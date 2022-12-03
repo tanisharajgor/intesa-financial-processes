@@ -1,0 +1,10 @@
+translate:
+  activityType:
+    activityType: ["Attività di Processo", "Attività di Controllo", "Attività di Processo Comune", "Attività di Sistema"]
+    activityTypeEnglish: ["process activity", "control activity", "common process activity", "system activity"]
+  activityCategory:
+    activityCategory: ["Professionale", "Operativa", "Commerciale"]
+    activityCategoryEnglish: ["professional", "operational", "commercial"]
+  actorType:
+    actorType: ["Unità organizzativa", "Posizione", "Persona", "Gruppo Vuoto", "Unità organizzativa esterna"]
+    actorTypeEnglish: ["Organizational unit", "Position", "Person", "Empty group", "External Organizational unit"]
