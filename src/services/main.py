@@ -2,8 +2,9 @@ import pandas as pd
 import os
 import numpy as np
 import yaml
-from python.data_management import actors_rename, activities_dm, actors_dm, create_actor_activity_network
+from python.data_management import actors_rename, activities_dm, actors_dm, create_actor_activities_nodes, create_links
 from python.translate import translate_text, authenticate_implicit_with_adc
+from python.helper import write_json
 
 with open('./config.yaml', 'r', encoding='utf8') as file:
     config = yaml.safe_load(file)
@@ -38,7 +39,16 @@ def main():
     activities = activities_dm(data, config, raw_pth)
     actors = actors_dm(data, config, raw_pth)
 
-    create_actor_activity_network(data, actors, activities)
+    nodes = create_actor_activities_nodes(data, actors, activities)
+
+    links = create_links(nodes)
+
+    network = {
+        "nodes" : nodes,
+        "links" : links
+    }
+
+    write_json(network, processed_pth, "network")
 
     import pdb; pdb.set_trace()
 
