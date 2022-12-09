@@ -40,7 +40,6 @@ def main():
     actors = actors_dm(data, config, raw_pth)
 
     nodes = create_actor_activities_nodes(data, actors, activities)
-
     links = create_links(nodes)
 
     network = {
@@ -49,8 +48,6 @@ def main():
     }
 
     write_json(network, processed_pth, "network")
-
-    import pdb; pdb.set_trace()
 
 if __name__ == '__main__':
     main()

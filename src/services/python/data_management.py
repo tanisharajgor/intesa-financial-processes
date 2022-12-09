@@ -67,6 +67,7 @@ def activities_dm(actors, config, raw_pth):
     activitiesTranslated = pd.read_csv(os.path.join(raw_pth, "activities_translated.csv")).rename(columns={'Italian': 'activity'})
     activities = pd.merge(activities, activitiesTranslated, on="activity", how="left").drop("activity", axis=1).rename(columns={'English': "activity"})
     activities = num_id(activities, "activity")
+    activities.activityCategory = activities.activityCategory.fillna('Other')
 
     ## Write the cleaned data out
     activities.to_csv(os.path.join(raw_pth, 'activities' + ".csv"), index = False)
@@ -163,11 +164,13 @@ def create_links(nodes):
 
     for node in nodes:
 
-        ka = node["activities"]
+        if (node["group"] == "actor"):
 
-        for ab in ka:
-            dict = {"source": int(ka["id"]),
-                    "target": int(node["id"])}
-            links.append(dict)
+            ka = node["activities"]
+
+            for ab in ka:
+                dict = {"source": int(ka["id"]),
+                        "target": int(node["id"])}
+                links.append(dict)
 
     return links
