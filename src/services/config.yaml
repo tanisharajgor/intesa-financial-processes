@@ -4,7 +4,7 @@ translate:
     activityTypeEnglish: ["process activity", "control activity", "common process activity", "system activity"]
   activityCategory:
     activityCategory: ["Professionale", "Operativa", "Commerciale"]
-    activityCategoryEnglish: ["professional", "operational", "commercial"]
+    activityCategoryEnglish: ["Professional", "Operational", "Commercial"]
   actorType:
     actorType: ["Unità organizzativa", "Posizione", "Persona", "Gruppo Vuoto", "Unità organizzativa esterna"]
     actorTypeEnglish: ["Organizational unit", "Position", "Person", "Empty group", "External Organizational unit"]

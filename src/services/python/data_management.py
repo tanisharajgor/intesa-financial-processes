@@ -1,13 +1,14 @@
 import pandas as pd
 import os
 
+from python.helper import unique_int
+
 """
 Create a dataframe from a dictionary
 """
 def dict_to_df(dictionary):
 
     return pd.DataFrame.from_dict(dictionary)
-
 
 """
 Update Ids to numeric
@@ -18,17 +19,9 @@ return dataframe
 def num_id(df, var_name, n = 0):
 
     df[var_name + 'ID'] = df.groupby(var_name).ngroup() + n
+    df = df[df[var_name + 'ID'] != -1]
 
     return df
-
-"""
-Unique integer
-param df dataframe. Pandas dataframe to subset
-param col_name string. Column name 
-return dataframe
-"""
-def unique_int(df, col_name):
-    return df[col_name].unique().astype(int)
 
 """
 Rename actors columns
@@ -59,7 +52,7 @@ def translate_config(df, config, colName):
 Data management steps for activities
 return dataframe
 """
-def activities_dm(actors, config, raw_pth):
+def activities_dm(actors, config, raw_pth, processed_pth):
 
     activities = actors[["activityGUID", "activity", "activityType", "activityCategory"]].drop_duplicates()
     activities = translate_config(activities, config, 'activityType')
@@ -70,7 +63,7 @@ def activities_dm(actors, config, raw_pth):
     activities.activityCategory = activities.activityCategory.fillna('Other')
 
     ## Write the cleaned data out
-    activities.to_csv(os.path.join(raw_pth, 'activities' + ".csv"), index = False)
+    activities.to_csv(os.path.join(processed_pth, 'activities' + ".csv"), index = False)
 
     return activities
 
@@ -78,18 +71,82 @@ def activities_dm(actors, config, raw_pth):
 Data management steps for actors
 return dataframe
 """
-def actors_dm(actors, config, raw_pth):
+def actors_dm(actors, config, raw_pth, processed_pth):
 
-    actors = actors[["actorGUID", "actorType", "actor"]].drop_duplicates()
+    actors = actors[actors["Obsolete Object"] != "Obsoleto"]
+    actors = actors[["actorGUID", "actorType", "actor"]].drop_duplicates() # drop duplicates
     actors = translate_config(actors, config, 'actorType')
     actorsTranslated = pd.read_csv(os.path.join(raw_pth, "actors_translated.csv")).rename(columns={'Italian': 'actor'})
     actors = pd.merge(actors, actorsTranslated, on="actor", how="left").drop("actor", axis=1).rename(columns={'English': "actor"})
     actors = num_id(actors, "actor")
 
     ## Write the cleaned data out
-    actors.to_csv(os.path.join(raw_pth, 'actors' + ".csv"), index = False)
+    actors.to_csv(os.path.join(processed_pth, 'actors' + ".csv"), index = False)
 
     return actors
+
+"""
+Data management steps for risks
+return dataframe
+"""
+def risks_dm(risks, raw_pth, processed_pth):
+
+    risks = risks[risks["Obsolete Object"] != "Obsoleto"]
+    risks = risks.rename(columns={
+                                'Object Name': 'risk',
+                                'Object GUID': 'riskGUID'})
+    risks = risks[["riskGUID", "risk"]].drop_duplicates() # drop duplicates
+    risksTranslated = pd.read_csv(os.path.join(raw_pth, "risks_translated.csv")).rename(columns={'Italian': 'risk'})
+    risks = pd.merge(risks, risksTranslated, on="risk", how="left").drop("risk", axis=1).rename(columns={'English': "risk"})
+    risks = num_id(risks, "risk")
+
+    ## Write the cleaned data out
+    risks.to_csv(os.path.join(processed_pth, 'risks' + ".csv"), index = False)
+
+    return risks
+
+"""
+Data management steps for controls
+return dataframe
+"""
+def controls_dm(controls, config, raw_pth, processed_pth):
+
+    controls = controls.rename(columns={
+                                'Activity Name': 'control',
+                                'Activity GUID': 'controlGUID',
+                                'Activity Category': 'activityCategory'})
+    controls = controls[["controlGUID", "control", "activityCategory"]].drop_duplicates() # drop duplicates
+    controls = translate_config(controls, config, 'activityCategory')
+    controlsTranslated = pd.read_csv(os.path.join(raw_pth, "controls_translated.csv")).rename(columns={'Italian': 'control'})
+    controls = pd.merge(controls, controlsTranslated, on="control", how="left").drop("control", axis=1).rename(columns={'English': "control"})
+    controls = num_id(controls, "control")
+    controls = controls.rename(columns={'activityCategory': 'controlCategory'})
+    controls.controlCategory = controls.controlCategory.fillna('Other')
+
+    ## Write the cleaned data out
+    controls.to_csv(os.path.join(processed_pth, 'controls' + ".csv"), index = False)
+
+    return controls
+
+"""
+Data management steps for applications
+return dataframe
+"""
+def applications_dm(applications, raw_pth, processed_pth):
+
+    applications = applications[applications["Obsolete Object"] != "Obsoleto"]
+    applications = applications.rename(columns={
+                                'Object Name': 'application',
+                                'Object GUID': 'applicationGUID'})
+    applications = applications[["applicationGUID", "application"]].drop_duplicates() # drop duplicates
+    applicationsTranslated = pd.read_csv(os.path.join(raw_pth, "applications_translated.csv")).rename(columns={'Italian': 'application'})
+    applications = pd.merge(applications, applicationsTranslated, on="application", how="left").drop("application", axis=1).rename(columns={'English': "application"})
+    applications = num_id(applications, "application")
+
+    ## Write the cleaned data out
+    applications.to_csv(os.path.join(processed_pth, 'applications' + ".csv"), index = False)
+
+    return applications
 
 def create_actor_activities_nodes(data, actors, activities):
 
@@ -98,8 +155,6 @@ def create_actor_activities_nodes(data, actors, activities):
     actors_activities = pd.merge(actors_activities, activities)
     actors_activities.drop(["activityGUID", "actorGUID"], axis=1, inplace=True)
     actors_activities = actors_activities.drop_duplicates()
-    actors_activities = actors_activities[actors_activities.activityID != -1]
-    actors_activities = actors_activities[actors_activities.actorID != -1]
 
     actors_nodes = []
 
