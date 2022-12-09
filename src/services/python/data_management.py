@@ -129,6 +129,64 @@ def controls_dm(controls, config, raw_pth, processed_pth):
     return controls
 
 """
+Data management steps for level1
+return dataframe
+"""
+def level1_dm(data, raw_pth, processed_pth):
+
+    level1 = data.rename(columns={
+                                'L1 NAME': 'level1',
+                                'L1 GUID': 'level1GUID'})
+
+    level1 = level1[["level1", "level1GUID"]].drop_duplicates() # drop duplicates
+    level1Translated = pd.read_csv(os.path.join(raw_pth, "level1_translated.csv")).rename(columns={'Italian': 'level1'})
+    level1 = pd.merge(level1, level1Translated, on="level1", how="left").drop("level1", axis=1).rename(columns={'English': "level1"})
+    level1 = num_id(level1, "level1")
+
+    ## Write the cleaned data out
+    level1.to_csv(os.path.join(processed_pth, 'level1' + ".csv"), index = False)
+
+    return level1
+
+"""
+Data management steps for level2
+return dataframe
+"""
+def level2_dm(data, raw_pth, processed_pth):
+
+    level2 = data.rename(columns={
+                                'L2 NAME': 'level2',
+                                'L2 GUID': 'level2GUID'})
+    level2 = level2[["level2", "level2GUID"]].drop_duplicates() # drop duplicates
+    level2Translated = pd.read_csv(os.path.join(raw_pth, "level2_translated.csv")).rename(columns={'Italian': 'level2'})
+    level2 = pd.merge(level2, level2Translated, on="level2", how="left").drop("level2", axis=1).rename(columns={'English': "level2"})
+    level2 = num_id(level2, "level2")
+
+    ## Write the cleaned data out
+    level2.to_csv(os.path.join(processed_pth, 'level2' + ".csv"), index = False)
+
+    return level2
+
+"""
+Data management steps for level3
+return dataframe
+"""
+def level3_dm(data, raw_pth, processed_pth):
+
+    level3 = data.rename(columns={
+                                'L3 NAME': 'level3',
+                                'L3 GUID': 'level3GUID'})
+    level3 = level3[["level3", "level3GUID"]].drop_duplicates() # drop duplicates
+    level3Translated = pd.read_csv(os.path.join(raw_pth, "level3_translated.csv")).rename(columns={'Italian': 'level3'})
+    level3 = pd.merge(level3, level3Translated, on="level3", how="left").drop("level3", axis=1).rename(columns={'English': "level3"})
+    level3 = num_id(level3, "level3")
+
+    ## Write the cleaned data out
+    level3.to_csv(os.path.join(processed_pth, 'level3' + ".csv"), index = False)
+
+    return level3
+
+"""
 Data management steps for applications
 return dataframe
 """

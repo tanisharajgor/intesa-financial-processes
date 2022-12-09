@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 import yaml
-from python.data_management import actors_rename, activities_dm, actors_dm, risks_dm, applications_dm, controls_dm, create_actor_activities_nodes, create_links
+from python.data_management import actors_rename, activities_dm, actors_dm, risks_dm, applications_dm, controls_dm, level1_dm, level2_dm, level3_dm, create_actor_activities_nodes, create_links
 from python.translate import translate_text, authenticate_implicit_with_adc
 from python.helper import write_json, create_lu
 
@@ -32,6 +32,9 @@ def main():
     translate_text(risks["Object Name"].unique(), raw_pth, 'risks_translated')
     translate_text(applications["Object Name"].unique(), raw_pth, 'applications_translated')
     translate_text(controls["Activity Name"].unique(), raw_pth, 'controls_translated')
+    translate_text(data["L1 NAME"].unique(), raw_pth, 'level1_translated')
+    translate_text(data["L2 NAME"].unique(), raw_pth, 'level2_translated')
+    translate_text(data["L3 NAME"].unique(), raw_pth, 'level3_translated')
 
     ## Clean data
     activities = activities_dm(data, config, raw_pth, processed_pth)
@@ -39,6 +42,9 @@ def main():
     risks = risks_dm(risks, raw_pth, processed_pth)
     applications = applications_dm(applications, raw_pth, processed_pth)
     controls = controls_dm(controls, config, raw_pth, processed_pth)
+    level1 = level1_dm(data, raw_pth, processed_pth)
+    level2 = level2_dm(data, raw_pth, processed_pth)
+    level3 = level3_dm(data, raw_pth, processed_pth)
 
     ## Structured data
     nodes = create_actor_activities_nodes(data, actors, activities)
@@ -50,11 +56,14 @@ def main():
     }
 
     lu = {
-        "risks": create_lu(risks.drop("riskGUID", axis=1), "riskID", "risk"),
-        "applications": create_lu(applications.drop("applicationGUID", axis=1), "applicationID", "application"),
-        "activities": create_lu(activities.drop("activityGUID", axis=1), "activityID", "activity"),
-        "actors": create_lu(actors.drop("actorGUID", axis=1), "actorID", "actor"),
-        "controls": create_lu(controls.drop("controlGUID", axis=1), "controlID", "control")
+        "risk": create_lu(risks.drop("riskGUID", axis=1), "riskID", "risk"),
+        "application": create_lu(applications.drop("applicationGUID", axis=1), "applicationID", "application"),
+        "activity": create_lu(activities.drop("activityGUID", axis=1), "activityID", "activity"),
+        "actor": create_lu(actors.drop("actorGUID", axis=1), "actorID", "actor"),
+        "control": create_lu(controls.drop("controlGUID", axis=1), "controlID", "control"),
+        "level1": create_lu(level1.drop("level1GUID", axis=1), "level1ID", "level1"),
+        "level2": create_lu(level2.drop("level2GUID", axis=1), "level2ID", "level2"),
+        "level3": create_lu(level3.drop("level3GUID", axis=1), "level3ID", "level3")
     }
 
     write_json(network, processed_pth, "network")
