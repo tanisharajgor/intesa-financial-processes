@@ -17,7 +17,6 @@ fl_name = "Richiesta_Dati_V2_EN.xlsb"
 def main():
 
     raw = os.path.join(raw_pth, fl_name)
-
     data = pd.read_excel(raw, sheet_name = "Actors")
     data = actors_rename(data)
 
@@ -27,27 +26,27 @@ def main():
 
     ## Translate Italian to English
     authenticate_implicit_with_adc()
-    translate_text(data.actor.unique(), raw_pth, 'actors_translated')
-    translate_text(data.activity.unique(), raw_pth, 'activities_translated')
-    translate_text(risks["Object Name"].unique(), raw_pth, 'risks_translated')
-    translate_text(applications["Object Name"].unique(), raw_pth, 'applications_translated')
-    translate_text(controls["Activity Name"].unique(), raw_pth, 'controls_translated')
-    translate_text(data["L1 NAME"].unique(), raw_pth, 'level1_translated')
-    translate_text(data["L2 NAME"].unique(), raw_pth, 'level2_translated')
-    translate_text(data["L3 NAME"].unique(), raw_pth, 'level3_translated')
+    translate_text(data.actor.unique(), os.path.join(raw_pth, "translated"), 'actors')
+    translate_text(data.activity.unique(), os.path.join(raw_pth, "translated"), 'activities')
+    translate_text(risks["Object Name"].unique(), os.path.join(raw_pth, "translated"), 'risks')
+    translate_text(applications["Object Name"].unique(), os.path.join(raw_pth, "translated"), 'applications')
+    translate_text(controls["Activity Name"].unique(), os.path.join(raw_pth, "translated"), 'controls')
+    translate_text(data["L1 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level1')
+    translate_text(data["L2 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level2')
+    translate_text(data["L3 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level3')
 
     ## Clean data
-    activities = activities_dm(data, config, raw_pth, processed_pth)
-    actors = actors_dm(data, config, raw_pth, processed_pth)
-    risks = risks_dm(risks, raw_pth, processed_pth)
-    applications = applications_dm(applications, raw_pth, processed_pth)
-    controls = controls_dm(controls, config, raw_pth, processed_pth)
-    level1 = level1_dm(data, raw_pth, processed_pth)
-    level2 = level2_dm(data, raw_pth, processed_pth)
-    level3 = level3_dm(data, raw_pth, processed_pth)
+    activitiesClean = activities_dm(data, config, raw_pth, processed_pth)
+    actorsClean = actors_dm(data, config, raw_pth, processed_pth)
+    risksClean = risks_dm(risks, raw_pth, processed_pth)
+    applicationsClean = applications_dm(applications, raw_pth, processed_pth)
+    controlsClean = controls_dm(controls, config, raw_pth, processed_pth)
+    level1Clean = level1_dm(data, raw_pth, processed_pth)
+    level2Clean = level2_dm(data, raw_pth, processed_pth)
+    level3Clean = level3_dm(data, raw_pth, processed_pth)
 
     ## Structured data
-    nodes = create_actor_activities_nodes(data, actors, activities)
+    nodes = create_actor_activities_nodes(data, actorsClean, activitiesClean)
     links = create_links(nodes)
 
     network = {
@@ -69,7 +68,7 @@ def main():
     write_json(network, processed_pth, "network")
     write_json(lu, processed_pth, "lu")
 
-    # import pdb; pdb.set_trace()
+    import pdb; pdb.set_trace()
 
 if __name__ == '__main__':
     main()

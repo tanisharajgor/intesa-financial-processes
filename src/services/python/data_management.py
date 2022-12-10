@@ -57,7 +57,7 @@ def activities_dm(actors, config, raw_pth, processed_pth):
     activities = actors[["activityGUID", "activity", "activityType", "activityCategory"]].drop_duplicates()
     activities = translate_config(activities, config, 'activityType')
     activities = translate_config(activities, config, 'activityCategory')
-    activitiesTranslated = pd.read_csv(os.path.join(raw_pth, "activities_translated.csv")).rename(columns={'Italian': 'activity'})
+    activitiesTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "activities.csv")).rename(columns={'Italian': 'activity'})
     activities = pd.merge(activities, activitiesTranslated, on="activity", how="left").drop("activity", axis=1).rename(columns={'English': "activity"})
     activities = num_id(activities, "activity")
     activities.activityCategory = activities.activityCategory.fillna('Other')
@@ -76,7 +76,7 @@ def actors_dm(actors, config, raw_pth, processed_pth):
     actors = actors[actors["Obsolete Object"] != "Obsoleto"]
     actors = actors[["actorGUID", "actorType", "actor"]].drop_duplicates() # drop duplicates
     actors = translate_config(actors, config, 'actorType')
-    actorsTranslated = pd.read_csv(os.path.join(raw_pth, "actors_translated.csv")).rename(columns={'Italian': 'actor'})
+    actorsTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "actors.csv")).rename(columns={'Italian': 'actor'})
     actors = pd.merge(actors, actorsTranslated, on="actor", how="left").drop("actor", axis=1).rename(columns={'English': "actor"})
     actors = num_id(actors, "actor")
 
@@ -96,9 +96,13 @@ def risks_dm(risks, raw_pth, processed_pth):
                                 'Object Name': 'risk',
                                 'Object GUID': 'riskGUID'})
     risks = risks[["riskGUID", "risk"]].drop_duplicates() # drop duplicates
-    risksTranslated = pd.read_csv(os.path.join(raw_pth, "risks_translated.csv")).rename(columns={'Italian': 'risk'})
+    risksTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "risks.csv")).rename(columns={'Italian': 'risk'})
     risks = pd.merge(risks, risksTranslated, on="risk", how="left").drop("risk", axis=1).rename(columns={'English': "risk"})
     risks = num_id(risks, "risk")
+    risks_type = pd.read_excel(os.path.join(raw_pth, "Rischi_Richiesta Dati 220913 (RISKS) translated.xlsx"), skiprows = [5381, 5382, 5383])[[" GUID Risk", " Type"]]
+    risks_type[' GUID Risk'] = risks_type[' GUID Risk'].str.strip()
+    risks_type[' Type'] = risks_type[' Type'].str.strip()
+    risks = pd.merge(risks, risks_type, left_on="riskGUID", right_on = " GUID Risk", how="left").drop(" GUID Risk", axis=1).rename(columns={' Type': "riskType"})
 
     ## Write the cleaned data out
     risks.to_csv(os.path.join(processed_pth, 'risks' + ".csv"), index = False)
@@ -117,11 +121,15 @@ def controls_dm(controls, config, raw_pth, processed_pth):
                                 'Activity Category': 'activityCategory'})
     controls = controls[["controlGUID", "control", "activityCategory"]].drop_duplicates() # drop duplicates
     controls = translate_config(controls, config, 'activityCategory')
-    controlsTranslated = pd.read_csv(os.path.join(raw_pth, "controls_translated.csv")).rename(columns={'Italian': 'control'})
+    controlsTranslated = pd.read_csv(os.path.join(raw_pth, "translated",  "controls.csv")).rename(columns={'Italian': 'control'})
     controls = pd.merge(controls, controlsTranslated, on="control", how="left").drop("control", axis=1).rename(columns={'English': "control"})
     controls = num_id(controls, "control")
     controls = controls.rename(columns={'activityCategory': 'controlCategory'})
     controls.controlCategory = controls.controlCategory.fillna('Other')
+    controls_type = pd.read_excel(os.path.join(raw_pth, "Controlli_Richiesta Dati 220913 (CONTROLLING ACTIVITY)) translated.xlsx"), skiprows = [5502, 5503, 5504])[[" Control Activity GUID", "Type"]]
+    controls_type[' Control Activity GUID'] = controls_type[' Control Activity GUID'].str.strip()
+    controls_type['Type'] = controls_type['Type'].str.strip()
+    controls = pd.merge(controls, controls_type[[" Control Activity GUID", "Type"]], left_on="controlGUID", right_on = " Control Activity GUID", how="left").drop(" Control Activity GUID", axis=1).rename(columns={'Type': "controlType"})
 
     ## Write the cleaned data out
     controls.to_csv(os.path.join(processed_pth, 'controls' + ".csv"), index = False)
@@ -139,7 +147,7 @@ def level1_dm(data, raw_pth, processed_pth):
                                 'L1 GUID': 'level1GUID'})
 
     level1 = level1[["level1", "level1GUID"]].drop_duplicates() # drop duplicates
-    level1Translated = pd.read_csv(os.path.join(raw_pth, "level1_translated.csv")).rename(columns={'Italian': 'level1'})
+    level1Translated = pd.read_csv(os.path.join(raw_pth, "translated", "level1.csv")).rename(columns={'Italian': 'level1'})
     level1 = pd.merge(level1, level1Translated, on="level1", how="left").drop("level1", axis=1).rename(columns={'English': "level1"})
     level1 = num_id(level1, "level1")
 
@@ -158,7 +166,7 @@ def level2_dm(data, raw_pth, processed_pth):
                                 'L2 NAME': 'level2',
                                 'L2 GUID': 'level2GUID'})
     level2 = level2[["level2", "level2GUID"]].drop_duplicates() # drop duplicates
-    level2Translated = pd.read_csv(os.path.join(raw_pth, "level2_translated.csv")).rename(columns={'Italian': 'level2'})
+    level2Translated = pd.read_csv(os.path.join(raw_pth, "translated", "level2.csv")).rename(columns={'Italian': 'level2'})
     level2 = pd.merge(level2, level2Translated, on="level2", how="left").drop("level2", axis=1).rename(columns={'English': "level2"})
     level2 = num_id(level2, "level2")
 
@@ -177,7 +185,7 @@ def level3_dm(data, raw_pth, processed_pth):
                                 'L3 NAME': 'level3',
                                 'L3 GUID': 'level3GUID'})
     level3 = level3[["level3", "level3GUID"]].drop_duplicates() # drop duplicates
-    level3Translated = pd.read_csv(os.path.join(raw_pth, "level3_translated.csv")).rename(columns={'Italian': 'level3'})
+    level3Translated = pd.read_csv(os.path.join(raw_pth, "translated", "level3.csv")).rename(columns={'Italian': 'level3'})
     level3 = pd.merge(level3, level3Translated, on="level3", how="left").drop("level3", axis=1).rename(columns={'English': "level3"})
     level3 = num_id(level3, "level3")
 
@@ -197,7 +205,7 @@ def applications_dm(applications, raw_pth, processed_pth):
                                 'Object Name': 'application',
                                 'Object GUID': 'applicationGUID'})
     applications = applications[["applicationGUID", "application"]].drop_duplicates() # drop duplicates
-    applicationsTranslated = pd.read_csv(os.path.join(raw_pth, "applications_translated.csv")).rename(columns={'Italian': 'application'})
+    applicationsTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "applications.csv")).rename(columns={'Italian': 'application'})
     applications = pd.merge(applications, applicationsTranslated, on="application", how="left").drop("application", axis=1).rename(columns={'English': "application"})
     applications = num_id(applications, "application")
 
