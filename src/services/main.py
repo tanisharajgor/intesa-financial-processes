@@ -11,7 +11,6 @@ with open('./config.yaml', 'r', encoding='utf8') as file:
 pth = "../data/"
 raw_pth = os.path.join(pth, "raw")
 processed_pth = os.path.join(pth, "processed")
-
 fl_name = "Richiesta_Dati_V2_EN.xlsb"
 
 def main():
@@ -55,14 +54,14 @@ def main():
     }
 
     lu = {
-        "risk": create_lu(risks.drop("riskGUID", axis=1), "riskID", "risk"),
-        "application": create_lu(applications.drop("applicationGUID", axis=1), "applicationID", "application"),
-        "activity": create_lu(activities.drop("activityGUID", axis=1), "activityID", "activity"),
-        "actor": create_lu(actors.drop("actorGUID", axis=1), "actorID", "actor"),
-        "control": create_lu(controls.drop("controlGUID", axis=1), "controlID", "control"),
-        "level1": create_lu(level1.drop("level1GUID", axis=1), "level1ID", "level1"),
-        "level2": create_lu(level2.drop("level2GUID", axis=1), "level2ID", "level2"),
-        "level3": create_lu(level3.drop("level3GUID", axis=1), "level3ID", "level3")
+        "risk": create_lu(risksClean.drop("riskGUID", axis=1), "riskID", "risk"),
+        "application": create_lu(applicationsClean.drop("applicationGUID", axis=1), "applicationID", "application"),
+        "activity": create_lu(activitiesClean.drop("activityGUID", axis=1), "activityID", "activity"),
+        "actor": create_lu(actorsClean.drop("actorGUID", axis=1), "actorID", "actor"),
+        "control": create_lu(controlsClean.drop("controlGUID", axis=1), "controlID", "control"),
+        "level1": create_lu(level1Clean.drop("level1GUID", axis=1), "level1ID", "level1"),
+        "level2": create_lu(level2Clean.drop("level2GUID", axis=1), "level2ID", "level2"),
+        "level3": create_lu(level3Clean.drop("level3GUID", axis=1), "level3ID", "level3")
     }
 
     write_json(network, processed_pth, "network")
@@ -72,4 +71,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    

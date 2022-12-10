@@ -103,6 +103,7 @@ def risks_dm(risks, raw_pth, processed_pth):
     risks_type[' GUID Risk'] = risks_type[' GUID Risk'].str.strip()
     risks_type[' Type'] = risks_type[' Type'].str.strip()
     risks = pd.merge(risks, risks_type, left_on="riskGUID", right_on = " GUID Risk", how="left").drop(" GUID Risk", axis=1).rename(columns={' Type': "riskType"})
+    risks["financialDisclosureRisk"] = risks.riskType == "Financial Disclosure Risk (ex 262/2005)"
 
     ## Write the cleaned data out
     risks.to_csv(os.path.join(processed_pth, 'risks' + ".csv"), index = False)

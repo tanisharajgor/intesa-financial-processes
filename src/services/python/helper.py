@@ -24,7 +24,6 @@ def write_json(df, pth, fl_name):
     with open(os.path.join(pth, fl_name + ".json"), 'w') as f:
         json.dump(df, f)
 
-
 """
 Unique integer
 param df dataframe. Pandas dataframe to subset
@@ -33,8 +32,6 @@ return dataframe
 """
 def unique_int(df, col_name):
     return df[col_name].unique().astype(int)
-
-
 
 """
 Subset dataframe
