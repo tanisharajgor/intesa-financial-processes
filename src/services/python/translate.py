@@ -4,11 +4,9 @@ import pandas as pd
 from python.helper import write_csv
 import math
 
-project_id = "banca-355515"
-
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "key.json"
 
-def authenticate_implicit_with_adc():
+def authenticate_implicit_with_adc(project_id):
     """
     When interacting with Google Cloud Client libraries, the library can auto-detect the
     credentials to use.
@@ -55,7 +53,7 @@ def n_chunks(text):
 Translating Italian to English
 Writes out translated text to english and saves as a CSV so the translation does not have to be run each time main is run
 """
-def translate_text(text, pth, fl_name):
+def translate_text(text, pth, fl_name, project_id):
 
     if(os.path.isfile(os.path.join(pth, fl_name + ".csv")) == False):
 

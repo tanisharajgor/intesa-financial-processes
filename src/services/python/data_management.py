@@ -243,6 +243,9 @@ def level1_to_level2_dm(data, level1, level2, processed_pth):
     df = pd.merge(df, level1, on="level1GUID", how="left").drop("level1GUID", axis=1)
     df = pd.merge(df, level2, on="level2GUID", how="left").drop("level2GUID", axis=1)
     df = df.drop_duplicates()[["level1ID", "level2ID"]]
+    df = df[(pd.isnull(df.level1ID) == False) & (pd.isnull(df.level2ID) == False)]
+    df['level1ID'] = pd.to_numeric(df['level1ID'], errors='coerce').astype(int)
+    df['level2ID'] = pd.to_numeric(df['level2ID'], errors='coerce').astype(int)
 
     df.to_csv(os.path.join(processed_pth, 'crosswalk', 'level1_level2' + ".csv"), index = False)
 
@@ -256,6 +259,9 @@ def level2_to_level3_dm(data, level2, level3, processed_pth):
     df = pd.merge(df, level2, on="level2GUID", how="left").drop("level2GUID", axis=1)
     df = pd.merge(df, level3, on="level3GUID", how="left").drop("level3GUID", axis=1)
     df = df.drop_duplicates()[["level2ID", "level3ID"]]
+    df = df[(pd.isnull(df.level2ID) == False) & (pd.isnull(df.level3ID) == False)]
+    df['level2ID'] = pd.to_numeric(df['level2ID'], errors='coerce').astype(int)
+    df['level3ID'] = pd.to_numeric(df['level3ID'], errors='coerce').astype(int)
 
     df.to_csv(os.path.join(processed_pth, 'crosswalk', 'level2_level3' + ".csv"), index = False)
 
@@ -269,6 +275,9 @@ def level3_to_model_dm(data, level3, model, processed_pth):
     df = pd.merge(df, level3, on="level3GUID", how="left").drop("level3GUID", axis=1)
     df = pd.merge(df, model, on="modelGUID", how="left").drop("modelGUID", axis=1)
     df = df.drop_duplicates()[["level3ID", "modelID"]]
+    df = df[(pd.isnull(df.level3ID) == False) & (pd.isnull(df.modelID) == False)]
+    df['level3ID'] = pd.to_numeric(df['level3ID'], errors='coerce').astype(int)
+    df['modelID'] = pd.to_numeric(df['modelID'], errors='coerce').astype(int)
 
     df.to_csv(os.path.join(processed_pth, 'crosswalk', 'level3_model' + ".csv"), index = False)
 
@@ -282,6 +291,9 @@ def model_to_activity_dm(data, model, activities, processed_pth):
     df = pd.merge(df, model, on="modelGUID", how="left").drop("modelGUID", axis=1)
     df = pd.merge(df, activities, on="activityGUID", how="left").drop("activityGUID", axis=1)
     df = df.drop_duplicates()[["modelID", "activityID"]]
+    df = df[(pd.isnull(df.modelID) == False) & (pd.isnull(df.activityID) == False)]
+    df['modelID'] = pd.to_numeric(df['modelID'], errors='coerce').astype(int)
+    df['activityID'] = pd.to_numeric(df['activityID'], errors='coerce').astype(int)
 
     df.to_csv(os.path.join(processed_pth, 'crosswalk', 'model_activities' + ".csv"), index = False)
 
@@ -298,19 +310,42 @@ def activity_to_risk_dm(risks, activities, risk, processed_pth):
     df = pd.merge(df, activities, on="activityGUID", how="left").drop("activityGUID", axis=1)
     df = pd.merge(df, risk, on="riskGUID", how="left").drop("riskGUID", axis=1)
     df = df.drop_duplicates()[["activityID", "riskID"]]
+    df = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.riskID) == False)]
+    df['activityID'] = pd.to_numeric(df['activityID'], errors='coerce').astype(int)
+    df['riskID'] = pd.to_numeric(df['riskID'], errors='coerce').astype(int)
 
     df.to_csv(os.path.join(processed_pth, 'crosswalk', 'activities_risks' + ".csv"), index = False)
 
     return df
 
 """
+Crosswalk between risks and controls
+"""
+def risk_to_control_dm(controls, risks, control, processed_pth):
+
+    df = controls[["Activity GUID", "Object GUID"]].rename(columns={
+                                'Activity GUID': 'controlGUID',
+                                'Object GUID': 'riskGUID'}).drop_duplicates()
+    df = pd.merge(df, risks, on="riskGUID", how="left").drop("riskGUID", axis=1)
+    df = pd.merge(df, control, on="controlGUID", how="left").drop("controlGUID", axis=1)
+    df = df.drop_duplicates()[["riskID", "controlID"]]
+    df = df[(pd.isnull(df.riskID) == False) & (pd.isnull(df.controlID) == False)]
+    df['riskID'] = pd.to_numeric(df['riskID'], errors='coerce').astype(int)
+    df['controlID'] = pd.to_numeric(df['controlID'], errors='coerce').astype(int)
+
+    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'risks_controls' + ".csv"), index = False)
+
+    return df
+
+"""
 Main crosswalk
 """
-def main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity):
+def main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity, activity_to_risk):
 
     df = pd.merge(level1_to_level2, level2_to_level3, on = "level2ID", how = "left")
     df = pd.merge(df, level3_to_model, on = "level3ID", how = "left")
     df = pd.merge(df, model_to_activity, on = "modelID", how = "left")
+    df = pd.merge(df, activity_to_risk, on = "activityID", how = "left")
 
     df.to_csv(os.path.join(processed_pth, 'crosswalk', 'main' + ".csv"), index = False)
 

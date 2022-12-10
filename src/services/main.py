@@ -4,7 +4,7 @@ import yaml
 from python.data_management import actors_rename, activities_dm, actors_dm, risks_dm, \
     applications_dm, controls_dm, level1_dm, level2_dm, level3_dm, model_dm, \
     level1_to_level2_dm, level2_to_level3_dm, level3_to_model_dm,model_to_activity_dm, \
-    activity_to_risk_dm, main_dm, \
+    activity_to_risk_dm, risk_to_control_dm, main_dm, \
     create_actor_activities_nodes, create_links
 from python.translate import translate_text, authenticate_implicit_with_adc
 from python.helper import write_json, create_lu
@@ -27,16 +27,17 @@ def main():
     applications = pd.read_excel(raw, sheet_name = "Applications (tools)")
 
     ## Translate Italian to English
-    # authenticate_implicit_with_adc()
-    # translate_text(data.actor.unique(), os.path.join(raw_pth, "translated"), 'actors')
-    # translate_text(data.activity.unique(), os.path.join(raw_pth, "translated"), 'activities')
-    # translate_text(risks["Object Name"].unique(), os.path.join(raw_pth, "translated"), 'risks')
-    # translate_text(applications["Object Name"].unique(), os.path.join(raw_pth, "translated"), 'applications')
-    # translate_text(controls["Activity Name"].unique(), os.path.join(raw_pth, "translated"), 'controls')
-    # translate_text(data["L1 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level1')
-    # translate_text(data["L2 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level2')
-    # translate_text(data["L3 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level3')
-    # translate_text(data["MODEL NAME ITA"].unique(), os.path.join(raw_pth, "translated"), 'model')
+    # project_id = config["translate"]["project_id"]
+    # authenticate_implicit_with_adc(project_id)
+    # translate_text(data.actor.unique(), os.path.join(raw_pth, "translated"), 'actors', project_id)
+    # translate_text(data.activity.unique(), os.path.join(raw_pth, "translated"), 'activities', project_id)
+    # translate_text(risks["Object Name"].unique(), os.path.join(raw_pth, "translated"), 'risks', project_id)
+    # translate_text(applications["Object Name"].unique(), os.path.join(raw_pth, "translated"), 'applications', project_id)
+    # translate_text(controls["Activity Name"].unique(), os.path.join(raw_pth, "translated"), 'controls', project_id)
+    # translate_text(data["L1 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level1', project_id)
+    # translate_text(data["L2 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level2', project_id)
+    # translate_text(data["L3 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level3', project_id)
+    # translate_text(data["MODEL NAME ITA"].unique(), os.path.join(raw_pth, "translated"), 'model', project_id)
 
 
     ## Clean data
@@ -56,14 +57,16 @@ def main():
                                 'L3 GUID': 'level3GUID',
                                 'MODEL GUID': 'modelGUID'})
 
+    # relational data
     level1_to_level2 = level1_to_level2_dm(data, level1Clean, level2Clean, processed_pth)
     level2_to_level3 = level2_to_level3_dm(data, level2Clean, level3Clean, processed_pth)
     level3_to_model = level3_to_model_dm(data, level3Clean, modelClean, processed_pth)
     model_to_activity = model_to_activity_dm(data, modelClean, activitiesClean, processed_pth)
     activity_to_risk = activity_to_risk_dm(risks, activitiesClean, risksClean, processed_pth)
-    main = main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity)
+    risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
+    main = main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity, activity_to_risk)
 
-    ## Structured data
+    ## Nested data
     nodes = create_actor_activities_nodes(data, actorsClean, activitiesClean)
     links = create_links(nodes)
 
