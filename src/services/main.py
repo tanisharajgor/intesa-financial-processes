@@ -1,7 +1,11 @@
 import pandas as pd
 import os
 import yaml
-from python.data_management import actors_rename, activities_dm, actors_dm, risks_dm, applications_dm, controls_dm, level1_dm, level2_dm, level3_dm, create_actor_activities_nodes, create_links
+from python.data_management import actors_rename, activities_dm, actors_dm, risks_dm, \
+    applications_dm, controls_dm, level1_dm, level2_dm, level3_dm, model_dm, \
+    level1_to_level2_dm, level2_to_level3_dm, level3_to_model_dm,model_to_activity_dm, \
+    activity_to_risk_dm, main_dm, \
+    create_actor_activities_nodes, create_links
 from python.translate import translate_text, authenticate_implicit_with_adc
 from python.helper import write_json, create_lu
 
@@ -18,21 +22,22 @@ def main():
     raw = os.path.join(raw_pth, fl_name)
     data = pd.read_excel(raw, sheet_name = "Actors")
     data = actors_rename(data)
-
     risks = pd.read_excel(raw, sheet_name = "Risks")
     controls = pd.read_excel(raw, sheet_name = "Controls")
     applications = pd.read_excel(raw, sheet_name = "Applications (tools)")
 
     ## Translate Italian to English
-    authenticate_implicit_with_adc()
-    translate_text(data.actor.unique(), os.path.join(raw_pth, "translated"), 'actors')
-    translate_text(data.activity.unique(), os.path.join(raw_pth, "translated"), 'activities')
-    translate_text(risks["Object Name"].unique(), os.path.join(raw_pth, "translated"), 'risks')
-    translate_text(applications["Object Name"].unique(), os.path.join(raw_pth, "translated"), 'applications')
-    translate_text(controls["Activity Name"].unique(), os.path.join(raw_pth, "translated"), 'controls')
-    translate_text(data["L1 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level1')
-    translate_text(data["L2 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level2')
-    translate_text(data["L3 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level3')
+    # authenticate_implicit_with_adc()
+    # translate_text(data.actor.unique(), os.path.join(raw_pth, "translated"), 'actors')
+    # translate_text(data.activity.unique(), os.path.join(raw_pth, "translated"), 'activities')
+    # translate_text(risks["Object Name"].unique(), os.path.join(raw_pth, "translated"), 'risks')
+    # translate_text(applications["Object Name"].unique(), os.path.join(raw_pth, "translated"), 'applications')
+    # translate_text(controls["Activity Name"].unique(), os.path.join(raw_pth, "translated"), 'controls')
+    # translate_text(data["L1 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level1')
+    # translate_text(data["L2 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level2')
+    # translate_text(data["L3 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level3')
+    # translate_text(data["MODEL NAME ITA"].unique(), os.path.join(raw_pth, "translated"), 'model')
+
 
     ## Clean data
     activitiesClean = activities_dm(data, config, raw_pth, processed_pth)
@@ -43,6 +48,20 @@ def main():
     level1Clean = level1_dm(data, raw_pth, processed_pth)
     level2Clean = level2_dm(data, raw_pth, processed_pth)
     level3Clean = level3_dm(data, raw_pth, processed_pth)
+    modelClean = model_dm(data, raw_pth, processed_pth)
+    data = data[["L1 GUID", "L2 GUID", "L3 GUID", "MODEL GUID", "activityGUID", "actorGUID"]].rename(
+                                columns={
+                                'L1 GUID': 'level1GUID',
+                                'L2 GUID': 'level2GUID',
+                                'L3 GUID': 'level3GUID',
+                                'MODEL GUID': 'modelGUID'})
+
+    level1_to_level2 = level1_to_level2_dm(data, level1Clean, level2Clean, processed_pth)
+    level2_to_level3 = level2_to_level3_dm(data, level2Clean, level3Clean, processed_pth)
+    level3_to_model = level3_to_model_dm(data, level3Clean, modelClean, processed_pth)
+    model_to_activity = model_to_activity_dm(data, modelClean, activitiesClean, processed_pth)
+    activity_to_risk = activity_to_risk_dm(risks, activitiesClean, risksClean, processed_pth)
+    main = main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity)
 
     ## Structured data
     nodes = create_actor_activities_nodes(data, actorsClean, activitiesClean)
@@ -54,20 +73,19 @@ def main():
     }
 
     lu = {
-        "risk": create_lu(risksClean.drop("riskGUID", axis=1), "riskID", "risk"),
-        "application": create_lu(applicationsClean.drop("applicationGUID", axis=1), "applicationID", "application"),
-        "activity": create_lu(activitiesClean.drop("activityGUID", axis=1), "activityID", "activity"),
-        "actor": create_lu(actorsClean.drop("actorGUID", axis=1), "actorID", "actor"),
-        "control": create_lu(controlsClean.drop("controlGUID", axis=1), "controlID", "control"),
-        "level1": create_lu(level1Clean.drop("level1GUID", axis=1), "level1ID", "level1"),
-        "level2": create_lu(level2Clean.drop("level2GUID", axis=1), "level2ID", "level2"),
-        "level3": create_lu(level3Clean.drop("level3GUID", axis=1), "level3ID", "level3")
+        "risk": create_lu(risksClean, "riskID", "risk"),
+        "application": create_lu(applicationsClean, "applicationID", "application"),
+        "activity": create_lu(activitiesClean, "activityID", "activity"),
+        "actor": create_lu(actorsClean, "actorID", "actor"),
+        "control": create_lu(controlsClean, "controlID", "control"),
+        "level1": create_lu(level1Clean, "level1ID", "level1"),
+        "level2": create_lu(level2Clean, "level2ID", "level2"),
+        "level3": create_lu(level3Clean, "level3ID", "level3"),
+        "model": create_lu(modelClean, "modelID", "model")
     }
 
-    write_json(network, processed_pth, "network")
-    write_json(lu, processed_pth, "lu")
-
-    import pdb; pdb.set_trace()
+    write_json(network, os.path.join(processed_pth, "json"), "network")
+    write_json(lu, os.path.join(processed_pth, "json"), "lu")
 
 if __name__ == '__main__':
     main()

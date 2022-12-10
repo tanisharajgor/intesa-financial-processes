@@ -54,18 +54,18 @@ return dataframe
 """
 def activities_dm(actors, config, raw_pth, processed_pth):
 
-    activities = actors[["activityGUID", "activity", "activityType", "activityCategory"]].drop_duplicates()
-    activities = translate_config(activities, config, 'activityType')
-    activities = translate_config(activities, config, 'activityCategory')
-    activitiesTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "activities.csv")).rename(columns={'Italian': 'activity'})
-    activities = pd.merge(activities, activitiesTranslated, on="activity", how="left").drop("activity", axis=1).rename(columns={'English': "activity"})
-    activities = num_id(activities, "activity")
-    activities.activityCategory = activities.activityCategory.fillna('Other')
+    df = actors[["activityGUID", "activity", "activityType", "activityCategory"]].drop_duplicates()
+    df = translate_config(df, config, 'activityType')
+    df = translate_config(df, config, 'activityCategory')
+    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "activities.csv")).rename(columns={'Italian': 'activity'})
+    df = pd.merge(df, dfTranslated, on="activity", how="left").drop("activity", axis=1).rename(columns={'English': "activity"})
+    df = num_id(df, "activity")
+    df.activityCategory = df.activityCategory.fillna('Other')
 
     ## Write the cleaned data out
-    activities.to_csv(os.path.join(processed_pth, 'activities' + ".csv"), index = False)
+    df.drop('activityGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'activities' + ".csv"), index = False)
 
-    return activities
+    return df
 
 """
 Data management steps for actors
@@ -73,17 +73,17 @@ return dataframe
 """
 def actors_dm(actors, config, raw_pth, processed_pth):
 
-    actors = actors[actors["Obsolete Object"] != "Obsoleto"]
-    actors = actors[["actorGUID", "actorType", "actor"]].drop_duplicates() # drop duplicates
-    actors = translate_config(actors, config, 'actorType')
-    actorsTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "actors.csv")).rename(columns={'Italian': 'actor'})
-    actors = pd.merge(actors, actorsTranslated, on="actor", how="left").drop("actor", axis=1).rename(columns={'English': "actor"})
-    actors = num_id(actors, "actor")
+    df = actors[actors["Obsolete Object"] != "Obsoleto"]
+    df = df[["actorGUID", "actorType", "actor"]].drop_duplicates() # drop duplicates
+    df = translate_config(df, config, 'actorType')
+    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "actors.csv")).rename(columns={'Italian': 'actor'})
+    df = pd.merge(df, dfTranslated, on="actor", how="left").drop("actor", axis=1).rename(columns={'English': "actor"})
+    df = num_id(df, "actor")
 
     ## Write the cleaned data out
-    actors.to_csv(os.path.join(processed_pth, 'actors' + ".csv"), index = False)
+    df.drop('actorGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'actors' + ".csv"), index = False)
 
-    return actors
+    return df
 
 """
 Data management steps for risks
@@ -91,24 +91,24 @@ return dataframe
 """
 def risks_dm(risks, raw_pth, processed_pth):
 
-    risks = risks[risks["Obsolete Object"] != "Obsoleto"]
-    risks = risks.rename(columns={
+    df = risks[risks["Obsolete Object"] != "Obsoleto"]
+    df = df.rename(columns={
                                 'Object Name': 'risk',
                                 'Object GUID': 'riskGUID'})
-    risks = risks[["riskGUID", "risk"]].drop_duplicates() # drop duplicates
-    risksTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "risks.csv")).rename(columns={'Italian': 'risk'})
-    risks = pd.merge(risks, risksTranslated, on="risk", how="left").drop("risk", axis=1).rename(columns={'English': "risk"})
-    risks = num_id(risks, "risk")
-    risks_type = pd.read_excel(os.path.join(raw_pth, "Rischi_Richiesta Dati 220913 (RISKS) translated.xlsx"), skiprows = [5381, 5382, 5383])[[" GUID Risk", " Type"]]
-    risks_type[' GUID Risk'] = risks_type[' GUID Risk'].str.strip()
-    risks_type[' Type'] = risks_type[' Type'].str.strip()
-    risks = pd.merge(risks, risks_type, left_on="riskGUID", right_on = " GUID Risk", how="left").drop(" GUID Risk", axis=1).rename(columns={' Type': "riskType"})
-    risks["financialDisclosureRisk"] = risks.riskType == "Financial Disclosure Risk (ex 262/2005)"
+    df = df[["riskGUID", "risk"]].drop_duplicates() # drop duplicates
+    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "risks.csv")).rename(columns={'Italian': 'risk'})
+    df = pd.merge(df, dfTranslated, on="risk", how="left").drop("risk", axis=1).rename(columns={'English': "risk"})
+    df = num_id(df, "risk")
+    dfType = pd.read_excel(os.path.join(raw_pth, "Rischi_Richiesta Dati 220913 (RISKS) translated.xlsx"), skiprows = [5381, 5382, 5383])[[" GUID Risk", " Type"]]
+    dfType[' GUID Risk'] = dfType[' GUID Risk'].str.strip()
+    dfType[' Type'] = dfType[' Type'].str.strip()
+    df = pd.merge(df, dfType, left_on="riskGUID", right_on = " GUID Risk", how="left").drop(" GUID Risk", axis=1).rename(columns={' Type': "riskType"})
+    df["financialDisclosureRisk"] = df.riskType == "Financial Disclosure Risk (ex 262/2005)"
 
     ## Write the cleaned data out
-    risks.to_csv(os.path.join(processed_pth, 'risks' + ".csv"), index = False)
+    df.drop('riskGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'risks' + ".csv"), index = False)
 
-    return risks
+    return df
 
 """
 Data management steps for controls
@@ -116,26 +116,27 @@ return dataframe
 """
 def controls_dm(controls, config, raw_pth, processed_pth):
 
-    controls = controls.rename(columns={
+    df = controls.rename(columns={
                                 'Activity Name': 'control',
                                 'Activity GUID': 'controlGUID',
                                 'Activity Category': 'activityCategory'})
-    controls = controls[["controlGUID", "control", "activityCategory"]].drop_duplicates() # drop duplicates
-    controls = translate_config(controls, config, 'activityCategory')
-    controlsTranslated = pd.read_csv(os.path.join(raw_pth, "translated",  "controls.csv")).rename(columns={'Italian': 'control'})
-    controls = pd.merge(controls, controlsTranslated, on="control", how="left").drop("control", axis=1).rename(columns={'English': "control"})
-    controls = num_id(controls, "control")
-    controls = controls.rename(columns={'activityCategory': 'controlCategory'})
-    controls.controlCategory = controls.controlCategory.fillna('Other')
-    controls_type = pd.read_excel(os.path.join(raw_pth, "Controlli_Richiesta Dati 220913 (CONTROLLING ACTIVITY)) translated.xlsx"), skiprows = [5502, 5503, 5504])[[" Control Activity GUID", "Type"]]
-    controls_type[' Control Activity GUID'] = controls_type[' Control Activity GUID'].str.strip()
-    controls_type['Type'] = controls_type['Type'].str.strip()
-    controls = pd.merge(controls, controls_type[[" Control Activity GUID", "Type"]], left_on="controlGUID", right_on = " Control Activity GUID", how="left").drop(" Control Activity GUID", axis=1).rename(columns={'Type': "controlType"})
+    df = df[["controlGUID", "control", "activityCategory"]].drop_duplicates() # drop duplicates
+    df = translate_config(df, config, 'activityCategory')
+    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated",  "controls.csv")).rename(columns={'Italian': 'control'})
+    df = pd.merge(df, dfTranslated, on="control", how="left").drop("control", axis=1).rename(columns={'English': "control"})
+    df = num_id(df, "control")
+    df = df.rename(columns={'activityCategory': 'controlCategory'})
+    df.controlCategory = df.controlCategory.fillna('Other')
+    dfType = pd.read_excel(os.path.join(raw_pth, "Controlli_Richiesta Dati 220913 (CONTROLLING ACTIVITY)) translated.xlsx"), skiprows = [5502, 5503, 5504])[[" Control Activity GUID", "Type"]]
+    dfType[' Control Activity GUID'] = dfType[' Control Activity GUID'].str.strip()
+    dfType['Type'] = dfType['Type'].str.strip()
+    df['control'] = df['control'].replace(r"^ +", regex=True)
+    df = pd.merge(df, dfType[[" Control Activity GUID", "Type"]], left_on="controlGUID", right_on = " Control Activity GUID", how="left").drop(" Control Activity GUID", axis=1).rename(columns={'Type': "controlType"})
 
     ## Write the cleaned data out
-    controls.to_csv(os.path.join(processed_pth, 'controls' + ".csv"), index = False)
+    df.drop('controlGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'controls' + ".csv"), index = False)
 
-    return controls
+    return df
 
 """
 Data management steps for level1
@@ -143,19 +144,19 @@ return dataframe
 """
 def level1_dm(data, raw_pth, processed_pth):
 
-    level1 = data.rename(columns={
+    df = data.rename(columns={
                                 'L1 NAME': 'level1',
                                 'L1 GUID': 'level1GUID'})
 
-    level1 = level1[["level1", "level1GUID"]].drop_duplicates() # drop duplicates
-    level1Translated = pd.read_csv(os.path.join(raw_pth, "translated", "level1.csv")).rename(columns={'Italian': 'level1'})
-    level1 = pd.merge(level1, level1Translated, on="level1", how="left").drop("level1", axis=1).rename(columns={'English': "level1"})
-    level1 = num_id(level1, "level1")
+    df = df[["level1", "level1GUID"]].drop_duplicates() # drop duplicates
+    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "level1.csv")).rename(columns={'Italian': 'level1'})
+    df = pd.merge(df, dfTranslated, on="level1", how="left").drop("level1", axis=1).rename(columns={'English': "level1"})
+    df = num_id(df, "level1")
 
     ## Write the cleaned data out
-    level1.to_csv(os.path.join(processed_pth, 'level1' + ".csv"), index = False)
+    df.drop('level1GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'level1' + ".csv"), index = False)
 
-    return level1
+    return df
 
 """
 Data management steps for level2
@@ -163,18 +164,18 @@ return dataframe
 """
 def level2_dm(data, raw_pth, processed_pth):
 
-    level2 = data.rename(columns={
+    df = data.rename(columns={
                                 'L2 NAME': 'level2',
                                 'L2 GUID': 'level2GUID'})
-    level2 = level2[["level2", "level2GUID"]].drop_duplicates() # drop duplicates
-    level2Translated = pd.read_csv(os.path.join(raw_pth, "translated", "level2.csv")).rename(columns={'Italian': 'level2'})
-    level2 = pd.merge(level2, level2Translated, on="level2", how="left").drop("level2", axis=1).rename(columns={'English': "level2"})
-    level2 = num_id(level2, "level2")
+    df = df[["level2", "level2GUID"]].drop_duplicates() # drop duplicates
+    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "level2.csv")).rename(columns={'Italian': 'level2'})
+    df = pd.merge(df, dfTranslated, on="level2", how="left").drop("level2", axis=1).rename(columns={'English': "level2"})
+    df = num_id(df, "level2")
 
     ## Write the cleaned data out
-    level2.to_csv(os.path.join(processed_pth, 'level2' + ".csv"), index = False)
+    df.drop('level2GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'level2' + ".csv"), index = False)
 
-    return level2
+    return df
 
 """
 Data management steps for level3
@@ -182,18 +183,37 @@ return dataframe
 """
 def level3_dm(data, raw_pth, processed_pth):
 
-    level3 = data.rename(columns={
+    df = data.rename(columns={
                                 'L3 NAME': 'level3',
                                 'L3 GUID': 'level3GUID'})
-    level3 = level3[["level3", "level3GUID"]].drop_duplicates() # drop duplicates
-    level3Translated = pd.read_csv(os.path.join(raw_pth, "translated", "level3.csv")).rename(columns={'Italian': 'level3'})
-    level3 = pd.merge(level3, level3Translated, on="level3", how="left").drop("level3", axis=1).rename(columns={'English': "level3"})
-    level3 = num_id(level3, "level3")
+    df = df[["level3", "level3GUID"]].drop_duplicates() # drop duplicates
+    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "level3.csv")).rename(columns={'Italian': 'level3'})
+    df = pd.merge(df, dfTranslated, on="level3", how="left").drop("level3", axis=1).rename(columns={'English': "level3"})
+    df = num_id(df, "level3")
 
     ## Write the cleaned data out
-    level3.to_csv(os.path.join(processed_pth, 'level3' + ".csv"), index = False)
+    df.drop('level3GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'level3' + ".csv"), index = False)
 
-    return level3
+    return df
+
+"""
+Data management steps for level3
+return dataframe
+"""
+def model_dm(data, raw_pth, processed_pth):
+
+    df = data.rename(columns={
+                                'MODEL NAME ITA': 'model',
+                                'MODEL GUID': 'modelGUID'})
+    df = df[["model", "modelGUID"]].drop_duplicates() # drop duplicates
+    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "model.csv")).rename(columns={'Italian': 'model'})
+    df = pd.merge(df, dfTranslated, on="model", how="left").drop("model", axis=1).rename(columns={'English': "model"})
+    df = num_id(df, "model")
+
+    ## Write the cleaned data out
+    df.drop('modelGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'model' + ".csv"), index = False)
+
+    return df
 
 """
 Data management steps for applications
@@ -201,19 +221,100 @@ return dataframe
 """
 def applications_dm(applications, raw_pth, processed_pth):
 
-    applications = applications[applications["Obsolete Object"] != "Obsoleto"]
-    applications = applications.rename(columns={
+    df = applications[applications["Obsolete Object"] != "Obsoleto"]
+    df = df.rename(columns={
                                 'Object Name': 'application',
                                 'Object GUID': 'applicationGUID'})
-    applications = applications[["applicationGUID", "application"]].drop_duplicates() # drop duplicates
-    applicationsTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "applications.csv")).rename(columns={'Italian': 'application'})
-    applications = pd.merge(applications, applicationsTranslated, on="application", how="left").drop("application", axis=1).rename(columns={'English': "application"})
-    applications = num_id(applications, "application")
+    df = df[["applicationGUID", "application"]].drop_duplicates() # drop duplicates
+    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "applications.csv")).rename(columns={'Italian': 'application'})
+    df = pd.merge(df, dfTranslated, on="application", how="left").drop("application", axis=1).rename(columns={'English': "application"})
+    df = num_id(df, "application")
 
     ## Write the cleaned data out
-    applications.to_csv(os.path.join(processed_pth, 'applications' + ".csv"), index = False)
+    df.drop('applicationGUID', axis = 1).to_csv(os.path.join(processed_pth, 'main', 'applications' + ".csv"), index = False)
 
-    return applications
+    return df
+
+"""
+Crosswalk between level1 and level2
+"""
+def level1_to_level2_dm(data, level1, level2, processed_pth):
+    df = data[["level1GUID", "level2GUID"]].drop_duplicates()
+    df = pd.merge(df, level1, on="level1GUID", how="left").drop("level1GUID", axis=1)
+    df = pd.merge(df, level2, on="level2GUID", how="left").drop("level2GUID", axis=1)
+    df = df.drop_duplicates()[["level1ID", "level2ID"]]
+
+    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'level1_level2' + ".csv"), index = False)
+
+    return df
+
+"""
+Crosswalk between level2 and level3
+"""
+def level2_to_level3_dm(data, level2, level3, processed_pth):
+    df = data[["level2GUID", "level3GUID"]].drop_duplicates()
+    df = pd.merge(df, level2, on="level2GUID", how="left").drop("level2GUID", axis=1)
+    df = pd.merge(df, level3, on="level3GUID", how="left").drop("level3GUID", axis=1)
+    df = df.drop_duplicates()[["level2ID", "level3ID"]]
+
+    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'level2_level3' + ".csv"), index = False)
+
+    return df
+
+"""
+Crosswalk between level3 and model
+"""
+def level3_to_model_dm(data, level3, model, processed_pth):
+    df = data[["level3GUID", "modelGUID"]].drop_duplicates()
+    df = pd.merge(df, level3, on="level3GUID", how="left").drop("level3GUID", axis=1)
+    df = pd.merge(df, model, on="modelGUID", how="left").drop("modelGUID", axis=1)
+    df = df.drop_duplicates()[["level3ID", "modelID"]]
+
+    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'level3_model' + ".csv"), index = False)
+
+    return df
+
+"""
+Crosswalk between models and activities
+"""
+def model_to_activity_dm(data, model, activities, processed_pth):
+    df = data[["modelGUID", "activityGUID"]].drop_duplicates()
+    df = pd.merge(df, model, on="modelGUID", how="left").drop("modelGUID", axis=1)
+    df = pd.merge(df, activities, on="activityGUID", how="left").drop("activityGUID", axis=1)
+    df = df.drop_duplicates()[["modelID", "activityID"]]
+
+    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'model_activities' + ".csv"), index = False)
+
+    return df
+
+"""
+Crosswalk between activities and risks
+"""
+def activity_to_risk_dm(risks, activities, risk, processed_pth):
+
+    df = risks[["Activity GUID", "Object GUID"]].rename(columns={
+                                'Activity GUID': 'activityGUID',
+                                'Object GUID': 'riskGUID'}).drop_duplicates()
+    df = pd.merge(df, activities, on="activityGUID", how="left").drop("activityGUID", axis=1)
+    df = pd.merge(df, risk, on="riskGUID", how="left").drop("riskGUID", axis=1)
+    df = df.drop_duplicates()[["activityID", "riskID"]]
+
+    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'activities_risks' + ".csv"), index = False)
+
+    return df
+
+"""
+Main crosswalk
+"""
+def main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity):
+
+    df = pd.merge(level1_to_level2, level2_to_level3, on = "level2ID", how = "left")
+    df = pd.merge(df, level3_to_model, on = "level3ID", how = "left")
+    df = pd.merge(df, model_to_activity, on = "modelID", how = "left")
+
+    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'main' + ".csv"), index = False)
+
+    return df
 
 def create_actor_activities_nodes(data, actors, activities):
 
