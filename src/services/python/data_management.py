@@ -89,21 +89,20 @@ def actors_dm(actors, config, raw_pth, processed_pth):
 Data management steps for risks
 return dataframe
 """
-def risks_dm(risks, raw_pth, processed_pth):
+def risks_dm(risks, config, raw_pth, processed_pth):
 
     df = risks[risks["Obsolete Object"] != "Obsoleto"]
     df = df.rename(columns={
                                 'Object Name': 'risk',
-                                'Object GUID': 'riskGUID'})
-    df = df[["riskGUID", "risk"]].drop_duplicates() # drop duplicates
+                                'Object GUID': 'riskGUID',
+                                'Tipo': 'riskType'})
+    df = df[["riskGUID", "risk", "riskType"]].drop_duplicates() # drop duplicates
+   # import pdb; pdb.set_trace()
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "risks.csv")).rename(columns={'Italian': 'risk'})
     df = pd.merge(df, dfTranslated, on="risk", how="left").drop("risk", axis=1).rename(columns={'English': "risk"})
     df = num_id(df, "risk")
-    dfType = pd.read_excel(os.path.join(raw_pth, "Rischi_Richiesta Dati 220913 (RISKS) translated.xlsx"), skiprows = [5381, 5382, 5383])[[" GUID Risk", " Type"]]
-    dfType[' GUID Risk'] = dfType[' GUID Risk'].str.strip()
-    dfType[' Type'] = dfType[' Type'].str.strip()
-    df = pd.merge(df, dfType, left_on="riskGUID", right_on = " GUID Risk", how="left").drop(" GUID Risk", axis=1).rename(columns={' Type': "riskType"})
-    df["financialDisclosureRisk"] = df.riskType == "Financial Disclosure Risk (ex 262/2005)"
+    df = translate_config(df, config, 'riskType')
+    df["financialDisclosureRisk"] = df.riskType == "Financial Information Risk (ex 262/2005)"
 
     ## Write the cleaned data out
     df.drop('riskGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'risks' + ".csv"), index = False)
@@ -119,20 +118,21 @@ def controls_dm(controls, config, raw_pth, processed_pth):
     df = controls.rename(columns={
                                 'Activity Name': 'control',
                                 'Activity GUID': 'controlGUID',
-                                'Activity Category': 'activityCategory'})
-    df = df[["controlGUID", "control", "activityCategory"]].drop_duplicates() # drop duplicates
+                                'Activity Category': 'activityCategory',
+                                'Tipo': 'controlType',
+                                'Periodicità': 'controlPeriodocity'})
+    df = df[["controlGUID", "control", "activityCategory", "controlType", "controlPeriodocity"]].drop_duplicates() # drop duplicates
     df = translate_config(df, config, 'activityCategory')
+    #import pdb; pdb.set_trace()
+    df = translate_config(df, config, 'controlType')
+    df = translate_config(df, config, 'controlPeriodocity')
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated",  "controls.csv")).rename(columns={'Italian': 'control'})
     df = pd.merge(df, dfTranslated, on="control", how="left").drop("control", axis=1).rename(columns={'English': "control"})
     df = num_id(df, "control")
     df = df.rename(columns={'activityCategory': 'controlCategory'})
     df.controlCategory = df.controlCategory.fillna('Other')
-    dfType = pd.read_excel(os.path.join(raw_pth, "Controlli_Richiesta Dati 220913 (CONTROLLING ACTIVITY)) translated.xlsx"), skiprows = [5502, 5503, 5504])[[" Control Activity GUID", "Type"]]
-    dfType[' Control Activity GUID'] = dfType[' Control Activity GUID'].str.strip()
-    dfType['Type'] = dfType['Type'].str.strip()
     df['control'] = df['control'].replace(r"^ +", regex=True)
-    df = pd.merge(df, dfType[[" Control Activity GUID", "Type"]], left_on="controlGUID", right_on = " Control Activity GUID", how="left").drop(" Control Activity GUID", axis=1).rename(columns={'Type': "controlType"})
-
+ 
     ## Write the cleaned data out
     df.drop('controlGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'controls' + ".csv"), index = False)
 

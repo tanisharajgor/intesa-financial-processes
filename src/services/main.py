@@ -15,16 +15,16 @@ with open('./config.yaml', 'r', encoding='utf8') as file:
 pth = "../data/"
 raw_pth = os.path.join(pth, "raw")
 processed_pth = os.path.join(pth, "processed")
-fl_name = "Richiesta_Dati_V2_EN.xlsb"
+fl_name = "Data_V3.xlsb"
 
 def main():
 
     raw = os.path.join(raw_pth, fl_name)
-    data = pd.read_excel(raw, sheet_name = "Actors")
+    data = pd.read_excel(raw, sheet_name = "Attori")
     data = actors_rename(data)
-    risks = pd.read_excel(raw, sheet_name = "Risks")
-    controls = pd.read_excel(raw, sheet_name = "Controls")
-    applications = pd.read_excel(raw, sheet_name = "Applications (tools)")
+    risks = pd.read_excel(raw, sheet_name = "Rischi")
+    controls = pd.read_excel(raw, sheet_name = "Controlli")
+    applications = pd.read_excel(raw, sheet_name = "Applicativi")
 
     ## Translate Italian to English
     # project_id = config["translate"]["project_id"]
@@ -43,7 +43,7 @@ def main():
     ## Clean data
     activitiesClean = activities_dm(data, config, raw_pth, processed_pth)
     actorsClean = actors_dm(data, config, raw_pth, processed_pth)
-    risksClean = risks_dm(risks, raw_pth, processed_pth)
+    risksClean = risks_dm(risks, config, raw_pth, processed_pth)
     applicationsClean = applications_dm(applications, raw_pth, processed_pth)
     controlsClean = controls_dm(controls, config, raw_pth, processed_pth)
     level1Clean = level1_dm(data, raw_pth, processed_pth)
