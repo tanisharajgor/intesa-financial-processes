@@ -57,6 +57,15 @@ def main():
                                 'L3 GUID': 'level3GUID',
                                 'MODEL GUID': 'modelGUID'})
 
+    risks = risks[["Rischio di Informativa Finanziaria (ex 262/2005)", "L2 GUID", "L3 GUID", "MODEL GUID", "Activity GUID", "Object GUID", ]].rename(
+                                columns={
+                                'Rischio di Informativa Finanziaria (ex 262/2005)': 'level1GUID',
+                                'L2 GUID': 'level2GUID',
+                                'L3 GUID': 'level3GUID',
+                                'MODEL GUID': 'modelGUID',
+                                'Activity GUID': 'activityGUID',
+                                'Object GUID': 'riskGUID'}).drop_duplicates()
+
     # relational data
     level1_to_level2 = level1_to_level2_dm(data, level1Clean, level2Clean, processed_pth)
     level2_to_level3 = level2_to_level3_dm(data, level2Clean, level3Clean, processed_pth)
@@ -64,7 +73,12 @@ def main():
     model_to_activity = model_to_activity_dm(data, modelClean, activitiesClean, processed_pth)
     activity_to_risk = activity_to_risk_dm(risks, activitiesClean, risksClean, processed_pth)
     risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
-    main = main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity, activity_to_risk)
+
+    import pdb; pdb.set_trace()
+    main = main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity, activity_to_risk, risk_to_control)
+
+    mainRisk = risks.drop_duplicates()
+    mainActivity = data[["level1GUID", "level2GUID", "level3GUID", "modelGUID", "activityGUID"]].drop_duplicates()
 
     ## Nested data
     nodes = create_actor_activities_nodes(data, actorsClean, activitiesClean)

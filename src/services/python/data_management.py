@@ -97,7 +97,6 @@ def risks_dm(risks, config, raw_pth, processed_pth):
                                 'Object GUID': 'riskGUID',
                                 'Tipo': 'riskType'})
     df = df[["riskGUID", "risk", "riskType"]].drop_duplicates() # drop duplicates
-   # import pdb; pdb.set_trace()
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "risks.csv")).rename(columns={'Italian': 'risk'})
     df = pd.merge(df, dfTranslated, on="risk", how="left").drop("risk", axis=1).rename(columns={'English': "risk"})
     df = num_id(df, "risk")
@@ -123,7 +122,6 @@ def controls_dm(controls, config, raw_pth, processed_pth):
                                 'Periodicità': 'controlPeriodocity'})
     df = df[["controlGUID", "control", "activityCategory", "controlType", "controlPeriodocity"]].drop_duplicates() # drop duplicates
     df = translate_config(df, config, 'activityCategory')
-    #import pdb; pdb.set_trace()
     df = translate_config(df, config, 'controlType')
     df = translate_config(df, config, 'controlPeriodocity')
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated",  "controls.csv")).rename(columns={'Italian': 'control'})
@@ -304,10 +302,7 @@ Crosswalk between activities and risks
 """
 def activity_to_risk_dm(risks, activities, risk, processed_pth):
 
-    df = risks[["Activity GUID", "Object GUID"]].rename(columns={
-                                'Activity GUID': 'activityGUID',
-                                'Object GUID': 'riskGUID'}).drop_duplicates()
-    df = pd.merge(df, activities, on="activityGUID", how="left").drop("activityGUID", axis=1)
+    df = pd.merge(risks, activities, on="activityGUID", how="left").drop("activityGUID", axis=1)
     df = pd.merge(df, risk, on="riskGUID", how="left").drop("riskGUID", axis=1)
     df = df.drop_duplicates()[["activityID", "riskID"]]
     df = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.riskID) == False)]
@@ -340,12 +335,13 @@ def risk_to_control_dm(controls, risks, control, processed_pth):
 """
 Main crosswalk
 """
-def main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity, activity_to_risk):
+def main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity, activity_to_risk, risk_to_control):
 
     df = pd.merge(level1_to_level2, level2_to_level3, on = "level2ID", how = "left")
     df = pd.merge(df, level3_to_model, on = "level3ID", how = "left")
     df = pd.merge(df, model_to_activity, on = "modelID", how = "left")
     df = pd.merge(df, activity_to_risk, on = "activityID", how = "left")
+    df = pd.merge(df, risk_to_control, on = "riskID", how = "left")
 
     df.to_csv(os.path.join(processed_pth, 'crosswalk', 'main' + ".csv"), index = False)
 
