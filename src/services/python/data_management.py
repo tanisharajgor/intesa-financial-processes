@@ -314,6 +314,44 @@ def activity_to_risk_dm(risks, activities, risk, processed_pth):
     return df
 
 """
+Crosswalk between activities and actors
+"""
+def activity_to_actor_dm(data, activities, actors, processed_pth):
+
+    df = pd.merge(data, activities, on="activityGUID", how="left").drop("activityGUID", axis=1)
+    df = pd.merge(df, actors, on="actorGUID", how="left").drop("actorGUID", axis=1)
+    df = df.drop_duplicates()[["activityID", "actorID"]]
+
+    df = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)]
+    df['activityID'] = pd.to_numeric(df['activityID'], errors='coerce').astype(int)
+    df['actorID'] = pd.to_numeric(df['actorID'], errors='coerce').astype(int)
+
+    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'activities_actor' + ".csv"), index = False)
+
+    return df
+
+"""
+Crosswalk between activities and applications
+"""
+def activity_to_application_dm(applications, activities, application, processed_pth):
+
+    applications = applications.rename(columns={
+                        'Activity GUID': 'activityGUID',
+                        'Object GUID': 'applicationGUID'})
+
+    df = pd.merge(applications, activities, on="activityGUID", how="left").drop("activityGUID", axis=1)
+    df = pd.merge(df, application, on="applicationGUID", how="left").drop("applicationGUID", axis=1)
+    df = df.drop_duplicates()[["activityID", "applicationID"]]
+
+    df = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.applicationID) == False)]
+    df['activityID'] = pd.to_numeric(df['activityID'], errors='coerce').astype(int)
+    df['applicationID'] = pd.to_numeric(df['applicationID'], errors='coerce').astype(int)
+
+    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'activities_application' + ".csv"), index = False)
+
+    return df
+
+"""
 Crosswalk between risks and controls
 """
 def risk_to_control_dm(controls, risks, control, processed_pth):

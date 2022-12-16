@@ -4,7 +4,7 @@ import yaml
 from python.data_management import actors_rename, activities_dm, actors_dm, risks_dm, \
     applications_dm, controls_dm, level1_dm, level2_dm, level3_dm, model_dm, \
     level1_to_level2_dm, level2_to_level3_dm, level3_to_model_dm,model_to_activity_dm, \
-    activity_to_risk_dm, risk_to_control_dm, main_dm, \
+    activity_to_risk_dm, risk_to_control_dm, activity_to_actor_dm, activity_to_application_dm, main_dm, \
     create_actor_activities_nodes, create_links
 from python.translate import translate_text, authenticate_implicit_with_adc
 from python.helper import write_json, create_lu
@@ -72,6 +72,8 @@ def main():
     level3_to_model = level3_to_model_dm(data, level3Clean, modelClean, processed_pth)
     model_to_activity = model_to_activity_dm(data, modelClean, activitiesClean, processed_pth)
     activity_to_risk = activity_to_risk_dm(risks, activitiesClean, risksClean, processed_pth)
+    activity_to_actor = activity_to_actor_dm(data, activitiesClean, actorsClean, processed_pth)
+    activity_to_application = activity_to_application_dm(applications, activitiesClean, applicationsClean, processed_pth)
     risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
 
     import pdb; pdb.set_trace()
