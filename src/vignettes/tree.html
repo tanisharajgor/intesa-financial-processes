@@ -41,25 +41,65 @@
             };
 
             var partitionLayout = d3.partition()
-            .size([400, 200]);
+            .size([400, 400]);
 
-            var rootNode = d3.hierarchy(data)
+            d3.json("../data/processed/nested/tree.json").then(function (data) {
 
-            rootNode.sum(function(d) {
-            return d.value;
-            });
+                var rootNode = d3.hierarchy(data)
 
-            partitionLayout(rootNode);
+                rootNode.sum(function(d) {
+                    return d.size;
+                });
 
-            d3.select('svg g')
-            .selectAll('rect')
-            .data(rootNode.descendants())
-            .enter()
-            .append('rect')
-            .attr('x', function(d) { return d.x0; })
-            .attr('y', function(d) { return d.y0; })
-            .attr('width', function(d) { return d.x1 - d.x0; })
-            .attr('height', function(d) { return d.y1 - d.y0; })
+                // console.log(rootNode)
+
+                partitionLayout(rootNode);
+
+                let rect = d3.select('svg g')
+                .selectAll('rect')
+                .data(rootNode.descendants())
+                .enter()
+                .append('rect')
+                .attr('x', function(d) { return d.x0; })
+                .attr('y', function(d) { return d.y0; })
+                .attr('width', function(d) { return d.x1 - d.x0; })
+                .attr('height', function(d) { return d.y1 - d.y0; })
+                .attr('stroke', 'white')
+
+
+                const tooltip = d3.select("svg g")
+                    .append("div")
+                    .attr("class", "tooltip");
+
+                rect.on("mouseover", function(e, d) {
+
+                    let thisRect = d3.select(this);
+                    let x = +thisRect.attr("x") + 20;
+                    let y = +thisRect.attr("y") - 10;
+
+                    tooltip.style("visibility", "visible")
+                        .style("top", `${y}px`)
+                        .style("left", `${x}px`)
+                        .html(`<b>${e.parent.data.key}</b><br>District: ${e.data.key}`);
+
+                    console.log(e);
+                    console.log(d);
+
+                    thisRect
+                        .attr("stroke", "black")
+                        .attr("stroke-width", 2);
+
+                    d3.select(this).attr("opacity", 1).raise();
+
+                }).on("mouseout", function() {
+
+                    tooltip.style("visibility", "hidden");
+                    rect.attr("opacity", 1);
+
+                    d3.selectAll('rect').attr("stroke", "none"); 
+                });
+            })
+
 
 
             // var width = 800;
