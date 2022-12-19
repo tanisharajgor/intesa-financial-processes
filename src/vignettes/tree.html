@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="./style/style.css"> -->
+</head>
+
+<body>
+    <div id="chart"></div>
+    <script>
+
+    var width = 800;
+    var height = 600;
+    var svg = d3.select("#chart")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    d3.json("../data/processed/json/tree.json").then(function (data) {
+
+        console.log(data);
+       
+    })
+
+    </script>
+</body>
+
+</html>
