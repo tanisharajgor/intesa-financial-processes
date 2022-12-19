@@ -18,8 +18,10 @@ return dataframe
 """
 def num_id(df, var_name, n = 0):
 
-    df[var_name + 'ID'] = df.groupby(var_name).ngroup() + n
-    df = df[df[var_name + 'ID'] != -1]
+
+    new_var = var_name.removesuffix("GUID") + 'ID'
+    df[new_var] = df.groupby(var_name).ngroup() + n
+    df = df[df[new_var] != -1]
 
     return df
 
@@ -59,7 +61,8 @@ def activities_dm(actors, config, raw_pth, processed_pth):
     df = translate_config(df, config, 'activityCategory')
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "activities.csv")).rename(columns={'Italian': 'activity'})
     df = pd.merge(df, dfTranslated, on="activity", how="left").drop("activity", axis=1).rename(columns={'English': "activity"})
-    df = num_id(df, "activity")
+    df = df[pd.isnull(df.activity) == False]
+    df = num_id(df, "activityGUID")
     df.activityCategory = df.activityCategory.fillna('Other')
 
     ## Write the cleaned data out
@@ -78,7 +81,8 @@ def actors_dm(actors, config, raw_pth, processed_pth):
     df = translate_config(df, config, 'actorType')
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "actors.csv")).rename(columns={'Italian': 'actor'})
     df = pd.merge(df, dfTranslated, on="actor", how="left").drop("actor", axis=1).rename(columns={'English': "actor"})
-    df = num_id(df, "actor")
+    df = df[pd.isnull(df.actor) == False]
+    df = num_id(df, "actorGUID")
 
     ## Write the cleaned data out
     df.drop('actorGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'actors' + ".csv"), index = False)
@@ -99,7 +103,8 @@ def risks_dm(risks, config, raw_pth, processed_pth):
     df = df[["riskGUID", "risk", "riskType"]].drop_duplicates() # drop duplicates
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "risks.csv")).rename(columns={'Italian': 'risk'})
     df = pd.merge(df, dfTranslated, on="risk", how="left").drop("risk", axis=1).rename(columns={'English': "risk"})
-    df = num_id(df, "risk")
+    df = df[pd.isnull(df.risk) == False]
+    df = num_id(df, "riskGUID")
     df = translate_config(df, config, 'riskType')
     df["financialDisclosureRisk"] = df.riskType == "Financial Information Risk (ex 262/2005)"
 
@@ -126,7 +131,8 @@ def controls_dm(controls, config, raw_pth, processed_pth):
     df = translate_config(df, config, 'controlPeriodocity')
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated",  "controls.csv")).rename(columns={'Italian': 'control'})
     df = pd.merge(df, dfTranslated, on="control", how="left").drop("control", axis=1).rename(columns={'English': "control"})
-    df = num_id(df, "control")
+    df = df[pd.isnull(df.control) == False]
+    df = num_id(df, "controlGUID")
     df = df.rename(columns={'activityCategory': 'controlCategory'})
     df.controlCategory = df.controlCategory.fillna('Other')
     df['control'] = df['control'].replace(r"^ +", regex=True)
@@ -149,7 +155,8 @@ def level1_dm(data, raw_pth, processed_pth):
     df = df[["level1", "level1GUID"]].drop_duplicates() # drop duplicates
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "level1.csv")).rename(columns={'Italian': 'level1'})
     df = pd.merge(df, dfTranslated, on="level1", how="left").drop("level1", axis=1).rename(columns={'English': "level1"})
-    df = num_id(df, "level1")
+    df = df[pd.isnull(df.level1) == False]
+    df = num_id(df, "level1GUID")
 
     ## Write the cleaned data out
     df.drop('level1GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'level1' + ".csv"), index = False)
@@ -168,7 +175,8 @@ def level2_dm(data, raw_pth, processed_pth):
     df = df[["level2", "level2GUID"]].drop_duplicates() # drop duplicates
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "level2.csv")).rename(columns={'Italian': 'level2'})
     df = pd.merge(df, dfTranslated, on="level2", how="left").drop("level2", axis=1).rename(columns={'English': "level2"})
-    df = num_id(df, "level2")
+    df = df[pd.isnull(df.level2) == False]
+    df = num_id(df, "level2GUID")
 
     ## Write the cleaned data out
     df.drop('level2GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'level2' + ".csv"), index = False)
@@ -187,7 +195,8 @@ def level3_dm(data, raw_pth, processed_pth):
     df = df[["level3", "level3GUID"]].drop_duplicates() # drop duplicates
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "level3.csv")).rename(columns={'Italian': 'level3'})
     df = pd.merge(df, dfTranslated, on="level3", how="left").drop("level3", axis=1).rename(columns={'English': "level3"})
-    df = num_id(df, "level3")
+    df = df[pd.isnull(df.level3) == False]
+    df = num_id(df, "level3GUID")
 
     ## Write the cleaned data out
     df.drop('level3GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'level3' + ".csv"), index = False)
@@ -206,7 +215,8 @@ def model_dm(data, raw_pth, processed_pth):
     df = df[["model", "modelGUID"]].drop_duplicates() # drop duplicates
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "model.csv")).rename(columns={'Italian': 'model'})
     df = pd.merge(df, dfTranslated, on="model", how="left").drop("model", axis=1).rename(columns={'English': "model"})
-    df = num_id(df, "model")
+    df = df[pd.isnull(df.model) == False]
+    df = num_id(df, "modelGUID")
 
     ## Write the cleaned data out
     df.drop('modelGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'model' + ".csv"), index = False)
@@ -226,7 +236,8 @@ def applications_dm(applications, raw_pth, processed_pth):
     df = df[["applicationGUID", "application"]].drop_duplicates() # drop duplicates
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "applications.csv")).rename(columns={'Italian': 'application'})
     df = pd.merge(df, dfTranslated, on="application", how="left").drop("application", axis=1).rename(columns={'English': "application"})
-    df = num_id(df, "application")
+    df = df[pd.isnull(df.application) == False]
+    df = num_id(df, "applicationGUID")
 
     ## Write the cleaned data out
     df.drop('applicationGUID', axis = 1).to_csv(os.path.join(processed_pth, 'main', 'applications' + ".csv"), index = False)
@@ -240,6 +251,7 @@ def level1_to_level2_dm(data, level1, level2, processed_pth):
     df = data[["level1GUID", "level2GUID"]].drop_duplicates()
     df = pd.merge(df, level1, on="level1GUID", how="left").drop("level1GUID", axis=1)
     df = pd.merge(df, level2, on="level2GUID", how="left").drop("level2GUID", axis=1)
+
     df = df.drop_duplicates()[["level1ID", "level2ID"]]
     df = df[(pd.isnull(df.level1ID) == False) & (pd.isnull(df.level2ID) == False)]
     df['level1ID'] = pd.to_numeric(df['level1ID'], errors='coerce').astype(int)
@@ -294,6 +306,20 @@ def model_to_activity_dm(data, model, activities, processed_pth):
     df['activityID'] = pd.to_numeric(df['activityID'], errors='coerce').astype(int)
 
     df.to_csv(os.path.join(processed_pth, 'crosswalk', 'model_activities' + ".csv"), index = False)
+
+    return df
+
+"""
+Crosswalk between level 3 and activities
+"""
+def level3_to_activity_dm(level3_to_model, model_to_activity, processed_pth):
+
+    df = pd.merge(level3_to_model, model_to_activity)[["level3ID", "activityID"]].drop_duplicates()
+    df = df[(pd.isnull(df.level3ID) == False) & (pd.isnull(df.activityID) == False)]
+    df['level3ID'] = pd.to_numeric(df['level3ID'], errors='coerce').astype(int)
+    df['activityID'] = pd.to_numeric(df['activityID'], errors='coerce').astype(int)
+
+    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'level3_activities' + ".csv"), index = False)
 
     return df
 
@@ -466,3 +492,115 @@ def create_links(nodes):
                 links.append(dict)
 
     return links
+
+"""
+Nest processes
+"""
+
+def nest_processes(level1_to_level2, level2_to_level3, level3_to_activities, level1, level2, level3, activity):
+
+    array1 = []
+
+    for a in unique_int(level1, "level1ID"):
+
+        array2 = []
+
+        for b in unique_int(level1_to_level2[level1_to_level2.level1ID == a], "level2ID"):
+
+            array3 = []
+
+            for c in unique_int(level2_to_level3[level2_to_level3.level2ID == b], "level3ID"):
+
+                array4 = []
+
+                for d in unique_int(level3_to_activities[level3_to_activities.level3ID == c], "activityID"):
+
+                    dict4 = {"id": int(d),
+                            "name": activity[activity.activityID == d].activity.iloc[0],
+                            "size": 1}
+
+                    array4.append(dict4)
+
+                dict3 = {"id": int(c),
+                        "name": level3[level3.level3ID == c].level3.iloc[0],
+                        "children": array4}
+
+                array3.append(dict3)
+
+            dict2 = {"id": int(a),
+                    "name": level2[level2.level2ID == b].level2.iloc[0],
+                    "children": array3}
+
+            array2.append(dict2)
+
+        dictl1 = {"id": int(a),
+                  "name": level1[level1.level1ID == a].level1.iloc[0],
+                  "children": array2}
+                
+        array1.append(dictl1)
+
+    dic = {"name": "root",
+           "children": array1}
+
+    return dic
+
+
+# """
+# Nest activities attributes
+# """
+# def nest_activities(activities, actors, risks, applications, activities_actor, activity_to_risk, activity_to_application):
+
+#     array = []
+
+#     for a in unique_int(activities, "activityID"):
+
+#         act = activities[activities.activityID == a]
+#         aa = activities_actor[activities_actor.activityID == a]
+#         ar = activity_to_risk[activity_to_risk.activityID == a]
+#         ab = activity_to_application[activity_to_application.activityID == a]
+#         dictactor = {}
+#         dictrisk = {}
+#         dictapps = {}
+
+#         dictact = {"id": int(a)}
+
+#         if aa.shape[0] > 0:
+
+#             for b in unique_int(aa, "actorID"):
+#                 aa_sub = aa[aa.actorID == b]
+    
+#             dictact["nActors"] = aa.shape[0]
+#             dictact["actors"] = {"id": int(b),
+#                             "group": "actor"}
+
+#         if ar.shape[0] > 0:
+
+#             for c in unique_int(ar, "riskID"):
+#                 ar_sub = ar[ar.riskID == c]
+                
+#                 dictrisk = {"id": int(c),
+#                             "group": "risk"}
+
+#         if ab.shape[0] > 0:
+
+#             for d in unique_int(ab, "applicationID"):
+#                 ab_sub = ab[ab.applicationID == d]
+                
+#                 dictapps = {"id": int(d),
+#                             "group": "application"}
+
+#         dictact = {
+#             "id": int(a),
+#             "nActors": aa.shape[0],
+#             "actors": dictactor,
+#             "nRisk": ar.shape[0],
+#             "risks": dictrisk,
+#             "nApplication": ab.shape[0],
+#             "applications": dictapps
+#         }
+#         array.append(dictact)
+
+#     import pdb; pdb.set_trace()
+
+
+#     return array

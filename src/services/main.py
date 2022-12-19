@@ -5,7 +5,8 @@ from python.data_management import actors_rename, activities_dm, actors_dm, risk
     applications_dm, controls_dm, level1_dm, level2_dm, level3_dm, model_dm, \
     level1_to_level2_dm, level2_to_level3_dm, level3_to_model_dm,model_to_activity_dm, \
     activity_to_risk_dm, risk_to_control_dm, activity_to_actor_dm, activity_to_application_dm, main_dm, \
-    create_actor_activities_nodes, create_links
+    create_actor_activities_nodes, create_links, nest_processes, level3_to_activity_dm
+    # nest_activities
 from python.translate import translate_text, authenticate_implicit_with_adc
 from python.helper import write_json, create_lu
 
@@ -50,6 +51,7 @@ def main():
     level2Clean = level2_dm(data, raw_pth, processed_pth)
     level3Clean = level3_dm(data, raw_pth, processed_pth)
     modelClean = model_dm(data, raw_pth, processed_pth)
+
     data = data[["L1 GUID", "L2 GUID", "L3 GUID", "MODEL GUID", "activityGUID", "actorGUID"]].rename(
                                 columns={
                                 'L1 GUID': 'level1GUID',
@@ -71,16 +73,23 @@ def main():
     level2_to_level3 = level2_to_level3_dm(data, level2Clean, level3Clean, processed_pth)
     level3_to_model = level3_to_model_dm(data, level3Clean, modelClean, processed_pth)
     model_to_activity = model_to_activity_dm(data, modelClean, activitiesClean, processed_pth)
+    level3_to_activity = level3_to_activity_dm(level3_to_model, model_to_activity, processed_pth)
     activity_to_risk = activity_to_risk_dm(risks, activitiesClean, risksClean, processed_pth)
     activity_to_actor = activity_to_actor_dm(data, activitiesClean, actorsClean, processed_pth)
     activity_to_application = activity_to_application_dm(applications, activitiesClean, applicationsClean, processed_pth)
     risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
 
-    import pdb; pdb.set_trace()
     main = main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity, activity_to_risk, risk_to_control)
+
+    # nest_activities(activitiesClean, actorsClean, risksClean, applicationsClean, activity_to_actor, activity_to_risk, activity_to_application)
+
+    tree = nest_processes(level1_to_level2, level2_to_level3, level3_to_activity, level1Clean, level2Clean, level3Clean, activitiesClean)
+    write_json(tree, os.path.join(processed_pth, "json"), "tree")
 
     mainRisk = risks.drop_duplicates()
     mainActivity = data[["level1GUID", "level2GUID", "level3GUID", "modelGUID", "activityGUID"]].drop_duplicates()
+
+    import pdb; pdb.set_trace()
 
     ## Nested data
     nodes = create_actor_activities_nodes(data, actorsClean, activitiesClean)
