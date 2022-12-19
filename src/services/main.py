@@ -7,6 +7,7 @@ from python.data_management import actors_rename, activities_dm, actors_dm, risk
     activity_to_risk_dm, risk_to_control_dm, activity_to_actor_dm, activity_to_application_dm, main_dm, \
     create_actor_activities_nodes, create_links, nest_processes, level3_to_activity_dm
     # nest_activities
+    
 from python.translate import translate_text, authenticate_implicit_with_adc
 from python.helper import write_json, create_lu
 
@@ -28,18 +29,17 @@ def main():
     applications = pd.read_excel(raw, sheet_name = "Applicativi")
 
     ## Translate Italian to English
-    # project_id = config["translate"]["project_id"]
-    # authenticate_implicit_with_adc(project_id)
-    # translate_text(data.actor.unique(), os.path.join(raw_pth, "translated"), 'actors', project_id)
-    # translate_text(data.activity.unique(), os.path.join(raw_pth, "translated"), 'activities', project_id)
-    # translate_text(risks["Object Name"].unique(), os.path.join(raw_pth, "translated"), 'risks', project_id)
-    # translate_text(applications["Object Name"].unique(), os.path.join(raw_pth, "translated"), 'applications', project_id)
-    # translate_text(controls["Activity Name"].unique(), os.path.join(raw_pth, "translated"), 'controls', project_id)
-    # translate_text(data["L1 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level1', project_id)
-    # translate_text(data["L2 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level2', project_id)
-    # translate_text(data["L3 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level3', project_id)
-    # translate_text(data["MODEL NAME ITA"].unique(), os.path.join(raw_pth, "translated"), 'model', project_id)
-
+    project_id = config["translate"]["projectId"]
+    authenticate_implicit_with_adc(project_id)
+    translate_text(data.actor.unique(), os.path.join(raw_pth, "translated"), 'actors', project_id)
+    translate_text(data.activity.unique(), os.path.join(raw_pth, "translated"), 'activities', project_id)
+    translate_text(risks["Object Name"].unique(), os.path.join(raw_pth, "translated"), 'risks', project_id)
+    translate_text(applications["Object Name"].unique(), os.path.join(raw_pth, "translated"), 'applications', project_id)
+    translate_text(controls["Activity Name"].unique(), os.path.join(raw_pth, "translated"), 'controls', project_id)
+    translate_text(data["L1 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level1', project_id)
+    translate_text(data["L2 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level2', project_id)
+    translate_text(data["L3 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level3', project_id)
+    translate_text(data["MODEL NAME ITA"].unique(), os.path.join(raw_pth, "translated"), 'model', project_id)
 
     ## Clean data
     activitiesClean = activities_dm(data, config, raw_pth, processed_pth)
@@ -84,7 +84,7 @@ def main():
     # nest_activities(activitiesClean, actorsClean, risksClean, applicationsClean, activity_to_actor, activity_to_risk, activity_to_application)
 
     tree = nest_processes(level1_to_level2, level2_to_level3, level3_to_activity, level1Clean, level2Clean, level3Clean, activitiesClean)
-    write_json(tree, os.path.join(processed_pth, "json"), "tree")
+    write_json(tree, os.path.join(processed_pth, "nested"), "tree")
 
     mainRisk = risks.drop_duplicates()
     mainActivity = data[["level1GUID", "level2GUID", "level3GUID", "modelGUID", "activityGUID"]].drop_duplicates()
@@ -112,8 +112,8 @@ def main():
         "model": create_lu(modelClean, "modelID", "model")
     }
 
-    write_json(network, os.path.join(processed_pth, "json"), "network")
-    write_json(lu, os.path.join(processed_pth, "json"), "lu")
+    write_json(network, os.path.join(processed_pth, "nested"), "network")
+    write_json(lu, os.path.join(processed_pth, "nested"), "lu")
 
 if __name__ == '__main__':
     main()

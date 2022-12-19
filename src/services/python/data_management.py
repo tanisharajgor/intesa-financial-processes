@@ -66,7 +66,7 @@ def activities_dm(actors, config, raw_pth, processed_pth):
     df.activityCategory = df.activityCategory.fillna('Other')
 
     ## Write the cleaned data out
-    df.drop('activityGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'activities' + ".csv"), index = False)
+    df.drop('activityGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'activities' + ".csv"), index = False)
 
     return df
 
@@ -85,7 +85,7 @@ def actors_dm(actors, config, raw_pth, processed_pth):
     df = num_id(df, "actorGUID")
 
     ## Write the cleaned data out
-    df.drop('actorGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'actors' + ".csv"), index = False)
+    df.drop('actorGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'actors' + ".csv"), index = False)
 
     return df
 
@@ -109,7 +109,7 @@ def risks_dm(risks, config, raw_pth, processed_pth):
     df["financialDisclosureRisk"] = df.riskType == "Financial Information Risk (ex 262/2005)"
 
     ## Write the cleaned data out
-    df.drop('riskGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'risks' + ".csv"), index = False)
+    df.drop('riskGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'risks' + ".csv"), index = False)
 
     return df
 
@@ -138,7 +138,7 @@ def controls_dm(controls, config, raw_pth, processed_pth):
     df['control'] = df['control'].replace(r"^ +", regex=True)
  
     ## Write the cleaned data out
-    df.drop('controlGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'controls' + ".csv"), index = False)
+    df.drop('controlGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'controls' + ".csv"), index = False)
 
     return df
 
@@ -159,7 +159,7 @@ def level1_dm(data, raw_pth, processed_pth):
     df = num_id(df, "level1GUID")
 
     ## Write the cleaned data out
-    df.drop('level1GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'level1' + ".csv"), index = False)
+    df.drop('level1GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'level1' + ".csv"), index = False)
 
     return df
 
@@ -179,7 +179,7 @@ def level2_dm(data, raw_pth, processed_pth):
     df = num_id(df, "level2GUID")
 
     ## Write the cleaned data out
-    df.drop('level2GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'level2' + ".csv"), index = False)
+    df.drop('level2GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'level2' + ".csv"), index = False)
 
     return df
 
@@ -199,7 +199,7 @@ def level3_dm(data, raw_pth, processed_pth):
     df = num_id(df, "level3GUID")
 
     ## Write the cleaned data out
-    df.drop('level3GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'level3' + ".csv"), index = False)
+    df.drop('level3GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'level3' + ".csv"), index = False)
 
     return df
 
@@ -219,7 +219,7 @@ def model_dm(data, raw_pth, processed_pth):
     df = num_id(df, "modelGUID")
 
     ## Write the cleaned data out
-    df.drop('modelGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'main', 'model' + ".csv"), index = False)
+    df.drop('modelGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'model' + ".csv"), index = False)
 
     return df
 
@@ -240,7 +240,7 @@ def applications_dm(applications, raw_pth, processed_pth):
     df = num_id(df, "applicationGUID")
 
     ## Write the cleaned data out
-    df.drop('applicationGUID', axis = 1).to_csv(os.path.join(processed_pth, 'main', 'applications' + ".csv"), index = False)
+    df.drop('applicationGUID', axis = 1).to_csv(os.path.join(processed_pth, 'relational', 'applications' + ".csv"), index = False)
 
     return df
 
@@ -257,7 +257,7 @@ def level1_to_level2_dm(data, level1, level2, processed_pth):
     df['level1ID'] = pd.to_numeric(df['level1ID'], errors='coerce').astype(int)
     df['level2ID'] = pd.to_numeric(df['level2ID'], errors='coerce').astype(int)
 
-    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'level1_level2' + ".csv"), index = False)
+    df.to_csv(os.path.join(processed_pth, 'relational', 'level1_level2' + ".csv"), index = False)
 
     return df
 
@@ -273,7 +273,7 @@ def level2_to_level3_dm(data, level2, level3, processed_pth):
     df['level2ID'] = pd.to_numeric(df['level2ID'], errors='coerce').astype(int)
     df['level3ID'] = pd.to_numeric(df['level3ID'], errors='coerce').astype(int)
 
-    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'level2_level3' + ".csv"), index = False)
+    df.to_csv(os.path.join(processed_pth, 'relational', 'level2_level3' + ".csv"), index = False)
 
     return df
 
@@ -289,7 +289,7 @@ def level3_to_model_dm(data, level3, model, processed_pth):
     df['level3ID'] = pd.to_numeric(df['level3ID'], errors='coerce').astype(int)
     df['modelID'] = pd.to_numeric(df['modelID'], errors='coerce').astype(int)
 
-    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'level3_model' + ".csv"), index = False)
+    df.to_csv(os.path.join(processed_pth, 'relational', 'level3_model' + ".csv"), index = False)
 
     return df
 
@@ -305,7 +305,7 @@ def model_to_activity_dm(data, model, activities, processed_pth):
     df['modelID'] = pd.to_numeric(df['modelID'], errors='coerce').astype(int)
     df['activityID'] = pd.to_numeric(df['activityID'], errors='coerce').astype(int)
 
-    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'model_activities' + ".csv"), index = False)
+    df.to_csv(os.path.join(processed_pth, 'relational', 'model_activities' + ".csv"), index = False)
 
     return df
 
@@ -319,7 +319,7 @@ def level3_to_activity_dm(level3_to_model, model_to_activity, processed_pth):
     df['level3ID'] = pd.to_numeric(df['level3ID'], errors='coerce').astype(int)
     df['activityID'] = pd.to_numeric(df['activityID'], errors='coerce').astype(int)
 
-    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'level3_activities' + ".csv"), index = False)
+    df.to_csv(os.path.join(processed_pth, 'relational', 'level3_activities' + ".csv"), index = False)
 
     return df
 
@@ -335,7 +335,7 @@ def activity_to_risk_dm(risks, activities, risk, processed_pth):
     df['activityID'] = pd.to_numeric(df['activityID'], errors='coerce').astype(int)
     df['riskID'] = pd.to_numeric(df['riskID'], errors='coerce').astype(int)
 
-    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'activities_risks' + ".csv"), index = False)
+    df.to_csv(os.path.join(processed_pth, 'relational', 'activities_risks' + ".csv"), index = False)
 
     return df
 
@@ -352,7 +352,7 @@ def activity_to_actor_dm(data, activities, actors, processed_pth):
     df['activityID'] = pd.to_numeric(df['activityID'], errors='coerce').astype(int)
     df['actorID'] = pd.to_numeric(df['actorID'], errors='coerce').astype(int)
 
-    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'activities_actor' + ".csv"), index = False)
+    df.to_csv(os.path.join(processed_pth, 'relational', 'activities_actor' + ".csv"), index = False)
 
     return df
 
@@ -373,7 +373,7 @@ def activity_to_application_dm(applications, activities, application, processed_
     df['activityID'] = pd.to_numeric(df['activityID'], errors='coerce').astype(int)
     df['applicationID'] = pd.to_numeric(df['applicationID'], errors='coerce').astype(int)
 
-    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'activities_application' + ".csv"), index = False)
+    df.to_csv(os.path.join(processed_pth, 'relational', 'activities_application' + ".csv"), index = False)
 
     return df
 
@@ -392,7 +392,7 @@ def risk_to_control_dm(controls, risks, control, processed_pth):
     df['riskID'] = pd.to_numeric(df['riskID'], errors='coerce').astype(int)
     df['controlID'] = pd.to_numeric(df['controlID'], errors='coerce').astype(int)
 
-    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'risks_controls' + ".csv"), index = False)
+    df.to_csv(os.path.join(processed_pth, 'relational', 'risks_controls' + ".csv"), index = False)
 
     return df
 
@@ -407,7 +407,7 @@ def main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, 
     df = pd.merge(df, activity_to_risk, on = "activityID", how = "left")
     df = pd.merge(df, risk_to_control, on = "riskID", how = "left")
 
-    df.to_csv(os.path.join(processed_pth, 'crosswalk', 'main' + ".csv"), index = False)
+    df.to_csv(os.path.join(processed_pth, 'relational', 'main' + ".csv"), index = False)
 
     return df
 
@@ -500,20 +500,26 @@ Nest processes
 def nest_processes(level1_to_level2, level2_to_level3, level3_to_activities, level1, level2, level3, activity):
 
     array1 = []
+    size1 = 0
+    ids1 = unique_int(level1, "level1ID")
 
-    for a in unique_int(level1, "level1ID"):
+    for a in ids1:
 
         array2 = []
+        size2 = 0
+        ids2 = unique_int(level1_to_level2[level1_to_level2.level1ID == a], "level2ID")
 
-        for b in unique_int(level1_to_level2[level1_to_level2.level1ID == a], "level2ID"):
+        for b in ids2:
 
             array3 = []
+            size3 = 0
+            ids3 = unique_int(level2_to_level3[level2_to_level3.level2ID == b], "level3ID")
 
-            for c in unique_int(level2_to_level3[level2_to_level3.level2ID == b], "level3ID"):
+            for c in ids3:
 
                 array4 = []
-
-                for d in unique_int(level3_to_activities[level3_to_activities.level3ID == c], "activityID"):
+                ids4 = unique_int(level3_to_activities[level3_to_activities.level3ID == c], "activityID")
+                for d in ids4:
 
                     dict4 = {"id": int(d),
                             "name": activity[activity.activityID == d].activity.iloc[0],
@@ -523,27 +529,34 @@ def nest_processes(level1_to_level2, level2_to_level3, level3_to_activities, lev
 
                 dict3 = {"id": int(c),
                         "name": level3[level3.level3ID == c].level3.iloc[0],
-                        "children": array4}
+                        "children": array4,
+                        "size": len(ids4)}
+                size3 = size3 + len(ids4)
 
                 array3.append(dict3)
 
             dict2 = {"id": int(a),
                     "name": level2[level2.level2ID == b].level2.iloc[0],
-                    "children": array3}
+                    "children": array3,
+                    "size": size3}
+
+            size2 = size2 + size3
 
             array2.append(dict2)
 
         dictl1 = {"id": int(a),
                   "name": level1[level1.level1ID == a].level1.iloc[0],
-                  "children": array2}
-                
+                  "children": array2,
+                  "size": size2}
+
+        size1 = size2 + size1
         array1.append(dictl1)
 
     dic = {"name": "root",
-           "children": array1}
+           "children": array1,
+           "size": size1}
 
     return dic
-
 
 # """
 # Nest activities attributes

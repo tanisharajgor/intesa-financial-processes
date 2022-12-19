@@ -1,5 +1,5 @@
 translate:
-  projectedId: "banca-355515"
+  projectId: "banca-355515"
   activityType:
     activityType: ["Attività di Processo", "Attività di Controllo", "Attività di Processo Comune", "Attività di Sistema"]
     activityTypeEnglish: ["process activity", "control activity", "common process activity", "system activity"]
