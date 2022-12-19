@@ -1,8 +1,16 @@
 # Python Code to Clean Banca Intesa Process Data
 
 
+## Navigate to repo
 1. In the command line `cd src/services`
-2. `python main.py`
+
+## Create and activate environment
+1. `conda env create -f environment.yml`
+1. `conda activate banca`
+
+## Run code
+
+1. `python main.py`
 
 ## Translation
 
