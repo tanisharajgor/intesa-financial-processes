@@ -6,6 +6,13 @@
     <link rel="shortcut icon" href="#">
 </head>
 
+<style>
+    body {
+        font-family: sans-serif
+    }
+
+</style>
+
 <body>
     <div id="chart"></div>
     <svg width="960" height="960"></svg>
@@ -27,7 +34,7 @@
 
         d3.json("../data/processed/json/tree.json").then(function (root) {
 
-            console.log(root);
+            // console.log(root);
 
             root = d3.hierarchy(root)
                 .sum(function(d) { return d.size; })
