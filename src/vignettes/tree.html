@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <link rel="shortcut icon" href="#">
+    </head>
+
+    <body>
+        <div id="chart"></div>
+        <script>
+
+            var width = 800;
+            var height = 600;
+            var svg = d3.select("#chart")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+            var color = d3.scaleOrdinal(d3.schemeDark2);
+
+            d3.json("../data/processed/json/tree.json").then(function (data) {
+
+                var treemap = d3.treemap()
+                    .size([width, height])
+                    .padding(1);
+
+                console.log(data)
+
+                var hierarchy = d3.hierarchy({ values: data }, function (d) { return d.values; })
+                    .sum(function (d) { return d.value; });
+
+                var root = treemap(hierarchy);
+                console.log(root);
+                console.log("rootleaves", root.leaves());
+
+                var rect = svg
+                    .selectAll("rect")
+                    .data(root.leaves())
+                    .enter()
+                    .append("rect")
+                    .attr("x", function (d) { return d.x0; })
+                    .attr("y", function (d) { return d.y0; })
+                    .attr("width", function (d) { return d.x1 - d.x0; })
+                    .attr("height", function (d) { return d.y1 - d.y0; })
+                    .attr("stroke", "#FFFFFF")
+                    .attr("fill", function (d) {
+                        console.log(d)
+                        return color(d.parent.data.key);
+                    });
+
+                // const tooltip = d3.select("#chart")
+                //     .append("div")
+                //     .attr("class", "tooltip");
+
+                // rect.on("mouseover", function(e, d) {
+
+                //     let thisRect = d3.select(this);
+                //     let x = +thisRect.attr("x") + 20;
+                //     let y = +thisRect.attr("y") - 10;
+
+                //     tooltip.style("visibility", "visible")
+                //         .style("top", `${y}px`)
+                //         .style("left", `${x}px`)
+                //         .html(`<b>${e.parent.data.key}</b><br>District: ${e.data.key}`);
+
+                //     console.log(e);
+                //     console.log(d);
+
+                //     thisRect
+                //     .attr("stroke", "black")
+                //     .attr("stroke-width", 2);
+
+                //     d3.select(this).attr("opacity", 1).raise();
+
+                // }).on("mouseout", function() {
+
+                //     tooltip.style("visibility", "hidden");
+                //     rect.attr("opacity", 1);
+
+                //     d3.selectAll('rect').attr("stroke", "none"); 
+                // });
+
+            });
+
+
+            function sumByCount(d) {
+                return d.children ? 0 : 1;
+            }
+
+            function sumBySize(d) {
+                return d.size;
+            }
+        </script>
+    </body>
+</html>
