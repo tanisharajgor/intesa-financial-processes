@@ -7,35 +7,8 @@
     </head>
 
     <body>
-        <div id="my_dataviz"></div>
+        <div id="chart"></div>
         <script>
-
-            var data = {
-            "name": "A1",
-            "children": [
-                {
-                "name": "B1",
-                "children": [
-                    {
-                    "name": "C1",
-                    "value": 100
-                    },
-                    {
-                    "name": "C2",
-                    "value": 300
-                    },
-                    {
-                    "name": "C3",
-                    "value": 200
-                    }
-                ]
-                },
-                {
-                "name": "B2",
-                "value": 200
-                }
-            ]
-            };
 
            // set the dimensions and margins of the graph
             const margin = {top: 10, right: 10, bottom: 10, left: 10},
@@ -43,130 +16,68 @@
             height = 445 - margin.top - margin.bottom;
 
             // append the svg object to the body of the page
-            const svg = d3.select("#my_dataviz")
-            .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform",
-                    `translate(${margin.left}, ${margin.top})`);
+            const svg = d3.select("#chart")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform",
+                        `translate(${margin.left}, ${margin.top})`)
+                .attr("font-family", "sans-serif")
+                .attr("font-size", 10);
 
             // read json data
-            d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_dendrogram_full.json").then(function(data) {
+            d3.json("../data/processed/flare.json").then(function(data) {
 
-            // Give the data to this cluster layout:
-            const root = d3.hierarchy(data).sum(function(d){ return d.value}) // Here the size of each leave is given in the 'value' field in input data
+                // Give the data to this cluster layout:
+                const root = d3.hierarchy(data).sum(function(d){ return d.size}) // Here the size of each leave is given in the 'value' field in input data
+                
+                // Then d3.treemap computes the position of each element of the hierarchy
+                d3.partition()
+                    .size([height - margin.top - margin.bottom, width - margin.left - margin.right])
+                    .padding(2)
+                    .round(false)
+                    (root)
+                
+                root.sort((a, b) => d3.descending(a.value, b.value))
 
-            // Then d3.treemap computes the position of each element of the hierarchy
-            d3.partition()
-                .size([width, height])
-                .padding(2)
-                (root)
+                const cell = svg
+                .selectAll("a")
+                .data(root.descendants())
+                .join("a")
+                // .attr("xlink:href", link == null ? null : d => link(d.data, d))
+                // .attr("target", link == null ? null : linkTarget)
+                .attr("transform", d => `translate(${d.y0},${d.x0})`);
 
-            // use this information to add rectangles:
-            svg
-                .selectAll("rect")
-                .data(root.leaves())
-                .join("rect")
-                .attr('x', function (d) { return d.x0; })
-                .attr('y', function (d) { return d.y0; })
-                .attr('width', function (d) { return d.x1 - d.x0; })
-                .attr('height', function (d) { return d.y1 - d.y0; })
-                .style("stroke", "black")
-                .style("fill", "slateblue")
+                cell.append("rect")
+                .attr("width", d => d.y1 - d.y0)
+                .attr("height", d => d.x1 - d.x0)
+                // .attr("fill", color ? d => color(d.ancestors().reverse()[1]?.index) : fill)
 
-            // and to add the text labels
-            svg
-                .selectAll("text")
-                .data(root.leaves())
-                .join("text")
-                .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-                .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-                .text(function(d){ return d.data.name })
-                .attr("font-size", "15px")
-                .attr("fill", "white")
-            })
-            // var width = 800;
-            // var height = 600;
-            // var svg = d3.select("#chart")
-            //     .append("svg")
-            //     .attr("width", width)
-            //     .attr("height", height);
+                const text = cell.filter(d => d.x1 - d.x0 > 10).append("text")
+                .attr("x", 4)
+                .attr("y", d => Math.min(9, (d.x1 - d.x0) / 2))
+                .attr("dy", "0.32em")
+                .attr("fill", "white");
 
-            // var color = d3.scaleOrdinal(d3.schemeDark2);
+                const label = d => d.name;
+                let format = ",";
+                const title = (d, n) => `${n.ancestors().reverse().map(d => d.data.name).join(".")}\n${n.value.toLocaleString("en")}`;
 
-            // d3.json("../data/processed/nested/tree.json").then(function (data) {
+                if (typeof format !== "function") format = d3.format(format)
 
-            //     var treemap = d3.treemap()
-            //         .size([width, height])
-            //         .padding(1);
+                if (label != null) text.append("tspan")
+                    .text(d => label(d.data, d));
 
-            //     console.log(data)
+                text.append("tspan")
+                    .attr("fill-opacity", 0.7)
+                    .attr("dx", label == null ? null : 3)
+                    .text(d => format(d.value))
+                    .attr("fill", "white");
 
-            //     var hierarchy = d3.hierarchy({ values: data }, function (d) { return d.values; })
-            //         .sum(function (d) { return d.value; });
-
-            //     var root = treemap(hierarchy);
-            //     console.log(root);
-            //     console.log("rootleaves", root.leaves());
-
-            //     var rect = svg
-            //         .selectAll("rect")
-            //         .data(root.leaves())
-            //         .enter()
-            //         .append("rect")
-            //         .attr("x", function (d) { return d.x0; })
-            //         .attr("y", function (d) { return d.y0; })
-            //         .attr("width", function (d) { return d.x1 - d.x0; })
-            //         .attr("height", function (d) { return d.y1 - d.y0; })
-            //         .attr("stroke", "#FFFFFF")
-            //         .attr("fill", function (d) {
-            //             console.log(d)
-            //             return color(d.parent.data.key);
-            //         });
-
-            //     // const tooltip = d3.select("#chart")
-            //     //     .append("div")
-            //     //     .attr("class", "tooltip");
-
-            //     // rect.on("mouseover", function(e, d) {
-
-            //     //     let thisRect = d3.select(this);
-            //     //     let x = +thisRect.attr("x") + 20;
-            //     //     let y = +thisRect.attr("y") - 10;
-
-            //     //     tooltip.style("visibility", "visible")
-            //     //         .style("top", `${y}px`)
-            //     //         .style("left", `${x}px`)
-            //     //         .html(`<b>${e.parent.data.key}</b><br>District: ${e.data.key}`);
-
-            //     //     console.log(e);
-            //     //     console.log(d);
-
-            //     //     thisRect
-            //     //     .attr("stroke", "black")
-            //     //     .attr("stroke-width", 2);
-
-            //     //     d3.select(this).attr("opacity", 1).raise();
-
-            //     // }).on("mouseout", function() {
-
-            //     //     tooltip.style("visibility", "hidden");
-            //     //     rect.attr("opacity", 1);
-
-            //     //     d3.selectAll('rect').attr("stroke", "none"); 
-            //     // });
-
-            // });
-
-
-            // function sumByCount(d) {
-            //     return d.children ? 0 : 1;
-            // }
-
-            // function sumBySize(d) {
-            //     return d.size;
-            // }
+                if (title != null) cell.append("title")
+                    .text(d => title(d.data, d));
+                })
         </script>
     </body>
 </html>
