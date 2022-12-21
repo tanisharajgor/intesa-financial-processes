@@ -12,8 +12,12 @@
 
            // set the dimensions and margins of the graph
             const margin = {top: 10, right: 10, bottom: 10, left: 10},
-            width = 445 - margin.left - margin.right,
-            height = 445 - margin.top - margin.bottom;
+            width = 1000 - margin.left - margin.right,
+            height = 1000 - margin.top - margin.bottom;
+
+            const label = d => d.name;
+                let format = ",";
+                const title = (d, n) => `${n.ancestors().reverse().map(d => d.data.name).join(".")}\n${n.value.toLocaleString("en")}`;
 
             // append the svg object to the body of the page
             const svg = d3.select("#chart")
@@ -27,42 +31,36 @@
                 .attr("font-size", 10);
 
             // read json data
-            d3.json("../data/processed/nested/tree.json").then(function(data) {
+            d3.json("../data/processed/nested/processes.json").then(function(data) {
 
                 // Give the data to this cluster layout:
-                const root = d3.hierarchy(data).sum(function(d){ return d.size}) // Here the size of each leave is given in the 'value' field in input data
-                
+                const root = d3.hierarchy(data).sum(function(d){ return 1}) // Here the size of each leave is given in the 'value' field in input data
+
                 // Then d3.treemap computes the position of each element of the hierarchy
                 d3.partition()
                     .size([height - margin.top - margin.bottom, width - margin.left - margin.right])
                     .padding(2)
                     .round(false)
                     (root)
-                
+
                 root.sort((a, b) => d3.descending(a.value, b.value))
 
                 const cell = svg
-                .selectAll("a")
-                .data(root.descendants())
-                .join("a")
-                // .attr("xlink:href", link == null ? null : d => link(d.data, d))
-                // .attr("target", link == null ? null : linkTarget)
-                .attr("transform", d => `translate(${d.y0},${d.x0})`);
+                    .selectAll("a")
+                    .data(root.descendants())
+                    .join("a")
+                    .attr("transform", d => `translate(${d.y0},${d.x0})`);
 
                 cell.append("rect")
-                .attr("width", d => d.y1 - d.y0)
-                .attr("height", d => d.x1 - d.x0)
+                    .attr("width", d => d.y1 - d.y0)
+                    .attr("height", d => d.x1 - d.x0)
                 // .attr("fill", color ? d => color(d.ancestors().reverse()[1]?.index) : fill)
 
                 const text = cell.filter(d => d.x1 - d.x0 > 10).append("text")
-                .attr("x", 4)
-                .attr("y", d => Math.min(9, (d.x1 - d.x0) / 2))
-                .attr("dy", "0.32em")
-                .attr("fill", "white");
-
-                const label = d => d.name;
-                let format = ",";
-                const title = (d, n) => `${n.ancestors().reverse().map(d => d.data.name).join(".")}\n${n.value.toLocaleString("en")}`;
+                    .attr("x", 4)
+                    .attr("y", d => Math.min(9, (d.x1 - d.x0) / 2))
+                    .attr("dy", "0.32em")
+                    .attr("fill", "white");
 
                 if (typeof format !== "function") format = d3.format(format)
 

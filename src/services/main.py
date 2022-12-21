@@ -92,9 +92,7 @@ def main():
     processesNested = nest_processes(level1_to_level2, level2_to_level3, level3_to_activity, activity_to_risk, level1Clean, level2Clean, level3Clean, activitiesClean, risksNested)
     write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
 
-
     import pdb; pdb.set_trace()
-
 
     ## Nested data
     nodes = create_actor_activities_nodes(data, actorsClean, activitiesClean)

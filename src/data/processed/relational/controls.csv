@@ -1,4 +1,4 @@
-controlCategory,controlType,controLPeriodocityEnglish,control,controlID
+controlCategory,controlType,controlPeriodocity,control,controlID
 Other,Manual,Per event,Verify and validate the entered data,2924
 Other,Missing,Missing,Check resetting of the EOD folder,5210
 Other,Missing,Per event,Verify compliance with Hedges,5151
@@ -578,18 +578,18 @@ Other,Manual,Per event,Verify the correct conduct in determining the price,5312
 Other,Semi-automatic,Daily,Verify the correct accounting of the operation,1315
 Other,Automatic,Per event,Prepare the transfer contracts not produced automatically by the system,2553
 Other,Manual,Per event,Check contracts/documentation acquired,960
-Other,Other,N.A.,Check the activities performed on the broken covenants,1704
-Other,Other,N.A.,Check the activities performed on the broken covenants,1705
-Other,Other,N.A.,Check the activities performed on the broken covenants,1706
-Other,Other,N.A.,Check the activities performed on the broken covenants,1707
-Professional,Other,N.A.,Check the consistency of the values entered in the system,3738
-Professional,Other,N.A.,Check the consistency of the values entered in the system,3739
-Professional,Other,N.A.,Check the consistency of the values entered in the system,3740
-Professional,Other,N.A.,Check the consistency of the values entered in the system,3741
-Other,Other,N.A.,Verify the processing of the reports received,199
-Other,Other,N.A.,Verify the processing of the reports received,200
-Other,Other,N.A.,Verify the processing of the reports received,201
-Other,Other,N.A.,Verify the processing of the reports received,202
+Other,NA,NA,Check the activities performed on the broken covenants,1704
+Other,NA,NA,Check the activities performed on the broken covenants,1705
+Other,NA,NA,Check the activities performed on the broken covenants,1706
+Other,NA,NA,Check the activities performed on the broken covenants,1707
+Professional,NA,NA,Check the consistency of the values entered in the system,3738
+Professional,NA,NA,Check the consistency of the values entered in the system,3739
+Professional,NA,NA,Check the consistency of the values entered in the system,3740
+Professional,NA,NA,Check the consistency of the values entered in the system,3741
+Other,NA,NA,Verify the processing of the reports received,199
+Other,NA,NA,Verify the processing of the reports received,200
+Other,NA,NA,Verify the processing of the reports received,201
+Other,NA,NA,Verify the processing of the reports received,202
 Other,Manual,Per event,Check that the Tool for carrying out the SPPI Test present in the Credit Portal is correctly powered,2968
 Other,Semi-automatic,Daily,Verify the outcome of the data processing,2110
 Other,Semi-automatic,Per event,Check the outcome of the calculation of the rate values,3723
@@ -618,8 +618,8 @@ Other,Semi-automatic,Daily,Check P&L Attribution,3417
 Other,Manual,Annualy,Check the completeness and accuracy of the tables/information Notes,1911
 Other,Manual,Annualy,Check the consistency of the data entered in the NI tables,1912
 Other,Manual,Quarterly,Carry out a trend analysis of the different types of loans,5429
-Other,Other,N.A.,Check the machining of the intercepted positions,354
-Other,Other,N.A.,Check the machining of the intercepted positions,355
+Other,NA,NA,Check the machining of the intercepted positions,354
+Other,NA,NA,Check the machining of the intercepted positions,355
 Other,Manual,Per event,Validate deals,4689
 Other,Manual,Per event,Check commission calculation,4688
 Other,Semi-automatic,Daily,Check the remaining certificates in load,5040
@@ -701,8 +701,8 @@ Other,Manual,Per event,Balancing with investor report,5522
 Other,Manual,Per event,Application cut-offs,2386
 Other,Semi-automatic,Per event,Correctness checks,3447
 Other,Manual,Per event,Quadrature between systems,3061
-Other,Other,N.A.,Monitor the operations carried out by the supervisee in financial instruments or investment services,5658
-Other,Other,N.A.,Monitor the operations carried out by the supervisee in financial instruments or investment services,5659
+Other,NA,NA,Monitor the operations carried out by the supervisee in financial instruments or investment services,5658
+Other,NA,NA,Monitor the operations carried out by the supervisee in financial instruments or investment services,5659
 Other,Missing,Missing,Check the completeness of the information set received,3471
 Other,Manual,Per event,Validate the reporting for the Group Financial Risks Committee,4313
 Other,Manual,Monthly,Validate the reporting intended for ISBD and decentralized banks,4200
@@ -969,8 +969,8 @@ Other,Manual,Monthly,Carry out the performance check,4680
 Other,Semi-automatic,Per event,Check the entered data and verify the errors generated after the forwarding to accounting,4679
 Other,Manual,Monthly,Verify correct accounting,1259
 Other,Manual,Per event,Verify correctness and consistency of the automatic verification of the TEG,4356
-Operational,Other,N.A.,Check the reporting presented by the Lead Bank,4130
-Operational,Other,N.A.,Verify correct accounting,1068
+Operational,NA,NA,Check the reporting presented by the Lead Bank,4130
+Operational,NA,NA,Verify correct accounting,1068
 Other,Manual,Per event,Verify the congruence with the resolutions of the data entered in the System,3175
 Other,Manual,Per event,Check the Deliberative Competence,4276
 Other,Manual,Per event,Verify the congruence with the resolutions of the data entered in the System,3174
@@ -997,10 +997,10 @@ Other,Manual,Per event,Monitor the expiry of the deadline for communicating the 
 Other,Manual,Per event,Check the contractual documentation,5618
 Other,Manual,Per event,Verify the regularity of the documentation functional to admission to the Central Guarantee Fund,5042
 Other,Manual,Per event,Verify the correct compilation of the Resolution Outcome Communication,2051
-Other,Other,N.A.,Check the correctness of the data entered in the form,1355
-Other,Other,N.A.,Check the correctness of the data entered in the form,1356
-Other,Other,N.A.,Check the method of settlement of the deposit,1198
-Other,Other,N.A.,Check the method of settlement of the deposit,1199
+Other,NA,NA,Check the correctness of the data entered in the form,1355
+Other,NA,NA,Check the correctness of the data entered in the form,1356
+Other,NA,NA,Check the method of settlement of the deposit,1198
+Other,NA,NA,Check the method of settlement of the deposit,1199
 Other,Manual,Per event,Verify the correct payment of commissions,480
 Other,Manual,Per event,Validate and verify SIRE master data,1751
 Other,Manual,Per event,Check the quantity of centralized titles,5653
@@ -1101,8 +1101,8 @@ Other,Manual,Per event,Start running the official emission tests,3693
 Other,Semi-automatic,Per event,Carry out emission test simulations,3692
 Other,Manual,Per event,Check the result of the emission test,4352
 Other,Manual,Per event,Verify the presence of a CSA agreement and the capacity of the credit line with the Counterparty,542
-Other,Other,N.A.,Reconcile completed transactions and account for pending transactions,3441
-Other,Other,N.A.,Reconcile completed transactions and account for pending transactions,3442
+Other,NA,NA,Reconcile completed transactions and account for pending transactions,3441
+Other,NA,NA,Reconcile completed transactions and account for pending transactions,3442
 Operational,Manual,Per event,Verify correct location update,3376
 Professional,Manual,Per event,Check the terms of the transaction,2041
 Operational,Manual,Per event,Validate the proposed complaint,880
@@ -1132,10 +1132,10 @@ Other,Manual,Per event,Check the ten-year results of the collection engine,4963
 Other,Manual,Per event,Perform merit checks,3615
 Other,Manual,Per event,Perform merit checks,5615
 Other,Manual,Per event,Check data transposition,618
-Other,Other,N.A.,Compare the original document and the prepared one,2356
-Other,Other,N.A.,Compare the original document and the prepared one,2357
-Other,Other,N.A.,Check the correctness of the entered data,2962
-Other,Other,N.A.,Check the correctness of the entered data,2963
+Other,NA,NA,Compare the original document and the prepared one,2356
+Other,NA,NA,Compare the original document and the prepared one,2357
+Other,NA,NA,Check the correctness of the entered data,2962
+Other,NA,NA,Check the correctness of the entered data,2963
 Other,Manual,Per event,Check the correspondence of the property subject to guarantee and the guarantee data entered in the system,1995
 Other,Manual,Per event,Check the data entered in the application,3720
 Other,Manual,Per event,Check the data of any non-mortgage guarantees entered in the system,5202
@@ -1287,18 +1287,18 @@ Professional,Manual,Per event,Certify unloading data,3876
 Professional,Manual,Per event,Verify the correct allocation of the value adjustment,4283
 Professional,Manual,Per event,Check the correctness and completeness of the prepared pilot flow,2906
 Professional,Manual,Per event,"Verify accounting data,",2030
-Other,Other,N.A.,Verify the correct calculation of the VaR,2283
-Other,Other,N.A.,Verify the correct calculation of the VaR,2284
-Other,Other,N.A.,Verify correct and complete data acquisition for exchange rate and interest rate risk,3080
-Other,Other,N.A.,Verify correct and complete data acquisition for participations,85
-Other,Other,N.A.,Verify correct and complete data acquisition for exchange rate and interest rate risk,3081
-Other,Other,N.A.,Verify correct and complete data acquisition for participations,86
-Other,Other,N.A.,Verify correct and complete reporting processing phase,4455
-Other,Other,N.A.,Verify the performance consistency of the VaR metrics,4457
-Other,Other,N.A.,Verify correct and complete reporting processing phase,4456
-Other,Other,N.A.,Verify the performance consistency of the VaR metrics,4458
-Other,Other,N.A.,Verify the correct acquisition of the input files,74
-Other,Other,N.A.,Verify the correct acquisition of the input files,75
+Other,NA,NA,Verify the correct calculation of the VaR,2283
+Other,NA,NA,Verify the correct calculation of the VaR,2284
+Other,NA,NA,Verify correct and complete data acquisition for exchange rate and interest rate risk,3080
+Other,NA,NA,Verify correct and complete data acquisition for participations,85
+Other,NA,NA,Verify correct and complete data acquisition for exchange rate and interest rate risk,3081
+Other,NA,NA,Verify correct and complete data acquisition for participations,86
+Other,NA,NA,Verify correct and complete reporting processing phase,4455
+Other,NA,NA,Verify the performance consistency of the VaR metrics,4457
+Other,NA,NA,Verify correct and complete reporting processing phase,4456
+Other,NA,NA,Verify the performance consistency of the VaR metrics,4458
+Other,NA,NA,Verify the correct acquisition of the input files,74
+Other,NA,NA,Verify the correct acquisition of the input files,75
 Other,Manual,Per event,Verify the opening of the game varies,2586
 Other,Manual,Per event,Verify the opening of the game varies,2585
 Professional,Manual,Per event,Verify the correctness of the prepared flows,4501
@@ -1512,7 +1512,7 @@ Other,Manual,Monthly,Check data acquisition for performing credit reserve calcul
 Professional,Manual,Per event,Verify Final Business Plan,3484
 Other,Manual,Per event,Verify the correct discharge of the guarantee,3969
 Other,Missing,Missing,Check the correspondence of the actual final recipient with the form,3565
-Other,Other,N.A.,Check correct completion of the form,596
+Other,NA,NA,Check correct completion of the form,596
 Other,Missing,Missing,Check for privacy consent C6,1006
 Other,Semi-automatic,Quarterly,Verify the correctness of the reported data,4890
 Other,Automatic,Quarterly,Check that the data has been loaded correctly,2732
@@ -1690,24 +1690,24 @@ Other,Manual,Per event,Verify the correctness of the data entered in the procedu
 Other,Missing,Missing,Verify the correctness of the contractual documentation produced,1852
 Other,Missing,Missing," Verify the truthfulness, completeness, adequacy of the data and information",5140
 Other,Missing,Missing," Verify the truthfulness, completeness, adequacy of the data and information",2212
-Other,Other,N.A.,Verify the formal correctness of the arrangements,5295
-Other,Other,N.A.,Verify the formal correctness of the arrangements,5296
-Other,Other,N.A.,Verify logical and formal differences in procedure,6
-Other,Other,N.A.,Verify logical and formal differences in procedure,7
-Other,Other,N.A.,Verify capital gains statement to be sent to customers,5712
-Other,Other,N.A.,Verify capital gains statement to be sent to customers,5713
-Other,Other,N.A.,Verify correct zeroing of masters,779
-Other,Other,N.A.,Verify correct zeroing of masters,780
-Other,Other,N.A.,Check current account debit transactions,4082
-Other,Other,N.A.,Check current account debit transactions,4083
-Other,Other,N.A.,Verify operating results determined by procedure,8
-Other,Other,N.A.,Verify operating results determined by procedure,9
-Other,Other,N.A.,Verify the passage of debits on customer current accounts,4086
-Other,Other,N.A.,Check monthly processing booking result,4084
-Other,Other,N.A.,Verify the passage of debits on customer current accounts,4087
-Other,Other,N.A.,Check monthly processing booking result,4085
-Other,Other,N.A.,Verify and authorize sending certifications to customers,5714
-Other,Other,N.A.,Verify and authorize sending certifications to customers,5715
+Other,NA,NA,Verify the formal correctness of the arrangements,5295
+Other,NA,NA,Verify the formal correctness of the arrangements,5296
+Other,NA,NA,Verify logical and formal differences in procedure,6
+Other,NA,NA,Verify logical and formal differences in procedure,7
+Other,NA,NA,Verify capital gains statement to be sent to customers,5712
+Other,NA,NA,Verify capital gains statement to be sent to customers,5713
+Other,NA,NA,Verify correct zeroing of masters,779
+Other,NA,NA,Verify correct zeroing of masters,780
+Other,NA,NA,Check current account debit transactions,4082
+Other,NA,NA,Check current account debit transactions,4083
+Other,NA,NA,Verify operating results determined by procedure,8
+Other,NA,NA,Verify operating results determined by procedure,9
+Other,NA,NA,Verify the passage of debits on customer current accounts,4086
+Other,NA,NA,Check monthly processing booking result,4084
+Other,NA,NA,Verify the passage of debits on customer current accounts,4087
+Other,NA,NA,Check monthly processing booking result,4085
+Other,NA,NA,Verify and authorize sending certifications to customers,5714
+Other,NA,NA,Verify and authorize sending certifications to customers,5715
 Professional,Semi-automatic,Per event,Check the machining of the positions,2442
 Operational,Missing,Missing,Check if further information is needed to be included in the request for creation or modification of the technical user,2816
 Operational,Missing,Missing,Keep data updated (cancellation of technical users on local authentication systems),2206
@@ -2148,8 +2148,8 @@ Other,Manual,Per event,Verify the identification of an external lawyer for the j
 Other,Missing,Missing,Verify the correctness of the invoices issued,846
 Other,Missing,Missing,Verify the operational error and the acquisition of the request for reversal of the operation advanced by the customer,928
 Other,Manual,Monthly,Check the completeness of the produced files,1116
-Other,Other,N.A.,Check the correctness of the entered data,2715
-Other,Other,N.A.,Check the correctness of the entered data,2716
+Other,NA,NA,Check the correctness of the entered data,2715
+Other,NA,NA,Check the correctness of the entered data,2716
 Other,Semi-automatic,Daily,Verify the correct accounting of the operation,2302
 Other,Manual,Per event,Check contracts/documentation acquired,303
 Other,Manual,Per event,Check the completeness and consistency of the documentation,4015
@@ -2381,8 +2381,8 @@ Operational,Manual,Per event,Check compilation of orders,5221
 Operational,Manual,Per event,Verify order entry is correct,1490
 Operational,Manual,Daily,Verify the correctness of the execution,4145
 Operational,Manual,Per event,Verify order entry is correct,4146
-Other,Other,N.A.,"Check the balance of the operation, the correctness of the data and archive the documentation",1968
-Other,Other,N.A.,"Check the balance of the operation, the correctness of the data and archive the documentation",1969
+Other,NA,NA,"Check the balance of the operation, the correctness of the data and archive the documentation",1968
+Other,NA,NA,"Check the balance of the operation, the correctness of the data and archive the documentation",1969
 Operational,Manual,Per event,Verify correctness of data,3290
 Other,Manual,Per event,Verify the correctness of the prepared communication,4228
 Other,Missing,Missing,Keep track of reports,583
@@ -2565,8 +2565,8 @@ Other,Manual,Per event,Check the allotment plans surveyed,4270
 Other,Manual,Monthly,Verify correct extraction,4701
 Other,Missing,Missing,Monitor the return of the signed Agreement,3019
 Other,Missing,Missing,Verify the existence of the criteria for accepting the employee's application,2980
-Operational,Other,N.A.,Check the regularity of archiving,4194
-Operational,Other,N.A.,Check the regularity of archiving,4193
+Operational,NA,NA,Check the regularity of archiving,4194
+Operational,NA,NA,Check the regularity of archiving,4193
 Other,Missing,Missing,Check and analyze the purchase need,985
 Other,Missing,Missing,Check the purchase requirement,4144
 Other,Manual,Monthly,Carry out checks on the assumptions of any provision resolutions,958
@@ -2688,8 +2688,8 @@ Other,Manual,Monthly,Tick interest reports and fee reports,4749
 Other,Semi-automatic,Half yearly,Check enabled users,4755
 Other,Semi-automatic,Daily,Communicate the suspended,4756
 Other,Missing,Missing,Check data consistency,2817
-Other,Other,N.A.,Monitor the operations carried out by the supervisee in financial instruments or investment services,1030
-Other,Other,N.A.,Monitor the operations carried out by the supervisee in financial instruments or investment services,1031
+Other,NA,NA,Monitor the operations carried out by the supervisee in financial instruments or investment services,1030
+Other,NA,NA,Monitor the operations carried out by the supervisee in financial instruments or investment services,1031
 Other,Manual,Quarterly,Verify the complete fulfillment of the reliefs,3483
 Other,Manual,Quarterly,Verify data quality,747
 Other,Semi-automatic,Quarterly,Check the sending result,1720
@@ -2735,9 +2735,9 @@ Other,Manual,Per event,Check the data entered in the accounting system,3465
 Other,Manual,Per event,Verify the correctness of the payment prepared,2623
 Other,Manual,Per event,Verify the correctness of the payment prepared,3466
 Other,Manual,Per event,Carry out compliance checks,2111
-Other,Other,N.A.,Check the completeness and regularity of the documents representing the guarantee,330
-Other,Other,N.A.,Check the completeness and regularity of the documents representing the guarantee,331
-Other,Other,N.A.,Check the completeness and regularity of the documents representing the guarantee,332
+Other,NA,NA,Check the completeness and regularity of the documents representing the guarantee,330
+Other,NA,NA,Check the completeness and regularity of the documents representing the guarantee,331
+Other,NA,NA,Check the completeness and regularity of the documents representing the guarantee,332
 Other,Manual,Per event,Check the operation,5230
 Operational,Manual,Per event,Verify instant credit transfers,5398
 Other,Missing,Missing,Verify the correct census of practices,1804
@@ -2780,8 +2780,8 @@ Other,Missing,Missing,Verify the customer's requirement regarding US and Cuban c
 Other,Missing,Missing,Monitor the operations carried out by the supervisee in financial instruments or investment services,984
 Other,Missing,Missing,Verify the correctness of the registry census,4434
 Other,Missing,Missing,Verify the correctness of the registry census,4435
-Operational,Other,N.A.,Validate analysis on new agreement,2521
-Operational,Other,N.A.,Validate analysis on new agreement,2522
+Operational,NA,NA,Validate analysis on new agreement,2521
+Operational,NA,NA,Validate analysis on new agreement,2522
 Operational,Missing,Missing,Verify that you have correctly classified all cyber relevant Third Parties,1429
 Other,Semi-automatic,Per event,Check,388
 Operational,Manual,Daily,Verify correct attribution of the position,703
@@ -2877,34 +2877,34 @@ Professional,Manual,Monthly,Carry out performance checks,1145
 Professional,Semi-automatic,Monthly,Verify the presence of any methodological discontinuities in the reporting criteria of the phenomena and related impacts,2663
 Professional,Manual,Monthly,Perform consistency checks,2272
 Professional,Semi-automatic,Monthly,Verify the correct incorporation of the data into the anticipation model,2996
-Other,Other,N.A.,Check the coupon and redemption schedule,2759
-Other,Other,N.A.,Check the coupon and redemption schedule,2760
-Other,Other,N.A.,Check customer credit letters,2757
-Other,Other,N.A.,Check customer credit letters,2758
-Other,Other,N.A.,Verify the tax amount,3337
-Other,Other,N.A.,Verify the tax amount,3338
-Other,Other,N.A.,Check the correctness of the payments,5374
-Other,Other,N.A.,Verify correct accounting,3339
-Other,Other,N.A.,Check the correctness of the payments,5375
-Other,Other,N.A.,Verify correct accounting,3340
-Other,Other,N.A.,Verify the balancing of roles,4608
-Other,Other,N.A.,Check balances of various open items,4610
-Other,Other,N.A.,Check the switchboards mod. 770 of relevance,4616
-Other,Other,N.A.,Verify the flow of recipients,4612
-Other,Other,N.A.,Check the sending of the certificates,4614
-Other,Other,N.A.,Verify the balancing of roles,4609
-Other,Other,N.A.,Check balances of various open items,4611
-Other,Other,N.A.,Check the switchboards mod. 770 of relevance,4617
-Other,Other,N.A.,Verify the flow of recipients,4613
-Other,Other,N.A.,Check the sending of the certificates,4615
-Other,Other,N.A.,Verify the correctness of the roles worked and relative accounting,2233
-Other,Other,N.A.,Check event rejects or recoveries,2235
-Other,Other,N.A.,Verify the correctness of the roles worked and relative accounting,2234
-Other,Other,N.A.,Check event rejects or recoveries,2236
-Other,Other,N.A.,Verify the correctness of the protocols received,1790
-Other,Other,N.A.,Verify the correctness of the protocols received,1791
-Other,Other,N.A.,Check the depositary's credits,4329
-Other,Other,N.A.,Check the depositary's credits,4330
+Other,NA,NA,Check the coupon and redemption schedule,2759
+Other,NA,NA,Check the coupon and redemption schedule,2760
+Other,NA,NA,Check customer credit letters,2757
+Other,NA,NA,Check customer credit letters,2758
+Other,NA,NA,Verify the tax amount,3337
+Other,NA,NA,Verify the tax amount,3338
+Other,NA,NA,Check the correctness of the payments,5374
+Other,NA,NA,Verify correct accounting,3339
+Other,NA,NA,Check the correctness of the payments,5375
+Other,NA,NA,Verify correct accounting,3340
+Other,NA,NA,Verify the balancing of roles,4608
+Other,NA,NA,Check balances of various open items,4610
+Other,NA,NA,Check the switchboards mod. 770 of relevance,4616
+Other,NA,NA,Verify the flow of recipients,4612
+Other,NA,NA,Check the sending of the certificates,4614
+Other,NA,NA,Verify the balancing of roles,4609
+Other,NA,NA,Check balances of various open items,4611
+Other,NA,NA,Check the switchboards mod. 770 of relevance,4617
+Other,NA,NA,Verify the flow of recipients,4613
+Other,NA,NA,Check the sending of the certificates,4615
+Other,NA,NA,Verify the correctness of the roles worked and relative accounting,2233
+Other,NA,NA,Check event rejects or recoveries,2235
+Other,NA,NA,Verify the correctness of the roles worked and relative accounting,2234
+Other,NA,NA,Check event rejects or recoveries,2236
+Other,NA,NA,Verify the correctness of the protocols received,1790
+Other,NA,NA,Verify the correctness of the protocols received,1791
+Other,NA,NA,Check the depositary's credits,4329
+Other,NA,NA,Check the depositary's credits,4330
 Other,Manual,Per event,Verify extracted data,403
 Other,Manual,Daily,Analyze the variations and check the performance trend,856
 Other,Manual,Per event,Analyze the variations and check the performance trend,2876
@@ -2958,18 +2958,18 @@ Other,Semi-automatic,Daily,Check coverage limit breaches per customer,2767
 Other,Semi-automatic,Daily,Verify non-compete accounting,31
 Other,Semi-automatic,Daily,Verify operator error for entering data with contradictory verification,2636
 Other,Semi-automatic,Daily,Verify operator error for incorrect allocation to the income statement,30
-Operational,Other,N.A.,Verify the correctness of the inserted plan,1452
-Operational,Other,N.A.,Verify the correctness of the inserted plan,1453
-Operational,Other,N.A.,Check the correspondence of the resolution data on the system,1456
-Operational,Other,N.A.,Check the correspondence of the resolution data on the system,1457
-Other,Other,N.A.," Verify the activities carried out for the non-payment, for the correct payment under guarantee and for the correct accounting of payments and the passage to loss",518
-Other,Other,N.A.," Verify the activities carried out for the non-payment, for the correct payment under guarantee and for the correct accounting of payments and the passage to loss",519
-Other,Other,N.A., Verify the correct accounting of the distribution of the collection and of the passages to loss,4560
-Other,Other,N.A., Verify the correct accounting of the distribution of the collection and of the passages to loss,4561
-Operational,Other,N.A.,Verify correctness of the proposal,1454
-Operational,Other,N.A.,Verify correctness of the proposal,1455
-Other,Other,N.A.,Check the interest invoice issued,3863
-Other,Other,N.A.,Check the interest invoice issued,3864
+Operational,NA,NA,Verify the correctness of the inserted plan,1452
+Operational,NA,NA,Verify the correctness of the inserted plan,1453
+Operational,NA,NA,Check the correspondence of the resolution data on the system,1456
+Operational,NA,NA,Check the correspondence of the resolution data on the system,1457
+Other,NA,NA," Verify the activities carried out for the non-payment, for the correct payment under guarantee and for the correct accounting of payments and the passage to loss",518
+Other,NA,NA," Verify the activities carried out for the non-payment, for the correct payment under guarantee and for the correct accounting of payments and the passage to loss",519
+Other,NA,NA, Verify the correct accounting of the distribution of the collection and of the passages to loss,4560
+Other,NA,NA, Verify the correct accounting of the distribution of the collection and of the passages to loss,4561
+Operational,NA,NA,Verify correctness of the proposal,1454
+Operational,NA,NA,Verify correctness of the proposal,1455
+Other,NA,NA,Check the interest invoice issued,3863
+Other,NA,NA,Check the interest invoice issued,3864
 Other,Manual,Quarterly,Investigate uncompleted rehearsals,4421
 Other,Semi-automatic,Per event,Check the completeness and correctness of the list of assets to be redeployed,2117
 Other,Manual,Quarterly,Verify the completeness in the activation of all re-examination requests.,5494
@@ -2992,10 +2992,10 @@ Other,Manual,Per event,Validate the operation entered manually,3309
 Other,Manual,Per event,Validate the operations entered manually,4304
 Other,Missing,Missing,Check for any information mismatches,2619
 Other,Missing,Missing,Check for any information mismatches,3843
-Other,Other,N.A.,Verify the correctness and completeness of the data,5452
-Other,Other,N.A.,Verify the correctness and completeness of the data,5453
-Other,Other,N.A.,Check the correctness of the data and authorize the request,1146
-Other,Other,N.A.,Check the correctness of the data and authorize the request,1147
+Other,NA,NA,Verify the correctness and completeness of the data,5452
+Other,NA,NA,Verify the correctness and completeness of the data,5453
+Other,NA,NA,Check the correctness of the data and authorize the request,1146
+Other,NA,NA,Check the correctness of the data and authorize the request,1147
 Other,Manual,Per event,Verify the correct updating of the relevant application with reference to the registration of the execution of the bank transfer on the basis of the communication received from Mutui Privati.,1293
 Other,Manual,Per event,Verify the correct classification of the customer's risk status,5480
 Other,Manual,Per event,Check the correctness of the calculation of the amount to be returned,2512
@@ -3137,12 +3137,12 @@ Other,Manual,Daily,Verify correct loading positions and make necessary adjustmen
 Other,Manual,Per event,Check the correct regulation of the positions,4812
 Other,Manual,Per event,Verify the correct settlement of the optional dividend operation,739
 Other,Manual,Per event,Fix any incorrect transfer instructions,4426
-Other,Other,N.A.,Check the settlement status of trade transactions,3328
-Other,Other,N.A.,Check the settlement status of trade transactions,3329
-Other,Other,N.A.,Check the status of the regulation,3184
-Other,Other,N.A.,Check the accumulations and forward the orders according to regulation,3182
-Other,Other,N.A.,Check the status of the regulation,3185
-Other,Other,N.A.,Check the accumulations and forward the orders according to regulation,3183
+Other,NA,NA,Check the settlement status of trade transactions,3328
+Other,NA,NA,Check the settlement status of trade transactions,3329
+Other,NA,NA,Check the status of the regulation,3184
+Other,NA,NA,Check the accumulations and forward the orders according to regulation,3182
+Other,NA,NA,Check the status of the regulation,3185
+Other,NA,NA,Check the accumulations and forward the orders according to regulation,3183
 Other,Missing,Missing,Check the documentation prepared,4469
 Other,Missing,Missing,Verify the correct entry of the economic conditions,4471
 Other,Missing,Missing,Check the information sheets,4470
@@ -3509,18 +3509,18 @@ Other,Manual,Monthly,Verify the consistency of the correct management phase with
 Other,Manual,Per event,Check the correct determination of the TEG,793
 Professional,Manual,Per event,Check that the TEG has been checked,1631
 Other,Manual,Monthly,Check for permission,1588
-Other,Other,N.A.,Check the complexity data,4390
-Other,Other,N.A.,Check the data relating to the holding period,4386
-Other,Other,N.A.,Check the correspondence of the data relating to the classification by objectives,3834
-Other,Other,N.A.,Check the data relating to the type of instrument,4388
-Other,Other,N.A.,Check the complexity data,4391
-Other,Other,N.A.,Check the data relating to the holding period,4387
-Other,Other,N.A.,Check the correspondence of the data relating to the classification by objectives,3835
-Other,Other,N.A.,Check the data relating to the type of instrument,4389
-Other,Other,N.A.,Check the Risk Value associated with the instrument,3838
-Other,Other,N.A.,Verify that the data already checked present the expected results,3836
-Other,Other,N.A.,Check the Risk Value associated with the instrument,3839
-Other,Other,N.A.,Verify that the data already checked present the expected results,3837
+Other,NA,NA,Check the complexity data,4390
+Other,NA,NA,Check the data relating to the holding period,4386
+Other,NA,NA,Check the correspondence of the data relating to the classification by objectives,3834
+Other,NA,NA,Check the data relating to the type of instrument,4388
+Other,NA,NA,Check the complexity data,4391
+Other,NA,NA,Check the data relating to the holding period,4387
+Other,NA,NA,Check the correspondence of the data relating to the classification by objectives,3835
+Other,NA,NA,Check the data relating to the type of instrument,4389
+Other,NA,NA,Check the Risk Value associated with the instrument,3838
+Other,NA,NA,Verify that the data already checked present the expected results,3836
+Other,NA,NA,Check the Risk Value associated with the instrument,3839
+Other,NA,NA,Verify that the data already checked present the expected results,3837
 Other,Manual,Annualy,Verify submission of all requests,4264
 Operational,Manual,Per event,Verification of correct representation in the financial statements,2565
 Professional,Manual,Per event,Verify the correctness and completeness of the data in the risk map,641
@@ -3530,9 +3530,9 @@ Other,Missing,Missing,Check the correctness and completeness of the request,375
 Other,Missing,Missing,Verify correct entry,5264
 Operational,Manual,Per event,Verify effective abandonment,5118
 Other,Manual,Per event,Verify effective abandonment,5326
-Other,Other,N.A.,Verify the correctness of the data in the system,1045
-Other,Other,N.A.,Verify the correctness of the data in the system,1046
-Other,Other,N.A.,Verify the correctness of the data in the system,1047
+Other,NA,NA,Verify the correctness of the data in the system,1045
+Other,NA,NA,Verify the correctness of the data in the system,1046
+Other,NA,NA,Verify the correctness of the data in the system,1047
 Other,Missing,Missing,Verify the presence of the authorization to notify assigned debtors,2213
 Other,Missing,Missing,Check the names of debtors on the lists relating to embargoes,833
 Other,Missing,Missing,Check the completeness and correctness of the data,2215
@@ -3569,18 +3569,18 @@ Other,Manual,Per event,Verify corrective actions,2904
 Other,Manual,Per event,Verify correct updating of management limits,3954
 Other,Semi-automatic,Daily,Verify the consistency and correctness of the calculated management risk measures,5120
 Other,Manual,Per event,Check the entered data,2061
-Other,Other,N.A.,Verify the data and approve the request,3425
-Other,Other,N.A.,Verify and integrate the uploaded data,3427
-Other,Other,N.A.,Verify the data and approve the request,3426
-Other,Other,N.A.,Verify and integrate the uploaded data,3428
-Other,Other,N.A.,Verify the correctness and completeness of the data,1670
-Other,Other,N.A.,Verify the correctness and completeness of the data,1671
-Other,Other,N.A.,Verify the correctness and completeness of the data,1666
-Other,Other,N.A.,Carry out formal checks,1664
-Other,Other,N.A.,Verify the correctness and completeness of the data,1667
-Other,Other,N.A.,Carry out formal checks,1665
-Other,Other,N.A.,Verify the correctness and completeness of the data,1668
-Other,Other,N.A.,Verify the correctness and completeness of the data,1669
+Other,NA,NA,Verify the data and approve the request,3425
+Other,NA,NA,Verify and integrate the uploaded data,3427
+Other,NA,NA,Verify the data and approve the request,3426
+Other,NA,NA,Verify and integrate the uploaded data,3428
+Other,NA,NA,Verify the correctness and completeness of the data,1670
+Other,NA,NA,Verify the correctness and completeness of the data,1671
+Other,NA,NA,Verify the correctness and completeness of the data,1666
+Other,NA,NA,Carry out formal checks,1664
+Other,NA,NA,Verify the correctness and completeness of the data,1667
+Other,NA,NA,Carry out formal checks,1665
+Other,NA,NA,Verify the correctness and completeness of the data,1668
+Other,NA,NA,Verify the correctness and completeness of the data,1669
 Other,Missing,Missing,Verify the correct feeding of the data between the feeding systems and the data aggregation system,2476
 Other,Missing,Missing,Verify the correct entry of the corrections entered in the procedure,4363
 Other,Missing,Missing,Verify the correct entry of the amount subject to adjustment,4362
@@ -3684,12 +3684,12 @@ Other,Manual,Per event,Check for the presence of further initiatives attributabl
 Other,Manual,Per event,Check the capacity of the budget,5253
 Other,Manual,Per event,Verify the correct census of the product,3856
 Other,Manual,Per event,Check the regularity and completeness of the extinguishment,1874
-Other,Other,N.A.,Check the correctness of the data,5388
-Other,Other,N.A.,Check the correctness of the data,5389
-Other,Other,N.A.,Monitor order accounts,1755
-Other,Other,N.A.,Monitor order accounts,1756
-Other,Other,N.A.,Monitor the operations carried out by the supervisee in financial instruments or investment services,2948
-Other,Other,N.A.,Monitor the operations carried out by the supervisee in financial instruments or investment services,2949
+Other,NA,NA,Check the correctness of the data,5388
+Other,NA,NA,Check the correctness of the data,5389
+Other,NA,NA,Monitor order accounts,1755
+Other,NA,NA,Monitor order accounts,1756
+Other,NA,NA,Monitor the operations carried out by the supervisee in financial instruments or investment services,2948
+Other,NA,NA,Monitor the operations carried out by the supervisee in financial instruments or investment services,2949
 Other,Missing,Missing,Check service activation request data,1224
 Other,Manual,Per event,Verify correct accommodation for incorrect credit line combination,1792
 Other,Manual,Daily,Measure uses and verify the presence of uses beyond the threshold of attention,4547
@@ -3881,12 +3881,12 @@ Operational,Manual,Per event,Verification of the return of funds,3392
 Operational,Manual,Per event,Check the correctness of the address,3225
 Other,Missing,Missing,Check that the entered data is correct,3870
 Other,Missing,Missing,Check variation,4282
-Other,Other,N.A.,Verify accounting operations,5302
-Other,Other,N.A.,Verify accounting operations,5303
-Other,Other,N.A.,Verify the correct execution of the provisions,420
-Other,Other,N.A.,Verify the correct execution of the provisions,421
-Other,Other,N.A.,Check balance between depositor and custodian accounts,4885
-Other,Other,N.A.,Check balance between depositor and custodian accounts,4886
+Other,NA,NA,Verify accounting operations,5302
+Other,NA,NA,Verify accounting operations,5303
+Other,NA,NA,Verify the correct execution of the provisions,420
+Other,NA,NA,Verify the correct execution of the provisions,421
+Other,NA,NA,Check balance between depositor and custodian accounts,4885
+Other,NA,NA,Check balance between depositor and custodian accounts,4886
 Other,Manual,Annualy,Carry out formal checks,3168
 Other,Manual,Annualy,Carry out performance checks on consolidated data,1155
 Other,Missing,Missing,Check the compliance of the DCNF with the regulatory requirements and the reporting standard,5419
@@ -3924,19 +3924,19 @@ Operational,Manual,Per event,Carry out the fulfilments foreseen in terms of Aml/
 Operational,Manual,Per event,Carry out checks on the subject of Aml / CTF or Countering the Financing of Terrorism,2780
 Operational,Manual,Per event,Check,297
 Operational,Manual,Per event,Check,2946
-Other,Other,N.A.,Carry out checks on any cancellation operations subject to reporting,616
-Other,Other,N.A.,Carry out checks on any cancellation operations subject to reporting,617
-Other,Other,N.A.,Monitor the operations carried out by the supervisee in financial instruments or investment services,893
-Other,Other,N.A.,Monitor the operations carried out by the supervisee in financial instruments or investment services,894
-Other,Other,N.A.,Carry out checks on the cancellation operations subject to reporting,2179
-Other,Other,N.A.,Carry out checks on the cancellation operations subject to reporting,2180
+Other,NA,NA,Carry out checks on any cancellation operations subject to reporting,616
+Other,NA,NA,Carry out checks on any cancellation operations subject to reporting,617
+Other,NA,NA,Monitor the operations carried out by the supervisee in financial instruments or investment services,893
+Other,NA,NA,Monitor the operations carried out by the supervisee in financial instruments or investment services,894
+Other,NA,NA,Carry out checks on the cancellation operations subject to reporting,2179
+Other,NA,NA,Carry out checks on the cancellation operations subject to reporting,2180
 Professional,Semi-automatic,Per event,Check the classification of the Supplier/Sub-supplier/Dealer and the presence of the Privacy Consent,3889
 Professional,Manual,Per event,Verify that data in ABC or @gile is loaded to calculate the rating correctly,2793
 Other,Semi-automatic,Per event,Verify correct execution of the authorization procedure,2796
 Other,Semi-automatic,Per event,Verify correct execution of the authorization procedure,5050
 Professional,Semi-automatic,Per event,Verify correct update,1049
-Operational,Other,N.A.,Check that the management system is correctly fed,5057
-Operational,Other,N.A.,Check that the management system is correctly fed,5058
+Operational,NA,NA,Check that the management system is correctly fed,5057
+Operational,NA,NA,Check that the management system is correctly fed,5058
 Other,Manual,Per event,Check the received data,511
 Other,Manual,Per event,Verify the accounting entry made,1750
 Other,Manual,Per event,Check the data entered in the system,5598
@@ -4570,12 +4570,12 @@ Other,Manual,Annualy,Carry out scenario analysis,3457
 Other,Manual,Annualy,Carry out scenario analysis,3456
 Other,Semi-automatic,Annualy,Compare fair value values,2847
 Operational,Semi-automatic,Annualy,Verify the balance of the funds,4354
-Operational,Other,N.A.,Verify the correctness of the sterilization / declassification,1991
-Operational,Other,N.A.,Verify the correctness of the sterilization / declassification,1992
-Operational,Other,N.A.,Check the sterilized / declassified positions,1993
-Operational,Other,N.A.,Check the sterilized / declassified positions,1994
-Other,Other,N.A.,Verify the correct and complete reporting of the positions,3997
-Other,Other,N.A.,Verify the correct and complete reporting of the positions,3998
+Operational,NA,NA,Verify the correctness of the sterilization / declassification,1991
+Operational,NA,NA,Verify the correctness of the sterilization / declassification,1992
+Operational,NA,NA,Check the sterilized / declassified positions,1993
+Operational,NA,NA,Check the sterilized / declassified positions,1994
+Other,NA,NA,Verify the correct and complete reporting of the positions,3997
+Other,NA,NA,Verify the correct and complete reporting of the positions,3998
 Other,Manual,Per event,Check documentation,2670
 Other,Manual,Per event,Check data entry in procedure,3630
 Other,Manual,Per event,Check for the presence of debit interests,631
@@ -5054,8 +5054,8 @@ Other,Manual,Per event,Verify the correct and complete registration of the docum
 Other,Manual,Per event,Check the data,3733
 Other,Manual,Per event,Analyze and resolve anomalies from manual reports,2410
 Other,Automatic,Per event,Analyze and resolve anomalies from automatic reports,405
-Operational,Other,N.A.,Verify the correctness of the return of the provisional deposit,3775
-Operational,Other,N.A.,Verify the correctness of the deposit of the provisional deposit,3774
+Operational,NA,NA,Verify the correctness of the return of the provisional deposit,3775
+Operational,NA,NA,Verify the correctness of the deposit of the provisional deposit,3774
 Operational,Missing,Missing,Keep data up to date,4165
 Professional,Semi-automatic,Quarterly,Verify the correct import into Tagetik of the Relationships between companies subject to consolidation,3180
 Other,Semi-automatic,Quarterly,Verify the complete fulfillment of the reliefs,1060
@@ -5339,16 +5339,16 @@ Other,Missing,Missing,Check that the amount has been entered correctly,2778
 Other,Semi-automatic,Per event,Monitor the correct receipt of operations,3980
 Other,Manual,Per event,Monitor and manage warranties,5047
 Other,Manual,Per event,Monitor and manage contractual obligations,5046
-Other,Other,N.A.,Check the delivery status of the securities at the Territorial Structures,2629
-Other,Other,N.A.,Check the delivery status of the securities at the Territorial Structures,2630
-Other,Other,N.A.,Verify consistency between materiality to be sent and procedural evidence,4866
-Other,Other,N.A.,Verify consistency between materiality to be sent and procedural evidence,4867
-Other,Other,N.A.,Check that the data has been entered correctly,453
-Other,Other,N.A.,Check that the data has been entered correctly,454
-Other,Other,N.A.,Verify the correct download of the titles,1836
-Other,Other,N.A.,Verify the correct download of the titles,1837
-Other,Other,N.A.,Monitor the operations carried out by the supervisee in financial instruments or investment services,4861
-Other,Other,N.A.,Monitor the operations carried out by the supervisee in financial instruments or investment services,4862
+Other,NA,NA,Check the delivery status of the securities at the Territorial Structures,2629
+Other,NA,NA,Check the delivery status of the securities at the Territorial Structures,2630
+Other,NA,NA,Verify consistency between materiality to be sent and procedural evidence,4866
+Other,NA,NA,Verify consistency between materiality to be sent and procedural evidence,4867
+Other,NA,NA,Check that the data has been entered correctly,453
+Other,NA,NA,Check that the data has been entered correctly,454
+Other,NA,NA,Verify the correct download of the titles,1836
+Other,NA,NA,Verify the correct download of the titles,1837
+Other,NA,NA,Monitor the operations carried out by the supervisee in financial instruments or investment services,4861
+Other,NA,NA,Monitor the operations carried out by the supervisee in financial instruments or investment services,4862
 Other,Missing,Missing,Verify that the suspension has been canceled,3822
 Other,Manual,Per event,Verify correct acquisition and formal completeness of the deed of assignment,2547
 Other,Manual,Per event,Check compliance with the deadlines set by the agreement for sending the payment notification,333
@@ -5424,8 +5424,8 @@ Other,Manual,Per event,Verify signatures on Transfers signed by Cover Fax,3697
 Other,Manual,Per event,Verify that all workable supplies are assigned,2993
 Commercial,Manual,Per event,Verify the elements of the assignment,3906
 Other,Manual,Daily,Reconcile factoring disbursements and the daily flow of outgoing wire transfers,4763
-Other,Other,N.A.,Monitor the operations carried out by the supervisee in financial instruments or investment services,1688
-Other,Other,N.A.,Monitor the operations carried out by the supervisee in financial instruments or investment services,1689
+Other,NA,NA,Monitor the operations carried out by the supervisee in financial instruments or investment services,1688
+Other,NA,NA,Monitor the operations carried out by the supervisee in financial instruments or investment services,1689
 Operational,Manual,Quarterly,Check the TOP Client List,3532
 Other,Missing,Missing,Monitor the operations carried out by the supervisee in financial instruments or investment services,4174
 Other,Manual,Per event,Verify the completeness and consistency of the request for extinction with the contractual details and with the time constraints,4464
@@ -5652,12 +5652,12 @@ Other,Semi-automatic,Per event,Monitor the operations carried out by the supervi
 Other,Missing,Missing,Manage the recommendations of the Territorial Competent Doctor (MCT) and verify the completion of all necessary inspections,160
 Other,Missing,Missing,Manage the prescriptions and limitations contained in the Eligibility Judgment,3827
 Other,Missing,Daily,Report and rectify any mismatches,5073
-Other,Other,N.A.,Check the regularity and completeness of the dividend payment request at the counter,857
-Other,Other,N.A.,Check the regularity and completeness of the dividend payment request at the counter,858
-Other,Other,N.A.,Check the provisional agenda,298
-Other,Other,N.A.,Check the provisional agenda,299
-Other,Other,N.A.,Carry out checks on the fees to be paid,1525
-Other,Other,N.A.,Carry out checks on the fees to be paid,1526
+Other,NA,NA,Check the regularity and completeness of the dividend payment request at the counter,857
+Other,NA,NA,Check the regularity and completeness of the dividend payment request at the counter,858
+Other,NA,NA,Check the provisional agenda,298
+Other,NA,NA,Check the provisional agenda,299
+Other,NA,NA,Carry out checks on the fees to be paid,1525
+Other,NA,NA,Carry out checks on the fees to be paid,1526
 Other,Manual,Per event,Check the stagnant perimeter,1054
 Other,Manual,Monthly,Check Add-on completeness,4437
 Other,Manual,Monthly,Verify the performance consistency of the accounting application of the adjustment funds,5026
