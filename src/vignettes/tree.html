@@ -27,7 +27,7 @@
                 .attr("font-size", 10);
 
             // read json data
-            d3.json("../data/processed/flare.json").then(function(data) {
+            d3.json("../data/processed/nested/tree.json").then(function(data) {
 
                 // Give the data to this cluster layout:
                 const root = d3.hierarchy(data).sum(function(d){ return d.size}) // Here the size of each leave is given in the 'value' field in input data
