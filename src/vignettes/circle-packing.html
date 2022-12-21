@@ -30,9 +30,10 @@
         const fill = "grey";
         const fillOpacity = 1;
 
+        // adapted from https://observablehq.com/@d3/pack
         d3.json("../data/processed/nested/processes.json").then(function (data) {
 
-            console.log(data);
+            // console.log(data);
 
             const root = d3.hierarchy(data).sum(function(d){ return 1});
 
