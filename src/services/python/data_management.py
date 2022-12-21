@@ -494,67 +494,137 @@ def create_links(nodes):
     return links
 
 """
+Nest controls in risks
+return dictionary
+"""
+def nest_risk_control(risk_to_control, risk, control):
+
+    riskArray = []
+    ids1 = unique_int(risk_to_control, "riskID")
+    manualControl = False
+    semiAutoControl = False
+    autoControl = False
+
+    for i in ids1:
+
+        riskDict = {"id": int(i),
+                    "name": risk[risk.riskID == i].risk.iloc[0],
+                    "financialDisclosureRisk": bool(risk[risk.riskID == i].financialDisclosureRisk.iloc[0])}
+
+        ids2 = unique_int(risk_to_control[risk_to_control.controlID == i], "controlID")
+        controlsArray = []
+
+        for j in ids2:
+            controlDict = {"id": int(j),
+                           "name": control[control.controlID == j].control.iloc[0],
+                           "type": control[control.controlID == j].controlType.iloc[0],
+                           "category": control[control.controlID == j].controlCategory.iloc[0],
+                           "peridocity": control[control.controlID == j].controlPeriodocity.iloc[0]}
+
+            controlsArray.append(controlDict)
+
+            if control[control.controlID == j].controlType.iloc[0] == "Manual":
+                manualControl = True
+
+            if control[control.controlID == j].controlType.iloc[0] == "Semi-automatic":
+                semiAutoControl = True
+
+            if control[control.controlID == j].controlType.iloc[0] == "Automatic":
+                autoControl = True
+
+        riskDict["children"] = controlsArray
+        riskDict["nControls"] = len(controlsArray)
+        riskDict["manualControl"] = manualControl
+        riskDict["semiAutoControl"] = semiAutoControl
+        riskDict["autoControl"] = autoControl
+        riskArray.append(riskDict)
+
+    return riskArray
+
+
+def test_list_boolean(list, boolName):
+    if len([i for i in list if i[boolName]]) > 0:
+        bool = True
+    else:
+        bool = False
+    
+    return bool
+
+"""
 Nest processes
 """
+def nest_processes(level1_to_level2, level2_to_level3, level3_to_activities, activity_to_risk, level1, level2, level3, activity, risksNested):
 
-def nest_processes(level1_to_level2, level2_to_level3, level3_to_activities, level1, level2, level3, activity):
+    process1Array = []
+    process1Ids = unique_int(level1, "level1ID")
 
-    array1 = []
-    size1 = 0
-    ids1 = unique_int(level1, "level1ID")
+    for a in process1Ids:
 
-    for a in ids1:
+        process1Dict = {"id": int(a),
+                        "name": level1[level1.level1ID == a].level1.iloc[0]}
 
-        array2 = []
-        size2 = 0
-        ids2 = unique_int(level1_to_level2[level1_to_level2.level1ID == a], "level2ID")
+        process2Array = []
+        nRiskProcess2 = 0
+        process2Ids = unique_int(level1_to_level2[level1_to_level2.level1ID == a], "level2ID")
 
-        for b in ids2:
+        for b in process2Ids:
 
-            array3 = []
-            size3 = 0
-            ids3 = unique_int(level2_to_level3[level2_to_level3.level2ID == b], "level3ID")
+            process2Dict = {"id": int(a),
+                            "name": level2[level2.level2ID == b].level2.iloc[0]}
 
-            for c in ids3:
+            process3Array = []
+            process3Ids = unique_int(level2_to_level3[level2_to_level3.level2ID == b], "level3ID")
+            nRiskProcesses3 = 0
 
-                array4 = []
-                ids4 = unique_int(level3_to_activities[level3_to_activities.level3ID == c], "activityID")
-                for d in ids4:
+            for c in process3Ids:
 
-                    dict4 = {"id": int(d),
+                process3Dict = {"id": int(c),
+                                "name": level3[level3.level3ID == c].level3.iloc[0]
+                }
+
+                activityArray = []
+                nRisksActivities = 0
+                activityIDs = unique_int(level3_to_activities[level3_to_activities.level3ID == c], "activityID")
+
+                # iterate through activity ids
+                for d in activityIDs:
+
+                    riskIds = unique_int(activity_to_risk[activity_to_risk.activityID == d], "riskID")
+
+                    riskDict = {"id": int(d),
                             "name": activity[activity.activityID == d].activity.iloc[0],
-                            "size": 1}
+                            "category": activity[activity.activityID == d].activityCategory.iloc[0],
+                            "nRisks": len(riskIds)}
 
-                    array4.append(dict4)
+                    nRisksActivities = len(riskIds) + nRisksActivities
 
-                dict3 = {"id": int(c),
-                        "name": level3[level3.level3ID == c].level3.iloc[0],
-                        "children": array4,
-                        "size": len(ids4)}
-                size3 = size3 + len(ids4)
+                    if len(riskIds) > 0:
 
-                array3.append(dict3)
+                        risks = [i for i in risksNested if i['id'] in riskIds]
+                        riskDict["financialDisclosureRisk"] = test_list_boolean(risks, "financialDisclosureRisk")
 
-            dict2 = {"id": int(a),
-                    "name": level2[level2.level2ID == b].level2.iloc[0],
-                    "children": array3,
-                    "size": size3}
+                    activityArray.append(riskDict)
+            
+                # Update process 3 array
+                nRiskProcesses3 = nRiskProcesses3 + nRisksActivities
+                process3Dict["children"] = activityArray
+                process3Dict["nRisks"] = nRisksActivities
+                process3Array.append(process3Dict)
+            
+            # import pdb; pdb.set_trace()
+            # Update process 2 array
+            # nRiskProcesses2 = nRiskProcesses2 + process3Dict["nRisks"]
+            process2Dict["children"] = process3Array
+            # process2Dict["nRisks"] = nRiskProcesses3
+            process2Array.append(process2Dict)
 
-            size2 = size2 + size3
+        # Update process 1 array
+        # nProcesses1 = nProcesses2 + nProcesses1
+        process1Dict["children"] = process2Array
+        process1Array.append(process1Dict)
 
-            array2.append(dict2)
-
-        dictl1 = {"id": int(a),
-                  "name": level1[level1.level1ID == a].level1.iloc[0],
-                  "children": array2,
-                  "size": size2}
-
-        size1 = size2 + size1
-        array1.append(dictl1)
-
-    dic = {"name": "root",
-           "children": array1,
-           "size": size1}
+    dic = {"name": "process1",
+           "children": process1Array}
 
     return dic
 
