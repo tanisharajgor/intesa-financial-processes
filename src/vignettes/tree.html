@@ -16,8 +16,8 @@
             height = 1000 - margin.top - margin.bottom;
 
             const label = d => d.name;
-                let format = ",";
-                const title = (d, n) => `${n.ancestors().reverse().map(d => d.data.name).join(".")}\n${n.value.toLocaleString("en")}`;
+            let format = ",";
+            const title = (d, n) => `${n.ancestors().reverse().map(d => d.data.name).join(".")}\n${n.value.toLocaleString("en")}`;
 
             // append the svg object to the body of the page
             const svg = d3.select("#chart")
@@ -35,6 +35,8 @@
 
                 // Give the data to this cluster layout:
                 const root = d3.hierarchy(data).sum(function(d){ return 1}) // Here the size of each leave is given in the 'value' field in input data
+
+                console.log(data)
 
                 // Then d3.treemap computes the position of each element of the hierarchy
                 d3.partition()
