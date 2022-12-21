@@ -33,7 +33,7 @@
         // adapted from https://observablehq.com/@d3/pack
         d3.json("../data/processed/nested/processes.json").then(function (data) {
 
-            // console.log(data);
+            console.log(data);
 
             const root = d3.hierarchy(data).sum(function(d){ return 1});
 
@@ -55,50 +55,49 @@
                 .attr("font-family", "sans-serif")
                 .attr("font-size", 10);
 
-        // Compute the layout.
-        d3.pack()
-            .size([width - margin.left - margin.right, height - margin.top - margin.bottom])
-            .padding(padding)
-            (root);
-        
-        const node = svg.selectAll("a")
-            .data(descendants)
-            .join("a")
-            .attr("transform", d => `translate(${d.x},${d.y})`);
+            // Compute the layout.
+            d3.pack()
+                .size([width - margin.left - margin.right, height - margin.top - margin.bottom])
+                .padding(padding)
+                (root);
+            
+            const node = svg.selectAll("a")
+                .data(descendants)
+                .join("a")
+                .attr("transform", d => `translate(${d.x},${d.y})`);
 
-        node.append("circle")
-            .attr("fill", d => d.children ? "#fff" : fill)
-            .attr("fill-opacity", d => d.children ? null : fillOpacity)
-            .attr("stroke", d => d.children ? stroke : null)
-            .attr("stroke-width", d => d.children ? strokeWidth : null)
-            .attr("stroke-opacity", d => d.children ? strokeOpacity : null)
-            .attr("r", d => d.r);
+            node.append("circle")
+                .attr("fill", d => d.children ? "#fff" : fill)
+                .attr("fill-opacity", d => d.children ? null : fillOpacity)
+                .attr("stroke", d => d.children ? stroke : null)
+                .attr("stroke-width", d => d.children ? strokeWidth : null)
+                .attr("stroke-opacity", d => d.children ? strokeOpacity : null)
+                .attr("r", d => d.r);
 
+            if (T) node.append("title").text((d, i) => T[i]);
 
-        if (T) node.append("title").text((d, i) => T[i]);
+            if (L) {
+            // A unique identifier for clip paths (to avoid conflicts).
+            const uid = `O-${Math.random().toString(16).slice(2)}`;
 
-        if (L) {
-        // A unique identifier for clip paths (to avoid conflicts).
-        const uid = `O-${Math.random().toString(16).slice(2)}`;
+            const leaf = node
+                .filter(d => !d.children && d.r > 10 && L[d.index] != null);
 
-        const leaf = node
-            .filter(d => !d.children && d.r > 10 && L[d.index] != null);
+            leaf.append("clipPath")
+                .attr("id", d => `${uid}-clip-${d.index}`)
+                .append("circle")
+                .attr("r", d => d.r);
 
-        leaf.append("clipPath")
-            .attr("id", d => `${uid}-clip-${d.index}`)
-            .append("circle")
-            .attr("r", d => d.r);
-
-        leaf.append("text")
-            .attr("clip-path", d => `url(${new URL(`#${uid}-clip-${d.index}`, location)})`)
-            .selectAll("tspan")
-            .data(d => `${L[d.index]}`.split(/\n/g))
-            .join("tspan")
-            .attr("x", 0)
-            .attr("y", (d, i, D) => `${(i - D.length / 2) + 0.85}em`)
-            .attr("fill-opacity", (d, i, D) => i === D.length - 1 ? 0.7 : null)
-            .text(d => d);
-        }
+            leaf.append("text")
+                .attr("clip-path", d => `url(${new URL(`#${uid}-clip-${d.index}`, location)})`)
+                .selectAll("tspan")
+                .data(d => `${L[d.index]}`.split(/\n/g))
+                .join("tspan")
+                .attr("x", 0)
+                .attr("y", (d, i, D) => `${(i - D.length / 2) + 0.85}em`)
+                .attr("fill-opacity", (d, i, D) => i === D.length - 1 ? 0.7 : null)
+                .text(d => d);
+            }
         });
 
     </script>
