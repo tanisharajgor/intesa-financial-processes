@@ -18,7 +18,6 @@ return dataframe
 """
 def num_id(df, var_name, n = 0):
 
-
     new_var = var_name.removesuffix("GUID") + 'ID'
     df[new_var] = df.groupby(var_name).ngroup() + n
     df = df[df[new_var] != -1]
@@ -492,7 +491,7 @@ def create_links(nodes):
             ka = node["activities"]
 
             for ab in ka:
-                dict = {"source": int(ka["id"]),
+                dict = {"source": int(ab["id"]),
                         "target": int(node["id"])}
                 links.append(dict)
 
