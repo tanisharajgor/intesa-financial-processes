@@ -62,7 +62,7 @@ def activities_dm(actors, config, raw_pth, processed_pth):
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "activities.csv")).rename(columns={'Italian': 'activity'})
     df = pd.merge(df, dfTranslated, on="activity", how="left").drop("activity", axis=1).rename(columns={'English': "activity"})
     df = df[pd.isnull(df.activity) == False]
-    df = num_id(df, "activityGUID")
+    df = num_id(df, "activityGUID", 100000)
     df.activityCategory = df.activityCategory.fillna('Other')
 
     ## Write the cleaned data out
@@ -421,27 +421,30 @@ def create_actor_activities_nodes(data, actors, activities):
 
     actors_nodes = []
 
+    # import pdb; pdb.set_trace()
+
     for a in unique_int(actors_activities, "actorID"):
 
         actors_activities_sub = actors_activities[actors_activities.actorID == a]
-
-        for i in unique_int(actors_activities_sub, "activityID"):
-
-            act_sub = actors_activities_sub[actors_activities_sub.activityID == i]
-
-            dictactivity = {"id": int(i),
-                            "group": "activity",
-                            "descr": act_sub.activity.iloc[0],
-                            "type": act_sub.activityType.iloc[0],
-                            "category": act_sub.activityCategory.iloc[0]}
 
         dictactor = {"id": int(a),
                     "group": "actor",
                     "descr": actors_activities_sub.actor.iloc[0],
                     "type": actors_activities_sub.actorType.iloc[0],
-                    "nActivities": len(actors_activities_sub),
-                    "activities": dictactivity}
+                    "nActivities": len(actors_activities_sub)}
 
+        activities_nodes = []
+        for i in unique_int(actors_activities_sub, "activityID"):
+
+            dictactivity = {"id": int(i),
+                            "group": "activity",
+                            "descr": actors_activities_sub[actors_activities_sub.activityID == i].activity.iloc[0],
+                            "type": actors_activities_sub[actors_activities_sub.activityID == i].activityType.iloc[0],
+                            "category": actors_activities_sub[actors_activities_sub.activityID == i].activityCategory.iloc[0]}
+
+            activities_nodes.append(dictactivity)
+
+        dictactor["activities"] = activities_nodes
         actors_nodes.append(dictactor)
 
     activities_nodes = []
@@ -450,23 +453,25 @@ def create_actor_activities_nodes(data, actors, activities):
 
         actors_activities_sub = actors_activities[actors_activities.activityID == j]
 
-        for k in unique_int(actors_activities_sub, "actorID"):
+        dictactivity = {"id": int(i),
+                        "group": "activity",
+                        "descr": actors_activities[actors_activities.activityID == j].activity.iloc[0],
+                        "type": actors_activities[actors_activities.activityID == j].activityType.iloc[0],
+                        "category": actors_activities[actors_activities.activityID == j].activityCategory.iloc[0]}
 
-            act_sub = actors_activities_sub[actors_activities_sub.actorID == k]
+        actors_nodes2 = []
+
+        for k in unique_int(actors_activities_sub, "actorID"):
 
             dictactor = {"id": int(a),
                         "group": "actor",
-                        "descr": act_sub.actor.iloc[0],
-                        "type": act_sub.actorType.iloc[0],
-                        "nActors": len(act_sub)}
+                        "descr": actors_activities_sub[actors_activities_sub.actorID == k].actor.iloc[0],
+                        "type": actors_activities_sub[actors_activities_sub.actorID == k].actorType.iloc[0],
+                        "nActors": len(actors_activities_sub[actors_activities_sub.actorID == k])}
 
-        dictactivity = {"id": int(i),
-                        "group": "activity",
-                        "descr": actors_activities_sub.activity.iloc[0],
-                        "type": actors_activities_sub.activityType.iloc[0],
-                        "category": actors_activities_sub.activityCategory.iloc[0],
-                        "actors": dictactor}
+            actors_nodes2.append(dictactor)
 
+        dictactivity["actor"] = actors_nodes2
         activities_nodes.append(dictactivity)
 
     return actors_nodes + activities_nodes
@@ -540,7 +545,6 @@ def nest_risk_control(risk_to_control, risk, control):
         riskArray.append(riskDict)
 
     return riskArray
-
 
 def test_list_boolean(list, boolName):
     if len([i for i in list if i[boolName]]) > 0:

@@ -58,61 +58,63 @@
                 // For a useful tool, see:
                 // https://bl.ocks.org/steveharoz/8c3e2524079a8c440df60c1ab72b5d03
                 // */
-                var simulation = d3.forceSimulation(data.nodes)
-                    // .force("link", d3.forceLink(data.links).id(function (d) { return d.id; }).distance(10).strength(2))
-                    // .force('y', d3.forceY().y(function (d) {
-                    //     return height/2;
-                    // }).strength(3))
-                    .force("charge", d3.forceManyBody().strength(-20))
-                    .force("center", d3.forceCenter(width / 2, height / 2))
-                    .force("collide", d3.forceCollide().radius(15));
 
-                // /* DRAW THE LINES FOR LINKS */
+                var simulation = d3.forceSimulation()
+                    .force("link", d3.forceLink().id(function(d) { return d.id; }))
+                    .force("charge", d3.forceManyBody())
+                    .force("center", d3.forceCenter(width / 2, height / 2));
+
                 var link = svg.append("g")
+                    .attr("class", "links")
                     .selectAll("line")
                     .data(data.links)
-                    .enter()
-                    .append("line")
-                    .attr("stroke", "#FFFFFF")
-                    .attr("stroke-width", 1);
+                    .enter().append("line");
 
-                // /* 
-                // DRAW THE CIRCLES FOR THE NODES
-                // */
                 var node = svg.append("g")
+                    .attr("class", "nodes")
                     .selectAll("circle")
                     .data(data.nodes)
-                    .enter()
-                    .append("circle")
-                    // .attr("stroke", "#fff")
-                    // .attr("stroke-width", 0.5)
-                    .attr("fill", "red")
-                    .attr("r", 5)
-                    .attr("stroke", "grey")
-                    .attr("stroke-width", 2);
+                    .enter().append("circle")
+                    .attr("r", 2.5)
+                    // .call(d3.drag()
+                    //     .on("start", dragstarted)
+                    //     .on("drag", dragged)
+                    //     .on("end", dragended));
 
-                // /* 
-                // TICK THE SIMULATION 
-                // Each time the simulation iterates ("ticks"), we will
-                // update the positions of the nodes (circles) and links (lines)
-                // in the network
-                // */
+                simulation
+                    .nodes(data.nodes)
+                    .on("tick", ticked);
 
-                simulation.on("tick", function () {
-                    link.attr("x1", function (d) { return d.source.x; })
-                        .attr("y1", function (d) { return d.source.y; })
-                        .attr("x2", function (d) { return d.target.x; })
-                        .attr("y2", function (d) { return d.target.y; })
+                simulation.force("link")
+                    .links(data.links);
 
-                        // .attr("stroke-width", function(d) {return strokeScale(d.weight); });
+                // simulation.on("tick", function () {
+                //     link.attr("x1", function (d) { return d.source.x; })
+                //         .attr("y1", function (d) { return d.source.y; })
+                //         .attr("x2", function (d) { return d.target.x; })
+                //         .attr("y2", function (d) { return d.target.y; })
+
+                //         // .attr("stroke-width", function(d) {return strokeScale(d.weight); });
+
+                //     node
+                //         .attr("cx", function (d) { return d.x; })
+                //         .attr("cy", function (d) { return d.y; })
+                //         // .attr("fill", function(d) { return colorScale(d.zone); })
+                //         // .attr("r", function(d) { return sizeScale(d.influence); })
+                //         // .attr("stroke", "grey");
+                // });
+
+                function ticked() {
+                    link
+                        .attr("x1", function(d) { return d.source.x; })
+                        .attr("y1", function(d) { return d.source.y; })
+                        .attr("x2", function(d) { return d.target.x; })
+                        .attr("y2", function(d) { return d.target.y; });
 
                     node
-                        .attr("cx", function (d) { return d.x; })
-                        .attr("cy", function (d) { return d.y; })
-                        // .attr("fill", function(d) { return colorScale(d.zone); })
-                        // .attr("r", function(d) { return sizeScale(d.influence); })
-                        // .attr("stroke", "grey");
-                });
+                        .attr("cx", function(d) { return d.x; })
+                        .attr("cy", function(d) { return d.y; });
+                }
 
                 // /* ADD A TOOLTIP */
                 // var tooltip = d3.select("#chart")
