@@ -18,12 +18,22 @@
                 .attr("width", width)
                 .attr("height", height);
 
-            d3.json("../data/processed/miserables.json").then(function (data) {
+            /* 
+            // https://bl.ocks.org/steveharoz/8c3e2524079a8c440df60c1ab72b5d03
+            // */
+            d3.json("../data/processed/nested/network.json").then(function (data) {
 
                 console.log(data);
-                /* 
-                // https://bl.ocks.org/steveharoz/8c3e2524079a8c440df60c1ab72b5d03
-                // */
+
+                const rScale = d3.scaleLinear()
+                    .domain([d3.extent(data.nodes, function(d) {return d.n })])
+                    .range([3, 7]);
+
+                const colorScale = d3.scaleLinear()
+                    .domain(["actor", "activity"])
+                    .range(["#0000FF", "#FF0000"])
+
+                var color = d3.scaleOrdinal(d3.schemeSpectral[9]);
 
                 var simulation = d3.forceSimulation()
                     .force("link", d3.forceLink().id(function(d) { return d.id; }))
@@ -43,7 +53,8 @@
                     .selectAll("circle")
                     .data(data.nodes)
                     .enter().append("circle")
-                    .attr("r", 2.5)
+                    .attr("fill", ((d) => colorScale(d.group)))
+                    .attr("r", ((d) =>rScale(d.n)))
 
                 simulation
                     .nodes(data.nodes)
