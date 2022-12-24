@@ -410,68 +410,84 @@ def main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, 
 
     return df
 
-def create_actor_activities_nodes(data, actors, activities):
-
+"""
+"""
+def dm_actor_activities_nodes(data, actors, activities):
     actors_activities = data[["activityGUID", "actorGUID"]]
     actors_activities = pd.merge(actors_activities, actors)
     actors_activities = pd.merge(actors_activities, activities)
     actors_activities.drop(["activityGUID", "actorGUID"], axis=1, inplace=True)
     actors_activities = actors_activities.drop_duplicates()
 
+    return actors_activities
+
+def dm_actors_nodes(actors_activities):
+
     actors_nodes = []
 
-    # import pdb; pdb.set_trace()
+    for i in unique_int(actors_activities, "actorID"):
 
-    for a in unique_int(actors_activities, "actorID"):
+        actors_activities_sub = actors_activities[actors_activities.actorID == i]
 
-        actors_activities_sub = actors_activities[actors_activities.actorID == a]
-
-        dictactor = {"id": int(a),
+        dictactor = {"id": int(i),
                     "group": "actor",
                     "descr": actors_activities_sub.actor.iloc[0],
                     "type": actors_activities_sub.actorType.iloc[0],
-                    "nActivities": len(actors_activities_sub)}
+                    "n": len(actors_activities_sub)}
 
-        activities_nodes = []
-        for i in unique_int(actors_activities_sub, "activityID"):
+        # activities_nodes = []
+        # for j in unique_int(actors_activities_sub, "activityID"):
 
-            dictactivity = {"id": int(i),
-                            "group": "activity",
-                            "descr": actors_activities_sub[actors_activities_sub.activityID == i].activity.iloc[0],
-                            "type": actors_activities_sub[actors_activities_sub.activityID == i].activityType.iloc[0],
-                            "category": actors_activities_sub[actors_activities_sub.activityID == i].activityCategory.iloc[0]}
+        #     dictactivity = {"id": int(j),
+        #                     "group": "activity",
+        #                     "descr": actors_activities_sub[actors_activities_sub.activityID == j].activity.iloc[0],
+        #                     # "type": actors_activities_sub[actors_activities_sub.activityID == j].activityType.iloc[0],
+        #                     "category": actors_activities_sub[actors_activities_sub.activityID == j].activityCategory.iloc[0]}
 
-            activities_nodes.append(dictactivity)
+        #     activities_nodes.append(dictactivity)
 
-        dictactor["activities"] = activities_nodes
+        # dictactor["activities"] = activities_nodes
         actors_nodes.append(dictactor)
 
+    return actors_nodes
+
+def dm_activities_nodes(actors_activities):
     activities_nodes = []
 
-    for j in unique_int(actors_activities, "activityID"):
+    for i in unique_int(actors_activities, "activityID"):
 
-        actors_activities_sub = actors_activities[actors_activities.activityID == j]
+        actors_activities_sub = actors_activities[actors_activities.activityID == i]
 
         dictactivity = {"id": int(i),
                         "group": "activity",
-                        "descr": actors_activities[actors_activities.activityID == j].activity.iloc[0],
-                        "type": actors_activities[actors_activities.activityID == j].activityType.iloc[0],
-                        "category": actors_activities[actors_activities.activityID == j].activityCategory.iloc[0]}
+                        "descr": actors_activities_sub.activity.iloc[0],
+                        "type": actors_activities_sub.activityType.iloc[0],
+                        "category": actors_activities_sub.activityCategory.iloc[0],
+                        "n": len(actors_activities_sub)}
 
-        actors_nodes2 = []
+        # actors_nodes = []
 
-        for k in unique_int(actors_activities_sub, "actorID"):
+        # for j in unique_int(actors_activities_sub, "actorID"):
 
-            dictactor = {"id": int(a),
-                        "group": "actor",
-                        "descr": actors_activities_sub[actors_activities_sub.actorID == k].actor.iloc[0],
-                        "type": actors_activities_sub[actors_activities_sub.actorID == k].actorType.iloc[0],
-                        "nActors": len(actors_activities_sub[actors_activities_sub.actorID == k])}
+        #     dictactor = {"id": int(j),
+        #                 "group": "actor",
+        #                 "descr": actors_activities_sub[actors_activities_sub.actorID == j].actor.iloc[0],
+        #                 # "type": actors_activities_sub[actors_activities_sub.actorID == j].actorType.iloc[0],
+        #                 "nActors": len(actors_activities_sub[actors_activities_sub.actorID == j])}
 
-            actors_nodes2.append(dictactor)
+        #     actors_nodes.append(dictactor)
 
-        dictactivity["actor"] = actors_nodes2
+        # dictactivity["actor"] = actors_nodes
         activities_nodes.append(dictactivity)
+
+    return activities_nodes
+
+def create_actor_activities_nodes(data, actors, activities):
+
+    actors_activities = dm_actor_activities_nodes(data, actors, activities)
+
+    actors_nodes = dm_actors_nodes(actors_activities)
+    activities_nodes = dm_activities_nodes(actors_activities)
 
     return actors_nodes + activities_nodes
 
@@ -480,20 +496,18 @@ Creates links for network
 param nodes object
 return dictionary
 """
-def create_links(nodes):
+def create_links(data, actors, activities):
 
     links = []
 
-    for node in nodes:
+    actors_activities =  dm_actor_activities_nodes(data, actors, activities)
 
-        if (node["group"] == "actor"):
+    for i in range(0, actors_activities.shape[0]):
 
-            ka = node["activities"]
+        dict = {"source": int(actors_activities.iloc[i].actorID),
+                "target": int(actors_activities.iloc[i].activityID)}
 
-            for ab in ka:
-                dict = {"source": int(ab["id"]),
-                        "target": int(node["id"])}
-                links.append(dict)
+        links.append(dict)
 
     return links
 

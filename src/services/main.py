@@ -94,7 +94,7 @@ def main():
 
     ## Nested data
     nodes = create_actor_activities_nodes(data, actorsClean, activitiesClean)
-    links = create_links(nodes)
+    links = create_links(data, actorsClean, activitiesClean)
 
     network = {
         "nodes" : nodes,
