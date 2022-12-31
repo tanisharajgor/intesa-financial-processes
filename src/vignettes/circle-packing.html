@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <link rel="shortcut icon" href="#">
+    </head>
+
+    <style>
+        body {
+            font-family: sans-serif
+        }
+
+    </style>
+
+    <body>
+        <div id="chart"></div>
+        <script>
+
+            const margin = {top: 10, right: 10, bottom: 10, left: 10},
+                width = 1000 - margin.left - margin.right,
+                height = 1000 - margin.top - margin.bottom;
+
+            const title = (d, n) => `${n.ancestors().reverse().map(({data: d}) => d.name).join(".")}\n${n.value.toLocaleString("en")}`;
+            const label = d => d.name;
+            const padding = 3;
+            const stroke = "#bbb";
+            const strokeWidth = 1;
+            const strokeOpacity = 1;
+            const fill = "grey";
+            const fillOpacity = 1;
+
+            // adapted from https://observablehq.com/@d3/pack
+            d3.json("../data/processed/nested/processes.json").then(function (data) {
+
+                console.log(data);
+
+                const root = d3.hierarchy(data).sum(function(d){ return 1});
+
+                const descendants = root.descendants();
+                const leaves = descendants.filter(d => !d.children);
+                leaves.forEach((d, i) => d.index = i);
+                const L = label == null ? null : leaves.map(d => label(d.data, d));
+                const T = title == null ? null : descendants.map(d => title(d.data, d));
+
+                root.sort((a, b) => d3.descending(a.value, b.value));
+
+                const svg = d3.select("#chart")
+                    .append("svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform",
+                            `translate(${margin.left}, ${margin.top})`)
+                    .attr("font-family", "sans-serif")
+                    .attr("font-size", 10);
+
+                // Compute the layout.
+                d3.pack()
+                    .size([width - margin.left - margin.right, height - margin.top - margin.bottom])
+                    .padding(padding)
+                    (root);
+                
+                const node = svg.selectAll("a")
+                    .data(descendants)
+                    .join("a")
+                    .attr("transform", d => `translate(${d.x},${d.y})`);
+
+                node.append("circle")
+                    .attr("fill", d => d.children ? "#fff" : fill)
+                    .attr("fill-opacity", d => d.children ? null : fillOpacity)
+                    .attr("stroke", d => d.children ? stroke : null)
+                    .attr("stroke-width", d => d.children ? strokeWidth : null)
+                    .attr("stroke-opacity", d => d.children ? strokeOpacity : null)
+                    .attr("r", d => d.r);
+
+                if (T) node.append("title").text((d, i) => T[i]);
+
+                if (L) {
+                // A unique identifier for clip paths (to avoid conflicts).
+                const uid = `O-${Math.random().toString(16).slice(2)}`;
+
+                const leaf = node
+                    .filter(d => !d.children && d.r > 10 && L[d.index] != null);
+
+                leaf.append("clipPath")
+                    .attr("id", d => `${uid}-clip-${d.index}`)
+                    .append("circle")
+                    .attr("r", d => d.r);
+
+                leaf.append("text")
+                    .attr("clip-path", d => `url(${new URL(`#${uid}-clip-${d.index}`, location)})`)
+                    .selectAll("tspan")
+                    .data(d => `${L[d.index]}`.split(/\n/g))
+                    .join("tspan")
+                    .attr("x", 0)
+                    .attr("y", (d, i, D) => `${(i - D.length / 2) + 0.85}em`)
+                    .attr("fill-opacity", (d, i, D) => i === D.length - 1 ? 0.7 : null)
+                    .text(d => d);
+                }
+            });
+
+        </script>
+    </body>
+
+</html>
