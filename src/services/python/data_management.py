@@ -649,62 +649,43 @@ def nest_processes(level1_to_level2, level2_to_level3, level3_to_activities, act
 
     return dic
 
-# """
-# Nest activities attributes
-# """
-# def nest_activities(activities, actors, risks, applications, activities_actor, activity_to_risk, activity_to_application):
+"""
+"""
+def activity_attributes(xwalk, lu, id, root):
 
-#     array = []
+    rootID = root+"ID"
+    df = pd.merge(xwalk[xwalk.activityID == id], lu, how="left", on=rootID)
 
-#     for a in unique_int(activities, "activityID"):
+    attributes = {}
 
-#         act = activities[activities.activityID == a]
-#         aa = activities_actor[activities_actor.activityID == a]
-#         ar = activity_to_risk[activity_to_risk.activityID == a]
-#         ab = activity_to_application[activity_to_application.activityID == a]
-#         dictactor = {}
-#         dictrisk = {}
-#         dictapps = {}
+    if df.shape[0] > 0:
+        attributes[root+"N"] = df.shape[0]
+        array = []
+        row = {}
+        for i in unique_int(df, rootID):
+            row = {"id": int(i),
+                # "type": df[df[rootID] == i][root+"Type"].iloc[0],
+                "descr": df[df[rootID] == i][root].iloc[0]}
+            array.append(row)
+        attributes["attributes"] = array
 
-#         dictact = {"id": int(a)}
+    return attributes
 
-#         if aa.shape[0] > 0:
+"""
+Nest activities attributes
+"""
+def nest_activities(activities, actors, risks, applications, activity_to_actor, activity_to_risk, activity_to_application):
 
-#             for b in unique_int(aa, "actorID"):
-#                 aa_sub = aa[aa.actorID == b]
-    
-#             dictact["nActors"] = aa.shape[0]
-#             dictact["actors"] = {"id": int(b),
-#                             "group": "actor"}
+    array = []
 
-#         if ar.shape[0] > 0:
+    for id in unique_int(activities, "activityID"):
 
-#             for c in unique_int(ar, "riskID"):
-#                 ar_sub = ar[ar.riskID == c]
-                
-#                 dictrisk = {"id": int(c),
-#                             "group": "risk"}
+        dictact = {
+            "id": int(id),
+            "actors": activity_attributes(activity_to_actor, actors, id, "actor"),
+            "risks": activity_attributes(activity_to_risk, risks, id, "risk"),
+            "applications": activity_attributes(activity_to_application, applications, id, "application")
+        }
+        array.append(dictact)
 
-#         if ab.shape[0] > 0:
-
-#             for d in unique_int(ab, "applicationID"):
-#                 ab_sub = ab[ab.applicationID == d]
-                
-#                 dictapps = {"id": int(d),
-#                             "group": "application"}
-
-#         dictact = {
-#             "id": int(a),
-#             "nActors": aa.shape[0],
-#             "actors": dictactor,
-#             "nRisk": ar.shape[0],
-#             "risks": dictrisk,
-#             "nApplication": ab.shape[0],
-#             "applications": dictapps
-#         }
-#         array.append(dictact)
-
-#     import pdb; pdb.set_trace()
-
-
-#     return array
+    return array

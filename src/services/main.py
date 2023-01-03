@@ -5,8 +5,8 @@ from python.data_management import actors_rename, activities_dm, actors_dm, risk
     applications_dm, controls_dm, level1_dm, level2_dm, level3_dm, model_dm, \
     level1_to_level2_dm, level2_to_level3_dm, level3_to_model_dm,model_to_activity_dm, \
     activity_to_risk_dm, risk_to_control_dm, activity_to_actor_dm, activity_to_application_dm, main_dm, \
-    create_actor_activities_nodes, create_links, nest_processes, level3_to_activity_dm, nest_risk_control
-    # nest_activities
+    create_actor_activities_nodes, create_links, nest_processes, level3_to_activity_dm, nest_risk_control, \
+    nest_activities
     
 from python.translate import translate_text, authenticate_implicit_with_adc
 from python.helper import write_json, create_lu
@@ -80,7 +80,8 @@ def main():
     risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
     main = main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity, activity_to_risk, risk_to_control)
 
-    # nest_activities(activitiesClean, actorsClean, risksClean, applicationsClean, activity_to_actor, activity_to_risk, activity_to_application)
+    activitiesNested = nest_activities(activitiesClean, actorsClean, risksClean, applicationsClean, activity_to_actor, activity_to_risk, activity_to_application)
+    write_json(activitiesNested, os.path.join(processed_pth, "nested"), "activities")
 
     # mainRisk = risks.drop_duplicates()
     # mainActivity = data[["level1GUID", "level2GUID", "level3GUID", "modelGUID", "activityGUID"]].drop_duplicates()
@@ -90,7 +91,6 @@ def main():
 
     processesNested = nest_processes(level1_to_level2, level2_to_level3, level3_to_activity, activity_to_risk, level1Clean, level2Clean, level3Clean, activitiesClean, risksNested)
     write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
-
 
     ## Nested data
     nodes = create_actor_activities_nodes(data, actorsClean, activitiesClean)
