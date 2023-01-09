@@ -6,6 +6,31 @@
         <link rel="shortcut icon" href="#">
     </head>
 
+    <style>
+
+        html, body {
+            cursor: auto;
+        }
+
+        #chart {
+            height: 100vh;
+            position: relative;
+        }
+
+        .tooltip {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            visibility: hidden;
+            font-family: sans-serif;
+            font-size: 10pt;
+            background-color:rgba(255,255,255,0.4);
+            padding: 2px;
+            pointer-events: none;
+        }
+
+    </style>
+
     <body>
         <div id="chart"></div>
         <script>
@@ -30,6 +55,14 @@
                 .attr("font-family", "sans-serif")
                 .attr("font-size", 10);
 
+            const colorScale = d3.scaleOrdinal()
+                .domain(["NA", "Manual", "Semi-automatic", "Automatic"])
+                .range(["#ADADAD", "#FF0000", "#FFC41F", "#0071BC"]);
+
+            const opacityScale = d3.scaleOrdinal()
+                .domain([0, 1, 2, 3, 4])
+                .range([.05, .15, .3, .55, 1.00])
+
             // read json data
             d3.json("../data/processed/nested/processes.json").then(function(data) {
 
@@ -47,22 +80,26 @@
 
                 root.sort((a, b) => d3.descending(a.value, b.value))
 
-                const cell = svg
+                const descendants = root.descendants();
+
+                const rect = svg
                     .selectAll("a")
-                    .data(root.descendants())
+                    .data(descendants)
                     .join("a")
                     .attr("transform", d => `translate(${d.y0},${d.x0})`);
 
-                cell.append("rect")
+                rect.append("rect")
                     .attr("width", d => d.y1 - d.y0)
                     .attr("height", d => d.x1 - d.x0)
-                // .attr("fill", color ? d => color(d.ancestors().reverse()[1]?.index) : fill)
+                    .attr("fill", d => d.data.riskStatus.controlTypeMode === undefined ? "#fff" : colorScale(d.data.riskStatus.controlTypeMode))
+                    .attr("fill-opacity", d => opacityScale(d.data.treeLevel));
 
-                const text = cell.filter(d => d.x1 - d.x0 > 10).append("text")
+                const text = rect.filter(d => d.x1 - d.x0 > 10).append("text")
                     .attr("x", 4)
                     .attr("y", d => Math.min(9, (d.x1 - d.x0) / 2))
                     .attr("dy", "0.32em")
-                    .attr("fill", "white");
+                    .attr("fill", "white")
+                    .attr("fill-opacity", 1);
 
                 if (typeof format !== "function") format = d3.format(format)
 
@@ -73,10 +110,47 @@
                     .attr("fill-opacity", 0.7)
                     .attr("dx", label == null ? null : 3)
                     .text(d => format(d.value))
-                    .attr("fill", "white");
+                    .attr("fill", "white")
+                    .attr("fill-opacity", 1);
 
-                if (title != null) cell.append("title")
+                if (title != null) rect.append("title")
                     .text(d => title(d.data, d));
+
+                // Tooltip
+                const tooltip = d3.select("#chart")
+                .append("div")
+                .attr("class", "tooltip");
+
+                rect.on("mouseover", function(e, d) {
+
+                    let thisRect = d3.select(this);
+
+                    console.log(this)
+                    let x = +thisRect.attr("x") + 20;
+                    let y = +thisRect.attr("y") - 10;
+
+                    console.log(e);
+                    console.log(d);
+
+                    tooltip.style("visibility", "visible")
+                        .style("top", `${y}px`)
+                        .style("left", `${x}px`)
+                        .html(`Process: <b>${d.data.name}</b>`);
+
+                    // thisRect
+                    //     .attr("stroke", "black")
+                    //     .attr("stroke-width", 2);
+
+                    d3.select(this).attr("opacity", 1).raise();
+
+                    }).on("mouseout", function() {
+
+                        tooltip.style("visibility", "hidden");
+                        rect.attr("opacity", 1);
+
+                        d3.selectAll('rect').attr("stroke", "none"); 
+                    });
+
                 })
         </script>
     </body>

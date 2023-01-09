@@ -7,8 +7,25 @@
     </head>
 
     <style>
-        body {
-            font-family: sans-serif
+        html, body {
+            cursor: auto;
+        }
+
+        #chart {
+            height: 100vh;
+            position: relative;
+        }
+
+        .tooltip {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            visibility: hidden;
+            font-family: sans-serif;
+            font-size: 10pt;
+            background-color:rgba(255,255,255,0.4);
+            padding: 2px;
+            pointer-events: none;
         }
 
     </style>
@@ -32,11 +49,14 @@
 
             const colorScale = d3.scaleOrdinal()
                 .domain(["NA", "Manual", "Semi-automatic", "Automatic"])
-                .range(["grey", "red", "yellow", "blue"])
+                .range(["#ADADAD", "#FF0000", "#FFC41F", "#0071BC"]);
+
+            // yellow: #FFC41F
+            // orange: #FF831D
 
             const opacityScale = d3.scaleOrdinal()
                 .domain([0, 1, 2, 3, 4])
-                .range([.05, .15, .3, .55, 1.00])
+                .range([.05, .15, .3, .55, 1.00]);
 
             // adapted from https://observablehq.com/@d3/pack
             d3.json("../data/processed/nested/processes.json").then(function (data) {
@@ -74,12 +94,9 @@
 
                 console.log(descendants)
 
-                node.append("circle")
+                const circle = node.append("circle")
                     .attr("fill", d => d.children ? "#fff" : fill)
                     .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
-                    // .attr("stroke", d => d.children ? stroke : null)
-                    // .attr("stroke-width", d => d.children ? strokeWidth : null)
-                    // .attr("stroke-opacity", d => d.children ? opacityScale : null)
                     .attr("r", d => d.r)
                     .attr("fill", d => d.data.riskStatus.controlTypeMode === undefined ? "#fff" : colorScale(d.data.riskStatus.controlTypeMode))
 
@@ -109,6 +126,41 @@
                     .attr("fill-opacity", (d, i, D) => i === D.length - 1 ? 0.7 : null)
                     .text(d => d);
                 }
+
+                // Tooltip
+                const tooltip = d3.select("#chart")
+                .append("div")
+                .attr("class", "tooltip");
+
+                circle.on("mouseover", function(e, d) {
+
+                    let thisCircle = d3.select(this);
+
+                    console.log(this)
+                    let x = +thisCircle.attr("cx") + 20;
+                    let y = +thisCircle.attr("cy") - 10;
+
+                    console.log(e);
+                    console.log(d);
+
+                    tooltip.style("visibility", "visible")
+                        .style("top", `${y}px`)
+                        .style("left", `${x}px`)
+                        .html(`Process: <b>${d.data.name}</b>`);
+
+                    // thisCircle
+                    //     .attr("stroke", "black")
+                    //     .attr("stroke-width", 2);
+
+                    d3.select(this).attr("opacity", 1).raise();
+
+                    }).on("mouseout", function() {
+
+                        tooltip.style("visibility", "hidden");
+                        circle.attr("opacity", 1);
+
+                        d3.selectAll('circle').attr("stroke", "none"); 
+                    });
             });
 
         </script>
