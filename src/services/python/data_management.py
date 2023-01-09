@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import numpy as np
 
 from python.helper import unique_int
 
@@ -512,52 +513,57 @@ def create_links(data, actors, activities):
     return links
 
 """
+Nest the activity attributes
+"""
+def create_attributes(xwalk, lu, id, root1, root2):
+
+    root1ID = root1+"ID"
+    root2ID = root2+"ID"
+    df = pd.merge(xwalk[xwalk[root1ID] == id], lu, how="left", on=root2ID)
+
+    attributes = {}
+
+    if df.shape[0] > 0:
+        attributes[root2+"N"] = df.shape[0]
+        if root2+"Type" in df.columns:
+            attributes[root2+"Mode"] = df.mode()[root2+"Type"].iloc[0]
+
+        array = []
+        row = {}
+        for i in unique_int(df, root2ID):
+            row = {"id": int(i),
+                   "name": df[df[root2ID] == i][root2].iloc[0]}
+
+            if root2+"Type" in df.columns:
+                row["typeMode"] = df[df[root2ID] == i][root2+"Type"].iloc[0]
+
+            array.append(row)
+        attributes["attributes"] = array
+
+    return attributes
+
+"""
 Nest controls in risks
 return dictionary
 """
 def nest_risk_control(risk_to_control, risk, control):
 
-    riskArray = []
-    ids1 = unique_int(risk_to_control, "riskID")
-    manualControl = False
-    semiAutoControl = False
-    autoControl = False
+    array = []
+    ids = unique_int(risk_to_control, "riskID")
 
-    for i in ids1:
+    for id in ids:
 
-        riskDict = {"id": int(i),
-                    "name": risk[risk.riskID == i].risk.iloc[0],
-                    "financialDisclosureRisk": bool(risk[risk.riskID == i].financialDisclosureRisk.iloc[0])}
+        attr = create_attributes(risk_to_control, control, id, "risk", "control")
+        dict = {"id": int(id),
+                "name": risk[risk.riskID == id].risk.iloc[0],
+                "financialDisclosureRisk": bool(risk[risk.riskID == id].financialDisclosureRisk.iloc[0]),
+                "children": attr,
+                "controlTypeMode": attr["controlMode"],
+                "controlN": len(attr["attributes"])}
 
-        ids2 = unique_int(risk_to_control[risk_to_control.controlID == i], "controlID")
-        controlsArray = []
+        array.append(dict)
 
-        for j in ids2:
-            controlDict = {"id": int(j),
-                           "name": control[control.controlID == j].control.iloc[0],
-                           "type": control[control.controlID == j].controlType.iloc[0],
-                           "category": control[control.controlID == j].controlCategory.iloc[0],
-                           "peridocity": control[control.controlID == j].controlPeriodocity.iloc[0]}
-
-            controlsArray.append(controlDict)
-
-            if control[control.controlID == j].controlType.iloc[0] == "Manual":
-                manualControl = True
-
-            if control[control.controlID == j].controlType.iloc[0] == "Semi-automatic":
-                semiAutoControl = True
-
-            if control[control.controlID == j].controlType.iloc[0] == "Automatic":
-                autoControl = True
-
-        riskDict["children"] = controlsArray
-        riskDict["nControls"] = len(controlsArray)
-        riskDict["manualControl"] = manualControl
-        riskDict["semiAutoControl"] = semiAutoControl
-        riskDict["autoControl"] = autoControl
-        riskArray.append(riskDict)
-
-    return riskArray
+    return array
 
 def test_list_boolean(list, boolName):
     if len([i for i in list if i[boolName]]) > 0:
@@ -568,108 +574,143 @@ def test_list_boolean(list, boolName):
     return bool
 
 """
+Combines two lookup tables using a crosswalk
+"""
+def relate_tables(lu1, lu2, xwalk, root1, root2):
+
+    root1ID = root1+"ID"
+    root2ID = root2+"ID"
+
+    df = pd.merge(xwalk, lu2, how="left", on=root2ID)
+    df = pd.merge(df, lu1, how="left", on=root1ID)
+    df.replace('NA', np.nan, inplace=True)
+
+    return df
+
+"""
+Creates a risk status attribute at the activity level
+return nested list
+"""
+def create_risk_status(df, rtc, root1, id):
+
+    root1ID = root1+"ID"
+    temp = pd.merge(df[df[root1ID] == id], rtc, how="left", on=["riskID", "controlID"])
+    temp = temp[pd.isnull(temp.riskID) == False]
+
+    if temp.shape[0] > 0:
+
+        temp['riskID'] = pd.to_numeric(temp['riskID'], errors='coerce').astype(int)
+
+        row = {"nRisks": int(temp.riskID.nunique()),
+               "riskID": temp.riskID.unique().tolist()}
+        
+        if pd.isnull(temp.controlType).iloc[0]:
+            controlTypeMode = "NA"
+        else:
+            controlTypeMode = temp.controlType.mode().iloc[0]
+
+        if pd.isnull(temp.controlPeriodocity).iloc[0]:
+            controlPeriodocityMode = "NA"
+        else:
+            controlPeriodocityMode = temp.controlPeriodocity.mode().iloc[0]
+
+        row["riskStatus"] = {"controlTypeMode": controlTypeMode,
+                             "controlPeriodocityMode": controlPeriodocityMode,
+                             "financialDisclosureRiskAny": bool(any(temp.financialDisclosureRisk))}
+    else:
+        row = {"nRisks": int(0)}
+
+    return row
+
+"""
+"""
+def nest_activities_to_risks(activities, risks, controls, level3_to_activities, activity_to_risk, risk_to_control):
+
+    array = []
+
+    ids = unique_int(level3_to_activities, "activityID")
+
+    for id in ids:
+
+        dict = {"id": int(id),
+                "name": activities[activities.activityID == id].activity.iloc[0],
+                "category": activities[activities.activityID == id].activityCategory.iloc[0]
+                }
+
+        risk_status = create_risk_status(risks, controls, activities, risk_to_control, activity_to_risk[activity_to_risk.activityID == id])
+
+        if len(risk_status) != 0:
+            dict["risks"] = risk_status
+            dict["financialDisclosureRiskAny"] = bool(risk_status['riskStatus']['financialDisclosureRiskAny'])
+            dict["controlTypeMode"] = risk_status['riskStatus']['controlTypeMode']
+            dict["controlPeriodocityMode"] = risk_status['riskStatus']['controlPeriodocityMode']
+            dict["nRisks"] = int(risk_status['nRisks'])
+
+        else:
+            dict["risks"] = {"nRisks": int(0),
+                            "financialDisclosureRiskAny": bool(False),
+                            "controlTypeMode": "NA",
+                            "controlPeriodocityMode": "NA"}
+
+        array.append(dict)
+
+    return array
+
+"""
+"""
+def subset_list(ids, l):
+    array = []
+    for i in l:
+
+        if i["id"] in ids:
+            array.append(i)
+    
+    return array
+
+"""
+"""
+def nest_processes_new(df, rtc, xwalk, root1df, root1, root2, children = None):
+
+    root1ID = root1+"ID"
+    root2ID = root2+"ID"
+
+    ids = unique_int(xwalk, root1ID)
+    array = []
+    
+    for id in ids:
+
+        childrenIDs = xwalk[xwalk[root1ID] == id][root2ID].unique().tolist()
+        d = {"id": int(id),
+            "name": root1df[root1df[root1ID] == id][root1].iloc[0],
+            "childrenIDs": childrenIDs,
+            "riskStatus": create_risk_status(df, rtc, root1, id)
+            }
+
+        if children is not None:
+            d["children"] = subset_list(childrenIDs, children)        
+
+        array.append(d)
+
+    return array
+
+"""
 Nest processes
 """
-def nest_processes(level1_to_level2, level2_to_level3, level3_to_activities, activity_to_risk, level1, level2, level3, activity, risksNested):
+def nest_processes(level1_to_level2, level2_to_level3, level3_to_activity, activity_to_risk, risk_to_control, level1, level2, level3, activities, risks, controls, risksNested):
 
-    process1Array = []
-    nRiskProcess1  = 0
-    process1Ids = unique_int(level1, "level1ID")
+    rtc = relate_tables(risks, controls, risk_to_control, root1 = "risk", root2 = "control")
 
-    for a in process1Ids:
+    df = pd.merge(level1_to_level2, level2_to_level3, how="left", on="level2ID")
+    df = pd.merge(df, level3_to_activity, how="left", on="level3ID")
+    df = pd.merge(df, activity_to_risk, how="left", on="activityID")
+    df = pd.merge(df, risk_to_control, how="left", on="riskID")
 
-        process1Dict = {"id": int(a),
-                        "name": level1[level1.level1ID == a].level1.iloc[0],
-                        "group": "process1"}
+    nest4 = nest_processes_new(df, rtc, activity_to_risk, activities, "activity", "risk")
+    nest3 = nest_processes_new(df, rtc, level3_to_activity, level3, "level3", "activity", nest4)
+    nest2 = nest_processes_new(df, rtc, level2_to_level3, level2, "level2", "level3", nest3)
+    nest1 = nest_processes_new(df, rtc, level1_to_level2, level1, "level1", "level2", nest2)
 
-        process2Array = []
-        nRiskProcess2 = 0
-        process2Ids = unique_int(level1_to_level2[level1_to_level2.level1ID == a], "level2ID")
-
-        for b in process2Ids:
-
-            process2Dict = {"id": int(a),
-                            "name": level2[level2.level2ID == b].level2.iloc[0],
-                            "group": "process2"}
-
-            process3Array = []
-            nRiskProcess3 = 0
-            process3Ids = unique_int(level2_to_level3[level2_to_level3.level2ID == b], "level3ID")
-
-            for c in process3Ids:
-
-                process3Dict = {"id": int(c),
-                                "name": level3[level3.level3ID == c].level3.iloc[0],
-                                "group": "process3"}
-
-                activityArray = []
-                nRisksActivities = 0
-                activityIDs = unique_int(level3_to_activities[level3_to_activities.level3ID == c], "activityID")
-
-                # iterate through activity ids
-                for d in activityIDs:
-
-                    riskIds = unique_int(activity_to_risk[activity_to_risk.activityID == d], "riskID")
-
-                    activityDict = {"id": int(d),
-                                    "name": activity[activity.activityID == d].activity.iloc[0],
-                                    "category": activity[activity.activityID == d].activityCategory.iloc[0],
-                                    "nRisks": len(riskIds),
-                                    "group": "activity"}
-
-                    nRisksActivities = len(riskIds) + nRisksActivities
-
-                    if len(riskIds) > 0:
-
-                        risks = [i for i in risksNested if i['id'] in riskIds]
-                        activityDict["financialDisclosureRisk"] = test_list_boolean(risks, "financialDisclosureRisk")
-
-                    activityArray.append(activityDict)
-
-                # Update process 3 array
-                nRiskProcess3 = nRisksActivities + nRiskProcess3
-                process3Dict["children"] = activityArray
-                process3Dict["nRisks"] = nRisksActivities
-                process3Array.append(process3Dict)
-
-            # Update process 2 array
-            nRiskProcess2 = nRiskProcess2 + nRiskProcess3
-            process2Dict["children"] = process3Array
-            process2Dict["nRisks"] = nRiskProcess3
-            process2Array.append(process2Dict)
-
-        # Update process 1 array
-        nRiskProcess1 = nRiskProcess1 + nRiskProcess2
-        process1Dict["children"] = process2Array
-        process1Dict["nRisks"] = nRiskProcess2
-        process1Array.append(process1Dict)
-
-    dic = {"name": "root",
-           "children": process1Array}
-
-    return dic
-
-"""
-"""
-def activity_attributes(xwalk, lu, id, root):
-
-    rootID = root+"ID"
-    df = pd.merge(xwalk[xwalk.activityID == id], lu, how="left", on=rootID)
-
-    attributes = {}
-
-    if df.shape[0] > 0:
-        attributes[root+"N"] = df.shape[0]
-        array = []
-        row = {}
-        for i in unique_int(df, rootID):
-            row = {"id": int(i),
-                # "type": df[df[rootID] == i][root+"Type"].iloc[0],
-                "descr": df[df[rootID] == i][root].iloc[0]}
-            array.append(row)
-        attributes["attributes"] = array
-
-    return attributes
+    return {"name": "root", "children": nest1}
 
 """
 Nest activities attributes
@@ -682,10 +723,11 @@ def nest_activities(activities, actors, risks, applications, activity_to_actor, 
 
         dictact = {
             "id": int(id),
-            "actors": activity_attributes(activity_to_actor, actors, id, "actor"),
-            "risks": activity_attributes(activity_to_risk, risks, id, "risk"),
-            "applications": activity_attributes(activity_to_application, applications, id, "application")
+            "actors": create_attributes(activity_to_actor, actors, id, "activity", "actor"),
+            "risks": create_attributes(activity_to_risk, risks, id, "activity", "risk"),
+            "applications": create_attributes(activity_to_application, applications, id, "activity", "application")
         }
+
         array.append(dictact)
 
     return array

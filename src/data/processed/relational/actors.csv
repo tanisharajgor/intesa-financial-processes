@@ -167,9 +167,9 @@ Organizational unit,Investor Relations,156
 Organizational unit,Price-Sensitive Communication,157
 Organizational unit,Board Secretariat and Management Committee,584
 Organizational unit,Board Committees Secretariat,586
-Empty group,Structure responsible for the operation - SOP,1453
+NA,Structure responsible for the operation - SOP,1453
 Organizational unit,Secretariat of the Management Control Committee and Supervisory Body 231/2001,2097
-Empty group,Committee secretariats,531
+NA,Committee secretariats,531
 Position,Digital Manager,1879
 Position,Remote Digital Commercial Coordinator,767
 Position,Digital Branch Manager,1880
@@ -179,7 +179,7 @@ Position,Remote Digital Branch Manager,765
 Position,ISPB - HNWI Branch Manager,3334
 Position,ISPB - Global Relationship Manager,3335
 Position,ISPB - Team Leader,948
-Empty group,OFS-enabled manager,1810
+NA,OFS-enabled manager,1810
 Position,ISPB - Agent,907
 Person,ISIA,2058
 External Organizational unit,Intesa Sanpaolo Vita,2824
@@ -249,7 +249,7 @@ Organizational unit,Group Financial Risks Committee,1298
 Organizational unit,Management Support and Monitoring,2348
 Organizational unit,Corporate and Physical Security Design,664
 Organizational unit,Project and Facility Management,1097
-Empty group,Business owners,2924
+NA,Business owners,2924
 Organizational unit,Managed savings,1543
 Organizational unit,Solutions & Asset Disposals,3106
 Organizational unit,Credit Analytics & Data,688
@@ -338,10 +338,10 @@ Organizational unit,Intesa Sanpaolo Vita - Personnel and Organization,1225
 Organizational unit,Personnel Management of Central BdT Structures,1497
 Organizational unit,"HR Contracts, Data Analysis & Cost Management - International Subsidiary Banks Division",1597
 Organizational unit,Domestic & International People Management - International Subsidiary Banks Division,1596
-Empty group,Society,2658
+NA,Society,2658
 Organizational unit,Personnel and Training,2983
-Empty group,Society,2657
-Empty group,Employee,1411
+NA,Society,2657
+NA,Employee,1411
 Organizational unit,Operations Smart HR services,440
 Organizational unit,Industrial Relations,2627
 Organizational unit,Ordinary Credit Specialist Support,2973
@@ -395,7 +395,7 @@ Organizational unit,Corporate taxation,362
 Organizational unit,Funding & Counterbalancing Capacity,2857
 Organizational unit,Large Corporate Loans,3148
 Organizational unit,Trade & Receivable Finance Products,1486
-Empty group,Accounting structure and structure responsible for payment,809
+NA,Accounting structure and structure responsible for payment,809
 Organizational unit,IMI CIB Budget and Cost Monitoring,2205
 Organizational unit,Brokerage & Execution,1590
 Organizational unit,E-Commerce Distribution,1589
@@ -415,7 +415,7 @@ Organizational unit,Incident Management and Monitoring,2396
 Organizational unit,Supply Chains and Application Management,1246
 Organizational unit,ORMDs and Performance Management,621
 Organizational unit,Governance and Management Systems,1423
-Empty group,Certification bodies,1291
+NA,Certification bodies,1291
 Organizational unit,Management Accounting Reconciliation,2871
 Organizational unit,Division Reporting,2872
 Organizational unit,Operations Credits and Accounts,2029
@@ -424,7 +424,7 @@ Organizational unit,Transactional,3150
 Organizational unit,Group Customer Database,2114
 Organizational unit,Operations Transaction Banking and Financial Institutions,1053
 Organizational unit,Operations coordination,3317
-Empty group,Data Technology Owner,526
+NA,Data Technology Owner,526
 Organizational unit,Data Technology,3173
 Organizational unit,Data Control and Methodologies,249
 Organizational unit,Data Center of Government and Data Quality,2370
@@ -437,7 +437,7 @@ Organizational unit,Economic and Asset Data Analysis,2372
 Organizational unit,Corporate Consulting and Parent Company Governance Processes,30
 Organizational unit,Welfare,2624
 Organizational unit,Governance Internal Board Committees and Supervisory Body 231/2001,585
-Empty group,Competent ISP structure by subject,429
+NA,Competent ISP structure by subject,429
 Person,Subsidiary Company,997
 Organizational unit,integrated risk reporting,124
 Position,MLT/Leasing specialist,2997
@@ -448,16 +448,16 @@ Organizational unit,RAF & Risk Policies,507
 Organizational unit,ICAAP & ILAAP,2376
 Organizational unit,"Planning, Capital Management & Recovery Plan",501
 Organizational unit,Funding Plan,1470
-Empty group,Business structure,2595
+NA,Business structure,2595
 Position,Factoring specialist,2996
-Empty group,Head of Management,1218
+NA,Head of Management,1218
 Organizational unit,NPE Summary and Controls,678
 Organizational unit,Governance Systems and Processes & Business Conduct Advisory,1839
-Empty group,Structure responsible for the operation - SOP,942
+NA,Structure responsible for the operation - SOP,942
 Person,Customer,292
 Organizational unit,Management of OTC Derivative Confirmations,980
 Organizational unit,BDT Corporate Solutions,3093
-Empty group,The Supervisor,1741
+NA,The Supervisor,1741
 Organizational unit,Regulatory Reporting,1198
 Organizational unit,Finance and Data Governance,1747
 Organizational unit,Data Governance,3285
@@ -471,7 +471,7 @@ Organizational unit,Financial Institutions Products,3240
 Organizational unit,Financial Institutions Cash Management Sales,3260
 Organizational unit,Support Subsidiaries and New Business,226
 Organizational unit,IT Regulatory Impact Analysis,2979
-Empty group,Second level structure,1965
+NA,Second level structure,1965
 Organizational unit,Organization Other Governance Functions,2978
 Organizational unit,"Finance Organization, Capital Markets and Synthesis Systems",2977
 Organizational unit,Organization of Control Functions,2976
@@ -484,10 +484,10 @@ Organizational unit,Central Management Group Supervisory Strategic Steering,1998
 Position,Intesa Sanpaolo Agents4You collaborator,1506
 Organizational unit,Central Institutional Affairs Directorate,1999
 Organizational unit,International Public Affairs,2739
-Empty group,GAF-ISP Life Regulatory Agenda,2874
-Empty group,structure involved,171
+NA,GAF-ISP Life Regulatory Agenda,2874
+NA,structure involved,171
 Organizational unit,Group Regulatory Evolution Agenda,1997
-Empty group,Corporate bodies,3132
+NA,Corporate bodies,3132
 Organizational unit,Data Center Service Execution,2442
 Organizational unit,Retail Finance,2333
 Organizational unit,Integrated Management of Values,1784
@@ -496,34 +496,34 @@ Organizational unit,Financial Products Regulation,86
 Organizational unit,CIB Commodity Solutions,3090
 Person,External custodian,1602
 Organizational unit,Vault,995
-Empty group,Branch with internal warehouse,390
-Empty group,Manager,1079
+NA,Branch with internal warehouse,390
+NA,Manager,1079
 Organizational unit,Supranational Agencies Origination,2984
-Empty group,Project leader,726
-Empty group,Project team,725
-Empty group,Operational Representative,1263
+NA,Project leader,726
+NA,Project team,725
+NA,Operational Representative,1263
 Person,Supplier Operational Representative,987
-Empty group,Local Bank Operations Support,277
-Empty group,Local CSIRT/Local ISO,731
-Empty group,Global Resilience & Complex Incident Management (GRe.CIM),1844
+NA,Local Bank Operations Support,277
+NA,Local CSIRT/Local ISO,731
+NA,Global Resilience & Complex Incident Management (GRe.CIM),1844
 Organizational unit,"Liquidity, Capital Measurement and Value Governance",3346
 Organizational unit,TIT - DC Group Treasury and Finance,506
 Organizational unit,Strategic Asset & Liability Management,1516
-Empty group,Purchasing body,64
+NA,Purchasing body,64
 Person,Unit in Charge,3191
 Organizational unit,Artistic heritage,2734
 Person,Body that owns the artistic assets,242
 Person,Recipient of the goods,3323
 Organizational unit,Real Estate Appraisals and Integrated Logistics,2776
 Organizational unit,Special Regulations,2208
-Empty group,Organizational unit manager,558
+NA,Organizational unit manager,558
 Person,Society,2721
 Organizational unit,Personnel and Network Assistance - Regional Management,1655
-Empty group,Employee,557
-Empty group,CIB employee,2964
-Empty group,CIB employee,2965
-Empty group,Central Management Structure,497
-Empty group,Territorial structure,498
+NA,Employee,557
+NA,CIB employee,2964
+NA,CIB employee,2965
+NA,Central Management Structure,497
+NA,Territorial structure,498
 Organizational unit,ECM Origination,536
 Organizational unit,Engagement Committee - IMI CIB Division,819
 Organizational unit,Corporate Finance BDT,96
@@ -599,7 +599,7 @@ Organizational unit,Logistics Services,2778
 Person,Counterpart,2775
 Organizational unit,GTB Support,2174
 Organizational unit,Global Custody,1672
-Empty group,Bank of Italy,1744
+NA,Bank of Italy,1744
 Organizational unit,Parent Company Compliance,35
 Organizational unit,Funding Collateral Management and Monitoring,1518
 Organizational unit,Cybersecurity Controls and Certifications,2082
@@ -633,48 +633,48 @@ Organizational unit,"Partnerships, Loyalty and Acquisition",2191
 Organizational unit,Pricing - BdT Division,1850
 Position,Territorial Coordination Specialist for Products and Segments - Regional Management,3164
 Organizational unit,Service contracts,1268
-Empty group,SLM users,22
-Empty group,ECM ISP IMI SEC,2616
+NA,SLM users,22
+NA,ECM ISP IMI SEC,2616
 Organizational unit,Legal Advisory Corporate Finance,2216
 Organizational unit,ECM London - IMI CIB Division,1787
 Organizational unit,London Branch - Legal - IMI CIB Division,668
 Organizational unit,ECM Transactions,539
-Empty group,Compliance ISP IMI SEC,1700
+NA,Compliance ISP IMI SEC,1700
 Organizational unit,Executive Management,1931
 Organizational unit,Equity Capital Markets,540
 Organizational unit,Human Resources Management - IMI CIB Division,2530
 Organizational unit,Work Transformation,2236
 Organizational unit,Deal Advisory,2164
 Organizational unit,Titles,1813
-Empty group,Legal ISP IMI SEC,656
-Empty group,Debt Syndication ISP IMI SEC,655
+NA,Legal ISP IMI SEC,656
+NA,Debt Syndication ISP IMI SEC,655
 Organizational unit,Intesa Sanpaolo IMI Securities Corporation - Chief Executive Officer,841
-Empty group, ISP IMI SEC US Brokerage & Equity Sales,1208
+NA, ISP IMI SEC US Brokerage & Equity Sales,1208
 Organizational unit,Holdings,163
 Organizational unit,FICC Financial Institutions Sales London - IMI CIB Division,670
 Organizational unit,Equity Sales,1568
 Organizational unit,Corporate Solutions London - IMI CIB Division,1897
 Organizational unit,Intesa Sanpaolo IMI Securities Corporation - Corporate Risk Solutions,2312
-Empty group,Local Risk Unit,2101
-Empty group, Reporter,2558
-Empty group,Delegated by the Head of internal reporting systems,763
+NA,Local Risk Unit,2101
+NA, Reporter,2558
+NA,Delegated by the Head of internal reporting systems,763
 Organizational unit,Management Control Committee,2305
-Empty group,Function in charge of the verification,713
-Empty group,Personal function,2910
-Empty group,Operational function,746
+NA,Function in charge of the verification,713
+NA,Personal function,2910
+NA,Operational function,746
 Organizational unit,Chief Audit Officer,2596
 Person,The supplier,548
 Organizational unit,Concession of Consumer Credit and Third Party Networks,681
-Empty group,Reference Manager,2270
+NA,Reference Manager,2270
 Organizational unit,Pensions and Operations Welfare,439
-Empty group,Director/Manager,2249
+NA,Director/Manager,2249
 Person,Pension Fund owner of the pension treatment,2880
 Organizational unit,SEPA and Commercial Collections,102
 Organizational unit,Executive Administration,2625
 Person,Pension Fund/Company,2241
 Organizational unit,Rates & Currency Sales,1563
 Organizational unit,Currency & Commodity Trading,181
-Empty group,Bank of Italy,1237
+NA,Bank of Italy,1237
 Organizational unit,Credit Granting,2336
 Organizational unit,Network Italy,642
 Organizational unit,Pricing methodologies and tools,1385
@@ -688,7 +688,7 @@ Organizational unit,Resource Management & Market Financing,2127
 Organizational unit,DCM & Debt Syndication,1915
 Organizational unit,ISBD Corporate Finance,567
 Organizational unit,Principal Investments,2128
-Empty group,Employee,49
+NA,Employee,49
 Organizational unit,Labor Processes,436
 Organizational unit,Digital Transformation & Legal Management,2211
 Person,Professional,3336
@@ -707,7 +707,7 @@ Organizational unit,IMI CIB Legal Advisory Department - IMI CIB Division,3080
 Person,External Legal Advisor,2140
 Organizational unit,Group Finance - DC Legal and Litigation - Group General Counsel,974
 Organizational unit,Treasury - Foreign Branch Hub,490
-Empty group,Recipients of escalation reports,100
+NA,Recipients of escalation reports,100
 Organizational unit,Hub Hong Kong Branch,3272
 Organizational unit,New York branch,923
 Organizational unit,Operational ALM,505
@@ -715,7 +715,7 @@ Organizational unit,London branch,2758
 Organizational unit,Portfolio Management,2868
 Organizational unit,Government Outsourcing,1197
 Organizational unit,Processing Interface and Business Support,1708
-Empty group,Entry coordinator in the User Testing environment,2358
+NA,Entry coordinator in the User Testing environment,2358
 Organizational unit,Data Infrastructure Solutions,1255
 Organizational unit,Central Innovation Department,2529
 Organizational unit,HR Development Models,1955
@@ -735,7 +735,7 @@ Position,Commercial Director of the Third Sector,234
 Position,Director of the Business Area,3167
 Position,Business Commercial Director,3162
 Position,Director of the Third Sector Area,2789
-Empty group,Client company,298
+NA,Client company,298
 Organizational unit,Analytical Accounting,963
 Organizational unit,"CIB Equity, Rates & Credit Solutions",3089
 Organizational unit,Equity Cash Sales,1564
@@ -748,10 +748,10 @@ Organizational unit,Planning & Optimization,3359
 Organizational unit,Analysis & Monitoring,3360
 Organizational unit,Stock Lending,2036
 Position,Specialist in Hedging Products and Liquidity Management,619
-Empty group,The Supervisor,3314
-Empty group,BdT manager,428
+NA,The Supervisor,3314
+NA,BdT manager,428
 Person,Customer,2828
-Empty group,front office,938
+NA,front office,938
 Organizational unit,Risk Technology,2576
 Organizational unit,Group Banking Book Modeling and Measurement,3248
 Organizational unit,Group positioning and transversal initiatives,1185
@@ -760,9 +760,9 @@ Organizational unit,Checks,1429
 Person,External service,2367
 Person,Ministry of Economy and Finance,2366
 Organizational unit,OMR and Outsourcing,1259
-Empty group,Representative of the Client Company,2512
-Empty group,Client company,992
-Empty group,Paying Structures,993
+NA,Representative of the Client Company,2512
+NA,Client company,992
+NA,Paying Structures,993
 Organizational unit,Market and Counterparty Risk Monitoring,1715
 Organizational unit,Market Risk Policies and Governance,1716
 Organizational unit,Financial Markets Analytics & Digital Solutions,2490
@@ -773,14 +773,14 @@ Organizational unit,Funds and Management products,1074
 Organizational unit,BdT Investment Services,827
 Organizational unit,Transactional Products,2197
 Organizational unit,Structured and Intercompany Funding,949
-Empty group,Foreign subsidiary,1285
+NA,Foreign subsidiary,1285
 Organizational unit,MLT Debt Origination & Sustainability Bond Structuring,2228
 Organizational unit,Group Banking Book monitoring,3248
 Organizational unit,Money Market & Settlements,2869
 Organizational unit,Group Finance,974
-Empty group,Facilitated subject,3344
+NA,Facilitated subject,3344
 Organizational unit,Budget Operating Expenses,1266
-Empty group,Responsibility Center (CdR),3343
+NA,Responsibility Center (CdR),3343
 Organizational unit,Treasury - Foreign Branch,2650
 Organizational unit,Integrated ALM & Innovative Management,3357
 Organizational unit,Credit Portfolio Management,605
@@ -809,7 +809,7 @@ Organizational unit,Legal and Employment Consulting,435
 Position,Business Analyst - International Management,2457
 Organizational unit,Emerging Markets Banks & ECAs,1642
 Organizational unit,"Asset Management, Insurance & Government",3262
-Empty group,SFO-qualified financial advisor with mixed contract,2441
+NA,SFO-qualified financial advisor with mixed contract,2441
 Organizational unit,Learning Accounts,2304
 Organizational unit,Coordination of training needs BdT,485
 Organizational unit,Private Banking and Fideuram projects,2106
@@ -822,7 +822,7 @@ Organizational unit,Global Transaction Banking Department - IMI CIB Division,164
 Organizational unit,Strategies and Marketing Department - IMI CIB Division,194
 Organizational unit,Central Administration and Tax Directorate,2902
 Organizational unit,Central Management for Internal Validation and Controls,2995
-Empty group,Project yards,2694
+NA,Project yards,2694
 Organizational unit,Internal Model & Capital Adequacy audits,1347
 Organizational unit,Internal Validation,985
 Organizational unit,Connection with Cost Management and NPL Monitoring,2373
@@ -830,59 +830,59 @@ Organizational unit,Budget and Group Management Reporting,2371
 Organizational unit,Performance Analysis of Parent Company and Corporate Centre,1269
 Person,Service,1840
 Organizational unit,Organ Structures and Corporate Governance,34
-Empty group,Group companies concerned,2022
+NA,Group companies concerned,2022
 Organizational unit,Antitrust Affairs,2741
 Organizational unit,Consolidated Financial Statements and Supervision,431
 Organizational unit,MLT Sector Specialist Consulting,61
-Empty group,Info Providers,2132
+NA,Info Providers,2132
 Organizational unit,"ICT Contracting, Procurement and Other Group Services",2557
 Organizational unit,International Consulting,1551
-Empty group,Lender Structure,1537
+NA,Lender Structure,1537
 Organizational unit,Service and UX Design,2863
 Organizational unit,Test Factory,3144
 Organizational unit,ISBD Digital Business Partner,3133
 Organizational unit,Digital Business Partner Governance Areas,2682
-Empty group,Business Owner,2555
+NA,Business Owner,2555
 Organizational unit,Cybersecurity Group Architecture Cloud Integration and Innovation,2083
 Organizational unit,Networking & Collaboration,2711
-Empty group,Facility manager,153
-Empty group,Safety Representative,1770
+NA,Facility manager,153
+NA,Safety Representative,1770
 Organizational unit,Network Hubs,924
 Organizational unit,Credit Controls - IMI CIB Division,2206
-Empty group,Assistant,1248
+NA,Assistant,1248
 Position,Corporate Analyst - Foreign Branch Hub,190
 Organizational unit,Corporate and Third Sector Loans,1638
 External Organizational unit,VUB bank,98
 Person,Group banks and companies,462
-Empty group,Trustees,823
-Empty group,European Central Bank,822
-Empty group,Bank of Italy,821
+NA,Trustees,823
+NA,European Central Bank,822
+NA,Bank of Italy,821
 Position,GTB Cash specialist,1388
 Organizational unit,"RFP, Onboarding and Execution",919
 Organizational unit,GTB Cash Management,1482
 Organizational unit,International Corporate Cash Management Sales,1772
-Empty group,Organizational Unit contact person,846
-Empty group,Organizational Unit contact person,780
-Empty group,Expenditure manager,3225
-Empty group,Organizational Unit contact person,12
+NA,Organizational Unit contact person,846
+NA,Organizational Unit contact person,780
+NA,Expenditure manager,3225
+NA,Organizational Unit contact person,12
 Person,Supplier,779
 Organizational unit,Purchasing Business and Personal Services,1100
 Person,Supplier,803
 Person,Supplier,2387
-Empty group,Organizational Unit contact person,2386
+NA,Organizational Unit contact person,2386
 Person,Supplier,804
 Person,Supplier,1705
 Person,Supplier,13
-Empty group,Support and Control Body,14
+NA,Support and Control Body,14
 Person,External Legal Advisor,334
 Organizational unit,Accounting & Administration - Hong Kong,889
 Organizational unit,Accounting & Administration - New York,891
 Organizational unit,Accounting & Administration - London,890
-Empty group,Bank of Italy,3055
+NA,Bank of Italy,3055
 Organizational unit,Rating Desk Validations,2854
-Empty group,Applicant body,2559
-Empty group,Supplier,2699
-Empty group,Internal/external proponent of the Purchasing Department,3103
+NA,Applicant body,2559
+NA,Supplier,2699
+NA,Internal/external proponent of the Purchasing Department,3103
 Organizational unit,Engagement Committee - OtS session,820
 Organizational unit,Facilitated Finance,62
 Organizational unit,Rating Coordination & Desk Institutions,2861
@@ -903,15 +903,15 @@ Organizational unit,Planning & Controlling,2418
 Organizational unit,Group Management Control,2260
 Person,Supplier,1783
 Organizational unit,ICT costs,960
-Empty group,Porter's office,2011
-Empty group,Employee,3043
+NA,Porter's office,2011
+NA,Employee,3043
 Organizational unit,Stress Testing & Enterprise Risk Projection,1684
 Organizational unit,Credit Risk Measurement,718
 Organizational unit,Supervisory Oversight,2987
-Empty group,Advisory Committees,2598
-Empty group,Divisions and Business Structures,1941
-Empty group,Competent CFO Area structure,2722
-Empty group,Branch with internal warehouse,356
+NA,Advisory Committees,2598
+NA,Divisions and Business Structures,1941
+NA,Competent CFO Area structure,2722
+NA,Branch with internal warehouse,356
 Person,External custodian,3184
 Organizational unit,Commodity Trading,180
 Person,Customer,1236
@@ -919,17 +919,17 @@ Organizational unit,Talent Management,1294
 Organizational unit,People Management,2201
 Person,Society,1923
 Organizational unit,People Development & Experience,1929
-Empty group,Client structures,528
+NA,Client structures,528
 Organizational unit,Internal communication,3143
 Organizational unit,LGD NPL Models and Infrastructure,2016
-Empty group,Incident Management functions,2448
-Empty group,Global Resilience & Complex Incident Management (GRe.CIM),3322
-Empty group,Functions Impacted,2034
-Empty group,Competent Functions,2447
+NA,Incident Management functions,2448
+NA,Global Resilience & Complex Incident Management (GRe.CIM),3322
+NA,Functions Impacted,2034
+NA,Competent Functions,2447
 Person,Nexi Acquiring Office,3030
 Organizational unit,Sales Network Italy,3363
 Person,Company within the Service perimeter,3020
-Empty group,Manager of the BdT Manager/ IMI CIB Manager,3038
+NA,Manager of the BdT Manager/ IMI CIB Manager,3038
 Organizational unit,"MLT/Leasing and Factoring specialists in Veneto, Trentino Alto Adige and Friuli Venezia Giulia",1696
 Organizational unit,"MLT/Leasing and Factoring specialists Piedmont, Valle d'Aosta, Liguria and Sardinia",1695
 Organizational unit,MLT/Leasing and Factoring Centre,1697
@@ -948,30 +948,30 @@ Organizational unit,Protection and social security products,1649
 Organizational unit,Life and pension products,1075
 Organizational unit,Investment Services and Insurance Products,1549
 Organizational unit,"Transparency and Desk Pricing Agribusiness, Third Sector and Third Party Networks",3000
-Empty group,Applicant,1062
+NA,Applicant,1062
 Organizational unit,"Identity, Logical-Physical Access Solutions",1758
-Empty group,Competent organization,1193
+NA,Competent organization,1193
 Organizational unit,Privacy Consulting,3377
-Empty group,PO manager,2013
+NA,PO manager,2013
 Organizational unit,Cybersecurity Service Quality Management,1761
-Empty group,Manager responsible for preparing the corporate accounting documents,3307
-Empty group,Contributing structures,3131
-Empty group,Reviewers,149
+NA,Manager responsible for preparing the corporate accounting documents,3307
+NA,Contributing structures,3131
+NA,Reviewers,149
 Organizational unit,Correspondence Services,2777
 Person,Supplier,740
 Person,Customer,2958
-Empty group,Personal function,1867
-Empty group,OU manager,1864
-Empty group,Physical Security Function,1868
-Empty group,Technical function,738
-Empty group,Cybersecurity function,236
-Empty group,ORMD extension,1681
-Empty group,ORMR,1863
-Empty group,Real estate function,1865
+NA,Personal function,1867
+NA,OU manager,1864
+NA,Physical Security Function,1868
+NA,Technical function,738
+NA,Cybersecurity function,236
+NA,ORMD extension,1681
+NA,ORMR,1863
+NA,Real estate function,1865
 Organizational unit,"Operational, Technology & Information Risk Management",327
-Empty group,Business Continuity Function,739
-Empty group,Governance and Process Development Function,1869
-Empty group,Organization function,1866
+NA,Business Continuity Function,739
+NA,Governance and Process Development Function,1869
+NA,Organization function,1866
 Organizational unit,Foreign Banks ALM & Liquidity Risk Management,1166
 Organizational unit,"Cyber, IT & Data Quality Risk Management",3014
 Organizational unit,Process Risk Analysis,122
@@ -979,13 +979,13 @@ Organizational unit,Evaluation and Monitoring of Project Benefits and Expenditur
 Organizational unit,Corporate,1993
 Person,Customer,1725
 Organizational unit,Investigations and Support,1200
-Empty group,Group company,358
-Empty group,Risk assessment structure,1265
+NA,Group company,358
+NA,Risk assessment structure,1265
 Organizational unit,Supervisory Regulations,206
 Organizational unit,Uses and Evolutionary Data Service Hub,3007
-Empty group,New product activator,1126
+NA,New product activator,1126
 Person,External custodian,1140
-Empty group,Branch with internal warehouse,374
+NA,Branch with internal warehouse,374
 Person,Vector,1991
 Organizational unit,Trade Finance & Cross Border Transactions,1018
 Person,Customer,1675
@@ -994,14 +994,14 @@ Organizational unit,BdT Personnel Development,1499
 Organizational unit,Fideuram Intesa Sanpaolo Private Banking - Training,3178
 Person,Society,982
 Organizational unit,People Management Executives,1930
-Empty group,Client structures,1287
+NA,Client structures,1287
 Organizational unit,Payments Investigation,560
-Empty group,Applicant Structures,2182
-Empty group,Local Bank Operations Support,2183
+NA,Applicant Structures,2182
+NA,Local Bank Operations Support,2183
 Organizational unit,IT Governance and Digital Transformation (Area Chapter Governance),727
 Organizational unit,Cybersecurity By Design,1756
-Empty group,Data Technology Owner,1121
-Empty group,Data Owner,1122
+NA,Data Technology Owner,1121
+NA,Data Owner,1122
 Organizational unit,Structuring & Execution,834
 Organizational unit,Origination Support,2847
 Organizational unit,Loan Origination Strategies,836
@@ -1009,21 +1009,21 @@ Organizational unit,Credit Risk Mitigation,2411
 Organizational unit,Transaction Management - DC Active Credit Portfolio Steering,835
 Organizational unit,Credit Market Strategies,837
 Organizational unit,Global ICT,1019
-Empty group,Organization function Subsidiary,2362
-Empty group,Supervisory body,1148
+NA,Organization function Subsidiary,2362
+NA,Supervisory body,1148
 Organizational unit,Transversal Compliance Controls,716
-Empty group,Company Compliance Officer,3230
-Empty group,Compliance Officer,2599
+NA,Company Compliance Officer,3230
+NA,Compliance Officer,2599
 Organizational unit,Compliance Governance and Controls Head Office Department,2992
-Empty group,General Secretariat of the Society,3138
+NA,General Secretariat of the Society,3138
 Organizational unit,Management of Subsidiary Secretariat Services,33
-Empty group,Subsidiary Company,1147
-Empty group,Process owners,3137
+NA,Subsidiary Company,1147
+NA,Process owners,3137
 Organizational unit,Consulting for Extraordinary Transactions and Controlled Governance,162
 Organizational unit,Regulatory Impacts Governance Functions,2705
 Organizational unit,Process Intelligence,3062
 Organizational unit,"Audit Coordination, Planning and Development Central Management",1350
-Empty group,Perimeter companies,732
+NA,Perimeter companies,732
 Organizational unit,Banking Services and Payment Systems,1505
 Organizational unit,Process Controls Regulatory Compliance,2142
 Organizational unit,Credit Services and Pricing Compliance,1381
@@ -1039,8 +1039,8 @@ Organizational unit,Industrial & Healthcare,545
 Organizational unit,M&A BDT,3366
 Person,M&A Advisory London - IMI CIB Division,811
 Organizational unit,Mid-Cap Corporate Finance Department - IMI CIB Division,2017
-Empty group,Application Referent,2846
-Empty group,Deliberative Body,1031
+NA,Application Referent,2846
+NA,Deliberative Body,1031
 Person,Deloitte,3054
 Organizational unit,Intesa Sanpaolo IMI Securities Corporation - ABCP Conduit,843
 Organizational unit,Transaction Management - Global Markets Solutions & Financing Department,2377
@@ -1050,94 +1050,94 @@ Organizational unit,Commercial Development Initiatives,2421
 Organizational unit,Network Performance and BdT Product Company,2296
 Organizational unit,Business Marketing Coordination,2229
 Organizational unit,Commercial targeting,1178
-Empty group,Emergency Unit,2152
-Empty group,NOGE,2153
-Empty group,Incident Management functions,1152
-Empty group,Crisis Committee,2156
-Empty group,Functions Impacted,2154
-Empty group,Control functions,2155
-Empty group,Competent Functions,2151
+NA,Emergency Unit,2152
+NA,NOGE,2153
+NA,Incident Management functions,1152
+NA,Crisis Committee,2156
+NA,Functions Impacted,2154
+NA,Control functions,2155
+NA,Competent Functions,2151
 Organizational unit,Media and Associations Relations,626
-Empty group,Organizational units involved,3282
+NA,Organizational units involved,3282
 Organizational unit,Proactive Management of Other Assets,2913
 Organizational unit,Platform Government,2425
-Empty group,User,421
+NA,User,421
 Person,Service,139
-Empty group,Responsible manager / CEO and CEO / GM,533
+NA,Responsible manager / CEO and CEO / GM,533
 Organizational unit,Treasury,952
 Organizational unit,Digital Reports & Solutions CIB,1020
-Empty group,Recipients DCTFG Reporting,1874
-Empty group,CIB Reporting Recipients,699
-Empty group,Subsidiary company,265
+NA,Recipients DCTFG Reporting,1874
+NA,CIB Reporting Recipients,699
+NA,Subsidiary company,265
 Organizational unit,HUB clearing,3295
 Person,Customer,68
-Empty group,Front office desk,1825
+NA,Front office desk,1825
 Organizational unit,Finance Evaluation Office,2521
 Person,Engineering,1492
 Organizational unit,Branch Applications and App Factory,3047
-Empty group,Employee,2141
+NA,Employee,2141
 Person,Society,951
-Empty group,Subject owner,2800
-Empty group,Client structures,2819
-Empty group,Professor,1510
+NA,Subject owner,2800
+NA,Client structures,2819
+NA,Professor,1510
 Organizational unit,Paper wallet,1199
 Person,Customer,2954
 Organizational unit,Equity & Credit Research,1468
-Empty group,Italian Stock Exchange,814
+NA,Italian Stock Exchange,814
 Person,External Legal,1091
 Organizational unit,Regulations and Personal Transactions,1384
 Organizational unit,Legal Advisory Extraordinary Finance,3082
-Empty group,Issuer,813
+NA,Issuer,813
 Organizational unit,ECM Marketing Institutional & Retail,538
-Empty group,Applicant Structure,1235
+NA,Applicant Structure,1235
 Organizational unit,Factoring supervision,2282
 Organizational unit,Credit Checks,117
 Organizational unit,Government & Institutional Investors,3256
 Organizational unit,Asset Management - Global Banking & Sovereign Institutions Department,406
 Organizational unit,Risk Data & Infrastructure,125
-Empty group,Competent CRO Area Management,2812
-Empty group,Managing Director and CEO,3124
-Empty group,Board of Directors,3123
+NA,Competent CRO Area Management,2812
+NA,Managing Director and CEO,3124
+NA,Board of Directors,3123
 Organizational unit,Securitization Banks,2379
-Empty group,Competent body,1535
-Empty group,Rating agency,5
-Empty group,External Counterparty,1391
-Empty group,Qualified Subject,1390
-Empty group,ISP branch,4
+NA,Competent body,1535
+NA,Rating agency,5
+NA,External Counterparty,1391
+NA,Qualified Subject,1390
+NA,ISP branch,4
 Person,Servicers,2619
 Organizational unit,Public Bodies and Treasuries,2232
 Organizational unit,"Cybersecurity Strategic Intelligence, Policy and Culture",2080
-Empty group,Application or Infrastructural Representative,1352
-Empty group,Contact Person for the Coordination of Return Plans,1353
-Empty group,Applicant for Specific Technical Checks,2446
+NA,Application or Infrastructural Representative,1352
+NA,Contact Person for the Coordination of Return Plans,1353
+NA,Applicant for Specific Technical Checks,2446
 Organizational unit,International Long Term Debt Origination & Private Placement,2227
 Person,Customer,812
 Organizational unit,Interest Rate Swap Trading,178
 Organizational unit,Accounting Processes,2816
 Organizational unit,ALM & FVA Management,2035
 Organizational unit,Active Value Management Equity,403
-Empty group,Group company,184
-Empty group,Reference manager,3269
-Empty group,Local organizational structure,1570
-Empty group,Structure contact person,2840
+NA,Group company,184
+NA,Reference manager,3269
+NA,Local organizational structure,1570
+NA,Structure contact person,2840
 Organizational unit,HR transformation,2821
-Empty group,Application Referents,3003
-Empty group,Management of reference personnel,563
-Empty group,Structure in charge of the management of critical events,3139
+NA,Application Referents,3003
+NA,Management of reference personnel,563
+NA,Structure in charge of the management of critical events,3139
 Person,CLS Bank,3140
-Empty group,Appointed Company,2936
+NA,Appointed Company,2936
 Person,Rating agency,2009
-Empty group,Operating Points,2935
+NA,Operating Points,2935
 Organizational unit,Management coordination,2401
 Organizational unit,Transformation and Strategic Projects,728
 Organizational unit,New Non-Banking Activities,1648
 External Organizational unit,Intesa Sanpaolo Vita - Personnel and Organization,1225
-Empty group,Employee,1667
+NA,Employee,1667
 Person,Society,3013
 Organizational unit,Personnel and Network Assistance - Agribusiness Management,1433
 Organizational unit,Personnel and Network Assistance - Impact Management,56
 Organizational unit,Personnel and Network Assistance - Digital Branch Management,173
-Empty group,Responsible,357
+NA,Responsible,357
 Organizational unit,Central Audit Global & Strategic Risks Department,1734
 Organizational unit,Model Risk Management,3015
 Organizational unit,Coordination of Risk Management Initiatives,2614
@@ -1150,7 +1150,7 @@ Organizational unit,Global Banking & Sovereign Institutions Department - IMI CIB
 Organizational unit,Corporate and SME Sales Management - ISB Division,932
 Organizational unit,Foreign Banks Risk Governance,1164
 Organizational unit,Credit Risk and Pillar 2 Internal Models Committee,3337
-Empty group,Application Referent,1401
+NA,Application Referent,1401
 Organizational unit,Cloud Center of Excellence,3376
 Organizational unit,Relations with the Privacy Guarantor and with the interested parties,3378
 Organizational unit,Foreign branch,221
@@ -1163,8 +1163,8 @@ Organizational unit,Investment Product Compliance Controls,3296
 Organizational unit,FX Derivatives Trading,182
 Organizational unit,Investment Products Sales,1567
 Organizational unit,Credit Portfolio Management - DC Active Credit Portfolio Steering,1517
-Empty group,The Supervisor,413
-Empty group,The Supervisor,414
+NA,The Supervisor,413
+NA,The Supervisor,414
 Organizational unit,Coordination of Decentralized Treasuries,880
 Organizational unit,Macroeconomic Analysis,994
 Person,"Intesa Sanpaolo Vita - Financial Statement Administration, Planning, Management Control Area",458
@@ -1172,16 +1172,16 @@ Person,Intesa Sanpaolo Vita - Finance and Actuarial Area,2060
 Person,Intesa Sanpaolo Vita - Risk Management,1509
 Organizational unit,Cost check,958
 Organizational unit,Business Plan and Presidium of Value,1789
-Empty group,Report recipients,3245
+NA,Report recipients,3245
 Position,Personnel Manager - Regional Management,185
 Person,Society,2516
-Empty group,Forestry Assignee,2459
-Empty group,Authorized Subject,1512
-Empty group,Facility manager or person in charge,2500
-Empty group,Non-dependent person,174
+NA,Forestry Assignee,2459
+NA,Authorized Subject,1512
+NA,Facility manager or person in charge,2500
+NA,Non-dependent person,174
 Organizational unit,Corporate Taxation and Finance,2894
 Person,Revenue Agency,1540
-Empty group,Board of Directors,2271
+NA,Board of Directors,2271
 Organizational unit,SRF Consortium,1329
 Person,Servicers,164
 Organizational unit,Monitoring and transitions,257
@@ -1195,29 +1195,29 @@ Organizational unit,Market Hub London - IMI CIB division,673
 Person,External lawyer,2477
 Organizational unit,Analysis and Oversight Network Italy,3347
 Person,Customer,848
-Empty group,Product Desk,2792
-Empty group,Alternative Investments Table and SPAC - Alternative Investments Session,475
-Empty group,Accountability Center,832
-Empty group,Applicant body,370
+NA,Product Desk,2792
+NA,Alternative Investments Table and SPAC - Alternative Investments Session,475
+NA,Accountability Center,832
+NA,Applicant body,370
 Organizational unit,Accounts Payable System Management,1184
 Organizational unit,"Purchases of goods, services and insurance",957
 Organizational unit,Purchasing IT Goods and Focal Points,956
 Person,Client,622
 Person,Local purchasing function,736
-Empty group,Applicant body,808
+NA,Applicant body,808
 Organizational unit,People Tech & Change Management,1573
 Person,Group company,1456
 Organizational unit,Companies and Agent Networks,172
-Empty group,The Evaluator,214
+NA,The Evaluator,214
 Organizational unit,Structured Deals,1645
-Empty group,PMLS extension,111
+NA,PMLS extension,111
 Person,Servicers,477
 Organizational unit,People Development & Change Management - International Subsidiary Banks Division,2554
 Person,Society,1082
-Empty group,Responsible,2177
-Empty group,Employee,1748
+NA,Responsible,2177
+NA,Employee,1748
 Organizational unit,Products Hedging and Cash Management,3024
-Empty group,The Supervisor,1742
+NA,The Supervisor,1742
 Position,Protection Specialist,1430
 Person,Non-core company,818
 Person,Administrative structure Bank / Subsidiary company,2646
@@ -1225,20 +1225,20 @@ Person,Core company,650
 Person,Infogroups,2482
 Organizational unit,Administration and Operations HR,438
 Organizational unit,Anti-Fraud Management,1760
-Empty group,Branch manager,1519
+NA,Branch manager,1519
 Organizational unit,Concessionaire Bank,2274
-Empty group,Corporate Secretariat of the Group Company,772
+NA,Corporate Secretariat of the Group Company,772
 Person,Group company,1532
-Empty group,Participation manager,1523
-Empty group,Compliance Officer of Group companies,2906
-Empty group,Structure Head of participatory investment operation,2027
-Empty group,Competent credit structure,1574
+NA,Participation manager,1523
+NA,Compliance Officer of Group companies,2906
+NA,Structure Head of participatory investment operation,2027
+NA,Competent credit structure,1574
 Organizational unit,Penalties and Operational Irregularities,913
 Person,Supplier,2481
-Empty group,Requesting Organizational Unit,2480
+NA,Requesting Organizational Unit,2480
 Organizational unit,CIB MLT/ Leasing and Factoring specialists,1699
 Position,Credit Officer Network Italy,1556
-Empty group,Business Owner,2959
+NA,Business Owner,2959
 Organizational unit,Digital Business Partner Business Areas,1216
 Organizational unit,Demand and Investment Monitoring,196
 Organizational unit,"Demand, Capital Budget and Accounts Payable",691
@@ -1247,9 +1247,9 @@ Organizational unit,Demand & Investment Management,1838
 Organizational unit,Transformation Center,773
 Organizational unit,Central Purchasing Department,1095
 Organizational unit,Central Strategic Support Department,720
-Empty group,Powered manager,2966
+NA,Powered manager,2966
 Organizational unit,Capital Budget and Investment Monitoring,2261
-Empty group,Investment Control Room,1219
+NA,Investment Control Room,1219
 Organizational unit,Intesa Sanpaolo Bank Albania,2055
 Organizational unit,Bank Intesa Beograd,2053
 Organizational unit,Intesa Sanpaolo Bank (Slovenia),3224
@@ -1265,14 +1265,14 @@ Position,Head of Industry - Global Corporate Management,1387
 Position,Financial advisor,2903
 Organizational unit,International Corporate Trade Finance Sales,1484
 Organizational unit,Supervisory Interface,2742
-Empty group,Co-Head of the Financial Market Coverage Head Office Department,1026
-Empty group,Companies that use vehicles,2363
+NA,Co-Head of the Financial Market Coverage Head Office Department,1026
+NA,Companies that use vehicles,2363
 Organizational unit,Central Directorate of Communication and Image,2749
 Organizational unit,Governance Parent Company and Subsidiaries,2096
 Person,IMI Bank,2075
 Organizational unit,"Corporate Consulting, Corporate Compliance and Parent Company Governance",587
-Empty group,Bank of Italy,2839
-Empty group,Council body,2364
+NA,Bank of Italy,2839
+NA,Council body,2364
 External Organizational unit,Intesa Sanpaolo Insurance,1233
 Organizational unit,Industry Research,2320
 Organizational unit,Data Warehouse & Analytics,2204
@@ -1281,7 +1281,7 @@ Organizational unit,Central Directorate of Studies and Research,1078
 Organizational unit,Governance Systems and Strategic Initiatives Department - ISB Division,1836
 Organizational unit,Regulations & Policies Business Impact analysis,37
 Organizational unit,Capital Management & Value Governance,1804
-Empty group,Customer,1851
+NA,Customer,1851
 Organizational unit,Wealth Management & Protection Marketing Coordination,2233
 Organizational unit,"Central Directorate for Safety at Work, the Environment and Privacy",3342
 Organizational unit,Transaction Banking Processes,3135
@@ -1289,16 +1289,16 @@ Organizational unit,Processes for Digital Work,3134
 Organizational unit,Governance and Finance Processes,2234
 Organizational unit,Credit Processes,575
 Organizational unit,Multichannel Commercial Processes,1785
-Empty group,ORMD extension,454
+NA,ORMD extension,454
 Organizational unit,Corporate and Physical Security,3199
 Organizational unit,Coordination of Group General Counsel - Legal Operations initiatives,2540
-Empty group,OU manager,2911
-Empty group,Customer Relationship Manager,2843
+NA,OU manager,2911
+NA,Customer Relationship Manager,2843
 Organizational unit,Disclaimers,2537
-Empty group,FM factories,2020
-Empty group,AM factories,2019
-Empty group,Project team,1502
-Empty group,FM factories,1209
+NA,FM factories,2020
+NA,AM factories,2019
+NA,Project team,1502
+NA,FM factories,1209
 Organizational unit,Middle Office Financial Statements and Tax Models,3154
 Position,Innovation Specialist - Regional Directorate,286
 Organizational unit,Controls - Regional Directorate,1654
@@ -1310,59 +1310,59 @@ Organizational unit,CIB Cross Applications,1023
 Organizational unit,Industry - Global Corporate Management,2404
 Organizational unit,Foreign Branch Hub,2655
 Person,Customer,2612
-Empty group,Project yards,1996
+NA,Project yards,1996
 Organizational unit,Data Service Hub,1254
 Organizational unit,credit risk models,310
-Empty group,Data Owner,106
-Empty group,Project Director,409
-Empty group,Date user,408
-Empty group,Holder,2103
-Empty group,Operational contact person,2102
+NA,Data Owner,106
+NA,Project Director,409
+NA,Date user,408
+NA,Holder,2103
+NA,Operational contact person,2102
 Person,External professional,802
 Person,Delegated Body,65
 Organizational unit,Purchasing Operational Support,663
-Empty group,Supplier,3183
+NA,Supplier,3183
 Person,Company Legal Function,2511
-Empty group,Technical body,3222
+NA,Technical body,3222
 Person,Default Management Group,2549
 Person,Central Counterparty Clearing House - CCP,2550
-Empty group,Head of Capital Markets,371
-Empty group,Group banks,1447
-Empty group,Global Resilience & Complex Incident Management (GRe.CIM),3351
-Empty group,Critical Event Readiness Team (CERT),3350
-Empty group,Competent functions,3349
-Empty group,Functions Impacted,248
-Empty group,Incident Management functions,1042
-Empty group,Control functions,480
+NA,Head of Capital Markets,371
+NA,Group banks,1447
+NA,Global Resilience & Complex Incident Management (GRe.CIM),3351
+NA,Critical Event Readiness Team (CERT),3350
+NA,Competent functions,3349
+NA,Functions Impacted,248
+NA,Incident Management functions,1042
+NA,Control functions,480
 Organizational unit,External Communication International Subsidiary Banks,3309
 Organizational unit,Head Office Departments and Staff Units reporting to the Collegial Bodies and/or to the CEO,2825
-Empty group,Group banks and companies,1066
+NA,Group banks and companies,1066
 Organizational unit,Average CIB and Governance Areas,320
 Organizational unit,Media Banca dei Territori and Local Media,3327
 Organizational unit,"Media Institutional, Social and Cultural Activities",1877
 Organizational unit,Media Wealth Management,463
 Position,ISPB - Private Area Assistant,1035
-Empty group,Cathedral,3041
-Empty group,Romulus,581
-Empty group,Special Purpose Vehicle,580
-Empty group,Customer,579
-Empty group,CP Placement Agent,29
-Empty group,ECP dealer,2322
+NA,Cathedral,3041
+NA,Romulus,581
+NA,Special Purpose Vehicle,580
+NA,Customer,579
+NA,CP Placement Agent,29
+NA,ECP dealer,2322
 External Organizational unit,Fideuram Intesa Sanpaolo Private Banking - ISPB Resource Management and Fideuram Banking Network,150
-Empty group,Application Referent,1034
+NA,Application Referent,1034
 Person,External resource,345
 Organizational unit,Internal Corporate Credit Systems and Management Models,1477
-Empty group,Perimeter company,3028
-Empty group,Structure of the Company's Financial Statements,2186
+NA,Perimeter company,3028
+NA,Structure of the Company's Financial Statements,2186
 Organizational unit,Monitoring and Control Outsourcing,679
-Empty group,Any other owners of the credits subject to securitizations who structured the transaction,366
-Empty group,Insurance companies,1854
+NA,Any other owners of the credits subject to securitizations who structured the transaction,366
+NA,Insurance companies,1854
 Organizational unit,Cost of Credit - IMI CIB Division,3155
 Organizational unit,Credit Cost & Asset Optimization,988
 Organizational unit,Performance Management and TdB,1582
 Person,Customer,508
 Person,Counterpart,2539
-Empty group,Employee,2331
+NA,Employee,2331
 Organizational unit,Management Coordination and HR Initiatives,1297
 Person,Personnel - Banks/Companies,939
 Organizational unit,Continuous auditing,771
@@ -1370,48 +1370,48 @@ Person,Servicers,1005
 Organizational unit,Real Estate Appraisal Checks,43
 Organizational unit,Foreign Network & Centralized Italian Subsidiaries Risk Management,202
 Person,Servicers,2018
-Empty group,Data Owner / Local Registry Representative,2665
-Empty group,Applicant,418
+NA,Data Owner / Local Registry Representative,2665
+NA,Applicant,418
 Organizational unit,Cybersecurity Project Management,2084
 Organizational unit,Cyber Audit and Physical Security,1733
-Empty group,Head of the UOG,3277
-Empty group,FO desk,3352
+NA,Head of the UOG,3277
+NA,FO desk,3352
 Person,Counterpart,78
 Organizational unit,"Business Continuity, Resilience and Crisis Management",1755
-Empty group,Business Owner Certifier,2990
+NA,Business Owner Certifier,2990
 Person,Customer,2092
 Organizational unit,Capital Markets Structuring,2381
 Organizational unit,Corporate and Investment Banking Regulatory Compliance Head Office Department,1504
 Organizational unit,People Management Governance Areas,1932
-Empty group,London Local Compliance,456
+NA,London Local Compliance,456
 Organizational unit,ICT and Security Systems Audit,1731
-Empty group,Issuer body,1149
-Empty group,Accountability Center,1150
-Empty group,Receiving Body,1206
-Empty group,Employee,555
-Empty group,Organizational unit manager,553
-Empty group,Bank of Italy,3209
+NA,Issuer body,1149
+NA,Accountability Center,1150
+NA,Receiving Body,1206
+NA,Employee,555
+NA,Organizational unit manager,553
+NA,Bank of Italy,3209
 Organizational unit,Entities Treasury,3153
-Empty group,Foreign Branch HUB / Foreign Branch,3238
+NA,Foreign Branch HUB / Foreign Branch,3238
 Organizational unit,Government Outsourcing and Purchasing Support,2974
-Empty group,Process Owner,513
-Empty group,Outsourcing Coordinator,105
-Empty group,Outsourcing contact person,90
+NA,Process Owner,513
+NA,Outsourcing Coordinator,105
+NA,Outsourcing contact person,90
 Organizational unit,Corporate Bodies and Corporate Affairs Central Management,2095
 Organizational unit,Support Process Audit,1730
 Position,Data Protection Officer,714
-Empty group,Compulsory Evaluation Functions,1370
+NA,Compulsory Evaluation Functions,1370
 Organizational unit,Group Non-Financial Risks and Controls Coordination Committee,1886
-Empty group,Competent HR management,2642
+NA,Competent HR management,2642
 Organizational unit,International Mobility & Compensation Support,1935
-Empty group,"Governance area, Function and/or Division involved",2643
+NA,"Governance area, Function and/or Division involved",2643
 Organizational unit,Performance Management,1934
 Organizational unit,Transactional Assistance and Financing,1925
-Empty group,Data Technology Owner,1990
-Empty group,Organizational unit dedicated to Data Ownership,2656
-Empty group,Data Owner,1989
-Empty group,Responsible Manager,1452
-Empty group,Control functions,269
+NA,Data Technology Owner,1990
+NA,Organizational unit dedicated to Data Ownership,2656
+NA,Data Owner,1989
+NA,Responsible Manager,1452
+NA,Control functions,269
 Organizational unit,Investment Products Structuring,1561
 Organizational unit,International Research Network coordination,2319
 Organizational unit,Eurizon Capital,2307
@@ -1426,9 +1426,9 @@ Organizational unit,Controls & Operational Risk,873
 Organizational unit,Public & Social Infrastructure,3215
 Organizational unit,Energy & Industry Specialized Lending,3218
 Organizational unit,Supervisory Response,2988
-Empty group,ORMD extension,1849
+NA,ORMD extension,1849
 Organizational unit,Corporate Audit and Finance Head Office Department,1300
-Empty group,CEO manager,267
+NA,CEO manager,267
 Organizational unit,Risk Assessment and Coordination of Compliance Initiatives,717
 Organizational unit,Specialist Principals,816
 Organizational unit,Financial Administrative Governance,861
@@ -1437,11 +1437,11 @@ Organizational unit,"Foreign Banks Audit, Wealth Management and Protection Head 
 Organizational unit,"Central Audit Department for Governance Processes, ICT and Support",1727
 Organizational unit,"Organization BdT, ISBD and other Business Sectors",3331
 Organizational unit,"Risk Assessment, TdB, Reporting and MIS",2145
-Empty group,Chief Risk Officer,1798
-Empty group,Requesting Organizational Unit,459
+NA,Chief Risk Officer,1798
+NA,Requesting Organizational Unit,459
 Person,Supplier,859
-Empty group,Expenditure manager,500
-Empty group,Territorial structure,635
+NA,Expenditure manager,500
+NA,Territorial structure,635
 Organizational unit,Credit Risk Mitigation & Support,259
 Person,Consap S.p.A.,2002
 Organizational unit,NPE North West management,2503
@@ -1451,12 +1451,12 @@ Organizational unit,Management of NPE North East and Dorsale Adriatica,2504
 Person,Italfondiario S.p.A. (Servicer outside the Group),845
 Organizational unit,Costs Service Unit and Industrial Accounting,959
 Organizational unit,Commercial development,3303
-Empty group,Appointed structure,2187
+NA,Appointed structure,2187
 Person,Society,291
 Person,Group company,3201
-Empty group,Head of Management,1678
+NA,Head of Management,1678
 External Organizational unit,Private branch - ISPB,2172
-Empty group,Country Manager USA & Americas,1714
+NA,Country Manager USA & Americas,1714
 Organizational unit,Innovation and Retailization Spaces,1172
 Organizational unit,Processes and Quality Assurance Know Your Customer,2434
 Organizational unit,Physical Security Services and Support,665
@@ -1472,69 +1472,69 @@ Organizational unit,CRM and Commercial Planning,1176
 Organizational unit,Corporate identity development,467
 Organizational unit,Quality and Research BdT,1174
 Organizational unit,Complaints and Quality,1040
-Empty group,Applicant structure,1585
+NA,Applicant structure,1585
 Organizational unit,Business coordination,710
 Organizational unit,HTC Credit & ESG Investments,708
-Empty group,Provider structure,1090
-Empty group,Central or Territorial Structure,2471
+NA,Provider structure,1090
+NA,Central or Territorial Structure,2471
 Organizational unit,"Supplier Qualification, Coordination and Monitoring",1197
-Empty group,Business Owner,399
-Empty group,Facilitated subject,398
-Empty group,Investment Control Room,208
+NA,Business Owner,399
+NA,Facilitated subject,398
+NA,Investment Control Room,208
 Organizational unit,Credit Engines,2339
 Person,Servicers,460
 Person,Bookrunners,468
-Empty group,Calculation Agent,2247
-Empty group,Asset Monitor,155
-Empty group,Bookrunners,2443
-Empty group,Paying Agent,2947
-Empty group,Representative of Covered Bondholders,2948
-Empty group,Rating agency,2946
+NA,Calculation Agent,2247
+NA,Asset Monitor,155
+NA,Bookrunners,2443
+NA,Paying Agent,2947
+NA,Representative of Covered Bondholders,2948
+NA,Rating agency,2946
 Person,Rating agency,2895
 Person,Servicers,2455
-Empty group,Territorial structure,910
-Empty group,Head of Money Market & Settlements,449
-Empty group,Head of Group Treasury and Finance Department,1906
+NA,Territorial structure,910
+NA,Head of Money Market & Settlements,449
+NA,Head of Group Treasury and Finance Department,1906
 Person,EBASS,3019
-Empty group,Treasury Manager,469
-Empty group,Intesa Sanpaolo Bank Ireland,287
+NA,Treasury Manager,469
+NA,Intesa Sanpaolo Bank Ireland,287
 Organizational unit,Desk Short Term Debt Origination and Private Placements - Hub Foreign Branch,2119
-Empty group,Employee,847
-Empty group, Organizational unit manager,559
+NA,Employee,847
+NA, Organizational unit manager,559
 Person,Society,2697
-Empty group,Employer (DL),381
-Empty group,Workers' Safety Representative (RLS),316
-Empty group,Prevention and Protection Service Manager (RSPP),383
+NA,Employer (DL),381
+NA,Workers' Safety Representative (RLS),316
+NA,Prevention and Protection Service Manager (RSPP),383
 Person,Territorial Competent Doctor (MCT),315
-Empty group,Emergency Coordinator,382
+NA,Emergency Coordinator,382
 Organizational unit,Health Surveillance and Psycho-Social Risks,1089
-Empty group, Occupational Health and Safety Management System Manager (RSGSL),1726
-Empty group,Employer Delegates (DDL),950
+NA, Occupational Health and Safety Management System Manager (RSGSL),1726
+NA,Employer Delegates (DDL),950
 Person,Competent Doctor (MC),2465
 Person,Asbestos Conservation Manager (RCA),317
 Person,Radiation Protection Expert (ER),2464
 Person,Competent Doctor Coordinator (MCC),474
-Empty group,Employee,2115
+NA,Employee,2115
 Person,Servicers,764
 Person,Reoco General Manager,1896
 Organizational unit,Committee for Transactions with Related Parties of ISP and Associated Entities of the Group,46
 Organizational unit,OMR,2571
-Empty group,Product Governance Table of the IMI CIB Division,1663
+NA,Product Governance Table of the IMI CIB Division,1663
 Organizational unit,DCM Origination,1913
 Person,Counterpart,2134
-Empty group,Finance and Treasury,2133
+NA,Finance and Treasury,2133
 Organizational unit,Post Closing BDT,3367
 Organizational unit,Group certified email communications and historical research,1414
-Empty group,Managerial Referent,151
-Empty group,Referent of the Sectoral Plan,152
-Empty group,Group company NO SAP,1057
-Empty group,Non-group company,1056
-Empty group,Equivalent company,2830
-Empty group,Group company,2829
-Empty group,Branch,1055
-Empty group,Employee,1054
+NA,Managerial Referent,151
+NA,Referent of the Sectoral Plan,152
+NA,Group company NO SAP,1057
+NA,Non-group company,1056
+NA,Equivalent company,2830
+NA,Group company,2829
+NA,Branch,1055
+NA,Employee,1054
 Organizational unit,Fideuram Intesa Sanpaolo Private Banking - Individual Financial Statements and Accounting,2799
-Empty group,Assistant / Clerk,1792
+NA,Assistant / Clerk,1792
 Organizational unit,Internal Real Estate Appraisals,41
 Organizational unit,External Real Estate Appraisals,42
 Person,External Expert or Provider,1762
@@ -1545,7 +1545,7 @@ Organizational unit,Banca dei Territori Division - Digital Retail Sales & Market
 Organizational unit,Regulatory Compliance Head Office Management BdT and Private,1503
 Organizational unit,"Market, Financial and C&IB Risks Coordination Area",1317
 Organizational unit,Third Parties Cybersecurity and Business Continuity,2081
-Empty group,Structure in charge of the management of critical events,1834
+NA,Structure in charge of the management of critical events,1834
 Person,Tax structure of the companies in the perimeter,1275
 Person,Accounting structure of the company in scope,113
 Person,Active and passive cycle structure of the company in scope,1188
@@ -1558,140 +1558,140 @@ Organizational unit,Chief Operating Officer Projects and Other Governance Areas,
 Organizational unit,Banking Research,2321
 Organizational unit,International Subsidiary Financial Monitoring,493
 External Organizational unit,ISDA Association,11
-Empty group,Employee,1668
+NA,Employee,1668
 Person,Travel agency,340
-Empty group,Head of the UOG,2050
+NA,Head of the UOG,2050
 Organizational unit,Partnerships and Sponsorships,712
 Organizational unit,Members and Assembly Management,36
 Person,Translation company,564
-Empty group,Primary Reporter,280
-Empty group,Champion,981
-Empty group,Market side structures,294
-Empty group,Secondary Reporter,2525
-Empty group,Corporate side structures,300
-Empty group,SFO-qualified financial advisor with mixed contract,354
+NA,Primary Reporter,280
+NA,Champion,981
+NA,Market side structures,294
+NA,Secondary Reporter,2525
+NA,Corporate side structures,300
+NA,SFO-qualified financial advisor with mixed contract,354
 Organizational unit,Management and Development of BdT Personnel,1173
 Organizational unit,"Company Performance, Third Sector and Third Party Networks",1175
 Organizational unit,Cybersecurity Engineering,1757
 Organizational unit,Channel Management and Everyday Banking Journey,1038
 Organizational unit,"Working Capital, Digital Strategy & Channels",1487
 Person,vehicle company,1885
-Empty group,Employee,24
-Empty group,DSI internal competent functions,724
-Empty group,Territorial or Central Structure,1977
+NA,Employee,24
+NA,DSI internal competent functions,724
+NA,Territorial or Central Structure,1977
 Person,Servicers,88
-Empty group,The Competent Management Structure,1273
+NA,The Competent Management Structure,1273
 Position,Extraordinary Finance Specialist,3163
-Empty group,Banks belonging to the perimeter,2949
-Empty group,Banks belonging to the perimeter,2950
+NA,Banks belonging to the perimeter,2949
+NA,Banks belonging to the perimeter,2950
 Person,Supplier,2531
 Person,Consob,1790
-Empty group,Other structures responsible for controls,1775
-Empty group,DSI control room,1186
-Empty group,DOF control room,1187
-Empty group,Competent Human Resources Management,1213
-Empty group,"Governance area, Function and/or Division involved",2245
+NA,Other structures responsible for controls,1775
+NA,DSI control room,1186
+NA,DOF control room,1187
+NA,Competent Human Resources Management,1213
+NA,"Governance area, Function and/or Division involved",2245
 Person,Society,1374
-Empty group,Taxpayer body,288
-Empty group,Reference Manager,876
+NA,Taxpayer body,288
+NA,Reference Manager,876
 Organizational unit,Cost of labor,2706
 Organizational unit,Budget and Cost Control BdT,1361
 Organizational unit,ISB Capital Budget and Cost Control,2944
-Empty group,Other control structures of Group companies,1778
-Empty group,Managers of Structure / Central Management of the Parent Company,1780
-Empty group,Entities managing or assigning expenditure,1779
+NA,Other control structures of Group companies,1778
+NA,Managers of Structure / Central Management of the Parent Company,1780
+NA,Entities managing or assigning expenditure,1779
 Organizational unit,Cybersecurity Group Governance and Foreign Networks,1151
-Empty group,Applicant Structure,1496
+NA,Applicant Structure,1496
 Organizational unit,Products and Commercial Networks and Regulations,2105
 Organizational unit,ISP Insures,2226
 Organizational unit,Digital Transformation and International Development,2104
 Organizational unit,Service Management,2399
 Organizational unit,ISP Life and Asset Management,2225
-Empty group,front office,1767
-Empty group,Remediation Owner,2292
-Empty group,ControlOwner,897
+NA,front office,1767
+NA,Remediation Owner,2292
+NA,ControlOwner,897
 Organizational unit,Government Mandatory Reporting,2426
-Empty group,proposer,1618
+NA,proposer,1618
 Organizational unit,Digital Vendor Management,775
 Organizational unit,Cybersecurity Group Architecture and Framework,2078
 Organizational unit,Info & Data Providers Management,19
 Organizational unit,Cybersecurity and Anti-Fraud Services,2079
-Empty group,Approver manager,1619
-Empty group,Hierarchical manager of the Proposer,1617
+NA,Approver manager,1619
+NA,Hierarchical manager of the Proposer,1617
 Organizational unit,Index & Market Data,20
 Organizational unit,Operative marketing,2235
 Organizational unit,Product Governance Risk Clearing,2569
-Empty group,Front office desk,2669
-Empty group,Lender Structure,1947
+NA,Front office desk,2669
+NA,Lender Structure,1947
 Organizational unit,Capital Budget,1587
-Empty group,competent structure,1308
+NA,competent structure,1308
 Person,Provis - General Secretariat,1011
 Person,Servicers,1472
 Organizational unit,Operational Services - ISPB,363
 Position,ISPB - Operations Manager,3333
-Empty group,Lender Structure,3071
-Empty group,Client company,2024
+NA,Lender Structure,3071
+NA,Client company,2024
 Organizational unit,Factoring concession CIB and BdT Nord Est,693
 Organizational unit,"Concession Factoring Public Finance and BdT North West, Center and South",694
-Empty group,Foreign branch,964
-Empty group,Prevention and Protection Service Manager (RSPP),2314
+NA,Foreign branch,964
+NA,Prevention and Protection Service Manager (RSPP),2314
 Person,Society,527
 Organizational unit,Human Resources Management - ISB Division,422
-Empty group, Occupational Health and Safety Management System Manager (RSGSL),1958
-Empty group,Employer (DL),2315
-Empty group,Employee,644
-Empty group,Company in scope,1479
+NA, Occupational Health and Safety Management System Manager (RSGSL),1958
+NA,Employer (DL),2315
+NA,Employee,644
+NA,Company in scope,1479
 Organizational unit,Pricing compliance,1647
 Organizational unit,Global Transaction Banking Desk - Foreign Branch,2121
-Empty group,Asset Owners,2960
-Empty group,Local Bank Operations Support,2961
-Empty group,Applicant Structures,1686
+NA,Asset Owners,2960
+NA,Local Bank Operations Support,2961
+NA,Applicant Structures,1686
 Organizational unit,Intesa Sanpaolo Vita - Organization,2805
 Organizational unit,Eurizon Capital - Marketing and Commercial Development Department,2803
 Organizational unit,Fideuram Intesa Sanpaolo Private Banking - Marketing and Offer Development,2802
 Organizational unit,Intesa Sanpaolo Vita - Life and Non-Life Product Compliance,2806
 Organizational unit,Eurizon Capital - Compliance & AML,2804
 Organizational unit,Insurance and Asset Management,1948
-Empty group,Structure Proposing the initiative,44
+NA,Structure Proposing the initiative,44
 Person,Unit in Charge,3193
 Person,Central Directorates,1539
 Person,Business functions,1538
 Person,Network structures,28
 Person,Servicers,854
-Empty group,The Supervisor,2180
-Empty group,Competent accounting structure Company,1703
+NA,The Supervisor,2180
+NA,Competent accounting structure Company,1703
 Organizational unit,Cybersecurity Identity and Anti-Fraud Governance,1754
 Organizational unit,London Branch - IMI CIB Division,3239
 Organizational unit,Intesa Sanpaolo IMI Securities Corporation,143
 Organizational unit,People Planning and Systems,2202
 Person,Interested,2250
-Empty group,Data Protection Officer (DPO),946
-Empty group,Other Receiving Structure,1992
+NA,Data Protection Officer (DPO),946
+NA,Other Receiving Structure,1992
 Person,Bank of Italy,1674
 Organizational unit,Communication and Advertising,629
-Empty group,Manufacturing facility,2582
+NA,Manufacturing facility,2582
 Organizational unit,Historical Archive,3329
 Organizational unit,Securitized Products Solutions London - IMI CIB Division,359
 Person,Servicers,984
-Empty group,Group Bank/Company,2408
+NA,Group Bank/Company,2408
 Organizational unit,Foreign and decentralized treasuries,882
 Organizational unit,CIB & ISB Management Control,2375
-Empty group,Figure - Applicant structure,2192
+NA,Figure - Applicant structure,2192
 Person,Delegated Body,1946
 Person,Local purchasing function,1945
-Empty group,Purchase Approver,3308
-Empty group,Applicant body,2659
+NA,Purchase Approver,3308
+NA,Applicant body,2659
 Person,Servicers,1983
-Empty group,Authorized body,550
+NA,Authorized body,550
 Person,Customer,2056
 Person,Competent province,416
 Organizational unit,Risk Management - Foreign Branch Hub,2593
 Person,Intesa Sanpaolo RBM Salute S.p.A.,3313
 Person,Administrative structure Bank / Subsidiary company,434
-Empty group,Head of the UOG,1976
-Empty group,Applicant,1975
-Empty group,Recipient,1474
-Empty group,Eurizon manager,76
+NA,Head of the UOG,1976
+NA,Applicant,1975
+NA,Recipient,1474
+NA,Eurizon manager,76
 Person,Customer,2534
 Organizational unit,Portfolio Management & Structuring,777
 Person,Intermediate group company,2818
@@ -1708,25 +1708,25 @@ Organizational unit,Balance sheets,2817
 Organizational unit,Social initiatives,2700
 Organizational unit,Management support,2986
 Position,Controls Specialist - Regional Management,1690
-Empty group,Client company,2610
+NA,Client company,2610
 Organizational unit,Secretariat and Support Services to the CEO,1777
-Empty group,Lender Structure,1847
-Empty group,Project yards,1357
+NA,Lender Structure,1847
+NA,Project yards,1357
 Organizational unit,Helpdesk,2620
-Empty group,User,332
-Empty group,Second level,241
-Empty group,Group Financial Risks Committee,651
-Empty group,Applicant,424
-Empty group,Head of the Applicant's Organizational Unit,425
-Empty group,Owner responsible for the server,1080
-Empty group,HR management of companies other than ISP,3114
+NA,User,332
+NA,Second level,241
+NA,Group Financial Risks Committee,651
+NA,Applicant,424
+NA,Head of the Applicant's Organizational Unit,425
+NA,Owner responsible for the server,1080
+NA,HR management of companies other than ISP,3114
 Organizational unit,Intercompany Mobility and HR Proactive Placement,2820
 Organizational unit,"Compensation, ISBD International Mobility & HR Cost Management - International Subsidiary Banks Division",870
 Person,Society,2517
-Empty group,Powered manager,2518
-Empty group,Employee,525
-Empty group,Structure Manager,1984
-Empty group,Supervisor,1659
+NA,Powered manager,2518
+NA,Employee,525
+NA,Structure Manager,1984
+NA,Supervisor,1659
 Organizational unit,New Services and Third Party Networks,1548
 Person,Partner,1354
 Organizational unit,Advanced Analytics,1177
@@ -1738,12 +1738,12 @@ Organizational unit,Agribusiness Sales Management,1434
 Organizational unit,Exclusive Sales Management,3171
 Organizational unit,Area - Global Corporate Management,643
 External Organizational unit,Marketing - ISPB,1340
-Empty group,Structures Product/service managers,1706
-Empty group,Paying Structures on SLM Parent Company,2865
-Empty group,competent structures,2885
-Empty group,Structures Paying on SLM DSI DCO ISCB,2864
-Empty group,Client company,2884
-Empty group,Applicant,1277
+NA,Structures Product/service managers,1706
+NA,Paying Structures on SLM Parent Company,2865
+NA,competent structures,2885
+NA,Structures Paying on SLM DSI DCO ISCB,2864
+NA,Client company,2884
+NA,Applicant,1277
 Organizational unit,"Infrastructure, Network, Cloud, Info-physical and Data Protection Solutions",1759
 Organizational unit,Model Risk Assessment,3016
 Organizational unit,Foreign Banks Risk Appetite Framework,1165
@@ -1764,28 +1764,28 @@ Position,Head of Global Corporate Department - IMI CIB Division,341
 Position,Head of NPE Central Department,343
 Position,Head of Agribusiness Department,1972
 Person,Bank of Italy,110
-Empty group,Structure in charge of the management of critical events,109
-Empty group,Managers of Structure / Central Management of the Parent Company,2971
-Empty group,Other control structures of Group companies,2970
-Empty group,Other control structures of Group companies,2967
-Empty group,Managers of Structure / Central Management of the Parent Company,2969
-Empty group,Entities managing or assigning expenditure,2968
+NA,Structure in charge of the management of critical events,109
+NA,Managers of Structure / Central Management of the Parent Company,2971
+NA,Other control structures of Group companies,2970
+NA,Other control structures of Group companies,2967
+NA,Managers of Structure / Central Management of the Parent Company,2969
+NA,Entities managing or assigning expenditure,2968
 Organizational unit,Business Unit Management Control,2262
 Organizational unit,Reporting - DC Cost Management,962
 Organizational unit,Real Estate and Logistics costs,961
-Empty group,Applicant's facility manager,595
-Empty group,Applicant,1830
-Empty group,Holder,1831
-Empty group,Asset Monitor,1713
-Empty group,Structure responsible for the operation - SOP,2933
-Empty group,Subsidiary Company,511
-Empty group,Managing Director and CEO,348
-Empty group,Manager in charge,2898
+NA,Applicant's facility manager,595
+NA,Applicant,1830
+NA,Holder,1831
+NA,Asset Monitor,1713
+NA,Structure responsible for the operation - SOP,2933
+NA,Subsidiary Company,511
+NA,Managing Director and CEO,348
+NA,Manager in charge,2898
 Organizational unit,Chairman of the board of directors,2345
-Empty group,Supervisory authorities,2899
-Empty group,Chief Executive Officer and Board of Directors of the Subsidiary,1227
-Empty group,Chief Executive Officer of the Subsidiary,1228
-Empty group,Chairman of the Board of Directors of the Subsidiary,1226
+NA,Supervisory authorities,2899
+NA,Chief Executive Officer and Board of Directors of the Subsidiary,1227
+NA,Chief Executive Officer of the Subsidiary,1228
+NA,Chairman of the Board of Directors of the Subsidiary,1226
 Organizational unit,Debt Structuring ISBD,569
 Organizational unit,Rating and Debt Advisory,1918
 Organizational unit,DCM Origination Desk - Hub Foreign Branch,3354
@@ -1793,13 +1793,13 @@ Organizational unit,London Branch - Compliance/AML - IMI CIB Division,667
 Organizational unit,ISBD Advisory,568
 Organizational unit,Intesa Sanpaolo IMI Securities Corporation - Primary Markets,844
 Organizational unit,Intesa Sanpaolo IMI Securities Corporation - Fixed Income Sales,144
-Empty group,Bank Step 1,264
-Empty group,Structure in charge of the management of critical events,2162
+NA,Bank Step 1,264
+NA,Structure in charge of the management of critical events,2162
 Person,EBA Clearing,2163
 Organizational unit,Internal Financial Intelligence Unit - Suspicious Activity Reporting,2430
-Empty group,Approver,2647
-Empty group,Applicant,2713
-Empty group, Structure Manager,2402
+NA,Approver,2647
+NA,Applicant,2713
+NA, Structure Manager,2402
 Organizational unit,Structured Finance Desk - Foreign Branch Hub,2748
 Organizational unit,Loan Syndication London - IMI CIB Division,1448
 Organizational unit,Controller Relationship Unit - IMI CIB Division,2391
@@ -1817,16 +1817,16 @@ Organizational unit,Credit Value Control Geographical Area 2,2852
 Organizational unit,Credit Value Control Geographic Area 1,2851
 Position,Credit Specialist - Regional Management,800
 Person,Unit in Charge,3194
-Empty group,foster structure,2747
-Empty group,Referrer,2166
+NA,foster structure,2747
+NA,Referrer,2166
 Organizational unit,Construction,1098
 Person,Service,1536
 Person,Financial company,2648
-Empty group,Employee,1533
-Empty group,Bank of Italy,1801
+NA,Employee,1533
+NA,Bank of Italy,1801
 Organizational unit,Commercial coordination,145
-Empty group,Second level,1677
-Empty group,Functions involved,1712
+NA,Second level,1677
+NA,Functions involved,1712
 Organizational unit,ORMD extension,886
 Position,Network Assistance Specialist - Impact Management,217
 Position,Network Assistance Specialist - Agribusiness Management,219
@@ -1839,9 +1839,9 @@ Organizational unit,Fideuram Intesa Sanpaolo Private Banking - ISPB Operational 
 Organizational unit,Presidium Participate,2519
 Person,Impacted bank,114
 Organizational unit,Digital Transformation Businesses and Corporates,2395
-Empty group,Structure responsible for the Management of Critical Events,3254
-Empty group,STDO London,2723
-Empty group,Bank of Italy,2552
+NA,Structure responsible for the Management of Critical Events,3254
+NA,STDO London,2723
+NA,Bank of Italy,2552
 Organizational unit,Administrative and Real Estate Litigation,914
 Person,Italian Stock Exchange,3207
 Person,Monte Titoli,1750
@@ -1855,15 +1855,15 @@ Organizational unit,Regional Directorate of Veneto Ovest and Trentino Alto Adige
 Organizational unit,Emilia Romagna and Marche Regional Directorate,213
 Organizational unit,Pulse,2502
 Person,Administrative structure Bank / Subsidiary company,1070
-Empty group,Evaluator,299
+NA,Evaluator,299
 Organizational unit,Business Solutions,2998
-Empty group,Compliance ISP IMI SEC,1205
+NA,Compliance ISP IMI SEC,1205
 Organizational unit,DCM London - IMI CIB Division,2649
-Empty group,Legal ISP IMI SEC,3330
+NA,Legal ISP IMI SEC,3330
 Organizational unit,financial engineering,900
 Person,External service,2303
 Person,Customer,302
-Empty group,Supervisor in possession of IVASS requirements,3348
+NA,Supervisor in possession of IVASS requirements,3348
 Organizational unit,North West audit,1305
 Organizational unit,Southern Audit,1073
 Organizational unit,Lombardy audit,1072
@@ -1872,7 +1872,7 @@ Organizational unit,Audit Center,1307
 Person,Group company,3316
 Organizational unit,"Models Transaction Monitoring, Analytics and Special Investigations",2432
 Organizational unit,Compliance Data Governance,1087
-Empty group,Data domain DOW and DTOW,944
+NA,Data domain DOW and DTOW,944
 Organizational unit,Fideuram Intesa Sanpaolo Private Banking - ISPB Logistics and Services,576
 Organizational unit,Technical Secretariat of the Presidency,1279
 Organizational unit,Financial Market Coverage Head Office Department,492
@@ -1885,49 +1885,49 @@ Person,Counterpart,2294
 Organizational unit,Legal NPE Transactions,2912
 Organizational unit,Solutions Development & Deals Execution,1555
 Organizational unit,Real Estate Structuring,3214
-Empty group,Employer (DL),3110
-Empty group,in charge,3111
-Empty group,Employee,1961
-Empty group,Fire Prevention and First Aid Officer,3065
-Empty group,Personnel with disabilities,1962
-Empty group,Emergency Coordinator,1971
-Empty group,Prevention and Protection Service Manager (RSPP),3109
-Empty group,Personnel employee with disabilities,3066
-Empty group,Deputy Emergency Coordinator,3064
+NA,Employer (DL),3110
+NA,in charge,3111
+NA,Employee,1961
+NA,Fire Prevention and First Aid Officer,3065
+NA,Personnel with disabilities,1962
+NA,Emergency Coordinator,1971
+NA,Prevention and Protection Service Manager (RSPP),3109
+NA,Personnel employee with disabilities,3066
+NA,Deputy Emergency Coordinator,3064
 Person,Society,2354
 Person,Territorial Competent Doctor (MCT),2355
-Empty group,Lender Structure,1068
-Empty group,Structure responsible for the operation - SOP,391
-Empty group,Group structure,3236
-Empty group,Critical Event Readiness Team (CERT),2602
-Empty group,ORMD extension,18
-Empty group,Global Resilience & Complex Incident Management (GRe.CIM),2600
-Empty group,Competent Functions,2601
-Empty group,Functions Impacted,1032
-Empty group,Control functions,1033
-Empty group,Incident Management functions,3107
+NA,Lender Structure,1068
+NA,Structure responsible for the operation - SOP,391
+NA,Group structure,3236
+NA,Critical Event Readiness Team (CERT),2602
+NA,ORMD extension,18
+NA,Global Resilience & Complex Incident Management (GRe.CIM),2600
+NA,Competent Functions,2601
+NA,Functions Impacted,1032
+NA,Control functions,1033
+NA,Incident Management functions,3107
 Organizational unit,Low Default Portfolio Models,311
 Organizational unit,LGD Performing and EAD Models,314
 Organizational unit,Retail Models,313
 Organizational unit,SME Models,312
 Person,Fideuram Investments,1598
 Person,Society,166
-Empty group,Employee,337
+NA,Employee,337
 Person,Insurance company,1657
-Empty group,Employee,1656
-Empty group,Sectoral Plan Coordinator,999
-Empty group,Managerial Referent,1000
-Empty group,Managers of the Structures Involved,1001
+NA,Employee,1656
+NA,Sectoral Plan Coordinator,999
+NA,Managerial Referent,1000
+NA,Managers of the Structures Involved,1001
 Person,Calculation Agent,2107
 Person,Customer,372
-Empty group,Supervisor,860
+NA,Supervisor,860
 Person,Consob,2698
-Empty group,Relationship Manager,676
+NA,Relationship Manager,676
 Organizational unit,"Network MLT/Leasing, Factoring and Protection Specialists",2999
 Organizational unit,Credit Risk Optimization & Strategic Transactions,2041
 Person,Vendors,2533
 Person,Central Counterparty Clearing House - CCP,937
-Empty group,Porter's office,1514
+NA,Porter's office,1514
 Person,Visitor,1513
 Organizational unit,Bergamo Territorial Consulting,1529
 Organizational unit,Naples dispute,911
@@ -1936,62 +1936,62 @@ Organizational unit,Rome dispute,915
 Organizational unit,Florence dispute,1059
 Organizational unit,Milan dispute,917
 Organizational unit,Bergamo dispute,1530
-Empty group,Operating structures,1420
-Empty group,"CdG, Group Management and Consolidated Reporting",3251
-Empty group,Applicant,1442
-Empty group,Data Owner,1123
-Empty group,receiving facility,1441
-Empty group,Operating structure,3211
+NA,Operating structures,1420
+NA,"CdG, Group Management and Consolidated Reporting",3251
+NA,Applicant,1442
+NA,Data Owner,1123
+NA,receiving facility,1441
+NA,Operating structure,3211
 Person,Nexi Acquiring Office,1852
-Empty group,Head of the impacted O.U,271
-Empty group,Managerial Referent,272
-Empty group,Operational contact person,273
-Empty group,Competent and Monitoring Functions,276
-Empty group,Responsible for the host OU,274
-Empty group,Emergency team,275
+NA,Head of the impacted O.U,271
+NA,Managerial Referent,272
+NA,Operational contact person,273
+NA,Competent and Monitoring Functions,276
+NA,Responsible for the host OU,274
+NA,Emergency team,275
 Person,Subsidiary company of the supervisory perimeter,2710
 Person,Issuing company of the supervisory perimeter,906
 Organizational unit,People Care,1109
 Person,Competent doctor,146
 Person,Corporate Protection Consultant Psychologist,2051
 Organizational unit,Employment Litigation,1293
-Empty group,Competent Human Resources Management,1253
-Empty group,Group company,147
-Empty group,The Structure that receives the deed,2256
+NA,Competent Human Resources Management,1253
+NA,Group company,147
+NA,The Structure that receives the deed,2256
 Organizational unit,Network Management & Development,639
-Empty group,Head of the Planning and AVM Department,1105
-Empty group,Head of the Treasury Department,1104
-Empty group,Mercury,2125
-Empty group,Branch Manager,986
+NA,Head of the Planning and AVM Department,1105
+NA,Head of the Treasury Department,1104
+NA,Mercury,2125
+NA,Branch Manager,986
 Organizational unit,Legal Advisory Markets,2215
-Empty group,Direct manager,2257
+NA,Direct manager,2257
 Person,Group company,700
-Empty group,Person,461
-Empty group,Recipients Reporting,329
+NA,Person,461
+NA,Recipients Reporting,329
 Person,Supervisory Board,2003
 Person,Customer,1859
-Empty group,top management,2483
-Empty group,IT Project Leader,50
-Empty group,Project team,51
+NA,top management,2483
+NA,IT Project Leader,50
+NA,Project team,51
 Organizational unit,Charity Fund,1280
-Empty group,Beneficiary body,898
+NA,Beneficiary body,898
 Person,Nexi,457
-Empty group,Entities managing or assigning expenditure,445
-Empty group,Other control structures of Group companies,444
-Empty group,Managers of Structure / Central Management of the Parent Company,443
+NA,Entities managing or assigning expenditure,445
+NA,Other control structures of Group companies,444
+NA,Managers of Structure / Central Management of the Parent Company,443
 Organizational unit,credit strategies,502
 Person,M&A Advisory London - IMI CIB Division,2660
 Person,Customer,2403
-Empty group,Group company,2798
-Empty group,Corporate secretariat Company,998
-Empty group,External Legal,512
+NA,Group company,2798
+NA,Corporate secretariat Company,998
+NA,External Legal,512
 Organizational unit,RWA Accuracy & Analytics,2848
-Empty group,Supplier,796
+NA,Supplier,796
 Organizational unit,Coordination of Agribusiness Specialists,1435
-Empty group,Delegated manager,2548
+NA,Delegated manager,2548
 Person,Organization Function of CIB Banks,481
 Organizational unit,Marketing & Sales Digital Platforms,1410
-Empty group,Structure responsible for editing parallel hierarchies,3228
+NA,Structure responsible for editing parallel hierarchies,3228
 Person,External custodian,2311
 Organizational unit,Purchasing Application Systems and Infoproviders,662
 Organizational unit,Global Procurement Focal Point,1196
@@ -2004,53 +2004,53 @@ Organizational unit,Insolvency proceedings and business crisis,1553
 Organizational unit,Post Disposal issues,1527
 Organizational unit,Specialist Litigation,2210
 Organizational unit,Sensitive Litigation,1531
-Empty group,Authorized Subject,3040
-Empty group,Application Referent,1799
+NA,Authorized Subject,3040
+NA,Application Referent,1799
 Organizational unit,Intercompany Distribution Agreements,197
-Empty group,Deliberative Body,2826
+NA,Deliberative Body,2826
 Person,Deloitte,658
 Person,Customer,675
-Empty group,Special Purpose Vehicle,2822
-Empty group,Organizational unit,874
-Empty group,Applicant,2111
-Empty group,Subsidiary company,2453
-Empty group,Group company,2608
-Empty group,M&A manager,1274
+NA,Special Purpose Vehicle,2822
+NA,Organizational unit,874
+NA,Applicant,2111
+NA,Subsidiary company,2453
+NA,Group company,2608
+NA,M&A manager,1274
 Organizational unit,Global Markets Services & Strategy,903
-Empty group,Operational and business functions,1048
-Empty group,Deliberating Organ Secretariat,1220
-Empty group,Structures concerned,1476
-Empty group,Placement Banks,529
+NA,Operational and business functions,1048
+NA,Deliberating Organ Secretariat,1220
+NA,Structures concerned,1476
+NA,Placement Banks,529
 External Organizational unit,Intesa Sanpaolo Private Banking,3299
-Empty group,Consob,1994
+NA,Consob,1994
 Person,Auditing firm,3077
 Organizational unit,ESG & Sustainability,2901
-Empty group,Head of the contributing structure,263
-Empty group,Responsible Manager,578
-Empty group,Applicant structure,1909
+NA,Head of the contributing structure,263
+NA,Responsible Manager,578
+NA,Applicant structure,1909
 Person,Counterpart,2736
-Empty group,Competent Human Resources Management,1979
+NA,Competent Human Resources Management,1979
 Organizational unit,Siref Trust,427
-Empty group,Competent Accounting Structures,1978
-Empty group,Responsible manager / CEO and CEO / GM,1688
+NA,Competent Accounting Structures,1978
+NA,Responsible manager / CEO and CEO / GM,1688
 Organizational unit,Legal Advisory Market Support,3083
-Empty group,Data Technology Owner,268
-Empty group,Data Owner,2412
-Empty group,Data User,1692
-Empty group,DSI Application Factory,23
-Empty group,Digital Business Partners,2790
-Empty group,Banks in perimeter,2807
+NA,Data Technology Owner,268
+NA,Data Owner,2412
+NA,Data User,1692
+NA,DSI Application Factory,23
+NA,Digital Business Partners,2790
+NA,Banks in perimeter,2807
 Organizational unit,Controller Capital Markets & Investment Banking,2392
 Person,Customer,210
 Organizational unit,LAF International,3369
 Organizational unit,LAF Italy,755
-Empty group,PMLS extension,3078
+NA,PMLS extension,3078
 Organizational unit,Retail & Wealth Management Sales Department,1735
-Empty group,Financial Market Coverage Department - Price-Sensitive Communication,1129
-Empty group,Controlled structure,2915
+NA,Financial Market Coverage Department - Price-Sensitive Communication,1129
+NA,Controlled structure,2915
 Organizational unit,Controls - Impact Direction,1526
 Person,Territorial and Central Structures,470
-Empty group,Recipients Reporting,6
+NA,Recipients Reporting,6
 Organizational unit,Eximbank,2254
 Organizational unit,ISBD Cash Management,1967
 Organizational unit,Business Internationalization Development,3026
@@ -2059,77 +2059,77 @@ Person,Active and passive cycle structure of the company in scope,1192
 Person,Tax structure of the company in perimeter,1191
 Person,Host Bank,1580
 Organizational unit,Digital Branch Sales Management,1181
-Empty group,Asset Owner,1603
+NA,Asset Owner,1603
 Person,Customer,2445
-Empty group,Asset Owner,1182
-Empty group,Application Referent,3310
-Empty group,Competent SIT contact person,1709
-Empty group,Applicant,3311
+NA,Asset Owner,1182
+NA,Application Referent,3310
+NA,Competent SIT contact person,1709
+NA,Applicant,3311
 Person,Bank of Italy,1660
 Person,ICT Service Provider,1290
-Empty group,Shopping,1848
-Empty group,Deliberative Body,2046
+NA,Shopping,1848
+NA,Deliberative Body,2046
 Person,Deloitte,3265
 Organizational unit,Consumer Association Relations,628
 Person,Consumers Association,1396
-Empty group,Supervisor in possession of IVASS requirements,547
+NA,Supervisor in possession of IVASS requirements,547
 Person,Tax structure of the company in perimeter,1802
 Organizational unit,Tax Controls,1330
-Empty group,The Supervisor,1124
+NA,The Supervisor,1124
 Organizational unit,Extraordinary Transactions - DC Group Treasury and Finance,953
-Empty group,Contact persons indicated at the time of transmission of the proxy,3226
-Empty group,Co-Head DCFMC,3312
-Empty group,Corporate Secretariats Banks / Subsidiaries and competent HR functions,1454
-Empty group,Society,659
+NA,Contact persons indicated at the time of transmission of the proxy,3226
+NA,Co-Head DCFMC,3312
+NA,Corporate Secretariats Banks / Subsidiaries and competent HR functions,1454
+NA,Society,659
 Person,Nexi,321
 Person,Counterpart,2094
 External Organizational unit,Concession Financial Institutions,338
-Empty group,Compliance ISP IMI SEC,417
+NA,Compliance ISP IMI SEC,417
 Organizational unit,Cybersecurity Incident Response Team,2085
-Empty group,Owner of the fund,1232
-Empty group,Competent decision-making body,1256
+NA,Owner of the fund,1232
+NA,Competent decision-making body,1256
 Person,Servicers,237
-Empty group,Business Owner,1392
-Empty group,Heads of DSI Service,2117
+NA,Business Owner,1392
+NA,Heads of DSI Service,2117
 Person,Society,3197
 Person,Trading Member,1970
-Empty group,Applicant structure,2006
-Empty group,Report Owner,1610
-Empty group,Structure that performs the secretarial function,825
+NA,Applicant structure,2006
+NA,Report Owner,1610
+NA,Structure that performs the secretarial function,825
 Person,Organization Function of CIB Banks,483
 Person,Society,3058
 Organizational unit,Enterprise Risk Governance,326
-Empty group,Structure in charge of the management of critical events,2578
-Empty group,Chief Risk Officer,850
+NA,Structure in charge of the management of critical events,2578
+NA,Chief Risk Officer,850
 Organizational unit,Compliance Government,1769
 Organizational unit,Government Anti Financial Crime,2143
 Organizational unit,Audit coordination,1351
 Organizational unit,Risk and Sustainability Committee,2388
-Empty group,Heads of Divisions and Central Management,378
-Empty group,Group company,1046
-Empty group,BDT COMPETENT STRUCTURE,967
+NA,Heads of Divisions and Central Management,378
+NA,Group company,1046
+NA,BDT COMPETENT STRUCTURE,967
 Person,Sponsee Applicant,3227
 Organizational unit,Territorial Communication Coordination,466
-Empty group,ORMD extension,2528
-Empty group,ORMR,266
+NA,ORMD extension,2528
+NA,ORMR,266
 Person,Group company,1278
-Empty group,Bank of Italy,633
-Empty group,Other structures involved in relation to the matter,3076
-Empty group,Corporate bodies,59
-Empty group,Head of Structure owner,387
-Empty group,Translation company,388
-Empty group,Structures concerned,1210
-Empty group,Responsible,1014
-Empty group,Employee,1013
+NA,Bank of Italy,633
+NA,Other structures involved in relation to the matter,3076
+NA,Corporate bodies,59
+NA,Head of Structure owner,387
+NA,Translation company,388
+NA,Structures concerned,1210
+NA,Responsible,1014
+NA,Employee,1013
 Person,Employee,3130
 Person,Supplier,2989
 Organizational unit,XVA Management,2037
-Empty group,Business and support function,630
-Empty group,Head of the business and support function,631
-Empty group,Data Protection Officer (DPO),632
-Empty group,Information Systems Function of each Legal Entity,2285
+NA,Business and support function,630
+NA,Head of the business and support function,631
+NA,Data Protection Officer (DPO),632
+NA,Information Systems Function of each Legal Entity,2285
 Person,Auditing firm,2157
-Empty group,Managing Director and CEO,3237
+NA,Managing Director and CEO,3237
 Person,Servicers,2664
 Organizational unit,People Development,2506
 Organizational unit,Human Resources - Foreign Branch Hub,2454
@@ -2147,84 +2147,84 @@ Organizational unit,Fixed Income Banking Book,706
 Organizational unit,"Rates, FX & Commodities Research",1238
 Organizational unit,Credit Assessment Control,2522
 Organizational unit,Active Monitoring of the NPL Plan,838
-Empty group,Central Structure,909
-Empty group,Territorial structure,908
+NA,Central Structure,909
+NA,Territorial structure,908
 Person,Organism for keeping the register,1252
-Empty group,Employee,556
-Empty group,Organizational unit manager,554
+NA,Employee,556
+NA,Organizational unit manager,554
 Position,Fideuram Intesa Sanpaolo Private Banking - Branch Manager,3045
 Position,Fideuram Intesa Sanpaolo Private Banking - Head of Administrative and Branch Services,3046
-Empty group,Central Management Structures,851
+NA,Central Management Structures,851
 Person,Customer,3325
 Person,Servicers,2515
 Person,Central Directorates,654
 Person,Business functions,653
-Empty group,Application structures in the field,2621
+NA,Application structures in the field,2621
 Organizational unit,Financial & ESG Performance Benchmarking,609
-Empty group,Managing Director and CEO,1833
+NA,Managing Director and CEO,1833
 Organizational unit,ISP Networks - Investment Products Sales,1566
-Empty group,Applicant body,1520
-Empty group,Issuer body,2299
-Empty group,Workers' Safety Representative (RLS),1812
-Empty group,Prevention and Protection Service Manager (RSPP),2033
-Empty group,Employer (DL),2031
+NA,Applicant body,1520
+NA,Issuer body,2299
+NA,Workers' Safety Representative (RLS),1812
+NA,Prevention and Protection Service Manager (RSPP),2033
+NA,Employer (DL),2031
 Person,Territorial Competent Doctor (MCT),2923
-Empty group,Emergency Coordinator,1811
-Empty group,in charge,2032
-Empty group,Employee,2638
+NA,Emergency Coordinator,1811
+NA,in charge,2032
+NA,Employee,2638
 Person,Society,2147
 Person,Competent Doctor Coordinator (MCC),2922
-Empty group,Client structures,955
+NA,Client structures,955
 Person,Society,1922
 Organizational unit,HR Change Management & Communication,1954
-Empty group,Data User,283
-Empty group,Data Technology Owner,1289
-Empty group,Data Owner,1288
-Empty group,Head of the Data Owner structure,2725
-Empty group,Product Desk - Structured Finance,1103
+NA,Data User,283
+NA,Data Technology Owner,1289
+NA,Data Owner,1288
+NA,Head of the Data Owner structure,2725
+NA,Product Desk - Structured Finance,1103
 Person,Servicers,2754
 Organizational unit,BdT Portfolio Monitoring,748
 Organizational unit,Risk Advanced Analytics,747
-Empty group,Applicant,2692
-Empty group,Operator/Customer,2068
+NA,Applicant,2692
+NA,Operator/Customer,2068
 Person,Conservation manager,2693
-Empty group,Employee,73
+NA,Employee,73
 Person,Society,75
-Empty group, Facility manager,74
+NA, Facility manager,74
 Person,Delegated Body,142
 Person,Client,2248
-Empty group,Applicant body,589
-Empty group,Operations center,1247
-Empty group,Managing Director and CEO,2329
-Empty group,Applicant body,397
-Empty group,Alternative Investments Table and SPAC - Alternative Investments Session,2476
-Empty group,Supervisor,3035
-Empty group,Reference Manager,2867
-Empty group,Structure responsible for the operation,966
-Empty group,Lender Structure,3270
-Empty group,Manager,768
-Empty group,Lender Structure,1116
-Empty group,SFTR-Request,2108
+NA,Applicant body,589
+NA,Operations center,1247
+NA,Managing Director and CEO,2329
+NA,Applicant body,397
+NA,Alternative Investments Table and SPAC - Alternative Investments Session,2476
+NA,Supervisor,3035
+NA,Reference Manager,2867
+NA,Structure responsible for the operation,966
+NA,Lender Structure,3270
+NA,Manager,768
+NA,Lender Structure,1116
+NA,SFTR-Request,2108
 Person,Client/Counterparty,657
 Organizational unit,Strategic marketing,3304
 Person,the requesting bank,2365
 Organizational unit,Credit Solutions,2786
 Organizational unit,R&D Consulting and European Funding,2275
 Person,Servicers,519
-Empty group,Pivot structure,1766
-Empty group,Other Structure Responsible for the response,1920
-Empty group,Group company,624
-Empty group,Foreign branch,83
-Empty group,Functional Owner structure,612
-Empty group,Structure concerned by subject,625
+NA,Pivot structure,1766
+NA,Other Structure Responsible for the response,1920
+NA,Group company,624
+NA,Foreign branch,83
+NA,Functional Owner structure,612
+NA,Structure concerned by subject,625
 Organizational unit,Coordination of Regulatory Compliance and Strategic PMO,947
-Empty group,Corporate bodies,623
-Empty group,Business division,1939
+NA,Corporate bodies,623
+NA,Business division,1939
 Person,External service,3259
 Organizational unit,Extraordinary operations,3098
-Empty group,Subsidiary accounting function,2594
+NA,Subsidiary accounting function,2594
 Person,Group company,2065
-Empty group,Project leader,1980
+NA,Project leader,1980
 Person,Supplier Project Leader,1981
 Organizational unit,Extraordinary Corporate Transactions and Minorities Interests,225
 Organizational unit,Intesa Sanpaolo Innovation Center - Financing and Growth of Startups,2057
@@ -2232,29 +2232,29 @@ Organizational unit,Extraordinary operations support,2416
 Person,ICT Service Provider,1373
 Organizational unit,Frankfurt branch,1371
 Organizational unit,Group Tax Control,1194
-Empty group,Business Functions and other Central Departments,2641
-Empty group,Group Counterparty,254
+NA,Business Functions and other Central Departments,2641
+NA,Group Counterparty,254
 Organizational unit,Recruiting & Assessment Center,1296
-Empty group,Candidate,2541
-Empty group,Hiring Manager,339
+NA,Candidate,2541
+NA,Hiring Manager,339
 Person,Servicers,1900
-Empty group,PEC box owner/user,8
-Empty group,Applicant,1710
-Empty group,Responsible,1711
-Empty group,Delegate,7
-Empty group,Deliberative Body,1428
+NA,PEC box owner/user,8
+NA,Applicant,1710
+NA,Responsible,1711
+NA,Delegate,7
+NA,Deliberative Body,1428
 Person,Deloitte,1125
-Empty group,Resource Planning and Optimization Manager,815
-Empty group,Departmental Tuning & Performances Manager,2695
-Empty group,Tuning & Performances Mainframe Manager,2696
+NA,Resource Planning and Optimization Manager,815
+NA,Departmental Tuning & Performances Manager,2695
+NA,Tuning & Performances Mainframe Manager,2696
 Person,Counterpart,2835
-Empty group,The Supervisor,616
-Empty group,The Supervisor,617
+NA,The Supervisor,616
+NA,The Supervisor,617
 Person,Administrative structure Bank / Subsidiary company,404
 Person,Italian banks controlled,405
 Organizational unit,Wealth Management Investment Services Risk,749
 Person,Bank of Italy,2793
-Empty group,Structure in charge of the management of critical events,2808
+NA,Structure in charge of the management of critical events,2808
 Person,Correspondent Bank,2809
 Person,ISPB Board of Directors,1146
 Person,Intesa Sanpaolo Provis Board of Directors,1145
@@ -2262,50 +2262,50 @@ Organizational unit,Fideuram Intesa Sanpaolo Private Banking - Chief Financial O
 Organizational unit,BdT Credit Risk Appetite and Faculty,1006
 Person,Servicers,282
 Person,Supplier,976
-Empty group,Supervisor in possession of IVASS requirements,3027
-Empty group,Structure to which the assignment of financial consultancy is proposed,2972
+NA,Supervisor in possession of IVASS requirements,3027
+NA,Structure to which the assignment of financial consultancy is proposed,2972
 Organizational unit,Global Transaction Banking Desk - Hub Foreign Branch,2118
 Organizational unit,Trade Finance CIB,515
 Organizational unit,Credit - Hub Foreign Branch,189
 Organizational unit,Country Manager USA & Americas,1234
 Organizational unit,Public Finance Management,2603
-Empty group,Data User,1910
-Empty group,Data Owner,1753
-Empty group,Specialist Support Function,783
-Empty group,Data Technology Owner,1159
-Empty group,PMO,782
+NA,Data User,1910
+NA,Data Owner,1753
+NA,Specialist Support Function,783
+NA,Data Technology Owner,1159
+NA,PMO,782
 Organizational unit,Corporate offices of the Group,227
 Person,Subsidiaries,1469
-Empty group,Museum services management company,1249
-Empty group,Applicant,2553
+NA,Museum services management company,1249
+NA,Applicant,2553
 Organizational unit,Physical Security Operational Management,2347
-Empty group,Authorized Subject,2661
-Empty group,Employee,2012
-Empty group,Supervisor,583
+NA,Authorized Subject,2661
+NA,Employee,2012
+NA,Supervisor,583
 Person,Counterparty/Client,101
-Empty group,centralized branch,85
-Empty group,External Resources Committee,165
+NA,centralized branch,85
+NA,External Resources Committee,165
 Person,Servicers,573
 Organizational unit,Privacy Controls and Reporting,1088
 Person,Counting room,1027
 Person,External Legal,1571
-Empty group,Structure and Society in the area,1049
+NA,Structure and Society in the area,1049
 External Organizational unit,Fideuram Intesa Sanpaolo Private Banking,2306
 External Organizational unit,Eurizon Capital,2307
 Person,Consob,3231
 Person,Group company,610
-Empty group,Group company,618
-Empty group,Society,2093
+NA,Group company,618
+NA,Society,2093
 Organizational unit,structured finance,752
 Organizational unit,NPLs,2686
 Person,Servicers,516
-Empty group,Structure responsible for the operation - SOP of the Parent Company,211
-Empty group,Structure responsible for the operation - SOP of the Subsidiary,212
-Empty group,Supplier,2729
-Empty group,Process/Business Owner,198
-Empty group,Lender Structure,3257
+NA,Structure responsible for the operation - SOP of the Parent Company,211
+NA,Structure responsible for the operation - SOP of the Subsidiary,212
+NA,Supplier,2729
+NA,Process/Business Owner,198
+NA,Lender Structure,3257
 Organizational unit,Monitoring of Valuation of Other Assets,2523
-Empty group,Company accounting structure,1102
+NA,Company accounting structure,1102
 Person,External Study,761
 Organizational unit,IMI – CIB Entities,1085
 Organizational unit,International Subsidiary Banks,1084
@@ -2313,12 +2313,12 @@ Organizational unit,"Private Banking, Asset Management and Insurance Entities",2
 Organizational unit,"Anti Financial Crime Control Companies, Banks and Foreign Branches",1086
 Organizational unit,Processes and Quality Assurance Embargoes and Anti-corruption,2438
 Person,Bank of Italy,1791
-Empty group,Recipients - Liquidity Report,2849
+NA,Recipients - Liquidity Report,2849
 Organizational unit,Rating Agencies Relations,158
-Empty group,Structure in charge of the management of critical events,2560
+NA,Structure in charge of the management of critical events,2560
 Person,Monte Titoli,1670
 Person,Bank of Italy,1669
-Empty group,Client,2938
+NA,Client,2938
 Person,Designer/Project Manager,2136
 Person,Conceding administration,3188
 Person,Supervisor,2939
@@ -2327,14 +2327,14 @@ Person,Supplier,2873
 Person,Coordinator for the Execution of the works,2942
 Person,Planning Coordinator,2941
 Person,Consap SpA,55
-Empty group,Central Management Structure,58
-Empty group,Territorial structure,57
+NA,Central Management Structure,58
+NA,Territorial structure,57
 Person,MB Credit Solutions,2148
 Person,Servicers,1440
 Person,Legal Entity,2213
 Person,Counterpart,2214
-Empty group,Second level,82
-Empty group,User,81
+NA,Second level,82
+NA,User,81
 Organizational unit,Banca dei Territori Division - Digital Branch Management,599
 Person,External provider,598
 Person,Providers,353
@@ -2343,58 +2343,58 @@ Organizational unit,CIB Credit Risk,1320
 Organizational unit,Legal Advisory GTB,857
 Person,Foreign branch,3053
 Person,Group counterpart,401
-Empty group,Business Owner,1884
+NA,Business Owner,1884
 Organizational unit,"Legal Consulting, Finance and Group Services",969
-Empty group,owner structure,3266
-Empty group,Enabled user,2605
-Empty group,Enabled user,2606
-Empty group,Third Sector Manager,2604
-Empty group,Managers of the structures involved,1316
-Empty group,Managerial Referent,1315
-Empty group,Sectoral Plan Coordinator,1314
-Empty group,Function Responsible for the Governance document,2088
+NA,owner structure,3266
+NA,Enabled user,2605
+NA,Enabled user,2606
+NA,Third Sector Manager,2604
+NA,Managers of the structures involved,1316
+NA,Managerial Referent,1315
+NA,Sectoral Plan Coordinator,1314
+NA,Function Responsible for the Governance document,2088
 Organizational unit,Coordination of BdT Risk Initiatives,751
-Empty group,Data Technology Office,3276
-Empty group,Data Owner,3275
+NA,Data Technology Office,3276
+NA,Data Owner,3275
 Organizational unit,Home ICT Network Audit,1732
-Empty group,Project yards,2109
+NA,Project yards,2109
 Person,Servicers,2914
-Empty group,BdT manager,1938
+NA,BdT manager,1938
 Person,Corporate client,138
 Person,Servicers,3084
-Empty group,Customer Relationship Manager,2059
-Empty group,Group company,552
+NA,Customer Relationship Manager,2059
+NA,Group company,552
 Organizational unit,Infrastructural Investments,1015
 Organizational unit,Coordination and Transversal Initiatives,784
 Organizational unit,Planning & Control - ISB Division,940
 External Organizational unit,Fideuram Investimenti SGR,1776
 Person,Administrative structure Bank / Subsidiary company,1904
-Empty group,Corporate Secretariat Bank with widespread shares,2654
-Empty group,Structure responsible for the operation,1524
-Empty group,Report recipient,2738
-Empty group,Entities managing or assigning expenditure,448
-Empty group,Managers of Structure / Central Management of the Parent Company,446
-Empty group,Other control structures of Group companies,447
-Empty group,Group banks and companies,1067
+NA,Corporate Secretariat Bank with widespread shares,2654
+NA,Structure responsible for the operation,1524
+NA,Report recipient,2738
+NA,Entities managing or assigning expenditure,448
+NA,Managers of Structure / Central Management of the Parent Company,446
+NA,Other control structures of Group companies,447
+NA,Group banks and companies,1067
 Organizational unit,ESG & Sustainability Reporting,1183
-Empty group,CSR contact person,565
-Empty group,Applicant body,1221
+NA,CSR contact person,565
+NA,Applicant body,1221
 Person,Local purchasing function,1156
 Person,Delegated Body,1157
-Empty group,Client,1158
-Empty group,Data Protection Officer (DPO),1689
-Empty group,Legal Function of each Legal Entity,1599
-Empty group,Client Group company,93
+NA,Client,1158
+NA,Data Protection Officer (DPO),1689
+NA,Legal Function of each Legal Entity,1599
+NA,Client Group company,93
 Person,Supplier/Third Party,1214
 Organizational unit,Supervisory Crisis Management,701
 Organizational unit,Coordination of Portfolios of Foreign Branches,3358
 Person,Servicers,2588
 Organizational unit,Central Structures,3179
-Empty group,Front Office Treasury,1450
-Empty group,Branch with internal warehouse,1662
-Empty group,Warehouse at depository facilities,1230
+NA,Front Office Treasury,1450
+NA,Branch with internal warehouse,1662
+NA,Warehouse at depository facilities,1230
 Person,External custodian,2290
-Empty group,Receiving Body,2169
+NA,Receiving Body,2169
 Person,Local Purchasing Function,3205
 Person,Delegated Body,3206
 Person,Promoter of the initiative,2737
@@ -2402,45 +2402,45 @@ Person,Unit in Charge,3192
 Person,Owner of the artistic asset,53
 Organizational unit,Cultural Initiatives and Exhibition Projects,2735
 Person,External documentation manager,2543
-Empty group,Central Structure User,1415
+NA,Central Structure User,1415
 Person,Conveyor,2544
-Empty group,Finance Application Management,201
-Empty group,User,943
+NA,Finance Application Management,201
+NA,User,943
 Organizational unit,Structured Debt Solutions,3370
 Organizational unit,DCM Origination Desk - Foreign Branch,3355
 Organizational unit,Intesa Sanpaolo IMI Securities Corporation - Compliance,842
-Empty group,Capital Markets ISDA Advisory,2773
-Empty group,Issuer,778
+NA,Capital Markets ISDA Advisory,2773
+NA,Issuer,778
 Person,Ministry of Economy and Finance,126
-Empty group,Clearstream,2086
-Empty group,Romulus,2087
+NA,Clearstream,2086
+NA,Romulus,2087
 Person,INPS office,1963
-Empty group,Facility manager,865
+NA,Facility manager,865
 Person,Unit in Charge,3190
-Empty group,Referrer,1821
-Empty group,reporting employee,2424
-Empty group,Employee,1820
-Empty group,Divisions and Central Structures,183
+NA,Referrer,1821
+NA,reporting employee,2424
+NA,Employee,1820
+NA,Divisions and Central Structures,183
 Organizational unit,IT - Foreign Branch Hub,2070
 Organizational unit,Relations with Universities and Schools,2701
-Empty group,IT Project Leader,2886
-Empty group,IT Project Leader,2496
-Empty group,PMOC / Agile Manager,2495
-Empty group,User Project Leader,2497
-Empty group,User Project Leader,2023
-Empty group,Data Protection Officer,200
-Empty group,Employee,1558
+NA,IT Project Leader,2886
+NA,IT Project Leader,2496
+NA,PMOC / Agile Manager,2495
+NA,User Project Leader,2497
+NA,User Project Leader,2023
+NA,Data Protection Officer,200
+NA,Employee,1558
 Person, Group company,991
-Empty group,Structure Manager,1559
-Empty group,Champion,1426
-Empty group,Local Compliance Office,1427
-Empty group,Primary Reporter,3286
-Empty group,Secondary Reporter,2526
-Empty group,Reporting Subjects/Referees,3287
-Empty group,First level managers of the IMI CIB Division,1012
-Empty group,Applicant,2917
-Empty group,Application Representative / Digital Business Partner,2918
-Empty group,Head of the UOG,2919
+NA,Structure Manager,1559
+NA,Champion,1426
+NA,Local Compliance Office,1427
+NA,Primary Reporter,3286
+NA,Secondary Reporter,2526
+NA,Reporting Subjects/Referees,3287
+NA,First level managers of the IMI CIB Division,1012
+NA,Applicant,2917
+NA,Application Representative / Digital Business Partner,2918
+NA,Head of the UOG,2919
 Person,Consap S.p.A.,781
 Person,Italfondiario S.p.A. (Servicer outside the Group),927
 Person,Group Bank Corporate Secretariat,239
@@ -2449,109 +2449,109 @@ Person,Servicers,734
 Person,Servicers,2937
 Organizational unit,Credit Solutions BdT,3338
 Organizational unit,Credit Solutions CIB,1781
-Empty group,Client company,572
-Empty group,Paying Structures,2510
+NA,Client company,572
+NA,Paying Structures,2510
 Person,Servicers,3075
-Empty group,Team leader,193
-Empty group,Responsible above the Tree,192
-Empty group,Team members,191
-Empty group,Emergency Unit,411
-Empty group,Crisis Committee,530
-Empty group,Control functions,3279
-Empty group,Functions Impacted,3278
-Empty group,Competent functions,524
-Empty group,Crisis Manager,3280
-Empty group,NOGE,1050
-Empty group,Contingency team,2623
+NA,Team leader,193
+NA,Responsible above the Tree,192
+NA,Team members,191
+NA,Emergency Unit,411
+NA,Crisis Committee,530
+NA,Control functions,3279
+NA,Functions Impacted,3278
+NA,Competent functions,524
+NA,Crisis Manager,3280
+NA,NOGE,1050
+NA,Contingency team,2623
 Person,Counterpart,3059
 Person,Servicers,920
 Person,Consumer Credit Servicer,1898
-Empty group,Supplier,965
-Empty group,Process Owner,2466
-Empty group,Operator,392
+NA,Supplier,965
+NA,Process Owner,2466
+NA,Operator,392
 Person,Customer,1588
-Empty group,Beneficiary body,2875
+NA,Beneficiary body,2875
 Organizational unit,European Regulatory & Public Affairs,2740
-Empty group,Requesting Bank Assistant,983
-Empty group,Competent decision-making body guaranteed bank,2859
+NA,Requesting Bank Assistant,983
+NA,Competent decision-making body guaranteed bank,2859
 Organizational unit,Global Markets Service,1593
-Empty group,BdT manager,1986
-Empty group,The Supervisor,1985
-Empty group,Other structure of the Bank,2004
-Empty group,Functions involved,1344
+NA,BdT manager,1986
+NA,The Supervisor,1985
+NA,Other structure of the Bank,2004
+NA,Functions involved,1344
 Person,Customer,1683
-Empty group,Foreign branches,1094
-Empty group,Structure requesting the evaluation,2905
-Empty group,Critical Event Readiness Team (CERT),1028
-Empty group,Local ISO,420
-Empty group,Competent Functions,15
-Empty group,Functions Impacted,16
-Empty group,Local ORMD function (Decentralized Operational Risk Management),3052
-Empty group,Structures inside the CRO Area,471
-Empty group,CRO area - Market/liquidity/operational/credit risks,1029
-Empty group,CRO Area - Credit Risks,1008
+NA,Foreign branches,1094
+NA,Structure requesting the evaluation,2905
+NA,Critical Event Readiness Team (CERT),1028
+NA,Local ISO,420
+NA,Competent Functions,15
+NA,Functions Impacted,16
+NA,Local ORMD function (Decentralized Operational Risk Management),3052
+NA,Structures inside the CRO Area,471
+NA,CRO area - Market/liquidity/operational/credit risks,1029
+NA,CRO Area - Credit Risks,1008
 External Organizational unit,ISP life,2637
-Empty group,Long absent employee,2551
-Empty group,Employee,1752
+NA,Long absent employee,2551
+NA,Employee,1752
 Person,Trading Desk,1409
-Empty group,Group banks and companies,2444
+NA,Group banks and companies,2444
 Person,Servicers,2385
 External Organizational unit,Large Corporate Loans,3148
-Empty group,The Supervisor,849
-Empty group,Head of the UOG,1943
+NA,The Supervisor,849
+NA,Head of the UOG,1943
 Organizational unit,Oversight of Transversal Data Initiatives,3011
-Empty group,Applicant,2255
-Empty group,Competent Data Owner,2691
-Empty group,Central Purchasing Department,1380
+NA,Applicant,2255
+NA,Competent Data Owner,2691
+NA,Central Purchasing Department,1380
 Organizational unit,Professional and Industry Associations,2702
 Person,Body for keeping the Register of Financial Advisors,3234
-Empty group,ISP branch,2728
-Empty group,External Corporate Servicer,582
-Empty group,Italian Stock Exchange,1223
-Empty group,Bank of Italy,1222
-Empty group,Rating agency,2325
-Empty group,Auditing firm,2326
-Empty group,Asset monitors,2327
+NA,ISP branch,2728
+NA,External Corporate Servicer,582
+NA,Italian Stock Exchange,1223
+NA,Bank of Italy,1222
+NA,Rating agency,2325
+NA,Auditing firm,2326
+NA,Asset monitors,2327
 Person,Supplier,2272
-Empty group,Applicant body,1379
-Empty group,Other demand structures,2727
-Empty group,Business Owner,2579
-Empty group,Investment Control Room,2410
-Empty group,DIL validator,3374
-Empty group,Trading desks,2774
+NA,Applicant body,1379
+NA,Other demand structures,2727
+NA,Business Owner,2579
+NA,Investment Control Room,2410
+NA,DIL validator,3374
+NA,Trading desks,2774
 Person,Counterpart,1651
-Empty group,Recipients - Weekly liquidity survey - Banks,1464
+NA,Recipients - Weekly liquidity survey - Banks,1464
 Organizational unit,Processes and Quality Assurance Transaction Monitoring,2429
 Organizational unit,Internal Financial Intelligence Unit - Case Investigations,2431
 Organizational unit,Registry and Group Company,1412
-Empty group,Reference technical structure,1459
-Empty group,Champion,1345
-Empty group,Secondary whistleblower,596
-Empty group,Primary whistleblower,574
-Empty group,Local Compliance Officer,1346
-Empty group,receiving facility,597
-Empty group,Reported Subjects/Referees,608
-Empty group,Subjects/Referees registered in the Limited Information List and in the Insider List,1936
+NA,Reference technical structure,1459
+NA,Champion,1345
+NA,Secondary whistleblower,596
+NA,Primary whistleblower,574
+NA,Local Compliance Officer,1346
+NA,receiving facility,597
+NA,Reported Subjects/Referees,608
+NA,Subjects/Referees registered in the Limited Information List and in the Insider List,1936
 Person,Administrative structure of the Company in scope,3129
-Empty group,CBCM contacts,1793
-Empty group,IT Factory Committee,2253
-Empty group,Italian Bank of the Group,2268
-Empty group,Reference structures - credits,1207
-Empty group,Foreign Banks,1534
-Empty group,Corporate Secretariat Banca Italiana Subsidiary,160
+NA,CBCM contacts,1793
+NA,IT Factory Committee,2253
+NA,Italian Bank of the Group,2268
+NA,Reference structures - credits,1207
+NA,Foreign Banks,1534
+NA,Corporate Secretariat Banca Italiana Subsidiary,160
 Organizational unit,Intesa Sanpaolo House,141
 Person,Servicers,869
 Organizational unit,International Legal,1550
 Person,Customer,1261
 External Organizational unit,Hub Hong Kong Branch,3272
-Empty group,Organizational Unit contact person,704
+NA,Organizational Unit contact person,704
 Person,Supplier,412
-Empty group,requesting employee,703
-Empty group,Expenditure manager,1636
-Empty group,CIB Service Manager,1887
-Empty group,Organizational Unit Manager,705
-Empty group,Lender Structure,591
-Empty group,SSA contact person,2907
+NA,requesting employee,703
+NA,Expenditure manager,1636
+NA,CIB Service Manager,1887
+NA,Organizational Unit Manager,705
+NA,Lender Structure,591
+NA,SSA contact person,2907
 Person,External lawyer,1043
 Person,Administrative structure Bank / Subsidiary company,1030
 Person,Monte Titoli,47
@@ -2559,7 +2559,7 @@ Person,Clearstream,1652
 Person,Bank of Italy,2054
 Organizational unit,Application coordination,1132
 Organizational unit,Fideuram Intesa Sanpaolo Private Banking - Information Systems,2161
-Empty group,IT Project Leader,744
+NA,IT Project Leader,744
 Person,Central Directorates,1542
 Person,Business functions,1541
 Organizational unit,CIB Capital Markets,1322
@@ -2567,83 +2567,83 @@ Person,Counterparty,3039
 Organizational unit,IMI CIB Regulatory Solutions,1794
 Organizational unit,Ratings & Fundamental Data,21
 Organizational unit,Fideuram Intesa Sanpaolo Private Banking - Corporate Affairs,2732
-Empty group,Structure responsible for the operation,3174
-Empty group,Corporate Secretariat Banca Italiana Subsidiary,2008
-Empty group,Corporate Secretariat Bank with widespread shares,1118
-Empty group,Structure responsible for the matter - Parent Company,430
-Empty group,Structure of the Subsidiary Bank's Financial Statements - Italy perimeter,2007
-Empty group,Subsidiary company,2838
+NA,Structure responsible for the operation,3174
+NA,Corporate Secretariat Banca Italiana Subsidiary,2008
+NA,Corporate Secretariat Bank with widespread shares,1118
+NA,Structure responsible for the matter - Parent Company,430
+NA,Structure of the Subsidiary Bank's Financial Statements - Italy perimeter,2007
+NA,Subsidiary company,2838
 Organizational unit,Operations Credits,2029
 Organizational unit,Operations Titles,284
 Organizational unit,Assessments and Verifications of Accounts and Deposits,1200
 Organizational unit,Credits,1331
-Empty group,Business Owner,2258
-Empty group,Requirements Committee,2744
-Empty group,ICT contact person,1160
-Empty group,ICT Project Leader,1490
-Empty group,Digital Business Partners,1491
-Empty group,Data Owner Responsible for the document,1673
-Empty group,Data Technology Owner,2514
-Empty group,Data Owner,2513
-Empty group,Data User,2309
-Empty group,Project director,1117
-Empty group,Project sponsors,1835
+NA,Business Owner,2258
+NA,Requirements Committee,2744
+NA,ICT contact person,1160
+NA,ICT Project Leader,1490
+NA,Digital Business Partners,1491
+NA,Data Owner Responsible for the document,1673
+NA,Data Technology Owner,2514
+NA,Data Owner,2513
+NA,Data User,2309
+NA,Project director,1117
+NA,Project sponsors,1835
 Person,Key Manager,333
 Person,hierarchical manager,375
 Person,NSF - Consortium for tax studies and research - back office with tax studies and research,3321
-Empty group,Appointed Committees,2667
+NA,Appointed Committees,2667
 Person,Society,1069
-Empty group,Enabled user,2090
-Empty group,Enabled user,2091
-Empty group,Third Sector Manager,238
+NA,Enabled user,2090
+NA,Enabled user,2091
+NA,Third Sector Manager,238
 Person,Commercial Partner,1455
-Empty group,Applicant,2671
-Empty group,Digital Business Partners,1143
-Empty group,Employee,1359
-Empty group,Responsible,26
-Empty group,Product / Service Manager Structure,1341
-Empty group,Application contact person,67
-Empty group,Operations structure competent for the specific activity,1671
-Empty group,Structures recipients of the reports,3181
+NA,Applicant,2671
+NA,Digital Business Partners,1143
+NA,Employee,1359
+NA,Responsible,26
+NA,Product / Service Manager Structure,1341
+NA,Application contact person,67
+NA,Operations structure competent for the specific activity,1671
+NA,Structures recipients of the reports,3181
 Person,Deloitte,3
-Empty group,Deliberative Body,2632
-Empty group,Controlled Structure,2896
-Empty group,Manager in charge,3210
+NA,Deliberative Body,2632
+NA,Controlled Structure,2896
+NA,Manager in charge,3210
 Organizational unit,Corporate activity audits,1135
 Organizational unit,Controller Relationship Units,2203
-Empty group,Global Resilience & Complex Incident Management (GRe.CIM),2449
-Empty group,Competent Functions,2450
-Empty group,Incident Management functions,1041
-Empty group,Functions Impacted,1940
+NA,Global Resilience & Complex Incident Management (GRe.CIM),2449
+NA,Competent Functions,2450
+NA,Incident Management functions,1041
+NA,Functions Impacted,1940
 Person,CIB Counterparty,385
 Person,The Counterparty,384
-Empty group,Qualified Subject,1953
-Empty group,Qualified Subject,2168
+NA,Qualified Subject,1953
+NA,Qualified Subject,2168
 Person,Carrier/Maintainer,695
-Empty group,Group banks and companies,2246
+NA,Group banks and companies,2246
 Person,Servicers,2149
-Empty group,Employee,1120
+NA,Employee,1120
 Position,Personnel Manager - Digital Branch Management,1369
 Position,Personnel Manager - Agribusiness Management,218
 Person,Society,3258
 Position,Personnel Manager - Impact Management,216
-Empty group,Head of the UOG,1973
-Empty group,Local ISO,2308
-Empty group,Management of Legal Entities/Foreign Branches,2112
-Empty group,Company Control Functions,2113
-Empty group,Facility manager,1608
-Empty group,Group banks and companies,1609
+NA,Head of the UOG,1973
+NA,Local ISO,2308
+NA,Management of Legal Entities/Foreign Branches,2112
+NA,Company Control Functions,2113
+NA,Facility manager,1608
+NA,Group banks and companies,1609
 Person,"Spontaneous applicant (e.g. association, body, organizer, promoter of the initiative/event)",1893
 Person,Sponsee Applicant,1892
-Empty group,Competent and Monitoring Functions,2718
-Empty group,Emergency team,2719
-Empty group,Managerial Referent,2715
-Empty group,U.O. Manager impacted,2714
-Empty group,Operational contact person,2716
-Empty group,Responsible of the Host O.U,2717
-Empty group,Emergency Unit,2720
-Empty group,The Supervisor,1808
-Empty group,The Supervisor,1809
+NA,Competent and Monitoring Functions,2718
+NA,Emergency team,2719
+NA,Managerial Referent,2715
+NA,U.O. Manager impacted,2714
+NA,Operational contact person,2716
+NA,Responsible of the Host O.U,2717
+NA,Emergency Unit,2720
+NA,The Supervisor,1808
+NA,The Supervisor,1809
 Organizational unit,"Extraordinary Transactions, Product Control and Group Treasury and Finance Support",1471
 Organizational unit,Network Development,641
 Organizational unit,Enterprise Risk Analysis & Integrated Reporting,328
@@ -2655,7 +2655,7 @@ Person,Administrative structure Bank / Subsidiary company,1891
 Person,BdT Product Company,1106
 Organizational unit,Local Public Administration Relations,2001
 Position,Territorial Coordination Specialist for Products and Segments - Agribusiness Management,290
-Empty group,Group Bank/Company,38
+NA,Group Bank/Company,38
 Position,Chief Compliance Officer Governance Area Manager,1621
 Position,Head of the Enterprise Risk Management Central Department,1626
 Position,Head of the BdT Risk Management Central Department,1620
@@ -2665,8 +2665,8 @@ Position,Chief Risk Officer Governance Area Manager,1622
 Position,Head of the BdT and Private Banking Regulatory Compliance Central Department,1624
 Position,Head of Group Treasury and Finance Department,1629
 Position,Head of Banca dei Territori Division,1745
-Empty group,Managers of Group Product Factories competent on the basis of the Division's offer,1112
-Empty group,Managers of companies belonging to the Banca dei Territori Division,3018
+NA,Managers of Group Product Factories competent on the basis of the Division's offer,1112
+NA,Managers of companies belonging to the Banca dei Territori Division,3018
 Position,Head of Global Markets & Investment Banking - IMI CIB Division,1343
 Position,"Head of Market, Financial and C&IB Risks Coordination Area",1623
 Position,Head of Central Legal and Litigation Department - Group General Counsel,1627
@@ -2674,187 +2674,187 @@ Position,Head of the Corporate and Investment Banking Regulatory Compliance Cent
 Position,Head of IMI Corporate & Investment Banking Division,1342
 Person,Customer,209
 Person,Administrative structure Bank / Subsidiary company,3264
-Empty group,Application contact person,2010
-Empty group,Referent group,479
-Empty group,Operation management,1942
-Empty group,Certificate contact person,1395
+NA,Application contact person,2010
+NA,Referent group,479
+NA,Operation management,1942
+NA,Certificate contact person,1395
 External Organizational unit,Fideuram Intesa Sanpaolo Private Banking - Training,3178
 Organizational unit,"IMI CIB audits, Public and Project Finance",120
-Empty group,Applicant structure,2110
-Empty group,Recipients of communication of certification of the model,52
+NA,Applicant structure,2110
+NA,Recipients of communication of certification of the model,52
 Organizational unit,Tableau de Bord and IMI CIB Business Plan,2389
-Empty group,Incident Management,978
-Empty group,Applicant Structures,2063
+NA,Incident Management,978
+NA,Applicant Structures,2063
 Person,Servicers,347
 Organizational unit,Geographic Area 2 NPE management,1399
 Organizational unit,Multinational Clients,452
 Organizational unit,NPE management Geographic Area 1,1398
 Person,Method,2341
 Organizational unit,BdT Management Control and Wealth Management,2374
-Empty group,Group company,137
-Empty group,Operation owner structure,1061
-Empty group,Responsible Division/Direction responsible,3274
-Empty group,Deliberative body,3273
+NA,Group company,137
+NA,Operation owner structure,1061
+NA,Responsible Division/Direction responsible,3274
+NA,Deliberative body,3273
 Person,Administrative structure of the Company in scope,2049
 Person,Servicers,2678
-Empty group,Candidate,1903
-Empty group,Research team,2622
+NA,Candidate,1903
+NA,Research team,2622
 Person,Society,2116
-Empty group,Responsible of the requesting Structure,634
-Empty group,Competent personnel management,648
+NA,Responsible of the requesting Structure,634
+NA,Competent personnel management,648
 Position,Agribusiness specialist,1064
-Empty group,Reference manager,3068
-Empty group,Italian Stock Exchange,2925
-Empty group,Bidder,2926
-Empty group,Central Structure,611
-Empty group,Developer,2841
-Empty group,Application Referent,666
+NA,Reference manager,3068
+NA,Italian Stock Exchange,2925
+NA,Bidder,2926
+NA,Central Structure,611
+NA,Developer,2841
+NA,Application Referent,666
 Organizational unit,"Sales Support Enterprises, Agribusiness and Third Sector",2759
-Empty group,Applicant structure,600
+NA,Applicant structure,600
 Person,Group companies in scope,3233
 Person,Supplier,1309
-Empty group,Financial Market Coverage Department - Price-Sensitive Communication,1457
-Empty group,Recipients of escalation reports,1408
-Empty group,Product Governance table of the IMI CIB Division,170
-Empty group,Employee,1782
+NA,Financial Market Coverage Department - Price-Sensitive Communication,1457
+NA,Recipients of escalation reports,1408
+NA,Product Governance table of the IMI CIB Division,170
+NA,Employee,1782
 Organizational unit,Coordination of Foreign Company Compliance and Cross-border Operations,1637
-Empty group,The Supervisor,509
-Empty group,The Supervisor,510
-Empty group,Supplier,2535
+NA,The Supervisor,509
+NA,The Supervisor,510
+NA,Supplier,2535
 Person,Client,2586
 Person,Delegated Body,2585
-Empty group,Applicant body,2580
-Empty group,Purchase Approver,2581
-Empty group,Envelope opening clerk,2561
+NA,Applicant body,2580
+NA,Purchase Approver,2581
+NA,Envelope opening clerk,2561
 Person,Client,3232
 Person,Client,2052
-Empty group,Purchasing Manager,3125
-Empty group,Lender Structure,1044
+NA,Purchasing Manager,3125
+NA,Lender Structure,1044
 Person,Servicers,1895
-Empty group,Customer Relationship Manager,807
-Empty group,Applicant,2663
+NA,Customer Relationship Manager,807
+NA,Applicant,2663
 Organizational unit,Product specialist desks - Hub foreign branch,2547
-Empty group,Group company,1680
+NA,Group company,1680
 Organizational unit,Foreign companies,831
-Empty group,Corporate secretariats of Group companies,2813
-Empty group,Group Company Compliance Officer,2313
-Empty group,Company Contact,2463
-Empty group,Competent structures for conducting initiatives on MR/MTF/OTF,742
-Empty group,Index administrator,649
-Empty group,Moderator,3196
-Empty group,Financial analyst,2150
+NA,Corporate secretariats of Group companies,2813
+NA,Group Company Compliance Officer,2313
+NA,Company Contact,2463
+NA,Competent structures for conducting initiatives on MR/MTF/OTF,742
+NA,Index administrator,649
+NA,Moderator,3196
+NA,Financial analyst,2150
 Person,Applicant,1658
 Person,CRIF,367
-Empty group,Data Office,1572
-Empty group,Data User,1822
-Empty group,Data Technology Owner,1823
-Empty group,Data Owner,520
-Empty group,Project sponsors,2005
-Empty group,ICT Project Leader,3243
-Empty group,Project director,235
-Empty group,Project Director,80
-Empty group,Holder,2675
-Empty group,Operational contact person,2674
-Empty group,Employee,875
-Empty group,Employee,1286
+NA,Data Office,1572
+NA,Data User,1822
+NA,Data Technology Owner,1823
+NA,Data Owner,520
+NA,Project sponsors,2005
+NA,ICT Project Leader,3243
+NA,Project director,235
+NA,Project Director,80
+NA,Holder,2675
+NA,Operational contact person,2674
+NA,Employee,875
+NA,Employee,1286
 Person,Society,735
-Empty group,Competent Human Resources Management,1071
-Empty group,PCI Officer,1163
-Empty group,Client Solutions Sales,2173
-Empty group,Investors,2791
+NA,Competent Human Resources Management,1071
+NA,PCI Officer,1163
+NA,Client Solutions Sales,2173
+NA,Investors,2791
 Person,State Street Bank,1579
 Organizational unit,Audit Regulatory Models & Capital Adequacy,1348
-Empty group,competent structure,3120
-Empty group,Recipient of the escalation communication,3121
-Empty group,Head of the Organizational Unit dedicated to issues relating to the Data Governance model,2726
-Empty group,Data Owner,3063
-Empty group,Data Technology Owner,3117
-Empty group,Data User,3119
-Empty group,Responsible for the Data Owner structure,3118
-Empty group,Organizational unit dedicated to issues relating to the Data Governance model,3060
+NA,competent structure,3120
+NA,Recipient of the escalation communication,3121
+NA,Head of the Organizational Unit dedicated to issues relating to the Data Governance model,2726
+NA,Data Owner,3063
+NA,Data Technology Owner,3117
+NA,Data User,3119
+NA,Responsible for the Data Owner structure,3118
+NA,Organizational unit dedicated to issues relating to the Data Governance model,3060
 External Organizational unit,Fideuram Life,2193
 Person,External professional,1337
-Empty group,Addressee structure of the deed,2963
-Empty group,Employee,806
-Empty group,Optional evaluator functions,1634
-Empty group,Mandatory and optional assessors – where involved,2668
-Empty group,Employee,2415
-Empty group,Responsible,2414
-Empty group,reporting structures,2356
+NA,Addressee structure of the deed,2963
+NA,Employee,806
+NA,Optional evaluator functions,1634
+NA,Mandatory and optional assessors – where involved,2668
+NA,Employee,2415
+NA,Responsible,2414
+NA,reporting structures,2356
 Person,Customer,2909
 Person,Customer,2745
-Empty group,Emergency team,3142
-Empty group,Emergency Unit,2014
-Empty group,Incoming OU Manager,2883
-Empty group,Competent and monitoring functions,2881
-Empty group,Head of OU impacted,2882
-Empty group,Control functions,400
-Empty group,Functions Impacted,697
-Empty group,Competent Functions,696
-Empty group,Emergency Unit,1113
-Empty group,Crisis Manager,698
-Empty group,Crisis Committee,1687
-Empty group,NOGE,1114
-Empty group,Contingency team,250
-Empty group,User,330
-Empty group,Second level,331
-Empty group,Competent Deliberating Body,2908
+NA,Emergency team,3142
+NA,Emergency Unit,2014
+NA,Incoming OU Manager,2883
+NA,Competent and monitoring functions,2881
+NA,Head of OU impacted,2882
+NA,Control functions,400
+NA,Functions Impacted,697
+NA,Competent Functions,696
+NA,Emergency Unit,1113
+NA,Crisis Manager,698
+NA,Crisis Committee,1687
+NA,NOGE,1114
+NA,Contingency team,250
+NA,User,330
+NA,Second level,331
+NA,Competent Deliberating Body,2908
 Person,Servicers,733
-Empty group,PMLS extension,1511
-Empty group,Non-operating structure staff,1141
-Empty group,Operating structure staff,1119
-Empty group,Head of the Operating Structure,1142
-Empty group,Head of non-operational structure,1139
-Empty group,CIB assistant,2797
-Empty group,Operations Central Structures,1138
+NA,PMLS extension,1511
+NA,Non-operating structure staff,1141
+NA,Operating structure staff,1119
+NA,Head of the Operating Structure,1142
+NA,Head of non-operational structure,1139
+NA,CIB assistant,2797
+NA,Operations Central Structures,1138
 Person,Delegated Body,2811
 Person,Local purchasing function,2810
-Empty group,Applicant body,1092
-Empty group,Emergency Coordinator,2263
-Empty group,in charge,1093
+NA,Applicant body,1092
+NA,Emergency Coordinator,2263
+NA,in charge,1093
 Person,Supplier,25
-Empty group,Structure in charge of the management of critical events,945
-Empty group,Functions Impacted,2779
+NA,Structure in charge of the management of critical events,945
+NA,Functions Impacted,2779
 Person,Mercury,3067
 Organizational unit,ISBD Trade Finance,1968
-Empty group,Responsible Manager,2468
-Empty group,Financial Market Coverage Department - Price-Sensitive Communication,2879
-Empty group,Auditing firm,2242
-Empty group,Financial Market Coverage Department - Price-Sensitive Communication,1130
-Empty group,Shareholders' meeting,1832
+NA,Responsible Manager,2468
+NA,Financial Market Coverage Department - Price-Sensitive Communication,2879
+NA,Auditing firm,2242
+NA,Financial Market Coverage Department - Price-Sensitive Communication,1130
+NA,Shareholders' meeting,1832
 External Organizational unit,Intesa Sanpaolo Innovation Center,2703
-Empty group,proposing structure,1507
-Empty group,Secretariats Decision-making bodies,1521
-Empty group,Other facility involved,1508
-Empty group,Corporate Bodies Secretariat,1528
-Empty group,Corporate bodies,1522
-Empty group,Data Owner,2689
-Empty group,Data Technology Owner,2690
-Empty group,Project yards,1144
+NA,proposing structure,1507
+NA,Secretariats Decision-making bodies,1521
+NA,Other facility involved,1508
+NA,Corporate Bodies Secretariat,1528
+NA,Corporate bodies,1522
+NA,Data Owner,2689
+NA,Data Technology Owner,2690
+NA,Project yards,1144
 Person,Typography,1444
-Empty group,Head of Human Resources Department,309
+NA,Head of Human Resources Department,309
 Organizational unit,Remuneration Committee,614
 Person,Translation company,1445
-Empty group,Board of Directors,3271
+NA,Board of Directors,3271
 Person,Borsa Italiana S.p.A.,1446
 Organizational unit,Know Your Customer Anti Money Laundering,2433
-Empty group,Controlled structure,2916
-Empty group,Supranational entities,2184
-Empty group,exteriors,2613
+NA,Controlled structure,2916
+NA,Supranational entities,2184
+NA,exteriors,2613
 Person,Other shape or structure,3176
 Person,Service in charge,3175
 Person,Servicers,3250
-Empty group,Deliberative Body,376
-Empty group,Authorized subject,1944
-Empty group,Non-dependent person,1418
+NA,Deliberative Body,376
+NA,Authorized subject,1944
+NA,Non-dependent person,1418
 Person,Corporate Secretariat Bank / Subsidiary,1956
 Person,Administrative structure Bank / Company not in service,3101
 Person,Administrative structure Bank / Subsidiary company,1957
-Empty group,Society,1704
-Empty group,Managers of Structure / Central Management of the Parent Company,394
-Empty group,Other control structures of Group companies,395
-Empty group,Entities managing or assigning expenditure,393
-Empty group,Controller Legal Entity,1243
+NA,Society,1704
+NA,Managers of Structure / Central Management of the Parent Company,394
+NA,Other control structures of Group companies,395
+NA,Entities managing or assigning expenditure,393
+NA,Controller Legal Entity,1243
 Person,MB Credit Solutions,71
 Person,cross factor,70
 Organizational unit,Fideuram Intesa Sanpaolo Private Banking - Operations Banking Products,794
@@ -2870,114 +2870,114 @@ Position,Head of Asset Management,1723
 Position,Fideuram Intesa Sanpaolo Private Banking - Centralized Branch Manager,792
 Position,Banks manager,1718
 Person,M.E.F.,2943
-Empty group,Qualified Subject,54
+NA,Qualified Subject,54
 Person,Society,2709
 Person,Counterpart,230
 Organizational unit,International Litigation,1552
-Empty group,Operational contact person,2677
-Empty group,Holder,2676
+NA,Operational contact person,2677
+NA,Holder,2676
 Person,Counterpart,2417
-Empty group,Support and Control Body,2707
-Empty group,Investment Control Room,2045
-Empty group,Business Owner,758
-Empty group,Business Owner,2724
-Empty group,Other demand structures,3252
+NA,Support and Control Body,2707
+NA,Investment Control Room,2045
+NA,Business Owner,758
+NA,Business Owner,2724
+NA,Other demand structures,3252
 Organizational unit,FI Network Management,590
-Empty group,Customer Controls,1633
+NA,Customer Controls,1633
 Person,Foreign Banks not belonging to the Group,2877
-Empty group,front office,1326
-Empty group,Central Administration Function,2181
-Empty group,Group banks and companies,3364
-Empty group,Deliberative Body,2474
+NA,front office,1326
+NA,Central Administration Function,2181
+NA,Group banks and companies,3364
+NA,Deliberative Body,2474
 Person,Deloitte,2639
-Empty group,Bank of Italy,2666
-Empty group,Applicant,1386
-Empty group,Authorized Subject,2662
-Empty group,Structure in charge of the management of critical events,2756
+NA,Bank of Italy,2666
+NA,Applicant,1386
+NA,Authorized Subject,2662
+NA,Structure in charge of the management of critical events,2756
 Person,SWIFT,2755
 Organizational unit,ISBD Sales Support,1481
-Empty group,Division manager,1500
-Empty group,Management Committee,1974
+NA,Division manager,1500
+NA,Management Committee,1974
 Position,Credit Officer - Regional Management,1764
 Person,Society,2100
-Empty group,Organizational unit manager,2099
-Empty group,Employee,2098
+NA,Organizational unit manager,2099
+NA,Employee,2098
 Organizational unit,Product Placement and Suitability,2334
 Person,Company of the Banking Group,523
-Empty group,Front office desk,247
-Empty group,Branch with internal warehouse,369
-Empty group,Passive Cycle Referent,1841
+NA,Front office desk,247
+NA,Branch with internal warehouse,369
+NA,Passive Cycle Referent,1841
 Person,Supplier,1313
-Empty group,Accounting structure,3318
-Empty group,Receiving Body,1842
-Empty group,Accountability Center,760
+NA,Accounting structure,3318
+NA,Receiving Body,1842
+NA,Accountability Center,760
 Person,Administrative structure Bank / Subsidiary company,1155
 Organizational unit,Credit Risk Reporting and Infrastructure,1167
 Organizational unit,Marketing,451
-Empty group,Lender Structure,455
-Empty group,Client company,3072
-Empty group,Chairman of the Committee,534
+NA,Lender Structure,455
+NA,Client company,3072
+NA,Chairman of the Committee,534
 Person,Client company,535
 Organizational unit,Analysis & Modelling,762
 Position,Director of the Financial Advisors Area,3182
 Position,Exclusive Commercial Director,3161
-Empty group,Tax Structure of the new Participant,2475
-Empty group,Tax Structure of the Company to be excluded,1632
-Empty group,Tax structure of the companies in the perimeter,231
-Empty group,Secretariat of the new Participant,232
-Empty group,Applicant bank assistant,3001
+NA,Tax Structure of the new Participant,2475
+NA,Tax Structure of the Company to be excluded,1632
+NA,Tax structure of the companies in the perimeter,231
+NA,Secretariat of the new Participant,232
+NA,Applicant bank assistant,3001
 Person,Fideuram Treasury,228
-Empty group,Recipient structures,2962
+NA,Recipient structures,2962
 Person,Third Keeper,1101
-Empty group,Applicant structure,551
+NA,Applicant structure,551
 Person,Administrative structure of the Company in scope,1876
 Person,INAIL,1701
 Person,Servicers,2479
 Person,Revenue Agency,499
-Empty group,Organizational Unit Manager,2651
-Empty group,Employee,522
-Empty group,Issuer body,415
+NA,Organizational Unit Manager,2651
+NA,Employee,522
+NA,Issuer body,415
 Organizational unit,"Retail, Personnel and Planning",2224
-Empty group,Project team,1281
-Empty group,User,104
-Empty group,Structure responsible for the Varied Match,2672
+NA,Project team,1281
+NA,User,104
+NA,Structure responsible for the Varied Match,2672
 Person,Customer,2047
 Person,Cassa di Compensazione e Garanzia,2795
 Person,Reviewers,2048
 External Organizational unit,Intesa Sanpaolo Holding International,2833
 Person,Bank of Italy,3079
-Empty group,Certification Bodies,2328
-Empty group,Structure responsible for the operation,1817
+NA,Certification Bodies,2328
+NA,Structure responsible for the operation,1817
 Organizational unit,Audit of Government Processes and Regulatory Fulfillments,1729
-Empty group,Process owners,1127
-Empty group,Board of Directors,745
-Empty group,Supervisory body,2069
-Empty group,Subsidiary company,1128
-Empty group,Investors,2633
-Empty group,brokers,2634
+NA,Process owners,1127
+NA,Board of Directors,745
+NA,Supervisory body,2069
+NA,Subsidiary company,1128
+NA,Investors,2633
+NA,brokers,2634
 Person,Administrative structure Bank / Subsidiary company,3242
 Person,Core company,2072
 Person,Non-core company,2073
 Organizational unit,Financial Products and Product Factory Coordination,453
-Empty group,Supranational body,2222
+NA,Supranational body,2222
 Organizational unit,Segment Reporting Layer and Transversal Analysis BU,1063
-Empty group,Board of Directors,2589
-Empty group,ISP branch,2590
-Empty group,Rating agency,2592
-Empty group,External Law Firm,2955
-Empty group,Representative of noteholders,2323
-Empty group,Calculation agent,2324
-Empty group,External Counterparty,2956
-Empty group,Qualified Subject,2591
-Empty group,External Corporate Servicer,2957
+NA,Board of Directors,2589
+NA,ISP branch,2590
+NA,Rating agency,2592
+NA,External Law Firm,2955
+NA,Representative of noteholders,2323
+NA,Calculation agent,2324
+NA,External Counterparty,2956
+NA,Qualified Subject,2591
+NA,External Corporate Servicer,2957
 Person,Servicers,1375
 Person,External Legal,1201
-Empty group,Sectoral Plan Coordinator,1282
-Empty group,Managerial Referent,1283
-Empty group,Managers of the structures involved,1284
-Empty group,SFO-qualified financial advisor with mixed contract,1405
+NA,Sectoral Plan Coordinator,1282
+NA,Managerial Referent,1283
+NA,Managers of the structures involved,1284
+NA,SFO-qualified financial advisor with mixed contract,1405
 Person,Customer,2240
-Empty group,Group company,3267
+NA,Group company,3267
 Person,Servicers,1377
 Person,ISPB -Pricing and Monitoring,1211
 Person,FID - Performance Management Methodologies and Tools,1212
@@ -2985,138 +2985,138 @@ Position,ISPB - Private Area Coordinator,1676
 Person,Tax structure of the companies in the perimeter,251
 Person,Society,1818
 Person,Society,3122
-Empty group,Delegate,1449
-Empty group,Assignee structure,2293
-Empty group,Product Desk - Structured Finance,2089
+NA,Delegate,1449
+NA,Assignee structure,2293
+NA,Product Desk - Structured Finance,2089
 Person,Servicers,817
-Empty group,Group banks/companies involved,148
-Empty group,Client Company Outsourcing Coordinator,2611
-Empty group,Parent Company disbursing structure,2546
-Empty group,Processing and Business Support Interface Manager,1862
+NA,Group banks/companies involved,148
+NA,Client Company Outsourcing Coordinator,2611
+NA,Parent Company disbursing structure,2546
+NA,Processing and Business Support Interface Manager,1862
 Organizational unit,ECM BDT,3365
-Empty group,Manager,1417
-Empty group,Deliberative Body,2451
+NA,Manager,1417
+NA,Deliberative Body,2451
 Person,Deloitte,1494
 Organizational unit,International Bank Coordination,1615
-Empty group,"Functions Foreign bank CFO, Real estate Planning & Control",532
+NA,"Functions Foreign bank CFO, Real estate Planning & Control",532
 Organizational unit,Coordination of Foreign Companies,1616
-Empty group,Italian companies managed within the perimeter,1577
-Empty group,PCI Officer,1111
-Empty group,Referent of the Sectoral Plan,1882
-Empty group,Business/Process Owner,1883
-Empty group,Structures involved in the Programme,1796
-Empty group,Program Steering Committee,1797
-Empty group,Risk Committee,1611
-Empty group,SFO-qualified financial advisor with mixed contract,941
+NA,Italian companies managed within the perimeter,1577
+NA,PCI Officer,1111
+NA,Referent of the Sectoral Plan,1882
+NA,Business/Process Owner,1883
+NA,Structures involved in the Programme,1796
+NA,Program Steering Committee,1797
+NA,Risk Committee,1611
+NA,SFO-qualified financial advisor with mixed contract,941
 Person,Organism for keeping the register,1338
 Person,IVASS,1465
 Organizational unit,Investment Banking & Structured Finance London - IMI CIB Division,3115
-Empty group,Bank General Management,2499
-Empty group,Activator function,69
-Empty group,User Manager,1356
-Empty group,Compliance Officer - Group Bank/Company,1826
-Empty group,Other recipient Structures of the Group Bank/Company,868
-Empty group,Recipients Reporting Volcker Rule,3187
-Empty group,Applicant body,926
+NA,Bank General Management,2499
+NA,Activator function,69
+NA,User Manager,1356
+NA,Compliance Officer - Group Bank/Company,1826
+NA,Other recipient Structures of the Group Bank/Company,868
+NA,Recipients Reporting Volcker Rule,3187
+NA,Applicant body,926
 Person,Society,336
 Person,Group company,1367
-Empty group,Business and support function,3198
+NA,Business and support function,3198
 Person,Supervisory authority,2138
-Empty group,Purchasing body,862
-Empty group,Applicant Structure,1443
-Empty group,Data Technology Owner,478
-Empty group,Data Owner,1475
-Empty group,Data User,2542
+NA,Purchasing body,862
+NA,Applicant Structure,1443
+NA,Data Technology Owner,478
+NA,Data Owner,1475
+NA,Data User,2542
 Organizational unit,Oversight of the Data Governance Model,3009
-Empty group,Central Structure,2583
+NA,Central Structure,2583
 Organizational unit,Central Relations & Legislative Monitoring,2000
 Organizational unit,Data office coordination,3008
-Empty group,Project yards,1364
+NA,Project yards,1364
 Organizational unit,Supervisory Impact Assessment,702
-Empty group,Calculation Agent,1501
-Empty group,Asset Monitor,805
+NA,Calculation Agent,1501
+NA,Asset Monitor,805
 Person,Rating agency,0
 Person,Bondholder Representative,1
 Person,vehicle company,2
 Person,Deloitte,396
-Empty group,Deliberative Body,1878
+NA,Deliberative Body,1878
 Person,Administrative structure Bank / Subsidiary company,741
 Person,Company not in the CRO Area perimeter,494
-Empty group,Function Responsible for the Rules document,3253
-Empty group,Functions Involved,3283
-Empty group,foster structure,866
+NA,Function Responsible for the Rules document,3253
+NA,Functions Involved,3283
+NA,foster structure,866
 Person,Unit in Charge,3189
-Empty group,Referrer,3246
-Empty group,Employee,2458
+NA,Referrer,3246
+NA,Employee,2458
 Person,Deloitte,2856
-Empty group,Deliberative Body,2640
+NA,Deliberative Body,2640
 Person,Servicers,3247
-Empty group,Deliberative Body,3036
+NA,Deliberative Body,3036
 Person,Servicers,2478
 Organizational unit,AML Network,389
 Position,Head of Central Operations Department,377
 Position,Head of Global Banking & Sovereign Institutions Department - IMI CIB Division,342
-Empty group,Head of Direct Management of Bad Loans,615
-Empty group,Reference manager,824
+NA,Head of Direct Management of Bad Loans,615
+NA,Reference manager,824
 Organizational unit,Fideuram Intesa Sanpaolo Private Banking - Operational Branch Management,3044
-Empty group,Central Structure,2460
+NA,Central Structure,2460
 Organizational unit,Desk Factoring - Foreign Branch,2124
-Empty group,Employee,3223
-Empty group,Subsidiary/subsidiary company,3141
-Empty group,Head of the Department to which the Employee belongs,1613
+NA,Employee,3223
+NA,Subsidiary/subsidiary company,3141
+NA,Head of the Department to which the Employee belongs,1613
 Person,Nexi,335
 Person,Organization Function of CIB Banks,482
 Organizational unit,Development of Incentive Systems,2762
 Organizational unit,Accounting & Operations - London,3326
-Empty group,Data User,1025
-Empty group,Data Technology Owner,2780
-Empty group,Data Owner,1024
+NA,Data User,1025
+NA,Data Technology Owner,2780
+NA,Data Owner,1024
 Person,Servicers,3056
 Person,Supplier,1324
 Person,Vector,1325
-Empty group,Consob,66
-Empty group,Emergency Unit,2353
-Empty group,Competent and monitoring functions,2218
-Empty group,Head of OU impacted,2352
-Empty group,Incoming OU Manager,2351
-Empty group,Emergency team,2217
-Empty group,Employee,2567
-Empty group,Responsible,2568
+NA,Consob,66
+NA,Emergency Unit,2353
+NA,Competent and monitoring functions,2218
+NA,Head of OU impacted,2352
+NA,Incoming OU Manager,2351
+NA,Emergency team,2217
+NA,Employee,2567
+NA,Responsible,2568
 Person,Society,1081
 Person,Society,645
-Empty group,Bank of Italy,1358
-Empty group,Applicant body,1137
-Empty group,Reporting Structure,293
-Empty group,Group ISO,2066
-Empty group,Local IT Security Managers,877
-Empty group,Secretariats of Centralized Management Companies,878
+NA,Bank of Italy,1358
+NA,Applicant body,1137
+NA,Reporting Structure,293
+NA,Group ISO,2066
+NA,Local IT Security Managers,877
+NA,Secretariats of Centralized Management Companies,878
 Person,IVASS,1110
-Empty group,Business/Process Owner,344
-Empty group,Implementing body,2788
-Empty group,Requesting facility,1115
+NA,Business/Process Owner,344
+NA,Implementing body,2788
+NA,Requesting facility,1115
 Person,Unit in Charge,1691
-Empty group,Referrer,759
-Empty group,Corporate side structures,1969
-Empty group,Market side structures,2219
-Empty group,Servicers,1763
-Empty group,Employee,1363
-Empty group,Supervisor,858
-Empty group,Subsidiary company,3051
-Empty group,Responsible Manager,1202
+NA,Referrer,759
+NA,Corporate side structures,1969
+NA,Market side structures,2219
+NA,Servicers,1763
+NA,Employee,1363
+NA,Supervisor,858
+NA,Subsidiary company,3051
+NA,Responsible Manager,1202
 Person,Supplier,207
-Empty group,Group Banks/Companies,2185
-Empty group,Supervisory body,301
-Empty group,Company Compliance Officer,255
-Empty group,Compliance Officer Company with non centralized management,256
-Empty group,Figure supporting the local Functions in carrying out the non-compliance risk monitoring activities,968
-Empty group,Data Governance Project Manager,1461
-Empty group,Digital Business Partners,1463
-Empty group,ICT Project Leader,1462
-Empty group,Function Responsible for the Governance document,27
-Empty group,Data Technology Office,1665
-Empty group,Data Owner,1666
+NA,Group Banks/Companies,2185
+NA,Supervisory body,301
+NA,Company Compliance Officer,255
+NA,Compliance Officer Company with non centralized management,256
+NA,Figure supporting the local Functions in carrying out the non-compliance risk monitoring activities,968
+NA,Data Governance Project Manager,1461
+NA,Digital Business Partners,1463
+NA,ICT Project Leader,1462
+NA,Function Responsible for the Governance document,27
+NA,Data Technology Office,1665
+NA,Data Owner,1666
 Person,Counterpart,442
-Empty group,Facility manager,419
+NA,Facility manager,419
 Person,Monte Titoli,1749
 External Organizational unit,Fideuram Intesa Sanpaolo Private Banking - Corporate Affairs,2732
 External Organizational unit,ISPB - Marketing,2731
@@ -3125,81 +3125,81 @@ Person,Servicers,2461
 Person,Engineering,3339
 Organizational unit,Administered savings products and consultancy services,1076
 Person,Society,1215
-Empty group,Appointed function,1773
-Empty group,Employee,1224
-Empty group,Territorial structure,495
-Empty group,Central Management Structure,496
-Empty group,ORMD extension,1908
-Empty group,Technical function,364
-Empty group,Business Continuity Function,186
-Empty group,Cybersecurity function,365
-Empty group,Real estate function,187
-Empty group,Physical Security Function,188
+NA,Appointed function,1773
+NA,Employee,1224
+NA,Territorial structure,495
+NA,Central Management Structure,496
+NA,ORMD extension,1908
+NA,Technical function,364
+NA,Business Continuity Function,186
+NA,Cybersecurity function,365
+NA,Real estate function,187
+NA,Physical Security Function,188
 Person,Servicers,3057
-Empty group,Report Owner,3229
+NA,Report Owner,3229
 Organizational unit,Retail Digital Transformation,2397
-Empty group,Data Owner Coordinator,2015
-Empty group,Structure that performs the function of Secretariat,351
-Empty group,Initial Recipients,3102
-Empty group,Foreign Banks in the perimeter,2189
+NA,Data Owner Coordinator,2015
+NA,Structure that performs the function of Secretariat,351
+NA,Initial Recipients,3102
+NA,Foreign Banks in the perimeter,2189
 Person,Ministry of Economy and Finance,922
-Empty group,Operator,646
-Empty group,Bidder,2781
+NA,Operator,646
+NA,Bidder,2781
 Person,Administrative structure Bank / Subsidiary company,647
 Organizational unit,Financing Retail and Agribusiness companies,3037
-Empty group,Issuer body,1489
+NA,Issuer body,1489
 Organizational unit,Digital Transformation Monitoring,774
 Organizational unit,Fideuram Intesa Sanpaolo Private Banking - ISPB Organization,577
-Empty group,Subsidiary owning the card relationship,613
-Empty group,Responsible,285
-Empty group,Applicant,3177
+NA,Subsidiary owning the card relationship,613
+NA,Responsible,285
+NA,Applicant,3177
 Person,Administrative structure Bank / Subsidiary company,3288
 Organizational unit,Investor Coverage & Roadshow,159
-Empty group,Sectoral Plan Coordinator,592
-Empty group,Managerial Referent,593
-Empty group,Managers of the Structures Involved,594
-Empty group,Business Owner,521
+NA,Sectoral Plan Coordinator,592
+NA,Managerial Referent,593
+NA,Managers of the Structures Involved,594
+NA,Business Owner,521
 Organizational unit,Administrative Governance and Group Controls,1332
-Empty group,Estimate IMM,2629
-Empty group,Other demand structures,2409
-Empty group,Business Owner,1419
-Empty group,ICT Estimator,517
+NA,Estimate IMM,2629
+NA,Other demand structures,2409
+NA,Business Owner,1419
+NA,ICT Estimator,517
 Person,Servicers,2630
-Empty group,In charge,1077
-Empty group,Applicant,1858
+NA,In charge,1077
+NA,Applicant,1858
 Person,Engineering,2310
-Empty group,Appointed employee,2837
-Empty group,Employee,2836
+NA,Appointed employee,2837
+NA,Employee,2836
 Person,Customer,2171
-Empty group,Applicant,1241
+NA,Applicant,1241
 Person,External supplier,3050
-Empty group,Editorial structure of the applicant,977
+NA,Editorial structure of the applicant,977
 Person,Tax structure of the company in perimeter,1189
 Organizational unit,Market Strategist,1592
 External Organizational unit,Financial Taxation,1400
-Empty group,Subsidiary company,1631
+NA,Subsidiary company,1631
 Person,Organization Function of CIB Banks,484
-Empty group,Group company,3328
-Empty group,Head of Division or Management,2030
-Empty group,Head of International Banks Division,473
+NA,Group company,3328
+NA,Head of Division or Management,2030
+NA,Head of International Banks Division,473
 Person,Servicers,289
 Organizational unit,Transformation and Operations Planning,1052
 Person,Customer,1276
-Empty group,Problem Task Assignee,2067
+NA,Problem Task Assignee,2067
 Person,Servicers,1378
-Empty group,Key Custodian,297
-Empty group,Key Manager,296
-Empty group,Applicant,295
-Empty group,Recipient of the nomination,3202
-Empty group,Head of the UOG,3048
-Empty group,Application Referents,1814
+NA,Key Custodian,297
+NA,Key Manager,296
+NA,Applicant,295
+NA,Recipient of the nomination,3202
+NA,Head of the UOG,3048
+NA,Application Referents,1814
 Person,External Body,3208
-Empty group,PCI Officer,853
+NA,PCI Officer,853
 Person,Servicers,2597
-Empty group,The Supervisor,2878
-Empty group,The Head of the Banca dei Territori Division,3281
+NA,The Supervisor,2878
+NA,The Head of the Banca dei Territori Division,3281
 Person,Issuer,252
-Empty group,Data Owner,895
+NA,Data Owner,895
 Organizational unit,Fideuram Intesa Sanpaolo Private Banking - Product and Customer Risk,2251
 Organizational unit,Fideuram Intesa Sanpaolo Private Banking - Control and Risk Model Control,1365
 Organizational unit,Private Customer Journeys and Multichannel Developments,1037
@@ -3210,103 +3210,103 @@ Person,cro,1635
 Person,CFO,2076
 Organizational unit,National and international policies and bodies,2888
 Organizational unit,Liquidity Management,2420
-Empty group,Financing body,2607
+NA,Financing body,2607
 Person,Customer,1630
-Empty group,Organizational units dedicated to Data Ownership,229
-Empty group,Data User,1154
-Empty group,Data Owner,1153
-Empty group,Data Technology Owner,1421
-Empty group,Control functions,253
+NA,Organizational units dedicated to Data Ownership,229
+NA,Data User,1154
+NA,Data Owner,1153
+NA,Data Technology Owner,1421
+NA,Control functions,253
 Organizational unit,Compliance Checks,1950
-Empty group,Employee,1600
-Empty group,KLEIS suppliers,9
-Empty group,CERT,2760
+NA,Employee,1600
+NA,KLEIS suppliers,9
+NA,CERT,2760
 Organizational unit,Country Manager USA & Americas - IMI CIB Division,3185
-Empty group,Relevant Entities,63
-Empty group,Data Owner,570
-Empty group,Data User,3373
-Empty group,Data Technology Owner,571
-Empty group,Responsible for the Data Owner structure,1751
+NA,Relevant Entities,63
+NA,Data Owner,570
+NA,Data User,3373
+NA,Data Technology Owner,571
+NA,Responsible for the Data Owner structure,1751
 Person,Administrative structure of the Bank in scope,797
 Person,Legal Entity Italy,2269
 Person,Foreign Legal Entity,518
 Person,External Legal,2300
-Empty group,SFO-qualified financial advisor with mixed contract,355
-Empty group,Head of Group Treasury and Finance Department,450
-Empty group,Euro Money Market Manager,1905
-Empty group,Head of Money Market & Settlements,472
-Empty group,Auditing firm,2244
+NA,SFO-qualified financial advisor with mixed contract,355
+NA,Head of Group Treasury and Finance Department,450
+NA,Euro Money Market Manager,1905
+NA,Head of Money Market & Settlements,472
+NA,Auditing firm,2244
 Person,Counterpart,3305
 Person,CCP,45
-Empty group,Group banks,2953
-Empty group,supranational body,2952
+NA,Group banks,2953
+NA,supranational body,2952
 Organizational unit,Intesa Sanpaolo RE.O.CO.,368
 Organizational unit,Eurizon Capital SA,2746
-Empty group,The Supervisor,2920
-Empty group,The Supervisor,2921
+NA,The Supervisor,2920
+NA,The Supervisor,2921
 Person,Servicers,3085
 Person,Provis - General Secretariat,1010
 Person,Group companies in scope,1544
-Empty group,Foreign branch,1467
-Empty group,Trading desks,1743
+NA,Foreign branch,1467
+NA,Trading desks,1743
 Person,Servicers,1982
 Person,General Secretariat - Other company within the VAT Group,1190
-Empty group,Deliberative body,2146
+NA,Deliberative body,2146
 Person,Servicers,1376
 Organizational unit,Corporate Image,627
 Person,Typography,1693
-Empty group,Auditing firm,2342
-Empty group,Financial Market Coverage Department - Price-Sensitive Communication,2615
-Empty group,Responsible Manager,2343
+NA,Auditing firm,2342
+NA,Financial Market Coverage Department - Price-Sensitive Communication,2615
+NA,Responsible Manager,2343
 Person,Translator,1694
 Organizational unit,"Guidelines, Rules and Risk Culture",2144
 Person,Bank of Italy,3127
-Empty group,Structure in charge of the management of critical events,3126
+NA,Structure in charge of the management of critical events,3126
 Person,EBA Clearing,3128
 Organizational unit,Administrative requirements for non-banking companies ex UBI,1737
 Organizational unit,Planning and Monitoring Real Estate Activities,2220
 Organizational unit,Portfolio Policies,884
-Empty group,Authorized subject,2137
-Empty group,Intesa Sanpaolo branch,1083
-Empty group,Asset Monitor,810
-Empty group,Authorized subjects,2887
+NA,Authorized subject,2137
+NA,Intesa Sanpaolo branch,1083
+NA,Asset Monitor,810
+NA,Authorized subjects,2887
 Person,vehicle company,48
 Person,External Legal,77
 Person,Rating agency,1372
-Empty group,Calculation Agent,154
-Empty group,Proprietary data structures,1404
-Empty group,Evaluator,432
-Empty group,Heads of organizational structure of DSI,1402
-Empty group,DSI Operational Coordinators,1403
+NA,Calculation Agent,154
+NA,Proprietary data structures,1404
+NA,Evaluator,432
+NA,Heads of organizational structure of DSI,1402
+NA,DSI Operational Coordinators,1403
 Organizational unit,Retail Management Support,1578
-Empty group,The Supervisor,1002
-Empty group,The Supervisor,1003
-Empty group,BdT manager,1397
-Empty group,Technical session of the Product Governance Table of the IMI Corporate & Investment Banking Division,757
-Empty group,The Supervisor,2536
+NA,The Supervisor,1002
+NA,The Supervisor,1003
+NA,BdT manager,1397
+NA,Technical session of the Product Governance Table of the IMI Corporate & Investment Banking Division,757
+NA,The Supervisor,2536
 Person,Account Holding Bank,652
 Person,Supervisory Body and keeping of the single register of financial advisors,1251
-Empty group,European Central Bank,1995
-Empty group,Organizational units dedicated to Data Ownership,1355
+NA,European Central Bank,1995
+NA,Organizational units dedicated to Data Ownership,1355
 Organizational unit,Credit Risk Technology,1685
 Organizational unit,Data Quality Controls and Analytics,1959
 Person,Customer,1740
-Empty group,Branch responsible for issuing the receipt,2765
+NA,Branch responsible for issuing the receipt,2765
 Organizational unit,Intesa Sanpaolo Holding International,2833
 Organizational unit,M&A Financial Services,786
 Organizational unit,"Strategic Initiatives, Project Portfolios and Investments",1837
 Organizational unit,M&A Commercial Banking,785
-Empty group,Controller of the Business Unit or Company,3297
-Empty group,User manager,2679
-Empty group,Finance Application Management,318
-Empty group,ORMD extension,262
-Empty group,CEO Managers,2870
+NA,Controller of the Business Unit or Company,3297
+NA,User manager,2679
+NA,Finance Application Management,318
+NA,ORMD extension,262
+NA,CEO Managers,2870
 Organizational unit,ICT Global Governance,1131
-Empty group,Functions Impacted,2609
-Empty group,Business Owner,2238
-Empty group,Project leader,1890
-Empty group,User test designer,1045
-Empty group,Employee,1679
+NA,Functions Impacted,2609
+NA,Business Owner,2238
+NA,Project leader,1890
+NA,User test designer,1045
+NA,Employee,1679
 Person,External Documentation Manager,1525
 Person,Vector,1495
 Person,Help Desk Archives,2796
@@ -3314,95 +3314,95 @@ Person,Auditing firm,1312
 Person,Translation company,1310
 Person,Graphic design and layout consultancy,1311
 Organizational unit,Business Unit Events and Initiatives,465
-Empty group,Group banks and companies,2845
+NA,Group banks and companies,2845
 Organizational unit,Institutional Events and Initiatives,464
 Person,Providers,2844
 Person,Eurizon Capital SGR - Risk Management,433
 Person,Consob,852
-Empty group,Applicant,270
+NA,Applicant,270
 Organizational unit,Data Quality Controls,118
-Empty group,Bank of Italy,17
-Empty group,Supplier,3372
-Empty group,Process Owner,1394
-Empty group,Financial analyst,607
+NA,Bank of Italy,17
+NA,Supplier,3372
+NA,Process Owner,1394
+NA,Financial analyst,607
 Person,Service,1853
 Person,Vector,1327
 Person,Main Contractor,1846
 Person,Counting room,2814
 Person,Maintainer,601
-Empty group,Applicant,602
-Empty group,BDT assistant,3204
-Empty group,Employee,3235
+NA,Applicant,602
+NA,BDT assistant,3204
+NA,Employee,3235
 Person,Competent Doctor Coordinator (MCC),2752
-Empty group,Workers' Safety Representative (RLS),1875
-Empty group,Employer (DL),2951
-Empty group,Prevention and Protection Service Manager (RSPP),2252
+NA,Workers' Safety Representative (RLS),1875
+NA,Employer (DL),2951
+NA,Prevention and Protection Service Manager (RSPP),2252
 Person,Society,2751
 Person,Territorial Competent Doctor (MCT),2753
 Person,UOG managers,84
-Empty group,Emergency Coordinator,2289
-Empty group,in charge,2757
-Empty group,Administrative Servicer,2170
+NA,Emergency Coordinator,2289
+NA,in charge,2757
+NA,Administrative Servicer,2170
 Person,Supplier,2462
-Empty group,Applicant,3298
-Empty group,Outsourcing Coordinator,2265
-Empty group,Evaluator functions on call,476
-Empty group,Outsourcing contact person,2264
-Empty group,Process Owner,3070
-Empty group,Other authorized function,990
-Empty group,Deliberative function,2405
+NA,Applicant,3298
+NA,Outsourcing Coordinator,2265
+NA,Evaluator functions on call,476
+NA,Outsourcing contact person,2264
+NA,Process Owner,3070
+NA,Other authorized function,990
+NA,Deliberative function,2405
 Person,External service,2301
 Person,Ministry of Economy and Finance,2302
-Empty group,Referent for reporting,108
-Empty group,Responsible Manager,107
-Empty group,Entities managing or assigning expenditure,3087
-Empty group,Managers of Structure / Central Management of the Parent Company,3088
-Empty group,Other control structures of Group companies,3086
+NA,Referent for reporting,108
+NA,Responsible Manager,107
+NA,Entities managing or assigning expenditure,3087
+NA,Managers of Structure / Central Management of the Parent Company,3088
+NA,Other control structures of Group companies,3086
 Organizational unit,Resource Planning and HR Systems BdT,1498
-Empty group,Data Owner,1586
-Empty group,Controlled Structures,2584
-Empty group,Corporate bodies,1682
+NA,Data Owner,1586
+NA,Controlled Structures,2584
+NA,Corporate bodies,1682
 Organizational unit,"Audit, Reporting and Internal Quality Assurance methodologies",1134
 Person,Engineering S.p.A.,2501
 Person,Tax structure of the company within the scope of the VAT Group,1960
-Empty group,Legal function,2743
-Empty group,Compliance function,1951
-Empty group,Group banks and companies,1788
-Empty group,Organizational unit,1250
+NA,Legal function,2743
+NA,Compliance function,1951
+NA,Group banks and companies,1788
+NA,Organizational unit,1250
 Organizational unit,Participatory Investments,169
-Empty group,The Supervisor,1921
+NA,The Supervisor,1921
 Person,Territorial Competent Doctor (MCT),934
-Empty group,Emergency Coordinator,2645
-Empty group,Employer (DL),491
-Empty group,Prevention and Protection Service Manager (RSPP),306
-Empty group,in charge,2644
-Empty group,Employee,3320
-Empty group,Workers' Safety Representative (RLS),308
+NA,Emergency Coordinator,2645
+NA,Employer (DL),491
+NA,Prevention and Protection Service Manager (RSPP),306
+NA,in charge,2644
+NA,Employee,3320
+NA,Workers' Safety Representative (RLS),308
 Person,Competent Doctor Coordinator (MCC),935
 Person,Psychologist specialist,1661
 Person,Society,2673
 Person,Competent Doctor (MC),307
-Empty group,Emergency Coordinator,936
-Empty group,OU manager,2566
-Empty group,Business Continuity Function,2564
-Empty group,ORMR,2565
-Empty group,Technical function,2562
-Empty group,ORMD extension,2284
-Empty group,Cybersecurity function,2563
-Empty group,Crisis contact persons,1336
-Empty group,Structure in charge of the management of critical events,2945
-Empty group,The Supervisor,3315
+NA,Emergency Coordinator,936
+NA,OU manager,2566
+NA,Business Continuity Function,2564
+NA,ORMR,2565
+NA,Technical function,2562
+NA,ORMD extension,2284
+NA,Cybersecurity function,2563
+NA,Crisis contact persons,1336
+NA,Structure in charge of the management of critical events,2945
+NA,The Supervisor,3315
 Organizational unit,Industry & Banking Research,72
-Empty group,User,79
+NA,User,79
 Person,Servicers,769
 Organizational unit,AFC Group Entities Oversight,2440
 Organizational unit,Compliance Digital Transformation,1257
 Organizational unit,Transaction Monitoring Anti Money Laundering,2428
 Organizational unit,Financial Sanctions and Anti-Corruption,2437
-Empty group,Group banks and companies,2330
-Empty group,Structures Interested in moving,979
-Empty group,Bank of Italy,3255
-Empty group,Recipients Reporting,1746
-Empty group,Managers of the structures involved,798
-Empty group,Managerial Referent,799
-Empty group,Sectoral Plan Coordinator,1515
+NA,Group banks and companies,2330
+NA,Structures Interested in moving,979
+NA,Bank of Italy,3255
+NA,Recipients Reporting,1746
+NA,Managers of the structures involved,798
+NA,Managerial Referent,799
+NA,Sectoral Plan Coordinator,1515

@@ -237,11 +237,11 @@ Possible violation of restrictions on petroleum and petrochemical products,1395,
 Possible regulatory violation in terms of Embargoes/AML/CTF or fight against the financing of terrorism,890,Other risks (operational),False
 Possible regulatory violation in terms of AML/CTF or countering the financing of terrorism,5195,Other risks (operational),False
 Verify correctness of entered data to authorize,361,Financial Information Risk (ex 262/2005),True
-Sending incomplete/correct data,2790,Other,False
-Sending incorrect and incomplete data,4239,Other,False
-Incorrect loading of accounting data,598,Other,False
-Incomplete/inconsistent upload of accounting data,599,Other,False
-Sending incomplete and/or incorrect template,2147,Other,False
+Sending incomplete/correct data,2790,NA,False
+Sending incorrect and incomplete data,4239,NA,False
+Incorrect loading of accounting data,598,NA,False
+Incomplete/inconsistent upload of accounting data,599,NA,False
+Sending incomplete and/or incorrect template,2147,NA,False
 Invalid powers of representation of the Public Body,4581,Other risks (operational),False
 Incorrect billing count,722,Financial Information Risk (ex 262/2005),True
 Incorrect/incomplete compilation and signing of the contract,3403,Other risks (operational),False
@@ -316,9 +316,9 @@ Possible error in the calculation of the TEG,705,Financial Information Risk (ex 
 Prices perimeter not complete,1282,Financial Information Risk (ex 262/2005),True
 Inconsistent prices,695,Financial Information Risk (ex 262/2005),True
 Database of test environments not aligned with the production environment and data breach.,1222,Information and Communication Technology risk,False
-Incorrect or not compliant data,4992,Other,False
-Incorrect date,131,Other,False
-Signature or powers not correct,132,Other,False
+Incorrect or not compliant data,4992,NA,False
+Incorrect date,131,NA,False
+Signature or powers not correct,132,NA,False
 Inconsistent data,85,Financial Information Risk (ex 262/2005),True
 Incomplete and incorrect data,82,Financial Information Risk (ex 262/2005),True
 Incorrect data,4087,Financial Information Risk (ex 262/2005),True
@@ -549,18 +549,18 @@ Incorrect pricing,5052,Legal and non-compliance,False
 Incorrect accounting of the tax credit,1329,Financial Information Risk (ex 262/2005),True
 Failure to produce the transfer agreement,2473,Legal and non-compliance,False
 Wrong acquisition of contracts/documentation,957,Legal and non-compliance,False
-Unmanaged broken covenant,1697,Other,False
-Unmanaged broken covenant,1698,Other,False
-Unmanaged broken covenant,1699,Other,False
-Unmanaged broken covenant,1700,Other,False
-Incorrect data entered,3602,Other,False
-Incorrect data entered,3603,Other,False
-Incorrect data entered,3604,Other,False
-Incorrect data entered,3605,Other,False
-Unverified covenant,177,Other,False
-Unverified covenant,178,Other,False
-Unverified covenant,179,Other,False
-Unverified covenant,180,Other,False
+Unmanaged broken covenant,1697,NA,False
+Unmanaged broken covenant,1698,NA,False
+Unmanaged broken covenant,1699,NA,False
+Unmanaged broken covenant,1700,NA,False
+Incorrect data entered,3602,NA,False
+Incorrect data entered,3603,NA,False
+Incorrect data entered,3604,NA,False
+Incorrect data entered,3605,NA,False
+Unverified covenant,177,NA,False
+Unverified covenant,178,NA,False
+Unverified covenant,179,NA,False
+Unverified covenant,180,NA,False
 Wrong execution of SPPI Test,2886,Financial Information Risk (ex 262/2005),True
 Belonging of the Supplier/Dealer to the perimeter of the Supply Chain and to the Economic Group of the Lead Supply Chain,1703,Financial Information Risk (ex 262/2005),True
 Incorrect compilation of SIF/SID and ineligible counterparties,3458,Financial Information Risk (ex 262/2005),True
@@ -587,8 +587,8 @@ Failure or incorrect verification of P&L data,4888,Other risks (operational),Fal
 "Lack of completeness, accuracy and validity of the tables of the Explanatory Notes",1929,Financial Information Risk (ex 262/2005),True
 Data consistency inconsistency,1895,Financial Information Risk (ex 262/2005),True
 Wrong data consistency,4974,Financial Information Risk (ex 262/2005),True
-Unworked positions,344,Other,False
-Unworked positions,345,Other,False
+Unworked positions,344,NA,False
+Unworked positions,345,NA,False
 Inconsistent data,4434,Other risks (operational),False
 Inconsistent data,4439,Other risks (operational),False
 Incorrect or unauthorized evaluation,3839,Financial Information Risk (ex 262/2005),True
@@ -666,8 +666,8 @@ Incorrect reporting to investors and the regulator,4991,Other risks (operational
 Non-compliance with balance sheet closing times and crushing of user certification times,2996,Other risks (operational),False
 Missed or incorrect payments due to investors,4737,Other risks (operational),False
 Incorrect imputations,4326,Financial Information Risk (ex 262/2005),True
-Operation not permitted,746,Other,False
-Operation not permitted,747,Other,False
+Operation not permitted,746,NA,False
+Operation not permitted,747,NA,False
 Lack of data functional to the calculation,3360,Other risks (operational),False
 Reporting not consistent with the calculated measures,4098,Financial Information Risk (ex 262/2005),True
 Reporting not consistent with the calculated measures,3751,Financial Information Risk (ex 262/2005),True
@@ -802,7 +802,7 @@ Incomplete or inconsistent data,1318,Legal and non-compliance,False
 Wrong or Missing Personal Information,5398,Legal and non-compliance,False
 LEI code not entered or entered incorrectly in the system,3267,Legal and non-compliance,False
 No or inconsistent data,2774,Legal and non-compliance,False
-Failure to comply with the deadlines for closing the account in foreign currency,2762,Other,False
+Failure to comply with the deadlines for closing the account in foreign currency,2762,NA,False
 Anomaly in the data transformations in power supply to the Laboratory,1941,Financial Information Risk (ex 262/2005),True
 Wrong data transport,1940,Financial Information Risk (ex 262/2005),True
 Wrong rating submission,3667,Financial Information Risk (ex 262/2005),True
@@ -835,7 +835,7 @@ Possible regulatory violation on the subject of Aml/CTF or Countering the Financ
 Wrong data entry,1174,Other risks (operational),False
 Possible regulatory violation on the subject of Aml/CTF or Countering the Financing of Terrorism,1273,Other risks (operational),False
 Miscommunication to customer,4572,Other risks (operational),False
-Possible violation of AML/CFT legislation,119,Other,False
+Possible violation of AML/CFT legislation,119,NA,False
 Operation performed incorrectly,2142,Other risks (operational),False
 Possible regulatory violation on the subject of Aml/CTF or Countering the Financing of Terrorism,1606,Other risks (operational),False
 Possible regulatory violation on the subject of Aml/CTF or Countering the Financing of Terrorism,4703,Other risks (operational),False
@@ -946,10 +946,10 @@ Failure to comply with the time limit set for the communication of the remodulat
 Incorrect/incomplete contractual documentation,3653,Other risks (operational),False
 Incorrect documentation functional to the application for admission to the Central Guarantee Fund,4812,Other risks (operational),False
 Incorrect compilation of the Resolution Outcome Communication (Annex A),2028,Other risks (operational),False
-Incorrect completion of the form,4698,Other,False
-Incorrect completion of the form,4699,Other,False
-Non-compliant accounting regulation,5273,Other,False
-Non-compliant accounting regulation,5274,Other,False
+Incorrect completion of the form,4698,NA,False
+Incorrect completion of the form,4699,NA,False
+Non-compliant accounting regulation,5273,NA,False
+Non-compliant accounting regulation,5274,NA,False
 Incorrect accounting entries,4846,Financial Information Risk (ex 262/2005),True
 Incorrect Sire details,3760,Financial Information Risk (ex 262/2005),True
 Possible error on the centralized quantity,5355,Financial Information Risk (ex 262/2005),True
@@ -1042,8 +1042,8 @@ Failure to comply with the limits established by law,4223,Financial Information 
 Failure to meet the minimum requirements,4151,Financial Information Risk (ex 262/2005),True
 Characteristics of the issue inconsistent with the assets transferred in order to pass the tests on the issue,3569,Financial Information Risk (ex 262/2005),True
 Inadequate credit line and/or Counterparty not covered by the CSA agreement,1051,Other risks (operational),False
-Incorrect accounting of operations or presence of any pending transactions,3332,Other,False
-Incorrect accounting of operations or presence of any pending transactions,3333,Other,False
+Incorrect accounting of operations or presence of any pending transactions,3332,NA,False
+Incorrect accounting of operations or presence of any pending transactions,3333,NA,False
 Incorrect management system update,3284,Financial Information Risk (ex 262/2005),True
 Incorrect preparation of settlement proposal,2014,Financial Information Risk (ex 262/2005),True
 Incorrect complaint report,874,Other risks (operational),False
@@ -1071,10 +1071,10 @@ Incorrect processing of the collection engine,4731,Financial Information Risk (e
 Incorrect processing of the collection engine,5323,Financial Information Risk (ex 262/2005),True
 Wrong Fee & KPI engine processing,5324,Financial Information Risk (ex 262/2005),True
 Wrong data acquisition,595,Financial Information Risk (ex 262/2005),True
-Acceptance form different from the version approved internally by the Bank,2297,Other,False
-Acceptance form different from the version approved internally by the Bank,2298,Other,False
-Incorrect data entry,2880,Other,False
-Incorrect data entry,2881,Other,False
+Acceptance form different from the version approved internally by the Bank,2297,NA,False
+Acceptance form different from the version approved internally by the Bank,2298,NA,False
+Incorrect data entry,2880,NA,False
+Incorrect data entry,2881,NA,False
 Incorrect or non-regular appraisal and/or guarantee value not correctly reported in the system,1974,Financial Information Risk (ex 262/2005),True
 Guarantee value not reported correctly in the system,4971,Financial Information Risk (ex 262/2005),True
 Incorrect application data,5412,Financial Information Risk (ex 262/2005),True
@@ -1120,8 +1120,8 @@ Incorrect management of information useful for inputting VAT registers,4110,Fina
 Incorrect / incomplete / late posting of adjustments to VAT balances,3997,Financial Information Risk (ex 262/2005),True
 Incorrect accounting of the fees referred to in the management of VAT registers,4512,Financial Information Risk (ex 262/2005),True
 Incorrect accounting of the fees referred to in the management of the --- VAT registers,4111,Financial Information Risk (ex 262/2005),True
-Incorrect accounting and/or input of accounting flows,1522,Other,False
-Incorrect accounting and/or input of accounting flows.,1523,Other,False
+Incorrect accounting and/or input of accounting flows,1522,NA,False
+Incorrect accounting and/or input of accounting flows.,1523,NA,False
 Incorrect accounting and/or input of accounting flows,3958,Financial Information Risk (ex 262/2005),True
 Incorrect / incomplete / late posting of adjustments to VAT balances,2709,Financial Information Risk (ex 262/2005),True
 Operation blocks,4772,Other risks (operational),False
@@ -1191,7 +1191,7 @@ Unsuitable documentation,1531,Other risks (operational),False
 Wrong or missing entry of the new conditions,1830,Financial Information Risk (ex 262/2005),True
 Incorrect or missing entry of the option exercise,1829,Financial Information Risk (ex 262/2005),True
 Economic conditions not entered in a timely manner,4471,Financial Information Risk (ex 262/2005),True
-Document required by the ontology model incomplete or incorrect,2465,Other,False
+Document required by the ontology model incomplete or incorrect,2465,NA,False
 Incorrect data,2688,Financial Information Risk (ex 262/2005),True
 Presence of any inconsistent formal data between the delta stock and the flow items of the items relating to the assets sold,1573,Other risks (operational),False
 Non-definitive balance sheets,1574,Other risks (operational),False
@@ -1225,18 +1225,18 @@ Wrong certification,3710,Financial Information Risk (ex 262/2005),True
 Incorrect imputation of the rectification,4081,Financial Information Risk (ex 262/2005),True
 Incorrect setting of the Pilot flow,2831,Financial Information Risk (ex 262/2005),True
 Incorrect accounting data and dubious results,2005,Financial Information Risk (ex 262/2005),True
-Wrong VAR measurement calculation,4679,Other,False
-Wrong VAR measurement calculation,4680,Other,False
-Incorrect power supply or incomplete group map,4677,Other,False
-Incorrect or incomplete input of the structural exchange risk and interest rate risk positions,3180,Other,False
-Incorrect power supply or incomplete group map,4678,Other,False
-Incorrect or incomplete input of the structural exchange risk and interest rate risk positions,3181,Other,False
-Incorrect or incomplete reporting,4234,Other,False
-Performance inconsistency of VaR metrics,4236,Other,False
-Incorrect or incomplete reporting,4235,Other,False
-Performance inconsistency of VaR metrics,4237,Other,False
-Streams not received correctly,4681,Other,False
-Streams not received correctly,4682,Other,False
+Wrong VAR measurement calculation,4679,NA,False
+Wrong VAR measurement calculation,4680,NA,False
+Incorrect power supply or incomplete group map,4677,NA,False
+Incorrect or incomplete input of the structural exchange risk and interest rate risk positions,3180,NA,False
+Incorrect power supply or incomplete group map,4678,NA,False
+Incorrect or incomplete input of the structural exchange risk and interest rate risk positions,3181,NA,False
+Incorrect or incomplete reporting,4234,NA,False
+Performance inconsistency of VaR metrics,4236,NA,False
+Incorrect or incomplete reporting,4235,NA,False
+Performance inconsistency of VaR metrics,4237,NA,False
+Streams not received correctly,4681,NA,False
+Streams not received correctly,4682,NA,False
 Miscellaneous or missing game opening,2495,Financial Information Risk (ex 262/2005),True
 Miscellaneous or missing game opening,2494,Financial Information Risk (ex 262/2005),True
 Incorrect/complete flow data,4274,Financial Information Risk (ex 262/2005),True
@@ -1322,8 +1322,8 @@ Errors in the consolidated flow,1934,Financial Information Risk (ex 262/2005),Tr
 Incorrect or incomplete Supplier data,3750,Financial Information Risk (ex 262/2005),True
 Incorrectly formalized threats,5411,Other risks (operational),False
 Incorrectly formalized threats,4029,Other risks (operational),False
-Failure to identify solutions that resolve the root cause of the Major Incident.,4410,Other,False
-Failure to investigate and diagnose the causes of the Major Incident,3859,Other,False
+Failure to identify solutions that resolve the root cause of the Major Incident.,4410,NA,False
+Failure to investigate and diagnose the causes of the Major Incident,3859,NA,False
 Location inconsistent with Company values and strategies,25,Other risks (operational),False
 Incorrect / incomplete data entry,24,Other risks (operational),False
 Failure to activate the interventions following the release of the opinion,955,Financial Information Risk (ex 262/2005),True
@@ -1360,10 +1360,10 @@ Incorrect attribution,4473,Financial Information Risk (ex 262/2005),True
 Incorrect system power supply,1476,Financial Information Risk (ex 262/2005),True
 Incorrect update,258,Financial Information Risk (ex 262/2005),True
 Failure or inconsistent execution of the defined training plan,172,Other risks (operational),False
-Incorrect trader requirements,4383,Other,False
-Invalid requirements,4384,Other,False
-Incorrect trader requirements,2088,Other,False
-Incorrect trader requirements,2089,Other,False
+Incorrect trader requirements,4383,NA,False
+Invalid requirements,4384,NA,False
+Incorrect trader requirements,2088,NA,False
+Incorrect trader requirements,2089,NA,False
 Settlement errors,2662,Financial Information Risk (ex 262/2005),True
 Payment error,2663,Financial Information Risk (ex 262/2005),True
 Request not correctly managed on the information systems,3094,Legal and non-compliance,False
@@ -1395,7 +1395,7 @@ Timing not respected,2664,Other risks (operational),False
 Incorrect invoice data,5408,Other risks (operational),False
 Incomplete and/or incorrect calculation results,5194,Financial Information Risk (ex 262/2005),True
 No data extraction,4901,Financial Information Risk (ex 262/2005),True
-Incomplete and/or incorrect calculation results,141,Other,False
+Incomplete and/or incorrect calculation results,141,NA,False
 Timing not respected,5407,Other risks (operational),False
 Inconsistent data,1225,Other risks (operational),False
 Inconsistent data,4186,Other risks (operational),False
@@ -1488,13 +1488,13 @@ Incorrect collateral amount to be exchanged,3250,Financial Information Risk (ex 
 Incorrect or late movement of collateral,1471,Financial Information Risk (ex 262/2005),True
 Wrong or missing collateral movement,678,Financial Information Risk (ex 262/2005),True
 Titles not available on the custodian,1212,Financial Information Risk (ex 262/2005),True
-Not timely and effective response to user requests or failure to restore normal service. Failure to register requests and/or relevant information.,2674,Other,False
-Incorrect classification of incidents and service requests,2673,Other,False
-Incorrect prioritization of incidents,2678,Other,False
-Incorrect prioritization of incidents,4700,Other,False
-Lack of documentation of identified solutions and application of remedial actions,2675,Other,False
-Failure to verify that an Incident has been closed satisfactorily and within an agreed/acceptable time frame.,2677,Other,False
-Inability to carry out trend analyzes due to failure to register requests and/or relevant information or from maintaining a complete history.,2676,Other,False
+Not timely and effective response to user requests or failure to restore normal service. Failure to register requests and/or relevant information.,2674,NA,False
+Incorrect classification of incidents and service requests,2673,NA,False
+Incorrect prioritization of incidents,2678,NA,False
+Incorrect prioritization of incidents,4700,NA,False
+Lack of documentation of identified solutions and application of remedial actions,2675,NA,False
+Failure to verify that an Incident has been closed satisfactorily and within an agreed/acceptable time frame.,2677,NA,False
+Inability to carry out trend analyzes due to failure to register requests and/or relevant information or from maintaining a complete history.,2676,NA,False
 Incomplete or incorrect input of contributed bond prices,784,Financial Information Risk (ex 262/2005),True
 Incorrect proposed price,3989,Financial Information Risk (ex 262/2005),True
 Feeding from infoprovider incomplete or incorrect,785,Financial Information Risk (ex 262/2005),True
@@ -1589,24 +1589,24 @@ Incorrect loading of data into the system,1723,Financial Information Risk (ex 26
 Lack of validity of the contractual documentation produced,1724,Financial Information Risk (ex 262/2005),True
 "Failure to verify the truthfulness, completeness, adequacy of the data and information",3771,Legal and non-compliance,False
 "Failure to verify the truthfulness, completeness, adequacy of the data and information",3772,Legal and non-compliance,False
-Improper data entry,5033,Other,False
-Improper data entry,5034,Other,False
-Block tax positions concerned,4510,Other,False
-Block tax positions concerned,4511,Other,False
-Incorrect statement to be sent to customers,777,Other,False
-Incorrect statement to be sent to customers,778,Other,False
-Master not correctly reset,775,Other,False
-Master not correctly reset,776,Other,False
-Incorrect debit transactions,12,Other,False
-Incorrect debit transactions,13,Other,False
-Incorrect operating results,10,Other,False
-Incorrect operating results,11,Other,False
-Wrong execution of the procedure,3904,Other,False
-Debits not recorded on current accounts,3906,Other,False
-Wrong execution of the procedure,3905,Other,False
-Debits not recorded on current accounts,3907,Other,False
-Certification to be sent to the wrong customer,5422,Other,False
-Certification to be sent to the wrong customer,5423,Other,False
+Improper data entry,5033,NA,False
+Improper data entry,5034,NA,False
+Block tax positions concerned,4510,NA,False
+Block tax positions concerned,4511,NA,False
+Incorrect statement to be sent to customers,777,NA,False
+Incorrect statement to be sent to customers,778,NA,False
+Master not correctly reset,775,NA,False
+Master not correctly reset,776,NA,False
+Incorrect debit transactions,12,NA,False
+Incorrect debit transactions,13,NA,False
+Incorrect operating results,10,NA,False
+Incorrect operating results,11,NA,False
+Wrong execution of the procedure,3904,NA,False
+Debits not recorded on current accounts,3906,NA,False
+Wrong execution of the procedure,3905,NA,False
+Debits not recorded on current accounts,3907,NA,False
+Certification to be sent to the wrong customer,5422,NA,False
+Certification to be sent to the wrong customer,5423,NA,False
 Unworked positions,5359,Other risks (operational),False
 Failure to enter necessary information and impossibility of correct census of users,245,Other risks (operational),False
 Technical user not updated,2158,Other risks (operational),False
@@ -1641,12 +1641,12 @@ Wrong payment arrangement,4090,Financial Information Risk (ex 262/2005),True
 Wrong payment arrangement,4088,Financial Information Risk (ex 262/2005),True
 Incomplete or incorrect documentation,4005,Other risks (operational),False
 Incomplete or incorrect documentation,1011,Other risks (operational),False
-Production of documentation on time,433,Other,False
+Production of documentation on time,433,NA,False
 Incomplete or incorrect documentation,4004,Other risks (operational),False
-Production of documentation on time,582,Other,False
+Production of documentation on time,582,NA,False
 Incomplete or incorrect documentation,1010,Other risks (operational),False
-Incomplete or incorrect documentation,434,Other,False
-Production of documentation on time,583,Other,False
+Incomplete or incorrect documentation,434,NA,False
+Production of documentation on time,583,NA,False
 Failure or incomplete implementation of the required adjustments,4405,Financial Information Risk (ex 262/2005),True
 Failure or delay in responding to the Servicer,1020,Other risks (operational),False
 Incorrect extinction in procedures,3432,Financial Information Risk (ex 262/2005),True
@@ -1662,13 +1662,13 @@ Squaring detected,5115,Financial Information Risk (ex 262/2005),True
 Loading anomaly,2421,Financial Information Risk (ex 262/2005),True
 System upload anomalies,4729,Financial Information Risk (ex 262/2005),True
 Incomplete note,3788,Financial Information Risk (ex 262/2005),True
-Not timely and effective response to user requests or failure to restore normal service. Failure to register requests and/or relevant information,4491,Other,False
-Incorrect classification of incidents and service requests,4490,Other,False
-Incorrect prioritization of incidents.,4492,Other,False
-Incorrect prioritization of incidents.,4495,Other,False
-Inability to carry out trend analyzes due to failure to register requests and/or relevant information or from maintaining a complete history.,4494,Other,False
-Lack of documentation of identified solutions and application of remedial actions,4493,Other,False
-Failure to verify that an Incident has been closed satisfactorily and within an agreed/acceptable time frame,4496,Other,False
+Not timely and effective response to user requests or failure to restore normal service. Failure to register requests and/or relevant information,4491,NA,False
+Incorrect classification of incidents and service requests,4490,NA,False
+Incorrect prioritization of incidents.,4492,NA,False
+Incorrect prioritization of incidents.,4495,NA,False
+Inability to carry out trend analyzes due to failure to register requests and/or relevant information or from maintaining a complete history.,4494,NA,False
+Lack of documentation of identified solutions and application of remedial actions,4493,NA,False
+Failure to verify that an Incident has been closed satisfactorily and within an agreed/acceptable time frame,4496,NA,False
 Concordance opinion not collected,570,Financial Information Risk (ex 262/2005),True
 Non-compliance with the Rules,3832,Other risks (operational),False
 Not published,2635,Other risks (operational),False
@@ -2017,8 +2017,8 @@ Failure or incorrect update of the application resulting from the assignment to 
 Incorrect invoices,3787,Other risks (operational),False
 Verify the operational error and the acquisition of the request for reversal of the operation advanced by the customer,2632,Legal and non-compliance,False
 Incomplete data production,1131,Financial Information Risk (ex 262/2005),True
-Incorrect data entry to the system,2618,Other,False
-Incorrect data entry to the system,2619,Other,False
+Incorrect data entry to the system,2618,NA,False
+Incorrect data entry to the system,2619,NA,False
 Incorrect accounting of the operation,2248,Financial Information Risk (ex 262/2005),True
 Wrong acquisition of contracts/documentation,2166,Legal and non-compliance,False
 Incomplete and/or inconsistent documentation,3822,Other risks (operational),False
@@ -2143,8 +2143,8 @@ Incorrect / incomplete production of information,3036,Other risks (operational),
 Incorrect / incomplete production of relevant information,631,Other risks (operational),False
 Incorrect gold trade report,2090,Other risks (operational),False
  Lack of or incomplete maintenance of operational documentation,3391,Information and Communication Technology risk,False
-Incorrect or non-timely execution of processing procedures,4181,Other,False
- Incorrect or non-timely execution of processing procedures,4180,Other,False
+Incorrect or non-timely execution of processing procedures,4181,NA,False
+ Incorrect or non-timely execution of processing procedures,4180,NA,False
 Incorrect/incomplete repricing,2043,Financial Information Risk (ex 262/2005),True
 Data not captured,2042,Financial Information Risk (ex 262/2005),True
 Incorrect or missing data in the report,5296,Legal and non-compliance,False
@@ -2241,8 +2241,8 @@ Incorrect compilation of orders,4987,Financial Information Risk (ex 262/2005),Tr
 Incorrect orders,1472,Financial Information Risk (ex 262/2005),True
 Presence of squares,3961,Financial Information Risk (ex 262/2005),True
 Incorrect order entry,3962,Financial Information Risk (ex 262/2005),True
-Incorrect data entry,1945,Other,False
-Incorrect data entry,1946,Other,False
+Incorrect data entry,1945,NA,False
+Incorrect data entry,1946,NA,False
 Incorrect data,3188,Other risks (operational),False
 Incorrect communication,4380,Other risks (operational),False
 Presence of an unauthorized exposed IP address,1409,Other risks (operational),False
@@ -2384,11 +2384,11 @@ Change in P&L on the Backtesting perimeter,2305,Other risks (operational),False
 Wrong data,293,Other risks (operational),False
 Wrong data,294,Other risks (operational),False
 Inconsistent rating,3538,Other risks (operational),False
-TEG beyond the wear threshold,2679,Other,False
-Transaction TEG over threshold,1969,Other,False
-TEG beyond the wear threshold,649,Other,False
-TEG of the operation beyond the wear threshold,2035,Other,False
-Incorrect data entry,3183,Other,False
+TEG beyond the wear threshold,2679,NA,False
+Transaction TEG over threshold,1969,NA,False
+TEG beyond the wear threshold,649,NA,False
+TEG of the operation beyond the wear threshold,2035,NA,False
+Incorrect data entry,3183,NA,False
 Incorrect data,553,Financial Information Risk (ex 262/2005),True
 Incorrect and/or incomplete registration of the document,555,Financial Information Risk (ex 262/2005),True
 Incorrect/incomplete compilation of the document in the system,552,Financial Information Risk (ex 262/2005),True
@@ -2408,10 +2408,10 @@ Make incorrect transfers,450,Financial Information Risk (ex 262/2005),True
 Incorrect stipulation documentation,5367,Financial Information Risk (ex 262/2005),True
 Incorrect or incomplete documentation,1899,Other risks (operational),False
 Arrangement of incorrect wire transfers,449,Financial Information Risk (ex 262/2005),True
-Wrong definition of sectoral outlooks,2133,Other,False
-Incomplete documentation,1706,Other,False
-" Incorrect calculation of the ""prevailing"" sector indicator",5169,Other,False
-Incorrect calculation of the quantitative component,2786,Other,False
+Wrong definition of sectoral outlooks,2133,NA,False
+Incomplete documentation,1706,NA,False
+" Incorrect calculation of the ""prevailing"" sector indicator",5169,NA,False
+Incorrect calculation of the quantitative component,2786,NA,False
 Wrong/incomplete extraction of positions,3152,Financial Information Risk (ex 262/2005),True
 Incorrect/incomplete entry of data into the system,5250,Financial Information Risk (ex 262/2005),True
 Failure to update procedures with auctioned goods extracted,3299,Financial Information Risk (ex 262/2005),True
@@ -2514,8 +2514,8 @@ Incorrect or incomplete data integration,100,Financial Information Risk (ex 262/
  Incorrect data after application of the pro-forma,1881,Financial Information Risk (ex 262/2005),True
 Incorrect data for the production of reports,101,Financial Information Risk (ex 262/2005),True
 Non-compliance of the data entered with respect to the contractual conditions,564,Financial Information Risk (ex 262/2005),True
-Incorrect data,1747,Other,False
-Incorrect data,1970,Other,False
+Incorrect data,1747,NA,False
+Incorrect data,1970,NA,False
 Incorrect and/or incomplete documentation,3971,Financial Information Risk (ex 262/2005),True
 Incorrect and/or incomplete documentation,135,Financial Information Risk (ex 262/2005),True
 Incorrect accounting of the counter-guarantee,4385,Financial Information Risk (ex 262/2005),True
@@ -2529,8 +2529,8 @@ Approval of an incorrect request,15,Other risks (operational),False
 Wrong acquisition of contracts/documentation,3050,Legal and non-compliance,False
 Incorrect accounting of the operation,1330,Financial Information Risk (ex 262/2005),True
 Failure to produce the transfer agreement,51,Legal and non-compliance,False
-Failure to identify anomalies/corrective activities with respect to the Baseline in the context of the use of resources,3160,Other,False
-Failure to resolve problems (or associated P-Tasks) adequately.,3161,Other,False
+Failure to identify anomalies/corrective activities with respect to the Baseline in the context of the use of resources,3160,NA,False
+Failure to resolve problems (or associated P-Tasks) adequately.,3161,NA,False
 Squaring between proxies received and uploaded to the system,3145,Other risks (operational),False
 Squaring between the amount collected and paid,3144,Other risks (operational),False
 Unsettled accounting suspension,1456,Financial Information Risk (ex 262/2005),True
@@ -2544,8 +2544,8 @@ Incorrect counterparty evidence,4516,Financial Information Risk (ex 262/2005),Tr
 Validation of fees and interests by unauthorized personnel,4517,Financial Information Risk (ex 262/2005),True
 Presence of pending positions,4515,Financial Information Risk (ex 262/2005),True
 Inconsistent census data,3620,Other risks (operational),False
-Operation not permitted,1026,Other,False
-Operation not permitted,1027,Other,False
+Operation not permitted,1026,NA,False
+Operation not permitted,1027,NA,False
 Incorrect data,3370,Financial Information Risk (ex 262/2005),True
 Inconsistent and/or inconsistent data,724,Other risks (operational),False
 Wrong / failure to send the report,1709,Other risks (operational),False
@@ -2586,9 +2586,9 @@ Incorrect data entry,3356,Financial Information Risk (ex 262/2005),True
 Wrong payment,2535,Financial Information Risk (ex 262/2005),True
 Wrong payment,3357,Financial Information Risk (ex 262/2005),True
 Non-compliant invoices,2085,Financial Information Risk (ex 262/2005),True
-Formally incorrect documentation,319,Other,False
-Formally incorrect documentation,320,Other,False
-Formally incorrect documentation,321,Other,False
+Formally incorrect documentation,319,NA,False
+Formally incorrect documentation,320,NA,False
+Formally incorrect documentation,321,NA,False
 Operation performed incorrectly,4364,Financial Information Risk (ex 262/2005),True
 Transfer not due,26,Other risks (operational),False
 Incorrect census of practices,1796,Other risks (operational),False
@@ -2631,8 +2631,8 @@ Customer with missing requirements,1357,Legal and non-compliance,False
 Operation carried out in the absence of the enabling requirements,985,Other risks (operational),False
 Incorrect census of own account relationships for anti-money laundering purposes,4211,Other risks (operational),False
 Incorrect census of omnibus third-party relationships for anti-money laundering purposes,4212,Other risks (operational),False
-Misevaluation of a supplier,2444,Other,False
-Misevaluation of a supplier,2445,Other,False
+Misevaluation of a supplier,2444,NA,False
+Misevaluation of a supplier,2445,NA,False
 Do not classify all Third Parties cyber relevant,1418,Other risks (operational),False
 Operation performed incorrectly,389,Financial Information Risk (ex 262/2005),True
 Incorrect location routing,155,Other risks (operational),False
@@ -2640,8 +2640,8 @@ Incorrect position hesitation,2134,Other risks (operational),False
 Incorrect accounting,2123,Financial Information Risk (ex 262/2005),True
 Incorrect or incomplete documentation,262,Other risks (operational),False
 Offer different from what was deliberated,3983,Financial Information Risk (ex 262/2005),True
-"Failure to create error knowledge records, failure to document potential solutions.",3376,Other,False
-Lack of documentation of identified solutions and application of inappropriate remedial actions.,3377,Other,False
+"Failure to create error knowledge records, failure to document potential solutions.",3376,NA,False
+Lack of documentation of identified solutions and application of inappropriate remedial actions.,3377,NA,False
 Incorrect data present,4892,Financial Information Risk (ex 262/2005),True
 Wrong entry of resolution terms,2067,Financial Information Risk (ex 262/2005),True
 Possible incorrect or incomplete inclusion of the necessary clauses in the contractual draft,4084,Financial Information Risk (ex 262/2005),True
@@ -2673,16 +2673,16 @@ Incomplete data transmission,2872,Financial Information Risk (ex 262/2005),True
 Incorrect or incomplete implementation of the interventions requested on the positions being sold,4498,Financial Information Risk (ex 262/2005),True
 Wrong certification,2720,Financial Information Risk (ex 262/2005),True
 Incorrect or incomplete downloads,4431,Financial Information Risk (ex 262/2005),True
-Incorrect NDG perimeter and/or reports,5014,Other,False
+Incorrect NDG perimeter and/or reports,5014,NA,False
 Wrong reversal of receipts,4709,Financial Information Risk (ex 262/2005),True
 Wrong transfer amount or currency,1804,Financial Information Risk (ex 262/2005),True
-Incorrect variation of personal data notes,5015,Other,False
+Incorrect variation of personal data notes,5015,NA,False
 Incorrect yield,1994,Financial Information Risk (ex 262/2005),True
 Incorrect accounting,2953,Financial Information Risk (ex 262/2005),True
 Migration account squaring,4507,Financial Information Risk (ex 262/2005),True
 Incorrect accounting of losses/profits from disposal,2954,Financial Information Risk (ex 262/2005),True
 Timing not respected,5354,Other risks (operational),False
-NDG perimeter and/or reports incorrect,5013,Other,False
+NDG perimeter and/or reports incorrect,5013,NA,False
 Incorrect accounting of the use of funds,2955,Financial Information Risk (ex 262/2005),True
 Failure to update the Remediation Plan,1284,Other risks (operational),False
 Check correctness and validity of the contract,1808,Financial Information Risk (ex 262/2005),True
@@ -2721,34 +2721,34 @@ Data anticipation not representative,4348,Other risks (operational),False
 Incorrect representation of results,1980,Other risks (operational),False
 Inconsistent data anticipation,1164,Other risks (operational),False
 Unreliable data anticipation,1979,Other risks (operational),False
-Incorrect reporting,2653,Other,False
-Incorrect reporting,2654,Other,False
-Wrong customer reporting,36,Other,False
-Wrong customer reporting,37,Other,False
-Incorrect tax calculation,3588,Other,False
-Incorrect tax calculation,3589,Other,False
-Incorrect payments,3240,Other,False
-Incorrect accounting,3242,Other,False
-Incorrect payments,3241,Other,False
-Incorrect accounting,3243,Other,False
-Incorrect reports to the Italian tax authorities,4119,Other,False
-Wrong reporting to Issuers,4121,Other,False
-Wrong RAD tax certifications,4372,Other,False
-Incorrect balancing of roles,4374,Other,False
-Processing accounts not reconciled,4123,Other,False
-Incorrect reports to the Italian tax authorities,4120,Other,False
-Wrong reporting to Issuers,4122,Other,False
-Wrong RAD tax certifications,4373,Other,False
-Incorrect balancing of roles,4375,Other,False
-Processing accounts not reconciled,4124,Other,False
-Incorrect balancing of roles,1782,Other,False
-Failure to balance various matches,1784,Other,False
-Incorrect balancing of roles,1783,Other,False
-Failure to balance various matches,1785,Other,False
-Incorrect quantity or parameters indicated,1780,Other,False
-Incorrect quantity or parameters indicated,1781,Other,False
-Failure to balance credits,4117,Other,False
-Failure to balance credits,4118,Other,False
+Incorrect reporting,2653,NA,False
+Incorrect reporting,2654,NA,False
+Wrong customer reporting,36,NA,False
+Wrong customer reporting,37,NA,False
+Incorrect tax calculation,3588,NA,False
+Incorrect tax calculation,3589,NA,False
+Incorrect payments,3240,NA,False
+Incorrect accounting,3242,NA,False
+Incorrect payments,3241,NA,False
+Incorrect accounting,3243,NA,False
+Incorrect reports to the Italian tax authorities,4119,NA,False
+Wrong reporting to Issuers,4121,NA,False
+Wrong RAD tax certifications,4372,NA,False
+Incorrect balancing of roles,4374,NA,False
+Processing accounts not reconciled,4123,NA,False
+Incorrect reports to the Italian tax authorities,4120,NA,False
+Wrong reporting to Issuers,4122,NA,False
+Wrong RAD tax certifications,4373,NA,False
+Incorrect balancing of roles,4375,NA,False
+Processing accounts not reconciled,4124,NA,False
+Incorrect balancing of roles,1782,NA,False
+Failure to balance various matches,1784,NA,False
+Incorrect balancing of roles,1783,NA,False
+Failure to balance various matches,1785,NA,False
+Incorrect quantity or parameters indicated,1780,NA,False
+Incorrect quantity or parameters indicated,1781,NA,False
+Failure to balance credits,4117,NA,False
+Failure to balance credits,4118,NA,False
 Verification stage incomplete extraction,404,Financial Information Risk (ex 262/2005),True
 Entries variance detected,860,Financial Information Risk (ex 262/2005),True
 Incorrect production of periodic reporting,2780,Financial Information Risk (ex 262/2005),True
@@ -2785,12 +2785,12 @@ Incorrect entry of the resolution communication on the external portal,4904,Othe
 Incorrect entry of the fund request on the external portal,5032,Other risks (operational),False
 Contribution disbursed inconsistent with the amount received,2967,Financial Information Risk (ex 262/2005),True
 Incorrect payment to the Entity of installments of third-party funds,2731,Financial Information Risk (ex 262/2005),True
-Lack of documentation of identified solutions and application of inappropriate remedial actions.,4148,Other,False
-Failure to verify that an Incident has been closed satisfactorily and within an agreed/acceptable time frame,4147,Other,False
-Inability to carry out trend analyzes due to failure to register reports and/or relevant information or from maintaining a complete history,4146,Other,False
-Incorrect prioritization of incidents,5181,Other,False
-Incorrect classification of incidents and service requests,5179,Other,False
-Not timely and effective response to user requests or failure to restore normal service. Failure to record reports and/or relevant information,5180,Other,False
+Lack of documentation of identified solutions and application of inappropriate remedial actions.,4148,NA,False
+Failure to verify that an Incident has been closed satisfactorily and within an agreed/acceptable time frame,4147,NA,False
+Inability to carry out trend analyzes due to failure to register reports and/or relevant information or from maintaining a complete history,4146,NA,False
+Incorrect prioritization of incidents,5181,NA,False
+Incorrect classification of incidents and service requests,5179,NA,False
+Not timely and effective response to user requests or failure to restore normal service. Failure to record reports and/or relevant information,5180,NA,False
 Incorrect signing of the documentation functional to the legal investigation and stipulation.,2070,Other risks (operational),False
 Failure to report a crime that can be prosecuted ex officio by a public service officer,990,Other risks (operational),False
 Incorrect and/or incomplete documentation functional to the legal investigation and stipulation.,2069,Other risks (operational),False
@@ -2801,18 +2801,18 @@ Exceeding the coverage limit per customer,4666,Financial Information Risk (ex 26
 Operator error due to incorrect allocation to the income statement,4670,Financial Information Risk (ex 262/2005),True
 Exceeding the treasury limit set for each bank,4667,Financial Information Risk (ex 262/2005),True
 Accounting not pertinent,4668,Financial Information Risk (ex 262/2005),True
-Inconsistent repayment plan,3994,Other,False
-Inconsistent repayment plan,3995,Other,False
-Incorrect entry of resolution data,969,Other,False
-Incorrect entry of resolution data,970,Other,False
-Wrong entry,3687,Other,False
-Wrong entry,3688,Other,False
-Wrong entry,3685,Other,False
-Wrong entry,3686,Other,False
-Incorrect proposal for excerpt / balance and excerpt,2356,Other,False
-Incorrect proposal for excerpt / balance and excerpt,2357,Other,False
-Wrong interest invoice issued,3693,Other,False
-Wrong interest invoice issued,3694,Other,False
+Inconsistent repayment plan,3994,NA,False
+Inconsistent repayment plan,3995,NA,False
+Incorrect entry of resolution data,969,NA,False
+Incorrect entry of resolution data,970,NA,False
+Wrong entry,3687,NA,False
+Wrong entry,3688,NA,False
+Wrong entry,3685,NA,False
+Wrong entry,3686,NA,False
+Incorrect proposal for excerpt / balance and excerpt,2356,NA,False
+Incorrect proposal for excerpt / balance and excerpt,2357,NA,False
+Wrong interest invoice issued,3693,NA,False
+Wrong interest invoice issued,3694,NA,False
 Failure to complete rehearsals,2696,Financial Information Risk (ex 262/2005),True
 Incomplete or incorrect extraction of goods to be redeployed,2965,Financial Information Risk (ex 262/2005),True
 Incomplete activation of all reports,1137,Financial Information Risk (ex 262/2005),True
@@ -2833,12 +2833,12 @@ Non-aligned systems,3666,,False
 Incorrect data,3313,,False
 Incorrect data,1682,,False
 Incorrect data,3312,,False
-Information mismatch,4924,Other,False
-Information mismatch,380,Other,False
-Incorrect / complete data,202,Other,False
-Incorrect / complete data,203,Other,False
-Incorrect data,5084,Other,False
-Incorrect data,5085,Other,False
+Information mismatch,4924,NA,False
+Information mismatch,380,NA,False
+Incorrect / complete data,202,NA,False
+Incorrect / complete data,203,NA,False
+Incorrect data,5084,NA,False
+Incorrect data,5085,NA,False
 Incorrect update of the relevant application,4562,Financial Information Risk (ex 262/2005),True
 Wrong or outdated classification of credit risk status.,5193,Financial Information Risk (ex 262/2005),True
 Incorrect calculation of the amount to be returned,2429,Financial Information Risk (ex 262/2005),True
@@ -2971,12 +2971,12 @@ Incorrect loading of positions,5186,Financial Information Risk (ex 262/2005),Tru
 Incorrect regulation,2240,Financial Information Risk (ex 262/2005),True
 Operation not adjusted correctly,2844,Financial Information Risk (ex 262/2005),True
 Wrong transfer instruction,4832,Financial Information Risk (ex 262/2005),True
-Wrong regulation,3227,Other,False
-Wrong regulation,3228,Other,False
-Wrong regulation,2864,Other,False
-Heaps not shipped,4343,Other,False
-Wrong regulation,2865,Other,False
-Heaps not shipped,4344,Other,False
+Wrong regulation,3227,NA,False
+Wrong regulation,3228,NA,False
+Wrong regulation,2864,NA,False
+Heaps not shipped,4343,NA,False
+Wrong regulation,2865,NA,False
+Heaps not shipped,4344,NA,False
 Non-compliant documentation,1851,Other risks (operational),False
 Wrong conditions,788,Other risks (operational),False
 Documents out of date,787,Other risks (operational),False
@@ -3269,7 +3269,7 @@ Reporting base data inconsistent,1263,Financial Information Risk (ex 262/2005),T
 Inconsistent data,2438,Financial Information Risk (ex 262/2005),True
 Wrong construction of links,3423,Financial Information Risk (ex 262/2005),True
 Failure and/or incorrect publication of documents,2049,Other risks (operational),False
-Incorrect classification and prioritization of Major Incidents. Lack of timeliness in reacting to a Major Incident,3578,Other,False
+Incorrect classification and prioritization of Major Incidents. Lack of timeliness in reacting to a Major Incident,3578,NA,False
 Wrong / Incomplete entry of data into the system,1007,Financial Information Risk (ex 262/2005),True
 Incorrect alert update,3945,Other risks (operational),False
 Risk of incorrect data,3949,Financial Information Risk (ex 262/2005),True
@@ -3295,8 +3295,8 @@ Incorrect or incomplete determination of commission income,4328,Financial Inform
  Incorrect determination of installments of third-party funds to be paid to the Entity,2571,Financial Information Risk (ex 262/2005),True
 Incorrect affixing of the pledge in favor of third parties,3374,Financial Information Risk (ex 262/2005),True
 Incorrect or incomplete catalogue,3763,Other risks (operational),False
-Lack of knowledge and acceptance of any inefficiencies by the Management,848,Other,False
-Failure to evaluate resources against growth forecasts,847,Other,False
+Lack of knowledge and acceptance of any inefficiencies by the Management,848,NA,False
+Failure to evaluate resources against growth forecasts,847,NA,False
 Incorrect incident management,1999,Other risks (operational),False
 Incorrect dispensing arrangement,4112,Financial Information Risk (ex 262/2005),True
 Wrong/incomplete data communication,4999,Financial Information Risk (ex 262/2005),True
@@ -3319,18 +3319,18 @@ Wrong assumption resolution,1183,Financial Information Risk (ex 262/2005),True
 Possible error in the calculation of the TEG,2541,Financial Information Risk (ex 262/2005),True
 Incorrect calculation of the TEG,1618,Financial Information Risk (ex 262/2005),True
 No authorization,1575,Other risks (operational),False
-Misaligned data relating to the classification by objectives of the instrument,1337,Other,False
-Misaligned data relating to the complexity of the instrument,1335,Other,False
-Misaligned data relating to the type of instrument,1333,Other,False
-Misaligned figure relating to the holding period,2430,Other,False
-Misaligned data relating to the classification by objectives of the instrument,1338,Other,False
-Misaligned data relating to the complexity of the instrument,1336,Other,False
-Misaligned data relating to the type of instrument,1334,Other,False
-Misaligned figure relating to the holding period,2431,Other,False
-Permanence of misalignments on previously verified data,1341,Other,False
-Misaligned data relating to the instrument's VaR,1339,Other,False
-Permanence of misalignments on previously verified data,1342,Other,False
-Misaligned data relating to the instrument's VaR,1340,Other,False
+Misaligned data relating to the classification by objectives of the instrument,1337,NA,False
+Misaligned data relating to the complexity of the instrument,1335,NA,False
+Misaligned data relating to the type of instrument,1333,NA,False
+Misaligned figure relating to the holding period,2430,NA,False
+Misaligned data relating to the classification by objectives of the instrument,1338,NA,False
+Misaligned data relating to the complexity of the instrument,1336,NA,False
+Misaligned data relating to the type of instrument,1334,NA,False
+Misaligned figure relating to the holding period,2431,NA,False
+Permanence of misalignments on previously verified data,1341,NA,False
+Misaligned data relating to the instrument's VaR,1339,NA,False
+Permanence of misalignments on previously verified data,1342,NA,False
+Misaligned data relating to the instrument's VaR,1340,NA,False
 Failure to request communication on changes of circumstance,4063,Other risks (operational),False
 Incorrect representation in the financial statements,1041,Financial Information Risk (ex 262/2005),True
 Incorrect or incomplete data in risk map,620,Other risks (operational),False
@@ -3340,9 +3340,9 @@ Incorrect and/or incomplete request,375,Other risks (operational),False
 Incorrect valuation of cash flow,2796,Financial Information Risk (ex 262/2005),True
 Failed Abandonment,3223,Financial Information Risk (ex 262/2005),True
 Lack of exercise/abandonment,4027,Financial Information Risk (ex 262/2005),True
-Incorrect and/or incomplete data,4246,Other,False
-Incorrect and/or incomplete data,4247,Other,False
-Incorrect and/or incomplete data,4248,Other,False
+Incorrect and/or incomplete data,4246,NA,False
+Incorrect and/or incomplete data,4247,NA,False
+Incorrect and/or incomplete data,4248,NA,False
 Incorrectly attributed derogation,2172,Other risks (operational),False
 Incomplete/incorrect data,2174,Other risks (operational),False
 Name present on the lists relating to Embargoes,844,Other risks (operational),False
@@ -3357,10 +3357,10 @@ Failure to identify a Related Party of ISP or Associated Person of the Group or 
 Incorrect decision-making process,2791,Legal and non-compliance,False
 Failure to recognize a non-exempt transaction,4994,Financial Information Risk (ex 262/2005),True
 Presence of unremedied anomalies,2511,Financial Information Risk (ex 262/2005),True
-"Misclassification, categorization and prioritization of problems",4617,Other,False
-Non-timely and effective response to Major Incidents or failure to restore normal service due to failure to define the relevant symptoms or due to the absence of the so-called available knowledge resources known error,4618,Other,False
-Non-timely and effective response to Major Incidents or failure to restore normal service due to failure to define relevant symptoms or lack of available knowledge resources,1057,Other,False
-"Incorrect prioritization of incidents, classified as Major Incidents.",1056,Other,False
+"Misclassification, categorization and prioritization of problems",4617,NA,False
+Non-timely and effective response to Major Incidents or failure to restore normal service due to failure to define the relevant symptoms or due to the absence of the so-called available knowledge resources known error,4618,NA,False
+Non-timely and effective response to Major Incidents or failure to restore normal service due to failure to define relevant symptoms or lack of available knowledge resources,1057,NA,False
+"Incorrect prioritization of incidents, classified as Major Incidents.",1056,NA,False
 Failure to comply with the terms set out in the agreement,3010,Financial Information Risk (ex 262/2005),True
 Incorrect accounting of the enforcement,3717,Financial Information Risk (ex 262/2005),True
 Missing contributions,4336,Other risks (operational),False
@@ -3379,16 +3379,16 @@ Failure to manage exceeding management limits,3784,Other risks (operational),Fal
 Incorrect updating of management limits,3785,Financial Information Risk (ex 262/2005),True
 Risk measures calculated inconsistently or incorrectly,1377,Financial Information Risk (ex 262/2005),True
 Incorrect data entry,2046,Other risks (operational),False
-Incorrect data,904,Other,False
-Inconsistent data,3279,Other,False
-Incorrect data,905,Other,False
-Inconsistent data,3280,Other,False
-Incorrect / complete data,902,Other,False
-Incorrect / complete data,903,Other,False
-Incorrect / complete data,906,Other,False
-Incorrect / complete data,907,Other,False
-Incorrect / complete data,3325,Other,False
-Incorrect / complete data,3326,Other,False
+Incorrect data,904,NA,False
+Inconsistent data,3279,NA,False
+Incorrect data,905,NA,False
+Inconsistent data,3280,NA,False
+Incorrect / complete data,902,NA,False
+Incorrect / complete data,903,NA,False
+Incorrect / complete data,906,NA,False
+Incorrect / complete data,907,NA,False
+Incorrect / complete data,3325,NA,False
+Incorrect / complete data,3326,NA,False
 Data misalignment between power systems and data aggregation system,4159,Other risks (operational),False
 Incorrect entry of the adjustments of the commissions on operations in ETD,4158,Other risks (operational),False
 Incorrect entry of the corrected commission,4157,Other risks (operational),False
@@ -3468,7 +3468,7 @@ Incorrect entry of data.,1542,Financial Information Risk (ex 262/2005),True
 Inconsistency in the P&L report,2370,Financial Information Risk (ex 262/2005),True
 Wrong contribution of prices to the market,2385,Financial Information Risk (ex 262/2005),True
 Incorrect expense allocation,1517,Other risks (operational),False
-Wrong subscription,4559,Other,False
+Wrong subscription,4559,NA,False
 Access by third parties with criminal and fraudulent intent,225,Other risks (operational),False
 Access by third parties with criminal and fraudulent intent,224,Other risks (operational),False
 Incorrect and consistent settlement instructions,5435,Financial Information Risk (ex 262/2005),True
@@ -3485,12 +3485,12 @@ Incorrect data entry,710,Other risks (operational),False
 Existence of other initiatives attributable to the same subject,5003,Other risks (operational),False
 Budget not available,5004,Financial Information Risk (ex 262/2005),True
 Wrong extinction,2163,Other risks (operational),False
-Incorrect data entry to the system,5119,Other,False
-Incorrect data entry to the system,5120,Other,False
-Errors in order accounts,1288,Other,False
-Errors in order accounts,1289,Other,False
-Operation not permitted,4598,Other,False
-Operation not permitted,4599,Other,False
+Incorrect data entry to the system,5119,NA,False
+Incorrect data entry to the system,5120,NA,False
+Errors in order accounts,1288,NA,False
+Errors in order accounts,1289,NA,False
+Operation not permitted,4598,NA,False
+Operation not permitted,4599,NA,False
 Wrong indication of data,1234,Other risks (operational),False
 Incorrect combination of credit line with corresponding deal,3956,Financial Information Risk (ex 262/2005),True
 Presence of overdrafts or collateral that is no longer eligible or a line in favor of the excess fund,4327,Financial Information Risk (ex 262/2005),True
@@ -3678,12 +3678,12 @@ Incorrect accounting,3296,Financial Information Risk (ex 262/2005),True
 Incorrect data entry,3123,Other risks (operational),False
 Incorrect data,2977,Other risks (operational),False
 Incorrect variation,4080,Other risks (operational),False
-Incorrect accounting,5042,Other,False
-Incorrect accounting,5043,Other,False
-Incorrect taxation of income,419,Other,False
-Incorrect taxation of income,420,Other,False
-Squaring of depositor and custodian balances,4647,Other,False
-Squaring of depositor and custodian balances,4648,Other,False
+Incorrect accounting,5042,NA,False
+Incorrect accounting,5043,NA,False
+Incorrect taxation of income,419,NA,False
+Incorrect taxation of income,420,NA,False
+Squaring of depositor and custodian balances,4647,NA,False
+Squaring of depositor and custodian balances,4648,NA,False
 Incorrect update of technical data sheets,3078,Other risks (operational),False
 Incorrect data consolidation,1175,Other risks (operational),False
 Failure to comply with regulatory and reporting standard requirements,5144,Other risks (operational),False
@@ -3720,19 +3720,19 @@ Incorrect or missing data,4713,Legal and non-compliance,False
 Possible regulatory violation on the subject of Aml/CTF or Countering the Financing of Terrorism,5072,Other risks (operational),False
 Operation performed incorrectly,715,Other risks (operational),False
 Operation performed incorrectly,3168,Other risks (operational),False
-Possible cancellation of the operation,737,Other,False
-Possible cancellation of the operation,738,Other,False
-Operation not permitted,881,Other,False
-Operation not permitted,882,Other,False
-Incorrect cancel operation,2125,Other,False
-Incorrect cancel operation,2126,Other,False
+Possible cancellation of the operation,737,NA,False
+Possible cancellation of the operation,738,NA,False
+Operation not permitted,881,NA,False
+Operation not permitted,882,NA,False
+Incorrect cancel operation,2125,NA,False
+Incorrect cancel operation,2126,NA,False
 Incorrect classification of Supplier/Subcontractor/Dealer and absence of Privacy,5425,Other risks (operational),False
 Incorrectly loaded data resulting in incorrect rating calculation,1736,Financial Information Risk (ex 262/2005),True
 Existence and occurrence of unauthorized operations,2702,Other risks (operational),False
 Existence and occurrence of unauthorized operations,4818,Other risks (operational),False
 Incorrect update,1039,Other risks (operational),False
-Incorrect management system update,4824,Other,False
-Incorrect management system update,4825,Other,False
+Incorrect management system update,4824,NA,False
+Incorrect management system update,4825,NA,False
 Failed / incorrect sending of data,4356,Other risks (operational),False
 Incorrect accounting entry,1744,Financial Information Risk (ex 262/2005),True
 Incorrect / incomplete data entry,4355,Other risks (operational),False
@@ -3834,13 +3834,13 @@ Wrong accounting/data entry in financial statements,796,Financial Information Ri
 Pricing catalog not published,3257,Other risks (operational),False
 Database of outsourcing incorrect and/or incomplete,2457,Other risks (operational),False
 Outsourcing log incomplete and/or incorrect,2995,Other risks (operational),False
-Failure to verify that an Incident has been closed satisfactorily and within an agreed/acceptable time frame.,289,Other,False
-Lack of documentation of identified solutions and application of remedial actions,287,Other,False
-Inability to carry out trend analyzes due to failure to register requests and/or relevant information or from maintaining a complete history.,288,Other,False
-Incorrect classification of incidents and service requests,284,Other,False
-Not timely and effective response to user requests or failure to restore normal service. Failure to register requests and/or relevant information,285,Other,False
-Incorrect prioritization of incidents.,286,Other,False
-Incorrect prioritization of incidents,290,Other,False
+Failure to verify that an Incident has been closed satisfactorily and within an agreed/acceptable time frame.,289,NA,False
+Lack of documentation of identified solutions and application of remedial actions,287,NA,False
+Inability to carry out trend analyzes due to failure to register requests and/or relevant information or from maintaining a complete history.,288,NA,False
+Incorrect classification of incidents and service requests,284,NA,False
+Not timely and effective response to user requests or failure to restore normal service. Failure to register requests and/or relevant information,285,NA,False
+Incorrect prioritization of incidents.,286,NA,False
+Incorrect prioritization of incidents,290,NA,False
 Inconsistency between the documentation produced and the type of file,1229,Financial Information Risk (ex 262/2005),True
 Wrong commission calculation,4544,Financial Information Risk (ex 262/2005),True
 Incorrect/incomplete compilation of documentation,3714,Other risks (operational),False
@@ -4305,12 +4305,12 @@ Inconsistent analysis,3351,Financial Information Risk (ex 262/2005),True
 Scenario analysis inconsistent with the methodology,3350,Financial Information Risk (ex 262/2005),True
 Incorrect data,2748,Financial Information Risk (ex 262/2005),True
 Incorrect valuation of fixed assets,1448,Financial Information Risk (ex 262/2005),True
-Incorrect sterilisation/declassification,2359,Other,False
-Incorrect sterilisation/declassification,2360,Other,False
-Lack of requirements for sterilisation/declassification,1971,Other,False
-Lack of requirements for sterilisation/declassification,1972,Other,False
-Incomplete or incorrect reporting of positions,3811,Other,False
-Incomplete or incorrect reporting of positions,3812,Other,False
+Incorrect sterilisation/declassification,2359,NA,False
+Incorrect sterilisation/declassification,2360,NA,False
+Lack of requirements for sterilisation/declassification,1971,NA,False
+Lack of requirements for sterilisation/declassification,1972,NA,False
+Incomplete or incorrect reporting of positions,3811,NA,False
+Incomplete or incorrect reporting of positions,3812,NA,False
 Incomplete/invalid documentation,2584,Financial Information Risk (ex 262/2005),True
 Incorrect data entry into the system,3513,Financial Information Risk (ex 262/2005),True
 Debt interest not yet repaid,2694,Financial Information Risk (ex 262/2005),True
@@ -4337,7 +4337,7 @@ Incorrect and/or incomplete emission characteristics,2411,Financial Information 
 Missed or incorrect pairing,3893,Financial Information Risk (ex 262/2005),True
 Invalidity of the Due Diligence forms.,3894,Financial Information Risk (ex 262/2005),True
 Incompleteness of the data entered,3895,Financial Information Risk (ex 262/2005),True
-Possible violation of restrictions on petroleum and petrochemical products,3525,Other,False
+Possible violation of restrictions on petroleum and petrochemical products,3525,NA,False
 Possible regulatory violation on the subject of Aml/CFT or Contrasting Terrorism Financing,3672,Other risks (operational),False
 No change in check status,4040,Other risks (operational),False
 Operation performed incorrectly,4872,Other risks (operational),False
@@ -4557,7 +4557,7 @@ Inconsistent data,97,Financial Information Risk (ex 262/2005),True
 Incorrect usage determination,298,Financial Information Risk (ex 262/2005),True
 Incorrect / not complete feeding of working xls files,3056,Financial Information Risk (ex 262/2005),True
 Incorrect data,1686,Financial Information Risk (ex 262/2005),True
-Incorrect accounts,704,Other,False
+Incorrect accounts,704,NA,False
 Incorrect data,4926,Financial Information Risk (ex 262/2005),True
 Inconsistent data,4754,Financial Information Risk (ex 262/2005),True
 Inconsistent service awards,3800,Financial Information Risk (ex 262/2005),True
@@ -4785,8 +4785,8 @@ Incorrect data,3792,Financial Information Risk (ex 262/2005),True
 Incorrect/incomplete compilation of the system document,1180,Financial Information Risk (ex 262/2005),True
 Incorrect and/or incomplete registration of the document,3794,Financial Information Risk (ex 262/2005),True
 Incorrect data,3793,Financial Information Risk (ex 262/2005),True
-Failure to resolve incidents for the IBMi scope,1251,Other,False
-Failure to resolve issues for the IBMi scope,1250,Other,False
+Failure to resolve incidents for the IBMi scope,1251,NA,False
+Failure to resolve issues for the IBMi scope,1250,NA,False
 Incorrect provisional deposit returned,2331,Financial Information Risk (ex 262/2005),True
 Incorrect provisional deposit deposited,3631,Financial Information Risk (ex 262/2005),True
 User profiling inconsistent with the principle of least privilege,3974,Other risks (operational),False
@@ -4909,15 +4909,15 @@ Incorrect results,1097,Financial Information Risk (ex 262/2005),True
 Incorrect flow,3009,Financial Information Risk (ex 262/2005),True
 Inconsistent data,734,Financial Information Risk (ex 262/2005),True
 Incorrect stream feed,3415,Financial Information Risk (ex 262/2005),True
-Counterparty present in the OFAC SDN List,4051,Other,False
-TEG of the operation beyond the wear threshold,782,Other,False
-Incorrect accounting,4664,Other,False
-Counterparty present in the OFAC SDN List,1436,Other,False
-Possible regulatory violation in terms of AML embargoes and countering the financing of terrorism,3864,Other,False
-Counterparty present in the OFAC SDN List,3863,Other,False
-TEG beyond the wear threshold,70,Other,False
-Possible regulatory violation in terms of AML embargoes and countering the financing of terrorism,3790,Other,False
-TEG of the operation beyond the wear threshold,1920,Other,False
+Counterparty present in the OFAC SDN List,4051,NA,False
+TEG of the operation beyond the wear threshold,782,NA,False
+Incorrect accounting,4664,NA,False
+Counterparty present in the OFAC SDN List,1436,NA,False
+Possible regulatory violation in terms of AML embargoes and countering the financing of terrorism,3864,NA,False
+Counterparty present in the OFAC SDN List,3863,NA,False
+TEG beyond the wear threshold,70,NA,False
+Possible regulatory violation in terms of AML embargoes and countering the financing of terrorism,3790,NA,False
+TEG of the operation beyond the wear threshold,1920,NA,False
 Possible incorrect assessment perimeter,1867,Financial Information Risk (ex 262/2005),True
 Presence of positions not included in the correct assessment perimeter,3592,Financial Information Risk (ex 262/2005),True
 Incorrect adjustment of evaluation grids,668,Financial Information Risk (ex 262/2005),True
@@ -5059,16 +5059,16 @@ Incorrect entry of the amount,4184,Financial Information Risk (ex 262/2005),True
 Incorrect margin calculation,3801,Financial Information Risk (ex 262/2005),True
 Wrong management of guarantees,3799,Financial Information Risk (ex 262/2005),True
 Incorrect management of contractual obligations,3798,Financial Information Risk (ex 262/2005),True
-Non-delivery of securities,4635,Other,False
-Non-delivery of securities,4636,Other,False
-Failure to match the actual materiality to be sent and procedural evidence,4633,Other,False
-Failure to match the actual materiality to be sent and procedural evidence,4634,Other,False
-Incorrect entry of data,2919,Other,False
-Incorrect entry of data,2920,Other,False
-Incorrect title download,1819,Other,False
-Incorrect title download,1820,Other,False
-Operation not permitted,2868,Other,False
-Operation not permitted,2869,Other,False
+Non-delivery of securities,4635,NA,False
+Non-delivery of securities,4636,NA,False
+Failure to match the actual materiality to be sent and procedural evidence,4633,NA,False
+Failure to match the actual materiality to be sent and procedural evidence,4634,NA,False
+Incorrect entry of data,2919,NA,False
+Incorrect entry of data,2920,NA,False
+Incorrect title download,1819,NA,False
+Incorrect title download,1820,NA,False
+Operation not permitted,2868,NA,False
+Operation not permitted,2869,NA,False
 Failure to cancel the suspension,632,Other risks (operational),False
 Failure to comply with the deadlines set for the notice of payment,322,Financial Information Risk (ex 262/2005),True
 Failure to pay back installments,4585,Financial Information Risk (ex 262/2005),True
@@ -5141,8 +5141,8 @@ Lack of signatures and/or invalid signatures on Paper Transfers or without digit
 Failure to Assign the Assignment,2917,Other risks (operational),False
 Presentation with anomalies and errors,3738,Financial Information Risk (ex 262/2005),True
 Presence of inconsistent data,4525,Other risks (operational),False
-Operation not permitted,883,Other,False
-Operation not permitted,884,Other,False
+Operation not permitted,883,NA,False
+Operation not permitted,884,NA,False
 Check the TOP Client List,3404,Other risks (operational),False
 Operation not permitted,3976,Other risks (operational),False
 Incorrect or failed extinction,5094,Financial Information Risk (ex 262/2005),True
@@ -5216,7 +5216,7 @@ Incorrect or missing data,2971,Financial Information Risk (ex 262/2005),True
 Incorrect final data,3965,Financial Information Risk (ex 262/2005),True
 Check the capacity of the budget,1457,Financial Information Risk (ex 262/2005),True
 Verify ownership of subscriptions,1640,Other risks (operational),False
-Calculation performed on incomplete and/or incorrect data perimeter,1221,Other,False
+Calculation performed on incomplete and/or incorrect data perimeter,1221,NA,False
 Incomplete and/or incorrect data import,803,Financial Information Risk (ex 262/2005),True
 Incorrect data,1848,Financial Information Risk (ex 262/2005),True
 Incomplete and/or incorrect data import,4654,Financial Information Risk (ex 262/2005),True
@@ -5264,7 +5264,7 @@ Failure to manage non-ordinary activities,2875,Other risks (operational),False
 Wrong data,928,Other risks (operational),False
 Incorrect customer communication,5298,Other risks (operational),False
 Possible violation of the Anti-Money Laundering / CFT legislation,5416,Other risks (operational),False
-Possible violation of restrictions on petroleum and petrochemical products,45,Other,False
+Possible violation of restrictions on petroleum and petrochemical products,45,NA,False
 Acknowledgment of receipt to the assignor (acknowledgement of receipt) and notice to the drawee incorrect,1885,Other risks (operational),False
 Wrong data,3849,Other risks (operational),False
 Wrong data,927,Other risks (operational),False
@@ -5353,12 +5353,12 @@ Operation not permitted,1539,Legal and non-compliance,False
 Failure to comply with the recommendations of the Territorial Competent Doctor (MCT),4387,Other risks (operational),False
 Failure to comply with the prescriptions/limitations of the Territorial Competent Doctor (MCT),3662,Other risks (operational),False
 Mismatch on margin amount,4841,Other risks (operational),False
-Incorrect tax reporting,861,Other,False
-Incorrect tax reporting,862,Other,False
-Incorrect loading of the provisional agenda,265,Other,False
-Incorrect loading of the provisional agenda,266,Other,False
-Incorrect tax reporting,373,Other,False
-Incorrect tax reporting,374,Other,False
+Incorrect tax reporting,861,NA,False
+Incorrect tax reporting,862,NA,False
+Incorrect loading of the provisional agenda,265,NA,False
+Incorrect loading of the provisional agenda,266,NA,False
+Incorrect tax reporting,373,NA,False
+Incorrect tax reporting,374,NA,False
 Wrong stagnant perimeter,4095,Financial Information Risk (ex 262/2005),True
 Inadequate value adjustment with respect to the change in the balance,3628,Financial Information Risk (ex 262/2005),True
 Incorrect and/or incomplete update of the archive,2055,Financial Information Risk (ex 262/2005),True
@@ -5396,8 +5396,8 @@ Calculation of projections not consistent with the Capital Plan,4269,Financial I
 Ceiling threshold exceeded,1560,Other risks (operational),False
 Operation not permitted,5319,Other risks (operational),False
 Incorrect quadrature,2542,Financial Information Risk (ex 262/2005),True
-Inability to carry out trend analyzes due to failure to register requests and/or relevant information or from maintaining a complete history.,228,Other,False
-Misclassification of incidents,308,Other,False
+Inability to carry out trend analyzes due to failure to register requests and/or relevant information or from maintaining a complete history.,228,NA,False
+Misclassification of incidents,308,NA,False
 Incorrect entry/removal/editing of names,1615,Legal and non-compliance,False
 Incorrect entry/removal/editing of names,1614,Legal and non-compliance,False
 Incorrect entry/removal/editing of names,1616,Legal and non-compliance,False
