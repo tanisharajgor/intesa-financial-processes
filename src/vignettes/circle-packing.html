@@ -30,10 +30,16 @@
             const fill = "grey";
             const fillOpacity = 1;
 
+            const colorScale = d3.scaleOrdinal()
+                .domain(["NA", "Manual", "Semi-automatic", "Automatic"])
+                .range(["grey", "red", "yellow", "blue"])
+
+            const opacityScale = d3.scaleOrdinal()
+                .domain([0, 1, 2, 3, 4])
+                .range([.05, .15, .3, .55, 1.00])
+
             // adapted from https://observablehq.com/@d3/pack
             d3.json("../data/processed/nested/processes.json").then(function (data) {
-
-                console.log(data);
 
                 const root = d3.hierarchy(data).sum(function(d){ return 1});
 
@@ -66,13 +72,16 @@
                     .join("a")
                     .attr("transform", d => `translate(${d.x},${d.y})`);
 
+                console.log(descendants)
+
                 node.append("circle")
                     .attr("fill", d => d.children ? "#fff" : fill)
-                    .attr("fill-opacity", d => d.children ? null : fillOpacity)
-                    .attr("stroke", d => d.children ? stroke : null)
-                    .attr("stroke-width", d => d.children ? strokeWidth : null)
-                    .attr("stroke-opacity", d => d.children ? strokeOpacity : null)
-                    .attr("r", d => d.r);
+                    .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
+                    // .attr("stroke", d => d.children ? stroke : null)
+                    // .attr("stroke-width", d => d.children ? strokeWidth : null)
+                    // .attr("stroke-opacity", d => d.children ? opacityScale : null)
+                    .attr("r", d => d.r)
+                    .attr("fill", d => d.data.riskStatus.controlTypeMode === undefined ? "#fff" : colorScale(d.data.riskStatus.controlTypeMode))
 
                 if (T) node.append("title").text((d, i) => T[i]);
 
@@ -83,10 +92,12 @@
                 const leaf = node
                     .filter(d => !d.children && d.r > 10 && L[d.index] != null);
 
+
                 leaf.append("clipPath")
                     .attr("id", d => `${uid}-clip-${d.index}`)
                     .append("circle")
-                    .attr("r", d => d.r);
+                    .attr("r", d => d.r)
+                    .attr("fill", function(d) { return console.log(d)})
 
                 leaf.append("text")
                     .attr("clip-path", d => `url(${new URL(`#${uid}-clip-${d.index}`, location)})`)

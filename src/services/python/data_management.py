@@ -614,9 +614,9 @@ def create_risk_status(df, rtc, root1, id):
         else:
             controlPeriodocityMode = temp.controlPeriodocity.mode().iloc[0]
 
-        row["riskStatus"] = {"controlTypeMode": controlTypeMode,
-                             "controlPeriodocityMode": controlPeriodocityMode,
-                             "financialDisclosureRiskAny": bool(any(temp.financialDisclosureRisk))}
+        row = {"controlTypeMode": controlTypeMode,
+               "controlPeriodocityMode": controlPeriodocityMode,
+               "financialDisclosureRiskAny": bool(any(temp.financialDisclosureRisk))}
     else:
         row = {"nRisks": int(0)}
 
@@ -669,7 +669,7 @@ def subset_list(ids, l):
 
 """
 """
-def nest_processes_new(df, rtc, xwalk, root1df, root1, root2, children = None):
+def nest_processes_new(df, rtc, xwalk, root1df, root1, root2, children = None, tree_level = None):
 
     root1ID = root1+"ID"
     root2ID = root2+"ID"
@@ -683,11 +683,12 @@ def nest_processes_new(df, rtc, xwalk, root1df, root1, root2, children = None):
         d = {"id": int(id),
             "name": root1df[root1df[root1ID] == id][root1].iloc[0],
             "childrenIDs": childrenIDs,
-            "riskStatus": create_risk_status(df, rtc, root1, id)
+            "riskStatus": create_risk_status(df, rtc, root1, id),
+            "treeLevel": int(tree_level)
             }
 
         if children is not None:
-            d["children"] = subset_list(childrenIDs, children)        
+            d["children"] = subset_list(childrenIDs, children)
 
         array.append(d)
 
@@ -705,12 +706,16 @@ def nest_processes(level1_to_level2, level2_to_level3, level3_to_activity, activ
     df = pd.merge(df, activity_to_risk, how="left", on="activityID")
     df = pd.merge(df, risk_to_control, how="left", on="riskID")
 
-    nest4 = nest_processes_new(df, rtc, activity_to_risk, activities, "activity", "risk")
-    nest3 = nest_processes_new(df, rtc, level3_to_activity, level3, "level3", "activity", nest4)
-    nest2 = nest_processes_new(df, rtc, level2_to_level3, level2, "level2", "level3", nest3)
-    nest1 = nest_processes_new(df, rtc, level1_to_level2, level1, "level1", "level2", nest2)
+    nest4 = nest_processes_new(df, rtc, activity_to_risk, activities, "activity", "risk", None, 4)
+    nest3 = nest_processes_new(df, rtc, level3_to_activity, level3, "level3", "activity", nest4, 3)
+    nest2 = nest_processes_new(df, rtc, level2_to_level3, level2, "level2", "level3", nest3, 2)
+    nest1 = nest_processes_new(df, rtc, level1_to_level2, level1, "level1", "level2", nest2, 1)
 
-    return {"name": "root", "children": nest1}
+    return {"name": "root", 
+            "children": nest1,  
+            "childrenIDs": level1_to_level2.level1ID.unique().tolist(),
+            "riskStatus": "NA",
+            "treeLevel": int(0)}
 
 """
 Nest activities attributes
