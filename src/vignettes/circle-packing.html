@@ -38,7 +38,6 @@
                 width = 1000 - margin.left - margin.right,
                 height = 1000 - margin.top - margin.bottom;
 
-            const title = (d, n) => `${n.ancestors().reverse().map(({data: d}) => d.name).join(".")}\n${n.value.toLocaleString("en")}`;
             const label = d => d.name;
             const padding = 3;
             const stroke = "#bbb";
@@ -67,7 +66,6 @@
                 const leaves = descendants.filter(d => !d.children);
                 leaves.forEach((d, i) => d.index = i);
                 const L = label == null ? null : leaves.map(d => label(d.data, d));
-                const T = title == null ? null : descendants.map(d => title(d.data, d));
 
                 root.sort((a, b) => d3.descending(a.value, b.value));
 
@@ -100,15 +98,12 @@
                     .attr("r", d => d.r)
                     .attr("fill", d => d.data.riskStatus.controlTypeMode === undefined ? "#fff" : colorScale(d.data.riskStatus.controlTypeMode))
 
-                if (T) node.append("title").text((d, i) => T[i]);
-
                 if (L) {
                 // A unique identifier for clip paths (to avoid conflicts).
                 const uid = `O-${Math.random().toString(16).slice(2)}`;
 
                 const leaf = node
                     .filter(d => !d.children && d.r > 10 && L[d.index] != null);
-
 
                 leaf.append("clipPath")
                     .attr("id", d => `${uid}-clip-${d.index}`)
@@ -135,22 +130,25 @@
                 circle.on("mouseover", function(e, d) {
 
                     let thisCircle = d3.select(this);
+                    console.log(thisCircle.attr("cx"))
 
-                    console.log(this)
+                    // console.log(this)
                     let x = +thisCircle.attr("cx") + 20;
                     let y = +thisCircle.attr("cy") - 10;
 
-                    console.log(e);
-                    console.log(d);
+                    console.log(x, y);
+
+                    // console.log(e);
+                    // console.log(d);
 
                     tooltip.style("visibility", "visible")
                         .style("top", `${y}px`)
                         .style("left", `${x}px`)
-                        .html(`Process: <b>${d.data.name}</b>`);
+                        .html(`Process: <b>${d.data.name}</b><br>Control type: <b>${d.data.riskStatus.controlTypeMode}</b>`);
 
-                    // thisCircle
-                    //     .attr("stroke", "black")
-                    //     .attr("stroke-width", 2);
+                    thisCircle
+                        .attr("stroke", "black")
+                        .attr("stroke-width", 2);
 
                     d3.select(this).attr("opacity", 1).raise();
 
