@@ -127,30 +127,30 @@
                 .append("div")
                 .attr("class", "tooltip");
 
-                circle.on("mouseover", function(e, d) {
+                d3.selectAll("circle").on("mouseover", function(e, d) {
 
-                    let thisCircle = d3.select(this);
-                    console.log(thisCircle.attr("cx"))
+                        let thisCircle = d3.select(this);
+                        console.log(thisCircle)
 
-                    // console.log(this)
-                    let x = +thisCircle.attr("cx") + 20;
-                    let y = +thisCircle.attr("cy") - 10;
+                        // console.log(this)
+                        let x = +thisCircle.attr("cx") + 20;
+                        let y = +thisCircle.attr("cy") - 10;
 
-                    console.log(x, y);
+                        console.log(x, y);
 
-                    // console.log(e);
-                    // console.log(d);
+                        // console.log(e);
+                        // console.log(d);
 
-                    tooltip.style("visibility", "visible")
-                        .style("top", `${y}px`)
-                        .style("left", `${x}px`)
-                        .html(`Process: <b>${d.data.name}</b><br>Control type: <b>${d.data.riskStatus.controlTypeMode}</b>`);
+                        tooltip.style("visibility", "visible")
+                            .style("top", `${y}px`)
+                            .style("left", `${x}px`)
+                            .html(`Process: <b>${d.data.name}</b><br>Control type: <b>${d.data.riskStatus.controlTypeMode}</b>`);
 
-                    thisCircle
-                        .attr("stroke", "black")
-                        .attr("stroke-width", 2);
+                        thisCircle
+                            .attr("stroke", "black")
+                            .attr("stroke-width", 2);
 
-                    d3.select(this).attr("opacity", 1).raise();
+                        d3.select(this).attr("opacity", 1).raise();
 
                     }).on("mouseout", function() {
 

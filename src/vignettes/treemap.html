@@ -121,13 +121,16 @@
                 .append("div")
                 .attr("class", "tooltip");
 
-                rect.on("mouseover", function(e, d) {
+                d3.selectAll("rect")
+                    .on("mouseover", function(e, d) {
 
                     let thisRect = d3.select(this);
 
                     console.log(this)
                     let x = +thisRect.attr("x") + 20;
                     let y = +thisRect.attr("y") - 10;
+
+                    console.log(thisRect.attr("x"))
 
                     console.log(e);
                     console.log(d);
