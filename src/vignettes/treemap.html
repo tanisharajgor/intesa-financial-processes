@@ -10,6 +10,7 @@
 
         html, body {
             cursor: auto;
+            font-family: sans-serif;
         }
 
         #chart {
@@ -22,11 +23,11 @@
             left: 0px;
             top: 0px;
             visibility: hidden;
-            font-family: sans-serif;
             font-size: 10pt;
-            background-color:rgba(255,255,255,0.4);
-            padding: 2px;
+            background-color:rgba(255,255,255,0.8);
+            padding: 5px;
             pointer-events: none;
+            border-radius: 5px;
         }
 
     </style>
@@ -42,7 +43,6 @@
 
             const label = d => d.name;
             let format = ",";
-            const title = (d, n) => `${n.ancestors().reverse().map(d => d.data.name).join(".")}\n${n.value.toLocaleString("en")}`;
 
             // append the svg object to the body of the page
             const svg = d3.select("#chart")
@@ -92,7 +92,8 @@
                     .attr("width", d => d.y1 - d.y0)
                     .attr("height", d => d.x1 - d.x0)
                     .attr("fill", d => d.data.riskStatus.controlTypeMode === undefined ? "#fff" : colorScale(d.data.riskStatus.controlTypeMode))
-                    .attr("fill-opacity", d => opacityScale(d.data.treeLevel));
+                    .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
+                    .attr("visibility", d => d.data.treeLevel == 0 ? "hidden": "visible");
 
                 const text = rect.filter(d => d.x1 - d.x0 > 10).append("text")
                     .attr("x", 4)
@@ -113,9 +114,6 @@
                     .attr("fill", "white")
                     .attr("fill-opacity", 1);
 
-                if (title != null) rect.append("title")
-                    .text(d => title(d.data, d));
-
                 // Tooltip
                 const tooltip = d3.select("#chart")
                 .append("div")
@@ -127,22 +125,19 @@
                     let thisRect = d3.select(this);
 
                     console.log(this)
-                    let x = +thisRect.attr("x") + 20;
-                    let y = +thisRect.attr("y") - 10;
+                    let x = e.layerX + 20;
+                    let y = e.layerY - 10;
 
-                    console.log(thisRect.attr("x"))
-
-                    console.log(e);
-                    console.log(d);
+                    // console.log(e)
 
                     tooltip.style("visibility", "visible")
                         .style("top", `${y}px`)
                         .style("left", `${x}px`)
                         .html(`Process: <b>${d.data.name}</b><br>Control type: <b>${d.data.riskStatus.controlTypeMode}</b>`);
 
-                    // thisRect
-                    //     .attr("stroke", "black")
-                    //     .attr("stroke-width", 2);
+                    thisRect
+                        .attr("stroke", "black")
+                        .attr("stroke-width", 2);
 
                     d3.select(this).attr("opacity", 1).raise();
 
