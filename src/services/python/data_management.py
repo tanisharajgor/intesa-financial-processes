@@ -75,7 +75,7 @@ def activities_dm(actors, config, raw_pth, processed_pth):
     df = clean_strings(df, "activity")
     df = df[pd.isnull(df.activity) == False]
     df = num_id(df, "activityGUID", 100000)
-    df.activityCategory = df.activityCategory.fillna('Other')
+    df.activityCategory = df.activityCategory.fillna('NA')
 
     ## Write the cleaned data out
     df.drop('activityGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'activities' + ".csv"), index = False)
@@ -149,7 +149,7 @@ def controls_dm(controls, config, raw_pth, processed_pth):
     df = df[pd.isnull(df.control) == False]
     df = num_id(df, "controlGUID")
     df = df.rename(columns={'activityCategory': 'controlCategory'})
-    df.controlCategory = df.controlCategory.fillna('Other')
+    df.controlCategory = df.controlCategory.fillna('NA')
     df['control'] = df['control'].replace(r"^ +", regex=True)
  
     ## Write the cleaned data out
@@ -620,6 +620,8 @@ def create_risk_status(df, rtc, root1, id):
     if temp.shape[0] > 0:
 
         temp['riskID'] = pd.to_numeric(temp['riskID'], errors='coerce').astype(int)
+        temp.controlType = temp.controlType.fillna('NA')
+        temp.controlPeriodocity = temp.controlPeriodocity.fillna('NA')
 
         row = {"nRisks": int(temp.riskID.nunique()),
                "riskID": temp.riskID.unique().tolist()}
@@ -698,6 +700,9 @@ def nest_processes_new(df, rtc, xwalk, root1df, root1, root2, children = None, t
     array = []
     
     for id in ids:
+
+        # if id == 9:
+        #     import pdb; pdb.set_trace()
 
         childrenIDs = xwalk[xwalk[root1ID] == id][root2ID].unique().tolist()
         d = {"id": int(id),

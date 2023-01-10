@@ -52,6 +52,16 @@
             const label = d => d.name;
             let format = ",";
             var riskVariable = "controlTypeMode";
+            let riskVariables = {
+                    "controlTypeMode": {
+                        values: ["NA", "Manual", "Semi-automatic", "Automatic"],
+                        colors: ["#ADADAD", "#FF0000", "#FFC41F", "#0071BC"]
+                    },
+                    "financialDisclosureRisk": {
+                        values: ["NA", "True", "False"],
+                        colors: ["#ADADAD", "#FF0000", "#0071BC"]
+                    }
+                }
 
             // append the svg object to the body of the page
             const svg = d3.select("#chart")

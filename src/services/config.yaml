@@ -14,7 +14,7 @@ translate:
     controlTypeEnglish: ['Manual', 'NA', 'Semi-automatic', 'Automatic', 'NA']
   controlPeriodocity:
     controlPeriodocity: ['Ad evento', 'vuoto', 'Trimestrale', 'Semestrale', 'Annua', 'Mensile', 'Settimanale', 'Giornaliera', 'Decadale', 'N.A.']
-    controlPeriodocityEnglish: ['Per event', 'NA', 'Quarterly', 'Half yearly', 'Annualy', 'Monthly', 'Weekly', 'Daily', 'Decadal', 'NA']
+    controlPeriodocityEnglish: ['Per event', 'NA', 'Quarterly', 'Half yearly', 'Annually', 'Monthly', 'Weekly', 'Daily', 'Decadal', 'NA']
   riskType:
     riskType: ['Altri rischi (operativi)', 'Rischio di Informativa Finanziaria (ex 262/2005)', 'Legale e di non Conformità', 'N.A.', 'Rischio Information and Communication Technology']
     riskTypeEnglish: ['Other risks (operational)', 'Financial Information Risk (ex 262/2005)', 'Legal and non-compliance', 'NA', 'Information and Communication Technology risk']
