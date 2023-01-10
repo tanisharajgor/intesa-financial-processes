@@ -67,7 +67,9 @@
             d3.json("../data/processed/nested/processes.json").then(function(data) {
 
                 // Give the data to this cluster layout:
-                const root = d3.hierarchy(data).sum(function(d){ return 1 }) // Here the size of each leave is given in the 'value' field in input data
+                const root = d3.hierarchy(data).sum(function(d) { return 1 }) // Here the size of each leave is given in the 'value' field in input data
+
+                console.log(root)
 
                 // Then d3.treemap computes the position of each element of the hierarchy
                 d3.partition()
@@ -98,7 +100,8 @@
                     .attr("x", 4)
                     .attr("y", d => Math.min(9, (d.x1 - d.x0) / 2))
                     .attr("dy", "0.32em")
-                    .attr("fill", "white")
+                    .attr("fill", "black")
+                    .attr("visibility", d => d.data.treeLevel == 0 ? "hidden": "visible");
 
                 if (typeof format !== "function") format = d3.format(format)
 
@@ -106,10 +109,10 @@
                     .text(d => label(d.data, d));
 
                 text.append("tspan")
-                    .attr("fill-opacity", 0.7)
+                    .attr("fill-opacity", 1)
                     .attr("dx", label == null ? null : 3)
                     .text(d => format(d.value))
-                    .attr("fill", "white")
+                    .attr("fill", "black")
                     .attr("fill-opacity", 1);
 
                 // Tooltip
@@ -141,8 +144,7 @@
                         rect.attr("opacity", 1);
 
                         d3.selectAll('rect').attr("stroke", "none"); 
-                });
-
+                    });
                 })
         </script>
     </body>
