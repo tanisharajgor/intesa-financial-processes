@@ -25,6 +25,17 @@ def num_id(df, var_name, n = 0):
 
     return df
 
+
+"""
+Clean up strings
+"""
+def clean_strings(df, var):
+    # df[var] = df[var].str.capitalize()
+    df[var] = df[var].str.replace('"', '')
+    df[var] = df[var].str.replace("'", '')
+
+    return df
+
 """
 Rename actors columns
 return dataframe
@@ -61,6 +72,7 @@ def activities_dm(actors, config, raw_pth, processed_pth):
     df = translate_config(df, config, 'activityCategory')
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "activities.csv")).rename(columns={'Italian': 'activity'})
     df = pd.merge(df, dfTranslated, on="activity", how="left").drop("activity", axis=1).rename(columns={'English': "activity"})
+    df = clean_strings(df, "activity")
     df = df[pd.isnull(df.activity) == False]
     df = num_id(df, "activityGUID", 100000)
     df.activityCategory = df.activityCategory.fillna('Other')
@@ -80,6 +92,7 @@ def actors_dm(actors, config, raw_pth, processed_pth):
     df = df[["actorGUID", "actorType", "actor"]].drop_duplicates() # drop duplicates
     df = translate_config(df, config, 'actorType')
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "actors.csv")).rename(columns={'Italian': 'actor'})
+    dfTranslated = clean_strings(dfTranslated, "actor")
     df = pd.merge(df, dfTranslated, on="actor", how="left").drop("actor", axis=1).rename(columns={'English': "actor"})
     df = df[pd.isnull(df.actor) == False]
     df = num_id(df, "actorGUID")
@@ -103,6 +116,7 @@ def risks_dm(risks, config, raw_pth, processed_pth):
     df = df[["riskGUID", "risk", "riskType"]].drop_duplicates() # drop duplicates
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "risks.csv")).rename(columns={'Italian': 'risk'})
     df = pd.merge(df, dfTranslated, on="risk", how="left").drop("risk", axis=1).rename(columns={'English': "risk"})
+    df = clean_strings(df, "risk")
     df = df[pd.isnull(df.risk) == False]
     df = num_id(df, "riskGUID")
     df = translate_config(df, config, 'riskType')
@@ -129,8 +143,9 @@ def controls_dm(controls, config, raw_pth, processed_pth):
     df = translate_config(df, config, 'activityCategory')
     df = translate_config(df, config, 'controlType')
     df = translate_config(df, config, 'controlPeriodocity')
-    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated",  "controls.csv")).rename(columns={'Italian': 'control'})
+    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "controls.csv")).rename(columns={'Italian': 'control'})
     df = pd.merge(df, dfTranslated, on="control", how="left").drop("control", axis=1).rename(columns={'English': "control"})
+    df = clean_strings(df, "control")
     df = df[pd.isnull(df.control) == False]
     df = num_id(df, "controlGUID")
     df = df.rename(columns={'activityCategory': 'controlCategory'})
@@ -155,6 +170,7 @@ def level1_dm(data, raw_pth, processed_pth):
     df = df[["level1", "level1GUID"]].drop_duplicates() # drop duplicates
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "level1.csv")).rename(columns={'Italian': 'level1'})
     df = pd.merge(df, dfTranslated, on="level1", how="left").drop("level1", axis=1).rename(columns={'English': "level1"})
+    df = clean_strings(df, "level1")
     df = df[pd.isnull(df.level1) == False]
     df = num_id(df, "level1GUID")
 
@@ -175,6 +191,7 @@ def level2_dm(data, raw_pth, processed_pth):
     df = df[["level2", "level2GUID"]].drop_duplicates() # drop duplicates
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "level2.csv")).rename(columns={'Italian': 'level2'})
     df = pd.merge(df, dfTranslated, on="level2", how="left").drop("level2", axis=1).rename(columns={'English': "level2"})
+    df = clean_strings(df, "level2")
     df = df[pd.isnull(df.level2) == False]
     df = num_id(df, "level2GUID")
 
@@ -195,6 +212,7 @@ def level3_dm(data, raw_pth, processed_pth):
     df = df[["level3", "level3GUID"]].drop_duplicates() # drop duplicates
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "level3.csv")).rename(columns={'Italian': 'level3'})
     df = pd.merge(df, dfTranslated, on="level3", how="left").drop("level3", axis=1).rename(columns={'English': "level3"})
+    df = clean_strings(df, "level3")
     df = df[pd.isnull(df.level3) == False]
     df = num_id(df, "level3GUID")
 
@@ -215,6 +233,7 @@ def model_dm(data, raw_pth, processed_pth):
     df = df[["model", "modelGUID"]].drop_duplicates() # drop duplicates
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "model.csv")).rename(columns={'Italian': 'model'})
     df = pd.merge(df, dfTranslated, on="model", how="left").drop("model", axis=1).rename(columns={'English': "model"})
+    df = clean_strings(df, "model")
     df = df[pd.isnull(df.model) == False]
     df = num_id(df, "modelGUID")
 
@@ -236,6 +255,7 @@ def applications_dm(applications, raw_pth, processed_pth):
     df = df[["applicationGUID", "application"]].drop_duplicates() # drop duplicates
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "applications.csv")).rename(columns={'Italian': 'application'})
     df = pd.merge(df, dfTranslated, on="application", how="left").drop("application", axis=1).rename(columns={'English': "application"})
+    df = clean_strings(df, "application")
     df = df[pd.isnull(df.application) == False]
     df = num_id(df, "applicationGUID")
 

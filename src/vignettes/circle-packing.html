@@ -29,12 +29,62 @@
             border-radius: 5px;
         }
 
+        .container {
+            display: flex;
+            flex-direction: row;
+        }
+
     </style>
 
     <body>
         <h1>Control Type by Process</h1>
-        <div id="chart"></div>
+        <div class="container">
+            <div id="chart"></div>
+            <div id="legend"></div>
+        </div>
         <script>
+
+            function legend(riskVariable, riskVariables) {
+                const width = 216;
+                let height = 100;
+                let t = riskVariables[riskVariable]
+
+                const svg = d3.select("#legend")
+                    .append("svg")
+                    .attr('width', width)
+                    .attr('height', height);
+
+                for (let i in t.values) {
+
+                    svg
+                        .append("circle")
+                        .attr('cx', 10)
+                        .attr('cy', ((d) => 20 + i*20))
+                        .attr('r', 5)
+                        .attr('fill', ((d) => t.colors[i]));
+
+                    svg
+                        .append("text")
+                        .attr("x", 20)
+                        .attr("y", ((d) => 25 + i*20))
+                        .text(((d) => t.values[i]))
+
+                }
+            }
+
+            // Creates a colorScales for different types of risk variables
+            function createColorScale(riskVariable, riskVariables) {
+                // yellow: #FFC41F
+                // orange: #FF831D
+
+                let t = riskVariables[riskVariable]
+
+                const colorScale = d3.scaleOrdinal()
+                    .domain(t.values)
+                    .range(t.colors);
+
+                return colorScale
+            }
 
             const margin = {top: 10, right: 10, bottom: 10, left: 10},
                 width = 1000 - margin.left - margin.right,
@@ -47,22 +97,30 @@
             const strokeOpacity = 1;
             const fill = "grey";
             const fillOpacity = 1;
+            var riskVariable = "controlTypeMode";
+            let riskVariables = {
+                    "controlTypeMode": {
+                        values: ["NA", "Manual", "Semi-automatic", "Automatic"],
+                        colors: ["#ADADAD", "#FF0000", "#FFC41F", "#0071BC"]
+                    },
+                    "financialDisclosureRisk": {
+                        values: ["NA", "True", "False"],
+                        colors: ["#ADADAD", "#FF0000", "#0071BC"]
+                    }
+                }
 
-            const colorScale = d3.scaleOrdinal()
-                .domain(["NA", "Manual", "Semi-automatic", "Automatic"])
-                .range(["#ADADAD", "#FF0000", "#FFC41F", "#0071BC"]);
-
-            // yellow: #FFC41F
-            // orange: #FF831D
-
+            // Set- scales
+            const colorScale = createColorScale(riskVariable, riskVariables);
             const opacityScale = d3.scaleOrdinal()
                 .domain([0, 1, 2, 3, 4])
-                .range([.05, .15, .2, .3, 1.00])
+                .range([.05, .15, .2, .3, 1.00]);
+
+            legend(riskVariable, riskVariables);
 
             // adapted from https://observablehq.com/@d3/pack
             d3.json("../data/processed/nested/processes.json").then(function (data) {
 
-                const root = d3.hierarchy(data).sum(function(d){ return 1});
+                const root = d3.hierarchy(data).sum(function(d) { return 1 });
                 const descendants = root.descendants();
                 const leaves = descendants.filter(d => !d.children);
                 leaves.forEach((d, i) => d.index = i);
@@ -97,7 +155,7 @@
                     .attr("fill", d => d.children ? "#fff" : fill)
                     .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
                     .attr("r", d => d.r)
-                    .attr("fill", d => d.data.riskStatus.controlTypeMode === undefined ? "#fff" : colorScale(d.data.riskStatus.controlTypeMode))
+                    .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
                     .attr("stroke-width", .5)
                     .attr("stroke", "grey")
                     .attr("visibility", d => d.data.treeLevel == 0 ? "hidden": "visible")
@@ -143,7 +201,7 @@
                         tooltip.style("visibility", "visible")
                             .style("top", `${y}px`)
                             .style("left", `${x}px`)
-                            .html(`Process: <b>${d.data.name}</b><br>Control type: <b>${d.data.riskStatus.controlTypeMode}</b>`);
+                            .html(`Process: <b>${d.data.name}</b><br>Control type: <b>${d.data.riskStatus[riskVariable]}</b>`);
 
                         thisCircle
                             .attr("stroke", "grey")
@@ -160,6 +218,7 @@
                             .attr("stroke-width", .5)
                             .attr("stroke", "grey"); 
                     });
+
             });
 
         </script>

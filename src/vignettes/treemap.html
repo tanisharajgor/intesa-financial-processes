@@ -30,10 +30,18 @@
             border-radius: 5px;
         }
 
+        .container {
+            display: flex;
+            flex-direction: row;
+        }
+
     </style>
 
     <body>
-        <div id="chart"></div>
+        <div class="container">
+            <div id="chart"></div>
+            <div id="legend"></div>
+        </div>
         <script>
 
            // set the dimensions and margins of the graph
@@ -43,6 +51,7 @@
 
             const label = d => d.name;
             let format = ",";
+            var riskVariable = "controlTypeMode";
 
             // append the svg object to the body of the page
             const svg = d3.select("#chart")
@@ -78,8 +87,6 @@
                     .round(false)
                     (root)
 
-                root.sort((a, b) => d3.descending(a.value, b.value))
-
                 const descendants = root.descendants();
                 console.log(descendants)
 
@@ -92,9 +99,11 @@
                 const rect = g.append("rect")
                     .attr("width", d => d.y1 - d.y0)
                     .attr("height", d => d.x1 - d.x0)
-                    .attr("fill", d => d.data.riskStatus.controlTypeMode === undefined ? "#fff" : colorScale(d.data.riskStatus.controlTypeMode))
+                    .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
                     .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
-                    .attr("visibility", d => d.data.treeLevel == 0 ? "hidden": "visible");
+                    .attr("visibility", d => d.data.treeLevel == 0 ? "hidden": "visible")
+                    .attr("stroke-width", .5)
+                    .attr("stroke", "#D7D7D7");
 
                 const text = g.filter(d => d.x1 - d.x0 > 10).append("text")
                     .attr("x", 4)
@@ -132,10 +141,10 @@
                         tooltip.style("visibility", "visible")
                             .style("top", `${y}px`)
                             .style("left", `${x}px`)
-                            .html(`Process: <b>${d.data.name}</b><br>Control type: <b>${d.data.riskStatus.controlTypeMode}</b>`);
+                            .html(`Process: <b>${d.data.name}</b><br>Control type: <b>${d.data.riskStatus[riskVariable]}</b>`);
 
                         thisRect
-                            .attr("stroke", "black")
+                            .attr("stroke", "grey")
                             .attr("stroke-width", 2);
 
                     }).on("mouseout", function() {
