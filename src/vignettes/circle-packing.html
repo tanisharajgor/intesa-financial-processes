@@ -31,7 +31,7 @@
     </style>
 
     <body>
-        <h1>Processes Risk Assessment</h1>
+        <h1>Control Type by Process</h1>
         <div id="chart"></div>
         <script>
 
@@ -85,13 +85,14 @@
                     .padding(padding)
                     (root);
                 
-                const node = svg
-                    .selectAll("circle")
+                const node = svg.selectAll("a")
                     .data(descendants)
-                    .join("circle")
+                    .join("a")
                     .attr("transform", d => `translate(${d.x},${d.y})`);
 
-                const circle = node
+                console.log(descendants)
+
+                const circle = node.append("circle")
                     .attr("fill", d => d.children ? "#fff" : fill)
                     .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
                     .attr("r", d => d.r)
@@ -100,30 +101,28 @@
                     .attr("stroke", "grey")
                     .attr("visibility", d => d.data.treeLevel == 0 ? "hidden": "visible")
 
-                d3.selectAll("circle[visibility=hidden]").remove();
-
                 if (L) {
-                // A unique identifier for clip paths (to avoid conflicts).
-                const uid = `O-${Math.random().toString(16).slice(2)}`;
+                    // A unique identifier for clip paths (to avoid conflicts).
+                    const uid = `O-${Math.random().toString(16).slice(2)}`;
 
-                const leaf = node
-                    .filter(d => !d.children && d.r > 10 && L[d.index] != null);
+                    const leaf = node
+                        .filter(d => !d.children && d.r > 10 && L[d.index] != null);
 
-                leaf.append("clipPath")
-                    .attr("id", d => `${uid}-clip-${d.index}`)
-                    .append("circle")
-                    .attr("r", d => d.r)
-                    .attr("fill", function(d) { return console.log(d)})
+                    leaf.append("clipPath")
+                        .attr("id", d => `${uid}-clip-${d.index}`)
+                        .append("circle")
+                        .attr("r", d => d.r)
+                        .attr("fill", function(d) { return console.log(d)})
 
-                leaf.append("text")
-                    .attr("clip-path", d => `url(${new URL(`#${uid}-clip-${d.index}`, location)})`)
-                    .selectAll("tspan")
-                    .data(d => `${L[d.index]}`.split(/\n/g))
-                    .join("tspan")
-                    .attr("x", 0)
-                    .attr("y", (d, i, D) => `${(i - D.length / 2) + 0.85}em`)
-                    .attr("fill-opacity", (d, i, D) => i === D.length - 1 ? 0.7 : null)
-                    .text(d => d);
+                    leaf.append("text")
+                        .attr("clip-path", d => `url(${new URL(`#${uid}-clip-${d.index}`, location)})`)
+                        .selectAll("tspan")
+                        .data(d => `${L[d.index]}`.split(/\n/g))
+                        .join("tspan")
+                        .attr("x", 0)
+                        .attr("y", (d, i, D) => `${(i - D.length / 2) + 0.85}em`)
+                        .attr("fill-opacity", (d, i, D) => i === D.length - 1 ? 0.7 : null)
+                        .text(d => d);
                 }
 
                 // Tooltip
@@ -134,7 +133,7 @@
                 d3.selectAll("circle").on("mouseover", function(e, d) {
 
                         let thisCircle = d3.select(this);
-                        console.log(thisCircle.attr("cx"))
+                        console.log(thisCircle)
 
                         // console.log(this)
                         let x = +thisCircle.attr("cx") + 20;
