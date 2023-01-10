@@ -9,6 +9,7 @@
     <style>
         html, body {
             cursor: auto;
+            font-family: sans-serif;
         }
 
         #chart {
@@ -21,7 +22,6 @@
             left: 0px;
             top: 0px;
             visibility: hidden;
-            font-family: sans-serif;
             font-size: 10pt;
             background-color:rgba(255,255,255,0.4);
             padding: 2px;
@@ -31,6 +31,7 @@
     </style>
 
     <body>
+        <h1>Processes Risk Assessment</h1>
         <div id="chart"></div>
         <script>
 
@@ -84,20 +85,22 @@
                     .padding(padding)
                     (root);
                 
-                const node = svg.selectAll("a")
+                const node = svg
+                    .selectAll("circle")
                     .data(descendants)
-                    .join("a")
+                    .join("circle")
                     .attr("transform", d => `translate(${d.x},${d.y})`);
 
-                console.log(descendants)
-
-                const circle = node.append("circle")
+                const circle = node
                     .attr("fill", d => d.children ? "#fff" : fill)
                     .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
                     .attr("r", d => d.r)
                     .attr("fill", d => d.data.riskStatus.controlTypeMode === undefined ? "#fff" : colorScale(d.data.riskStatus.controlTypeMode))
                     .attr("stroke-width", .5)
                     .attr("stroke", "grey")
+                    .attr("visibility", d => d.data.treeLevel == 0 ? "hidden": "visible")
+
+                d3.selectAll("circle[visibility=hidden]").remove();
 
                 if (L) {
                 // A unique identifier for clip paths (to avoid conflicts).
@@ -125,13 +128,13 @@
 
                 // Tooltip
                 const tooltip = d3.select("#chart")
-                .append("div")
-                .attr("class", "tooltip");
+                    .append("div")
+                    .attr("class", "tooltip");
 
                 d3.selectAll("circle").on("mouseover", function(e, d) {
 
                         let thisCircle = d3.select(this);
-                        console.log(thisCircle)
+                        console.log(thisCircle.attr("cx"))
 
                         // console.log(this)
                         let x = +thisCircle.attr("cx") + 20;
