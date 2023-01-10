@@ -55,13 +55,12 @@
 
             const opacityScale = d3.scaleOrdinal()
                 .domain([0, 1, 2, 3, 4])
-                .range([.05, .15, .3, .55, 1.00]);
+                .range([.05, .15, .2, .3, 1.00])
 
             // adapted from https://observablehq.com/@d3/pack
             d3.json("../data/processed/nested/processes.json").then(function (data) {
 
                 const root = d3.hierarchy(data).sum(function(d){ return 1});
-
                 const descendants = root.descendants();
                 const leaves = descendants.filter(d => !d.children);
                 leaves.forEach((d, i) => d.index = i);
@@ -97,6 +96,8 @@
                     .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
                     .attr("r", d => d.r)
                     .attr("fill", d => d.data.riskStatus.controlTypeMode === undefined ? "#fff" : colorScale(d.data.riskStatus.controlTypeMode))
+                    .attr("stroke-width", .5)
+                    .attr("stroke", "grey")
 
                 if (L) {
                 // A unique identifier for clip paths (to avoid conflicts).
@@ -147,7 +148,7 @@
                             .html(`Process: <b>${d.data.name}</b><br>Control type: <b>${d.data.riskStatus.controlTypeMode}</b>`);
 
                         thisCircle
-                            .attr("stroke", "black")
+                            .attr("stroke", "grey")
                             .attr("stroke-width", 2);
 
                         d3.select(this).attr("opacity", 1).raise();
@@ -157,7 +158,9 @@
                         tooltip.style("visibility", "hidden");
                         circle.attr("opacity", 1);
 
-                        d3.selectAll('circle').attr("stroke", "none"); 
+                        d3.selectAll('circle')
+                            .attr("stroke-width", .5)
+                            .attr("stroke", "grey"); 
                     });
             });
 
