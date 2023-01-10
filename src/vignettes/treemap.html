@@ -67,9 +67,7 @@
             d3.json("../data/processed/nested/processes.json").then(function(data) {
 
                 // Give the data to this cluster layout:
-                const root = d3.hierarchy(data).sum(function(d){ return 1}) // Here the size of each leave is given in the 'value' field in input data
-
-                console.log(data)
+                const root = d3.hierarchy(data).sum(function(d){ return 1 }) // Here the size of each leave is given in the 'value' field in input data
 
                 // Then d3.treemap computes the position of each element of the hierarchy
                 d3.partition()
@@ -81,26 +79,26 @@
                 root.sort((a, b) => d3.descending(a.value, b.value))
 
                 const descendants = root.descendants();
+                console.log(descendants)
 
-                const rect = svg
-                    .selectAll("a")
+                const g = svg
+                    .selectAll("g")
                     .data(descendants)
-                    .join("a")
+                    .join("g")
                     .attr("transform", d => `translate(${d.y0},${d.x0})`);
 
-                rect.append("rect")
+                const rect = g.append("rect")
                     .attr("width", d => d.y1 - d.y0)
                     .attr("height", d => d.x1 - d.x0)
                     .attr("fill", d => d.data.riskStatus.controlTypeMode === undefined ? "#fff" : colorScale(d.data.riskStatus.controlTypeMode))
                     .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
                     .attr("visibility", d => d.data.treeLevel == 0 ? "hidden": "visible");
 
-                const text = rect.filter(d => d.x1 - d.x0 > 10).append("text")
+                const text = g.filter(d => d.x1 - d.x0 > 10).append("text")
                     .attr("x", 4)
                     .attr("y", d => Math.min(9, (d.x1 - d.x0) / 2))
                     .attr("dy", "0.32em")
                     .attr("fill", "white")
-                    .attr("fill-opacity", 1);
 
                 if (typeof format !== "function") format = d3.format(format)
 
@@ -116,30 +114,26 @@
 
                 // Tooltip
                 const tooltip = d3.select("#chart")
-                .append("div")
-                .attr("class", "tooltip");
+                    .append("div")
+                    .attr("class", "tooltip");
 
                 d3.selectAll("rect")
                     .on("mouseover", function(e, d) {
 
-                    let thisRect = d3.select(this);
+                        let thisRect = d3.select(this);
+                        let x = e.layerX + 20;
+                        let y = e.layerY - 10;
 
-                    console.log(this)
-                    let x = e.layerX + 20;
-                    let y = e.layerY - 10;
+                        // console.log(e)
 
-                    // console.log(e)
+                        tooltip.style("visibility", "visible")
+                            .style("top", `${y}px`)
+                            .style("left", `${x}px`)
+                            .html(`Process: <b>${d.data.name}</b><br>Control type: <b>${d.data.riskStatus.controlTypeMode}</b>`);
 
-                    tooltip.style("visibility", "visible")
-                        .style("top", `${y}px`)
-                        .style("left", `${x}px`)
-                        .html(`Process: <b>${d.data.name}</b><br>Control type: <b>${d.data.riskStatus.controlTypeMode}</b>`);
-
-                    thisRect
-                        .attr("stroke", "black")
-                        .attr("stroke-width", 2);
-
-                    d3.select(this).attr("opacity", 1).raise();
+                        thisRect
+                            .attr("stroke", "black")
+                            .attr("stroke-width", 2);
 
                     }).on("mouseout", function() {
 
@@ -147,7 +141,7 @@
                         rect.attr("opacity", 1);
 
                         d3.selectAll('rect').attr("stroke", "none"); 
-                    });
+                });
 
                 })
         </script>

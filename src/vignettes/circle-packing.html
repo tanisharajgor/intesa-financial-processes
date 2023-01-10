@@ -74,7 +74,7 @@
                     .append("svg")
                     .attr("width", width + margin.left + margin.right)
                     .attr("height", height + margin.top + margin.bottom)
-                    // .append("g")
+                    .append("g")
                     .attr("transform",
                             `translate(${margin.left}, ${margin.top})`)
                     .attr("font-family", "sans-serif")
@@ -86,9 +86,9 @@
                     .padding(padding)
                     (root);
                 
-                const node = svg.selectAll("a")
+                const node = svg.selectAll("g")
                     .data(descendants)
-                    .join("a")
+                    .join("g")
                     .attr("transform", d => `translate(${d.x},${d.y})`);
 
                 console.log(descendants)
@@ -114,6 +114,7 @@
                         .append("circle")
                         .attr("r", d => d.r)
                         .attr("fill", function(d) { return console.log(d)})
+
 
                     leaf.append("text")
                         .attr("clip-path", d => `url(${new URL(`#${uid}-clip-${d.index}`, location)})`)
