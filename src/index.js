@@ -13,6 +13,8 @@ import CirclePacking from "./pages/CirclePacking";
 import TreeMap from "./pages/TreeMap";
 import Network from "./pages/Network";
 
+import "./utils/styles/styles.scss";
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <HashRouter>
