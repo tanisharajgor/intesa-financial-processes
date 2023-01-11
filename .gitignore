@@ -3,3 +3,6 @@ key.json
 
 src/services/python/__pycache__
 node_modules
+node_modules/
+build/
+build

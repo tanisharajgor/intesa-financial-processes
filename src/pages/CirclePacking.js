@@ -3,6 +3,45 @@ import { riskVariables, createLegend, createColorScale } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 
+function renderTooltip(riskVariable, circle) {
+    
+    // Tooltip
+    let tooltip = d3.select("#chart")
+        .append("div")
+        .attr("class", "tooltip");
+
+        d3.selectAll("circle").on("mouseover", function(e, d) {
+
+            let thisCircle = d3.select(this);
+            let x = e.layerX + 20;
+            let y = e.layerY - 10;
+
+            // console.log(e)
+
+            tooltip.style("visibility", "visible")
+                .style("top", `${y}px`)
+                .style("left", `${x}px`)
+                .html(`Process: <b>${d.data.name}</b><br>Control type: <b>${d.data.riskStatus[riskVariable]}</b>`);
+
+            thisCircle
+                .attr("stroke", "grey")
+                .attr("stroke-width", 2);
+
+            d3.select(this).attr("opacity", 1).raise();
+
+        }).on("mouseout", function() {
+
+            tooltip.style("visibility", "hidden");
+            circle.attr("opacity", 1);
+
+            d3.selectAll('circle')
+                .attr("stroke-width", .5)
+                .attr("stroke", "grey"); 
+        });
+
+}
+
+
 export default function CirclePacking() {
 
     console.log(data)
@@ -19,6 +58,7 @@ export default function CirclePacking() {
     const fill = "grey";
     const fillOpacity = 1;
     var riskVariable = "controlTypeMode";
+    var tooltip;
 
     // Set- scales
     const colorScale = createColorScale(riskVariable, riskVariables);
@@ -94,39 +134,7 @@ export default function CirclePacking() {
                 //         .text(d => d);
                 // }
 
-                // Tooltip
-                const tooltip = d3.select("#chart")
-                    .append("div")
-                    .attr("class", "tooltip");
-
-                d3.selectAll("circle").on("mouseover", function(e, d) {
-
-                        let thisCircle = d3.select(this);
-                        let x = e.layerX + 20;
-                        let y = e.layerY - 10;
-
-                        // console.log(e)
-
-                        tooltip.style("visibility", "visible")
-                            .style("top", `${y}px`)
-                            .style("left", `${x}px`)
-                            .html(`Process: <b>${d.data.name}</b><br>Control type: <b>${d.data.riskStatus[riskVariable]}</b>`);
-
-                        thisCircle
-                            .attr("stroke", "grey")
-                            .attr("stroke-width", 2);
-
-                        d3.select(this).attr("opacity", 1).raise();
-
-                    }).on("mouseout", function() {
-
-                        tooltip.style("visibility", "hidden");
-                        circle.attr("opacity", 1);
-
-                        d3.selectAll('circle')
-                            .attr("stroke-width", .5)
-                            .attr("stroke", "grey"); 
-                    });
+                renderTooltip(riskVariable, circle);
 
     return(
         <div className="circle-packing">
