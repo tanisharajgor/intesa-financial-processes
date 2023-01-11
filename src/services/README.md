@@ -1,6 +1,5 @@
 # Python Code to Clean Banca Intesa Process Data
 
-
 ## Navigate to repo
 1. In the command line `cd src/services`
 
