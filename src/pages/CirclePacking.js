@@ -1,5 +1,5 @@
 import Navigation from "../components/Navigation";
-import { riskVariables, createLegend, createColorScale } from "../utils/global";
+import { riskVariables, createLegend, createColorScale, createOpacityScale } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect } from "react";
@@ -41,35 +41,30 @@ function renderTooltip(riskVariable, circle) {
     });
 }
 
-
 export default function CirclePacking() {
 
     console.log(data)
 
     var riskVariable = "controlTypeMode";
+    const margin = {top: 10, right: 10, bottom: 10, left: 10},
+    width = 1000 - margin.left - margin.right,
+    height = 1000 - margin.top - margin.bottom;
+
+    const padding = 3;
+    const fill = "grey";
+
+    // Set-up scales
+    const colorScale = createColorScale(riskVariable, riskVariables);
+    const opacityScale = createOpacityScale();
+
+    // Set-up hierarchical data structures
+    const root = d3.hierarchy(data).sum(function(d) { return 1 });
+    const descendants = root.descendants();
+    const leaves = descendants.filter(d => !d.children);
+    leaves.forEach((d, i) => d.index = i);
+    root.sort((a, b) => d3.descending(a.value, b.value));
 
     useEffect(() => {
-
-        const margin = {top: 10, right: 10, bottom: 10, left: 10},
-                    width = 1000 - margin.left - margin.right,
-                    height = 1000 - margin.top - margin.bottom;
-
-        const padding = 3;
-        const fill = "grey";
-
-        // Set-up scales
-        const colorScale = createColorScale(riskVariable, riskVariables);
-        const opacityScale = d3.scaleOrdinal()
-            .domain([0, 1, 2, 3, 4])
-            .range([.05, .15, .2, .3, 1.00]);
-
-        const root = d3.hierarchy(data).sum(function(d) { return 1 });
-        const descendants = root.descendants();
-        const leaves = descendants.filter(d => !d.children);
-        leaves.forEach((d, i) => d.index = i);
-        // const L = label == null ? null : leaves.map(d => label(d.data, d));
-
-        root.sort((a, b) => d3.descending(a.value, b.value));
 
         const svg = d3.select("#chart")
             .append("svg")
@@ -86,13 +81,13 @@ export default function CirclePacking() {
             .size([width - margin.left - margin.right, height - margin.top - margin.bottom])
             .padding(padding)
             (root);
-        
+
         const node = svg.selectAll("g")
             .data(descendants)
             .join("g")
             .attr("transform", d => `translate(${d.x},${d.y})`);
 
-        console.log(descendants)
+        // console.log(descendants)
 
         const circle = node.append("circle")
             .attr("fill", d => d.children ? "#fff" : fill)
@@ -104,11 +99,8 @@ export default function CirclePacking() {
             .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible")
 
         renderTooltip(riskVariable, circle);
-
-    })
-
-    useEffect(() => {
         createLegend(riskVariable, riskVariables);
+
     }, [riskVariable])
 
     return(

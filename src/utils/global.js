@@ -46,9 +46,18 @@ export function createColorScale(variable, variableLookup) {
 
     let t = variableLookup[variable]
 
-    const colorScale = d3.scaleOrdinal()
+    const scale = d3.scaleOrdinal()
         .domain(t.values)
         .range(t.colors);
 
-    return colorScale
+    return scale;
+}
+
+export function createOpacityScale() {
+
+    const scale = d3.scaleOrdinal()
+        .domain([0, 1, 2, 3, 4])
+        .range([.05, .15, .2, .3, 1.00]);
+
+    return scale;
 }
