@@ -2,3 +2,4 @@ key.json
 /__pycache__
 
 src/services/python/__pycache__
+node_modules
