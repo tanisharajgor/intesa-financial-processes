@@ -454,7 +454,9 @@ def dm_actors_nodes(actors_activities):
                     "group": "actor",
                     "descr": actors_activities_sub.actor.iloc[0],
                     "type": actors_activities_sub.actorType.iloc[0],
-                    "n": len(actors_activities_sub)}
+                    "nActivities": len(actors_activities_sub),
+                    "activitiesIDs": actors_activities_sub.activityID.unique().tolist()
+                    }
 
         # activities_nodes = []
         # for j in unique_int(actors_activities_sub, "activityID"):
@@ -484,7 +486,9 @@ def dm_activities_nodes(actors_activities):
                         "descr": actors_activities_sub.activity.iloc[0],
                         "type": actors_activities_sub.activityType.iloc[0],
                         "category": actors_activities_sub.activityCategory.iloc[0],
-                        "n": len(actors_activities_sub)}
+                        "nActors": len(actors_activities_sub),
+                        "actorIDs": actors_activities_sub.actorID.unique().tolist()
+                        }
 
         # actors_nodes = []
 
@@ -690,8 +694,10 @@ def subset_list(ids, l):
     return array
 
 """
+Nest sub processes
+Return object
 """
-def nest_processes_new(df, rtc, xwalk, root1df, root1, root2, children = None, tree_level = None):
+def nest_sub_processes(df, rtc, xwalk, root1df, root1, root2, children = None, tree_level = None):
 
     root1ID = root1+"ID"
     root2ID = root2+"ID"
@@ -700,9 +706,6 @@ def nest_processes_new(df, rtc, xwalk, root1df, root1, root2, children = None, t
     array = []
     
     for id in ids:
-
-        # if id == 9:
-        #     import pdb; pdb.set_trace()
 
         childrenIDs = xwalk[xwalk[root1ID] == id][root2ID].unique().tolist()
         d = {"id": int(id),
@@ -721,6 +724,7 @@ def nest_processes_new(df, rtc, xwalk, root1df, root1, root2, children = None, t
 
 """
 Nest processes
+Return object
 """
 def nest_processes(level1_to_level2, level2_to_level3, level3_to_activity, activity_to_risk, risk_to_control, level1, level2, level3, activities, risks, controls, risksNested):
 
@@ -731,10 +735,10 @@ def nest_processes(level1_to_level2, level2_to_level3, level3_to_activity, activ
     df = pd.merge(df, activity_to_risk, how="left", on="activityID")
     df = pd.merge(df, risk_to_control, how="left", on="riskID")
 
-    nest4 = nest_processes_new(df, rtc, activity_to_risk, activities, "activity", "risk", None, 4)
-    nest3 = nest_processes_new(df, rtc, level3_to_activity, level3, "level3", "activity", nest4, 3)
-    nest2 = nest_processes_new(df, rtc, level2_to_level3, level2, "level2", "level3", nest3, 2)
-    nest1 = nest_processes_new(df, rtc, level1_to_level2, level1, "level1", "level2", nest2, 1)
+    nest4 = nest_sub_processes(df, rtc, activity_to_risk, activities, "activity", "risk", None, 4)
+    nest3 = nest_sub_processes(df, rtc, level3_to_activity, level3, "level3", "activity", nest4, 3)
+    nest2 = nest_sub_processes(df, rtc, level2_to_level3, level2, "level2", "level3", nest3, 2)
+    nest1 = nest_sub_processes(df, rtc, level1_to_level2, level1, "level1", "level2", nest2, 1)
 
     return {"name": "root", 
             "children": nest1,  
