@@ -1,6 +1,7 @@
 import Navigation from "../components/Navigation";
 import { riskVariables, createLegend, createColorScale } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
+import * as d3 from 'd3';
 
 export default function CirclePacking() {
 
@@ -18,6 +19,14 @@ export default function CirclePacking() {
     const fill = "grey";
     const fillOpacity = 1;
     var riskVariable = "controlTypeMode";
+
+    // Set- scales
+    const colorScale = createColorScale(riskVariable, riskVariables);
+    const opacityScale = d3.scaleOrdinal()
+        .domain([0, 1, 2, 3, 4])
+        .range([.05, .15, .2, .3, 1.00]);
+
+    createLegend(riskVariable, riskVariables);
 
     return(
         <div className="circle-packing">
