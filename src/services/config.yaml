@@ -1,10 +1,20 @@
 translate:
+  projectId: "banca-355515"
   activityType:
     activityType: ["Attività di Processo", "Attività di Controllo", "Attività di Processo Comune", "Attività di Sistema"]
     activityTypeEnglish: ["process activity", "control activity", "common process activity", "system activity"]
   activityCategory:
     activityCategory: ["Professionale", "Operativa", "Commerciale"]
-    activityCategoryEnglish: ["professional", "operational", "commercial"]
+    activityCategoryEnglish: ["Professional", "Operational", "Commercial"]
   actorType:
     actorType: ["Unità organizzativa", "Posizione", "Persona", "Gruppo Vuoto", "Unità organizzativa esterna"]
     actorTypeEnglish: ["Organizational unit", "Position", "Person", "Empty group", "External Organizational unit"]
+  controlType:
+    controlType: ['Manuale', 'vuoto', 'Semiautomatico', 'Automatico', 'N.A.']
+    controlTypeEnglish: ['Manual', 'Missing', 'Semi-automatic', 'Automatic', 'NA']
+  controlPeriodocity:
+    controlPeriodocity: ['Ad evento', 'vuoto', 'Trimestrale', 'Semestrale', 'Annua', 'Mensile', 'Settimanale', 'Giornaliera', 'Decadale', 'N.A.']
+    controlPeriodocityEnglish: ['Per event', 'Missing', 'Quarterly', 'Half yearly', 'Annualy', 'Monthly', 'Weekly', 'Daily', 'Decadal', 'NA']
+  riskType:
+    riskType: ['Altri rischi (operativi)', 'Rischio di Informativa Finanziaria (ex 262/2005)', 'Legale e di non Conformità', 'N.A.', 'Rischio Information and Communication Technology']
+    riskTypeEnglish: ['Other risks (operational)', 'Financial Information Risk (ex 262/2005)', 'Legal and non-compliance', 'Other', 'Information and Communication Technology risk']

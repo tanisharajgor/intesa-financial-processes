@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <link rel="shortcut icon" href="#">
+        <!-- <link rel="stylesheet" type="text/css" href="./style/style.css"> -->
+    </head>
+
+    <body>
+        <div id="chart"></div>
+        <script>
+
+            var width = 800;
+            var height = 600;
+            var svg = d3.select("#chart")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+            /* 
+            // https://bl.ocks.org/steveharoz/8c3e2524079a8c440df60c1ab72b5d03
+            // */
+            d3.json("../data/processed/nested/network.json").then(function (data) {
+
+                console.log(data);
+
+                const rScale = d3.scaleLinear()
+                    .domain([d3.extent(data.nodes, function(d) {return d.n })])
+                    .range([3, 7]);
+
+                const colorScale = d3.scaleLinear()
+                    .domain(["actor", "activity"])
+                    .range(["#0000FF", "#FF0000"])
+
+                var color = d3.scaleOrdinal(d3.schemeSpectral[9]);
+
+                var simulation = d3.forceSimulation()
+                    .force("link", d3.forceLink().id(function(d) { return d.id; }))
+                    .force("charge", d3.forceManyBody())
+                    .force("center", d3.forceCenter(width / 2, height / 2));
+
+                var link = svg.append("g")
+                    .attr("class", "links")
+                    .selectAll("line")
+                    .data(data.links)
+                    .enter()
+                    .append("line")
+                    .attr("stroke", "grey");
+
+                var node = svg.append("g")
+                    .attr("class", "nodes")
+                    .selectAll("circle")
+                    .data(data.nodes)
+                    .enter().append("circle")
+                    .attr("fill", ((d) => colorScale(d.group)))
+                    .attr("r", ((d) =>rScale(d.n)))
+
+                simulation
+                    .nodes(data.nodes)
+                    .on("tick", ticked);
+
+                simulation.force("link")
+                    .links(data.links);
+
+                function ticked() {
+                    link
+                        .attr("x1", function(d) { return d.source.x; })
+                        .attr("y1", function(d) { return d.source.y; })
+                        .attr("x2", function(d) { return d.target.x; })
+                        .attr("y2", function(d) { return d.target.y; });
+
+                    node
+                        .attr("cx", function(d) { return d.x; })
+                        .attr("cy", function(d) { return d.y; });
+                }
+            })
+
+        </script>
+    </body>
+
+</html>
