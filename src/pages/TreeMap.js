@@ -89,7 +89,6 @@ export default function TreeMap() {
             .attr("stroke-width", .5)
             .attr("stroke", "#D7D7D7");
 
-
         createLegend(riskVariable, riskVariables);
         renderTooltip(riskVariable, rect);
 
