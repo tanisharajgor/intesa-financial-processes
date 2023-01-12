@@ -54,16 +54,13 @@ export default function TreeMap() {
 
     // Set-up hierarchical data
     const root = d3.hierarchy(data).sum(function(d) { return 1 }) // Here the size of each leave is given in the 'value' field in input data
-
-     // Then d3.treemap computes the position of each element of the hierarchy
-     d3.partition()
+    d3.partition()
         .size([height - margin.top - margin.bottom, width - margin.left - margin.right])
         .padding(2)
         .round(false)
         (root);
 
     const descendants = root.descendants();
-    console.log(descendants)
 
     useEffect(() => {
         const svg = d3.select("#chart")
@@ -82,7 +79,7 @@ export default function TreeMap() {
             .join("g")
             .attr("transform", d => `translate(${d.y0},${d.x0})`);
 
-        const rect = g.append("rect")
+        g.append("rect")
             .attr("width", d => d.y1 - d.y0)
             .attr("height", d => d.x1 - d.x0)
             .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
@@ -91,8 +88,14 @@ export default function TreeMap() {
             .attr("stroke-width", .5)
             .attr("stroke", "#D7D7D7");
 
-        renderTooltip(riskVariable, rect);
+    }, [riskVariable])
 
+    useEffect(() => {
+
+        const rect = d3.selectAll("#chart svg g rect")
+            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
+
+        renderTooltip(riskVariable, rect);
     }, [riskVariable])
 
     return(

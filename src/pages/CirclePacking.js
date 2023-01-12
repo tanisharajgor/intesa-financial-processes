@@ -82,13 +82,14 @@ export default function CirclePacking() {
             .attr("font-family", "sans-serif")
             .attr("font-size", 10);
 
-        const node = d3.select("#chart svg")
+        const node = svg
             .selectAll("g")
             .data(descendants)
             .join("g")
             .attr("transform", d => `translate(${d.x},${d.y})`);
 
-        const circle = node.append("circle")
+        node
+            .append("circle")
             .attr("fill", d => d.children ? "#fff" : "grey")
             .attr("r", d => d.r)
             .attr("stroke-width", .5)
