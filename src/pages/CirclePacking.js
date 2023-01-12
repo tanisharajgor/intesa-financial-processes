@@ -62,7 +62,14 @@ export default function CirclePacking() {
     const leaves = descendants.filter(d => !d.children);
     leaves.forEach((d, i) => d.index = i);
     root.sort((a, b) => d3.descending(a.value, b.value));
+     // Compute the layout.
+     d3.pack()
+     .size([width - margin.left - margin.right, height - margin.top - margin.bottom])
+     .padding(padding)
+     (root);
 
+
+    // Draw circle packing once
     useEffect(() => {
 
         const svg = d3.select("#chart")
@@ -75,25 +82,26 @@ export default function CirclePacking() {
             .attr("font-family", "sans-serif")
             .attr("font-size", 10);
 
-        // Compute the layout.
-        d3.pack()
-            .size([width - margin.left - margin.right, height - margin.top - margin.bottom])
-            .padding(padding)
-            (root);
-
-        const node = svg.selectAll("g")
+        const node = d3.select("#chart svg")
+            .selectAll("g")
             .data(descendants)
             .join("g")
             .attr("transform", d => `translate(${d.x},${d.y})`);
 
         const circle = node.append("circle")
             .attr("fill", d => d.children ? "#fff" : "grey")
-            .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
             .attr("r", d => d.r)
-            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
             .attr("stroke-width", .5)
             .attr("stroke", "grey")
+            .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
             .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible")
+
+    }, [])
+
+    // Update the visual aesthetics of the visualization that change with a user input
+    useEffect(() => {
+        const circle = d3.selectAll("#chart svg circle")
+            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
 
         renderTooltip(riskVariable, circle);
 
