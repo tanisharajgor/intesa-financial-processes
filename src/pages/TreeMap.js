@@ -1,5 +1,6 @@
 import Navigation from "../components/Navigation";
-import { riskVariables, createLegend, createColorScale, createOpacityScale } from "../utils/global";
+import View from "../components/View";
+import { riskVariables, createColorScale, createOpacityScale } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect } from "react";
@@ -38,18 +39,31 @@ function renderTooltip(riskVariable, rect) {
         });
 }
 
-
 export default function TreeMap() {
 
+    const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
+
+    // Set-up layout
     const margin = {top: 10, right: 10, bottom: 10, left: 10},
-    width = 1000 - margin.left - margin.right,
-    height = 1000 - margin.top - margin.bottom;
-    var riskVariable = "controlTypeMode";
+        width = 1000 - margin.left - margin.right,
+        height = 1000 - margin.top - margin.bottom;
 
     // Set-up scales
     const colorScale = createColorScale(riskVariable, riskVariables);
     const opacityScale = createOpacityScale();
+
+    // Set-up hierarchical data
     const root = d3.hierarchy(data).sum(function(d) { return 1 }) // Here the size of each leave is given in the 'value' field in input data
+
+     // Then d3.treemap computes the position of each element of the hierarchy
+     d3.partition()
+        .size([height - margin.top - margin.bottom, width - margin.left - margin.right])
+        .padding(2)
+        .round(false)
+        (root);
+
+    const descendants = root.descendants();
+    console.log(descendants)
 
     useEffect(() => {
         const svg = d3.select("#chart")
@@ -61,18 +75,6 @@ export default function TreeMap() {
                     `translate(${margin.left}, ${margin.top})`)
             .attr("font-family", "sans-serif")
             .attr("font-size", 10);
-
-        console.log(root)
-
-        // Then d3.treemap computes the position of each element of the hierarchy
-        d3.partition()
-            .size([height - margin.top - margin.bottom, width - margin.left - margin.right])
-            .padding(2)
-            .round(false)
-            (root)
-
-        const descendants = root.descendants();
-        console.log(descendants)
 
         const g = svg
             .selectAll("g")
@@ -89,7 +91,6 @@ export default function TreeMap() {
             .attr("stroke-width", .5)
             .attr("stroke", "#D7D7D7");
 
-        createLegend(riskVariable, riskVariables);
         renderTooltip(riskVariable, rect);
 
     }, [riskVariable])
@@ -100,7 +101,7 @@ export default function TreeMap() {
             <Navigation/>
             <div class="container">
                 <div id="chart"></div>
-                <div id="legend"></div>
+                <View riskVariable={riskVariable} updateRiskVariable={updateRiskVariable}/>
             </div>
         </div>
     )

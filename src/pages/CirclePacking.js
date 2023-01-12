@@ -1,8 +1,9 @@
 import Navigation from "../components/Navigation";
-import { riskVariables, createLegend, createColorScale, createOpacityScale } from "../utils/global";
+import View from "../components/View";
+import { riskVariables, createColorScale, createOpacityScale } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // Tooltip
 function renderTooltip(riskVariable, circle) {
@@ -43,15 +44,13 @@ function renderTooltip(riskVariable, circle) {
 
 export default function CirclePacking() {
 
-    console.log(data)
+    const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
 
-    var riskVariable = "controlTypeMode";
+    // Set-up layout
     const margin = {top: 10, right: 10, bottom: 10, left: 10},
-    width = 1000 - margin.left - margin.right,
-    height = 1000 - margin.top - margin.bottom;
-
+        width = 1000 - margin.left - margin.right,
+        height = 1000 - margin.top - margin.bottom;
     const padding = 3;
-    const fill = "grey";
 
     // Set-up scales
     const colorScale = createColorScale(riskVariable, riskVariables);
@@ -87,10 +86,8 @@ export default function CirclePacking() {
             .join("g")
             .attr("transform", d => `translate(${d.x},${d.y})`);
 
-        // console.log(descendants)
-
         const circle = node.append("circle")
-            .attr("fill", d => d.children ? "#fff" : fill)
+            .attr("fill", d => d.children ? "#fff" : "grey")
             .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
             .attr("r", d => d.r)
             .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
@@ -99,7 +96,6 @@ export default function CirclePacking() {
             .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible")
 
         renderTooltip(riskVariable, circle);
-        createLegend(riskVariable, riskVariables);
 
     }, [riskVariable])
 
@@ -109,7 +105,7 @@ export default function CirclePacking() {
             <Navigation/>
             <div className="container">
                 <div id="chart"></div>
-                <div id="legend"></div>
+                <View riskVariable={riskVariable} updateRiskVariable={updateRiskVariable}/>
             </div>
         </div>
     )
