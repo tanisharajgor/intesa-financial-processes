@@ -3,8 +3,8 @@ import { riskVariables } from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
 
-// Creates the svg and variabls for the legend
-function createLegend(variable, variableLookup) {
+// Initiates the legend svg and sets the non-changing attributes
+function initiateLegend(variable, variableLookup) {
     const width = 216;
     let height = 100;
     let t = variableLookup[variable];
@@ -12,7 +12,8 @@ function createLegend(variable, variableLookup) {
     const svg = d3.select("#legend")
         .append("svg")
         .attr('width', width)
-        .attr('height', height);
+        .attr('height', height)
+        .append("g");
 
     for (let i in t.values) {
 
@@ -32,6 +33,34 @@ function createLegend(variable, variableLookup) {
     }
 }
 
+// Updates the legend attributes on variable change
+function updateLegend(variable, variableLookup) {
+
+    let t = variableLookup[variable];
+
+    let svg = d3.select("#legend svg")
+
+    d3.select("#legend svg g").remove();
+
+    svg = svg.append("g")
+
+    for (let i in t.values) {
+
+        svg
+            .append("circle")
+            .attr('cx', 10)
+            .attr('cy', ((d) => 20 + i*20))
+            .attr('r', 5)
+            .attr('fill', ((d) => t.colors[i]));
+
+        svg
+            .append("text")
+            .attr("x", 20)
+            .attr("y", ((d) => 25 + i*20))
+            .text(((d) => t.values[i]))
+    }
+}
+
 
 export default function View({riskVariable, updateRiskVariable}) {
 
@@ -41,7 +70,11 @@ export default function View({riskVariable, updateRiskVariable}) {
     }
 
     useEffect(() => {
-        createLegend(riskVariable, riskVariables);
+        initiateLegend(riskVariable, riskVariables);
+    }, [])
+
+    useEffect(() => {
+        updateLegend(riskVariable, riskVariables);
     }, [riskVariable])
 
     return(

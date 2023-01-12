@@ -42,6 +42,10 @@ function renderTooltip(riskVariable, circle) {
     });
 }
 
+function inititateCirclePacking() {
+    
+}
+
 export default function CirclePacking() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
