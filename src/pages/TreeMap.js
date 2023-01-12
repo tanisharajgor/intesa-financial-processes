@@ -3,7 +3,7 @@ import View from "../components/View";
 import { riskVariables, createColorScale, createOpacityScale } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // Tooltip
 function renderTooltip(riskVariable, rect) {

@@ -46,6 +46,7 @@ export default function View({riskVariable, updateRiskVariable}) {
 
     return(
         <div className='View'>
+            <h3>Risk type</h3>
             <FormControl variant="outlined" size="small">
                 <Select
                     labelId="view-select-label"
