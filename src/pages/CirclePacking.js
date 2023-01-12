@@ -23,7 +23,7 @@ function renderTooltip(riskVariable, circle) {
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`Process: <b>${d.data.name}</b><br>Control type: <b>${d.data.riskStatus[riskVariable]}</b>`);
+            .html(`Process: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]}</b>`);
 
         thisCircle
             .attr("stroke", "grey")
