@@ -19,7 +19,6 @@ raw_pth = os.path.join(pth, "raw")
 processed_pth = os.path.join(pth, "processed")
 fl_name = "Data_V3.xlsb"
 
-
 def save_csv(raw_pth):
 
     for fl in os.listdir(raw_pth):
@@ -98,6 +97,7 @@ def main():
 
     # mainRisk = risks.drop_duplicates()
     # mainActivity = data[["level1GUID", "level2GUID", "level3GUID", "modelGUID", "activityGUID"]].drop_duplicates()
+    import pdb; pdb.set_trace()
 
     risksNested = nest_risk_control(risk_to_control, risksClean, controlsClean)
     write_json(risksNested, os.path.join(processed_pth, "nested"), "risks")
