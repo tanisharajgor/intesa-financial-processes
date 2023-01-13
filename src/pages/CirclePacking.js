@@ -42,10 +42,6 @@ function renderTooltip(riskVariable, circle) {
     });
 }
 
-function inititateCirclePacking() {
-    
-}
-
 export default function CirclePacking() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
@@ -71,7 +67,6 @@ export default function CirclePacking() {
      .size([width - margin.left - margin.right, height - margin.top - margin.bottom])
      .padding(padding)
      (root);
-
 
     // Draw circle packing once
     useEffect(() => {
