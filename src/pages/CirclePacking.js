@@ -1,13 +1,17 @@
 import Navigation from "../components/Navigation";
-import { riskVariables, createLegend, createColorScale, createOpacityScale } from "../utils/global";
+import Main from "../components/Main";
+import { riskVariables, createColorScale, createOpacityScale } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { StylesProvider } from "@material-ui/core/styles";
+
+const id = "circle-packing-chart";
 
 // Tooltip
 function renderTooltip(riskVariable, circle) {
 
-    let tooltip = d3.select("#chart")
+    let tooltip = d3.select(`#${id}`)
         .append("div")
         .attr("class", "tooltip");
 
@@ -22,28 +26,28 @@ function renderTooltip(riskVariable, circle) {
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`Process: <b>${d.data.name}</b><br>Control type: <b>${d.data.riskStatus[riskVariable]}</b>`);
+            .html(`Process: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]}</b>`);
 
-        thisCircle
-            .attr("stroke", "grey")
-            .attr("stroke-width", 2);
+        // thisCircle
+        //     .attr("stroke", "grey")
+        //     .attr("stroke-width", 2);
 
-        d3.select(this).attr("opacity", 1).raise();
+        // d3.select(this).attr("opacity", 1).raise();
 
     }).on("mouseout", function() {
 
         tooltip.style("visibility", "hidden");
-        circle.attr("opacity", 1);
+        // circle.attr("opacity", 1);
 
-        d3.selectAll('circle')
-            .attr("stroke-width", .5)
-            .attr("stroke", "grey"); 
+        // d3.selectAll('circle')
+        //     .attr("stroke-width", .5)
+        //     .attr("stroke", "grey"); 
     });
 }
 
 export default function CirclePacking() {
 
-    var riskVariable = "controlTypeMode";
+    const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
 
     const height = 932, width = 932;
 
@@ -67,62 +71,58 @@ export default function CirclePacking() {
         .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
         .interpolate(d3.interpolateHcl);
 
+    // Draw circle packing once
     useEffect(() => {
 
-        const svg = d3.select("#chart").append("svg")
-        .attr("viewBox", `-${width / 2} -${height / 2} ${width} ${height}`)
-        .style("display", "block")
-        .style("margin", "0 -14px")
-        .style("background", color(0))
-        .style("cursor", "pointer")
-        .on("click", (event) => zoom(event, root));
-  
-    const node = svg.append("g")
-      .selectAll("circle")
-      .data(root.descendants().slice(1))
-      .join("circle")
-        .attr("fill", d => d.children ? color(d.depth) : "white")
-        .attr("pointer-events", d => !d.children ? "none" : null)
-        .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
-        .on("mouseout", function() { d3.select(this).attr("stroke", null); })
-        .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
+        const svg = d3.select(`#${id}`).append("svg")
+            .attr("viewBox", `-${width / 2} -${height / 2} ${width} ${height}`)
+            .style("cursor", "pointer")
+            .on("click", (event) => zoom(event, root));
+    
+        const circle = svg.append("g")
+            .selectAll("circle")
+            .data(root.descendants().slice(1))
+            .join("circle")
+                .attr("fill", d => d.children ? color(d.depth) : "white")
+                .attr("pointer-events", d => !d.children ? "none" : null)
+                .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
+                .on("mouseout", function() { d3.select(this).attr("stroke", null); })
+                .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
 
-    zoomTo([root.x, root.y, root.r * 2]);
+        zoomTo([root.x, root.y, root.r * 2]);
 
-    function zoomTo(v) {
-        const k = width / v[2];
+        function zoomTo(v) {
+            const k = width / v[2];
 
-        view = v;
-        node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
-        node.attr("r", d => d.r * k);
-    }
+            view = v;
+            circle.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
+            circle.attr("r", d => d.r * k);
+        }
 
-    function zoom(event, d) {
-        const focus0 = focus;
+        function zoom(event, d) {
+            const focus0 = focus;
 
-        focus = d;
+            focus = d;
 
-        const transition = svg.transition()
-            .duration(event.altKey ? 7500 : 750)
-            .tween("zoom", d => {
-            const i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2]);
-            return t => zoomTo(i(t));
+            const transition = svg.transition()
+                .duration(event.altKey ? 7500 : 750)
+                .tween("zoom", d => {
+                const i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2]);
+                return t => zoomTo(i(t));
             });
-    }
+        }
 
-        // renderTooltip(riskVariable, circle);
-        // createLegend(riskVariable, riskVariables);
+        renderTooltip(riskVariable, circle);
 
     }, [riskVariable])
 
     return(
-        <div className="circle-packing">
-            <h3>Circle packing</h3>
-            <Navigation/>
-            <div>
-                <div id="chart" className="Visualization"></div>
-                <div id="legend"></div>
+        <StylesProvider>
+            <div className="Content">
+                <Navigation/>
+                <div className="Query" id="FilterMenu"></div>
+                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} id={id}/>
             </div>
-        </div>
+        </StylesProvider>
     )
 }

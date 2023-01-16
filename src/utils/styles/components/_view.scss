@@ -1,0 +1,14 @@
+// View component styles
+
+.View {
+    margin-top: $appPadding;
+}
+
+.ViewInfo {
+    border-radius: 0;
+    border: 1px solid $appBackgroundTransparent;
+}
+
+.inner p {
+    margin-bottom: 0.625em;
+}

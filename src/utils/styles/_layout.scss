@@ -1,192 +1,190 @@
 /*
-  Layout styles 
-  Expected DOM hierarchy:
-  #root
-  - .Content
-  -- .Navigation
-  --- .Navigation_branding
-  --- .Navigation_links
-  -- .Query
-  -- .Main
-  --- .Visualizaiton
-  --- .Status
-  ---- .ViewInfo
-  ---- .Inspect
-  --- .ViewControl
-  */
+Layout styles 
+Expected DOM hierarchy:
+#root
+- .Content
+-- .Navigation
+--- .Navigation_branding
+--- .Navigation_links
+-- .Query
+-- .Main
+--- .Visualizaiton
+--- .Status
+---- .ViewInfo
+---- .Inspect
+--- .ViewControl
+*/
 
-  body {
+body {
     color: $appColor;
     background-color: $appBackground;
-  }
-  
-  // React app mounting point
-  #root {
+}
+
+// React app mounting point
+#root {
     width: 100vw;
     height: 100vh;
-  }
-  
-  // Wrapper
-  .Content {
+}
+
+// Wrapper
+.Content {
     display: grid;
     grid-template-columns: [left] $queryColWidth [main] auto;
     grid-template-rows: [nav] $topNavHeight [body] auto;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-  }
-  
-  // Top navigation
-  .Navigation {
+}
+
+// Top navigation
+.Navigation {
     grid-column-start: 1;
     grid-column-end: span 2;
-  
     display: flex;
     flex-direction: row;
-  }
-  
-  .Navigation_branding {
+}
+
+.Navigation_branding {
     flex: 1;
-  
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: start;
-  }
-  
-  .Navigation_links {
+}
+
+.Navigation_links {
     flex: 1;
-  
+
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: end;
-  }
-  
-  // Left query builder wodgets
-  .Query {
+}
+
+// Left query builder wodgets
+.Query {
     grid-column-start: 1;
     overflow-y: auto;
     overflow-x: hidden;
-  
+
     overflow-y: auto;
     overflow-x: hidden;
-  }
-  
-  // Container for the viz, status, and view controls
-  .Main {
+}
+
+// Container for the viz, status, and view controls
+.Main {
     position: relative;
     grid-column-start: 2;
-  }
-  
-  .Visualization {
+}
+
+.Visualization {
     width: 100%;
     height: 100%;
-  }
-  
-  // Status, legend, and attributes
-  .Status {
+}
+
+// Status, legend, and attributes
+.Status {
     position: fixed;
     top: 8%;
     right: 2%;
     width: $viewColWidth;
-  }
+}
 
-  .EmployeeRecord {
+.EmployeeRecord {
     position: absolute;
-  }
-  
-  .ViewInfo + .Inspect {
+}
+
+.ViewInfo + .Inspect {
     margin-top: $appPadding;
-  }
-  
-  // View controls: zoom, reset
-  .ViewControl {
+}
+
+// View controls: zoom, reset
+.ViewControl {
     position: absolute;
     bottom: 0;
     right: 0;
-  }
-  
-  /*
-    Mico-layout styles 
-  
-    Expected DOM hierarchy:
-    .layout_group
-    -- .layout_row
-    --- .layout_item.label
-    --- .layout_item
-    --- .layout_item.icon
-  
-    or 
-  
-    .layout_group
-    -- .layout_row
-    --- .layout_item.push
-    --- .layout_item.ctl
-  
-    */
-  
-  .layout_group {
-    width: 100%;
-  }
-  
-  .layout_group.inline {
+}
+
+/*
+Mico-layout styles 
+
+Expected DOM hierarchy:
+.layout_group
+-- .layout_row
+--- .layout_item.label
+--- .layout_item
+--- .layout_item.icon
+
+or 
+
+.layout_group
+-- .layout_row
+--- .layout_item.push
+--- .layout_item.ctl
+
+*/
+
+.layout_group {
+width: 100%;
+}
+
+.layout_group.inline {
     width: 100%;
     .layout_row {
-      display: block;
-      .layout_item {
+        display: block;
+        .layout_item {
         display: inline;
-      }
+        }
     }
-  }
-  
-  .layout_group.border {
+}
+
+.layout_group.border {
     border-bottom: 1px solid $appBorderColor;
-  }
-  
-  .layout_group.pad {
+}
+
+.layout_group.pad {
     padding: 12px;
-  }
-  
-  .layout_row {
+}
+
+.layout_row {
     display: flex;
     gap: $appPadding;
     flex-direction: row;
     align-items: center;
     width: 100%;
     .layout_item {
-      flex: 1;
-      display: inline-block;
+        flex: 1;
+        display: inline-block;
     }
     .layout_item.label {
-      flex: 0;
-      min-width: 2.5rem;
+        flex: 0;
+        min-width: 2.5rem;
     }
     .layout_item.icon {
-      flex: 0;
-      min-width: 2rem;
+        flex: 0;
+        min-width: 2rem;
     }
     .layout_item.push {
-      margin-left: $appPadding + 2.5rem;
+        margin-left: $appPadding + 2.5rem;
     }
-  }
-  
-  .layout_group + .layout_group,
-  .layout_row + .layout_row {
+}
+
+.layout_group + .layout_group,
+.layout_row + .layout_row {
     margin-top: $appPadding * 2;
-  }
-  
-  .layout_group.inline {
+}
+
+.layout_group.inline {
     .layout_group + .layout_row,
     .layout_row + .layout_row {
-      margin-top: $appPadding;
+        margin-top: $appPadding;
     }
-  }
-  
-  .key {
+}
+
+.key {
     color: $appColorSecondary;
-  }
-  
-  .value {
+}
+
+.value {
     color: $appColor;
-  }
+}

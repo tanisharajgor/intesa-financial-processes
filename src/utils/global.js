@@ -2,47 +2,27 @@ import * as d3 from 'd3';
 
 export const riskVariables = {
     "controlTypeMode": {
-        values: ["NA", "Manual", "Semi-automatic", "Automatic"],
-        colors: ["#ADADAD", "#FF0000", "#FFC41F", "#0071BC"]
+        label: "Control type mode",
+        values: ["Manual", "Semi-automatic", "Automatic", "NA"],
+        colors: ["#FF0000", "#FFC41F", "#0071BC", "#ADADAD"]
     },
-    "financialDisclosureRisk": {
-        values: ["NA", "True", "False"],
-        colors: ["#ADADAD", "#FF0000", "#0071BC"]
-    }
-}
-
-export function createLegend(variable, variableLookup) {
-    const width = 216;
-    let height = 100;
-    let t = variableLookup[variable]
-
-    const svg = d3.select("#legend")
-        .append("svg")
-        .attr('width', width)
-        .attr('height', height);
-
-    for (let i in t.values) {
-
-        svg
-            .append("circle")
-            .attr('cx', 10)
-            .attr('cy', ((d) => 20 + i*20))
-            .attr('r', 5)
-            .attr('fill', ((d) => t.colors[i]));
-
-        svg
-            .append("text")
-            .attr("x", 20)
-            .attr("y", ((d) => 25 + i*20))
-            .text(((d) => t.values[i]))
-
+    "financialDisclosureRiskAny": {
+        label: "Financial disclosure risk",
+        values: [true, false, "NA"],
+        colors: ["#FF0000", "#0071BC", "#ADADAD"]
+    },
+    "controlPeriodocityMode": {
+        label: "Periodocity",
+        values: ['Per event', 'Quarterly', 'Half yearly', 'Annually', 'Monthly', 'Weekly', 'Daily', 'Decadal', 'NA'],
+        colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', 
+        '#e377c2', '#bcbd22', '#ADADAD']
     }
 }
 
 // Creates a colorScales for different types of variables
+// yellow: #FFC41F
+// orange: #FF831D
 export function createColorScale(variable, variableLookup) {
-    // yellow: #FFC41F
-    // orange: #FF831D
 
     let t = variableLookup[variable]
 

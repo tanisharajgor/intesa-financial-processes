@@ -1,0 +1,57 @@
+// Navigation component styles
+
+.Navigation {
+    border-bottom: 1px solid $appBorderColor;
+  }
+  
+  // Branding
+  .Navigation_branding {
+    flex: 1;
+  
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+  
+    padding: $appPadding;
+  
+    h2 {
+      color: $appColorFocus;
+      font-size: 1.25rem;
+    }
+  }
+  
+  // Links
+  .Navigation_links {
+    flex: 1;
+  
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+  
+    padding: $appPadding;
+  }
+  
+  .Navigation_list {
+    list-style: none;
+  }
+  
+  .Navigation_link {
+    display: inline-block;
+    flex-grow: 0;
+    flex: 0;
+    color: $appColorSecondary;
+    a {
+      padding: $appPadding;
+      border-radius: $appBorderRadius;
+    }
+    a.active {
+      color: $appColor;
+    }  
+    a:hover {
+      color: $appColor;
+      background-color: $appBorderColor;
+    }
+  
+  }
