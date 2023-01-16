@@ -28,9 +28,9 @@ function renderTooltip(riskVariable, circle) {
             .style("left", `${x}px`)
             .html(`Process: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]}</b>`);
 
-        // thisCircle
-        //     .attr("stroke", "grey")
-        //     .attr("stroke-width", 2);
+        thisCircle
+            .attr("stroke", "grey")
+            .attr("stroke-width", 2);
 
         // d3.select(this).attr("opacity", 1).raise();
 
@@ -39,9 +39,9 @@ function renderTooltip(riskVariable, circle) {
         tooltip.style("visibility", "hidden");
         // circle.attr("opacity", 1);
 
-        // d3.selectAll('circle')
-        //     .attr("stroke-width", .5)
-        //     .attr("stroke", "grey"); 
+        d3.selectAll('circle')
+            .attr("stroke-width", .5)
+            .attr("stroke", "grey"); 
     });
 }
 
@@ -66,10 +66,9 @@ export default function CirclePacking() {
     let focus = root;
     let view;
 
-    const color = d3.scaleLinear()
-        .domain([0, 5])
-        .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
-        .interpolate(d3.interpolateHcl);
+    // Set-up scales
+    const colorScale = createColorScale(riskVariable, riskVariables);
+    const opacityScale = createOpacityScale();
 
     // Draw circle packing once
     useEffect(() => {
@@ -83,11 +82,15 @@ export default function CirclePacking() {
             .selectAll("circle")
             .data(root.descendants().slice(1))
             .join("circle")
-                .attr("fill", d => d.children ? color(d.depth) : "white")
+                .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
                 .attr("pointer-events", d => !d.children ? "none" : null)
                 .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
                 .on("mouseout", function() { d3.select(this).attr("stroke", null); })
-                .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
+                .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()))
+                .attr("stroke-width", .5)
+                .attr("stroke", "grey")
+                .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
+                .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible");
 
         zoomTo([root.x, root.y, root.r * 2]);
 
@@ -111,6 +114,13 @@ export default function CirclePacking() {
                 return t => zoomTo(i(t));
             });
         }
+
+    }, [])
+
+    // Update the visual aesthetics of the visualization that change with a user input
+    useEffect(() => {
+        const circle = d3.selectAll(`#${id} svg circle`)
+            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
 
         renderTooltip(riskVariable, circle);
 
