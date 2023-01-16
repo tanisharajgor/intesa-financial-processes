@@ -13,7 +13,7 @@ export const riskVariables = {
     },
     "controlPeriodocityMode": {
         label: "Periodocity",
-        values: ['Per event', 'Quarterly', 'Half yearly', 'Annually', 'Monthly', 'Weekly', 'Daily', 'Decadal', 'NA'],
+        values: ['Decadal', 'Annually', 'Half yearly', 'Quarterly', 'Monthly', 'Weekly', 'Daily', 'Per event', 'NA'],
         colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', 
         '#e377c2', '#bcbd22', '#ADADAD']
     }

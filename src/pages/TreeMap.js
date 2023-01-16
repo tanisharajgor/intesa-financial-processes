@@ -63,7 +63,6 @@ function addProcessLabels(rectHeight) {
             .attr("transform","rotate(-90)")
             .text(labels[i])
     }
-
 }
 
 
