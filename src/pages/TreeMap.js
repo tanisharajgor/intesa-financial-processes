@@ -1,12 +1,12 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { riskVariables, createColorScale, createOpacityScale } from "../utils/global";
+import { riskVariables, createColorScale } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import { StylesProvider } from "@material-ui/core/styles";
 
-const id ="tree-map-chart";
+const id = "tree-map-chart";
 
 // Tooltip
 function renderTooltip(riskVariable, rect) {
@@ -53,7 +53,9 @@ export default function TreeMap() {
 
     // Set-up scales
     const colorScale = createColorScale(riskVariable, riskVariables);
-    const opacityScale = createOpacityScale();
+    const opacityScale =  d3.scaleOrdinal()
+            .domain([0, 1, 2, 3, 4])
+            .range([.3, .4, .5, .6, .25]);
 
     // Set-up hierarchical data
     const root = d3.hierarchy(data).sum(function(d) { return 1 }) // Here the size of each leave is given in the 'value' field in input data
@@ -70,26 +72,32 @@ export default function TreeMap() {
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
+            .attr("transform",`translate(${width/2},${height/2})`)
+            .attr("transform","rotate(90)")
             .append("g")
-            .attr("transform",
-                    `translate(${margin.left}, ${margin.top})`)
-            .attr("font-family", "sans-serif")
-            .attr("font-size", 10);
+                .attr("transform",
+                        `translate(${margin.left}, ${margin.top})`)
+                .attr("font-family", "sans-serif")
+                .attr("font-size", 10)
+
+        const shift = descendants[0].y1 - descendants[0].y0; // calculate the size of the root rect
+
+        console.log(descendants)
 
         const g = svg
             .selectAll("g")
-            .data(descendants)
+            .data(descendants.shift()) //.shift pops off the root data
             .join("g")
-            .attr("transform", d => `translate(${d.y0},${d.x0})`);
+            .attr("transform", d => `translate(${d.y0 - shift},${d.x0})`); //shift the visualization the amount of the root rect
 
         g.append("rect")
             .attr("width", d => d.y1 - d.y0)
-            .attr("height", d => d.x1 - d.x0)
+            .attr("height", d => (d.x1 - d.x0) + 1)
             .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
-            .attr("fill-opacity", d => .5)
+            .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
             .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible")
-            .attr("stroke-width", .5)
-            .attr("stroke", "#D7D7D7");
+            // .attr("stroke-width", .5)
+            // .attr("stroke", "#D7D7D7");
 
     }, [])
 
