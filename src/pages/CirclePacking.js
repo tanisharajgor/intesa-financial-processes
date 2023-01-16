@@ -6,10 +6,12 @@ import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import { StylesProvider } from "@material-ui/core/styles";
 
+const id = "circle-packing-chart";
+
 // Tooltip
 function renderTooltip(riskVariable, circle) {
 
-    let tooltip = d3.select("#chart")
+    let tooltip = d3.select(`#${id}`)
         .append("div")
         .attr("class", "tooltip");
 
@@ -72,7 +74,7 @@ export default function CirclePacking() {
     // Draw circle packing once
     useEffect(() => {
 
-        const svg = d3.select("#chart")
+        const svg = d3.select(`#${id}`)
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -101,7 +103,7 @@ export default function CirclePacking() {
 
     // Update the visual aesthetics of the visualization that change with a user input
     useEffect(() => {
-        const circle = d3.selectAll("#chart svg circle")
+        const circle = d3.selectAll(`#${id} svg circle`)
             .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
 
         renderTooltip(riskVariable, circle);
@@ -113,7 +115,7 @@ export default function CirclePacking() {
             <div className="Content">
                 <Navigation/>
                 <div className="Query" id="FilterMenu"></div>
-                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable}/>
+                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} id={id}/>
             </div>
         </StylesProvider>
     )
