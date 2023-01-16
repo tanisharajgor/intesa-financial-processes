@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import View from "../components/View";
-import { riskVariables, createColorScale, createOpacityScale } from "../utils/global";
+import { riskVariables, createColorScale } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -52,7 +52,9 @@ export default function TreeMap() {
 
     // Set-up scales
     const colorScale = createColorScale(riskVariable, riskVariables);
-    const opacityScale = createOpacityScale();
+    const opacityScale =  d3.scaleOrdinal()
+            .domain([0, 1, 2, 3, 4])
+            .range([.3, .4, .5, .6, .7]);
 
     // Set-up hierarchical data
     const root = d3.hierarchy(data).sum(function(d) { return 1 }) // Here the size of each leave is given in the 'value' field in input data
@@ -79,6 +81,8 @@ export default function TreeMap() {
 
         const shift = descendants[0].y1 - descendants[0].y0; // calculate the size of the root rect
 
+        console.log(descendants)
+
         const g = svg
             .selectAll("g")
             .data(descendants.shift()) //.shift pops off the root data
@@ -87,12 +91,12 @@ export default function TreeMap() {
 
         g.append("rect")
             .attr("width", d => d.y1 - d.y0)
-            .attr("height", d => d.x1 - d.x0)
+            .attr("height", d => (d.x1 - d.x0) + 1)
             .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
-            .attr("fill-opacity", d => .5)
+            .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
             .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible")
-            .attr("stroke-width", .5)
-            .attr("stroke", "#D7D7D7");
+            // .attr("stroke-width", .5)
+            // .attr("stroke", "#D7D7D7");
 
     }, [])
 
