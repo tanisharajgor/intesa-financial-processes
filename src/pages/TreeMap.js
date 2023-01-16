@@ -77,11 +77,13 @@ export default function TreeMap() {
                 .attr("font-family", "sans-serif")
                 .attr("font-size", 10)
 
+        const shift = descendants[0].y1 - descendants[0].y0; // calculate the size of the root rect
+
         const g = svg
             .selectAll("g")
-            .data(descendants)
+            .data(descendants.shift()) //.shift pops off the root data
             .join("g")
-            .attr("transform", d => `translate(${d.y0},${d.x0})`);
+            .attr("transform", d => `translate(${d.y0 - shift},${d.x0})`); //shift the visualization the amount of the root rect
 
         g.append("rect")
             .attr("width", d => d.y1 - d.y0)
