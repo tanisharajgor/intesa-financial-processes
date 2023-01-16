@@ -5,10 +5,12 @@ import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 
+const id ="tree-map-chart";
+
 // Tooltip
 function renderTooltip(riskVariable, rect) {
 
-    const tooltip = d3.select("#chart")
+    const tooltip = d3.select(`#${id}`)
         .append("div")
         .attr("class", "tooltip");
 
@@ -63,7 +65,7 @@ export default function TreeMap() {
     const descendants = root.descendants();
 
     useEffect(() => {
-        const svg = d3.select("#chart")
+        const svg = d3.select(`#${id}`)
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -92,7 +94,7 @@ export default function TreeMap() {
 
     useEffect(() => {
 
-        const rect = d3.selectAll("#chart svg g rect")
+        const rect = d3.selectAll(`#${id} svg g rect`)
             .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
 
         renderTooltip(riskVariable, rect);
@@ -103,7 +105,7 @@ export default function TreeMap() {
             <h3>Tree Map</h3>
             <Navigation/>
             <div className="container">
-                <div id="chart"></div>
+                <div id={id}></div>
                 <View riskVariable={riskVariable} updateRiskVariable={updateRiskVariable}/>
             </div>
         </div>
