@@ -29,7 +29,7 @@ function initiateLegend(variable, variableLookup) {
             .attr("x", 20)
             .attr("y", ((d) => 25 + i*20))
             .text(((d) => t.values[i]))
-
+            .style("fill", "white")
     }
 }
 
@@ -58,6 +58,8 @@ function updateLegend(variable, variableLookup) {
             .attr("x", 20)
             .attr("y", ((d) => 25 + i*20))
             .text(((d) => t.values[i]))
+            .style("fill", "white")
+
     }
 }
 
@@ -79,7 +81,7 @@ export default function View({riskVariable, updateRiskVariable}) {
 
     return(
         <div className='View'>
-            <h3>Risk type</h3>
+            <h3>View by risk type</h3>
             <FormControl variant="outlined" size="small">
                 <Select
                     labelId="view-select-label"

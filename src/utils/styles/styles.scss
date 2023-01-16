@@ -2,5 +2,13 @@
 @import "variables";
 @import "reset";
 
-@import "components/layout";
+// Base
+@import "typography";
+@import "layout";
+
+// Components
 @import "components/tooltip";
+@import "components/visualization";
+@import "components/navigation";
+@import "components/status";
+@import "components/view";

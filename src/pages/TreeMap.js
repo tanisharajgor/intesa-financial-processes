@@ -1,9 +1,10 @@
 import Navigation from "../components/Navigation";
-import View from "../components/View";
+import Main from "../components/Main";
 import { riskVariables, createColorScale, createOpacityScale } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
+import { StylesProvider } from "@material-ui/core/styles";
 
 // Tooltip
 function renderTooltip(riskVariable, rect) {
@@ -91,7 +92,6 @@ export default function TreeMap() {
     }, [])
 
     useEffect(() => {
-
         const rect = d3.selectAll("#chart svg g rect")
             .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
 
@@ -99,13 +99,12 @@ export default function TreeMap() {
     }, [riskVariable])
 
     return(
-        <div>
-            <h3>Tree Map</h3>
-            <Navigation/>
-            <div className="container">
-                <div id="chart"></div>
-                <View riskVariable={riskVariable} updateRiskVariable={updateRiskVariable}/>
+        <StylesProvider injectFirst>
+            <div className="Content">
+                <Navigation/>
+                <div className="Query" id="FilterMenu"></div>
+                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable}/>
             </div>
-        </div>
+        </StylesProvider>
     )
 }

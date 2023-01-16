@@ -1,10 +1,13 @@
 import Navigation from "../components/Navigation";
+import { StylesProvider } from "@material-ui/core/styles";
 
 export default function Network() {
     return(
-        <div> 
-            <h3>Network</h3>
-            <Navigation/>
-        </div>
+        <StylesProvider injectFirst>
+            <div className="Content">
+                <Navigation/>
+                <div className="Query" id="FilterMenu"></div>
+            </div>
+        </StylesProvider>
     )
 }

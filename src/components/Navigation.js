@@ -6,7 +6,10 @@ import { NavLink } from "react-router-dom";
  */
 export default function Navigation() {
     return (
-        <div className="Navigation">  
+        <div className="Navigation">
+            <div className="Navigation_branding">
+                <h2><NavLink to="/">Banca Processes</NavLink></h2>
+            </div>
             <div className="Navigation_links">
                 <ul id="Navigation_list">
                     <li className="Navigation_link">
