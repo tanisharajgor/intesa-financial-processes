@@ -8,6 +8,11 @@ import { StylesProvider } from "@material-ui/core/styles";
 
 const id = "tree-map-chart";
 
+// Set-up layout
+const margin = {top: 10, right: 10, bottom: 10, left: 10},
+    width = 1000 - margin.left - margin.right,
+    height = 1000 - margin.top - margin.bottom;
+
 // Tooltip
 function renderTooltip(riskVariable, rect) {
 
@@ -42,14 +47,29 @@ function renderTooltip(riskVariable, rect) {
         });
 }
 
+function addProcessLabels(rectHeight) {
+
+    const labels = ["Level 1 Processes", "Level 2 Processes", "Level 3 Processes", "Activities"]
+
+    for (let i in labels) {
+        d3.select(`#${id} svg`)
+            .append("text")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 14)
+            .attr("x", -110 - height)
+            .attr("y", rectHeight/2 + rectHeight*i + margin.left) //+ height
+            .attr("fill", "white")
+            .attr("transform",`translate(${width/2},${height/2})`)
+            .attr("transform","rotate(-90)")
+            .text(labels[i])
+    }
+
+}
+
+
 export default function TreeMap() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
-
-    // Set-up layout
-    const margin = {top: 10, right: 10, bottom: 10, left: 10},
-        width = 1000 - margin.left - margin.right,
-        height = 1000 - margin.top - margin.bottom;
 
     // Set-up scales
     const colorScale = createColorScale(riskVariable, riskVariables);
@@ -76,28 +96,23 @@ export default function TreeMap() {
             .attr("transform","rotate(90)")
             .append("g")
                 .attr("transform",
-                        `translate(${margin.left}, ${margin.top})`)
-                .attr("font-family", "sans-serif")
-                .attr("font-size", 10)
+                        `translate(${margin.left}, ${margin.top})`);
 
-        const shift = descendants[0].y1 - descendants[0].y0; // calculate the size of the root rect
-
-        console.log(descendants)
+        const rectHeight = descendants[0].y1 - descendants[0].y0; // calculate the size of the root rect
+        addProcessLabels(rectHeight);
 
         const g = svg
             .selectAll("g")
             .data(descendants.shift()) //.shift pops off the root data
             .join("g")
-            .attr("transform", d => `translate(${d.y0 - shift},${d.x0})`); //shift the visualization the amount of the root rect
+            .attr("transform", d => `translate(${d.y0 - rectHeight},${d.x0})`); //shift the visualization the amount of the root rect
 
         g.append("rect")
             .attr("width", d => d.y1 - d.y0)
             .attr("height", d => (d.x1 - d.x0) + 1)
             .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
             .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
-            .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible")
-            // .attr("stroke-width", .5)
-            // .attr("stroke", "#D7D7D7");
+            .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible");
 
     }, [])
 
