@@ -23,8 +23,6 @@ def save_csv(raw_pth):
 
     for fl in os.listdir(raw_pth):
 
-       # import pdb; pdb.set_trace()
-
         df =  pd.read_excel(os.path.join(raw_pth, fl))
 
         name = os.path.splitext(fl)[0]
@@ -97,12 +95,11 @@ def main():
 
     # mainRisk = risks.drop_duplicates()
     # mainActivity = data[["level1GUID", "level2GUID", "level3GUID", "modelGUID", "activityGUID"]].drop_duplicates()
-    import pdb; pdb.set_trace()
 
     risksNested = nest_risk_control(risk_to_control, risksClean, controlsClean)
     write_json(risksNested, os.path.join(processed_pth, "nested"), "risks")
 
-    processesNested = nest_processes(level1_to_level2, level2_to_level3, level3_to_activity, activity_to_risk, risk_to_control, level1Clean, level2Clean, level3Clean, activitiesClean, risksClean, controlsClean, risksNested)
+    processesNested = nest_processes(level1_to_level2, level2_to_level3, level3_to_activity, activity_to_risk, risk_to_control, level1Clean, level2Clean, level3Clean, activitiesClean, risksClean, controlsClean)
     write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
 
     ## Nested data
