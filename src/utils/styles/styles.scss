@@ -24,3 +24,7 @@ html, body {
     display: flex;
     flex-direction: row;
 }
+
+@import "variables";
+@import "layout";
+@import "components/visualization";
