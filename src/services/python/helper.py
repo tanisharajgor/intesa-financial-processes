@@ -11,8 +11,6 @@ param fl_name string
 def write_csv(df, pth, fl_name):
 
     df.to_csv(os.path.join(pth, fl_name + ".csv"), index = False)
-<<<<<<< HEAD
-=======
 
 """
 Write out JSON file
@@ -66,4 +64,3 @@ def create_lu(df, var_id, var_descr, sort = False):
                         "descr": descr})
 
     return array
->>>>>>> 387a69faa21965d57aae8287333da63e61731589
