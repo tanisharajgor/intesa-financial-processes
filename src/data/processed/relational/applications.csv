@@ -755,7 +755,7 @@ SAP R3 Purchasing Purchase order,1748
 PEACE,687
 CMLT Early repayment Web Mortgages,144
 ACDUP Bank check duplication WEB,236
-GHRX Banker's Checks and Wire Transfer Inquiry Management,1860
+GHRX Bankers Checks and Wire Transfer Inquiry Management,1860
 J6TP Operational functions PASS,99
 RMW Risk Middleware,460
 PHS Portfolio Hierarchy Server,870
@@ -855,7 +855,7 @@ New Bank Loan Offer,1376
 Streeling,976
 155102 Business Object Info View,1183
 CCWEB Cash Management and Central Cash Transport,326
-Moody's,623
+Moodys,623
 SPPI Test Tool - Titles,80
 N600 Shipping and Transport Materiality Management,1405
 N650 Order accounts management,1776
@@ -881,7 +881,7 @@ Customer Journey POS Sale - Intesa Sanpaolo Agents4You,1913
 Revenue engine and fee and KPI engine,583
 Portal for uploading product sheets and Primary Market and PCT subscription sheets,478
 SAP Data Management,1251
-PEF - Fido's Electronic Practice,90
+PEF - Fidos Electronic Practice,90
 TWS - Automatic host and departmental batch processing scheduler,740
 New Asset Dialogue - Company Asset Management,1408
 Credit Portal - Mortgages to Individuals,383
@@ -1092,7 +1092,7 @@ MMSR – Money Market Statistical Reporting,305
 GPO Cancellation of titles,1700
 GPO Interest Rates,1702
 N600 Confirmation of receipt of envelope,1344
-AO0 Calling of shareholders' meetings,469
+AO0 Calling of shareholders meetings,469
 New Employee Loan Offer,109
 Hub Operations MIFID Service Contract Storage,863
 Archiving of service contracts MIFID Anomaly management,862
@@ -1189,7 +1189,7 @@ Hyperion Web Analysis reports,178
 INCA Query budget chapters,1427
 VABI Change in budget chapters,1513
 CABI Loading budget chapters,835
-ICTS Query treasurer's account,271
+ICTS Query treasurers account,271
 GBIL Budget management,264
 VAES Year change,266
 INES Query exercises,1461
@@ -1399,7 +1399,7 @@ BUY Validation of documentation,484
 F24IN Collections Tax collection model F24,241
 F24NW F24 processing with OCR for DCO,29
 RETAS Check Revision Web Check Dematerialization,1631
-WEBCARD Waiver of the Group's card,365
+WEBCARD Waiver of the Groups card,365
 ZAFI Waiver with refund,964
 WEBCARD Queries on positions,363
 NAIM Signal Management Service Execution Mode interbank.,792
@@ -1451,7 +1451,7 @@ DSO - Agenda 3270,1814
 MCT Accounting Model Processing Master Data Target,1029
 COBL0 Collateralisation of bank loans,915
 QUATM ATM MTA balancing work session management,233
-IJBL Cashier's checks,1352
+IJBL Cashiers checks,1352
 ICRO Question C.R.O,1419
 AUTH Authorization functions,379
 LLIN Infrastructure Counts Inquiry Settlements and Account Situation,954
