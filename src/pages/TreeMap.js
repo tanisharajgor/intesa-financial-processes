@@ -69,11 +69,13 @@ export default function TreeMap() {
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
+            .attr("transform",`translate(${width/2},${height/2})`)
+            .attr("transform","rotate(90)")
             .append("g")
-            .attr("transform",
-                    `translate(${margin.left}, ${margin.top})`)
-            .attr("font-family", "sans-serif")
-            .attr("font-size", 10);
+                .attr("transform",
+                        `translate(${margin.left}, ${margin.top})`)
+                .attr("font-family", "sans-serif")
+                .attr("font-size", 10)
 
         const g = svg
             .selectAll("g")
