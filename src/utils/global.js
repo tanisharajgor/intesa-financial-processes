@@ -3,13 +3,19 @@ import * as d3 from 'd3';
 export const riskVariables = {
     "controlTypeMode": {
         label: "Control type mode",
-        values: ["NA", "Manual", "Semi-automatic", "Automatic"],
-        colors: ["#ADADAD", "#FF0000", "#FFC41F", "#0071BC"]
+        values: ["Manual", "Semi-automatic", "Automatic", "NA"],
+        colors: ["#FF0000", "#FFC41F", "#0071BC", "#ADADAD"]
     },
     "financialDisclosureRiskAny": {
         label: "Financial disclosure risk",
-        values: ["NA", true, false],
-        colors: ["#ADADAD", "#FF0000", "#0071BC"]
+        values: [true, false, "NA"],
+        colors: ["#FF0000", "#0071BC", "#ADADAD"]
+    },
+    "controlPeriodocityMode": {
+        label: "Periodocity",
+        values: ['Per event', 'Quarterly', 'Half yearly', 'Annually', 'Monthly', 'Weekly', 'Daily', 'Decadal', 'NA'],
+        colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', 
+        '#e377c2', '#bcbd22', '#ADADAD']
     }
 }
 

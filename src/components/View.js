@@ -9,6 +9,10 @@ function initiateLegend(variable, variableLookup) {
     let height = 100;
     let t = variableLookup[variable];
 
+    if (t.values.length > 2) {
+        height += (t.values.length + 1)*20;
+    }
+
     const svg = d3.select("#legend")
         .append("svg")
         .attr('width', width)

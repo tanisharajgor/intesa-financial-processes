@@ -86,7 +86,7 @@ export default function TreeMap() {
             .attr("width", d => d.y1 - d.y0)
             .attr("height", d => d.x1 - d.x0)
             .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
-            .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
+            .attr("fill-opacity", d => .5)
             .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible")
             .attr("stroke-width", .5)
             .attr("stroke", "#D7D7D7");
