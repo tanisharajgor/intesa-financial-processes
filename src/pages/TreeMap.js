@@ -5,7 +5,7 @@ import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 
-const id ="tree-map-chart";
+const id = "tree-map-chart";
 
 // Tooltip
 function renderTooltip(riskVariable, rect) {
