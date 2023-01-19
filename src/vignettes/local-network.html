@@ -1,0 +1,216 @@
+<!-- 
+Run from local server on this file 
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Network</title>
+<style>
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 12px;
+    color: #fff;
+    background: #000;
+    overflow: hidden;
+}
+
+svg {
+    background: #000;
+}
+
+</style>
+</head>
+<body>
+<div>
+    <p class="title">
+        Activities associated with a specific node and other linked actors.
+        <br>
+        White/Grey = actors
+        <br>
+        Red = process activity
+        <br>
+        Blue = control activity
+    </p>
+    <p>
+<input id="nodeinput" type="text" value="2549">
+<input id="expand" type="checkbox">  
+<label for="expand">Expand</label>
+    </p>
+    <svg id="plot"></svg>
+</div>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+
+const promises = [
+    d3.json("../data/processed/nested/network.json"),
+    d3.json("../data/processed/nested/lu.json")
+]
+
+Promise.all(promises).then(([data,lu])=>{
+
+    const nodes = data.nodes;
+    const links = data.links;
+
+    const processData = () =>{
+        const uid = d3.select("#nodeinput").node().value * 1;
+        const linksFiltered = filterSourceTarget(links, uid);
+        const uniqueUids = listUids(linksFiltered);
+        const nodesFiltered = getNodesByUid(nodes, uniqueUids);
+
+        // expand to related actors
+        const expandedLinks = expandActorLinks(nodesFiltered);
+        const expandedUniqueUids = listUids(expandedLinks);
+        const expandedNodes = getNodesByUid(nodes, expandedUniqueUids);
+
+        nodeTypeAndSize(expandedNodes, uid);
+
+        // Question:
+        // console.log(
+        //     "Are lookups useful? I'm not seeing any new info ...",
+        //     nodesFiltered[4],
+        //     lu.activity.filter(d=>d.id === nodesFiltered[4].id)
+        // )
+
+        const rootDom = d3.select("#plot");
+        rootDom.attr("width",window.innerWidth)
+            .attr("height",window.innerHeight)
+
+
+        const draw = () => {
+                // only selected node and associated activities
+                drawNetwork(rootDom, nodesFiltered, linksFiltered);
+        };
+        const drawExpanded = () => {
+                // expanded to related actors
+                drawNetwork(rootDom, expandedNodes, expandedLinks);
+        };
+
+        draw();
+
+        const btn = d3.select("#expand").on("change",(e)=>{
+            e.target.checked ? drawExpanded(): draw(); 
+        })
+    }
+
+    processData();
+
+    const nid = d3.select("#nodeinput").on("change",(e)=>{
+        d3.select("#expand").property("checked",false)
+        processData();
+    });
+
+})
+
+function listUids(linksArray){
+    const uids = [];
+    linksArray.forEach(d=>{
+        uids.push(d.source);
+        uids.push(d.target);
+    });
+    return [...new Set(uids)];
+}
+
+function filterSourceTarget(linksArray, uid){
+    return linksArray.filter(d=>(d.source === uid || d.target === uid));
+}
+
+function getNodesByUid(nodesArray, uidArray){
+    return nodesArray.filter(d=>(uidArray.includes(d.id)));
+}
+
+function expandActorLinks(nodesArray){
+    let actorLinks = [];
+    nodesArray.forEach(d=>{
+        if(d.group === "activity") {
+            d.actorIDs.forEach(j=>{
+                actorLinks.push({
+                    "source":d.id,
+                    "target":j
+                })
+            })
+        }
+    })
+    return actorLinks;
+}
+
+function nodeTypeAndSize(nodesArray, id){
+    return nodesArray.map(d=>{
+        if (d.id === id) {
+            d.root = true;
+            d.size = 4;
+        } else {
+            if (d.group === "actor") d.size = 1.5;
+            else d.size = 1;
+        }
+        return d;
+    })
+}
+
+function drawNetwork(rootDom, nodes, links){
+
+    rootDom.selectAll('g').remove();
+
+    const plot = rootDom.append("g");
+
+    const radius = d3.scaleSqrt()
+        .domain([1, 2])
+        .range([3, 7]);
+    
+    const width = rootDom.attr("width"),
+          height = rootDom.attr("height")
+
+    const force = d3.forceSimulation()
+        .nodes(nodes)
+        .force("charge", d3.forceManyBody())
+        .force("x", d3.forceX(width/2))
+        .force("y", d3.forceY(height/2))
+        .force("link", d3.forceLink(links).id(d=>d.id).distance(100));
+
+    const link = plot.selectAll(".link")
+        .data(links)
+        .enter()
+        .append("line")
+        .attr("class", "link")
+        .attr("stroke","grey")
+        .attr("opacity", 0.3);
+
+    const node = plot.selectAll(".node")
+        .data(nodes)
+        .enter()
+        .append("circle")
+        .attr("class", "node")
+        .attr("cx", width * 0.5)
+        .attr("cy", width * 0.5)
+        .attr("r", d=>radius(d.size))
+        .style("fill", d=>{
+            // root
+            if (d.root) return "#FFFFFF";
+            // actor
+            if (d.group === "actor") return "#777777";
+            // process
+            if (d.type === "process activity") return "red";
+            // control
+            if (d.type === "control activity") return "blue";
+        })
+
+    force.on("tick",()=>{
+        link
+            .attr("x1",d=>d.source.x)
+            .attr("y1",d=>d.source.y)
+            .attr("x2",d=>d.target.x)
+            .attr("y2",d=>d.target.y);
+        node
+            .attr("cx",d=>d.x)
+            .attr("cy",d=>d.y);
+    });
+}
+
+
+</script>
+</body>
+</html>
