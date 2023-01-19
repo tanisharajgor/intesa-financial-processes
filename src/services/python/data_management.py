@@ -67,6 +67,8 @@ return dataframe
 """
 def activities_dm(actors, config, raw_pth, processed_pth):
 
+    # import pdb; pdb.set_trace()
+
     df = actors[["activityGUID", "activity", "activityType", "activityCategory"]].drop_duplicates()
     df = translate_config(df, config, 'activityType')
     df = translate_config(df, config, 'activityCategory')
@@ -92,8 +94,8 @@ def actors_dm(actors, config, raw_pth, processed_pth):
     df = df[["actorGUID", "actorType", "actor"]].drop_duplicates() # drop duplicates
     df = translate_config(df, config, 'actorType')
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "actors.csv")).rename(columns={'Italian': 'actor'})
-    dfTranslated = clean_strings(dfTranslated, "actor")
     df = pd.merge(df, dfTranslated, on="actor", how="left").drop("actor", axis=1).rename(columns={'English': "actor"})
+    df = clean_strings(df, "actor")
     df = df[pd.isnull(df.actor) == False]
     df = num_id(df, "actorGUID")
 
@@ -763,5 +765,58 @@ def nest_activities(activities, actors, risks, applications, activity_to_actor, 
         }
 
         array.append(dictact)
+
+    return array
+
+
+
+def create_network(data, level3, actors, activities):
+
+    array = []
+
+    data = pd.merge(data, level3, how="inner", on="level3GUID")
+
+    for i in data.level3ID.unique():
+
+        df = data[data.level3ID == i].drop_duplicates()
+        df = pd.merge(df, actors, how="inner", on="actorGUID")
+        df = pd.merge(df, activities, how="inner", on="activityGUID")
+
+        actorsID = df.actorID.unique()
+        activitiesID = df.activityID.unique()
+
+        actorsArray = []
+        activitiesArray = []
+        links = []
+
+        for j in range(0, df.shape[0] - 1):
+            linkRow = {"target": int(df.actorID.iloc[j]),
+                       "source": int(df.activityID.iloc[j])}
+
+            links.append(linkRow)
+
+        for k in actorsID:
+            actorRow = {"id": int(k),
+                        "group": "actor"}
+
+            actorsArray.append(actorRow)
+
+        for l in activitiesID:
+            activityRow = {"id": int(l),
+                           "group": "activity"}
+
+            activitiesArray.append(activityRow)
+
+        # import pdb; pdb.set_trace()
+        nodes = actorsArray + activitiesArray
+
+        # import pdb; pdb.set_trace()
+        network = {
+            "id": int(i),
+            "nodes": nodes,
+            "links": links
+        }
+    
+        array.append(network)
 
     return array

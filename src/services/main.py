@@ -6,7 +6,7 @@ from python.data_management import actors_rename, activities_dm, actors_dm, risk
     level1_to_level2_dm, level2_to_level3_dm, level3_to_model_dm,model_to_activity_dm, \
     activity_to_risk_dm, risk_to_control_dm, activity_to_actor_dm, activity_to_application_dm, main_dm, \
     create_actor_activities_nodes, create_links, nest_processes, level3_to_activity_dm, nest_risk_control, \
-    nest_activities
+    nest_activities, create_network
     
 from python.translate import translate_text, authenticate_implicit_with_adc
 from python.helper import write_json, create_lu
@@ -90,6 +90,9 @@ def main():
     risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
     main = main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity, activity_to_risk, risk_to_control)
 
+
+    network = create_network(data, level3Clean, actorsClean, activitiesClean)
+
     # activitiesNested = nest_activities(activitiesClean, actorsClean, risksClean, applicationsClean, activity_to_actor, activity_to_risk, activity_to_application)
     # write_json(activitiesNested, os.path.join(processed_pth, "nested"), "activities")
 
@@ -103,13 +106,13 @@ def main():
     write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
 
     ## Nested data
-    nodes = create_actor_activities_nodes(data, actorsClean, activitiesClean)
-    links = create_links(data, actorsClean, activitiesClean)
+    # nodes = create_actor_activities_nodes(data, actorsClean, activitiesClean)
+    # links = create_links(data, actorsClean, activitiesClean)
 
-    network = {
-        "nodes" : nodes,
-        "links" : links
-    }
+    # network = {
+    #     "nodes" : nodes,
+    #     "links" : links
+    # }
 
     lu = {
         "risk": create_lu(risksClean, "riskID", "risk"),
