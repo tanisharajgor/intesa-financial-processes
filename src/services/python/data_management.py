@@ -619,6 +619,8 @@ return nested list
 """
 def create_risk_status(df, rtc, root1, id):
 
+    # import pdb; pdb.set_trace()
+
     root1ID = root1+"ID"
     temp = pd.merge(df[df[root1ID] == id], rtc, how="left", on=["riskID", "controlID"])
     temp = temp[pd.isnull(temp.riskID) == False]
@@ -768,19 +770,21 @@ def nest_activities(activities, actors, risks, applications, activity_to_actor, 
 
     return array
 
-
-
-def create_network(data, level3, actors, activities):
+def create_network(data, level3, actors, activities, risks, controls, activity_to_risk, risk_to_control):
 
     array = []
 
     data = pd.merge(data, level3, how="inner", on="level3GUID")
+    data = pd.merge(data, actors, how="inner", on="actorGUID")
+    data = pd.merge(data, activities, how="inner", on="activityGUID")
+    data = pd.merge(data, activity_to_risk, how="left", on="activityID")
+    data = pd.merge(data, risk_to_control, how="left", on="riskID")
+
+    rtc = relate_tables(risks, controls, risk_to_control, root1 = "risk", root2 = "control")
 
     for i in data.level3ID.unique():
 
         df = data[data.level3ID == i].drop_duplicates()
-        df = pd.merge(df, actors, how="inner", on="actorGUID")
-        df = pd.merge(df, activities, how="inner", on="activityGUID")
 
         actorsID = df.actorID.unique()
         activitiesID = df.activityID.unique()
@@ -796,21 +800,29 @@ def create_network(data, level3, actors, activities):
             links.append(linkRow)
 
         for k in actorsID:
+
+            # import pdb; pdb.set_trace()
             actorRow = {"id": int(k),
-                        "group": "actor"}
+                        "group": "actor",
+                        "name": actors[actors.actorID == k].actor.iloc[0],
+                        "nActivities": int(df[df.actorID == k].activityID.nunique()),
+                        "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
+                        "riskStatus": create_risk_status(df[df.actorID == k], rtc, "actor", k)}
 
             actorsArray.append(actorRow)
 
         for l in activitiesID:
             activityRow = {"id": int(l),
-                           "group": "activity"}
+                           "group": "activity",
+                           "name": activities[activities.activityID == l].activity.iloc[0],
+                           "nActors": int(df[df.activityID == l].actorID.nunique()),
+                           "actorsID": df[df.activityID == l].actorID.unique().tolist(),
+                           "riskStatus": create_risk_status(df[df.activityID == l], rtc, "activity", l)}
 
             activitiesArray.append(activityRow)
 
-        # import pdb; pdb.set_trace()
         nodes = actorsArray + activitiesArray
 
-        # import pdb; pdb.set_trace()
         network = {
             "id": int(i),
             "nodes": nodes,

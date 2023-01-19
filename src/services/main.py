@@ -90,8 +90,7 @@ def main():
     risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
     main = main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity, activity_to_risk, risk_to_control)
 
-
-    network = create_network(data, level3Clean, actorsClean, activitiesClean)
+    network = create_network(data, level3Clean, actorsClean, activitiesClean, risksClean, controlsClean, activity_to_risk, risk_to_control)
 
     # activitiesNested = nest_activities(activitiesClean, actorsClean, risksClean, applicationsClean, activity_to_actor, activity_to_risk, activity_to_application)
     # write_json(activitiesNested, os.path.join(processed_pth, "nested"), "activities")
@@ -99,35 +98,26 @@ def main():
     # mainRisk = risks.drop_duplicates()
     # mainActivity = data[["level1GUID", "level2GUID", "level3GUID", "modelGUID", "activityGUID"]].drop_duplicates()
 
-    risksNested = nest_risk_control(risk_to_control, risksClean, controlsClean)
-    write_json(risksNested, os.path.join(processed_pth, "nested"), "risks")
+    # risksNested = nest_risk_control(risk_to_control, risksClean, controlsClean)
+    # write_json(risksNested, os.path.join(processed_pth, "nested"), "risks")
 
-    processesNested = nest_processes(level1_to_level2, level2_to_level3, level3_to_activity, activity_to_risk, risk_to_control, level1Clean, level2Clean, level3Clean, activitiesClean, risksClean, controlsClean)
-    write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
-
-    ## Nested data
-    # nodes = create_actor_activities_nodes(data, actorsClean, activitiesClean)
-    # links = create_links(data, actorsClean, activitiesClean)
-
-    # network = {
-    #     "nodes" : nodes,
-    #     "links" : links
+    # processesNested = nest_processes(level1_to_level2, level2_to_level3, level3_to_activity, activity_to_risk, risk_to_control, level1Clean, level2Clean, level3Clean, activitiesClean, risksClean, controlsClean)
+    # write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
+  
+    # lu = {
+    #     "risk": create_lu(risksClean, "riskID", "risk"),
+    #     "application": create_lu(applicationsClean, "applicationID", "application"),
+    #     "activity": create_lu(activitiesClean, "activityID", "activity"),
+    #     "actor": create_lu(actorsClean, "actorID", "actor"),
+    #     "control": create_lu(controlsClean, "controlID", "control"),
+    #     "level1": create_lu(level1Clean, "level1ID", "level1"),
+    #     "level2": create_lu(level2Clean, "level2ID", "level2"),
+    #     "level3": create_lu(level3Clean, "level3ID", "level3"),
+    #     "model": create_lu(modelClean, "modelID", "model")
     # }
 
-    lu = {
-        "risk": create_lu(risksClean, "riskID", "risk"),
-        "application": create_lu(applicationsClean, "applicationID", "application"),
-        "activity": create_lu(activitiesClean, "activityID", "activity"),
-        "actor": create_lu(actorsClean, "actorID", "actor"),
-        "control": create_lu(controlsClean, "controlID", "control"),
-        "level1": create_lu(level1Clean, "level1ID", "level1"),
-        "level2": create_lu(level2Clean, "level2ID", "level2"),
-        "level3": create_lu(level3Clean, "level3ID", "level3"),
-        "model": create_lu(modelClean, "modelID", "model")
-    }
-
     write_json(network, os.path.join(processed_pth, "nested"), "network")
-    write_json(lu, os.path.join(processed_pth, "nested"), "lu")
+    # write_json(lu, os.path.join(processed_pth, "nested"), "lu")
 
 if __name__ == '__main__':
     main()

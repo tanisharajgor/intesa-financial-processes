@@ -7,6 +7,41 @@ import * as d3 from 'd3';
 
 const id = "network-chart";
 
+// Tooltip
+function renderTooltip(circle) {
+
+    let tooltip = d3.select(`#${id}`)
+        .append("div")
+        .attr("class", "tooltip");
+
+    circle.on("mouseover", function(e, d) {
+
+        let thisCircle = d3.select(this);
+        let x = e.layerX + 20;
+        let y = e.layerY - 10;
+
+        tooltip.style("visibility", "visible")
+            .style("top", `${y}px`)
+            .style("left", `${x}px`)
+            .html(`<b>${d.group}</b><br>${d.name}`);
+
+        thisCircle
+            .attr("stroke", "white")
+            .attr("stroke-width", 2);
+
+        d3.select(this).attr("opacity", 1).raise();
+
+    }).on("mouseout", function() {
+
+        tooltip.style("visibility", "hidden");
+        circle.attr("opacity", 1);
+
+        d3.selectAll('circle')
+            .attr("stroke-width", .5)
+            .attr("stroke", "white"); 
+    });
+}
+
 export default function Network() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
@@ -22,18 +57,17 @@ export default function Network() {
             .attr("width", width)
             .attr("height", height);
 
-        // const rScale = d3.scaleLinear()
-        //     .domain([d3.extent(data.nodes, function(d) {return d.n })])
-        //     .range([3, 7]);
+        const colorScale = d3.scaleOrdinal(d3.schemeSet2);
 
-        const colorScale = d3.scaleLinear()
-            .domain(["actor", "activity"])
-            .range(["#0000FF", "#FF0000"])
+        const rScale = d3.scaleLinear()
+            .domain(d3.extent(data.nodes, ((d) => d.nActivities === undefined ? 1: d.nActivities)))
+            .range([5, 20])
 
         var simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) { return d.id; }))
-            .force("charge", d3.forceManyBody())
-            .force("center", d3.forceCenter(width / 2, height / 2));
+            .force("charge", d3.forceManyBody().strength(-1.5))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("collide", d3.forceCollide().strength(2).radius((d) => d.nActivities === undefined ? 3: rScale(d.nActivities)));
 
         var link = svg.append("g")
             .attr("class", "links")
@@ -47,10 +81,12 @@ export default function Network() {
             .attr("class", "nodes")
             .selectAll("circle")
             .data(data.nodes)
-            .enter().append("circle")
+            .enter()
+            .append("circle")
             .attr("fill", ((d) => colorScale(d.group)))
-            // .attr("r", ((d) =>rScale(d.n)))
-            .attr("r", 3);
+            .attr("r", ((d) => d.nActivities === undefined ? 3: rScale(d.nActivities)))
+            .attr("stroke-width", .5)
+            .attr("stroke", "white");
 
         simulation
             .nodes(data.nodes)
@@ -70,6 +106,9 @@ export default function Network() {
                 .attr("cx", function(d) { return d.x; })
                 .attr("cy", function(d) { return d.y; });
         }
+
+        let circle = d3.selectAll("circle")
+        renderTooltip(circle);
     }, [])
 
     return(
