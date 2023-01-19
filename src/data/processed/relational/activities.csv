@@ -40,7 +40,7 @@ control activity,NA,Verify the correct communication to the SGR,126277
 process activity,Professional,Receive and examine the deed,128809
 process activity,Operational,Consolidate the statement,111638
 process activity,Professional,Report any exceptions/additions to what was automatically detected by the system,128394
-process activity,Operational,Sign the paperwork pursuant to art. 73,135142
+process activity,Operational,Sign the paperwork pursuant to art. 73,135143
 process activity,Operational,Integrate the data useful for the non-automatic declaration,128396
 process activity,Professional,Carry out the necessary actions for custody signaled by the system,117149
 process activity,Professional,Register the paper document,121629
@@ -789,7 +789,7 @@ process activity,Operational,Archive documentation,104677
 process activity,Operational,Enter the request data,104678
 control activity,NA,Verify the correspondence of the data,115891
 process activity,Commercial,Collect customer subscription,134633
-control activity,NA,Check the conformity of the signature affixed,135108
+control activity,NA,Check the conformity of the signature affixed,135109
 process activity,Professional,Upload adjustment file,125007
 control activity,NA,Check anomaly resolution,100053
 process activity,Professional,Assign incident anomaly,125271
@@ -1002,7 +1002,7 @@ process activity,Professional,Submit the result of the analysis,100608
 process activity,Professional,Formalize and send the issued opinion,112290
 process activity,Professional,Check for relevant operation,112289
 process activity,Operational,Monitor project/event developments,103077
-process activity,Operational,Monitor project/event developments,135124
+process activity,Operational,Monitor project/event developments,135125
 process activity,Operational,Validate the Limited Information List and send notice of registration,134826
 control activity,NA,Check registration in Limited Information List,103699
 process activity,Operational,Validate the registration of new subjects who have access to Privileged Information and send notice of successful registration,108550
@@ -1161,7 +1161,7 @@ control activity,Operational,Check that the entered data is correct,118800
 process activity,Operational,Transmit instructions,111782
 process activity,Operational,Archive the practice,111132
 process activity,Operational,Notify the depositary identified for the delivery of the metal,109694
-control activity,Operational,Send emails to your structure mailbox for subsequent forwarding to the custodian,135076
+control activity,Operational,Send emails to your structure mailbox for subsequent forwarding to the custodian,135077
 process activity,Operational,Unload the warehouse and deliver the metal,129733
 control activity,Operational,Verify the congruence of the metal to be delivered,121484
 process activity,Operational,Send evidence to EIB,115565
@@ -1528,7 +1528,7 @@ process activity,Operational,Send the Annual Control Plan,120603
 process activity,Operational,Identify the nature of the non-receipt of the card,125379
 process activity,Professional,Carry out - only in the case of Off-site Offerings - the activities envisaged before the off-site meeting,100883
 process activity,Operational,Comply with privacy requirements,113158
-process activity,Operational,Identify or register the cardholder,135089
+process activity,Operational,Identify or register the cardholder,135090
 process activity,Operational,Complete the configuration of the commercial offer,118095
 process activity,Commercial,Identify and consequently register or update the personal data of the subject requesting the operation,131619
 process activity,Commercial,Fulfill the obligations relating to the contractual documentation,133146
@@ -1542,7 +1542,7 @@ process activity,Professional,Monitor the progress of the offer,133147
 process activity,Commercial,Deliver the pre-contractual documentation to the Customer,113020
 process activity,Operational,Start the configuration of the commercial offer,107947
 process activity,Operational,Access the commercial platform and search for the Client,131620
-process activity,Operational,Carry out - towards the cardholder - the activities foreseen for the activation and - where foreseen - delivery of the card,135090
+process activity,Operational,Carry out - towards the cardholder - the activities foreseen for the activation and - where foreseen - delivery of the card,135091
 process activity,Professional,Communicate the start of the review process of the ceilings,118195
 process activity,Professional,Propose overall ceiling and relative breakdown of sub-ceilings,118198
 process activity,Professional,Recontact the Business Units,129865
@@ -1614,7 +1614,7 @@ process activity,Professional,Enter the operation in the Watch List,126480
 process activity,Professional,Communicate broadcasters to contact for the pitch,126466
 process activity,Professional,Accept the mandate,125354
 process activity,Professional,Resell the securities following a settlement failure,104753
-process activity,Professional,Ascertain the applicability of Regulation M,134947
+process activity,Professional,Ascertain the applicability of Regulation M,134948
 process activity,Professional,Send signing powers to the Documentation Agent,123834
 process activity,Professional,Complete the Compliance Controls Checklist,129929
 process activity,Professional,Complete the Compliance Controls Checklist,122570
@@ -1706,7 +1706,7 @@ control activity,NA,Verify the reservation of decision-making powers,111656
 control activity,NA,Check the appraisal and the preliminary notary report for the practices reported in the Monitoring Dashboard,112161
 control activity,NA,"Check correspondence, expert report and warranty data",112160
 process activity,Professional,Evaluate the admissibility of the loan application,116592
-process activity,Professional,Analyze the summary of the loan application and the preliminary investigation results,134965
+process activity,Professional,Analyze the summary of the loan application and the preliminary investigation results,134966
 control activity,NA,Check the practices reported in the Monitoring Dashboard,103094
 process activity,Operational,Request the necessary documentation,103933
 process activity,Operational,Send communication of amounts 730 to heirs,117794
@@ -2306,7 +2306,7 @@ process activity,Operational,Receive and review documentation,103194
 control activity,NA,Check documentation completeness,103195
 process activity,Professional,Carry out any proposal for a resolution on the loan,126177
 process activity,Operational,Make the transfer,125887
-control activity,NA,Verify correct accounting,135032
+control activity,NA,Verify correct accounting,135033
 process activity,Professional,Verify the credit line with the Counterparty,105427
 process activity,Operational,Carry out assessments on the nature of the breach,105429
 process activity,Professional,Carry out the regularization of the Counterparties/Clients with the Initial Margin contractual set/documentation certifying the missing no-papering scenario,104848
@@ -2476,11 +2476,11 @@ process activity,Professional,Activate the development phases on the systems,132
 process activity,Professional,Carry out simulations to evaluate credit impacts on Faculties,128170
 process activity,Professional,Identify impacted Rule documents to be drafted/updated,132799
 process activity,Professional,Analyze the outcome of simulations to evaluate the impact on credit faculties and on the Rules,132796
-process activity,Professional,Share the modification proposal with the interested structures with Internal Validation and Audit and submit it to the competent Collegiate Bodies,135134
+process activity,Professional,Share the modification proposal with the interested structures with Internal Validation and Audit and submit it to the competent Collegiate Bodies,135135
 process activity,Professional,Consolidate the proposed change,132797
 process activity,Professional,"Draft or update the Rules of Competence document and submit, where necessary, to the Secretariats of the Committees/BoD Secretariat",133196
 process activity,Professional,Evaluate feedback and make any adjustments,133195
-process activity,Professional,Process the proposed change,135133
+process activity,Professional,Process the proposed change,135134
 process activity,Professional,"Update the Faculty document on credit and submit, where necessary, to the Secretariats of the Committees/CDA Secretariat",118393
 process activity,Professional,Communicate the scope and timing of consolidation,108871
 control activity,NA,Verify the perimeter of the Companies to be analysed,108613
@@ -2767,7 +2767,7 @@ process activity,Operational,Access Limits and Delegate Management,116365
 process activity,Operational,Validate the information entered,127302
 process activity,Operational,Modify the operating limits,111274
 process activity,Operational,Acquire the required documentation,132871
-process activity,Operational,Scan company documentation,134920
+process activity,Operational,Scan company documentation,134921
 process activity,Operational,Access Limits and Delegate Management,132872
 process activity,Professional,"Access the procedure, insert (or import) the data, confirm the operation",104600
 process activity,Operational,Modify the operating limits and collect the signature of the Legal Representative,103819
@@ -3336,9 +3336,9 @@ process activity,Operational,Communicate the test plan,128148
 process activity,Professional,Start processing in the test environment,110315
 process activity,Professional,Define the test to run,109406
 control activity,NA,Verify the consistency of the test with the expected results on the input stream,109407
-process activity,Operational,Survey the technical forms,135048
+process activity,Operational,Survey the technical forms,135049
 control activity,NA,Verify the complete and correct census,125837
-process activity,Operational,Communicate the need for new technical Forms,135046
+process activity,Operational,Communicate the need for new technical Forms,135047
 process activity,Operational,Engage the ICT assessment facility,112272
 process activity,Professional,Detect and report potential impact on general ledger systems,117177
 process activity,Professional,Assess the impact on supervisory reporting,111689
@@ -3347,7 +3347,7 @@ process activity,Professional,Remove the causes in case of failure to pass the t
 process activity,Professional,Check whether the request impacts supervisory reports,115420
 process activity,Operational,Create the input streams from the ledger,122936
 process activity,Professional,Detect and report potential impact on reporting systems,133958
-process activity,Professional,Analyze impact for generic reserve calculation and for RWA,135047
+process activity,Professional,Analyze impact for generic reserve calculation and for RWA,135048
 process activity,Professional,Start the technical evaluation of the intervention,133957
 process activity,Professional,Prepare database for testing,128149
 process activity,Professional,Prepare the summary document,111690
@@ -3710,13 +3710,13 @@ control activity,NA,Make a new comparison,116214
 process activity,Operational,Generate the provisional journal,116649
 control activity,Operational,Compare with the Trial Balance,116212
 process activity,Operational,Consolidate the Journal,116215
-process activity,Professional,Pick up and verify the customers request,134889
-process activity,Professional,Verify customer request,134891
+process activity,Professional,Pick up and verify the customers request,134890
+process activity,Professional,Verify customer request,134892
 process activity,Professional,Define operating methods to be adopted,118995
 process activity,Operational,Check the essential data of the order,129825
 process activity,Professional,Retrieve the Modification disposition and identify the customer,118994
 process activity,Operational,Archive documentation,129827
-process activity,Professional,Verify signing powers and evaluate execution methods,134890
+process activity,Professional,Verify signing powers and evaluate execution methods,134891
 process activity,Professional,Enter data into the system,118126
 process activity,Professional,Send the documentation to the structure in charge,129823
 process activity,Operational,Archive documentation,118470
@@ -3732,9 +3732,9 @@ process activity,Operational,Carry out the foreseen activities before configurin
 process activity,Commercial,Interview the customer to identify his insurance needs,110082
 process activity,Commercial,Monitor the signing of the Commercial Proposal,132511
 process activity,Operational,Access the product offer procedure,116092
-process activity,Commercial,Monitor the status of the submitted Proposal,135028
+process activity,Commercial,Monitor the status of the submitted Proposal,135029
 process activity,Commercial,Send the Proposal and related documentation to the Client,110081
-process activity,Operational,Configure the Estimate and send the Proposal to the Customer,135027
+process activity,Operational,Configure the Estimate and send the Proposal to the Customer,135028
 process activity,Operational,Register the non-customer in the General Registry,107796
 process activity,Operational,Send Active Contract signed,113669
 process activity,Operational,Carry out data updates and ISTAT adjustments,109902
@@ -3902,22 +3902,22 @@ process activity,Operational,Make the expected prints,134303
 process activity,Operational,Retrieve the identification data of the operation to be cancelled,134329
 process activity,Operational,Enter and confirm the cancellation/reversal in the procedure,134245
 process activity,Operational,Collect any forms previously delivered to the Customer,134301
-process activity,Operational,Forward the documentation signed by the customer to the custodians,134985
+process activity,Operational,Forward the documentation signed by the customer to the custodians,134986
 process activity,Operational,Carry out any re-credit to the AdE for the amounts not refunded to the customer,127459
 process activity,Operational,Archive documentation,117950
 process activity,Operational,Communicate the receipt of the transfer,117796
-process activity,Operational,Receive the tax refund request,135148
+process activity,Operational,Receive the tax refund request,135149
 control activity,NA,Check the validity and completeness of the request received,134406
 process activity,Operational,Set aside the transfer amount,129293
 process activity,Operational,Credit the amounts to be refunded to the foreign customer,129291
 process activity,Operational,Reconcile amounts and notify customer,129292
-process activity,Operational,Prepare the necessary documentation for the tax refund procedure,134987
+process activity,Operational,Prepare the necessary documentation for the tax refund procedure,134988
 process activity,Operational,Submit your refund requests,116157
-process activity,Operational,Archive documentation,135147
+process activity,Operational,Archive documentation,135148
 process activity,Operational,Communicate the data resulting from internal evidence to the structure in charge,116159
 process activity,Operational,Credit the amounts to be refunded to the resident and non-resident customer,113982
 control activity,NA,Verify credit amounts,120202
-process activity,Operational,Send the completed documentation to the customer,134986
+process activity,Operational,Send the completed documentation to the customer,134987
 process activity,Operational,Extract all practices with date of the current month,116156
 process activity,Operational,Carry out the preparatory activities for the management of the Italian bond tax refund request,116158
 process activity,Operational,Check the type of refund requested,111224
@@ -4753,7 +4753,7 @@ control activity,NA,Validate the operation in the system,121438
 control activity,Operational,Verify the consistency of the NAV value of the Fund and register it in the system,110027
 control activity,Operational,Check the transaction data entered in the system,125709
 process activity,Commercial,Prepare the information note and present the divestment proposal to the dedicated Table,130386
-process activity,Operational,Archive documentation,135021
+process activity,Operational,Archive documentation,135022
 process activity,Operational,Manage the settlement of the operation,121925
 process activity,Operational,Communicate the transaction for registration in the participatory investment management system,102260
 process activity,Commercial,Prepare the documentation relating to the divestment (partial or total) and forward the request,121924
@@ -4840,10 +4840,10 @@ process activity,Operational,Carry out checks in the field of armaments,103617
 control activity,NA,Check for the presence of the Borrowers name in the whitelist,103591
 process activity,Operational,Analyze the borrowers KYC package,114290
 control activity,NA,Verify the conclusion of the analysis of the KYC Package within three months of the settlement date,103588
-process activity,Operational,Fill in the borrower census form,134942
-process activity,Operational,Request any intervention by the competent structures in the presence of sanctions and/or negative information and prepare a summary sheet,134941
+process activity,Operational,Fill in the borrower census form,134943
+process activity,Operational,Request any intervention by the competent structures in the presence of sanctions and/or negative information and prepare a summary sheet,134942
 control activity,NA,Check for the presence of sanctions and/or negative information,115109
-process activity,Operational,"Verify, with reference to the borrower, that he is not included in the Sanction Lists issued by international authorities and/or lists internal to the Intesa Sanpaolo Group or the absence of negative information",134940
+process activity,Operational,"Verify, with reference to the borrower, that he is not included in the Sanction Lists issued by international authorities and/or lists internal to the Intesa Sanpaolo Group or the absence of negative information",134941
 process activity,Operational,Manage the portfolio position based on the AML opinion received,126939
 process activity,Operational,Start completing census of borrower and portfolio,128239
 process activity,Operational,Request the borrowers KYC Package from the agent bank,114289
@@ -5381,7 +5381,7 @@ process activity,Operational,Monitor data obsolescence,108242
 process activity,Operational,Send the Contract for inclusion in the personal data systems and for filing,128727
 process activity,Operational,Enter information about the registry system,106766
 control activity,NA,Check with the Customer the notifications on the completeness and consistency of the data,107277
-process activity,Operational,Prepare the file with the ISDL information according to the preset format,134978
+process activity,Operational,Prepare the file with the ISDL information according to the preset format,134979
 process activity,Professional,Enhance the autonomous reporting fields,127786
 process activity,Professional,Acquire the List of Traders authorized to operate from the Counterparty within the DFA perimeter,102867
 process activity,Operational,Download the updated version of the US SDL from ARCO,123816
@@ -5641,7 +5641,7 @@ process activity,Professional,Enter the operation in the Front Office system,115
 control activity,NA,Monitor and manage contractual obligations,127113
 process activity,Professional,Report any unavailability of data,131618
 control activity,NA,Analyze the nightly processing logs for the risk measurement calculation phase,131617
-control activity,NA,Analyze logs of nightly processing for data import,135003
+control activity,NA,Analyze logs of nightly processing for data import,135004
 process activity,Operational,Submit Impact Assessment Details,121870
 process activity,Operational,Analyze the Impact Assessment Details,121871
 process activity,Operational,Request the integration of the Impact Assessment Details,121872
@@ -5718,7 +5718,7 @@ process activity,Professional,Develop and share the communication plan,116542
 process activity,Professional,Evaluate the activity plan,105006
 process activity,Professional,Start communication activities,116543
 process activity,Professional,Start communication activities,117407
-process activity,Professional,Submit the activity plan,135078
+process activity,Professional,Submit the activity plan,135079
 process activity,Professional,Monitor communication,116544
 process activity,Professional,Transmit the news to be disseminated to the media,105005
 process activity,Professional,Monitor communication,117408
@@ -5756,7 +5756,7 @@ process activity,Operational,Instruct the USCP to be issued with the required te
 process activity,Operational,Address the request and define whether to issue USCP or ECP.,101301
 process activity,Operational,Instruct the ECPs to be issued with the required terms.,120342
 process activity,Operational,Send financing confirmation via CP issue.,106211
-process activity,Operational,Request the drawdown of the liquidity line from the Bank.,135061
+process activity,Operational,Request the drawdown of the liquidity line from the Bank.,135062
 process activity,Operational,Notify Deutsche Bank (depository) of the issuance effected.,101303
 process activity,Operational,Notify BONY (Issuing and Paying Agent) of the issue carried out on the market.,120343
 process activity,Operational,Transfer subscription proceeds to the originator.,126695
@@ -5870,7 +5870,7 @@ process activity,Operational,Communicate additional data,110602
 control activity,NA,Check data completeness,120349
 process activity,Operational,Share the analyzes carried out,120308
 process activity,Professional,Carry out the calculations of the forecasting engines,103365
-control activity,NA,Check the system data,134939
+control activity,NA,Check the system data,134940
 process activity,Operational,Send the reports to the interested structures for sharing,116622
 process activity,Professional,Prepare list of positions,110601
 process activity,Operational,Prepare reporting,131402
@@ -5913,7 +5913,7 @@ process activity,Professional,Punctually evaluate the position,121594
 process activity,Professional,Evaluate the Employees position as a whole,119909
 process activity,Professional,Define and communicate debt repayment/restructuring plan,119910
 process activity,Professional,Report the position of the Employee,121595
-process activity,Operational,Provide relevant data,134972
+process activity,Operational,Provide relevant data,134973
 control activity,Operational,Check completeness of compilation of the RAF report,104974
 process activity,Professional,Prepare and send a list with properties on the balance sheet for over 48 months,123354
 process activity,Professional,Analyze business plan performance and any deviations,100212
@@ -5929,7 +5929,7 @@ process activity,Professional,Submit reports for signature,123356
 process activity,Operational,Implement the Business Plan of the acquired property,111389
 process activity,Professional,Carry out the reclassification of the property in the balance sheet,128167
 control activity,NA,Verify the complete reclassification of the properties,128168
-process activity,Operational,Prepare list for RAF reporting,134971
+process activity,Operational,Prepare list for RAF reporting,134972
 control activity,Operational,Check completeness of compilation of the RAF report,104973
 process activity,Operational,Complete and submit the overall report,110463
 control activity,NA,Verify completeness of final RAF report,125466
@@ -5941,7 +5941,7 @@ process activity,Operational,Confer the task of appraisal of the end of the work
 process activity,Operational,Close the Expertise,105021
 process activity,Commercial,Check the need for any last SAL,131248
 process activity,Commercial,Check the status of the construction site or project,131247
-process activity,Professional,Send reports on non-routine sales operations,135123
+process activity,Professional,Send reports on non-routine sales operations,135124
 control activity,NA,Verify the correct submission of the report,133493
 control activity,NA,Check the movements on non-routine transfer operations,124658
 process activity,Professional,Confirm or transfer the resolution,126617
@@ -6026,8 +6026,8 @@ process activity,Operational,Request timely validation of pending deal,110093
 process activity,Operational,Dispose of any O-Key device returned by the Customer,116409
 process activity,Operational,Ascertain the Clients powers to perform the requested operation,127188
 process activity,Professional,Repay the portion of the fee not due by the Customer,128247
-process activity,Operational,Send the original of the paper documentation produced and archive a copy,135000
-process activity,Operational,File the original of the paper documentation produced,134999
+process activity,Operational,Send the original of the paper documentation produced and archive a copy,135001
+process activity,Operational,File the original of the paper documentation produced,135000
 process activity,Operational,Enter the data in the procedure,112744
 process activity,Operational,Locate the contract number,112748
 process activity,Commercial,Manage the documentation produced in paper format,112745
@@ -6043,7 +6043,7 @@ process activity,Operational,Authorize payment instructions,100940
 control activity,NA,Verify correct combination of collateral amounts to be collected,111977
 control activity,NA,Check for blocked payments,100036
 process activity,Operational,Report non-payment by the Counterparty,126948
-control activity,NA,Tick Settlement Instructions for Securities Margin,135125
+control activity,NA,Tick Settlement Instructions for Securities Margin,135126
 process activity,Operational,Carry out the balances on the balances,103487
 process activity,Operational,Send the communication of the conclusion of the margining activities,128479
 process activity,Operational,Check receipts and any pending payments,100942
@@ -6158,7 +6158,7 @@ process activity,Operational,Prepare the remodeling documents,109867
 process activity,Commercial,Acquire the attribution of the updated TIT,109204
 process activity,Commercial,Provide TIT attribution,114030
 process activity,Operational,Take charge of the remodulation request,130715
-process activity,Operational,Gather information to determine the Global Effective Rate,135109
+process activity,Operational,Gather information to determine the Global Effective Rate,135110
 control activity,NA,Verify correctness and consistency of the automatic verification of the TEG,126748
 process activity,Operational,Insert the contract remodulation simulation into the system,107952
 process activity,Commercial,Review the results of the creditworthiness assessment,120266
@@ -6482,7 +6482,7 @@ process activity,Professional,Provide payment instructions to the creditor,10726
 process activity,Operational,Provide quote TIT MLT operating,106613
 process activity,Operational,Request quotation TIT MLT operating,106303
 process activity,Operational,Receive confirmation and upload operational TIT MLT to system,106304
-control activity,NA,Verify TIT acquisition in system,134962
+control activity,NA,Verify TIT acquisition in system,134963
 process activity,Operational,Census of the new limit on Motor TIT - Lirico,131546
 process activity,Operational,Verify the consistency of the operation and monitor Plafond use ex ante,127689
 process activity,Operational,Prepare and send a request for TIT MLT in derogation from the ceiling,127688
@@ -6909,7 +6909,7 @@ process activity,Professional,Start contact activities for customer involvement,
 process activity,Professional,Approve the proposal for customizing the spaces,115638
 process activity,Operational,Start the billing process and monitor the status of bill payments,133446
 process activity,Professional,Carry out the preliminary activities for defining the Event Format,133440
-process activity,Professional,Provide information on the activation of a new Partner,135033
+process activity,Professional,Provide information on the activation of a new Partner,135034
 process activity,Operational,Carry out the closing activities of the Partners communication schedule,123674
 process activity,Professional,Start the validation process of the potential Partner and the Initiative,107168
 process activity,Professional,Prepare the commercial proposal for the potential Partner and proceed with the contractualisation,133442
@@ -6963,7 +6963,7 @@ process activity,Operational,Populate the original deals present in Murex,121912
 process activity,Professional,Estimate costs/benefits of funding and verify impacts on portfolios,121917
 process activity,Operational,Communicate the sending order to the deal clearing,121913
 process activity,Professional,Send the Data Quality report of the Risk Factors,116219
-process activity,Professional,Submit Risk Not In Model report,135065
+process activity,Professional,Submit Risk Not In Model report,135066
 process activity,Professional,Initiate annual Proxy review process,112519
 control activity,NA,Check the adequacy of the Proxy,131984
 process activity,Professional,Update database,127897
@@ -7154,7 +7154,7 @@ process activity,Operational,Check recovery activity,112572
 process activity,Operational,Receive settlement proposal,112573
 control activity,Professional,Check the terms of the transaction,112574
 process activity,Operational,Support settlement text preparation,123821
-process activity,Operational,Evaluate request for settlement agreement,135031
+process activity,Operational,Evaluate request for settlement agreement,135032
 process activity,Professional,Request authorization for the Complaint Report,123819
 control activity,Operational,Validate the proposed complaint,105453
 process activity,Operational,Finalize the transaction,133151
@@ -7365,7 +7365,7 @@ process activity,Professional,Stipulate the deed of assent to the partial cancel
 process activity,Professional,"Analyze the documentation and involve, if necessary, the competent corporate function",122155
 process activity,Professional,Prepare the signing of the deed of release,119997
 process activity,Professional,Communicate deed signing needs,119998
-process activity,Professional,Register the restriction event in the reference application,134974
+process activity,Professional,Register the restriction event in the reference application,134975
 process activity,Professional,Submit reports on signed deeds,126616
 process activity,Professional,Authorize the signing of the deed,126615
 process activity,Professional,Register the restriction event in the reference application,122154
@@ -7731,12 +7731,12 @@ control activity,NA,Check the expense report,125151
 process activity,Operational,"Evaluate individual travel services desired, if needed",116517
 process activity,Operational,Evaluate and confirm/reject the proposals,103528
 process activity,Operational,Modify the current or future trip if necessary,120755
-process activity,Operational,Carry out the activities envisaged for the management of the Economic Groups and the updating of the regulatory segmentation by variation of the Economic Group,135110
+process activity,Operational,Carry out the activities envisaged for the management of the Economic Groups and the updating of the regulatory segmentation by variation of the Economic Group,135111
 process activity,Professional,Acquire documentation,134289
 process activity,Operational,Identify the Reference Manager of the counterparty and of the Economic Group,134287
 process activity,Professional,Examine the legal documentation,134284
-process activity,Professional,"Carry out the checks required by anti-money laundering, anti-terrorism and embargo legislation",134930
-process activity,Professional,Open the file in the Credit Portal and set up the loan application,134929
+process activity,Professional,"Carry out the checks required by anti-money laundering, anti-terrorism and embargo legislation",134931
+process activity,Professional,Open the file in the Credit Portal and set up the loan application,134930
 process activity,Commercial,Have the customer sign and file the loan application,134290
 control activity,NA,Check the activities carried out by the assistant in all phases of the Application,127953
 process activity,Operational,Survey and update the corporate structure and request/update the Chamber of Commerce certificates,134285
@@ -8453,13 +8453,13 @@ control activity,Professional,Perform checks on FTE and external costs,107728
 process activity,Professional,Processing of costing data: Definition of Transactional Data - Send the income statement of the costs of Intesa Sanpaolo S.p.A.,104013
 process activity,Operational,Carry out the credit investigation for the release of a Compliance opinion and communicate the outcome,124864
 process activity,Operational,Address the inquiry request,106082
-process activity,Professional,Check the results of the credit resolution,134954
+process activity,Professional,Check the results of the credit resolution,134955
 process activity,Operational,Formalize and activate the takeover,116679
 process activity,Professional,Deliberate the proposal,124865
 process activity,Professional,Implement the authorization for the technical transfer,121674
 process activity,Operational,Carry out a personal census,125227
 process activity,Operational,Archive documentation,128763
-process activity,Professional,Instructing the credit file,134953
+process activity,Professional,Instructing the credit file,134954
 process activity,Operational,Inform the competent functions,121738
 process activity,Operational,Prepare takeover proposal,106081
 control activity,NA,Verify the takeover proposal,106083
@@ -8647,7 +8647,7 @@ process activity,Operational,Determine whether the analyzed information is attri
 process activity,Operational,Close the business,132170
 process activity,Operational,Analyze the information and data collected,116782
 process activity,Operational,Formalize security incident,132168
-control activity,NA,Check the adequate formalization of the accident,135030
+control activity,NA,Check the adequate formalization of the accident,135031
 process activity,Operational,Identify potential threats and new cyber attack patterns,123661
 process activity,Operational,Evaluate the need for additional information,130034
 process activity,Operational,Get additional information,123663
@@ -9022,7 +9022,7 @@ control activity,NA,Check the timing,110812
 process activity,Operational,Make payments,113779
 control activity,NA,Check effective preparation and successful transfers,132710
 process activity,Operational,Finalize the quarterly Revolving Facility report,110594
-control activity,NA,Check the timing,134996
+control activity,NA,Check the timing,134997
 process activity,Operational,"Extract the input data of interest, commissions, account balance, excerpts and miscellaneous items and make them available",111294
 control activity,Professional,"Check effective input data extraction of interest, commissions, account balance and write-offs",131532
 process activity,Operational,Extract margin input data and make it available,113108
@@ -9038,14 +9038,14 @@ process activity,Professional,Finalize the monthly Revolving Facility report,105
 control activity,NA,Check the timing,110813
 process activity,Professional,Issue active invoice,111295
 control activity,NA,Check the timing,116928
-control activity,NA,Check the data of the active invoice,134998
+control activity,NA,Check the data of the active invoice,134999
 process activity,Operational,Carry out the calculation,110219
 control activity,NA,Check the output,110220
 control activity,Professional,Check effective input data extraction of perforating reasons,105092
 process activity,Professional,Accounting for the economic effects,107732
 control activity,NA,Check accounting,105583
 process activity,Operational,Submit the information and the Revolving Facility Report,116489
-control activity,NA,Check the timing,134997
+control activity,NA,Check the timing,134998
 process activity,Professional,Prepare final balance,124986
 process activity,Professional,Carry out feedback,124985
 process activity,Professional,Prepares the Equity Risk Tableau de Bord,124984
@@ -9085,9 +9085,9 @@ process activity,Professional,Propose the modification request,100282
 process activity,Professional,Prepare data for consolidation of risk measures,131178
 control activity,NA,Carry out drift and trend checks,104390
 process activity,Professional,Monitor the measurements of the banks in the ISBD perimeter and other decentralized ones and compliance with the limits,121369
-control activity,NA,Carry out deviation and performance checks of the measurements of the banks in the ISBD perimeter and other decentralized ones,135143
+control activity,NA,Carry out deviation and performance checks of the measurements of the banks in the ISBD perimeter and other decentralized ones,135144
 process activity,Professional,Capture and update operating limit levels,131179
-control activity,NA,Monitor compliance with operating limits,135144
+control activity,NA,Monitor compliance with operating limits,135145
 control activity,NA,Verify correct limit update,104391
 control activity,NA,Verify proper loading of system tables,104389
 process activity,Professional,Create Position Masters and feed the ERMAS calculation engine,109784
@@ -9315,11 +9315,11 @@ process activity,Operational,Sign the title page and the attestation for the Aud
 process activity,Operational,Request data upload in production,118290
 process activity,Operational,Produce a copy of the ministerial flows sent and request a copy from the supplier,128821
 process activity,Professional,Call kick-off meeting,121275
-process activity,Operational,Return verified reports,134911
+process activity,Operational,Return verified reports,134912
 process activity,Operational,Request the Ministerial flows for sending Form 770,128819
 process activity,Operational,Prepare the start-of-business Circular,123780
-process activity,Operational,"Collect the data relating to the SQ, ST, SX panels and send the related reports",134909
-control activity,NA,Compare the available evidence with the owner structures,134910
+process activity,Operational,"Collect the data relating to the SQ, ST, SX panels and send the related reports",134910
+control activity,NA,Compare the available evidence with the owner structures,134911
 process activity,Operational,Prepare business start-up letter,123781
 process activity,Operational,Send competency updates,121274
 process activity,Operational,Register the collected documents,111259
@@ -9374,22 +9374,22 @@ control activity,NA,Verify assignment of YARL to new contributing facility,11069
 process activity,Operational,Create the detail structure for the contribution,129067
 process activity,Professional,Prepare and possibly update the infrastructure,113170
 process activity,Professional,Evaluate any changes to the perimeter of contributed data,113171
-process activity,Professional,Survey new fittings,135117
-control activity,NA,Check siding census,135118
+process activity,Professional,Survey new fittings,135118
+control activity,NA,Check siding census,135119
 process activity,Professional,Record any manual Prime Notes,123303
 control activity,NA,Verify the correct registration of the First Manual Note,123304
 process activity,Professional,Download reconciliation reports,127182
-control activity,NA,Check for misalignments between ledger and accounting,135116
+control activity,NA,Check for misalignments between ledger and accounting,135117
 control activity,NA,Check the outcome of the processing performed by the system,128953
 control activity,NA,Check the correspondence between ledgers and account balances,121599
 control activity,NA,Verify accounting consistency within the Sire ledger,121602
 process activity,Operational,Archive the results of the checks carried out and the monthly archives useful for subsequent trend analyses,132631
-process activity,Professional,Repropose daily elaborations with value at the end of the month,135119
+process activity,Professional,Repropose daily elaborations with value at the end of the month,135120
 process activity,Professional,Systematically analyze elementary accounts,101686
 control activity,NA,"Verify, and possibly complete, the census of elementary accounts",121601
 process activity,Professional,Send data flow for accounting integration valid on the previous month,132630
 control activity,NA,Check the outcome of sending the supplementary flow of the supervisory report,123300
-process activity,Professional,Send the flow for supervisory reporting,135120
+process activity,Professional,Send the flow for supervisory reporting,135121
 control activity,NA,Check the result of sending data for supervisory reporting,132629
 process activity,Operational,Archive the results of the checks carried out and the daily archives useful for subsequent trend analyses,123305
 process activity,Professional,Analyze the account balance for supervisory reporting,101685
@@ -9498,7 +9498,7 @@ process activity,Professional,Verify incident,110786
 process activity,Professional,Assign incidents to the second competent HD level,103432
 control activity,NA,Check the enhancement of the priority level of an incident,127565
 process activity,Professional,Check if the incident can generate a Major Incident,103435
-control activity,NA,Check the enhancement of the priority level of an incident.,134946
+control activity,NA,Check the enhancement of the priority level of an incident.,134947
 process activity,Professional,Assign the incident to the maintenance specialist group,110787
 process activity,Professional,Resolve the user incident,103434
 control activity,NA,Verify the closure of the Incident,111061
@@ -9531,22 +9531,22 @@ process activity,Operational,Maintain query queries on SAS projects,111396
 control activity,NA,Carry out the performance check of the input data for the Euro Area Sub-consolidated perimeter,111397
 process activity,Operational,Submit regulatory reporting streams for NSFR,105846
 process activity,Operational,Receive and process data related to Extra-procedural entries fed by Hermione,116313
-process activity,Operational,Receive and produce database for intraday reporting,135101
+process activity,Operational,Receive and produce database for intraday reporting,135102
 process activity,Operational,Verify compliance with the limits at a consolidated and individual level,106868
 control activity,NA,Verify the consolidation process of the Euro Area Sub-consolidated perimeter,123638
 process activity,Operational,Launch data consolidation process and chart of accounts engagement,111398
 process activity,Operational,Receive and integrate accounting data not fed by legacy systems,123640
-process activity,Operational,Calculate LCR regulatory reporting indicator,135104
+process activity,Operational,Calculate LCR regulatory reporting indicator,135105
 process activity,Operational,Receive and integrate data relating to the contribution of foreign banks,123639
-process activity,Operational,Receive and integrate downgrade data,135100
+process activity,Operational,Receive and integrate downgrade data,135101
 process activity,Operational,Carry out maintenance of internal Staging Area tables,111395
 process activity,Operational,Report any overruns,106869
 process activity,Operational,Prepare and send analytical reporting for operating structures of the CFO area,105844
 control activity,NA,Verify correct acquisition of the flows received in the Staging Area,110495
 process activity,Operational,Submit regulatory reporting flows for LCR,106866
 process activity,Operational,Prepare reports for internal committees,106870
-process activity,Operational,Produce consolidated database for reporting,135102
-control activity,NA,Analyze the changes and verify the performance trends of the balance sheets,135103
+process activity,Operational,Produce consolidated database for reporting,135103
+control activity,NA,Analyze the changes and verify the performance trends of the balance sheets,135104
 process activity,Operational,Send integration to the temporary password request,127761
 process activity,Operational,Generate the temporary password and communicate it to the Applicant,117723
 process activity,Operational,Open ticket for troubleshooting,111133
@@ -9558,7 +9558,7 @@ process activity,Operational,Verify the completion of the password update,117726
 process activity,Operational,Start the password update automatisms,117725
 process activity,Operational,Restore the original password,117724
 process activity,Operational,Historicize the new password,116021
-process activity,Operational,Communicate the resolution of the anomaly,135081
+process activity,Operational,Communicate the resolution of the anomaly,135082
 process activity,Operational,Check the temporary password request,104833
 process activity,Operational,Make the mandatory communication of renewal of the secondment,128224
 process activity,Professional,Agree on the conditions of the posting,105165
@@ -10145,8 +10145,8 @@ process activity,Operational,Request import on production environment,101880
 process activity,Operational,Provide a dedicated Murex environment,125761
 process activity,Operational,Apply risk premium on positions,101109
 process activity,Operational,Import flat files on test environment,101110
-process activity,Operational,Authorize and submit capital gains statement,135051
 process activity,Operational,Authorize and submit capital gains statement,135052
+process activity,Operational,Authorize and submit capital gains statement,135053
 process activity,Operational,Check for spreads or the nature of differences between depositors and capital gains and make adjustments,132570
 control activity,NA,Verify the formal correctness of the arrangements,132572
 process activity,Operational,Check for spreads or the nature of differences between depositors and capital gains and make adjustments,132571
@@ -10162,9 +10162,9 @@ process activity,Operational,Perform tasks related to capital gains tax payment 
 process activity,Operational,Generate paper tax statements and related debit reasons,133354
 process activity,Operational,Generate paper tax statements and related debit reasons,133355
 process activity,Operational,Download sample reports,104782
-control activity,NA,Verify capital gains statement to be sent to customers,135049
-process activity,Operational,Download sample reports,104783
 control activity,NA,Verify capital gains statement to be sent to customers,135050
+process activity,Operational,Download sample reports,104783
+control activity,NA,Verify capital gains statement to be sent to customers,135051
 process activity,Operational,Make a payment to the taxman,133358
 process activity,Operational,Make a payment to the taxman,133359
 process activity,Operational,Reset accounting ledger,104778
@@ -10183,10 +10183,10 @@ control activity,NA,Check monthly processing booking result,125054
 process activity,Operational,Book capital gain closing processing,125053
 control activity,NA,Verify the passage of debits on customer current accounts,125057
 control activity,NA,Check monthly processing booking result,125055
-process activity,Operational,Download certification sample,135053
-control activity,NA,Verify and authorize sending certifications to customers,135055
 process activity,Operational,Download certification sample,135054
 control activity,NA,Verify and authorize sending certifications to customers,135056
+process activity,Operational,Download certification sample,135055
+control activity,NA,Verify and authorize sending certifications to customers,135057
 process activity,Operational,Query the application in order to detect any deviations or differences,132650
 process activity,Operational,Query the application in order to detect any deviations or differences,132651
 process activity,Professional,Monitor the effectiveness of the adopted solution,112151
@@ -10561,11 +10561,11 @@ process activity,Operational,Verify the completeness of the documentation and th
 process activity,Professional,Carry out merit assessments,122991
 process activity,Operational,Submit the practice to the signature of the authorized person,100731
 process activity,Operational,Make the appropriate assessments,130974
-process activity,Operational,Carry out preventive investigations,135127
+process activity,Operational,Carry out preventive investigations,135128
 control activity,NA,Verify closure of miscellaneous consignment,103048
 process activity,Professional,"Proceed with the subsequent authorization, forwarding, or refusal activities",122992
 process activity,Operational,Enter the request in the procedure,122988
-process activity,Operational,Evaluate the type of accounting event,135126
+process activity,Operational,Evaluate the type of accounting event,135127
 process activity,Professional,Carry out preventive assessments,122989
 process activity,Professional,Authorize or submit the operation,122990
 process activity,Operational,Monitor flows to and from SIA,128244
@@ -10963,7 +10963,7 @@ process activity,Professional,Communicate the end of the restrictions,127926
 process activity,Professional,Participate in update calls / meetings,104854
 process activity,Professional,Review the contract and offer documentation,104329
 process activity,Operational,Resell the securities in the event of a failed subscription,124444
-process activity,Professional,Account for commissions,135130
+process activity,Professional,Account for commissions,135131
 control activity,NA,Verify that commissions are correctly accounted for,119669
 process activity,Professional,Propose the hedging derivative (if necessary) and update the WL,130667
 process activity,Professional,Request the completion of the Self-Declaration letter from the Banks top management,112179
@@ -11003,13 +11003,13 @@ process activity,Professional,Announce the transaction,114961
 process activity,Professional,Complete the Compliance Controls Checklist,105183
 process activity,Professional,Send the acceptance to the Documentation Agent,105896
 process activity,Professional,Fill out the DCM Controls Checklist,105182
-process activity,Professional,Participate in Due Diligence Calls (where applicable),135128
+process activity,Professional,Participate in Due Diligence Calls (where applicable),135129
 process activity,Professional,Participate in update calls / meetings,100416
 process activity,Professional,Communicate broadcasters to contact for the pitch,103389
 process activity,Professional,Ascertain the customers KYC status,113946
 process activity,Professional,Communicate operating restrictions,117926
 process activity,Professional,Accept the mandate,103196
-process activity,Professional,Sign the contractual and offer documentation,135129
+process activity,Professional,Sign the contractual and offer documentation,135130
 process activity,Professional,Conduct syndication activities,129562
 process activity,Professional,Perform Due Diligence,132437
 process activity,Professional,Create a new opportunity,100197
@@ -11267,7 +11267,7 @@ process activity,Professional,Incorporate indications from the checks carried ou
 process activity,Professional,Check the decommissioning request for any impacts,104382
 process activity,Professional,Fill in the form for the disposal of the Feasible Operation and send notification,104381
 process activity,Professional,Decommission Operation Feasible in the catalog,104384
-control activity,NA,Verify that the End of Validity Date is correct,135145
+control activity,NA,Verify that the End of Validity Date is correct,135146
 process activity,Professional,Fill in the Feasible Operation census form and request verification,123430
 process activity,Professional,Verify the census request received and provide instructions for the enhancement of flags and fields useful for anti-money laundering purposes,123431
 process activity,Operational,Certify the nature of the apparatus,102826
@@ -11741,7 +11741,7 @@ process activity,Operational,Carry out anti-money laundering registrations,10699
 process activity,Operational,Receive the request for early termination from the Partner,110557
 process activity,Operational,Carry out the simulation of the early repayment of the loan,112468
 process activity,Operational,Transmit the Expiry Proposal to the customer,112470
-control activity,NA,Verify receipt data and layout,134912
+control activity,NA,Verify receipt data and layout,134913
 process activity,Operational,Book the early repayment of the mortgage,112469
 process activity,Operational,Cash the cashiers check and pay off the loan early,106989
 process activity,Professional,Communicate opinion,113722
@@ -11986,15 +11986,15 @@ process activity,Commercial,Verify the insufficiency of the information necessar
 process activity,Operational,"Communicate to the customer the impossibility of fulfilling the request and in the case of existing relationships, start the process for unilateral withdrawal",129193
 process activity,Operational,Archive documentation,129154
 process activity,Operational,Cancel trades,106486
-process activity,Operational,Confirm to the vendor the ok to proceed with the live run and submit NPV and Sensitivity of the deals for the live run,135011
+process activity,Operational,Confirm to the vendor the ok to proceed with the live run and submit NPV and Sensitivity of the deals for the live run,135012
 process activity,Operational,Validate compressed trades,121429
 process activity,Operational,Close compressed trades and enter new deals in Murex,121428
 process activity,Operational,Proceed to Sign Off,121426
 process activity,Operational,Compile file for deals compression and ensure file upload,101572
-process activity,Operational,Submit NPV and Sensitivity of deals for dry run,135009
+process activity,Operational,Submit NPV and Sensitivity of deals for dry run,135010
 process activity,Professional,Communicate list of trades to compress,101934
 process activity,Operational,Check compression execution and representation on the Position keeping system,103318
-process activity,Operational,Communicate list of trades to be compressed and tolerances in terms of NPV and sensitivity,135007
+process activity,Operational,Communicate list of trades to be compressed and tolerances in terms of NPV and sensitivity,135008
 process activity,Operational,Check the eligibility of deals for compression,101571
 process activity,Operational,Perform Clearing Hub - Sire realignment,101670
 control activity,NA,Reconcile the positions,106789
@@ -12007,13 +12007,13 @@ process activity,Operational,Associate deals to nectar in the Eurex GUI,101936
 process activity,Operational,Check effective cancellation of trades,106485
 process activity,Operational,Send compression order,121425
 process activity,Operational,Communicate list of trades to be compressed,101570
-process activity,Operational,Check the unwinding proposal of the dry run and give the ok to proceed with the live run,135010
+process activity,Operational,Check the unwinding proposal of the dry run and give the ok to proceed with the live run,135011
 process activity,Operational,Check the result of the compression,121427
 process activity,Operational,Sign the ok to proceed and give proof to the Vendor,103317
 process activity,Operational,Correct squaring,101671
-process activity,Operational,Check the unwinding proposal of the live run and give the ok to proceed with the live execution,135012
+process activity,Operational,Check the unwinding proposal of the live run and give the ok to proceed with the live execution,135013
 process activity,Operational,Check execution of compression by the CCP the next day,101573
-process activity,Operational,Submit to the vendor the tolerances indicated by the FO and the deals indicated by the FO that fall within the perimeter indicated by the vendor,135008
+process activity,Operational,Submit to the vendor the tolerances indicated by the FO and the deals indicated by the FO that fall within the perimeter indicated by the vendor,135009
 process activity,Operational,Check effective cancellation of trades,121430
 process activity,Operational,Closing positions and entering new deals in Murex,101938
 process activity,Operational,Communicate list of trades to compress,121424
@@ -12073,7 +12073,7 @@ process activity,Operational,Verify suspended them on behalf of Spunta Nostra,11
 control activity,Operational,Check pending management,130509
 process activity,Operational,Register the merger between ABI code,102944
 process activity,Operational,Start the investigation relating to their suspension on behalf of Spunta Loro,125140
-control activity,Operational,Check the pending,134913
+control activity,Operational,Check the pending,134914
 process activity,Professional,Engage previous relevant management structure for substantive checks,106118
 process activity,Professional,Communicate details of acquired credits,109341
 control activity,Professional,Check the uploaded data of the repurchased claims,113036
@@ -13103,7 +13103,7 @@ process activity,Operational,Check if the Customer has already requested the rei
 process activity,Operational,Identify the applicant,112427
 process activity,Operational,Identify the applicant,112428
 process activity,Operational,Identify the applicant,112429
-process activity,Professional,Send periodic reports on the results of the checks,135132
+process activity,Professional,Send periodic reports on the results of the checks,135133
 process activity,Professional,Report to the Compliance function,106511
 process activity,Professional,Evaluate the actions to be taken,106512
 process activity,Professional,Receive the formal request for the distribution of the intragroup margin,111333
@@ -13113,10 +13113,10 @@ process activity,Professional,Initiate the process for managing the infringement
 process activity,Professional,Receive evidence of the contracted Threshold,104639
 process activity,Professional,Deliberate the thresholds to be assigned,111334
 process activity,Operational,Send periodic communication to collect confirmation of the validity of known information,132496
-process activity,Operational,Receive change request from Front Office,135106
+process activity,Operational,Receive change request from Front Office,135107
 process activity,Operational,Check for anomalies and request resolution actions,126073
-process activity,Operational,Carry out the cancellation and restore,134905
-process activity,Operational,Report any errors in the operations and contact the Front Office Desk,134906
+process activity,Operational,Carry out the cancellation and restore,134906
+process activity,Operational,Report any errors in the operations and contact the Front Office Desk,134907
 process activity,Operational,Request timely validation of pending deal,113407
 control activity,NA,Check reversed and restored transactions in the Middle Office system,100113
 process activity,Operational,Check for misalignments in internal systems,126072
@@ -13403,11 +13403,11 @@ process activity,Commercial,Activate the device process,101433
 process activity,Operational,Sign the Inventory Book,116793
 process activity,Operational,Upload Balance sheet data,104546
 control activity,NA,Check the balance of the data,104547
-process activity,Operational,Close activities,135006
+process activity,Operational,Close activities,135007
 control activity,NA,Verify proper archiving,104550
-process activity,Operational,Open the repository,135004
+process activity,Operational,Open the repository,135005
 process activity,Operational,Agree on sending the activity ledger flow for applications that do not use the quadrator,107449
-control activity,NA,Check the flows,135005
+control activity,NA,Check the flows,135006
 control activity,NA,Check for flag presence,108500
 process activity,Operational,Upload Financial Report,104548
 control activity,NA,Verify correct loading,104549
@@ -13668,24 +13668,24 @@ process activity,Commercial,Verify the possibility of managing the Customers req
 process activity,Operational,Access after-sales features,113371
 process activity,Operational,Report the policy,126731
 process activity,Professional,Identify the Client,102215
-process activity,Professional,Generate reports,134959
-process activity,Professional,Communicate the perimeter of underlyings to Totem Markit,134958
+process activity,Professional,Generate reports,134960
+process activity,Professional,Communicate the perimeter of underlyings to Totem Markit,134959
 process activity,Operational,Communicate calculated Fair Value Adjustment,131519
 process activity,Professional,Perform analysis on the feedback received and assign scores,102916
 control activity,NA,Check sensitivity for completeness,113080
 process activity,Operational,Prepare reports and update distribution list,131518
 process activity,Professional,Fill in the templates for each service,102915
 control activity,NA,Check the data to be contributed,128757
-process activity,Professional,Identify the perimeter of underlyings to contribute to Totem Markit,134955
-process activity,Professional,Send the populated template to Totem Markit,134957
+process activity,Professional,Identify the perimeter of underlyings to contribute to Totem Markit,134956
+process activity,Professional,Send the populated template to Totem Markit,134958
 process activity,Operational,Generate and distribute reports,105556
 process activity,Professional,Check feedback,129476
 process activity,Operational,Calculate Fair Value Adjustment,131521
 control activity,NA,Check calculated Fair Value Adjustment,113079
 process activity,Professional,Storing and integrating the consent data obtained from the feedback,131522
 process activity,Operational,Distribute generated reports,131520
-process activity,Professional,Download the templates for each service,134960
-process activity,Operational,Receive consensus feedback from Totem Markit,134956
+process activity,Professional,Download the templates for each service,134961
+process activity,Operational,Receive consensus feedback from Totem Markit,134957
 process activity,Operational,Prepare and send the Cross Border Account documentary set and the Attestation Letter,112672
 process activity,Operational,Receive from the Requesting Company the request to open a Cross Border Account with a Group Entity,112667
 process activity,Professional,"Verify the Cross Border Account document set, register the customer and perform the Due Diligence, also for AML purposes, required by local legislation",112673
@@ -13869,7 +13869,7 @@ control activity,Operational,Check and validate any cancellation,100034
 process activity,Operational,Account for the flow,132214
 process activity,Professional,Analyze the flows present in the Schedule,114456
 process activity,Operational,Carry out checks for operations in the Petrochemical Oil Sector,100079
-process activity,Operational,Manage unauthorized or unmanaged overdrafts,134961
+process activity,Operational,Manage unauthorized or unmanaged overdrafts,134962
 process activity,Professional,Carry out the integration function,129353
 process activity,Operational,Manage blocked flows for fraud reports,104892
 process activity,Operational,Receive and manage the Security Notification,117049
@@ -14297,7 +14297,7 @@ process activity,Operational,Manage blocking evidence,107922
 control activity,Operational,Verify the arrangement of the flows within the terms,114109
 system activity,NA,Process entered statements and validate/revoke flows,108655
 process activity,Operational,Supervise system rejects and other types of outstanding balances,131601
-process activity,Operational,Oversee blocking evidence and channels with customers,134914
+process activity,Operational,Oversee blocking evidence and channels with customers,134915
 process activity,Operational,Validate/revoke the flow,105474
 process activity,Operational,Manage the overdue report,105475
 process activity,Professional,Make the connection with the Capital IQ source,115169
@@ -14902,7 +14902,7 @@ process activity,NA,Receive the definitive pdf of the Shareholders Meeting file,
 control activity,NA,Check the correspondence of the definitive pdf of the file,103563
 process activity,NA,Communicate the results of the resolution,100702
 process activity,NA,Prepare draft of the Report,112175
-control activity,NA,Check draft information for completeness Report,134975
+control activity,NA,Check draft information for completeness Report,134976
 process activity,NA,Send the Shareholders Meeting file to the printer in Italian and in English,103880
 process activity,NA,Receive the concordance and any additions/updates,104295
 process activity,NA,Submit the draft Report translated into English,125515
@@ -15399,7 +15399,7 @@ process activity,Professional,Continue talking to AdE,113967
 process activity,Professional,Examine the below threshold files and start the approval process,109578
 process activity,Professional,Record in the application any tax news not yet recorded,126486
 process activity,Professional,Assign practices,105425
-process activity,Professional,Monitor tax news,134883
+process activity,Professional,Monitor tax news,134884
 control activity,Operational,Check the Excel census of Abitacs reports,125394
 process activity,Operational,Archive the practice,108833
 process activity,Professional,Survey the tax news in the application and in the Compliance Legal Inventory,105423
@@ -15865,9 +15865,9 @@ process activity,Professional,Identify the type of resolution to be adopted,1131
 process activity,Operational,Archive documentation,127000
 common process activity,Professional,Fulfill the fulfilments foreseen by the Privacy regulations,107894
 process activity,Operational,Insert mandatory links,120943
-process activity,Operational,Evaluate and validate the information received in the Customer File,135135
+process activity,Operational,Evaluate and validate the information received in the Customer File,135136
 process activity,Operational,Check the anti-money laundering entity code table,132458
-process activity,Operational,Complete the Census Process and close the onboarding file,135136
+process activity,Operational,Complete the Census Process and close the onboarding file,135137
 process activity,Operational,Start the census request,105205
 process activity,Operational,Enabling the subject on specialist finance systems [EXCLUSIVELY FOR PERSONS WITH OPERATION attributable to a GLOBAL MARKETS & INVESTMENT BANKING PRODUCT DESK],118663
 process activity,Professional,Identify the legal figure,120938
@@ -16128,7 +16128,7 @@ control activity,NA,Verify effective compliance with the Groups internal deadlin
 process activity,Professional,Prepare the response and information/resolution to the Committees/Corporate Bodies if required,110259
 control activity,NA,Check the correctness and completeness of the documentation,108222
 process activity,Professional,Archive documentation,102314
-process activity,Professional,"Transmit communications on reports/inspections/specialist issues, management of evidence by the Authorities",134964
+process activity,Professional,"Transmit communications on reports/inspections/specialist issues, management of evidence by the Authorities",134965
 process activity,Professional,Analyze the requests/communications with the support of the functional Owners and identify the necessary insights and actions to be taken,103657
 process activity,Professional,Update Suspended Databases,134741
 process activity,Professional,Identify and engage the competent Functional Owner structures in relation to the evidence received from the Authorities,103656
@@ -16473,7 +16473,7 @@ process activity,Operational,"Receive a copy of the confirmation of the counter-
 control activity,NA,Verify the correct accounting of the Confidi Guarantee and the Counter-guarantee,128157
 process activity,Professional,Evaluate with the Deliberating Body the continuation of the operation,101158
 process activity,Operational,Send the request for documentation to the Customer,101147
-process activity,Professional,Communicate the return of the Risk Event to MCC,135097
+process activity,Professional,Communicate the return of the Risk Event to MCC,135098
 process activity,Professional,Contact Confidi,101145
 process activity,Professional,Ask for prior authorization to release the Plafond,101154
 process activity,Professional,Check the presence of the guarantee certificate,100882
@@ -16491,7 +16491,7 @@ process activity,Operational,"Open the search, post an ad on Jobs@ISP and start 
 process activity,Operational,Screen the applications and define the shortlist,129364
 process activity,Operational,Indicate the list of candidates to be met,106588
 process activity,Operational, Share the names of interesting candidates,129366
-process activity,Operational,Formalize the organizational change and generate the related documents,135121
+process activity,Operational,Formalize the organizational change and generate the related documents,135122
 process activity,Operational,Confirm availability for interview,129367
 process activity,Operational,Apply to express your interest in the position,122341
 process activity,Operational,Validate the opening of the search,122339
@@ -17737,8 +17737,8 @@ process activity,Operational,Manage any misdirected collections on assigned posi
 control activity,NA,Verify receipts reversal to Kerma,130264
 process activity,Professional,Operation regulation,111161
 control activity,Professional,Check the settled sums,111162
-process activity,Professional,Send any reports and requests for action on the position,134915
-process activity,Operational,Request an update of the master data notes on the NDGs and of the relationships subject to transfer,134979
+process activity,Professional,Send any reports and requests for action on the position,134916
+process activity,Operational,Request an update of the master data notes on the NDGs and of the relationships subject to transfer,134980
 process activity,Professional,Receive the Servicers discount and activate any actions,101532
 process activity,Operational,Communicate the event and the list of positions,112806
 process activity,Operational,Update master data notes on NDGs and transfer reports,120221
@@ -18081,15 +18081,15 @@ process activity,Professional,Assess the need to enter contingency securities se
 process activity,Operational,Check the update of the database,111775
 process activity,Professional,Prepare information for customers,127469
 process activity,Operational,Send the regulatory provisions and monitor the results,111774
-process activity,Professional,Agree on the LIQUIDITY management methods relating to the T2S securities settlement provisions and communicate them to Bank of Italy,135001
+process activity,Professional,Agree on the LIQUIDITY management methods relating to the T2S securities settlement provisions and communicate them to Bank of Italy,135002
 process activity,Professional,Agree on the amount and prepare faxes in Target format,130444
-process activity,Professional,Verify the acquisition of the T2S reference from the GUI platform and the supply of this information in the TOP procedure via another specific MACRO/MOTOR,134933
+process activity,Professional,Verify the acquisition of the T2S reference from the GUI platform and the supply of this information in the TOP procedure via another specific MACRO/MOTOR,134934
 process activity,Operational,Transfer liquidity from T2S to T2 through an LT message on the GUI,121351
 process activity,Operational,Report the need to activate the contingency procedures via Fax,106606
-process activity,Operational,Identify the operations subject to contingency,134931
+process activity,Operational,Identify the operations subject to contingency,134932
 process activity,Operational,Eliminate payment instructions relating to securities settlements with value date less than or equal to D Date (D Date = value today) entered by the Local Custody Department in the GUI,122857
 process activity,Professional,Assess the need to activate contingencies for T2S and/or Monte Titoli settlement,107341
-process activity,Professional,Send faxes in Target format to transmit the details of liquidity transfer transactions from T2 to T2S,135002
+process activity,Professional,Send faxes in Target format to transmit the details of liquidity transfer transactions from T2 to T2S,135003
 process activity,Professional,Follow and monitor the creation and success of the flow of status updates of the operations entered via MACRO (SIGRADE application),129724
 process activity,Operational,Identify the priority securities settlement orders to be executed or possibly blocked in the Treasury applications,112717
 process activity,Operational,Enter the liquidity round from T2 to T2S,106603
@@ -18100,7 +18100,7 @@ process activity,Operational,Establish and communicate the amount of the Liquidi
 process activity,Operational,Log in to the emergency stations,111773
 process activity,Operational,Enter the Liquidity Transfer message (MT202),106605
 process activity,Professional,"Follow and monitor the creation and success of the flow created by TOP for sending, via MACRO MOTOR / GUI of the VARs (Hold - Release) and CANs (Cancellations)",129725
-process activity,Professional,Follow and monitor the creation of the flow of operations subject to contingency,134932
+process activity,Professional,Follow and monitor the creation of the flow of operations subject to contingency,134933
 process activity,Operational,Report the anomaly and communicate the activation of the contingency procedures,122198
 process activity,Operational,Manage periodic monitoring for Volcker Rule purposes,116706
 process activity,Operational,Make periodic reporting pursuant to the Bank Holding Company Act,116708
@@ -18682,22 +18682,22 @@ control activity,NA,Check the correctness of the data and authorize the request,
 process activity,Operational,Modify stale data,132692
 control activity,NA,Check the correctness of the data and authorize the request,107367
 process activity,Operational,Upload the physical certificate to DA and send it,125615
-process activity,Operational,Detect the need to cancel the nominative/bearer physical certificate,134983
+process activity,Operational,Detect the need to cancel the nominative/bearer physical certificate,134984
 process activity,Operational,Perform return operation,119848
 process activity,Operational, Manage the exchange of certificates,107567
 process activity,Operational,Manage closed funds,123896
 process activity,Operational,Check for the presence of physical certificates in Vault,107566
 process activity,Operational,Detect the need to deposit a physical certificate,126652
-process activity,Operational,Receive certificates/instructions from third party distributors/SGRs for reimbursement/dematerialization,134982
+process activity,Operational,Receive certificates/instructions from third party distributors/SGRs for reimbursement/dematerialization,134983
 process activity,Operational,Track return request,119847
 process activity,Operational,Detect the need to transfer a physical certificate to another bank in charge of customer deposits,132873
 process activity,Operational, Manage exchange requests after the merger date,107568
 process activity,Operational,Detect the need to issue a physical certificate,126388
-process activity,Operational,Cancel the named/bearer physical certificate,134984
+process activity,Operational,Cancel the named/bearer physical certificate,134985
 process activity,Operational,Detect fund merger event,121475
 process activity,Operational,Receive physical certificate and deliver it to the customer,119849
 process activity,Operational,Perform the transfer,126651
-process activity,Operational,Send physical certificate with possible charge for issuing/shipping,134980
+process activity,Operational,Send physical certificate with possible charge for issuing/shipping,134981
 process activity,Operational,Enter return request,119846
 process activity,Operational,Detect transfer request,126650
 process activity,Operational,Archive documentation,123897
@@ -19313,7 +19313,7 @@ process activity,Operational,Refine the customers request,110183
 process activity,Operational,Check the documents and complete the withdrawal of the metal,106444
 process activity,Operational,Expire the metal price quotation,130075
 control activity,Operational,Check the deadline,109378
-process activity,Operational,Perform the operation,135020
+process activity,Operational,Perform the operation,135021
 control activity,Operational,Check the correctness of the accounting,101056
 process activity,Operational,Extinguish,126544
 control activity,Operational,Check the correctness of the extinction,114503
@@ -19330,14 +19330,14 @@ process activity,Operational,Formalize the sending of an intimation letter,10577
 process activity,Operational,Insert the data by notice letter,123429
 process activity,Professional,"Receive, analyze and authorize the Clients request",118194
 process activity,Operational,Request documentation from the Customer and send it to the Central Structure,106443
-process activity,Operational,Inform the Client of the Banks acceptance of the withdrawal of the metal,135018
+process activity,Operational,Inform the Client of the Banks acceptance of the withdrawal of the metal,135019
 process activity,Operational,Transmit instructions,118193
 process activity,Operational,Check expiring trades and collect instructions,105732
 control activity,Professional,Monitor unmanaged overdue files,102781
 process activity,Professional,Receive and analyze the Clients request,110182
 process activity,Operational,Fill out the contract,101972
 control activity,Operational,Check that the entered data is correct,108625
-process activity,Operational,Notify the Central Structure of the receipt of the metal,135019
+process activity,Operational,Notify the Central Structure of the receipt of the metal,135020
 process activity,Operational,Request the completion of the contract,112738
 process activity,Operational,Evaluate exclusion,118504
 process activity,Operational,Apply exclusion,118505
@@ -19391,7 +19391,7 @@ control activity,NA,Verify the correctness of the extracted data,109996
 process activity,Operational,Receive confirmation of enrollment in the register of increased vote applicants,100652
 process activity,Operational,Manage capital increases with rolling instructions,133455
 process activity,Operational,Receive Instructions From The Customer And Upload Manual Instructions For Converting Rolling Btp Italia To The System,133287
-control activity,NA,Check that the instructions are correct,135073
+control activity,NA,Check that the instructions are correct,135074
 process activity,Operational,Enter the instructions manually,133206
 process activity,Operational,Report Claims weekly,126557
 process activity,Operational,Adjust the operation and close the event,133480
@@ -19504,7 +19504,7 @@ process activity,Operational,Communicate whether to discontinue the user,118244
 process activity,Operational,Carry out technical checks on users subject to change of Organizational Unit and adjust the Salesforce configuration,114094
 process activity,Operational,Provide instructions,128649
 process activity,Operational,Report the need to activate a new user,129767
-process activity,Operational,Send processing request,135083
+process activity,Operational,Send processing request,135084
 process activity,Operational,Analyze the reports received,102149
 process activity,Operational,Check the list of Salesforce users who changed their Organizational Unit in the previous day,129769
 process activity,Operational,Carry out technical checks on outgoing users and adjust the Salesforce configuration,129772
@@ -20065,14 +20065,14 @@ process activity,Operational,Send missing documentation to Consap,108233
 process activity,Professional,Prepare written defenses,108086
 process activity,Professional,Monitor credit recovery activities,108232
 process activity,Professional,Activate the non-performing Warranty status and update the appropriate application,108228
-process activity,Operational,Update the warranty in the appropriate application,135075
+process activity,Operational,Update the warranty in the appropriate application,135076
 process activity,Operational,Update the warranty in the appropriate application,124016
 process activity,Operational,Archive documentation,108227
 process activity,Professional,Request Consap Guarantee Pre-activation and update the appropriate application,108293
 process activity,Professional,Request missing documentation,108087
 process activity,Operational,Request non-performing classification of the position,108091
 process activity,Professional,Activate recovery actions,108294
-process activity,Operational,Update the warranty in the appropriate application,135074
+process activity,Operational,Update the warranty in the appropriate application,135075
 process activity,Operational,Send notice letter,108292
 process activity,Professional,Define the first enrollment value,126777
 process activity,Professional,Communicate participatory investment,124956
@@ -20174,7 +20174,7 @@ process activity,Operational,Provide key handover support,132895
 process activity,Operational,Provide support for subject inquiries,125301
 process activity,Operational,Upload lease agreement in procedure,132897
 control activity,Operational,Verify correct registration in the system,100751
-process activity,Professional,Manage lease authorization proposal,135099
+process activity,Professional,Manage lease authorization proposal,135100
 control activity,Professional,Check completeness of documentation,126062
 process activity,Operational,Receive lease documentation,132896
 process activity,Professional,Submit report,112953
@@ -20323,7 +20323,7 @@ process activity,Operational,Carry out any updating of the covenants in the syst
 control activity,Operational,Check the correctness and completeness of the covenants entered in the system,132647
 process activity,Professional,Send the data entry instructions to the system,104955
 process activity,Professional,Update the system loan data,104969
-control activity,Operational,Check the correctness and completeness of the loan data entered in the system,135029
+control activity,Operational,Check the correctness and completeness of the loan data entered in the system,135030
 process activity,Professional,Start the credit process for the waiver and/or amendment proposal,104966
 process activity,Professional,Analyze the risk profile and evaluate the clients request and/or breach of the covenant,104970
 process activity,Professional,Prepare parameter tables for Fair Value calculation and Credit Risk Mitigation (CRM),132997
@@ -20530,12 +20530,12 @@ control activity,NA,Verify the correct balancing of the operations,130976
 process activity,Operational,Confirm the execution of the provision to the Judicial Authority and provide any supplementary instructions,103246
 control activity,NA, Check the completeness of the documentation and instructions assigned,130470
 process activity,Operational,Communicate the provision of integration/release from seizure or confiscation,113551
-process activity,Operational,"Verify the occurred crystallization, yield of interest-free relationships and suspension of mortgage installments",135085
+process activity,Operational,"Verify the occurred crystallization, yield of interest-free relationships and suspension of mortgage installments",135086
 process activity,Operational,"Promptly notify the Bank Assessments of the notification of the provision and request instructions by drawing up the report, where required",106611
 process activity,Professional,Review the Bank Checks and carry out the integration/release order or confiscation or revocation of the confiscation,133101
 process activity,Professional,Verify the content of the provision notified and start the execution of the same,100331
 process activity,Operational,"Evaluate in the presence of Prevention Measures or seizures/confiscations for which the provisions on the protection of third parties provided for by Legislative Decree 159/2011 apply, the debt exposures at the date of notification of the measure and contact the AG.",130567
-process activity,Operational,Execute crystallization request,135084
+process activity,Operational,Execute crystallization request,135085
 process activity,Operational,"Carry out the activities indicated in this process guide and, limited to the unforeseen parts, follow the instructions received from Bank Assessments",129651
 process activity,Operational,"Monitor and manage the relationship, taking care to submit updates/critical issues to the structures identified",113550
 process activity,Professional,Receive and implement the activities required by the Bank Assessments within the times indicated for the execution of the provision,105430
@@ -20844,9 +20844,9 @@ process activity,Operational,Activate the Ebaas module and the customers choice 
 process activity,Operational,Identify and possibly update the customers registry,117087
 process activity,Operational,Start the proposed early repayment confirmation of the loan,110533
 process activity,Professional,Receive the request from the customer,130216
-process activity,Operational,Carry out pricing assessments,134969
-process activity,Operational,Check for SWWR presence with legal connection,134967
-process activity,Operational,Confirm SWWR presence with legal connection,134966
+process activity,Operational,Carry out pricing assessments,134970
+process activity,Operational,Check for SWWR presence with legal connection,134968
+process activity,Operational,Confirm SWWR presence with legal connection,134967
 process activity,Operational,Complete the calculation activities,112393
 process activity,Professional,Share the results of the calculation procedure with the Front Office,114088
 process activity,Professional,Align the Fair Value levels and update the product list,113007
@@ -20857,7 +20857,7 @@ process activity,Operational,Carry out timely risk assessment,101549
 process activity,Operational,"Check for SWWR presence, adjustment of daily measures or monthly monitoring",107564
 process activity,Professional,Verify the correct processing of the scores,133019
 control activity,NA,Verify the correct and complete management of the technical process,127352
-process activity,Operational,Carry out operation entry,134968
+process activity,Operational,Carry out operation entry,134969
 process activity,Professional,Analyze the outputs of the calculation process and provide your own evaluations,114089
 process activity,Professional,Prepare reports for the Group Financial Risks Committee,111733
 process activity,Professional,Highlight Mpor and eligibility changes,110401
@@ -20901,17 +20901,17 @@ process activity,Professional,Authorize invoice issue,108004
 control activity,NA,Replicate the calculation developed by the Servicer,107418
 process activity,Operational,Check the automatic rules inserted in the application.,133680
 process activity,Operational,Validate the check on the workings,133733
-process activity,Operational,Verify accuracy of data,135058
+process activity,Operational,Verify accuracy of data,135059
 process activity,Operational,Send PEC to the correct recipient.,127554
 process activity,Operational,Assign request,110624
-process activity,Operational,Assign the request,135057
-process activity,Operational,Check sent mail folder,135060
+process activity,Operational,Assign the request,135058
+process activity,Operational,Check sent mail folder,135061
 process activity,Operational,Examine the PECs,110625
 process activity,Operational,Code the rules,133681
 process activity,Operational,Archive the processed documentation,108806
 process activity,Operational,Archive the completed shipment,127555
 process activity,Operational,Check pec in archive folders,133732
-process activity,Operational,Archive the request,135059
+process activity,Operational,Archive the request,135060
 process activity,Operational,Complete the information,133679
 process activity,Operational,Monitor the developments of the Revocation Proposal,101442
 process activity,Operational,Archive documentation,101443
@@ -21166,7 +21166,7 @@ process activity,Professional,Decide on assignment requests,112735
 process activity,Professional,Review activation requests,107284
 control activity,Professional,"Verify the correctness, completeness and adequacy of the expense",100496
 process activity,Professional,Request the release of funds,103817
-control activity,NA,Check the activation request,135077
+control activity,NA,Check the activation request,135078
 process activity,Professional,Proceed with assigning the project cards to the system,116237
 process activity,Professional,Prepare assignment documentation on relevant projects,112734
 process activity,Professional,Request budget allocation on relevant projects,116238
@@ -21292,12 +21292,12 @@ control activity,NA,"Verify the monthly trend of the economic and, where possibl
 control activity,NA,Verify the absence of anomalous data in the input of the accounting system by performing the standard checks,112320
 process activity,Operational,Archive documentation,130942
 process activity,Commercial,Send the documentation to the customer and collect the subscription,130941
-control activity,NA,Verify the conformity of the signature affixed by the customer,135036
+control activity,NA,Verify the conformity of the signature affixed by the customer,135037
 process activity,Professional,Receive the customers request and request give course to the manager,108936
 process activity,Operational,Provide give course,108937
 process activity,Operational,Archive documentation,124417
 process activity,Operational,Enter the request data,124418
-control activity,NA,Check that the data matches,135035
+control activity,NA,Check that the data matches,135036
 process activity,Operational,Convey the rejection,124416
 process activity,Professional,Archive documentation/communication,106399
 process activity,Professional,Ensure implementation of any mitigation measures,121604
@@ -21407,7 +21407,7 @@ process activity,Operational,Submit the repayment plans to the Head of Departmen
 process activity,Operational,Send the repayment plan to the Supervisory Body,105472
 process activity,Operational,Report positions involuntarily exceeding the limits,129166
 process activity,Operational,Transmit the data of the prudential reporting of connected parties,125284
-process activity,Operational,Report the repayment plan,135146
+process activity,Operational,Report the repayment plan,135147
 process activity,Operational,Involve the structures concerned for subsequent fulfilments,126778
 process activity,Operational,Continuously monitor compliance with prudential limits and Group ceilings,106577
 process activity,Operational,Supervise compliance with the limits during the preliminary investigation and involve the Risk function in advance where required,108932
@@ -21515,10 +21515,10 @@ process activity,Operational,Specify the terms of the request,113169
 process activity,Professional,Request specific authorization for non-standard business cards,113168
 process activity,Operational,Request business cards,113162
 process activity,Operational,Initiate catalog item modification workflows,106599
-process activity,Operational,Confirm the catalog item object of the Task,134993
+process activity,Operational,Confirm the catalog item object of the Task,134994
 process activity,Operational,Changing the status of the catalog from initializing to in progress,106598
-process activity,Operational,Delegate the activity to a Compiler User,134995
-process activity,Professional,Make one or more changes to the catalog item object of the Task,134994
+process activity,Operational,Delegate the activity to a Compiler User,134996
+process activity,Professional,Make one or more changes to the catalog item object of the Task,134995
 process activity,Professional,Reject the task,101583
 process activity,Professional,Defer task for approval,119524
 process activity,Professional,Create the AU catalog,106597
@@ -21963,11 +21963,11 @@ process activity,Operational,Communicate classification decisions as unlikely to
 process activity,Operational,Involve the Banks COPC for transactions of greater significance,114881
 process activity,Operational,Determining the decision-making process and carrying out a preliminary investigation,132215
 control activity,NA,Verify the decision-making process,132216
-process activity,Operational,Verification outcome reporting,135042
-process activity,Operational, Analyze the anomalies highlighted,135041
+process activity,Operational,Verification outcome reporting,135043
+process activity,Operational, Analyze the anomalies highlighted,135042
 control activity,NA,Check for individual anomalies,115889
 process activity,Operational,Consolidate the accounting date,120933
-process activity,Professional,Take charge of the report or Incident,134892
+process activity,Professional,Take charge of the report or Incident,134893
 process activity,Professional,Verify existence of conditions for opening Major Incident,104072
 process activity,Professional,Create and assign the Problem,111452
 control activity,NA,Verify the correct prioritization of a Problem,101949
@@ -22385,18 +22385,18 @@ process activity,Commercial,Provide the customer with the complaint form,116183
 process activity,Commercial,Identify the type of request and identify the requesting party,109540
 process activity,Commercial,Identify the type of request and identify the requesting party,109541
 process activity,Commercial,Identify the type of request and identify the requesting party,109542
-process activity,Professional,Produce information for financial statements and update financial statements applications,135014
+process activity,Professional,Produce information for financial statements and update financial statements applications,135015
 control activity,NA,Verify correct accounting of data and completeness of positions with respect to the supervisory application,103281
-process activity,Professional,Produce reports for management purposes,135015
+process activity,Professional,Produce reports for management purposes,135016
 process activity,Professional,Accounting for the FVOCI reserve and accounting for taxation,123675
 control activity,NA,Verify correct accounting of data and completeness of positions,123682
 process activity,Professional,Transmit the fair value measurements to the supervisory application,129594
 control activity,NA,Verify correct accounting and completeness of the positions with respect to the supervisory application,121483
-process activity,Professional,Account for credit risk assessment for FVOCI receivables,135013
+process activity,Professional,Account for credit risk assessment for FVOCI receivables,135014
 control activity,NA,Verify correct accounting of the data register and completeness of the positions,123681
 process activity,Professional,Accounting for fair value values,109984
 control activity,Professional,Verify the correctness of the values accounted for,121482
-process activity,Professional,Produce information for the purpose of monthly reporting,135016
+process activity,Professional,Produce information for the purpose of monthly reporting,135017
 process activity,Professional,Check for any changes in the scope of equity investments,127769
 process activity,Professional,Contact the new company in the perimeter,127772
 process activity,Operational,Update the Group Map,127771
@@ -22714,7 +22714,7 @@ process activity,Operational,Adapt the document system relating to the Cybersecu
 process activity,Operational,Start the annual assessment by sending the questionnaires to the Legal Entities and Foreign Branches,113973
 process activity,Operational,Start the periodic monitoring and/or annual assessment process,128398
 process activity,Operational,Confirm the successful enabling,129198
-process activity,Operational,Provide for the transmission of the necessary information,135063
+process activity,Operational,Provide for the transmission of the necessary information,135064
 process activity,Operational,Prepare the authorization request,116061
 process activity,Operational,Transmit the request for authorization to access restricted areas.,116062
 process activity,Operational,Provide the information and provide for the transmission of a copy of the same with evidence of the consent/denial given,103970
@@ -22722,24 +22722,24 @@ control activity,NA,Verify the effective acquisition of consent,127597
 process activity,Operational,Deny access,129196
 process activity,Operational,Provide for the acquisition of the biometric data by the interested party,129197
 process activity,Operational,Arrange activation of biometric filter on access to restricted area,132092
-process activity,Operational,Evaluate the request for authorization to access restricted areas,135062
+process activity,Operational,Evaluate the request for authorization to access restricted areas,135063
 control activity,NA,Evaluate the request for authorization to access restricted areas,121676
-control activity,NA,Verify and send instructions to the Depositary,135140
+control activity,NA,Verify and send instructions to the Depositary,135141
 process activity,Operational,Deliver/collect rights due,122978
 control activity,NA,Verify locations,123091
 process activity,Operational,Communicate the event to the front office,122979
-process activity,Operational,Request the production of reports to be sent to the Counterparty,135137
+process activity,Operational,Request the production of reports to be sent to the Counterparty,135138
 process activity,Operational,Receive dividend/coupon payment status,100021
 control activity,NA,Check dividend/coupon retrocession,100166
 process activity,Operational,Prepare and submit Claim,123090
 control activity,NA,Receive confirmation from the counterparty,123088
-process activity,Operational,Send claims reports to Counterparties,135138
-control activity,NA,Check report claims,135141
+process activity,Operational,Send claims reports to Counterparties,135139
+control activity,NA,Check report claims,135142
 process activity,Operational,Calculate quantity of shares/rights to be exchanged,122980
 control activity,NA,Verify that the calculation is correct,123089
 control activity,NA,Monitor our accounts,100022
 process activity,Operational,Check positions affected by Corporate Action and/or dividend payment/coupon detachment,100130
-process activity,Operational,Notify the Front Office of any suspensions,135139
+process activity,Operational,Notify the Front Office of any suspensions,135140
 process activity,Operational,Confirm the amount to be settled in the system,117081
 process activity,Operational,Maintain documentation,129087
 process activity,Professional,Carry out the operation requested by the treasurer company,129083
@@ -23465,14 +23465,14 @@ process activity,Operational,Send a request for recoding and registration of inc
 control activity,NA,Perform preliminary performance checks on RRM flow (Exposures),130816
 control activity,NA,Carry out preliminary performance checks on the NPL Excerpts Archive,130817
 process activity,Operational,Make guidance flows available for the NPL reporting process,121781
-control activity,NA,Verify compliance of the archives provided,134926
+control activity,NA,Verify compliance of the archives provided,134927
 process activity,Operational,Deploy definitive perimeter,108624
 process activity,Operational,Send the search communication for additional positions to be reported,121779
 control activity,NA,Verify receipt of feedback,121780
 process activity,Operational,Send the operational calendar and the Flow Monitor for preliminary verification,130366
 control activity,NA,Check for any possible errors and criticalities,112804
-process activity,Operational,Send a request for the supply of cumulative excerpts for the Banks not included in the NPL Excerpt Archive perimeter,134927
-control activity,NA,Check the supply of cumulative excerpts,134928
+process activity,Operational,Send a request for the supply of cumulative excerpts for the Banks not included in the NPL Excerpt Archive perimeter,134928
+control activity,NA,Check the supply of cumulative excerpts,134929
 process activity,Professional,Acquire updated input streams and activate SMARTREG internal diagnostics,106449
 process activity,Operational,Identify any anomalous master data positions,106474
 control activity,NA,Verify the correctness of the flows,119128
@@ -23690,7 +23690,7 @@ control activity,NA,Check the completeness of the documentation,103546
 process activity,Operational,Verify the content of the provision notified and start the management of the assessment,119921
 process activity,Operational,Provide the Bank Assessments Office with the necessary documentation where not explicitly excluded by the provision,114377
 control activity,NA,Manage documentation requests,112085
-control activity,NA,Check the completeness of the documentation,135131
+control activity,NA,Check the completeness of the documentation,135132
 process activity,Operational,Promptly communicate and address the notification of the provision to the Bank Assessments Office,102461
 process activity,Professional,Identify the strategy for carrying out the probe check,100717
 process activity,Professional,Request the deactivation of the incorrect probe or component,102190
@@ -23934,7 +23934,7 @@ process activity,Operational,Process and communicate the data collected,119423
 control activity,NA,Check operating curve calculation,119221
 process activity,Operational,Calculate the TIT MLT,119421
 process activity,Operational,Prepare TIT MLT Standard communication to the Divisional Controller.,113883
-process activity,Operational,Calculate Add Ons for particular types of operations,135105
+process activity,Operational,Calculate Add Ons for particular types of operations,135106
 process activity,Operational,Detect market returns,119422
 process activity,Commercial,Publish the standard TIT MLT curves monthly,132197
 process activity,Professional,Carry out the necessary actions,119324
@@ -23959,7 +23959,7 @@ process activity,Operational,Request authorization to open the Cover Account,132
 process activity,Operational,Request the inclusion of the account in the liquidation procedure,104214
 process activity,Professional,Verify authorization to open the Cover Account,126247
 process activity,Operational,Account for movements of the Cover Account,131561
-control activity,NA,Verify correct accounting,135034
+control activity,NA,Verify correct accounting,135035
 process activity,Operational,Reset the balance,116424
 control activity,NA,Verify the correct debit of the account,116425
 process activity,Operational,Send and print Swift confirmation messages for Cover Account opening,116481
@@ -24015,16 +24015,16 @@ process activity,Professional,Submit cost and revenue data,110047
 process activity,Professional,Allocate data to individual business units,102072
 process activity,Professional,Prepare reporting,102073
 process activity,Operational,Receive the assignment letter,117516
-process activity,Operational,Attribute replacement compensation,135092
-process activity,Professional,Designate the Deputy Branch Manager or Representative,135098
-process activity,Operational,Communicate the successful identification of the Substitute/Appointee,135096
-process activity,Operational,Update the applications and have the letter of assignment generated,135091
+process activity,Operational,Attribute replacement compensation,135093
+process activity,Professional,Designate the Deputy Branch Manager or Representative,135099
+process activity,Operational,Communicate the successful identification of the Substitute/Appointee,135097
+process activity,Operational,Update the applications and have the letter of assignment generated,135092
 process activity,Operational,Represent to the Client any evidence of an operational block upon confirmation of his Financial Profile,115391
 process activity,Operational,Verify the customers subscription to the Graphometric Signature or Remote Digital Signature services,128609
 process activity,Operational,Manage the update of the Financial Profile,128610
 process activity,Operational,Inform the customer of the choice of signature method,127132
 process activity,Operational,Check the Clients signature or signatory powers,127133
-process activity,Professional,Check the validity of the Clients Financial Profile,135115
+process activity,Professional,Check the validity of the Clients Financial Profile,135116
 process activity,Operational,Archive documentation,127135
 process activity,Operational,Confirm the updated Questionnaire,127130
 process activity,Operational,Manage the documentation produced in electronic format,127134
@@ -24104,8 +24104,8 @@ process activity,Operational,Enter the operation in the system,121979
 process activity,Operational,Enter the operation in the system,121980
 process activity,Professional,Verify the urgency of the intervention and possibly make a telephone notification,102995
 process activity,Professional,Take the corrective action,110504
-process activity,Operational,"If necessary, close the alarm",134904
-process activity,Operational,Close the Incident,134903
+process activity,Operational,"If necessary, close the alarm",134905
+process activity,Operational,Close the Incident,134904
 process activity,Operational,Open an incident,110503
 process activity,Professional,Check if system or application structures are involved,126274
 process activity,Professional,Evaluate the positions of the BdT Suppliers/Dealers if Customers and Prospects,106684
@@ -24386,7 +24386,7 @@ process activity,Operational,Choose the recognition mode,103917
 process activity,Commercial,Carry out activities for the enhanced identification of non-multichannel customers,101091
 process activity,Operational,Provide feedback on identification and anti-fraud checks performed,103919
 process activity,Operational,Carry out automatic and manual checks on data and documents,103918
-process activity,Professional,Carry out the planned intervention,135064
+process activity,Professional,Carry out the planned intervention,135065
 process activity,Professional,Share planning and allocate economic resources,111855
 process activity,Professional,Carry out the planned intervention,130680
 control activity,NA,Check that DG deliverables have been updated,114209
@@ -24632,7 +24632,7 @@ process activity,Professional,Produce Power of Attorney and send to consortium m
 process activity,Professional,Publish offer documents,126685
 process activity,Operational,Receive Invitation letter and/or Authorization letter signed by the customer,110421
 process activity,Professional,Publication notices on the final results of the offer,118829
-process activity,Operational,Identify the number assigned to the contract during its generation,134938
+process activity,Operational,Identify the number assigned to the contract during its generation,134939
 process activity,Operational,Contact the other party in the absence of confirmation,131030
 process activity,Operational,Contact the other party in order to request the correction of the contract,106915
 process activity,Operational,Solicit the correction of contracts,100032
@@ -25313,7 +25313,7 @@ process activity,Operational,Send the Drafts of the dossiers for examination by 
 process activity,Professional,Sign the certificate pursuant to art. 154 bis of the TUF and the certification letters sent to the Independent Auditors,102500
 process activity,Operational,Provide for the dissemination and storage of the press release and publish the documents on the institutional website,114661
 process activity,Operational,Report changes made to the Catalog of Technological Solutions / Implemented Features,123042
-process activity,Operational,Identify the need to define a new indicator,135022
+process activity,Operational,Identify the need to define a new indicator,135023
 process activity,Operational,Start the relationship matrix maintenance process,101136
 process activity,Operational,Verify the need to update the Integrated Cybersecurity and Business Continuity Control Model,124140
 process activity,Operational,Carry over the changes,124338
@@ -25404,14 +25404,14 @@ process activity,Professional,Activate demand,126641
 process activity,Professional,Verify impacts on the information systems for the Pilot and the start of the model change,119453
 process activity,Professional,Gather requirements and initiate application design activities,118438
 process activity,Professional,Request activation of the investment lines as part of the Capital Budget,105400
-process activity,NA,File the Final Report in English c/o Borsa Italiana S.p.A.,134900
+process activity,NA,File the Final Report in English c/o Borsa Italiana S.p.A.,134901
 process activity,NA,Send draft of the Report,134084
 process activity,NA,Receive the concordance and any additions,121066
 control activity,NA,Check feedback,121067
 process activity,NA,Incorporate the sections of the Report produced,107607
 control activity,NA,Check Report with returns,107608
 process activity,NA,Communicate agreement on the final draft of the Report,102896
-process activity,NA,Send the approved Report to the press in Italian,134899
+process activity,NA,Send the approved Report to the press in Italian,134900
 process activity,NA,Submit the approved Report in Italian,105785
 process activity,NA,Receive the concordance and any additions/updates,116263
 control activity,NA,Verify concordance,133013
@@ -25433,7 +25433,7 @@ process activity,NA,Send Index and Report of the previous year,133015
 process activity,NA,Filing the Report c/o Registered Office and Borsa Italiana,105786
 process activity,NA,Carry out the overall review of the documentCarry out the overall review of the document for the profiles of the respective competence,121069
 process activity,NA,Make copies of the Report available to shareholders,101509
-process activity,NA,Send the report in English to print,134901
+process activity,NA,Send the report in English to print,134902
 process activity,NA,Send post-concord draft of the Report for presentation to the Remuneration Committee,134085
 process activity,NA,Authorize the index of the Report,133014
 process activity,NA,Receive the translated English version from the Translation Company,125775
@@ -25750,7 +25750,7 @@ process activity,Operational,Record the total excussion in the pertinent applica
 process activity,Professional,Verify regularity of the enforcement,107291
 process activity,Operational,Send communication to the SPV,134707
 control activity,Operational,Verify the punctual sending of the communication to the SPV,108543
-process activity,Operational,Send the communication of the enforcement operations relating to the relationships in Servicing Bank to the support structures of the activities with the Transferee,134973
+process activity,Operational,Send the communication of the enforcement operations relating to the relationships in Servicing Bank to the support structures of the activities with the Transferee,134974
 control activity,Professional,Verify the timely sending of the communication,110984
 process activity,Operational,Receive payment from the M.E.F.,110120
 process activity,Professional,Crystallize funding,124267
@@ -25763,7 +25763,7 @@ control activity,Operational,Verify compliance with the terms and correctness of
 process activity,Operational,Manage location,103496
 process activity,Operational,Pay off the loan,117325
 control activity,Operational,Verify that the loan has been extinguished,112221
-process activity,Professional,Prepare and submit a guarantee enforcement application,134937
+process activity,Professional,Prepare and submit a guarantee enforcement application,134938
 process activity,Professional,Provide provisions for the repayment of the loan,129387
 process activity,Operational,Early repayment of the loan to C.D.P.,133540
 control activity,Operational,Verify the correctness of the refunded amount,118652
@@ -26118,7 +26118,7 @@ process activity,Professional,Deposit KID with Consob,123962
 process activity,Professional, Identify elements of the Target Market and prepare the Business Clearing form,114320
 process activity,Operational,Deposit advertising campaign,112197
 process activity,Professional,Verify Termsheet correctness,114317
-process activity,Professional,Carry out the first indicative pricing of the structure and monitor pricing,134944
+process activity,Professional,Carry out the first indicative pricing of the structure and monitor pricing,134945
 process activity,Professional,Request the resolution from the Deliberating Manager,114324
 process activity,Professional,Update Final Terms,123954
 process activity,Professional,Prepare the Business Clearing form and carry out the check,114323
@@ -26129,7 +26129,7 @@ process activity,Professional,Choose the definitive underlyings,128472
 process activity,Professional, Draw up the Product Testing and Product Design Technical Sheet,122116
 process activity,Professional,Validate the timetable,114314
 process activity,Commercial,Define the wording of the advertising material,129975
-process activity,Professional,Choose the potential underlyings and start the trading restrictions check request,134945
+process activity,Professional,Choose the potential underlyings and start the trading restrictions check request,134946
 process activity,Professional,Propose the structure,114316
 process activity,Professional,Upload Final Terms and produce the summary sheet,114326
 process activity,Professional,"Survey the IMIN page, update the census in the infoproviders and provide data relating to issues listed on Consob (pursuant to Article 116)",119132
@@ -26188,13 +26188,13 @@ process activity,Operational,Archive documentation,119708
 process activity,Professional,Detect operations in armaments,116047
 process activity,Operational,Propose the authorization to your hierarchical superior,116585
 process activity,Operational,Deliberate,112338
-process activity,Operational,Submit the file to the Management Committee,134894
+process activity,Operational,Submit the file to the Management Committee,134895
 process activity,Operational,Send in advance the notification of the opening of the file to the competent structure,115039
 process activity,Operational,Notify the Manager of the outcome of the processing and arrange for the return of the sums to the originator,125731
 process activity,Operational,Provide the competent structure with data regarding operations in the sector,110076
 process activity,Operational,Ask the customer for a copy of the documentation,134848
 process activity,Operational,Analyze if there are Transactions of Greater Importance (OMR),110218
-process activity,Operational,Issue the authorization and communicate the outcome of the evaluation,134895
+process activity,Operational,Issue the authorization and communicate the outcome of the evaluation,134896
 process activity,Operational,Take over the weapons operation,134847
 process activity,Operational,Express their assessments and send them to the Division Manager and the CRO Governance Area,120006
 process activity,Operational,Propose the authorization to your hierarchical superior,110077
@@ -26219,13 +26219,13 @@ process activity,Operational,Archive documentation,126697
 process activity,Operational," Send the supporting documentation to the Chief Risk Officer Governance Area, in order to issue the OMR opinion",120007
 process activity,Operational,Communicate to the competent structure,112339
 control activity,NA,"Check the consistency, the completeness of the information",130304
-process activity,Operational,Issue the opinion and send it to the Division Manager,134893
+process activity,Operational,Issue the opinion and send it to the Division Manager,134894
 process activity,Professional,Check the documentation (Company Declaration),127350
 control activity,NA,Check the completeness of the documentation,126452
 process activity,Operational,Receive documentation,114588
 process activity,Professional,Analyze the documentation received,126671
 control activity,NA,Check for the presence of the weapons code,124050
-control activity,NA,"Verify the consistency, completeness of information and compliance of the transaction",135082
+control activity,NA,"Verify the consistency, completeness of information and compliance of the transaction",135083
 control activity,NA,Check outstanding SDD debit provisions,127078
 process activity,Operational,Oversee unopted assets,112680
 control activity,NA,Check for unopted assets,103044
@@ -26326,11 +26326,11 @@ process activity,Professional,Start the activities aimed at the billing process 
 process activity,Operational,Promptly contact the customer to update the profiling questionnaire,101461
 control activity,NA,Verify the absence of Investment Proposals/Instructions for the client to be reported,100505
 process activity,Operational,Transmit any existing Investment Proposals/Instructions to the Central Structure,101463
-process activity,Operational,Carry out the preparatory activities for the management of reports,134886
-process activity,Operational,Engage the Reference Manager,134888
+process activity,Operational,Carry out the preparatory activities for the management of reports,134887
+process activity,Operational,Engage the Reference Manager,134889
 process activity,Operational,Insert specific notice in ABC,132914
-process activity,Operational,Identify the reports subject to priority action,134887
-process activity,Operational,Receive the report processed by the system,134885
+process activity,Operational,Identify the reports subject to priority action,134888
+process activity,Operational,Receive the report processed by the system,134886
 process activity,Operational,Return only the evidence on which to intervene,107815
 process activity,Operational,Analyze the Investment Proposals/Instructions received,101464
 process activity,Operational,Monitor pending updates,101462
@@ -26679,7 +26679,7 @@ process activity,Operational,Communicate changes in the corporate sphere,121065
 process activity,Professional,Provide information for the assessment on the methods of inclusion in the VAT group,108273
 process activity,Professional,Release your own ratings,108274
 control activity,NA,Verify correctness of evaluation,129664
-process activity,Professional,Prepare the Periodic Report,135111
+process activity,Professional,Prepare the Periodic Report,135112
 control activity,Professional,Verify correctness of the Information,101129
 process activity,Professional,Sign the AGI/1 Model,117845
 process activity,Operational,Update the tool,118602
@@ -26821,7 +26821,7 @@ control activity,NA,Check that the files are set up correctly,132721
 process activity,Operational,Record commission amounts on a monthly basis,111365
 process activity,Professional,Receive Mark to Market reports,110732
 control activity,NA,Check alignment with Market Treasury IMI CIB,110734
-process activity,Operational,Post collateral collection/payment,134963
+process activity,Operational,Post collateral collection/payment,134964
 process activity,Operational,Retrieve the printouts containing the lists of operations to be submitted on a certain date,116539
 process activity,Operational,Submit the printouts with the lists of operations with a certain date,116538
 process activity,Operational,Provide indications on the correct allocation of the amounts for financial statement purposes,111364
@@ -26839,7 +26839,7 @@ process activity,Professional,"Acquire the data necessary for the identification
 process activity,Operational,Request the census of the Alternative Fund,111953
 process activity,Operational,Verify that the subject surveyed is not reported as present in the Embargo Sanction lists,133987
 process activity,Operational,Submit census request,115612
-process activity,Operational,Send the census request to the competent structures,134898
+process activity,Operational,Send the census request to the competent structures,134899
 process activity,Operational,Verify that the subject surveyed is not reported as present in the Embargo Sanction lists,122750
 process activity,Operational,Request the census of a Dummy CDN,102902
 process activity,Operational,Request the census of the subject in the finance systems,131857
@@ -26865,7 +26865,7 @@ control activity,Operational,Verify the proper loading of the data,109124
 process activity,Operational,Activate Contract Negotiation and Formalize Commission Table,106882
 process activity,Operational,Contact the competent structure for the identification of the Relationship Manager,110404
 process activity,Operational,Archive documentation,120911
-process activity,Operational,Insert the data into the procedure,135093
+process activity,Operational,Insert the data into the procedure,135094
 process activity,Operational,Make the documentary request to the Broker,131693
 process activity,Professional,Insert information expansions for reports,108523
 control activity,Operational,Check that the data has been loaded correctly,102145
@@ -26886,7 +26886,7 @@ process activity,Operational,Update Authorized Broker/OTF List,128042
 process activity,Operational,Carry out data reception/retrieval,104283
 process activity,Operational,Archive documentation,105789
 process activity,Operational,Take charge of the request and verify the completeness of the data received,106009
-process activity,Operational,Gather customer needs,134896
+process activity,Operational,Gather customer needs,134897
 process activity,Operational,Send the census request to the competent structures,133142
 process activity,Operational,Archive documentation,109798
 process activity,Operational,Verify that the subject surveyed is not reported as present in the Embargo Sanction lists,127228
@@ -26895,7 +26895,7 @@ process activity,Operational,Engage the relevant CDN facility,119224
 process activity,Operational,Census Dummy CDN,102903
 process activity,Operational,Perform Due Diligence,115629
 process activity,Operational,Archive documentation,128043
-process activity,Professional,"Acquire the data necessary for identification, census and execution of mandatory obligations",134897
+process activity,Professional,"Acquire the data necessary for identification, census and execution of mandatory obligations",134898
 process activity,Operational,Receive the currency reference for the accounted movement,112547
 process activity,Operational,Receive bond placement prospectus and/or settlement instructions,132052
 process activity,Operational,Settle the bond placement received,121150
@@ -27481,12 +27481,12 @@ process activity,Operational,Listen to phone calls,115580
 process activity,Operational,Internal reporting management.,122938
 process activity,Operational,Coordinate with the operating structure for any coverage reservations.,108066
 process activity,Operational,Manage external reporting to the lender.,122939
-process activity,Operational,Internally define the terms of the placement.,134907
+process activity,Operational,Internally define the terms of the placement.,134908
 process activity,Operational,Provide indications for the settlement of the operation.,108065
 process activity,Operational,Manage any early repayments.,107419
 process activity,Operational, Send the Term Sheet to the investor.,120200
 process activity,Operational,Confirm subscription terms with investors by stipulating a minimum amount.,126658
-process activity,Operational,Share placement terms with Brokers/Investors.,134908
+process activity,Operational,Share placement terms with Brokers/Investors.,134909
 process activity,Operational,Determine the final subscription volumes.,101885
 process activity,Operational,Handle investor feedback and negotiation.,101884
 process activity,Operational,Send the terms of the placement to the investor.,126657
@@ -27525,7 +27525,7 @@ process activity,Professional,Certify the data and transmit the relative attesta
 control activity,NA,Verify the behavioral consistency of the data present in the Packages,133125
 control activity,NA,Check the completeness and correctness of the data in the Packages,133135
 control activity,NA,Monitor receipt of the Reporting Package,133124
-control activity,NA,Check the data entered in the support application,135017
+control activity,NA,Check the data entered in the support application,135018
 process activity,Professional,Correct any anomalies and make the data available again,133112
 control activity,NA,Check that the requested data has been corrected,133128
 process activity,Operational,Send the reported data to the interested structures,133130
@@ -27598,7 +27598,7 @@ process activity,Operational,Communicate membership of TLTRO programs.,107084
 process activity,Operational,Monitor TLTRO disbursements at Business Unit level.,105541
 process activity,Operational,Send report to the Auditors.,107083
 process activity,Professional,Consolidate the perimeter of the sale,133422
-process activity,Professional,Present the securitization project to the Board of Directors,135114
+process activity,Professional,Present the securitization project to the Board of Directors,135115
 process activity,Operational,Provide for the certification of the MICART3 analytical flow,107494
 process activity,Professional,Request preparation of information on ABC,133423
 process activity,Operational,Request opening of all vehicle accounts,128509
@@ -27606,7 +27606,7 @@ process activity,Professional,Have lines of credit and subordinated financing au
 process activity,Operational,Quantify the analytical and synthetic price,107495
 process activity,Operational,To appoint an External Law Firm and Rating Agencies,133421
 process activity,Professional,Request the issue of the securities and the settlement of the operation,127467
-process activity,Professional,Select assets,135113
+process activity,Professional,Select assets,135114
 process activity,Professional,Request the listing of any hedging derivative where applicable,128510
 process activity,Professional,Sign contracts relating to the transfer block,121843
 process activity,Professional,Apply for the establishment or participation of a vehicle,114536
@@ -27683,12 +27683,12 @@ process activity,Operational,Send Viacard Telepass,118642
 process activity,Operational,Upload card issuance requests,118643
 process activity,Operational,Make changes and send confirmation to the customer,110461
 process activity,Operational,Create location,118641
-process activity,Operational,Report any information gaps in the annual audit plan,135067
+process activity,Operational,Report any information gaps in the annual audit plan,135068
 process activity,Operational,Prepare and make available the reporting of the annual audit plan,129698
 process activity,Operational,Make the necessary documentation available to the Board of Directors,129699
 process activity,Operational,Close the annual audit plan,129700
-process activity,Operational,Integrate the reasons in the annual audit plan,135068
-process activity,Operational,Ensure proper completion of the annual audit plan,135066
+process activity,Operational,Integrate the reasons in the annual audit plan,135069
+process activity,Operational,Ensure proper completion of the annual audit plan,135067
 process activity,Operational,Prepare the flow of information for the Supervisory Body on a monthly basis and keep the Single Register of Financial Advisors,105996
 process activity,Professional,Update the application and issue Consob / IVASS assignments to operate off-site,105973
 process activity,Operational,Update the data in the Banks electronic archive,105995
@@ -27922,7 +27922,7 @@ process activity,Professional,Carry out innovation and research activities,11174
 process activity,Professional,Develop new fruition experiences and monitor the effectiveness of those already provided,127027
 process activity,Professional,Design experiences and frameworks to use,127026
 process activity,Professional,Evaluate presentation of the training project,108563
-process activity,Professional,Examine the relevant training offer,134923
+process activity,Professional,Examine the relevant training offer,134924
 process activity,Professional,"Assign tasks to teachers, tutors, planners and administrators",103711
 process activity,Operational,Collect the data of the participants and teachers and load them into the procedure,131445
 control activity,NA,Verify the correct loading of the data in the procedure,130074
@@ -27933,7 +27933,7 @@ process activity,Operational,Upload data and documents to the Fund platform,1046
 control activity,NA,Verify formal completeness of data and documents,131942
 process activity,Professional,Evaluate the suggestions received and prepare the project sheets,115202
 process activity,Operational,Enter the accounting data received in the Active Cycle process,116848
-process activity,Professional,Prepare the text and sign the trade union agreement,134922
+process activity,Professional,Prepare the text and sign the trade union agreement,134923
 process activity,Operational,Define and upload training activity calendar,103728
 process activity,Operational,Activate the competent functions/structures for identifying the participants,129605
 process activity,Operational,Proceed with enrollment in the identified courses,127433
@@ -27944,7 +27944,7 @@ control activity,NA,Verify the correctness and completeness of the documentation
 process activity,Professional,Prepare forms and applications,104664
 process activity,Professional,Prepare the Training Plan dossier,129456
 process activity,Professional,Communicate any changes to INPS registration numbers for updates to the Fund platforms,134829
-process activity,Professional,Periodically monitor and evaluate tenders,134921
+process activity,Professional,Periodically monitor and evaluate tenders,134922
 process activity,Operational,Provide the data to account for the accrued contributions,116847
 process activity,Professional,Communicate information to the Supply Authority,103727
 control activity,NA,Verify compliance with the deadlines,102030
@@ -27952,14 +27952,14 @@ process activity,Professional,Receive the collection against the settlement of t
 control activity,NA,Verify correct settlement of the contribution,120138
 control activity,NA,Carry out periodic checks on the contributions collected,107833
 process activity,Professional,Carry out the final disclosure towards the Unions,105585
-process activity,Professional,Prepare the draft of the Training Plan based on the form of the Provider Body,134925
+process activity,Professional,Prepare the draft of the Training Plan based on the form of the Provider Body,134926
 control activity,NA,Verify the economic component of the draft Plan,112448
 process activity,Professional,Send the application for admission to the loan to the institution,100897
 control activity,NA,Check the completeness of the application for admission to the loan,112541
 process activity,Professional,Request the disbursement and the relative invoice from the institution,121530
 process activity,Operational,Prepare the filing of the practice,103730
 process activity,Professional,Send information on the training plan,115201
-process activity,Professional,Provide the personal data of the participants in the training projects,134924
+process activity,Professional,Provide the personal data of the participants in the training projects,134925
 process activity,Professional,Detect the progress of teaching and activate the evaluation process,134346
 process activity,Professional,Evaluate the elaborated proposals,111911
 process activity,Professional,"Provide cost of course users, calculation of participants salary cost and any additional documentation",108064
@@ -28004,15 +28004,15 @@ process activity,Professional,Renew statements contained in the filing,113086
 process activity,Professional,Prepare Investor Education Feedback,107323
 process activity,Professional,Perform stabilization operations,124448
 process activity,Professional,Prepare Investor Education Feedback,110137
-process activity,Professional,Enter the terms of the operation in the system,134918
+process activity,Professional,Enter the terms of the operation in the system,134919
 process activity,Professional,Ascertain the need for Investor Education activities,126779
 process activity,Professional,Carry out Early Look / Pilot Fishing activities during meetings with Investors,104852
 process activity,Professional,Carry out Investor Education activities during meetings with investors,129788
-process activity,Professional,Prepare documentation for the settlement and closing of the operation,134917
+process activity,Professional,Prepare documentation for the settlement and closing of the operation,134918
 process activity,Professional,Produce and distribute the Pre-IPO Research,129787
 process activity,Professional,Activate the Retail Marketing structures,113088
 process activity,Professional,Contact investors,128460
-process activity,Professional,Prepare the pricing document,134916
+process activity,Professional,Prepare the pricing document,134917
 process activity,Professional,Ascertain the requirements for the involvement of Sales for the purposes of Investor Education activity,115222
 process activity,Professional,Perform stabilization operations,106856
 process activity,Professional,Send the Syndicate Briefing,107247
@@ -28047,7 +28047,7 @@ process activity,Professional,Inform investors,101174
 process activity,Professional,Activate the crossing procedure,112776
 process activity,Professional,Send mandatory communications,124449
 process activity,Professional,Communicate official start date for trading,122139
-process activity,Professional,Archive documentation,134919
+process activity,Professional,Archive documentation,134920
 process activity,Professional,Submit feedback,119277
 process activity,Professional,Exercise greenshoe,124450
 process activity,Professional,Organize the roadshow,126780
@@ -28876,13 +28876,13 @@ process activity,Operational,Open the workstation,122452
 process activity,Operational,Absorb the values by operators hand,122372
 process activity,Operational,Check the type of equipment connected to the cash desk,122269
 process activity,Operational,Handle any cash differences,105661
-process activity,Professional,Report locations,135087
+process activity,Professional,Report locations,135088
 process activity,Professional,Check for the presence of prejudicial events and negative symptoms,118808
 process activity,Professional,Analyze the position and make the proposal,130959
 control activity,NA,Check the list of unworked items,127457
 process activity,Professional,Solicit evaluation,127667
 process activity,Professional,Analyze the proposal and manage the event,127458
-process activity,Professional,Analyze the evidence found,135086
+process activity,Professional,Analyze the evidence found,135087
 process activity,Professional,Classify as Impaired Credit,121773
 process activity,Operational,Archive documentation,116333
 process activity,Professional,Deactivate the prejudicial event,121772
@@ -28894,7 +28894,7 @@ process activity,Operational,Archive documentation,123525
 process activity,Operational,Put the position in the status PM,131453
 process activity,Operational,Enter positions in PM status,107487
 process activity,Professional,Assess the need/opportunity to classify as non-performing credit,131452
-process activity,Professional,Define the positions to be assigned to PM Status,135088
+process activity,Professional,Define the positions to be assigned to PM Status,135089
 process activity,Professional,Monitor customers,101967
 process activity,Professional,Submit request/make classification in Proactive Management status,123524
 process activity,Professional,"In case of subrogation, identify the notary and request the cost estimate",122077
@@ -29062,7 +29062,7 @@ process activity,Operational,Monitor the progress of formal actions towards the 
 process activity,Operational,Formalize any action against the institution,123533
 process activity,Professional,Analyze the contributions in arrears at the institution,125588
 process activity,Operational,Monitor the progress of the actions taken,107412
-process activity,Professional,Evaluate and communicate any provisions for risks,134902
+process activity,Professional,Evaluate and communicate any provisions for risks,134903
 control activity,NA,Verify conditions for accrual to risk funds,129615
 process activity,Professional,Manage encroachments and any blocks,126527
 process activity,Professional,Evaluate implementation methods in the Branch or to be forwarded to the Central Structure,105665
@@ -29165,7 +29165,7 @@ process activity,Professional,"Calculate the present value of Bonds, Derivatives
 control activity,NA,Check calculation on present value,108153
 process activity,Professional,Carry out checks on existing transactions,106051
 control activity,NA,Check annual report data for accruals,113981
-process activity,Professional,Prepare Servicer Report,135045
+process activity,Professional,Prepare Servicer Report,135046
 control activity,NA,Carry out checks for the purpose of certifying the Servicer Report,130960
 process activity,Professional,Prepare processing to verify the suitability of assets transferred to ISP CB Pubblico,131784
 control activity,NA,Check suitability calculation,116367
@@ -29192,7 +29192,7 @@ process activity,Operational,Prepare download of the database relating to loans,
 process activity,Professional,Carry out the ALM Tests on the emission program,116958
 control activity,NA,Check the test results,108350
 process activity,Professional,Send half-yearly reports on the membership band,106403
-process activity,Operational,Upload the file to the Credit Datasheet section of the Servicer Report,135044
+process activity,Operational,Upload the file to the Credit Datasheet section of the Servicer Report,135045
 control activity,NA,Check the correct completion of the credit data,116718
 process activity,Operational,Prepare download of the database relating to the securities sold,100008
 process activity,Professional,Monitor checks performed,106050
@@ -29467,7 +29467,7 @@ process activity,Operational,Receive request for additional documentation,113953
 process activity,Operational,Receive loss settlement,113955
 control activity,NA,Verify the effective loading of the positive execution outcome into the procedure,134206
 process activity,Operational,Check the existing transactions by value date and the reason for the non-settlement,106642
-control activity,NA,Verify that the settlement has taken place,134884
+control activity,NA,Verify that the settlement has taken place,134885
 process activity,Operational,Communicate any pending operations,107727
 process activity,Operational,Find the cause and take corrective actions,128611
 process activity,Operational,Manage reports,113289
@@ -29728,7 +29728,7 @@ process activity,Professional,Enter the Government Bond ticket,105287
 control activity,NA,Verify the correctness of the deal in the Position Keeping system,126173
 process activity,Professional,Locate the customer and verify their requirements,128382
 process activity,Operational,Carry out final reporting,106809
-process activity,Operational,Ex post monitor use of Plafond of the single Business Unit,135043
+process activity,Operational,Ex post monitor use of Plafond of the single Business Unit,135044
 process activity,Operational,Monitor ex post use of TIT in derogation/specific TIT,106440
 process activity,Operational,Square the output values,106649
 process activity,Professional,Process the request and send the transport document,113380
@@ -30002,13 +30002,13 @@ process activity,Operational,Ask for the designation of a contact person,134168
 process activity,Operational,Agree on the details for the set up,130438
 process activity,Operational,Update Watch List information,134843
 process activity,Professional,Archive documentation,134840
-process activity,Operational,Communicate support needs,135023
+process activity,Operational,Communicate support needs,135024
 control activity,NA,Check for support needs,134841
 process activity,Operational,Request assistance,134839
-process activity,Operational,Get help,135026
-process activity,Professional,Communicate request for assistance,135024
+process activity,Operational,Get help,135027
+process activity,Professional,Communicate request for assistance,135025
 process activity,Professional,Communicate temporary suspension,134842
-process activity,Professional,Identify personnel to involve,135025
+process activity,Professional,Identify personnel to involve,135026
 process activity,Professional,Take the management decision,134310
 process activity,Professional,Take the management decision,131990
 process activity,Professional,Proceed with the coercive realization of the pledge,131992
@@ -30454,8 +30454,8 @@ process activity,Professional,Receive disbursement request,127549
 process activity,Operational,Set aside the proformas and close the lot,131493
 control activity,NA,Verify the consistency of the data,124686
 process activity,Operational,Make payments,103595
-process activity,Professional,Verify the existence of the expense and authorize the payment of the invoice,135112
-process activity,Operational,Submit monthly assessments for legal fees and fees accrued and not yet invoiced or invoiced and not accounted for,135122
+process activity,Professional,Verify the existence of the expense and authorize the payment of the invoice,135113
+process activity,Operational,Submit monthly assessments for legal fees and fees accrued and not yet invoiced or invoiced and not accounted for,135123
 control activity,NA,Check the data entered in WF SAP,117899
 process activity,Operational,Make payment,131719
 process activity,Professional,Send accounting instructions,112384
@@ -31332,8 +31332,8 @@ process activity,Professional,Extract the operating data necessary for the produ
 control activity,NA,Carry out the monthly check of the data present in the Market Report,123745
 process activity,Professional,Inform about the non-compliance of the data reported in the RTS 27 Report.,125831
 process activity,Professional,Send the Report to Consob,107626
-process activity,Professional,Submit the report,134935
-process activity,Professional,"Solve the issues encountered, rework and upload the document to a shared folder",134934
+process activity,Professional,Submit the report,134936
+process activity,Professional,"Solve the issues encountered, rework and upload the document to a shared folder",134935
 control activity,NA,Quarterly check the data in the RTS 27 Report,127630
 process activity,Professional,Send the quarterly evaluation report to the Compliance and Business structures,107625
 process activity,Professional,Generate the SI Determination output again,112936
@@ -31341,7 +31341,7 @@ process activity,Professional,Inform about the incorrectness of the data reporte
 process activity,Professional,Carry out the data extraction again for the production of the Markets Report,116105
 process activity,Professional,Extract the report,113925
 control activity,NA,Quarterly check the data contained in the Report SI Determination,129055
-process activity,Professional,Authorize publication on the IMI CIB Division website,134936
+process activity,Professional,Authorize publication on the IMI CIB Division website,134937
 process activity,Professional,Archive the documentation produced,121230
 process activity,Professional,Inform about the incorrectness of the data reported in the Report,112935
 process activity,Professional,Publish the RTS 27 Report on the IMI CIB Division website,102150
@@ -31430,7 +31430,7 @@ control activity,NA,Verify notarial deed of sale and preliminary report,133648
 process activity,Operational,Forward documentation to the competent structure,107148
 control activity,NA,Verify the correct composition of the contractual file,130514
 process activity,Operational,Report the operation to the bodies envisaged in the case of Public Administration user.,133650
-control activity,NA,Verify that communication has been sent pursuant to Art. 48 Law 196/2009,134948
+control activity,NA,Verify that communication has been sent pursuant to Art. 48 Law 196/2009,134949
 control activity,NA,Check the regularity of the communication pursuant to Art. 48 Law 196/2009,124645
 process activity,Operational,Issue the order dossier,115575
 control activity,NA,Monitor contracts stipulated with an expired supplier order,127741
@@ -31570,10 +31570,10 @@ process activity,Operational,Extinguish the relationships underlying the closing
 process activity,Operational,Check with the Fiduciary regarding the termination of relationships,107867
 process activity,Operational,Send the mandate termination request to the Trustee,119799
 process activity,Operational,Receive the closing instructions sent by the Trustee,107866
-process activity,Professional,Create and assign a Problem Task,134991
-process activity,Professional,Open Problem Proactive,134989
-process activity,Professional,Verify the existence of conditions for the opening of the Proactive Problem,134988
-process activity,Professional,Monitor Proactive Issues,134990
+process activity,Professional,Create and assign a Problem Task,134992
+process activity,Professional,Open Problem Proactive,134990
+process activity,Professional,Verify the existence of conditions for the opening of the Proactive Problem,134989
+process activity,Professional,Monitor Proactive Issues,134991
 control activity,NA,Relate the systems,120325
 process activity,Professional,Insert and validate the operation with BdT,133500
 control activity,NA,Check for anomalies and confirm operations,122488
@@ -31848,14 +31848,14 @@ process activity,Professional,Initiate any service revocation/maintenance assess
 process activity,Professional,Compile final summary notes,117919
 process activity,Professional,Provide relevant information,114226
 process activity,Operational,Analyze reported anomalies,122138
-process activity,Operational,Enter the transactions received from the counterparty from time to time into the system,134951
+process activity,Operational,Enter the transactions received from the counterparty from time to time into the system,134952
 control activity,NA,Check that the operation has been entered correctly,129332
 process activity,Operational,Archive documentation,113928
 process activity,Operational,Monitor the status of the settlement of operations,129358
 process activity,Operational,Have the customer sign the documentation,102305
-process activity,Operational,Prepare any exchange negotiation,134952
+process activity,Operational,Prepare any exchange negotiation,134953
 control activity,NA,Verify that exchange negotiation is set up correctly,116002
-process activity,Operational,Register the indemnity letter in the reference application,134950
+process activity,Operational,Register the indemnity letter in the reference application,134951
 process activity,Operational,"If necessary, confirm the transfer received",121664
 process activity,Operational,Enter the data in the procedure,102303
 control activity,NA,Carry out checks on the transactions subject to reporting,113929
@@ -31866,7 +31866,7 @@ process activity,Operational,Keep the module produced by the procedure in eviden
 process activity,Operational,Enter the data in the procedure,134522
 process activity,Operational,Carry out the preliminary checks,121663
 process activity,Operational,Consider using the multiple transfer transaction,134521
-process activity,Operational,Request the indemnity letter and submit it to the customer for signature,134949
+process activity,Operational,Request the indemnity letter and submit it to the customer for signature,134950
 process activity,Operational,Confirm the operation in the system,134523
 process activity,Operational,Archive the documentation produced and signed by the customer,131864
 process activity,Operational,Proceed with the authorization or rejection of the transactions entered by the Branches,122136
@@ -31954,7 +31954,7 @@ process activity,Operational,Carry out the verification and certification of the
 control activity,NA,Carry out checks on the positions subject to sampling,129963
 control activity,NA,Carry out the verification and certification activities of the Returns and Balances flow,129962
 process activity,Operational,Carry out the verification and certification of the KOI flow relating to the Asset Management Funds and Insurance Investment Products component,115432
-control activity,NA,Verify the absence of anomalies in the flows subject to certification in relation to the Wealth Management Funds and Insurance Investment Products components,134943
+control activity,NA,Verify the absence of anomalies in the flows subject to certification in relation to the Wealth Management Funds and Insurance Investment Products components,134944
 process activity,Operational,Perform KOI flow verification and certification activities,129382
 control activity,NA,Verify the absence of anomalies present in the flows subject to certification,119664
 process activity,Operational,Carry out the verification and certification activities of the returns and balances flow,107695
@@ -32382,7 +32382,7 @@ process activity,Operational,Archive the paper documentation produced,115240
 process activity,Commercial,Collect the Clients signature,123508
 process activity,Operational,Check the data of the entity carrying out the operation,117323
 process activity,Professional,"Evaluate the proposal, define the needs estimate and propose an activity plan",105606
-process activity,Professional,Transmit the control deactivation request,134981
+process activity,Professional,Transmit the control deactivation request,134982
 process activity,Professional,Share and approve the needs estimate in order to allocate the necessary economic resources,105629
 process activity,Professional,Review the evidence received regarding the risks,130867
 process activity,Professional,Make developments,105614
@@ -32462,7 +32462,7 @@ control activity,NA,Verify the correctness of the data indicated in the declarat
 process activity,Operational,Certify successful completion of the self-certification process,118163
 control activity,NA,Verify the correct completion of the self-certification process,117119
 process activity,Operational,Archive the self-certification,118162
-process activity,Professional,Prepare the annual control report on input data for contributions,134970
+process activity,Professional,Prepare the annual control report on input data for contributions,134971
 process activity,Professional,Carry out annual (internal) control activities,105591
 process activity,Professional,Inform the Board of Directors in the event of relevant complaints and anonymous reports,105596
 process activity,Professional,Process the quarterly control report on the correlation of interest rates/repricing positions,108800
@@ -32888,9 +32888,9 @@ process activity,Professional,Carry out the anti-money laundering obligations se
 process activity,Operational,Perform master identification and integrate commercial offer data,107476
 process activity,Operational,Start your loan application,113040
 process activity,Operational,Manage your application online,128645
-process activity,Professional,Acquire information for determining the TEG,134976
+process activity,Professional,Acquire information for determining the TEG,134977
 control activity,NA,Check that the wear threshold is not exceeded,128644
-process activity,Operational,Print the SECCI document request and collect the signature,134977
+process activity,Operational,Print the SECCI document request and collect the signature,134978
 process activity,Operational,Carry out the turning operation,134388
 process activity,Operational,Prepare the request for transfer of securities,115870
 process activity,Operational,Archive the documentation signed by the customer,134387
@@ -33409,7 +33409,7 @@ process activity,Operational,Forward the provisions to the competent corporate f
 process activity,Operational,Archive documentation,126422
 process activity,Operational,Identify the customer,129581
 process activity,Professional,Acquire Contributions,113616
-control activity,NA,Verify the completeness and formal consistency of the Contributions,134992
+control activity,NA,Verify the completeness and formal consistency of the Contributions,134993
 process activity,Professional,Archive and keep the Report,104895
 process activity,Professional,Share the report,127694
 process activity,Professional,Publish and distribute the report,127695
@@ -33703,7 +33703,7 @@ process activity,Professional,Make payment,100105
 process activity,Operational,Monitor engagement letters,100511
 process activity,Operational,Eliminate the CIDs of the employees subject to secondment,108099
 process activity,Operational,Extract and send the employee file,109931
-process activity,Operational,Send message requesting not to hire temporarily,135107
+process activity,Operational,Send message requesting not to hire temporarily,135108
 process activity,Operational,Save the information,108101
 process activity,Professional,Submit employee list,113920
 process activity,Operational,Load the data into the dedicated application,130766
@@ -33834,7 +33834,7 @@ process activity,Professional,Identify the Customer and carry out any census or 
 process activity,Professional,Proceed with the possible acquisition of the signature affixed to the paper specimen,126506
 process activity,Operational,Have the customer sign the form printed by the procedure,119815
 control activity,NA,Verify ownership of subscriptions,101554
-process activity,Operational,Verify the activities for the correct management of the mandate,135037
+process activity,Operational,Verify the activities for the correct management of the mandate,135038
 process activity,Operational,Withdraw the customers request and proceed with the revocation and/or reinstatement of the mandate,130776
 process activity,Operational,Proceed with the cancellation of the mandate,130775
 process activity,Operational,Withdraw the domiciliation change request from the customer,104821
@@ -33881,11 +33881,11 @@ process activity,Operational,Request data from contributors,108607
 process activity,Professional,"Provide the value of the DTA and DTL divided by tax (IRES and IRAP), before compensation",124545
 process activity,Professional,Follow the preliminary investigation phase and integrate the data and information at the request of Consob,124268
 process activity,Professional,Prepare the Base Prospectus,106827
-control activity,NA,Check for the existence of significant press releases for the Base Prospectus,135094
+control activity,NA,Check for the existence of significant press releases for the Base Prospectus,135095
 control activity,NA,Check the correct compilation of the Base Prospectus,132183
 process activity,Professional,Prepare and submit application for admission to listing,110660
 process activity,Operational,Request authorization from the Manager in charge,118090
-control activity,NA,Verify the accounting data present in the documents approved by Consob,135095
+control activity,NA,Verify the accounting data present in the documents approved by Consob,135096
 process activity,Professional,Submit the Prospectus and/or Supplement for approval by Consob,125279
 process activity,Professional,Request release of the admissibility judgment from Borsa Italiana S.p.A.,110659
 process activity,Professional,Activate procedure for admission to trading,110948
@@ -33988,13 +33988,13 @@ process activity,Operational,Request the Remediation Plan,123984
 process activity,Operational,Inform the Process Owner of the discovery of the Security requirements,130442
 process activity,Operational,Perform assessments,121333
 process activity,Operational,Call and hold kick-off meeting,123845
-process activity,Operational,Engage the supplier,135040
+process activity,Operational,Engage the supplier,135041
 control activity,Operational,Verify that you have completely performed the Annual Assessment Plan,107929
-process activity,Operational,Verify receipt of the Remediation Plan,135038
+process activity,Operational,Verify receipt of the Remediation Plan,135039
 process activity,Operational,Schedule the assessment,121332
 process activity,Operational,Check availability for assessment,123844
 process activity,Operational,Formally share the results,123983
-process activity,Operational,Check the implementation of the Remediation Plan,135039
+process activity,Operational,Check the implementation of the Remediation Plan,135040
 process activity,Operational,Define and prepare the recommendation distribution list,101926
 process activity,Professional,Activate and define blackout period,101928
 process activity,Professional,Proceed to distribute the report,101927
@@ -34269,9 +34269,9 @@ control activity,NA,Verify the correctness of the calculation of the accrual,113
 control activity,NA,Check the monthly trend of commission accruals.,114993
 process activity,Operational,Account for commission accruals,134780
 control activity,NA,Verify the account balance of accrued and uncollected commissions,127325
-process activity,Operational,Take charge of the payment notice or the reclamation charges tax file,135069
+process activity,Operational,Take charge of the payment notice or the reclamation charges tax file,135070
 process activity,Operational,Finalize the closure of the IMU / TASI assessment notice,131740
-process activity,Operational,Process notices of payment of reclamation charges,135070
+process activity,Operational,Process notices of payment of reclamation charges,135071
 process activity,Operational,Associate the communication to the corresponding contract,113630
 process activity,Operational,Confer an assignment for the completion of the early redemption,129325
 control activity,NA,Verify early redemption implemented internally,127059
@@ -34286,7 +34286,7 @@ process activity,Professional,Supervise the application of the VAT regime on the
 process activity,Operational,Authorize service charges paid by the customer,113628
 process activity,Operational,Evaluate notices of payment of taxes for the use of public land or waste disposal,132519
 process activity,Operational,Calculate the amounts due,129324
-process activity,Operational,Give instructions for the payment of the tax bill for reclamation charges,135071
+process activity,Operational,Give instructions for the payment of the tax bill for reclamation charges,135072
 process activity,Operational,Acquire the boat usage documentation,118069
 process activity,Operational,Finalize the closing of the mortgage or cadastral tax assessment notice,111375
 process activity,Operational,Taking charge of the event on the contract in effect,115172
@@ -34295,7 +34295,7 @@ process activity,Operational,Evaluate the tax bills for the use of public land o
 process activity,Operational,Oversee billing of the outsourcer,113629
 process activity,Operational,Request additional information for generic tax bills for the use of public land or waste disposal,132520
 process activity,Operational,Check the conditions for eligibility for early redemption,113457
-process activity,Operational,Charge the customer with the charges relating to the tax return for reclamation charges,135072
+process activity,Operational,Charge the customer with the charges relating to the tax return for reclamation charges,135073
 process activity,Operational,Extract the list of active Skype for Business federations,129455
 process activity,Professional,Notify the revocation,124662
 process activity,Professional,Enable federation revocation,124660
@@ -34775,13 +34775,13 @@ process activity,Professional,Verify the causes of the anomaly and address its r
 process activity,Professional,Communicate the decision to proceed with the activation of business continuity measures for the territorial network structures,132509
 process activity,Professional,Carry out the self-assessment,118980
 process activity,Professional,Prepare the qualitative and quantitative contributions to the ICAAP package on an accrual basis,122883
-process activity,Professional,Aggregate the qualitative and quantitative contributions and send them to the recipients on an accrual basis,135151
+process activity,Professional,Aggregate the qualitative and quantitative contributions and send them to the recipients on an accrual basis,135152
 control activity,NA,Verify the consistency and correct insertion of contributions / elaborations within the Package,127092
 process activity,Professional,Determine the total internal capital,120195
 control activity,NA,Verify the accuracy of the calculation of overall internal capital and the impacts on own funds and capital requirements (stress perspective),109957
 process activity,Professional,Prepare the Group liquidity and funding plan,127416
 control activity,NA,Check the consistency of the liquidity indicators with the RAF limits and with the regulatory limits,134194
-process activity,Operational,Supervise the receipt of qualitative contributions,135149
+process activity,Operational,Supervise the receipt of qualitative contributions,135150
 process activity,Operational,Include the evidence of the self-assessment in the package,118981
 control activity,NA,Verify the correctness of the contributions,115355
 process activity,Professional,Determine capital adequacy indicators,127415
@@ -34793,7 +34793,7 @@ process activity,Professional,"Carry out the measurement of internal capital and
 control activity,NA,Verify the correctness of the calculations and request certification of compliance with the data quality standards from the contributing structures,116846
 process activity,Professional,Determine the sources of coverage of the total internal capital,120196
 control activity,NA,Verify the consistency of the Capital Plan projections with respect to the economic and financial projections,125281
-process activity,Operational,Supervise the receipt of quantitative contributions,135150
+process activity,Operational,Supervise the receipt of quantitative contributions,135151
 process activity,Professional,Prepare the qualitative and quantitative contributions to the ILAAP package on an accrual basis,122885
 process activity,Professional,Formulate and share a new ceiling proposal,105398
 process activity,Professional,Provide feedback on the ceiling proposal on individual Suppliers,105397
@@ -34888,7 +34888,7 @@ process activity,Operational,Close the ticket,131057
 process activity,Operational,Close the ticket,131064
 process activity,Operational,"Prepare balances, list of movements on positions managed by the servicer",119464
 process activity,Professional,Follow up on the request,112412
-process activity,Professional,Check for possible anomalies,135079
+process activity,Professional,Check for possible anomalies,135080
 process activity,Operational,Provide information about checking accounts and cards,131063
 process activity,Operational,Close tickets,128585
 process activity,Operational,Close tickets,124759
@@ -34921,7 +34921,7 @@ process activity,Operational,Close tickets,105893
 process activity,Operational,Close the ticket,130881
 process activity,Professional,Verify if related party or art.136,130840
 process activity,Professional,Check perimeter,116527
-process activity,Operational,Close the ticket,135080
+process activity,Operational,Close the ticket,135081
 process activity,Operational,Close the ticket,130963
 process activity,Operational,Cancel the mortgage,131058
 process activity,Professional,Check perimeter,130962
@@ -35152,3 +35152,4 @@ process activity,Operational,Define the perimeter and scope of the checks,113270
 process activity,Operational,Document the annual audit plan,134882
 process activity,Operational,Plan and execute test sessions,134881
 process activity,Operational,Make additions to the annual audit plan,121331
+process activity,Operational, Activate monitoring of the sustainability of the annual audit plan,134883
