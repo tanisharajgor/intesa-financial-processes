@@ -85,7 +85,16 @@ export default function View({riskVariable, updateRiskVariable}) {
 
     return(
         <div className='View'>
-            <h3>View by risk type</h3>
+            <div className="inner">
+                <div className="layout_group inline">
+                    <div className="layout_row">
+                        <span className="layout_item key">
+                            Legend:
+                        </span>
+                        <span className="layout_item"></span>
+                    </div>
+                </div>
+            </div>
             <FormControl variant="outlined" size="small">
                 <Select
                     labelId="view-select-label"

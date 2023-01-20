@@ -10,7 +10,7 @@ const id = "tree-map-chart";
 
 // Set-up layout
 const margin = {top: 10, right: 10, bottom: 10, left: 10},
-    width = 1000 - margin.left - margin.right,
+    width = 700 - margin.left - margin.right,
     height = 1000 - margin.top - margin.bottom;
 
 // Tooltip
@@ -64,7 +64,6 @@ function addProcessLabels(rectHeight) {
             .text(labels[i])
     }
 }
-
 
 export default function TreeMap() {
 
