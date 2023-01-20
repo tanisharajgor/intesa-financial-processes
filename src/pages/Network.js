@@ -4,11 +4,12 @@ import { StylesProvider } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network.json";
 import * as d3 from 'd3';
+import { riskVariables, createColorScale } from "../utils/global";
 
 const id = "network-chart";
 
 // Tooltip
-function renderTooltip(circle) {
+function renderTooltip(riskVariable, circle) {
 
     let tooltip = d3.select(`#${id}`)
         .append("div")
@@ -23,7 +24,8 @@ function renderTooltip(circle) {
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`<b>${d.group}</b><br>${d.name}`);
+            .html(`Node type: <b>${d.group}</b><br>${riskVariables[riskVariable].label}: <b>${d.riskStatus[riskVariable]}</b>`)
+            // .html(`<b>${d.group}</b><br>${d.name}`);
 
         thisCircle
             .attr("stroke", "white")
@@ -48,6 +50,12 @@ export default function Network() {
 
     let data = graph[0];
 
+    // Set-up scales
+    const colorScale = createColorScale(riskVariable, riskVariables);
+    const rScale = d3.scaleLinear()
+        .domain(d3.extent(data.nodes, ((d) => d.nActivities === undefined ? 1: d.nActivities)))
+        .range([5, 20]);
+
     useEffect(() => {
 
         var width = 800;
@@ -56,12 +64,6 @@ export default function Network() {
             .append("svg")
             .attr("width", width)
             .attr("height", height);
-
-        const colorScale = d3.scaleOrdinal(d3.schemeSet2);
-
-        const rScale = d3.scaleLinear()
-            .domain(d3.extent(data.nodes, ((d) => d.nActivities === undefined ? 1: d.nActivities)))
-            .range([5, 20])
 
         var simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) { return d.id; }))
@@ -83,7 +85,6 @@ export default function Network() {
             .data(data.nodes)
             .enter()
             .append("circle")
-            .attr("fill", ((d) => colorScale(d.group)))
             .attr("r", ((d) => d.nActivities === undefined ? 3: rScale(d.nActivities)))
             .attr("stroke-width", .5)
             .attr("stroke", "white");
@@ -106,10 +107,14 @@ export default function Network() {
                 .attr("cx", function(d) { return d.x; })
                 .attr("cy", function(d) { return d.y; });
         }
-
-        let circle = d3.selectAll("circle")
-        renderTooltip(circle);
     }, [])
+
+    useEffect(() => {
+        const circle = d3.selectAll(`#${id} svg circle`)
+            .attr("fill", d => d.riskStatus[riskVariable] === undefined ? "#ADADAD" : colorScale(d.riskStatus[riskVariable]))
+
+        renderTooltip(riskVariable, circle);
+    }, [riskVariable])
 
     return(
         <StylesProvider injectFirst>
