@@ -70,23 +70,26 @@ export default function Network() {
             .force("center", d3.forceCenter(width / 2, height / 2))
             .force("collide", d3.forceCollide().strength(2).radius((d) => d.nActivities === undefined ? 3: rScale(d.nActivities)));
 
-        var link = svg.append("g")
-            .attr("class", "links")
-            .selectAll("line")
-            .data(data.links)
-            .enter()
-            .append("line")
-            .attr("stroke", "grey");
+        var link = svg
+            .append("g")
+                .attr("class", "links")
+                .selectAll("line")
+                .data(data.links)
+                .enter()
+                .append("line")
+                .attr("stroke", "grey");
 
-        var node = svg.append("g")
-            .attr("class", "nodes")
-            .selectAll("circle")
-            .data(data.nodes)
-            .enter()
-            .append("circle")
-            .attr("r", ((d) => d.nActivities === undefined ? 3: rScale(d.nActivities)))
-            .attr("stroke-width", .5)
-            .attr("stroke", "white");
+        var node = svg
+            .append("g")
+                .attr("class", "nodes")
+                .selectAll("path")
+                .data(data.nodes)
+                .enter()
+                .append("path")
+                .attr("d", d3.symbol().type(d3.symbolSquare))
+                    // .type(function(d) { console.log(d); return d.group == "actor" ? "circle" : "square"; }))
+                .attr("stroke-width", .5)
+                .attr("stroke", "white");
 
         simulation
             .nodes(data.nodes)
@@ -95,6 +98,10 @@ export default function Network() {
         simulation.force("link")
             .links(data.links);
 
+        function transform(d) {
+            return "translate(" + d.x + "," + d.y + ")";
+        }
+
         function ticked() {
             link
                 .attr("x1", function(d) { return d.source.x; })
@@ -102,9 +109,12 @@ export default function Network() {
                 .attr("x2", function(d) { return d.target.x; })
                 .attr("y2", function(d) { return d.target.y; });
 
-            node
-                .attr("cx", function(d) { return d.x; })
-                .attr("cy", function(d) { return d.y; });
+            // node
+            //     .attr("x", function(d) { return d.x; })
+            //     .attr("y", function(d) { return d.y; });
+
+                // path.attr("d", linkArc);
+            node.attr("transform", transform)
         }
     }, [])
 
