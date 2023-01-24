@@ -24,8 +24,7 @@ function renderTooltip(riskVariable, circle) {
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`Node type: <b>${d.group}</b><br>${riskVariables[riskVariable].label}: <b>${d.riskStatus[riskVariable]}</b>`)
-            // .html(`<b>${d.group}</b><br>${d.name}`);
+            .html(`<b>${d.group}</b>: <b>${d.name}</b>`);
 
         thisCircle
             .attr("stroke", "white")

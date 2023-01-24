@@ -164,7 +164,6 @@ Data management steps for level1
 return dataframe
 """
 def level1_dm(data, raw_pth, processed_pth):
-
     df = data.rename(columns={
                                 'L1 NAME': 'level1',
                                 'L1 GUID': 'level1GUID'})
@@ -619,8 +618,6 @@ return nested list
 """
 def create_risk_status(df, rtc, root1, id):
 
-    # import pdb; pdb.set_trace()
-
     root1ID = root1+"ID"
     temp = pd.merge(df[df[root1ID] == id], rtc, how="left", on=["riskID", "controlID"])
     temp = temp[pd.isnull(temp.riskID) == False]
@@ -770,7 +767,19 @@ def nest_activities(activities, actors, risks, applications, activity_to_actor, 
 
     return array
 
-def create_network(data, level3, actors, activities, risks, controls, activity_to_risk, risk_to_control):
+"""
+"""
+def levelsObject(df, level1, level2):
+
+    levels = {
+            "level1ID": pd.merge(df, level1, on="level1GUID", how="left")["level1ID"].unique().tolist(),
+            "level2ID": pd.merge(df, level2, on="level2GUID", how="left")["level2ID"].unique().tolist(),
+            "level3ID": df.level3ID.unique().tolist(),
+        }
+
+    return levels
+
+def create_network(data, level1, level2, level3, actors, activities, risks, controls, activity_to_risk, risk_to_control):
 
     array = []
 
@@ -801,13 +810,17 @@ def create_network(data, level3, actors, activities, risks, controls, activity_t
 
         for k in actorsID:
 
-            # import pdb; pdb.set_trace()
+            if (pd.isnull(pd.merge(df[df.actorID == k], level1, on="level1GUID", how="left")["level1ID"].unique())):
+                import pdb; pdb.set_trace()
+
             actorRow = {"id": int(k),
                         "group": "actor",
                         "name": actors[actors.actorID == k].actor.iloc[0],
                         "nActivities": int(df[df.actorID == k].activityID.nunique()),
                         "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
-                        "riskStatus": create_risk_status(df[df.actorID == k], rtc, "actor", k)}
+                        "riskStatus": create_risk_status(df[df.actorID == k], rtc, "actor", k),
+                        "levels": levelsObject(df[df.actorID == k], level1, level2)
+                        }
 
             actorsArray.append(actorRow)
 
@@ -817,7 +830,9 @@ def create_network(data, level3, actors, activities, risks, controls, activity_t
                            "name": activities[activities.activityID == l].activity.iloc[0],
                            "nActors": int(df[df.activityID == l].actorID.nunique()),
                            "actorsID": df[df.activityID == l].actorID.unique().tolist(),
-                           "riskStatus": create_risk_status(df[df.activityID == l], rtc, "activity", l)}
+                           "riskStatus": create_risk_status(df[df.activityID == l], rtc, "activity", l),
+                           "levels": levelsObject(df[df.activityID == l], level1, level2)
+                           }
 
             activitiesArray.append(activityRow)
 
