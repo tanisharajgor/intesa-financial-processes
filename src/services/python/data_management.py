@@ -810,9 +810,6 @@ def create_network(data, level1, level2, level3, actors, activities, risks, cont
 
         for k in actorsID:
 
-            if (pd.isnull(pd.merge(df[df.actorID == k], level1, on="level1GUID", how="left")["level1ID"].unique())):
-                import pdb; pdb.set_trace()
-
             actorRow = {"id": int(k),
                         "group": "actor",
                         "name": actors[actors.actorID == k].actor.iloc[0],
