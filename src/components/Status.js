@@ -1,9 +1,9 @@
 import View from "./View";
 
-export default function Status({riskVariable, updateRiskVariable}) {
+export default function Status({id, riskVariable, updateRiskVariable}) {
     return (
         <div className="Status">
-            <View riskVariable={riskVariable} updateRiskVariable={updateRiskVariable}/>
+            <View id={id} riskVariable={riskVariable} updateRiskVariable={updateRiskVariable}/>
         </div>
     )
 }

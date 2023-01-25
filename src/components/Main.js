@@ -4,7 +4,7 @@ export default function Main({riskVariable, updateRiskVariable, id}) {
     return(
         <div className="Main">
             <div id={id} className="Visualization"></div>
-            <Status riskVariable={riskVariable} updateRiskVariable={updateRiskVariable}/>
+            <Status id={id} riskVariable={riskVariable} updateRiskVariable={updateRiskVariable}/>
         </div>
     )
 }

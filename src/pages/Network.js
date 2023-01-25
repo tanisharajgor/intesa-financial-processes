@@ -87,7 +87,7 @@ export default function Network() {
                 .enter()
                 .append("path")
                 .attr("d", d3.symbol()
-                    .type(function(d) { return d.group == "actor" ? d3.symbolCircle : d3.symbolTriangle; })
+                    .type(function(d) { return d.group === "actor" ? d3.symbolCircle : d3.symbolTriangle; })
                     .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
                 .attr("stroke-width", .5)
                 .attr("stroke", "white");
@@ -109,6 +109,7 @@ export default function Network() {
                 .attr("y1", function(d) { return d.source.y; })
                 .attr("x2", function(d) { return d.target.x; })
                 .attr("y2", function(d) { return d.target.y; });
+
             node.attr("transform", transform)
         }
     }, [])
