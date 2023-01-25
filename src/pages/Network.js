@@ -9,13 +9,13 @@ import { riskVariables, createColorScale } from "../utils/global";
 const id = "network-chart";
 
 // Tooltip
-function renderTooltip(riskVariable, circle) {
+function renderTooltip(node) {
 
     let tooltip = d3.select(`#${id}`)
         .append("div")
         .attr("class", "tooltip");
 
-    circle.on("mouseover", function(e, d) {
+        node.on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
         let x = e.layerX + 20;
@@ -35,9 +35,9 @@ function renderTooltip(riskVariable, circle) {
     }).on("mouseout", function() {
 
         tooltip.style("visibility", "hidden");
-        circle.attr("opacity", 1);
+        node.attr("opacity", 1);
 
-        d3.selectAll('circle')
+        d3.selectAll('path')
             .attr("stroke-width", .5)
             .attr("stroke", "white"); 
     });
@@ -53,7 +53,7 @@ export default function Network() {
     const colorScale = createColorScale(riskVariable, riskVariables);
     const rScale = d3.scaleLinear()
         .domain(d3.extent(data.nodes, ((d) => d.nActivities === undefined ? 1: d.nActivities)))
-        .range([5, 20]);
+        .range([50, 100]);
 
     useEffect(() => {
 
@@ -68,7 +68,7 @@ export default function Network() {
             .force("link", d3.forceLink().id(function(d) { return d.id; }))
             .force("charge", d3.forceManyBody().strength(-1.5))
             .force("center", d3.forceCenter(width / 2, height / 2))
-            .force("collide", d3.forceCollide().strength(2).radius((d) => d.nActivities === undefined ? 3: rScale(d.nActivities)));
+            // .force("collide", d3.forceCollide().strength(2).radius((d) => d.nActivities === undefined ? 20: rScale(d.nActivities)));
 
         var link = svg
             .append("g")
@@ -86,8 +86,9 @@ export default function Network() {
                 .data(data.nodes)
                 .enter()
                 .append("path")
-                .attr("d", d3.symbol().type(d3.symbolSquare))
-                    // .type(function(d) { console.log(d); return d.group == "actor" ? "circle" : "square"; }))
+                .attr("d", d3.symbol()
+                    .type(function(d) { return d.group == "actor" ? d3.symbolCircle : d3.symbolTriangle; })
+                    .size(((d) => d.nActivities === undefined ? 20: rScale(d.nActivities))))
                 .attr("stroke-width", .5)
                 .attr("stroke", "white");
 
@@ -108,21 +109,15 @@ export default function Network() {
                 .attr("y1", function(d) { return d.source.y; })
                 .attr("x2", function(d) { return d.target.x; })
                 .attr("y2", function(d) { return d.target.y; });
-
-            // node
-            //     .attr("x", function(d) { return d.x; })
-            //     .attr("y", function(d) { return d.y; });
-
-                // path.attr("d", linkArc);
             node.attr("transform", transform)
         }
     }, [])
 
     useEffect(() => {
-        const circle = d3.selectAll(`#${id} svg circle`)
+        const node = d3.selectAll(`#${id} svg path`)
             .attr("fill", d => d.riskStatus[riskVariable] === undefined ? "#ADADAD" : colorScale(d.riskStatus[riskVariable]))
 
-        renderTooltip(riskVariable, circle);
+        renderTooltip(node);
     }, [riskVariable])
 
     return(
