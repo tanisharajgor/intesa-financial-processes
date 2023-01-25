@@ -53,7 +53,7 @@ export default function Network() {
     const colorScale = createColorScale(riskVariable, riskVariables);
     const rScale = d3.scaleLinear()
         .domain(d3.extent(data.nodes, ((d) => d.nActivities === undefined ? 1: d.nActivities)))
-        .range([50, 100]);
+        .range([100, 300]);
 
     useEffect(() => {
 
@@ -68,7 +68,7 @@ export default function Network() {
             .force("link", d3.forceLink().id(function(d) { return d.id; }))
             .force("charge", d3.forceManyBody().strength(-1.5))
             .force("center", d3.forceCenter(width / 2, height / 2))
-            // .force("collide", d3.forceCollide().strength(2).radius((d) => d.nActivities === undefined ? 20: rScale(d.nActivities)));
+            .force("collide", d3.forceCollide().strength(2).radius(4));
 
         var link = svg
             .append("g")
@@ -88,7 +88,7 @@ export default function Network() {
                 .append("path")
                 .attr("d", d3.symbol()
                     .type(function(d) { return d.group == "actor" ? d3.symbolCircle : d3.symbolTriangle; })
-                    .size(((d) => d.nActivities === undefined ? 20: rScale(d.nActivities))))
+                    .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
                 .attr("stroke-width", .5)
                 .attr("stroke", "white");
 
