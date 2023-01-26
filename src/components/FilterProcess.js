@@ -9,6 +9,10 @@ const rScale = d3.scaleOrdinal()
     .domain([0, 1, 2, 3])
     .range([5, 4, 3, 2])
 
+const opacityScale = d3.scaleOrdinal()
+    .domain([0, 1, 2, 3])
+    .range([.4, .4, .4, 1])
+
 // Tooltip
 function renderTooltip(node) {
 
@@ -128,6 +132,7 @@ export default function FilterProcess({updateLevel3ID}) {
             .attr('id', d => d.data.descr)
             .attr('class', 'Process-Node')
             .attr("fill", palette ? d => color(d.ancestors().reverse()[1]?.index) : "#ccc")
+            .attr("opacity", d => opacityScale(d.data.treeLevel))
 
     }, [])
 

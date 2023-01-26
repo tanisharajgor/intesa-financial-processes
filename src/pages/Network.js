@@ -39,6 +39,7 @@ function renderTooltip(node) {
             .attr("stroke", "white")
             .attr("stroke-width", 2);
 
+        d3.selectAll(`#${id} svg path`).attr("opacity", .5)
         d3.select(this).attr("opacity", 1).raise();
 
     }).on("mouseout", function() {
@@ -46,7 +47,7 @@ function renderTooltip(node) {
         tooltip.style("visibility", "hidden");
         node.attr("opacity", 1);
 
-        d3.selectAll('path')
+        d3.selectAll(`#${id} svg path`)
             .attr("stroke-width", .5)
             .attr("stroke", "white"); 
     });
