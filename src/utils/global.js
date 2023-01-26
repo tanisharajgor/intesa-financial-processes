@@ -1,5 +1,8 @@
 import * as d3 from 'd3';
 
+export const palette = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', 
+'#e377c2', '#bcbd22', '#ADADAD'];
+
 export const riskVariables = {
     "controlTypeMode": {
         label: "Control type mode",
@@ -14,8 +17,7 @@ export const riskVariables = {
     "controlPeriodocityMode": {
         label: "Periodocity",
         values: ['Decadal', 'Annually', 'Half yearly', 'Quarterly', 'Monthly', 'Weekly', 'Daily', 'Per event', 'NA'],
-        colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', 
-        '#e377c2', '#bcbd22', '#ADADAD']
+        colors: palette
     }
 }
 

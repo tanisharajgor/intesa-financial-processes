@@ -119,8 +119,6 @@ function shapeType(id) {
 }
 
 function riskType() {
-
-    console.log("run")
     return(
         <div className="layout_row">
             <span className="layout_item key">
