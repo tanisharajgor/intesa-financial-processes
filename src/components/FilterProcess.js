@@ -10,7 +10,8 @@ function renderTooltip(node) {
 
     let tooltip = d3.select(`#${id}`)
         .append("div")
-        .attr("class", "tooltip");
+        .attr("class", "tooltip")
+        .attr("z-index", 500);
 
         node.on("mouseover", function(e, d) {
 
@@ -89,7 +90,7 @@ export default function FilterProcess({updateLevel3ID}) {
 
         const plot = svg.append("g")
             .attr("transform", `translate(${160},${160})`)
-            .attr('id', 'Position-Plot');
+            .attr('id', 'Process-Plot');
 
         const link = plot.append("g")
             .attr("fill", "none")
