@@ -70,7 +70,7 @@ function renderNetwork(data) {
         .force("link", d3.forceLink().id(function(d) { return d.id; }))
         .force("charge", d3.forceManyBody().strength(-1.5))
         .force("center", d3.forceCenter(width / 2, height / 2))
-        .force("collide", d3.forceCollide().strength(2).radius(4));
+        .force("collide", d3.forceCollide().strength(2).radius(8));
 
     var link = svg
         .append("g")
