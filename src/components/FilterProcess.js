@@ -5,6 +5,10 @@ import { palette } from '../utils/global';
 
 const id = "Filter-Process";
 
+const rScale = d3.scaleOrdinal()
+    .domain([0, 1, 2, 3])
+    .range([5, 4, 3, 2])
+
 // Tooltip
 function renderTooltip(node) {
 
@@ -119,7 +123,7 @@ export default function FilterProcess({updateLevel3ID}) {
             .attr("transform", d => `rotate(${radToDeg(d.x) - 90}) translate(${d.y},0)`);
 
         node.append("circle")
-            .attr("r", d => d.children ? 3 : 2)
+            .attr("r", d => rScale(d.data.treeLevel))
             .attr("visibility", d => d.data.treeLevel == 0 ? "hidden" : "visible")
             .attr('id', d => d.data.descr)
             .attr('class', 'Process-Node')
