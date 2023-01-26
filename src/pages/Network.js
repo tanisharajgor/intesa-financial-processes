@@ -114,7 +114,6 @@ function renderNetwork(data) {
 
         node.attr("transform", transform)
     }
-
 }
 
 export default function Network() {

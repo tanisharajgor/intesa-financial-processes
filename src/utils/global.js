@@ -7,16 +7,19 @@ export const riskVariables = {
     "controlTypeMode": {
         label: "Control type mode",
         values: ["Manual", "Semi-automatic", "Automatic", "NA"],
+        labels: ["Manual", "Semi-automatic", "Automatic", "na"],
         colors: ["#FF0000", "#FFC41F", "#0071BC", "#ADADAD"]
     },
     "financialDisclosureRiskAny": {
         label: "Financial disclosure risk",
+        labels: ["Yes", "No", "na"],
         values: [true, false, "NA"],
         colors: ["#FF0000", "#0071BC", "#ADADAD"]
     },
     "controlPeriodocityMode": {
         label: "Periodocity",
         values: ['Decadal', 'Annually', 'Half yearly', 'Quarterly', 'Monthly', 'Weekly', 'Daily', 'Per event', 'NA'],
+        labels: ['Decadal', 'Annually', 'Half yearly', 'Quarterly', 'Monthly', 'Weekly', 'Daily', 'Per event', 'na'],
         colors: palette
     }
 }

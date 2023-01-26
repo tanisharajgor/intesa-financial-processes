@@ -6,6 +6,25 @@ import { useEffect } from "react";
 const width = 216;
 let height = 100;
 
+function drawLegend(svg, t) {
+    for (let i in t.values) {
+
+        svg
+            .append("circle")
+            .attr('cx', 10)
+            .attr('cy', ((d) => 20 + i*20))
+            .attr('r', 5)
+            .attr('fill', ((d) => t.colors[i]));
+
+        svg
+            .append("text")
+            .attr("x", 20)
+            .attr("y", ((d) => 25 + i*20))
+            .text(((d) => t.labels[i]))
+            .style("fill", "white")
+    }
+}
+
 // Initiates the legend svg and sets the non-changing attributes
 function initiateLegend(variable, variableLookup) {
 
@@ -21,22 +40,7 @@ function initiateLegend(variable, variableLookup) {
         .attr('height', height)
         .append("g");
 
-    for (let i in t.values) {
-
-        svg
-            .append("circle")
-            .attr('cx', 10)
-            .attr('cy', ((d) => 20 + i*20))
-            .attr('r', 5)
-            .attr('fill', ((d) => t.colors[i]));
-
-        svg
-            .append("text")
-            .attr("x", 20)
-            .attr("y", ((d) => 25 + i*20))
-            .text(((d) => t.values[i]))
-            .style("fill", "white")
-    }
+    drawLegend(svg, t);
 }
 
 // Updates the legend attributes on variable change
@@ -44,29 +48,13 @@ function updateLegend(variable, variableLookup) {
 
     let t = variableLookup[variable];
 
-    let svg = d3.select("#view-legend svg")
+    let svg = d3.select("#view-legend svg");
 
     d3.select("#view-legend svg g").remove();
 
-    svg = svg.append("g")
+    svg = svg.append("g");
 
-    for (let i in t.values) {
-
-        svg
-            .append("circle")
-            .attr('cx', 10)
-            .attr('cy', ((d) => 20 + i*20))
-            .attr('r', 5)
-            .attr('fill', ((d) => t.colors[i]));
-
-        svg
-            .append("text")
-            .attr("x", 20)
-            .attr("y", ((d) => 25 + i*20))
-            .text(((d) => t.values[i]))
-            .style("fill", "white")
-
-    }
+    drawLegend(svg, t);
 }
 
 function shapeLegend(id) {
