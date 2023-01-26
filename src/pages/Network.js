@@ -60,7 +60,7 @@ function initNetwork() {
         .append("g");
 }
 
-function renderNetwork(data) {
+function renderNetwork(data, riskVariable, colorScale) {
 
     var svg = d3.select(`#${id} svg`);
 
@@ -98,7 +98,8 @@ function renderNetwork(data) {
                 .type(function(d) { return d.group === "actor" ? d3.symbolCircle : d3.symbolTriangle; })
                 .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
             .attr("stroke-width", .5)
-            .attr("stroke", "white");
+            .attr("stroke", "white")
+            .attr("fill", d => d.riskStatus[riskVariable] === undefined ? "#ADADAD" : colorScale(d.riskStatus[riskVariable]));
 
     simulation
         .nodes(data.nodes)
@@ -138,13 +139,16 @@ export default function Network() {
     }, [])
 
     useEffect(() => {
-        renderNetwork(data);
+        renderNetwork(data, riskVariable, colorScale);
+    }, [level3ID])
+
+    useEffect(() => {
         const node = d3.selectAll(`#${id} svg path`)
             .attr("fill", d => d.riskStatus[riskVariable] === undefined ? "#ADADAD" : colorScale(d.riskStatus[riskVariable]))
 
         renderTooltip(node);
 
-    }, [riskVariable, level3ID])
+    }, [riskVariable])
 
     return(
         <StylesProvider injectFirst>
