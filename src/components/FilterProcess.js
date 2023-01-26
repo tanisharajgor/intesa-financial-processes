@@ -44,10 +44,8 @@ function clickProcess(updateLevel3ID) {
     d3.selectAll('.Process-Node').each(function (d, i) {
         d3.select(this)
             .on('click', (e, datum) => {
-                // console.log(datum.data.id)
-                // console.log(e)
-
                 updateLevel3ID(datum.data.id)
+                d3.select(`#${id} .tooltip`).remove();
             })
     })
 }
