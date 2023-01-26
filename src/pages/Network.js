@@ -10,15 +10,10 @@ import { riskVariables, createColorScale } from "../utils/global";
 const id = "network-chart";
 var width = 800;
 var height = 600;
-
-function initTooltip() {
-    d3.select(`#${id}`)
-        .append("div")
-        .attr("class", "tooltip");
-}
+const linkColor = "#373d44";
 
 // Tooltip
-function renderTooltip(node) {
+function renderTooltip(node, links) {
 
     var tooltip = d3.select(`#${id}`)
         .append("div")
@@ -29,6 +24,8 @@ function renderTooltip(node) {
         let thisCircle = d3.select(this);
         let x = e.layerX + 20;
         let y = e.layerY - 10;
+
+        const b = links.filter((i) => i.source.id === d.id || i.target.id === d.id).map((d) => d.index)
 
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
@@ -42,6 +39,11 @@ function renderTooltip(node) {
         d3.selectAll(`#${id} svg path`).attr("opacity", .5)
         d3.select(this).attr("opacity", 1).raise();
 
+        d3.selectAll(`#${id} .link`)
+            .attr("opacity", d => b.includes(d.index) ? 1: .5)
+            .attr("stroke", d => b.includes(d.index)? "grey": linkColor)
+            .attr("stroke-width", d => b.includes(d.index)? 1.5: 1);
+
     }).on("mouseout", function() {
 
         tooltip.style("visibility", "hidden");
@@ -49,7 +51,11 @@ function renderTooltip(node) {
 
         d3.selectAll(`#${id} svg path`)
             .attr("stroke-width", .5)
-            .attr("stroke", "white"); 
+            .attr("stroke", "white");
+
+        d3.selectAll(`#${id} .link`)
+            .attr("opacity", 1)
+            .attr("stroke", linkColor);
     });
 }
 
@@ -86,7 +92,9 @@ function renderNetwork(data, riskVariable, colorScale) {
             .data(data.links)
             .enter()
             .append("line")
-            .attr("stroke", "grey");
+            .attr("stroke", linkColor)
+            .attr("id", d => `link-${d.index}`)
+            .attr("class", "link");
 
     var node = svg
         .append("g")
@@ -141,14 +149,14 @@ export default function Network() {
     useEffect(() => {
         renderNetwork(data, riskVariable, colorScale);
         const node = d3.selectAll(`#${id} svg path`);
-        renderTooltip(node);
+        renderTooltip(node, data.links);
     }, [level3ID])
 
     useEffect(() => {
         const node = d3.selectAll(`#${id} svg path`)
             .attr("fill", d => d.riskStatus[riskVariable] === undefined ? "#ADADAD" : colorScale(d.riskStatus[riskVariable]))
 
-        renderTooltip(node);
+        renderTooltip(node, data.links);
 
     }, [riskVariable])
 
