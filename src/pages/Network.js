@@ -11,14 +11,19 @@ const id = "network-chart";
 var width = 800;
 var height = 600;
 
+function initTooltip() {
+    d3.select(`#${id}`)
+        .append("div")
+        .attr("class", "tooltip")
+        .append("g");
+}
+
 // Tooltip
 function renderTooltip(node) {
 
-    let tooltip = d3.select(`#${id}`)
-        .append("div")
-        .attr("class", "tooltip");
+    var tooltip = d3.select(`#${id} .tooltip g`)
 
-        node.on("mouseover", function(e, d) {
+    node.on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
         let x = e.layerX + 20;
@@ -128,6 +133,7 @@ export default function Network() {
 
     useEffect(() => {
         initNetwork();
+        initTooltip();
     }, [])
 
     useEffect(() => {
@@ -136,6 +142,7 @@ export default function Network() {
             .attr("fill", d => d.riskStatus[riskVariable] === undefined ? "#ADADAD" : colorScale(d.riskStatus[riskVariable]))
 
         renderTooltip(node);
+
     }, [riskVariable, level3ID])
 
     return(
