@@ -131,6 +131,10 @@ export default function FilterProcess({updateLevel3ID}) {
     })
 
     return(
-        <div id={id}></div>
+
+        <div>
+            <h4><span className='key'>Filter by Process</span></h4>
+            <div id={id}></div>
+        </div>
     )
 }
