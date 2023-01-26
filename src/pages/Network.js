@@ -20,15 +20,15 @@ function initTooltip() {
 // Tooltip
 function renderTooltip(node) {
 
-    var tooltip = d3.select(`#${id} .tooltip`)
+    var tooltip = d3.select(`#${id}`)
+        .append("div")
+        .attr("class", "tooltip");
 
     node.on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
         let x = e.layerX + 20;
         let y = e.layerY - 10;
-
-        console.log(x, y)
 
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
@@ -135,11 +135,12 @@ export default function Network() {
 
     useEffect(() => {
         initNetwork();
-        initTooltip();
     }, [])
 
     useEffect(() => {
         renderNetwork(data, riskVariable, colorScale);
+        const node = d3.selectAll(`#${id} svg path`);
+        renderTooltip(node);
     }, [level3ID])
 
     useEffect(() => {
