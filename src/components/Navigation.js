@@ -8,7 +8,7 @@ export default function Navigation() {
     return (
         <div className="Navigation">
             <div className="Navigation_branding">
-                <h2><NavLink to="/">Banca Processes</NavLink></h2>
+                <h2><NavLink to="/">Banca Intesa Processes</NavLink></h2>
             </div>
             <div className="Navigation_links">
                 <ul id="Navigation_list">
