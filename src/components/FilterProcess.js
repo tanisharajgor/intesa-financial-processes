@@ -62,7 +62,7 @@ function clickProcess(updateLevel3ID) {
     })
 }
 
-export default function FilterProcess({updateLevel3ID}) {
+export default function FilterProcess({level3ID, updateLevel3ID}) {
 
     const radToDeg = (radians) => {
         return radians * (180 / Math.PI);
@@ -73,6 +73,8 @@ export default function FilterProcess({updateLevel3ID}) {
         height = 375,
         radius = width * 0.5,
         outerMargin = width * 0.15;
+
+    const levelDescr = lu["level3"].find((d) => d.id === level3ID).descr;
 
     // configure layout generator
     const tree = d3.cluster()
@@ -143,9 +145,10 @@ export default function FilterProcess({updateLevel3ID}) {
     })
 
     return(
-
         <div>
-            <h4><span className='key'>Filter by Process</span></h4>
+            <h4><span className='key'>Filter by Process:</span>
+                <span className='spec'>{levelDescr}</span>
+            </h4>
             <div id={id}></div>
         </div>
     )

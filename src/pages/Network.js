@@ -165,7 +165,7 @@ export default function Network() {
             <div className="Content">
                 <Navigation/>
                 <div className="Query" id="FilterMenu">
-                    <FilterProcess updateLevel3ID={updateLevel3ID}/>
+                    <FilterProcess level3ID = {level3ID} updateLevel3ID={updateLevel3ID}/>
                 </div>
                 <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} id={id}/>                
             </div>
