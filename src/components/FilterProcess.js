@@ -1,7 +1,11 @@
+import { Accordion, AccordionSummary, AccordionDetails, IconButton } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import lu from '../data/processed/nested/lu.json';
 import { palette } from '../utils/global';
+import { useStyles } from '../utils/ComponentStyles';
+
 
 const id = "Filter-Process";
 
@@ -64,6 +68,8 @@ function clickProcess(updateLevel3ID) {
 
 export default function FilterProcess({level3ID, updateLevel3ID}) {
 
+    const Styles = useStyles();
+
     // contants
     const width = 375,
         height = 600;
@@ -113,7 +119,7 @@ export default function FilterProcess({level3ID, updateLevel3ID}) {
             })
             .append("circle")
                 .attr("r", d => rScale(d.data.data.treeLevel))
-                .style("fill", "#69b3a2")
+                .style("fill", "#03afbf")
                 .style("stroke-width", 2)
                 // .attr("visibility", d => d.data.data.treeLevel == 0 ? "hidden" : "visible")
     }, [])
@@ -125,11 +131,21 @@ export default function FilterProcess({level3ID, updateLevel3ID}) {
     })
 
     return(
-        <div>
-            <h4><span className='key'>Filter by Process:</span>
-                <span className='spec'>{levelDescr}</span>
-            </h4>
-            <div id={id}></div>
-        </div>
+        <Accordion className={Styles.card}>
+            <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="age-filter-content"
+                id="age-filter-header"
+            >
+            <div>
+                <h4><span className='key'>Filter by Process:</span>
+                    <span className='spec'>{levelDescr}</span>
+                </h4>
+            </div>
+            </AccordionSummary>
+            <AccordionDetails>
+                <div id={id}></div>
+            </AccordionDetails>
+        </Accordion>
     )
 }
