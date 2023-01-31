@@ -57,7 +57,7 @@ function clickProcess(updateLevel3ID) {
     d3.selectAll('.Process-Node').each(function (d, i) {
         d3.select(this)
             .on('click', (e, datum) => {
-                updateLevel3ID(datum.data.id)
+                updateLevel3ID(datum.data.data.id)
 
                 var tooltip = d3.select(`#${id} .tooltip`);
                 d3.select(`#${id} .tooltip`).remove();
@@ -121,6 +121,7 @@ export default function FilterProcess({level3ID, updateLevel3ID}) {
                 .attr("r", d => rScale(d.data.data.treeLevel))
                 .style("fill", "#03afbf")
                 .style("stroke-width", 2)
+                .attr("class", "Process-Node")
                 // .attr("visibility", d => d.data.data.treeLevel == 0 ? "hidden" : "visible")
     }, [])
 
