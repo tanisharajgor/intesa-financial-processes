@@ -5,7 +5,7 @@ import { StylesProvider } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network.json";
 import * as d3 from 'd3';
-import { riskVariables, createColorScale } from "../utils/global";
+import { riskVariables, createColorScale, naColor } from "../utils/global";
 
 const id = "network-chart";
 var width = 800;
@@ -108,7 +108,7 @@ function renderNetwork(data, riskVariable, colorScale) {
                 .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
             .attr("stroke-width", .5)
             .attr("stroke", "white")
-            .attr("fill", d => d.riskStatus[riskVariable] === undefined ? "#ADADAD" : colorScale(d.riskStatus[riskVariable]));
+            .attr("fill", d => d.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.riskStatus[riskVariable]));
 
     simulation
         .nodes(data.nodes)
@@ -154,7 +154,7 @@ export default function Network() {
 
     useEffect(() => {
         const node = d3.selectAll(`#${id} svg path`)
-            .attr("fill", d => d.riskStatus[riskVariable] === undefined ? "#ADADAD" : colorScale(d.riskStatus[riskVariable]))
+            .attr("fill", d => d.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.riskStatus[riskVariable]))
 
         renderTooltip(node, data.links);
 

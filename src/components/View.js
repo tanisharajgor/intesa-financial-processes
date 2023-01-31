@@ -1,5 +1,5 @@
 import { FormControl, Select, MenuItem } from "@material-ui/core";
-import { riskVariables, createColorScale } from "../utils/global";
+import { riskVariables, createColorScale, naColor } from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
 
@@ -7,7 +7,15 @@ const width = 216;
 let height = 100;
 
 function drawLegend(svg, t, colorScale) {
-    
+
+    if (!t.values.includes('NA')) {
+        t.values.push('NA')
+    }
+
+    if (!t.labels.includes('na')) {
+        t.labels.push('na')
+    }
+
     for (let i in t.values) {
 
         svg
@@ -15,7 +23,7 @@ function drawLegend(svg, t, colorScale) {
             .attr('cx', 10)
             .attr('cy', ((d) => 20 + i*20))
             .attr('r', 5)
-            .attr('fill', ((d) => colorScale(t.values[i])));
+            .attr('fill', ((d) => t.values[i] === "NA" ? naColor: colorScale(t.values[i])));
 
         svg
             .append("text")
