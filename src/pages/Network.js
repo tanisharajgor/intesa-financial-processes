@@ -8,7 +8,7 @@ import * as d3 from 'd3';
 import { riskVariables, createColorScale, naColor } from "../utils/global";
 
 const id = "network-chart";
-var width = 800;
+var width = 1000;
 var height = 600;
 const linkColor = "#373d44";
 
@@ -70,9 +70,7 @@ function initNetwork() {
 function renderNetwork(data, riskVariable, colorScale) {
 
     var svg = d3.select(`#${id} svg`);
-
     d3.select(`#${id} svg g`).remove();
-
     svg = svg.append("g")
 
     const rScale = d3.scaleLinear()

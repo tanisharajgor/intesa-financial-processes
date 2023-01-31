@@ -49,7 +49,7 @@ export default function CirclePacking() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
 
-    const height = 932, width = 932;
+    const height = 932, width = 1000;
 
     function pack(data) {
         let x = d3.pack()

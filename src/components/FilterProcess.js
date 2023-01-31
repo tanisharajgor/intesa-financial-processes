@@ -64,35 +64,23 @@ function clickProcess(updateLevel3ID) {
 
 export default function FilterProcess({level3ID, updateLevel3ID}) {
 
-    const radToDeg = (radians) => {
-        return radians * (180 / Math.PI);
-    }
-
     // contants
     const width = 375,
-        height = 375,
-        radius = width * 0.5,
-        outerMargin = width * 0.15;
+        height = 600;
 
     const levelDescr = lu["level3"].find((d) => d.id === level3ID).descr;
 
-    // configure layout generator
-    const tree = d3.cluster()
-        .size([2 * Math.PI, radius - outerMargin]); // x = angle, y = r
+    const cluster = d3.cluster()
+        .size([height, width - 100]);  // 100 is the margin I will have on the right side
 
-    // create instance of d3 hierarchy
     const hierarchyData = d3.hierarchy(lu["processes"]);
 
-    // apply cluster layout
-    const root = tree(hierarchyData);
+    // Give the data to this cluster layout:
+    const root = d3.hierarchy(hierarchyData, function(d) {
+        return d.children;
+    });
 
-    // console.log(root.children.length)
-
-    let color = d3.scaleOrdinal()
-        .domain([0, root.children.length - 1])
-        .range(palette);
-
-    root.children.forEach((child, i) => child.index = i);
+    cluster(root);
 
     useEffect(() => {
     
@@ -101,41 +89,33 @@ export default function FilterProcess({level3ID, updateLevel3ID}) {
             .attr("width", width)
             .attr("height", height);
 
-        const plot = svg.append("g")
-            .attr("transform", `translate(${160},${160})`)
-            .attr('id', 'Process-Plot');
-
-        const link = plot.append("g")
-            .attr("fill", "none")
+        // Add the links between nodes:
+        svg.selectAll('path')
+            .data( root.descendants().slice(1) )
+            .join('path')
+            .attr("d", function(d) {
+                return "M" + d.y + "," + d.x
+                        + "C" + (d.parent.y + 50) + "," + d.x
+                        + " " + (d.parent.y + 150) + "," + d.parent.x // 50 and 150 are coordinates of inflexion, play with it to change links shape
+                        + " " + d.parent.y + "," + d.parent.x;
+                    })
+            .style("fill", 'none')
             .attr("stroke", "#4e5155")
             .attr("stroke-opacity", 1)
             .attr("stroke-width", .5)
-            .selectAll("path")
-            .data(root.links())
-            .enter()
-            .append("path")
-            .attr("d", (d3.linkRadial())
-                .angle(d => d.x)
-                .radius(d => d.y));
 
-        const node = plot
-            .append("g")
-            .attr("stroke-linejoin", "round")
-            .attr("stroke-width", 3)
-            .selectAll("g")
-            .data(root.descendants().reverse())
-            .enter()
-            .append("g")
-            .attr("transform", d => `rotate(${radToDeg(d.x) - 90}) translate(${d.y},0)`);
-
-        node.append("circle")
-            .attr("r", d => rScale(d.data.treeLevel))
-            .attr("visibility", d => d.data.treeLevel == 0 ? "hidden" : "visible")
-            .attr('id', d => d.data.descr)
-            .attr('class', 'Process-Node')
-            .attr("fill", palette ? d => color(d.ancestors().reverse()[1]?.index) : "#ccc")
-            // .attr("pointer-events", d => d.data.treeLevel != 3? "none": "auto")
-
+        // Add a circle for each node.
+        svg.selectAll("g")
+            .data(root.descendants())
+            .join("g")
+            .attr("transform", function(d) {
+                return `translate(${d.y},${d.x})`
+            })
+            .append("circle")
+                .attr("r", d => rScale(d.data.data.treeLevel))
+                .style("fill", "#69b3a2")
+                .style("stroke-width", 2)
+                // .attr("visibility", d => d.data.data.treeLevel == 0 ? "hidden" : "visible")
     }, [])
 
     useEffect(() => {
