@@ -132,7 +132,7 @@ export default function FilterProcess({updateLevel3ID}) {
             .attr('id', d => d.data.descr)
             .attr('class', 'Process-Node')
             .attr("fill", palette ? d => color(d.ancestors().reverse()[1]?.index) : "#ccc")
-            // .attr("opacity", d => opacityScale(d.data.treeLevel))
+            // .attr("pointer-events", d => d.data.treeLevel != 3? "none": "auto")
 
     }, [])
 

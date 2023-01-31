@@ -1,12 +1,13 @@
 import { FormControl, Select, MenuItem } from "@material-ui/core";
-import { riskVariables } from "../utils/global";
+import { riskVariables, createColorScale } from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
 
 const width = 216;
 let height = 100;
 
-function drawLegend(svg, t) {
+function drawLegend(svg, t, colorScale) {
+    
     for (let i in t.values) {
 
         svg
@@ -14,7 +15,7 @@ function drawLegend(svg, t) {
             .attr('cx', 10)
             .attr('cy', ((d) => 20 + i*20))
             .attr('r', 5)
-            .attr('fill', ((d) => t.colors[i]));
+            .attr('fill', ((d) => colorScale(t.values[i])));
 
         svg
             .append("text")
@@ -26,7 +27,7 @@ function drawLegend(svg, t) {
 }
 
 // Initiates the legend svg and sets the non-changing attributes
-function initiateLegend(variable, variableLookup) {
+function initiateLegend(variable, variableLookup, colorScale) {
 
     let t = variableLookup[variable];
 
@@ -40,11 +41,11 @@ function initiateLegend(variable, variableLookup) {
         .attr('height', height)
         .append("g");
 
-    drawLegend(svg, t);
+    drawLegend(svg, t, colorScale);
 }
 
 // Updates the legend attributes on variable change
-function updateLegend(variable, variableLookup) {
+function updateLegend(variable, variableLookup, colorScale) {
 
     let t = variableLookup[variable];
 
@@ -54,7 +55,7 @@ function updateLegend(variable, variableLookup) {
 
     svg = svg.append("g");
 
-    drawLegend(svg, t);
+    drawLegend(svg, t ,colorScale);
 }
 
 function shapeLegend(id) {
@@ -119,6 +120,8 @@ function riskType() {
 
 export default function View({id, riskVariable, updateRiskVariable}) {
 
+    const colorScale = createColorScale(riskVariable, riskVariables);
+
     const handleChange = (event) => {
         let newView = (Object.keys(riskVariables).find((c) => riskVariables[c].label === event.target.value))
         updateRiskVariable(newView)
@@ -129,11 +132,11 @@ export default function View({id, riskVariable, updateRiskVariable}) {
     }, [])
 
     useEffect(() => {
-        initiateLegend(riskVariable, riskVariables);
+        initiateLegend(riskVariable, riskVariables, colorScale);
     }, [])
 
     useEffect(() => {
-        updateLegend(riskVariable, riskVariables);
+        updateLegend(riskVariable, riskVariables, colorScale);
     }, [riskVariable])
 
     return(

@@ -19,7 +19,7 @@ export const riskVariables = {
     },
     "controlPeriodocityMode": {
         label: "Periodocity",
-        values: ['Decadal', 'Annually', 'Half yearly', 'Quarterly', 'Monthly', 'Weekly', 'Daily', 'Per event', 'NA'],
+        values: [3650, 365, 182, 91, 30, 7, 1, .1, 0],
         labels: ['Decadal', 'Annually', 'Half yearly', 'Quarterly', 'Monthly', 'Weekly', 'Daily', 'Per event', 'na'],
         colors: palette
     }
@@ -31,12 +31,25 @@ export const riskVariables = {
 export function createColorScale(variable, variableLookup) {
 
     let t = variableLookup[variable]
+    if (variable == "controlPeriodocityMode") {
 
-    const scale = d3.scaleOrdinal()
-        .domain(t.values)
-        .range(t.colors);
+        var s = d3.scaleSequential(d3.interpolate("purple", "orange"))
+            .domain(d3.extent(t.values));
 
-    return scale;
+        const scale = d3.scaleOrdinal()
+            .domain([t.labels])
+            .range(t.values.map((d) => s(d)))
+
+        return scale
+
+    } else {
+
+        const scale = d3.scaleOrdinal()
+            .domain(t.values)
+            .range(t.colors);
+
+        return scale
+    }
 }
 
 export function createOpacityScale() {
