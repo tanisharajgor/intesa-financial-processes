@@ -30,8 +30,18 @@ const cluster = d3.cluster()
     .size([height, width - 100]);  // 100 is the margin I will have on the right side
 
 
+function fillScale(d, selectedLevel3ID) {
+    if (d.data.data.treeLevel === 3 && d.data.data.id === selectedLevel3ID) {
+        return "#03afbf";
+    } else if (d.data.data.treeLevel === 3) {
+        return "white"
+    } else {
+        return "#4e5155"
+    }
+}
+
 // Tooltip
-function renderTooltip(node) {
+function renderTooltip(node, selectedLevel3ID) {
 
     let tooltip = d3.select(`#${id}`)
         .append("div")
@@ -59,21 +69,19 @@ function renderTooltip(node) {
 
         thisCircle
             .attr("stroke", "white")
-            .attr("stroke-width", d => d.data.data.treeLevel === 3 ? 2: 0)
-            .attr("fill", d => d.data.data.treeLevel === 3 ? "#03afbf": "#4e5155");
-
-        d3.select(this)
-            .attr("opacity", 1)
-            .raise();
+            .attr("stroke-width", d => d.data.data.treeLevel === 3 ? 1.5: 0)
+            .attr("fill", d => d.data.data.treeLevel === 3 ? "#03afbf": "#4e5155")
+            .attr("r", 4);
 
     }).on("mouseout", function() {
 
         tooltip.style("visibility", "hidden");
-        node.attr("opacity", 1);
 
         d3.selectAll('.Process-Node')
-            .attr("stroke", "none")
-            .attr("fill", d => d.data.data.treeLevel === 3 ? "white": "#4e5155")
+            .attr("stroke", d => fillScale(d, selectedLevel3ID))
+            .attr("fill", d => fillScale(d, selectedLevel3ID))
+            .attr("stroke-width", .5)
+            .attr("r", d => rScale(d.data.data.treeLevel))
     });
 }
 
@@ -97,7 +105,7 @@ function initFilter() {
         .attr("height", height);
 }
 
-function updateFilter(root) {
+function updateFilter(root, selectedLevel3ID) {
 
     let svg = d3.select(`#${id} svg`);
 
@@ -130,16 +138,17 @@ function updateFilter(root) {
         })
         .append("circle")
             .attr("r", d => rScale(d.data.data.treeLevel))
-            .attr("fill", d => d.data.data.treeLevel === 3 ? "white": "#4e5155")
-            .attr("class", "Process-Node")
-            // .attr("visibility", d => d.data.data.treeLevel == 0 ? "hidden" : "visible")
+            .attr("fill", d => fillScale(d, selectedLevel3ID))
+            .attr("stroke", d => fillScale(d, selectedLevel3ID))
+            .attr("stroke-width", .5)
+            .attr("class", "Process-Node");
 }
 
-export default function FilterProcess({level3ID, updateLevel3ID}) {
+export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
     const Styles = useStyles();
-    const level3Descr = lu["level3"].find((d) => d.id === level3ID).descr;
-    const [selectedLevel1, updateLevel1] = useState(level1[0].id);
-    const levelsFiltered = lu["processes"].children.find((d) => d.id === selectedLevel1);
+    const level3Descr = lu["level3"].find((d) => d.id === selectedLevel3ID).descr;
+    const [selectedLevel1ID, updateLevel1] = useState(level1[0].id);
+    const levelsFiltered = lu["processes"].children.find((d) => d.id === selectedLevel1ID);
 
     // Update data
     const hierarchyData = d3.hierarchy(levelsFiltered);
@@ -160,15 +169,15 @@ export default function FilterProcess({level3ID, updateLevel3ID}) {
 
     // Initialize SVG Visualization
     useEffect(() => {
-        updateFilter(root);
-    }, [selectedLevel1])
+        updateFilter(root, selectedLevel3ID);
+    }, [selectedLevel1ID])
 
     // Update SVG Visualization
     useEffect(() => {
         const node = d3.selectAll(".Process-Node");
         clickProcess(updateLevel3ID);
-        renderTooltip(node);
-    }, [selectedLevel1])
+        renderTooltip(node, selectedLevel3ID);
+    }, [selectedLevel1ID, selectedLevel3ID])
 
     return(
         <Accordion className={Styles.card}>
@@ -192,7 +201,7 @@ export default function FilterProcess({level3ID, updateLevel3ID}) {
                                         labelId="process1-select-label"
                                         id="process1-select"
                                         displayEmpty
-                                        value={selectedLevel1}
+                                        value={selectedLevel1ID}
                                         onChange={handleChange}
                                     >
                                         {level1.map((level, index) => {

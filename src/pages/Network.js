@@ -138,10 +138,10 @@ function renderNetwork(data, riskVariable, colorScale) {
 export default function Network() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
-    const [level3ID, updateLevel3ID] = useState(graph[0].id);
+    const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
     const [hoverID, updateHoverID] = useState(-1);
 
-    let data = graph.find((d) => d.id === level3ID);
+    let data = graph.find((d) => d.id === selectedLevel3ID);
 
     // Hover
     let rStatus = data.nodes.find((d) => d.id === hoverID); 
@@ -153,7 +153,6 @@ export default function Network() {
         } else {
             hoverValue = rStatus.riskStatus[riskVariable];
         }
-
     } else {
         hoverValue = undefined;
     }
@@ -169,14 +168,12 @@ export default function Network() {
         renderNetwork(data, riskVariable, colorScale);
         const node = d3.selectAll(`#${id} svg path`);
         renderTooltip(node, data.links, updateHoverID);
-    }, [level3ID])
+    }, [selectedLevel3ID])
 
     useEffect(() => {
         const node = d3.selectAll(`#${id} svg path`)
             .attr("fill", d => d.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.riskStatus[riskVariable]))
-
         renderTooltip(node, data.links, updateHoverID);
-
     }, [riskVariable])
 
     return(
@@ -184,7 +181,7 @@ export default function Network() {
             <div className="Content">
                 <Navigation/>
                 <div className="Query" id="FilterMenu">
-                    <FilterProcess level3ID = {level3ID} updateLevel3ID={updateLevel3ID}/>
+                    <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
                 </div>
                 <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id}/>                
             </div>
