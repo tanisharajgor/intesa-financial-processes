@@ -90,6 +90,51 @@ function clickProcess(updateLevel3ID) {
     })
 }
 
+function initFilter() {
+    d3.select(`#${id}`)
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+}
+
+function updateFilter(root) {
+
+    let svg = d3.select(`#${id} svg`);
+
+    d3.select(`#${id} svg g`).remove();
+
+    svg = svg.append("g")
+        .attr("transform", "translate(10, 0)");
+
+    // Add the links between nodes:
+    svg.selectAll('path')
+        .data(root.descendants().slice(1))
+        .join('path')
+        .attr("d", function(d) {
+            return "M" + d.y + "," + d.x
+                    + "C" + (d.parent.y + 50) + "," + d.x
+                    + " " + (d.parent.y + 150) + "," + d.parent.x // 50 and 150 are coordinates of inflexion, play with it to change links shape
+                    + " " + d.parent.y + "," + d.parent.x;
+                })
+        .style("fill", 'none')
+        .attr("stroke", "#4e5155")
+        .attr("stroke-opacity", 1)
+        .attr("stroke-width", .5)
+
+    // Add a circle for each node.
+    svg.selectAll("g")
+        .data(root.descendants())
+        .join("g")
+        .attr("transform", function(d) {
+            return `translate(${d.y},${d.x})`
+        })
+        .append("circle")
+            .attr("r", d => rScale(d.data.data.treeLevel))
+            .attr("fill", d => d.data.data.treeLevel === 3 ? "white": "#4e5155")
+            .attr("class", "Process-Node")
+            // .attr("visibility", d => d.data.data.treeLevel == 0 ? "hidden" : "visible")
+}
+
 export default function FilterProcess({level3ID, updateLevel3ID}) {
     const Styles = useStyles();
     const level3Descr = lu["level3"].find((d) => d.id === level3ID).descr;
@@ -110,45 +155,12 @@ export default function FilterProcess({level3ID, updateLevel3ID}) {
     };
 
     useEffect(() => {
-        d3.select(`#${id}`)
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height);
+        initFilter();
     }, [])
 
     // Initialize SVG Visualization
     useEffect(() => {
-        const svg = d3.select(`#${id} svg`)
-            .append("g")
-            .attr("transform", "translate(10, 0)");
-
-        // Add the links between nodes:
-        svg.selectAll('path')
-            .data(root.descendants().slice(1))
-            .join('path')
-            .attr("d", function(d) {
-                return "M" + d.y + "," + d.x
-                        + "C" + (d.parent.y + 50) + "," + d.x
-                        + " " + (d.parent.y + 150) + "," + d.parent.x // 50 and 150 are coordinates of inflexion, play with it to change links shape
-                        + " " + d.parent.y + "," + d.parent.x;
-                    })
-            .style("fill", 'none')
-            .attr("stroke", "#4e5155")
-            .attr("stroke-opacity", 1)
-            .attr("stroke-width", .5)
-
-        // Add a circle for each node.
-        svg.selectAll("g")
-            .data(root.descendants())
-            .join("g")
-            .attr("transform", function(d) {
-                return `translate(${d.y},${d.x})`
-            })
-            .append("circle")
-                .attr("r", d => rScale(d.data.data.treeLevel))
-                .attr("fill", d => d.data.data.treeLevel === 3 ? "white": "#4e5155")
-                .attr("class", "Process-Node")
-                // .attr("visibility", d => d.data.data.treeLevel == 0 ? "hidden" : "visible")
+        updateFilter(root);
     }, [selectedLevel1])
 
     // Update SVG Visualization
