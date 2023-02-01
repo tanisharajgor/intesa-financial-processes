@@ -32,6 +32,7 @@ function drawLegend(svg, t, colorScale, hoverValue, variable) {
             .attr("y", ((d) => 25 + i*20))
             .text(((d) => t.labels[i]))
             .style("fill", "white")
+            .attr('opacity', ((d) => t.values[i] === hoverValue || hoverValue === undefined? 1: .5));
     }
 }
 
