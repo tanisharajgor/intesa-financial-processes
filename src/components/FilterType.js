@@ -11,25 +11,28 @@ const id = "Filter-Type";
 export default function FilterType({}) {
 
     const Styles = useStyles();
-    const [typesChecks, updateChecks] = useState([])
+    const [typesChecks, updateChecks] = useState("Process activity")
 
     const handleChange = (event) => {
-        // let level1 = event.target.value;
-        // updateLevel1(level1)
     };
 
     const values = ["Process activity", "Control activity", "Common process activity", "System activity"]
-    const all = "";
+
+    console.log(values.includes(typesChecks))
+    console.log("Control activity".includes(values))
+
+    let newSelectedTypes = [];
 
     const updateSelectedRange = (selected) => {
         // Update the selected age ranges, so the selected boxes are checked
-        let newSelectedTypes = [];
         if (typesChecks.includes(selected)) {
             newSelectedTypes = typesChecks.filter((obj) => obj.id !== selected.id);
         } else {
             typesChecks.push(selected)
             newSelectedTypes = [...typesChecks];
+            console.log(newSelectedTypes)
         }
+        updateChecks(newSelectedTypes)
     }
 
     return(
@@ -50,15 +53,17 @@ export default function FilterType({}) {
                         <div className="layout_row">
                             <div className="layout_item push">
                             <ul>
-                                {
-                                    values.map((value, index) => {
-                                        return (
-                                            <li key={index}>
-                                                 <FormControlLabel
-                                                    control={<Checkbox color="primary" checked={typesChecks.includes(value)} name={value} onChange={() => updateSelectedRange(value)} />}
-                                                    label={value}
-                                                />
-                                            </li>
+                                {values.map((value, index) => {
+                                    return (
+                                        <li key={index}>
+                                                <FormControlLabel
+                                                control={<Checkbox color="primary" 
+                                                checked={values.includes(typesChecks)} 
+                                                name={value} 
+                                                onChange={() => updateSelectedRange(value)} />}
+                                                label={value}
+                                            />
+                                        </li>
                                         )
                                     })
                                 }
@@ -71,6 +76,5 @@ export default function FilterType({}) {
                     </div>
             </AccordionDetails>
         </Accordion>
-
     )
 }

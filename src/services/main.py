@@ -122,9 +122,6 @@ def main():
     # activitiesNested = nest_activities(activitiesClean, actorsClean, risksClean, applicationsClean, activity_to_actor, activity_to_risk, activity_to_application)
     # write_json(activitiesNested, os.path.join(processed_pth, "nested"), "activities")
 
-    # mainRisk = risks.drop_duplicates()
-    # mainActivity = data[["level1GUID", "level2GUID", "level3GUID", "modelGUID", "activityGUID"]].drop_duplicates()
-
     # risksNested = nest_risk_control(risk_to_control, risksClean, controlsClean)
     # write_json(risksNested, os.path.join(processed_pth, "nested"), "risks")
 
@@ -135,9 +132,7 @@ def main():
         "risk": create_lu(risksClean, "riskID", "risk"),
         "application": create_lu(applicationsClean, "applicationID", "application"),
         "activity": create_lu(activitiesClean, "activityID", "activity"),
-        "activityType": create_lu(activitiesClean, "activityType", "activityType"),
         "actor": create_lu(actorsClean, "actorID", "actor"),
-        "actorType": create_lu(actorsClean, "actorType", "actorType"),
         "control": create_lu(controlsClean, "controlID", "control"),
         "level1": create_lu(level1Clean, "level1ID", "level1"),
         "level2": create_lu(level2Clean, "level2ID", "level2"),

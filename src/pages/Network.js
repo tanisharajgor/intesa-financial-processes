@@ -66,9 +66,7 @@ function renderTooltip(node, links, updateHoverID) {
 }
 function symbolType(d) {
 
-    console.log(d)
-
-    if (d.group === "actor") {
+    if (d.group === "Actor") {
         return d3.symbolCircle;
     } else {
         if (d.type === "Process activity") {
@@ -82,7 +80,6 @@ function symbolType(d) {
         }
     }
 }
-
 
 function initNetwork() {
     d3.select(`#${id}`)
@@ -166,7 +163,7 @@ export default function Network() {
     // Hover
     let rStatus = data.nodes.find((d) => d.id === hoverID); 
 
-    if (rStatus != undefined) {
+    if (rStatus !== undefined) {
 
         if (rStatus.riskStatus[riskVariable] === undefined) {
             hoverValue = "NA";
@@ -176,8 +173,6 @@ export default function Network() {
     } else {
         hoverValue = undefined;
     }
-
-    console.log(data)
 
     // Set-up scales
     const colorScale = createColorScale(riskVariable, riskVariables);
