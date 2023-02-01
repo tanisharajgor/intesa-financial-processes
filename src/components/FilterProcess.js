@@ -9,7 +9,7 @@ import lu from '../data/processed/nested/lu.json';
 import { palette } from '../utils/global';
 import { useStyles } from '../utils/ComponentStyles';
 
-// contants
+// constants
 const width = 345,
     height = 600;
 
@@ -183,8 +183,8 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
         <Accordion className={Styles.card}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
-                aria-controls="age-filter-content"
-                id="age-filter-header"
+                aria-controls="process-filter-content"
+                id="process-filter-header"
             >
             <div>
                 <h4><span className='key'>Filter by Process:</span>

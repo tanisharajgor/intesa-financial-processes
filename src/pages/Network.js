@@ -1,6 +1,7 @@
 import Main from "../components/Main";
 import Navigation from "../components/Navigation";
 import FilterProcess from "../components/FilterProcess";
+import FilterType from "../components/FilterType";
 import { StylesProvider } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
@@ -203,6 +204,7 @@ export default function Network() {
                 <Navigation/>
                 <div className="Query" id="FilterMenu">
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
+                    <FilterType/>
                 </div>
                 <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id}/>                
             </div>
