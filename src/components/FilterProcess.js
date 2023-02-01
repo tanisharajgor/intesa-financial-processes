@@ -47,7 +47,6 @@ function renderTooltip(node) {
         if (d.data.data.treeLevel === 3) {
             x = e.layerX - 150;
             y = e.layerY - 100;
-
         } else {
             x = e.layerX + 20;
             y = e.layerY - 10;
@@ -59,11 +58,13 @@ function renderTooltip(node) {
             .html(`Level ${d.data.data.treeLevel}<br><b>${d.data.data.name}</b>`);
 
         thisCircle
-            // .attr("stroke", "white")
-            // .attr("stroke-width", 1)
-            .attr("fill", "#03afbf");
+            .attr("stroke", "white")
+            .attr("stroke-width", d => d.data.data.treeLevel === 3 ? 2: 0)
+            .attr("fill", d => d.data.data.treeLevel === 3 ? "#03afbf": "#4e5155");
 
-        d3.select(this).attr("opacity", 1).raise();
+        d3.select(this)
+            .attr("opacity", 1)
+            .raise();
 
     }).on("mouseout", function() {
 
@@ -71,7 +72,8 @@ function renderTooltip(node) {
         node.attr("opacity", 1);
 
         d3.selectAll('.Process-Node')
-            .attr("stroke", "none"); 
+            .attr("stroke", "none")
+            .attr("fill", d => d.data.data.treeLevel === 3 ? "white": "#4e5155")
     });
 }
 
@@ -81,7 +83,6 @@ function clickProcess(updateLevel3ID) {
         d3.select(this)
             .on('click', (e, datum) => {
                 updateLevel3ID(datum.data.data.id)
-
                 var tooltip = d3.select(`#${id} .tooltip`);
                 d3.select(`#${id} .tooltip`).remove();
                 tooltip = tooltip.append("div").attr("class", "tooltip");
@@ -93,9 +94,6 @@ export default function FilterProcess({level3ID, updateLevel3ID}) {
     const Styles = useStyles();
     const level3Descr = lu["level3"].find((d) => d.id === level3ID).descr;
     const [selectedLevel1, updateLevel1] = useState(level1[0].id);
-
-    console.log(lu["processes"].children.find((d) => d.id === selectedLevel1))
-
     const levelsFiltered = lu["processes"].children.find((d) => d.id === selectedLevel1);
 
     // Update data
@@ -120,11 +118,13 @@ export default function FilterProcess({level3ID, updateLevel3ID}) {
 
     // Initialize SVG Visualization
     useEffect(() => {
-        const svg = d3.select(`#${id} svg`);
+        const svg = d3.select(`#${id} svg`)
+            .append("g")
+            .attr("transform", "translate(10, 0)");
 
         // Add the links between nodes:
         svg.selectAll('path')
-            .data( root.descendants().slice(1) )
+            .data(root.descendants().slice(1))
             .join('path')
             .attr("d", function(d) {
                 return "M" + d.y + "," + d.x
@@ -146,8 +146,7 @@ export default function FilterProcess({level3ID, updateLevel3ID}) {
             })
             .append("circle")
                 .attr("r", d => rScale(d.data.data.treeLevel))
-                .style("fill", d=> d.data.data.treeLevel === 3 ? "white": "#4e5155  ")
-                .style("stroke-width", 1)
+                .attr("fill", d => d.data.data.treeLevel === 3 ? "white": "#4e5155")
                 .attr("class", "Process-Node")
                 // .attr("visibility", d => d.data.data.treeLevel == 0 ? "hidden" : "visible")
     }, [selectedLevel1])
