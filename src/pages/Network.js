@@ -3,7 +3,7 @@ import Navigation from "../components/Navigation";
 import FilterProcess from "../components/FilterProcess";
 import { StylesProvider } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
-import graph from "../data/processed/nested/network.json";
+import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
 import { riskVariables, createColorScale, naColor } from "../utils/global";
 
@@ -11,9 +11,10 @@ const id = "network-chart";
 var width = 1000;
 var height = 600;
 const linkColor = "#373d44";
+var hoverValue;
 
 // Tooltip
-function renderTooltip(node, links) {
+function renderTooltip(node, links, updateHoverID) {
 
     var tooltip = d3.select(`#${id}`)
         .append("div")
@@ -44,6 +45,8 @@ function renderTooltip(node, links) {
             .attr("stroke", d => b.includes(d.index)? "grey": linkColor)
             .attr("stroke-width", d => b.includes(d.index)? 1.5: 1);
 
+        updateHoverID(d.id);
+
     }).on("mouseout", function() {
 
         tooltip.style("visibility", "hidden");
@@ -56,6 +59,8 @@ function renderTooltip(node, links) {
         d3.selectAll(`#${id} .link`)
             .attr("opacity", 1)
             .attr("stroke", linkColor);
+
+        updateHoverID(-1);
     });
 }
 
@@ -134,8 +139,24 @@ export default function Network() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
     const [level3ID, updateLevel3ID] = useState(graph[0].id);
+    const [hoverID, updateHoverID] = useState(-1);
 
     let data = graph.find((d) => d.id === level3ID);
+
+    // Hover
+    let rStatus = data.nodes.find((d) => d.id === hoverID); 
+
+    if (rStatus != undefined) {
+
+        if (rStatus.riskStatus[riskVariable] === undefined) {
+            hoverValue = "NA";
+        } else {
+            hoverValue = rStatus.riskStatus[riskVariable];
+        }
+
+    } else {
+        hoverValue = undefined;
+    }
 
     // Set-up scales
     const colorScale = createColorScale(riskVariable, riskVariables);
@@ -147,14 +168,14 @@ export default function Network() {
     useEffect(() => {
         renderNetwork(data, riskVariable, colorScale);
         const node = d3.selectAll(`#${id} svg path`);
-        renderTooltip(node, data.links);
+        renderTooltip(node, data.links, updateHoverID);
     }, [level3ID])
 
     useEffect(() => {
         const node = d3.selectAll(`#${id} svg path`)
             .attr("fill", d => d.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.riskStatus[riskVariable]))
 
-        renderTooltip(node, data.links);
+        renderTooltip(node, data.links, updateHoverID);
 
     }, [riskVariable])
 
@@ -165,7 +186,7 @@ export default function Network() {
                 <div className="Query" id="FilterMenu">
                     <FilterProcess level3ID = {level3ID} updateLevel3ID={updateLevel3ID}/>
                 </div>
-                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} id={id}/>                
+                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id}/>                
             </div>
         </StylesProvider>
     )

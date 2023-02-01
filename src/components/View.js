@@ -6,7 +6,7 @@ import { useEffect } from "react";
 const width = 216;
 let height = 100;
 
-function drawLegend(svg, t, colorScale) {
+function drawLegend(svg, t, colorScale, hoverValue, variable) {
 
     if (!t.values.includes('NA')) {
         t.values.push('NA')
@@ -23,7 +23,8 @@ function drawLegend(svg, t, colorScale) {
             .attr('cx', 10)
             .attr('cy', ((d) => 20 + i*20))
             .attr('r', 5)
-            .attr('fill', ((d) => t.values[i] === "NA" ? naColor: colorScale(t.values[i])));
+            .attr('fill', ((d) => t.values[i] === "NA" ? naColor: colorScale(t.values[i])))
+            .attr('opacity', ((d) => t.values[i] === hoverValue || hoverValue === undefined? 1: .5));
 
         svg
             .append("text")
@@ -35,7 +36,7 @@ function drawLegend(svg, t, colorScale) {
 }
 
 // Initiates the legend svg and sets the non-changing attributes
-function initiateLegend(variable, variableLookup, colorScale) {
+function initiateLegend(variable, variableLookup, colorScale, hoverValue) {
 
     let t = variableLookup[variable];
 
@@ -49,11 +50,11 @@ function initiateLegend(variable, variableLookup, colorScale) {
         .attr('height', height)
         .append("g");
 
-    drawLegend(svg, t, colorScale);
+    drawLegend(svg, t, colorScale, hoverValue, variable);
 }
 
 // Updates the legend attributes on variable change
-function updateLegend(variable, variableLookup, colorScale) {
+function updateLegend(variable, variableLookup, colorScale, hoverValue) {
 
     let t = variableLookup[variable];
 
@@ -63,7 +64,7 @@ function updateLegend(variable, variableLookup, colorScale) {
 
     svg = svg.append("g");
 
-    drawLegend(svg, t ,colorScale);
+    drawLegend(svg, t, colorScale, hoverValue, variable);
 }
 
 function shapeLegend(id) {
@@ -126,7 +127,7 @@ function riskType() {
     )
 }
 
-export default function View({id, riskVariable, updateRiskVariable}) {
+export default function View({id, riskVariable, updateRiskVariable, hoverValue}) {
 
     const colorScale = createColorScale(riskVariable, riskVariables);
 
@@ -144,8 +145,8 @@ export default function View({id, riskVariable, updateRiskVariable}) {
     }, [])
 
     useEffect(() => {
-        updateLegend(riskVariable, riskVariables, colorScale);
-    }, [riskVariable])
+        updateLegend(riskVariable, riskVariables, colorScale, hoverValue);
+    }, [riskVariable, hoverValue])
 
     return(
         <div>

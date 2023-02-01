@@ -55,12 +55,8 @@ export function createColorScale(variable, variableLookup) {
     let t = variableLookup[variable]
     if (variable == "controlPeriodocityMode") {
 
-        var s = d3.scaleSequentialLog(d3.interpolate("orange", "purple"))
+        var scale = d3.scaleSequentialLog(d3.interpolate("orange", "purple"))
             .domain(d3.extent(t.values));
-
-        const scale = d3.scaleOrdinal()
-            .domain(t.labels)
-            .range(t.values.map((d) => s(d)));
 
         return scale
 
