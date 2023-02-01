@@ -31,7 +31,7 @@ function renderTooltip(node, links, updateHoverID) {
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`<b>${d.group}</b>: <b>${d.name}</b>`);
+            .html(`<b>${d.group}</b>: <b>${d.name}</b> <br>Type: ${d.type}`);
 
         thisCircle
             .attr("stroke", "white")
@@ -63,6 +63,25 @@ function renderTooltip(node, links, updateHoverID) {
         updateHoverID(-1);
     });
 }
+function symbolType(d) {
+
+    console.log(d)
+
+    if (d.group === "actor") {
+        return d3.symbolCircle;
+    } else {
+        if (d.type === "Process activity") {
+            return d3.symbolSquare;
+        } else if (d.type === "Control activity") {
+            return d3.symbolStar;
+        } else if (d.type === "Common process activity") {
+            return d3.symbolTriangle;
+        } else {
+            return d3.symbolDiamond;
+        }
+    }
+}
+
 
 function initNetwork() {
     d3.select(`#${id}`)
@@ -107,7 +126,7 @@ function renderNetwork(data, riskVariable, colorScale) {
             .enter()
             .append("path")
             .attr("d", d3.symbol()
-                .type(function(d) { return d.group === "actor" ? d3.symbolCircle : d3.symbolTriangle; })
+                .type(((d) => symbolType(d)))
                 .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
             .attr("stroke-width", .5)
             .attr("stroke", "white")
@@ -156,6 +175,8 @@ export default function Network() {
     } else {
         hoverValue = undefined;
     }
+
+    console.log(data)
 
     // Set-up scales
     const colorScale = createColorScale(riskVariable, riskVariables);

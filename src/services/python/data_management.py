@@ -825,7 +825,7 @@ def create_network(data, level1, level2, level3, actors, activities, risks, cont
         for k in actorsID:
 
             actorRow = {"id": int(k),
-                        "group": "actor",
+                        "group": "Actor",
                         "name": actors[actors.actorID == k].actor.iloc[0],
                         "type": actors[actors.actorID == k].actorType.iloc[0],
                         "nActivities": int(df[df.actorID == k].activityID.nunique()),
@@ -838,7 +838,7 @@ def create_network(data, level1, level2, level3, actors, activities, risks, cont
 
         for l in activitiesID:
             activityRow = {"id": int(l),
-                           "group": "activity",
+                           "group": "Activity",
                            "name": activities[activities.activityID == l].activity.iloc[0],
                            "type": activities[activities.activityID == l].activityType.iloc[0],
                            "nActors": int(df[df.activityID == l].actorID.nunique()),
