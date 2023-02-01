@@ -1,21 +1,34 @@
 import { Accordion, AccordionSummary, AccordionDetails, IconButton } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import lu from '../data/processed/nested/lu.json';
 import { palette } from '../utils/global';
 import { useStyles } from '../utils/ComponentStyles';
 
+// contants
+const width = 345,
+    height = 600;
 
 const id = "Filter-Process";
 
+const level1 = lu["level1"];
+
 const rScale = d3.scaleOrdinal()
     .domain([0, 1, 2, 3])
-    .range([5, 4, 3, 2])
+    .range([6, 5, 4, 3]);
 
 const opacityScale = d3.scaleOrdinal()
     .domain([0, 1, 2, 3])
-    .range([.4, .4, .4, 1])
+    .range([.4, .4, .4, 1]);
+
+// Data management steps
+const cluster = d3.cluster()
+    .size([height, width - 100]);  // 100 is the margin I will have on the right side
+
 
 // Tooltip
 function renderTooltip(node) {
@@ -25,20 +38,30 @@ function renderTooltip(node) {
         .attr("class", "tooltip")
         .attr("z-index", 500);
 
-        node.on("mouseover", function(e, d) {
+    node.on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
-        let x = e.layerX + 20;
-        let y = e.layerY - 10;
+
+        var x, y;
+
+        if (d.data.data.treeLevel === 3) {
+            x = e.layerX - 150;
+            y = e.layerY - 100;
+
+        } else {
+            x = e.layerX + 20;
+            y = e.layerY - 10;
+        }
 
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`Level ${d.data.treeLevel}<br><b>${d.data.name}</b>`);
+            .html(`Level ${d.data.data.treeLevel}<br><b>${d.data.data.name}</b>`);
 
         thisCircle
-            .attr("stroke", "white")
-            .attr("stroke-width", 1);
+            // .attr("stroke", "white")
+            // .attr("stroke-width", 1)
+            .attr("fill", "#03afbf");
 
         d3.select(this).attr("opacity", 1).raise();
 
@@ -67,33 +90,37 @@ function clickProcess(updateLevel3ID) {
 }
 
 export default function FilterProcess({level3ID, updateLevel3ID}) {
-
     const Styles = useStyles();
+    const level3Descr = lu["level3"].find((d) => d.id === level3ID).descr;
+    const [selectedLevel1, updateLevel1] = useState(level1[0].id);
 
-    // contants
-    const width = 375,
-        height = 600;
+    console.log(lu["processes"].children.find((d) => d.id === selectedLevel1))
 
-    const levelDescr = lu["level3"].find((d) => d.id === level3ID).descr;
+    const levelsFiltered = lu["processes"].children.find((d) => d.id === selectedLevel1);
 
-    const cluster = d3.cluster()
-        .size([height, width - 100]);  // 100 is the margin I will have on the right side
-
-    const hierarchyData = d3.hierarchy(lu["processes"]);
-
-    // Give the data to this cluster layout:
+    // Update data
+    const hierarchyData = d3.hierarchy(levelsFiltered);
     const root = d3.hierarchy(hierarchyData, function(d) {
         return d.children;
     });
 
     cluster(root);
 
+    const handleChange = (event) => {
+        let level1 = event.target.value;
+        updateLevel1(level1)
+    };
+
     useEffect(() => {
-    
-        const svg = d3.select(`#${id}`)
+        d3.select(`#${id}`)
             .append("svg")
             .attr("width", width)
             .attr("height", height);
+    }, [])
+
+    // Initialize SVG Visualization
+    useEffect(() => {
+        const svg = d3.select(`#${id} svg`);
 
         // Add the links between nodes:
         svg.selectAll('path')
@@ -119,17 +146,18 @@ export default function FilterProcess({level3ID, updateLevel3ID}) {
             })
             .append("circle")
                 .attr("r", d => rScale(d.data.data.treeLevel))
-                .style("fill", "#03afbf")
-                .style("stroke-width", 2)
+                .style("fill", d=> d.data.data.treeLevel === 3 ? "white": "#4e5155  ")
+                .style("stroke-width", 1)
                 .attr("class", "Process-Node")
                 // .attr("visibility", d => d.data.data.treeLevel == 0 ? "hidden" : "visible")
-    }, [])
+    }, [selectedLevel1])
 
+    // Update SVG Visualization
     useEffect(() => {
         const node = d3.selectAll(".Process-Node");
         clickProcess(updateLevel3ID);
         renderTooltip(node);
-    })
+    }, [selectedLevel1])
 
     return(
         <Accordion className={Styles.card}>
@@ -140,12 +168,35 @@ export default function FilterProcess({level3ID, updateLevel3ID}) {
             >
             <div>
                 <h4><span className='key'>Filter by Process:</span>
-                    <span className='spec'>{levelDescr}</span>
+                    <span className='spec'> {level3Descr}</span>
                 </h4>
             </div>
             </AccordionSummary>
             <AccordionDetails>
-                <div id={id}></div>
+                <div className="layout_group">
+                        <div className="layout_row">
+                            <div className="layout_item push">
+                                <FormControl variant="outlined" size="small">
+                                    <Select
+                                        labelId="process1-select-label"
+                                        id="process1-select"
+                                        displayEmpty
+                                        value={selectedLevel1}
+                                        onChange={handleChange}
+                                    >
+                                        {level1.map((level, index) => {
+                                            return(
+                                                <MenuItem key={index} value={level.id}>{level.descr}</MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </div>
+                        </div>
+                        <div className="layout_row">
+                            <div id={id}></div>
+                        </div>
+                    </div>
             </AccordionDetails>
         </Accordion>
     )
