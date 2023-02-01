@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import numpy as np
+import math
 
 from python.helper import unique_int
 
@@ -145,6 +146,20 @@ def controls_dm(controls, config, raw_pth, processed_pth):
     df = translate_config(df, config, 'activityCategory')
     df = translate_config(df, config, 'controlType')
     df = translate_config(df, config, 'controlPeriodocity')
+
+    period_mapping = {
+                    'Decadal': 3650, 
+                    'Annually': 365, 
+                    'Half yearly':182, 
+                    'Quarterly':92,
+                    'Monthly':30, 
+                    'Weekly':7, 
+                    'Daily':1, 
+                    'Per event':.1,
+                    }
+
+    df = df.assign(controlPeriodocity = df.controlPeriodocity.map(period_mapping))
+
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "controls.csv")).rename(columns={'Italian': 'control'})
     df = pd.merge(df, dfTranslated, on="control", how="left").drop("control", axis=1).rename(columns={'English': "control"})
     df = clean_strings(df, "control")
@@ -626,7 +641,6 @@ def create_risk_status(df, rtc, root1, id):
 
         temp['riskID'] = pd.to_numeric(temp['riskID'], errors='coerce').astype(int)
         temp.controlType = temp.controlType.fillna('NA')
-        temp.controlPeriodocity = temp.controlPeriodocity.fillna('NA')
 
         row = {"nRisks": int(temp.riskID.nunique()),
                "riskID": temp.riskID.unique().tolist()}
@@ -639,7 +653,7 @@ def create_risk_status(df, rtc, root1, id):
         if pd.isnull(temp.controlPeriodocity).iloc[0]:
             controlPeriodocityMode = "NA"
         else:
-            controlPeriodocityMode = temp.controlPeriodocity.mode().iloc[0]
+            controlPeriodocityMode = float(temp.controlPeriodocity.mode().iloc[0])
 
         row = {"controlTypeMode": controlTypeMode,
                "controlPeriodocityMode": controlPeriodocityMode,

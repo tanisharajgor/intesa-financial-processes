@@ -88,7 +88,7 @@ def main():
     activity_to_actor = activity_to_actor_dm(data, activitiesClean, actorsClean, processed_pth)
     activity_to_application = activity_to_application_dm(applications, activitiesClean, applicationsClean, processed_pth)
     risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
-    main = main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity, activity_to_risk, risk_to_control)
+    # main = main_dm(processed_pth, level1_to_level2, level2_to_level3, level3_to_model, model_to_activity, activity_to_risk, risk_to_control)
 
     l1Array = []
     for i in level1_to_level2.level1ID.unique():
@@ -117,7 +117,7 @@ def main():
               "treeLevel": 1}
         l1Array.append(r1)
 
-    # network = create_network(data, level3Clean, actorsClean, activitiesClean, risksClean, controlsClean, activity_to_risk, risk_to_control)
+    network = create_network(data, level1Clean, level2Clean, level3Clean, actorsClean, activitiesClean, risksClean, controlsClean, activity_to_risk, risk_to_control)
 
     # activitiesNested = nest_activities(activitiesClean, actorsClean, risksClean, applicationsClean, activity_to_actor, activity_to_risk, activity_to_application)
     # write_json(activitiesNested, os.path.join(processed_pth, "nested"), "activities")
@@ -144,7 +144,7 @@ def main():
         "processes": {"name": "root", "children": l1Array, "treeLevel": 0}
     }
 
-    # write_json(network, os.path.join(processed_pth, "nested"), "network")
+    write_json(network, os.path.join(processed_pth, "nested"), "network2")
     write_json(lu, os.path.join(processed_pth, "nested"), "lu")
 
 if __name__ == '__main__':
