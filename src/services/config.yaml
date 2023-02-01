@@ -2,7 +2,7 @@ translate:
   projectId: "banca-355515"
   activityType:
     activityType: ["Attività di Processo", "Attività di Controllo", "Attività di Processo Comune", "Attività di Sistema"]
-    activityTypeEnglish: ["process activity", "control activity", "common process activity", "system activity"]
+    activityTypeEnglish: ["Process activity", "Control activity", "Common process activity", "System activity"]
   activityCategory:
     activityCategory: ["Professionale", "Operativa", "Commerciale"]
     activityCategoryEnglish: ["Professional", "Operational", "Commercial"]
