@@ -18,8 +18,8 @@ export default function FilterType({}) {
 
     const values = ["Process activity", "Control activity", "Common process activity", "System activity"]
 
-    console.log(values.includes(typesChecks))
-    console.log("Control activity".includes(values))
+    // console.log(values.includes(typesChecks))
+    // console.log("Control activity".includes(values))
 
     let newSelectedTypes = [];
 

@@ -128,7 +128,7 @@ function renderNetwork(data, riskVariable, colorScale) {
                 .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
             .attr("stroke-width", .5)
             .attr("stroke", "white")
-            .attr("fill", d => d.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.riskStatus[riskVariable]));
+            .attr("fill", d => d.riskStatus[riskVariable] === undefined || d.riskStatus[riskVariable] === "NA" ? naColor : colorScale(d.riskStatus[riskVariable]));
 
     simulation
         .nodes(data.nodes)
@@ -160,6 +160,8 @@ export default function Network() {
 
     let data = graph.find((d) => d.id === selectedLevel3ID);
 
+    console.log(data.nodes.filter((d) => d.id === 176))
+
     // Hover
     let rStatus = data.nodes.find((d) => d.id === hoverID); 
 
@@ -189,7 +191,7 @@ export default function Network() {
 
     useEffect(() => {
         const node = d3.selectAll(`#${id} svg path`)
-            .attr("fill", d => d.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.riskStatus[riskVariable]))
+        .attr("fill", d => d.riskStatus[riskVariable] === undefined || d.riskStatus[riskVariable] === "NA" ? naColor : colorScale(d.riskStatus[riskVariable]));
         renderTooltip(node, data.links, updateHoverID);
     }, [riskVariable])
 
