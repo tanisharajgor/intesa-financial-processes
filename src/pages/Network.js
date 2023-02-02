@@ -13,12 +13,11 @@ var width = 1000;
 var height = 600;
 const linkColor = "#373d44";
 var hoverValue;
-var data;
 var colorScale;
 var nodes;
 
 // Tooltip
-function renderTooltip(updateHoverID) {
+function renderTooltip(data, updateHoverID) {
 
     var tooltip = d3.select(`#${id}`)
         .append("div")
@@ -84,19 +83,18 @@ function symbolType(d) {
     }
 }
 
-function filterByType(activityTypesChecks) {
 
-    // activityTypesChecks.push("Actor")
+// Filtes the data by level3ID and activity Type
+function filterData(selectedLevel3ID, activityTypesChecks, updateData) {
+    let data = graph.find((d) => d.id === selectedLevel3ID);
+    data.nodes = data.nodes.filter((d) => d.group === "Actor" || activityTypesChecks.includes(d.type));
+    let ids = data.nodes.map((d) => d.id)
+    data.links = data.links.filter((d) => ids.includes(d.source.id === undefined ? d.source : d.source.id) && ids.includes(d.target.id === undefined ? d.target : d.target.id))
 
-    let nodes = data.nodes.filter((d) => activityTypesChecks.includes(d.type));
-    let ids = nodes.map((d) => d.id)
-    let links = data.links.filter((d) => ids.includes(d.source.id === undefined ? d.source : d.source.id) || ids.includes(d.target.id === undefined ? d.target : d.target.id))
-
-    data.links = links;
-    data.nodes = nodes;
+    updateData(data);
 }
 
-function hover(hoverID, riskVariable) {
+function hover(data, hoverID, riskVariable) {
     let rStatus = data.nodes.find((d) => d.id === hoverID); 
 
     if (rStatus !== undefined) {
@@ -119,7 +117,7 @@ function initNetwork() {
         .append("g");
 }
 
-function renderNetwork(riskVariable) {
+function renderNetwork(data, riskVariable) {
 
     var svg = d3.select(`#${id} svg`);
     d3.select(`#${id} svg g`).remove();
@@ -184,30 +182,34 @@ function renderNetwork(riskVariable) {
 
 export default function Network() {
 
+    const typeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
+    const [data, updateData] = useState(graph.find((d) => d.id === selectedLevel3ID));
     const [hoverID, updateHoverID] = useState(-1);
-    const typeValues = ["Process activity", "Control activity", "Common process activity", "System activity"]
-    const [activityTypesChecks, updateActivityTypeChecks] = useState(typeValues)
-
-    data = graph.find((d) => d.id === selectedLevel3ID);
-
-    // filterByType(activityTypesChecks);
+    const [activityTypesChecks, updateActivityTypeChecks] = useState(typeValues);
 
     // Hover
-    hover(hoverID, riskVariable);
+    hover(data, hoverID, riskVariable);
 
     // Set-up scales
     colorScale = createColorScale(riskVariable, riskVariables);
 
+    // React Hooks
     useEffect(() => {
         initNetwork();
     }, [])
 
+    // Filter data
+    // useEffect(() => {
+    //     filterData(selectedLevel3ID, activityTypesChecks, updateData);
+    // }, [activityTypesChecks])
+
+    // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
     useEffect(() => {
-        renderNetwork(riskVariable);
+        renderNetwork(data, riskVariable);
         nodes = d3.selectAll(`#${id} svg path`);
-        renderTooltip(updateHoverID);
+        renderTooltip(data, updateHoverID);
     }, [selectedLevel3ID, activityTypesChecks])
 
     // Updates the color of the nodes without restarting the network simulation
