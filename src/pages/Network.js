@@ -15,21 +15,22 @@ const linkColor = "#373d44";
 var hoverValue;
 var data;
 var colorScale;
+var nodes;
 
 // Tooltip
-function renderTooltip(node, links, updateHoverID) {
+function renderTooltip(updateHoverID) {
 
     var tooltip = d3.select(`#${id}`)
         .append("div")
         .attr("class", "tooltip");
 
-    node.on("mouseover", function(e, d) {
+    nodes.on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
         let x = e.layerX + 20;
         let y = e.layerY - 10;
 
-        const b = links.filter((i) => i.source.id === d.id || i.target.id === d.id).map((d) => d.index)
+        const b = data.links.filter((i) => i.source.id === d.id || i.target.id === d.id).map((d) => d.index)
 
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
@@ -53,7 +54,7 @@ function renderTooltip(node, links, updateHoverID) {
     }).on("mouseout", function() {
 
         tooltip.style("visibility", "hidden");
-        node.attr("opacity", 1);
+        nodes.attr("opacity", 1);
 
         d3.selectAll(`#${id} svg path`)
             .attr("stroke-width", .5)
@@ -83,7 +84,7 @@ function symbolType(d) {
     }
 }
 
-function filterByType(data, activityTypesChecks) {
+function filterByType(activityTypesChecks) {
 
     // activityTypesChecks.push("Actor")
 
@@ -93,9 +94,6 @@ function filterByType(data, activityTypesChecks) {
 
     data.links = links;
     data.nodes = nodes;
-
-    return data;
-
 }
 
 function hover(hoverID, riskVariable) {
@@ -194,7 +192,7 @@ export default function Network() {
 
     data = graph.find((d) => d.id === selectedLevel3ID);
 
-    // data = filterByType(data, activityTypesChecks);
+    // filterByType(activityTypesChecks);
 
     // Hover
     hover(hoverID, riskVariable);
@@ -208,14 +206,14 @@ export default function Network() {
 
     useEffect(() => {
         renderNetwork(riskVariable);
-        const node = d3.selectAll(`#${id} svg path`);
-        renderTooltip(node, data.links, updateHoverID);
+        nodes = d3.selectAll(`#${id} svg path`);
+        renderTooltip(updateHoverID);
     }, [selectedLevel3ID, activityTypesChecks])
 
     // Updates the color of the nodes without restarting the network simulation
     useEffect(() => {
-        const node = d3.selectAll(`#${id} svg path`)
-        .attr("fill", d => d.riskStatus[riskVariable] === undefined || d.riskStatus[riskVariable] === "NA" ? naColor : colorScale(d.riskStatus[riskVariable]));
+        nodes
+            .attr("fill", d => d.riskStatus[riskVariable] === undefined || d.riskStatus[riskVariable] === "NA" ? naColor : colorScale(d.riskStatus[riskVariable]));
     }, [riskVariable])
 
     return(
