@@ -13,6 +13,8 @@ var width = 1000;
 var height = 600;
 const linkColor = "#373d44";
 var hoverValue;
+var data;
+var colorScale;
 
 // Tooltip
 function renderTooltip(node, links, updateHoverID) {
@@ -81,6 +83,36 @@ function symbolType(d) {
     }
 }
 
+function filterByType(data, activityTypesChecks) {
+
+    // activityTypesChecks.push("Actor")
+
+    let nodes = data.nodes.filter((d) => activityTypesChecks.includes(d.type));
+    let ids = nodes.map((d) => d.id)
+    let links = data.links.filter((d) => ids.includes(d.source.id === undefined ? d.source : d.source.id) || ids.includes(d.target.id === undefined ? d.target : d.target.id))
+
+    data.links = links;
+    data.nodes = nodes;
+
+    return data;
+
+}
+
+function hover(hoverID, riskVariable) {
+    let rStatus = data.nodes.find((d) => d.id === hoverID); 
+
+    if (rStatus !== undefined) {
+
+        if (rStatus.riskStatus[riskVariable] === undefined) {
+            hoverValue = "NA";
+        } else {
+            hoverValue = rStatus.riskStatus[riskVariable];
+        }
+    } else {
+        hoverValue = undefined;
+    }
+}
+
 function initNetwork() {
     d3.select(`#${id}`)
         .append("svg")
@@ -89,7 +121,7 @@ function initNetwork() {
         .append("g");
 }
 
-function renderNetwork(data, riskVariable, colorScale) {
+function renderNetwork(riskVariable) {
 
     var svg = d3.select(`#${id} svg`);
     d3.select(`#${id} svg g`).remove();
@@ -157,40 +189,33 @@ export default function Network() {
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
     const [hoverID, updateHoverID] = useState(-1);
+    const typeValues = ["Process activity", "Control activity", "Common process activity", "System activity"]
+    const [activityTypesChecks, updateActivityTypeChecks] = useState(typeValues)
 
-    let data = graph.find((d) => d.id === selectedLevel3ID);
+    data = graph.find((d) => d.id === selectedLevel3ID);
+
+    // data = filterByType(data, activityTypesChecks);
 
     // Hover
-    let rStatus = data.nodes.find((d) => d.id === hoverID); 
-
-    if (rStatus !== undefined) {
-
-        if (rStatus.riskStatus[riskVariable] === undefined) {
-            hoverValue = "NA";
-        } else {
-            hoverValue = rStatus.riskStatus[riskVariable];
-        }
-    } else {
-        hoverValue = undefined;
-    }
+    hover(hoverID, riskVariable);
 
     // Set-up scales
-    const colorScale = createColorScale(riskVariable, riskVariables);
+    colorScale = createColorScale(riskVariable, riskVariables);
 
     useEffect(() => {
         initNetwork();
     }, [])
 
     useEffect(() => {
-        renderNetwork(data, riskVariable, colorScale);
+        renderNetwork(riskVariable);
         const node = d3.selectAll(`#${id} svg path`);
         renderTooltip(node, data.links, updateHoverID);
-    }, [selectedLevel3ID])
+    }, [selectedLevel3ID, activityTypesChecks])
 
+    // Updates the color of the nodes without restarting the network simulation
     useEffect(() => {
         const node = d3.selectAll(`#${id} svg path`)
         .attr("fill", d => d.riskStatus[riskVariable] === undefined || d.riskStatus[riskVariable] === "NA" ? naColor : colorScale(d.riskStatus[riskVariable]));
-        renderTooltip(node, data.links, updateHoverID);
     }, [riskVariable])
 
     return(
@@ -199,7 +224,7 @@ export default function Network() {
                 <Navigation/>
                 <div className="Query" id="FilterMenu">
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
-                    <FilterType/>
+                    <FilterType activityTypesChecks={activityTypesChecks} updateActivityTypeChecks = {updateActivityTypeChecks} typeValues={typeValues}/>
                 </div>
                 <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id}/>                
             </div>

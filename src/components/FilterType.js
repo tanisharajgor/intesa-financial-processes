@@ -1,28 +1,24 @@
-import { Accordion, AccordionSummary, AccordionDetails, IconButton } from '@material-ui/core';
+import { Accordion, AccordionSummary, AccordionDetails, } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { FormControlLabel } from '@material-ui/core';
-import Select from '@material-ui/core/Select';
 import { useStyles } from '../utils/ComponentStyles';
 import Checkbox from '@material-ui/core/Checkbox';
-import { useState } from "react";
 
 const id = "Filter-Type";
 
-export default function FilterType({}) {
+export default function FilterType({activityTypesChecks, updateActivityTypeChecks, typeValues}) {
 
     const Styles = useStyles();
-    const values = ["Process activity", "Control activity", "Common process activity", "System activity"]
-    const [typesChecks, updateChecks] = useState(values)
     let newSelectedTypes = [];
 
     const updateSelectedRange = (selected) => {
-        if (typesChecks.includes(selected)) {
-            newSelectedTypes = typesChecks.filter((obj) => obj !== selected);
+        if (activityTypesChecks.includes(selected)) {
+            newSelectedTypes = activityTypesChecks.filter((obj) => obj !== selected);
         } else {
-            typesChecks.push(selected)
-            newSelectedTypes = [...typesChecks];
+            activityTypesChecks.push(selected)
+            newSelectedTypes = [...activityTypesChecks];
         }
-        updateChecks(newSelectedTypes)
+        updateActivityTypeChecks(newSelectedTypes)
     }
 
     return(
@@ -43,13 +39,12 @@ export default function FilterType({}) {
                         <div className="layout_row">
                             <div className="layout_item push">
                             <ul>
-                                {values.map((value, index) => {
-
+                                {typeValues.map((value, index) => {
                                     return (
                                         <li key={index}>
                                                 <FormControlLabel
                                                 control={<Checkbox color="primary" 
-                                                checked={typesChecks.includes(value)} 
+                                                checked={activityTypesChecks.includes(value)} 
                                                 name={value} 
                                                 onChange={() => updateSelectedRange(value)} />}
                                                 label={value}
