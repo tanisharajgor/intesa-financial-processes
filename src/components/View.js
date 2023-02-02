@@ -5,8 +5,9 @@ import { useEffect } from "react";
 
 const width = 216;
 let height = 100;
+var colorScale;
 
-function drawLegend(svg, t, colorScale, hoverValue, variable) {
+function drawLegend(svg, t, hoverValue, variable) {
 
     if (!t.values.includes('NA')) {
         t.values.push('NA')
@@ -37,7 +38,7 @@ function drawLegend(svg, t, colorScale, hoverValue, variable) {
 }
 
 // Initiates the legend svg and sets the non-changing attributes
-function initiateLegend(variable, variableLookup, colorScale, hoverValue) {
+function initiateLegend(variable, variableLookup, hoverValue) {
 
     let t = variableLookup[variable];
 
@@ -51,11 +52,11 @@ function initiateLegend(variable, variableLookup, colorScale, hoverValue) {
         .attr('height', height)
         .append("g");
 
-    drawLegend(svg, t, colorScale, hoverValue, variable);
+    drawLegend(svg, t, hoverValue, variable);
 }
 
 // Updates the legend attributes on variable change
-function updateLegend(variable, variableLookup, colorScale, hoverValue) {
+function updateLegend(variable, variableLookup, hoverValue) {
 
     let t = variableLookup[variable];
 
@@ -65,7 +66,7 @@ function updateLegend(variable, variableLookup, colorScale, hoverValue) {
 
     svg = svg.append("g");
 
-    drawLegend(svg, t, colorScale, hoverValue, variable);
+    drawLegend(svg, t, hoverValue, variable);
 }
 
 function shapeLegend(id) {
@@ -130,7 +131,7 @@ function riskType() {
 
 export default function View({id, riskVariable, updateRiskVariable, hoverValue}) {
 
-    const colorScale = createColorScale(riskVariable, riskVariables);
+    colorScale = createColorScale(riskVariable, riskVariables);
 
     const handleChange = (event) => {
         let newView = (Object.keys(riskVariables).find((c) => riskVariables[c].label === event.target.value))
@@ -142,11 +143,11 @@ export default function View({id, riskVariable, updateRiskVariable, hoverValue})
     }, [])
 
     useEffect(() => {
-        initiateLegend(riskVariable, riskVariables, colorScale);
+        initiateLegend(riskVariable, riskVariables);
     }, [])
 
     useEffect(() => {
-        updateLegend(riskVariable, riskVariables, colorScale, hoverValue);
+        updateLegend(riskVariable, riskVariables, hoverValue);
     }, [riskVariable, hoverValue])
 
     return(

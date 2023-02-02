@@ -86,12 +86,12 @@ function symbolType(d) {
 
 // Filtes the data by level3ID and activity Type
 function filterData(selectedLevel3ID, activityTypesChecks, updateData) {
-    let data = graph.find((d) => d.id === selectedLevel3ID);
-    data.nodes = data.nodes.filter((d) => d.group === "Actor" || activityTypesChecks.includes(d.type));
-    let ids = data.nodes.map((d) => d.id)
-    data.links = data.links.filter((d) => ids.includes(d.source.id === undefined ? d.source : d.source.id) && ids.includes(d.target.id === undefined ? d.target : d.target.id))
+    let dataNew = graph.find((d) => d.id === selectedLevel3ID);
+    dataNew.nodes = dataNew.nodes.filter((d) => d.group === "Actor" || activityTypesChecks.includes(d.type));
+    let ids = dataNew.nodes.map((d) => d.id)
+    dataNew.links = dataNew.links.filter((d) => ids.includes(d.source.id === undefined ? d.source : d.source.id) && ids.includes(d.target.id === undefined ? d.target : d.target.id))
 
-    updateData(data);
+    updateData(dataNew);
 }
 
 function hover(data, hoverID, riskVariable) {
@@ -185,9 +185,10 @@ export default function Network() {
     const typeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
-    const [data, updateData] = useState(graph.find((d) => d.id === selectedLevel3ID));
     const [hoverID, updateHoverID] = useState(-1);
     const [activityTypesChecks, updateActivityTypeChecks] = useState(typeValues);
+
+    let data = graph.find((d) => d.id === selectedLevel3ID)
 
     // Hover
     hover(data, hoverID, riskVariable);
