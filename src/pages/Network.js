@@ -160,8 +160,6 @@ export default function Network() {
 
     let data = graph.find((d) => d.id === selectedLevel3ID);
 
-    console.log(data.nodes.filter((d) => d.id === 176))
-
     // Hover
     let rStatus = data.nodes.find((d) => d.id === hoverID); 
 

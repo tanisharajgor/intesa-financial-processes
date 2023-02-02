@@ -11,26 +11,16 @@ const id = "Filter-Type";
 export default function FilterType({}) {
 
     const Styles = useStyles();
-    const [typesChecks, updateChecks] = useState("Process activity")
-
-    const handleChange = (event) => {
-    };
-
     const values = ["Process activity", "Control activity", "Common process activity", "System activity"]
-
-    // console.log(values.includes(typesChecks))
-    // console.log("Control activity".includes(values))
-
+    const [typesChecks, updateChecks] = useState(values)
     let newSelectedTypes = [];
 
     const updateSelectedRange = (selected) => {
-        // Update the selected age ranges, so the selected boxes are checked
         if (typesChecks.includes(selected)) {
-            newSelectedTypes = typesChecks.filter((obj) => obj.id !== selected.id);
+            newSelectedTypes = typesChecks.filter((obj) => obj !== selected);
         } else {
             typesChecks.push(selected)
             newSelectedTypes = [...typesChecks];
-            console.log(newSelectedTypes)
         }
         updateChecks(newSelectedTypes)
     }
@@ -54,11 +44,12 @@ export default function FilterType({}) {
                             <div className="layout_item push">
                             <ul>
                                 {values.map((value, index) => {
+
                                     return (
                                         <li key={index}>
                                                 <FormControlLabel
                                                 control={<Checkbox color="primary" 
-                                                checked={values.includes(typesChecks)} 
+                                                checked={typesChecks.includes(value)} 
                                                 name={value} 
                                                 onChange={() => updateSelectedRange(value)} />}
                                                 label={value}
