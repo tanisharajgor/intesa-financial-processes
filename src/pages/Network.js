@@ -86,11 +86,11 @@ function symbolType(d) {
 
 // Filtes the data by level3ID and activity Type
 function filterData(selectedLevel3ID, activityTypesChecks) {
-    let dataNew = graph.find((d) => d.id === selectedLevel3ID);
+    let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID))
+
     dataNew.nodes = dataNew.nodes.filter((d) => d.group === "Actor" || activityTypesChecks.includes(d.type));
     let ids = dataNew.nodes.map((d) => d.id)
     dataNew.links = dataNew.links.filter((d) => ids.includes(d.source.id === undefined ? d.source : d.source.id) && ids.includes(d.target.id === undefined ? d.target : d.target.id))
-
     return dataNew;
     // updateData(dataNew);
 }
@@ -188,8 +188,7 @@ export default function Network() {
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
     const [hoverID, updateHoverID] = useState(-1);
     const [activityTypesChecks, updateActivityTypeChecks] = useState(typeValues);
-
-    let data = graph.find((d) => d.id === selectedLevel3ID)
+    const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
 
     // Hover
     hover(data, hoverID, riskVariable);
@@ -204,7 +203,7 @@ export default function Network() {
 
     // Filter data
     useEffect(() => {
-        data = filterData(selectedLevel3ID, activityTypesChecks);
+       updateData(filterData(selectedLevel3ID, activityTypesChecks))
     }, [activityTypesChecks])
 
     // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
