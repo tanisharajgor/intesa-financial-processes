@@ -189,7 +189,7 @@ export default function Network() {
     const [hoverID, updateHoverID] = useState(-1);
     const [activityTypesChecks, updateActivityTypeChecks] = useState(typeValues);
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
-
+ 
     // Hover
     hover(data, hoverID, riskVariable);
 
@@ -204,14 +204,14 @@ export default function Network() {
     // Filter data
     useEffect(() => {
        updateData(filterData(selectedLevel3ID, activityTypesChecks))
-    }, [activityTypesChecks])
+    }, [activityTypesChecks, selectedLevel3ID])
 
     // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
     useEffect(() => {
         renderNetwork(data, riskVariable);
         nodes = d3.selectAll(`#${id} svg path`);
         renderTooltip(data, updateHoverID);
-    }, [selectedLevel3ID, activityTypesChecks])
+    }, [selectedLevel3ID, activityTypesChecks, data, riskVariable])
 
     // Updates the color of the nodes without restarting the network simulation
     useEffect(() => {
