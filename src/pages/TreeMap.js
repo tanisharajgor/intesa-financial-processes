@@ -108,7 +108,7 @@ export default function TreeMap() {
         g.append("rect")
             .attr("width", d => d.y1 - d.y0)
             .attr("height", d => (d.x1 - d.x0) + 1)
-            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.data.riskStatus[riskVariable]))
+            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined || d.data.riskStatus[riskVariable] === "NA" ? naColor : colorScale(d.data.riskStatus[riskVariable]))
             .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
             .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible");
 
@@ -116,7 +116,7 @@ export default function TreeMap() {
 
     useEffect(() => {
         const rect = d3.selectAll(`#${id} svg g rect`)
-            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.data.riskStatus[riskVariable]))
+            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined || d.data.riskStatus[riskVariable] === "NA" ? naColor : colorScale(d.data.riskStatus[riskVariable]))
 
         renderTooltip(riskVariable, rect);
     }, [riskVariable])
