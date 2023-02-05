@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { riskVariables, createColorScale } from "../utils/global";
+import { riskVariables, createColorScale, naColor } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ const id = "tree-map-chart";
 
 // Set-up layout
 const margin = {top: 10, right: 10, bottom: 10, left: 10},
-    width = 1000 - margin.left - margin.right,
+    width = 700 - margin.left - margin.right,
     height = 1000 - margin.top - margin.bottom;
 
 // Tooltip
@@ -65,7 +65,6 @@ function addProcessLabels(rectHeight) {
     }
 }
 
-
 export default function TreeMap() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
@@ -109,7 +108,7 @@ export default function TreeMap() {
         g.append("rect")
             .attr("width", d => d.y1 - d.y0)
             .attr("height", d => (d.x1 - d.x0) + 1)
-            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
+            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.data.riskStatus[riskVariable]))
             .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
             .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible");
 
@@ -117,7 +116,7 @@ export default function TreeMap() {
 
     useEffect(() => {
         const rect = d3.selectAll(`#${id} svg g rect`)
-            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
+            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.data.riskStatus[riskVariable]))
 
         renderTooltip(riskVariable, rect);
     }, [riskVariable])

@@ -80,6 +80,7 @@ body {
 .Visualization {
     width: 100%;
     height: 100%;
+    // color: #373d44;
 }
 
 // Status, legend, and attributes
@@ -165,7 +166,7 @@ width: 100%;
         min-width: 2rem;
     }
     .layout_item.push {
-        margin-left: $appPadding + 2.5rem;
+        // margin-left: $appPadding + 2.5rem;
     }
 }
 

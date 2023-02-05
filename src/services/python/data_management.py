@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import numpy as np
+import math
 
 from python.helper import unique_int
 
@@ -67,6 +68,8 @@ return dataframe
 """
 def activities_dm(actors, config, raw_pth, processed_pth):
 
+    # import pdb; pdb.set_trace()
+
     df = actors[["activityGUID", "activity", "activityType", "activityCategory"]].drop_duplicates()
     df = translate_config(df, config, 'activityType')
     df = translate_config(df, config, 'activityCategory')
@@ -92,8 +95,8 @@ def actors_dm(actors, config, raw_pth, processed_pth):
     df = df[["actorGUID", "actorType", "actor"]].drop_duplicates() # drop duplicates
     df = translate_config(df, config, 'actorType')
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "actors.csv")).rename(columns={'Italian': 'actor'})
-    dfTranslated = clean_strings(dfTranslated, "actor")
     df = pd.merge(df, dfTranslated, on="actor", how="left").drop("actor", axis=1).rename(columns={'English': "actor"})
+    df = clean_strings(df, "actor")
     df = df[pd.isnull(df.actor) == False]
     df = num_id(df, "actorGUID")
 
@@ -143,6 +146,20 @@ def controls_dm(controls, config, raw_pth, processed_pth):
     df = translate_config(df, config, 'activityCategory')
     df = translate_config(df, config, 'controlType')
     df = translate_config(df, config, 'controlPeriodocity')
+
+    period_mapping = {
+                    'Decadal': 3650, 
+                    'Annually': 365, 
+                    'Half yearly':182, 
+                    'Quarterly':92,
+                    'Monthly':30, 
+                    'Weekly':7, 
+                    'Daily':1, 
+                    'Per event':.1,
+                    }
+
+    df = df.assign(controlPeriodocity = df.controlPeriodocity.map(period_mapping))
+
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "controls.csv")).rename(columns={'Italian': 'control'})
     df = pd.merge(df, dfTranslated, on="control", how="left").drop("control", axis=1).rename(columns={'English': "control"})
     df = clean_strings(df, "control")
@@ -162,7 +179,6 @@ Data management steps for level1
 return dataframe
 """
 def level1_dm(data, raw_pth, processed_pth):
-
     df = data.rename(columns={
                                 'L1 NAME': 'level1',
                                 'L1 GUID': 'level1GUID'})
@@ -625,7 +641,6 @@ def create_risk_status(df, rtc, root1, id):
 
         temp['riskID'] = pd.to_numeric(temp['riskID'], errors='coerce').astype(int)
         temp.controlType = temp.controlType.fillna('NA')
-        temp.controlPeriodocity = temp.controlPeriodocity.fillna('NA')
 
         row = {"nRisks": int(temp.riskID.nunique()),
                "riskID": temp.riskID.unique().tolist()}
@@ -638,7 +653,7 @@ def create_risk_status(df, rtc, root1, id):
         if pd.isnull(temp.controlPeriodocity).iloc[0]:
             controlPeriodocityMode = "NA"
         else:
-            controlPeriodocityMode = temp.controlPeriodocity.mode().iloc[0]
+            controlPeriodocityMode = float(temp.controlPeriodocity.mode().iloc[0])
 
         row = {"controlTypeMode": controlTypeMode,
                "controlPeriodocityMode": controlPeriodocityMode,
@@ -763,5 +778,85 @@ def nest_activities(activities, actors, risks, applications, activity_to_actor, 
         }
 
         array.append(dictact)
+
+    return array
+
+"""
+"""
+def levelsObject(df, level1, level2):
+
+    levels = {
+            "level1ID": pd.merge(df, level1, on="level1GUID", how="left")["level1ID"].unique().tolist(),
+            "level2ID": pd.merge(df, level2, on="level2GUID", how="left")["level2ID"].unique().tolist(),
+            "level3ID": df.level3ID.unique().tolist(),
+        }
+
+    return levels
+
+def create_network(data, level1, level2, level3, actors, activities, risks, controls, activity_to_risk, risk_to_control):
+
+    array = []
+
+    data = pd.merge(data, level3, how="inner", on="level3GUID")
+    data = pd.merge(data, actors, how="inner", on="actorGUID")
+    data = pd.merge(data, activities, how="inner", on="activityGUID")
+    data = pd.merge(data, activity_to_risk, how="left", on="activityID")
+    data = pd.merge(data, risk_to_control, how="left", on="riskID")
+
+    rtc = relate_tables(risks, controls, risk_to_control, root1 = "risk", root2 = "control")
+
+    for i in data.level3ID.unique():
+
+        df = data[data.level3ID == i].drop_duplicates()
+
+        actorsID = df.actorID.unique()
+        activitiesID = df.activityID.unique()
+
+        actorsArray = []
+        activitiesArray = []
+        links = []
+
+        for j in range(0, df.shape[0] - 1):
+            linkRow = {"target": int(df.actorID.iloc[j]),
+                       "source": int(df.activityID.iloc[j])}
+
+            links.append(linkRow)
+
+        for k in actorsID:
+
+            actorRow = {"id": int(k),
+                        "group": "Actor",
+                        "name": actors[actors.actorID == k].actor.iloc[0],
+                        "type": actors[actors.actorID == k].actorType.iloc[0],
+                        "nActivities": int(df[df.actorID == k].activityID.nunique()),
+                        "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
+                        "riskStatus": create_risk_status(df[df.actorID == k], rtc, "actor", k),
+                        "levels": levelsObject(df[df.actorID == k], level1, level2)
+                        }
+
+            actorsArray.append(actorRow)
+
+        for l in activitiesID:
+            activityRow = {"id": int(l),
+                           "group": "Activity",
+                           "name": activities[activities.activityID == l].activity.iloc[0],
+                           "type": activities[activities.activityID == l].activityType.iloc[0],
+                           "nActors": int(df[df.activityID == l].actorID.nunique()),
+                           "actorsID": df[df.activityID == l].actorID.unique().tolist(),
+                           "riskStatus": create_risk_status(df[df.activityID == l], rtc, "activity", l),
+                           "levels": levelsObject(df[df.activityID == l], level1, level2)
+                           }
+
+            activitiesArray.append(activityRow)
+
+        nodes = actorsArray + activitiesArray
+
+        network = {
+            "id": int(i),
+            "nodes": nodes,
+            "links": links
+        }
+    
+        array.append(network)
 
     return array

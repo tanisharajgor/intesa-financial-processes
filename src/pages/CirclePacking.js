@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { riskVariables, createColorScale, createOpacityScale } from "../utils/global";
+import { riskVariables, createColorScale, createOpacityScale, naColor } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -49,7 +49,7 @@ export default function CirclePacking() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
 
-    const height = 932, width = 932;
+    const height = 932, width = 1000;
 
     function pack(data) {
         let x = d3.pack()
@@ -82,7 +82,7 @@ export default function CirclePacking() {
             .selectAll("circle")
             .data(root.descendants().slice(1))
             .join("circle")
-                .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
+                .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.data.riskStatus[riskVariable]))
                 .attr("pointer-events", d => !d.children ? "none" : null)
                 .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
                 .on("mouseout", function() { d3.select(this).attr("stroke", null); })
@@ -120,7 +120,7 @@ export default function CirclePacking() {
     // Update the visual aesthetics of the visualization that change with a user input
     useEffect(() => {
         const circle = d3.selectAll(`#${id} svg circle`)
-            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
+            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.data.riskStatus[riskVariable]))
 
         renderTooltip(riskVariable, circle);
 
