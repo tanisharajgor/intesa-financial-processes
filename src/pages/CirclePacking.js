@@ -75,6 +75,7 @@ export default function CirclePacking() {
 
         const svg = d3.select(`#${id}`).append("svg")
             .attr("viewBox", `-${width / 2} -${height / 2} ${width} ${height}`)
+            .attr("transform","rotate(-90)")
             .style("cursor", "pointer")
             .on("click", (event) => zoom(event, root));
     
