@@ -48,6 +48,7 @@ function renderTooltip(riskVariable, circle) {
 export default function CirclePacking() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
+    const [hoverID, updateHoverID] = useState(-1);
 
     const height = 932, width = 1000;
 

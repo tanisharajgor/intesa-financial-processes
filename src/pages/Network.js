@@ -6,13 +6,12 @@ import { StylesProvider } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
-import { riskVariables, createColorScale, naColor } from "../utils/global";
+import { riskVariables, createColorScale, naColor, hover } from "../utils/global";
 
 const id = "network-chart";
 var width = 1000;
 var height = 600;
 const linkColor = "#373d44";
-var hoverValue;
 var colorScale;
 var nodes;
 
@@ -92,21 +91,6 @@ function filterData(selectedLevel3ID, activityTypesChecks) {
     let ids = dataNew.nodes.map((d) => d.id)
     dataNew.links = dataNew.links.filter((d) => ids.includes(d.source.id === undefined ? d.source : d.source.id) && ids.includes(d.target.id === undefined ? d.target : d.target.id))
     return dataNew;
-}
-
-function hover(data, hoverID, riskVariable) {
-    let rStatus = data.nodes.find((d) => d.id === hoverID); 
-
-    if (rStatus !== undefined) {
-
-        if (rStatus.riskStatus[riskVariable] === undefined) {
-            hoverValue = "NA";
-        } else {
-            hoverValue = rStatus.riskStatus[riskVariable];
-        }
-    } else {
-        hoverValue = undefined;
-    }
 }
 
 function initNetwork() {
@@ -190,7 +174,7 @@ export default function Network() {
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
  
     // Hover
-    hover(data, hoverID, riskVariable);
+    let hoverValue = hover(data, hoverID, riskVariable);
 
     // Set-up scales
     colorScale = createColorScale(riskVariable, riskVariables);
