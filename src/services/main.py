@@ -141,7 +141,7 @@ def main():
         "processes": {"name": "root", "children": l1Array, "treeLevel": 0}
     }
 
-   write_json(network, os.path.join(processed_pth, "nested"), "network2")
+    write_json(network, os.path.join(processed_pth, "nested"), "network2")
     write_json(lu, os.path.join(processed_pth, "nested"), "lu")
 
 if __name__ == '__main__':
