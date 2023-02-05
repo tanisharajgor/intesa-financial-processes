@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { riskVariables, createColorScale, naColor } from "../utils/global";
+import { riskVariables, createColorScale, naColor, hover } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -14,7 +14,7 @@ const margin = {top: 10, right: 10, bottom: 10, left: 10},
     height = 1000 - margin.top - margin.bottom;
 
 // Tooltip
-function renderTooltip(riskVariable, rect) {
+function renderTooltip(riskVariable, updateHoverID) {
 
     const tooltip = d3.select(`#${id}`)
         .append("div")
@@ -38,12 +38,16 @@ function renderTooltip(riskVariable, rect) {
                 .attr("stroke", "grey")
                 .attr("stroke-width", 2);
 
+            updateHoverID(d.data.id);
+
         }).on("mouseout", function() {
 
             tooltip.style("visibility", "hidden");
-            rect.attr("opacity", 1);
+            d3.selectAll("rect")
+                .attr("opacity", 1)
+                .attr("stroke", "none");
 
-            d3.selectAll('rect').attr("stroke", "none"); 
+            updateHoverID(-1);
         });
 }
 
@@ -68,6 +72,10 @@ function addProcessLabels(rectHeight) {
 export default function TreeMap() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
+    const [hoverID, updateHoverID] = useState(-1);
+
+    // Hover
+    let hoverValue = hover(data, hoverID, riskVariable);
 
     // Set-up scales
     const colorScale = createColorScale(riskVariable, riskVariables);
@@ -112,13 +120,12 @@ export default function TreeMap() {
             .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
             .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible");
 
+        renderTooltip(riskVariable, updateHoverID);
     }, [])
 
     useEffect(() => {
-        const rect = d3.selectAll(`#${id} svg g rect`)
+        d3.selectAll(`#${id} svg g rect`)
             .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.data.riskStatus[riskVariable]))
-
-        renderTooltip(riskVariable, rect);
     }, [riskVariable])
 
     return(
@@ -126,7 +133,7 @@ export default function TreeMap() {
             <div className="Content">
                 <Navigation/>
                 <div className="Query" id="FilterMenu"></div>
-                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} id={id}/>
+                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id}/>
             </div>
         </StylesProvider>
     )

@@ -174,7 +174,7 @@ export default function Network() {
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
  
     // Hover
-    let hoverValue = hover(data, hoverID, riskVariable);
+    let hoverValue = hover(data.nodes, hoverID, riskVariable);
 
     // Set-up scales
     colorScale = createColorScale(riskVariable, riskVariables);

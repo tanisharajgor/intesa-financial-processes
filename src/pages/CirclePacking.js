@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { riskVariables, createColorScale, createOpacityScale, naColor } from "../utils/global";
+import { riskVariables, createColorScale, createOpacityScale, naColor, hover } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -9,7 +9,7 @@ import { StylesProvider } from "@material-ui/core/styles";
 const id = "circle-packing-chart";
 
 // Tooltip
-function renderTooltip(riskVariable, circle) {
+function renderTooltip(riskVariable, updateHoverID) {
 
     let tooltip = d3.select(`#${id}`)
         .append("div")
@@ -32,12 +32,12 @@ function renderTooltip(riskVariable, circle) {
             .attr("stroke", "grey")
             .attr("stroke-width", 2);
 
-        // d3.select(this).attr("opacity", 1).raise();
+        updateHoverID(d.data.id);
 
     }).on("mouseout", function() {
 
         tooltip.style("visibility", "hidden");
-        // circle.attr("opacity", 1);
+        updateHoverID(-1);
 
         d3.selectAll('circle')
             .attr("stroke-width", .5)
@@ -49,6 +49,8 @@ export default function CirclePacking() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
     const [hoverID, updateHoverID] = useState(-1);
+
+    let hoverValue = hover(data, hoverID, riskVariable);
 
     const height = 932, width = 1000;
 
@@ -116,14 +118,14 @@ export default function CirclePacking() {
             });
         }
 
+        renderTooltip(riskVariable, updateHoverID);
+
     }, [])
 
     // Update the visual aesthetics of the visualization that change with a user input
     useEffect(() => {
-        const circle = d3.selectAll(`#${id} svg circle`)
+        d3.selectAll(`#${id} svg circle`)
             .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.data.riskStatus[riskVariable]))
-
-        renderTooltip(riskVariable, circle);
 
     }, [riskVariable])
 
@@ -132,7 +134,7 @@ export default function CirclePacking() {
             <div className="Content">
                 <Navigation/>
                 <div className="Query" id="FilterMenu"></div>
-                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} id={id}/>
+                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id}/>
             </div>
         </StylesProvider>
     )

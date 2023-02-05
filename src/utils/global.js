@@ -80,16 +80,21 @@ export function createOpacityScale() {
 }
 
 export function hover(data, hoverID, riskVariable) {
-    let rStatus = data.nodes.find((d) => d.id === hoverID);
 
-    if (rStatus !== undefined) {
+    console.log(data)
 
-        if (rStatus.riskStatus[riskVariable] === undefined) {
-            return "NA";
+    if (data.children === undefined) {
+        let rStatus = data.find((d) => d.id === hoverID);
+
+        if (rStatus !== undefined) {
+    
+            if (rStatus.riskStatus[riskVariable] === undefined) {
+                return "NA";
+            } else {
+                return rStatus.riskStatus[riskVariable];
+            }
         } else {
-            return rStatus.riskStatus[riskVariable];
+            return undefined;
         }
-    } else {
-        return undefined;
     }
 }
