@@ -9,7 +9,7 @@ import { StylesProvider } from "@material-ui/core/styles";
 const id = "circle-packing-chart";
 
 // Tooltip
-function renderTooltip(riskVariable, circle) {
+function renderTooltip(riskVariable) {
 
     let tooltip = d3.select(`#${id}`)
         .append("div")
@@ -21,7 +21,7 @@ function renderTooltip(riskVariable, circle) {
         let x = e.layerX + 20;
         let y = e.layerY - 10;
 
-        // console.log(e)
+        console.log(thisCircle)
 
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
@@ -32,12 +32,9 @@ function renderTooltip(riskVariable, circle) {
             .attr("stroke", "grey")
             .attr("stroke-width", 2);
 
-        // d3.select(this).attr("opacity", 1).raise();
-
     }).on("mouseout", function() {
 
         tooltip.style("visibility", "hidden");
-        // circle.attr("opacity", 1);
 
         d3.selectAll('circle')
             .attr("stroke-width", .5)
@@ -84,7 +81,6 @@ export default function CirclePacking() {
             .data(root.descendants().slice(1))
             .join("circle")
                 .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.data.riskStatus[riskVariable]))
-                .attr("pointer-events", d => !d.children ? "none" : null)
                 .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
                 .on("mouseout", function() { d3.select(this).attr("stroke", null); })
                 .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()))
@@ -115,16 +111,13 @@ export default function CirclePacking() {
                 return t => zoomTo(i(t));
             });
         }
-
+        renderTooltip(riskVariable);
     }, [])
 
     // Update the visual aesthetics of the visualization that change with a user input
     useEffect(() => {
-        const circle = d3.selectAll(`#${id} svg circle`)
+        d3.selectAll(`#${id} svg circle`)
             .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.data.riskStatus[riskVariable]))
-
-        renderTooltip(riskVariable, circle);
-
     }, [riskVariable])
 
     return(
