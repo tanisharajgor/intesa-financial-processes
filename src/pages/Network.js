@@ -6,7 +6,7 @@ import { StylesProvider } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
-import { riskVariables, createColorScale, naColor } from "../utils/global";
+import { riskVariables, createColorScale, applyColorScale, naColor } from "../utils/global";
 
 const id = "network-chart";
 var width = 1000;
@@ -156,7 +156,7 @@ function renderNetwork(data, riskVariable) {
                 .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
             .attr("stroke-width", .5)
             .attr("stroke", "white")
-            .attr("fill", d => d.riskStatus[riskVariable] === undefined || d.riskStatus[riskVariable] === "NA" ? naColor : colorScale(d.riskStatus[riskVariable]));
+            .attr("fill", d => applyColorScale(d.riskStatus, riskVariable, colorScale));
 
     simulation
         .nodes(data.nodes)
@@ -215,7 +215,7 @@ export default function Network() {
     // Updates the color of the nodes without restarting the network simulation
     useEffect(() => {
         nodes
-            .attr("fill", d => d.riskStatus[riskVariable] === undefined || d.riskStatus[riskVariable] === "NA" ? naColor : colorScale(d.riskStatus[riskVariable]));
+            .attr("fill", d => applyColorScale(d.riskStatus, riskVariable, colorScale));
     }, [riskVariable])
 
     return(
