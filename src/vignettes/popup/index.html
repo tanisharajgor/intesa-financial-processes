@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radia Popup</title>
+<style>
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    background: #000;
+}
+
+svg {
+    position: absolute;
+    top: 500px;
+    left: 720px;
+}
+
+#bg {
+    width: 1920px;
+    height: 1080px;
+}
+
+#bg.dim{
+    opacity: 0.3;
+}
+
+.root {
+    cursor: pointer;
+}
+
+.root:hover {
+    stroke: white;
+}
+
+</style>
+</head>
+<body>
+<img id="bg" src="bg.svg" alt="">
+
+<svg id="plot"></svg>
+<script src="d3.min.js"></script>
+<script>
+
+const allNames = [ "Shelby Sherman", "Ollie Marsh", "Marci Washington", "Samantha Keith", "Jan Hendricks", "Abel York", "Daryl Bradshaw", "Gus Randolph", "Millard Lam", "Ramon Bauer", "Cleo Calhoun", "Kermit Marquez", "Becky Pearson", "Normand Everett", "Ariel Haas", "Silas Jordan", "Jeromy Roman", "Brooks Osborn", "Chance Carrillo", "Vincent Madden", "Cary Donaldson", "Frankie Hahn", "Amos Yates", "Eusebio Leon", "Alyce Coffey", "Tad Schmidt", "Josefa Solis", "Quintin Nguyen", "Trenton Finley", "Lilian Guzman", "Trey Anderson", "Christie Hanson", "Joe Harvey", "Yong Jackson", "Lucius Lester", "Mona Fuentes", "Clemente Mccann", "Buck Summers", "Bessie Hester", "Hans Mcdonald", "Jaime Leach", "Ricardo Steele", "Carolyn Myers", "Bonita Barnes", "Mauricio Daugherty", "Cameron Oneill", "Erma Medina", "Melanie Nash", "Cole Bean", "Clara Huffman" ];
+
+const width = 300,
+      height = 300,
+      r = 59, 
+      n = 10;
+
+const data = allNames.slice(0,n);
+
+const plot = d3.select("#plot");
+plot.attr("width",width).attr("height",height);
+
+const root = plot.append("circle")
+    .attr("class","root")
+    .attr("cx",width*0.5)
+    .attr("cy",height*0.5)
+    .attr("r",r)
+    .attr("fill","rgba(255,255,255,0.2)")
+    // .attr("opacity",0.2)
+    .on("click",(e)=>{
+        const bg = d3.select("#bg")
+        const selection = d3.select(e.target)
+        console.log(
+            "click",
+            d3.selectAll(".popup").size()
+        )
+        if (d3.selectAll(".popup").size() > 0){
+            bg.attr("class","")
+            d3.selectAll(".popup").remove();
+        } else {
+            bg.attr("class","dim")
+            radialPopup(
+                plot, 
+                {"x":+selection.attr("cx"), "y": +selection.attr("cy")},
+                data,
+                r
+            );
+        }
+    })
+    
+function radialPopup(rootDOM, center, data, radius){
+    const r = radius + 15;
+    const g = rootDOM.append('g');
+    g.attr("class","popup")
+    const c = Math.PI*2*r;
+    const angleRad = (Math.PI*2) / data.length;
+
+    const points = g.selectAll("point")
+        .data(data)
+        .enter()
+        .append("circle")
+            .attr("class","point")
+            .attr("cx",center.x)
+            .attr("cy",center.y)
+            .attr("r",5)
+            .attr("fill","white")
+            .transition()
+                .duration(500)
+                .attr("cx",(d,i)=>findPoint(center, angleRad*i, r).x)
+                .attr("cy",(d,i)=>findPoint(center, angleRad*i, r).y)
+
+    const labels = g.selectAll("label")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("class","label")
+        .attr("fill","white")
+        .text(d=>d)
+        .attr("opacity",0)
+        .attr("x",(d,i)=>findPoint(center, angleRad*i, r + 10).x)
+        .attr("y",(d,i)=>findPoint(center, angleRad*i, r + 10).y)
+        .style('text-anchor', 'start')
+        .attr("transform","rotate(30)")
+        .style('transform-origin',"left top")
+        .attr("transform",(d,i)=>`rotate(
+            ${radToDeg(angleRad*i)} 
+            ${findPoint(center, angleRad*i, r + 10).x} 
+            ${findPoint(center, angleRad*i, r + 10).y}
+            )`
+        )
+        .transition()
+            .delay(200)
+            .duration(300)
+            .attr("opacity",1)
+
+    function degToRad(degrees){
+        return degrees * (Math.PI/180);
+    }
+
+    function radToDeg(radians){
+        return radians * (180/Math.PI);
+    }
+
+    function findPoint(center, angleRad, distance){
+        return {
+            x: (Math.cos(angleRad) * distance + center.x).toFixed(2),
+            y: (Math.sin(angleRad) * distance + center.y).toFixed(2)
+        }
+    }
+}
+
+
+
+</script>
+</body>
+</html>
