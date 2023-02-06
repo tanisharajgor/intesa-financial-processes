@@ -70,6 +70,12 @@ export function createColorScale(variable, variableLookup) {
     }
 }
 
+export function applyColorScale(d, riskVariable, colorScale) {
+
+    return d[riskVariable] === undefined || d[riskVariable] === "NA" ? naColor : colorScale(d[riskVariable])
+
+}
+
 export function createOpacityScale() {
 
     const scale = d3.scaleOrdinal()

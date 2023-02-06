@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { riskVariables, createColorScale, createOpacityScale, naColor, hover } from "../utils/global";
+import { riskVariables, createColorScale, applyColorScale, createOpacityScale, hover } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -21,7 +21,7 @@ function renderTooltip(riskVariable, updateHoverID) {
         let x = e.layerX + 20;
         let y = e.layerY - 10;
 
-        // console.log(e)
+        console.log(thisCircle)
 
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
@@ -78,6 +78,7 @@ export default function CirclePacking() {
 
         const svg = d3.select(`#${id}`).append("svg")
             .attr("viewBox", `-${width / 2} -${height / 2} ${width} ${height}`)
+            .attr("transform","rotate(-90)")
             .style("cursor", "pointer")
             .on("click", (event) => zoom(event, root));
     
@@ -85,8 +86,7 @@ export default function CirclePacking() {
             .selectAll("circle")
             .data(root.descendants().slice(1))
             .join("circle")
-                .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.data.riskStatus[riskVariable]))
-                .attr("pointer-events", d => !d.children ? "none" : null)
+                .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
                 .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
                 .on("mouseout", function() { d3.select(this).attr("stroke", null); })
                 .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()))
@@ -125,8 +125,7 @@ export default function CirclePacking() {
     // Update the visual aesthetics of the visualization that change with a user input
     useEffect(() => {
         d3.selectAll(`#${id} svg circle`)
-            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.data.riskStatus[riskVariable]))
-
+            .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
     }, [riskVariable])
 
     return(

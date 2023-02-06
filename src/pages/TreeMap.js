@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { riskVariables, createColorScale, naColor, hover } from "../utils/global";
+import { riskVariables, createColorScale, applyColorScale, hover } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -116,7 +116,7 @@ export default function TreeMap() {
         g.append("rect")
             .attr("width", d => d.y1 - d.y0)
             .attr("height", d => (d.x1 - d.x0) + 1)
-            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.data.riskStatus[riskVariable]))
+            .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
             .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
             .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible");
 
@@ -124,8 +124,10 @@ export default function TreeMap() {
     }, [])
 
     useEffect(() => {
-        d3.selectAll(`#${id} svg g rect`)
-            .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? naColor : colorScale(d.data.riskStatus[riskVariable]))
+        const rect = d3.selectAll(`#${id} svg g rect`)
+            .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
+
+        renderTooltip(riskVariable, rect);
     }, [riskVariable])
 
     return(
