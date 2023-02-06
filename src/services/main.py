@@ -119,14 +119,14 @@ def main():
 
     network = create_network(data, level1Clean, level2Clean, level3Clean, actorsClean, activitiesClean, risksClean, controlsClean, activity_to_risk, risk_to_control)
 
-    # activitiesNested = nest_activities(activitiesClean, actorsClean, risksClean, applicationsClean, activity_to_actor, activity_to_risk, activity_to_application)
-    # write_json(activitiesNested, os.path.join(processed_pth, "nested"), "activities")
+    activitiesNested = nest_activities(activitiesClean, actorsClean, risksClean, applicationsClean, activity_to_actor, activity_to_risk, activity_to_application)
+    write_json(activitiesNested, os.path.join(processed_pth, "nested"), "activities")
 
-    # risksNested = nest_risk_control(risk_to_control, risksClean, controlsClean)
-    # write_json(risksNested, os.path.join(processed_pth, "nested"), "risks")
+    risksNested = nest_risk_control(risk_to_control, risksClean, controlsClean)
+    write_json(risksNested, os.path.join(processed_pth, "nested"), "risks")
 
-    # processesNested = nest_processes(level1_to_level2, level2_to_level3, level3_to_activity, activity_to_risk, risk_to_control, level1Clean, level2Clean, level3Clean, activitiesClean, risksClean, controlsClean)
-    # write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
+    processesNested = nest_processes(level1_to_level2, level2_to_level3, level3_to_activity, activity_to_risk, risk_to_control, level1Clean, level2Clean, level3Clean, activitiesClean, risksClean, controlsClean)
+    write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
   
     lu = {
         "risk": create_lu(risksClean, "riskID", "risk"),
