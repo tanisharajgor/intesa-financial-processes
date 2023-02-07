@@ -107,8 +107,7 @@ def create_risk_status(df):
         row = {"controlTypeMode": controlTypeMode,
             "controlPeriodocityMode": controlPeriodocityMode,
             "financialDisclosureRiskAny": bool(any(temp.financialDisclosureRisk))}
-        # except:
-        #     import pdb; pdb.set_trace()
+
     else:
         row = {"nRisks": int(0)}
 
