@@ -91,25 +91,28 @@ def create_risk_status(df):
 
     if temp.shape[0] > 0:
 
-        temp['riskID'] = pd.to_numeric(temp['riskID'], errors='coerce').astype(int)
-        temp.controlType = temp.controlType.fillna('NA')
+        try:
+            temp['riskID'] = pd.to_numeric(temp['riskID'], errors='coerce').astype(int)
+            temp.controlType = temp.controlType.fillna('NA')
 
-        row = {"nRisks": int(temp.riskID.nunique()),
-               "riskID": temp.riskID.unique().tolist()}
-        
-        if pd.isnull(temp.controlType).iloc[0]:
-            controlTypeMode = "NA"
-        else:
-            controlTypeMode = temp.controlType.mode().iloc[0]
+            row = {"nRisks": int(temp.riskID.nunique()),
+                "riskID": temp.riskID.unique().tolist()}
+            
+            if pd.isnull(temp.controlType).iloc[0]:
+                controlTypeMode = "NA"
+            else:
+                controlTypeMode = temp.controlType.mode().iloc[0]
 
-        if pd.isnull(temp.controlPeriodocity).iloc[0]:
-            controlPeriodocityMode = "NA"
-        else:
-            controlPeriodocityMode = float(temp.controlPeriodocity.mode().iloc[0])
+            if pd.isnull(temp.controlPeriodocity).iloc[0]:
+                controlPeriodocityMode = "NA"
+            else:
+                controlPeriodocityMode = float(temp.controlPeriodocity.mode().iloc[0])
 
-        row = {"controlTypeMode": controlTypeMode,
-               "controlPeriodocityMode": controlPeriodocityMode,
-               "financialDisclosureRiskAny": bool(any(temp.financialDisclosureRisk))}
+            row = {"controlTypeMode": controlTypeMode,
+                "controlPeriodocityMode": controlPeriodocityMode,
+                "financialDisclosureRiskAny": bool(any(temp.financialDisclosureRisk))}
+        except:
+            import pdb; pdb.set_trace()
     else:
         row = {"nRisks": int(0)}
 
@@ -150,7 +153,7 @@ def create_sub_processes(df, root, children = None, tree_level = None):
 Nest processes
 Return object
 """
-def create_processes(main):
+def create_processes_to_activities(main):
 
     nest4 = create_sub_processes(main, "activity", None, 4)
     nest3 = create_sub_processes(main, "level3", nest4, 3)
@@ -247,3 +250,34 @@ def create_network(data):
         array.append(network)
 
     return array
+
+
+def create_processes(main):
+    l1Array = []
+    for i in main.level1ID.unique():
+        l2 = main[main.level1ID == i].level2ID.unique()
+
+        l2Array = []
+        for j in l2:
+            l3 = main[main.level2ID == j].level3ID.unique()
+
+            l3Array = []
+            for k in l3:
+                r3 = {"id": int(k),
+                     "name": main[main.level3ID == k].level3.iloc[0],
+                     "treeLevel": 3}
+                l3Array.append(r3)
+
+            r2 = {"id": int(j),
+                 "name": main[main.level2ID == j].level2.iloc[0],
+                 "children": l3Array,
+                 "treeLevel": 2}
+            l2Array.append(r2)
+
+        r1 = {"id": int(i),
+              "name": main[main.level1ID == i].level1.iloc[0],
+              "children": l2Array,
+              "treeLevel": 1}
+        l1Array.append(r1)
+
+    return l1Array

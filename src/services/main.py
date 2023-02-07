@@ -7,8 +7,8 @@ from python.data_management import actors_rename, activities_dm, actors_dm, risk
     activity_to_risk_dm, risk_to_control_dm, activity_to_actor_dm, activity_to_application_dm, main_dm, \
     level3_to_activity_dm
 
-from python.nest_data import create_processes, create_risk_control, \
-    create_activities, create_network
+from python.nest_data import create_processes_to_activities, create_risk_control, \
+    create_activities, create_network, create_processes
 
 from python.translate import translate_text, authenticate_implicit_with_adc
 from python.helper import write_json, create_lu
@@ -92,44 +92,19 @@ def main():
     risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
     main = main_dm(data, level1Clean, level2Clean, level3Clean, activitiesClean, actorsClean, risksClean, controlsClean, activity_to_risk, risk_to_control)
 
-    l1Array = []
-    for i in level1_to_level2.level1ID.unique():
-        l2 = level1_to_level2[level1_to_level2.level1ID == i].level2ID.unique()
-
-        l2Array = []
-        for j in l2:
-            l3 = level2_to_level3[level2_to_level3.level2ID == j].level3ID.unique()
-
-            l3Array = []
-            for k in l3:
-                r3 = {"id": int(k),
-                     "name": level3Clean[level3Clean.level3ID == k].level3.iloc[0],
-                     "treeLevel": 3}
-                l3Array.append(r3)
-
-            r2 = {"id": int(j),
-                 "name": level2Clean[level2Clean.level2ID == j].level2.iloc[0],
-                 "children": l3Array,
-                 "treeLevel": 2}
-            l2Array.append(r2)
-
-        r1 = {"id": int(i),
-              "name": level1Clean[level1Clean.level1ID == i].level1.iloc[0],
-              "children": l2Array,
-              "treeLevel": 1}
-        l1Array.append(r1)
-
     network = create_network(main)
     # write_json(network, os.path.join(processed_pth, "nested"), "network2")
 
     risksNested = create_risk_control(main)
     # write_json(risksNested, os.path.join(processed_pth, "nested"), "risks")
 
-    activitiesNested = create_activities(pd.merge(main, activity_to_application, how="left", on="applicationID"), applicationsClean)
+    # activitiesNested = create_activities(pd.merge(main, activity_to_application, how="left", on="activityID"), applicationsClean)
     # write_json(activitiesNested, os.path.join(processed_pth, "nested"), "activities")
 
-    processesNested = create_processes(main)
+    processesNested = create_processes_to_activities(main)
     # write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
+
+    processes = create_processes(main)
 
     import pdb; pdb.set_trace()
   
@@ -143,7 +118,7 @@ def main():
         "level2": create_lu(level2Clean, "level2ID", "level2"),
         "level3": create_lu(level3Clean, "level3ID", "level3"),
         "model": create_lu(modelClean, "modelID", "model"),
-        "processes": {"name": "root", "children": l1Array, "treeLevel": 0}
+        "processes": {"name": "root", "children": processes, "treeLevel": 0}
     }
 
     write_json(lu, os.path.join(processed_pth, "nested"), "lu")
