@@ -1,4 +1,4 @@
-import { Accordion, AccordionSummary, AccordionDetails, IconButton } from '@material-ui/core';
+import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -6,7 +6,6 @@ import Select from '@material-ui/core/Select';
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import lu from '../data/processed/nested/lu.json';
-import { palette } from '../utils/global';
 import { useStyles } from '../utils/ComponentStyles';
 
 // constants
@@ -21,14 +20,9 @@ const rScale = d3.scaleOrdinal()
     .domain([0, 1, 2, 3])
     .range([6, 5, 4, 3]);
 
-const opacityScale = d3.scaleOrdinal()
-    .domain([0, 1, 2, 3])
-    .range([.4, .4, .4, 1]);
-
 // Data management steps
 const cluster = d3.cluster()
     .size([height, width - 100]);  // 100 is the margin I will have on the right side
-
 
 function fillScale(d, selectedLevel3ID) {
     if (d.data.data.treeLevel === 3 && d.data.data.id === selectedLevel3ID) {
@@ -90,8 +84,6 @@ function clickProcess(updateLevel3ID) {
     d3.selectAll('.Process-Node').each(function (d, i) {
         d3.select(this)
             .on('click', (e, datum) => {
-
-                console.log(datum.data.data.id)
                 updateLevel3ID(datum.data.data.id)
                 var tooltip = d3.select(`#${id} .tooltip`);
                 d3.select(`#${id} .tooltip`).remove();

@@ -21,8 +21,6 @@ function renderTooltip(riskVariable, updateHoverID) {
         let x = e.layerX + 20;
         let y = e.layerY - 10;
 
-        console.log(thisCircle)
-
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
