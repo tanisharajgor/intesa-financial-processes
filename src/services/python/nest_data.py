@@ -91,28 +91,24 @@ def create_risk_status(df):
 
     if temp.shape[0] > 0:
 
-        try:
-            temp['riskID'] = pd.to_numeric(temp['riskID'], errors='coerce').astype(int)
-            temp.controlType = temp.controlType.fillna('NA')
+        row = {"nRisks": int(temp.riskID.nunique()),
+                "riskID": temp.riskID.unique().astype(int).tolist()}
+        
+        if pd.isnull(temp.controlType).iloc[0]:
+            controlTypeMode = "NA"
+        else:
+            controlTypeMode = temp.controlType.mode().iloc[0]
 
-            row = {"nRisks": int(temp.riskID.nunique()),
-                "riskID": temp.riskID.unique().tolist()}
-            
-            if pd.isnull(temp.controlType).iloc[0]:
-                controlTypeMode = "NA"
-            else:
-                controlTypeMode = temp.controlType.mode().iloc[0]
+        if pd.isnull(temp.controlPeriodocity).iloc[0]:
+            controlPeriodocityMode = "NA"
+        else:
+            controlPeriodocityMode = float(temp.controlPeriodocity.mode().iloc[0])
 
-            if pd.isnull(temp.controlPeriodocity).iloc[0]:
-                controlPeriodocityMode = "NA"
-            else:
-                controlPeriodocityMode = float(temp.controlPeriodocity.mode().iloc[0])
-
-            row = {"controlTypeMode": controlTypeMode,
-                "controlPeriodocityMode": controlPeriodocityMode,
-                "financialDisclosureRiskAny": bool(any(temp.financialDisclosureRisk))}
-        except:
-            import pdb; pdb.set_trace()
+        row = {"controlTypeMode": controlTypeMode,
+            "controlPeriodocityMode": controlPeriodocityMode,
+            "financialDisclosureRiskAny": bool(any(temp.financialDisclosureRisk))}
+        # except:
+        #     import pdb; pdb.set_trace()
     else:
         row = {"nRisks": int(0)}
 
@@ -124,6 +120,7 @@ Return object
 """
 def create_sub_processes(df, root, children = None, tree_level = None):
 
+    import pdb; pdb.set_trace()
     rootID = root+"ID"
 
     array = []
