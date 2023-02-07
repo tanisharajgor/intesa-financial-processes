@@ -20,7 +20,7 @@ export const riskVariables = {
         colors: ["#FF0000", "#0071BC"]
     },
     "controlPeriodocityMode": {
-        label: "Periodocity",
+        label: "Periodicity",
         values: [3650, 365, 182, 91, 30, 7, 1, .1],
         labels: ['Decadal', 'Annually', 'Half yearly', 'Quarterly', 'Monthly', 'Weekly', 'Daily', 'Per event'],
         colors: palette
