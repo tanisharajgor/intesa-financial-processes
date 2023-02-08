@@ -23,6 +23,8 @@ function renderTooltip(riskVariable, updateHoverID) {
 
         let type = d.data.treeLevel === 4? "Activity": "Process";
 
+        console.log(riskVariable)
+
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
@@ -126,6 +128,8 @@ export default function CirclePacking() {
     useEffect(() => {
         d3.selectAll(`#${id} svg circle`)
             .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
+
+        renderTooltip(riskVariable, updateHoverID);
     }, [riskVariable])
 
     return(

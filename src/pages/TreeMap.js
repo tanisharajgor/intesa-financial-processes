@@ -11,7 +11,7 @@ const id = "tree-map-chart";
 // Set-up layout
 const margin = {top: 10, right: 10, bottom: 10, left: 10},
     width = 700 - margin.left - margin.right,
-    height = 1000 - margin.top - margin.bottom;
+    height = 1200 - margin.top - margin.bottom;
 
 // Tooltip
 function renderTooltip(riskVariable, updateHoverID) {
@@ -102,7 +102,8 @@ export default function TreeMap() {
             .attr("transform","rotate(90)")
             .append("g")
                 .attr("transform",
-                        `translate(${margin.left}, ${margin.top})`);
+                        `translate(${margin.left}, ${margin.top})`)
+                .attr("transform", `translate(${margin.left}, -450)`);
 
         const rectHeight = descendants[0].y1 - descendants[0].y0; // calculate the size of the root rect
         addProcessLabels(rectHeight);
@@ -127,6 +128,7 @@ export default function TreeMap() {
         d3.selectAll(`#${id} svg g rect`)
             .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
 
+        renderTooltip(riskVariable, updateHoverID);
     }, [riskVariable])
 
     return(
