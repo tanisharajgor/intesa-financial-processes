@@ -25,11 +25,7 @@ function renderTooltip(riskVariable, updateHoverID) {
 
         let type = d.data.treeLevel === 4? "Activity": "Process";
 
-        console.log(riskVariable)
-
         let rs = d.data.riskStatus[riskVariable];
-
-        console.log(rs)
 
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
