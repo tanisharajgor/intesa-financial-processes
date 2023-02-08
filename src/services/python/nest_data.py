@@ -87,28 +87,26 @@ return nested list
 """
 def create_risk_status(df):
 
-    # temp = df[pd.isnull(df.riskID) == False]
-    
-    temp = df
+    df = df[pd.isnull(df.riskID) == False]
 
-    if temp.shape[0] > 0:
+    if df.shape[0] > 0:
 
-        row = {"nRisks": int(temp.riskID.nunique()),
-               "riskID": temp.riskID.unique().astype(int).tolist()}
+        row = {"nRisks": int(df.riskID.nunique()),
+               "riskID": df.riskID.unique().astype(int).tolist()}
         
-        if pd.isnull(temp.controlType).iloc[0]:
+        if pd.isnull(df.controlType).iloc[0]:
             controlTypeMode = "NA"
         else:
-            controlTypeMode = temp.controlType.mode().iloc[0]
+            controlTypeMode = df.controlType.mode().iloc[0]
 
-        if pd.isnull(temp.controlPeriodocity).iloc[0]:
+        if pd.isnull(df.controlPeriodocity).iloc[0]:
             controlPeriodocityMode = "NA"
         else:
-            controlPeriodocityMode = float(temp.controlPeriodocity.mode().iloc[0])
+            controlPeriodocityMode = float(df.controlPeriodocity.mode().iloc[0])
 
         row = {"controlTypeMode": controlTypeMode,
                "controlPeriodocityMode": controlPeriodocityMode,
-               "financialDisclosureRiskAny": bool(any(temp.financialDisclosureRisk))}
+               "financialDisclosureRiskAny": bool(any(df.financialDisclosureRisk))}
 
     else:
         row = {"nRisks": int(0)}
@@ -126,17 +124,12 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
 
     ids = unique_int(df, root1ID)
     array = []
-    
+
     for id in ids:
 
         df_sub = df[df[root1ID] == id]
 
         childrenIDs = df_sub[df_sub[root1ID] == id][root2ID].unique().tolist()
-
-        # if (all(pd.isnull(childrenIDs))):
-        #     childrenIDs = []
-        # else:
-        #     childrenIDs.tolist()
 
         d = {"id": int(id),
             "name": df_sub[df_sub[root1ID] == id][root1].iloc[0],
