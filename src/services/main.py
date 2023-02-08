@@ -8,7 +8,7 @@ from python.data_management import actors_rename, activities_dm, actors_dm, risk
     level3_to_activity_dm
 
 from python.nest_data import create_processes_to_activities, create_risk_control, \
-    create_activities, create_network, create_processes
+     create_network, create_processes
 
 from python.translate import translate_text, authenticate_implicit_with_adc
 from python.helper import write_json, create_lu
@@ -92,17 +92,14 @@ def main():
     risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
     main = main_dm(data, level1Clean, level2Clean, level3Clean, activitiesClean, actorsClean, risksClean, controlsClean, activity_to_risk, risk_to_control)
 
-    network = create_network(main)
-    write_json(network, os.path.join(processed_pth, "nested"), "network2")
+    # network = create_network(main)
+    # write_json(network, os.path.join(processed_pth, "nested"), "network2")
 
-    risksNested = create_risk_control(main)
-    write_json(risksNested, os.path.join(processed_pth, "nested"), "risks")
+    # risksNested = create_risk_control(main)
+    # write_json(risksNested, os.path.join(processed_pth, "nested"), "risks")
 
-    # activitiesNested = create_activities(pd.merge(main, activity_to_application, how="left", on="activityID"), applicationsClean)
-    # write_json(activitiesNested, os.path.join(processed_pth, "nested"), "activities")
-
-    # processesNested = create_processes_to_activities(main)
-    # write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
+    processesNested = create_processes_to_activities(main)
+    write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
 
     processes = create_processes(main)
 

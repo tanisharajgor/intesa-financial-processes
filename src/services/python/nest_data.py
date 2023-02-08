@@ -92,7 +92,7 @@ def create_risk_status(df):
     if temp.shape[0] > 0:
 
         row = {"nRisks": int(temp.riskID.nunique()),
-                "riskID": temp.riskID.unique().astype(int).tolist()}
+               "riskID": temp.riskID.unique().astype(int).tolist()}
         
         if pd.isnull(temp.controlType).iloc[0]:
             controlTypeMode = "NA"
@@ -105,8 +105,8 @@ def create_risk_status(df):
             controlPeriodocityMode = float(temp.controlPeriodocity.mode().iloc[0])
 
         row = {"controlTypeMode": controlTypeMode,
-            "controlPeriodocityMode": controlPeriodocityMode,
-            "financialDisclosureRiskAny": bool(any(temp.financialDisclosureRisk))}
+               "controlPeriodocityMode": controlPeriodocityMode,
+               "financialDisclosureRiskAny": bool(any(temp.financialDisclosureRisk))}
 
     else:
         row = {"nRisks": int(0)}
@@ -117,24 +117,29 @@ def create_risk_status(df):
 Nest sub processes
 Return object
 """
-def create_sub_processes(df, root, children = None, tree_level = None):
+def create_sub_processes(df, root1, root2, children = None, tree_level = None):
 
-    import pdb; pdb.set_trace()
-    rootID = root+"ID"
+    root1ID = root1+"ID"
+    root2ID = root2+"ID"
 
+    ids = unique_int(df, root1ID)
     array = []
     
-    ids = df[rootID].unique()
-
     for id in ids:
 
-        df_sub = df[df[rootID] == id]
+        df_sub = df[df[root1ID] == id]
 
-        childrenIDs = df[rootID].unique().tolist()
+        childrenIDs = df_sub[df_sub[root1ID] == id][root2ID].unique().tolist()
+
+        # if (all(pd.isnull(childrenIDs))):
+        #     childrenIDs = []
+        # else:
+        #     childrenIDs.tolist()
+
         d = {"id": int(id),
-            "name": df_sub[df_sub[rootID] == id][root].iloc[0],
-            "childrenIDs": childrenIDs,
-            "riskStatus": create_risk_status(df),
+            "name": df_sub[df_sub[root1ID] == id][root1].iloc[0],
+            # "childrenIDs": childrenIDs,
+            "riskStatus": create_risk_status(df_sub),
             "treeLevel": int(tree_level)
             }
 
@@ -151,10 +156,10 @@ Return object
 """
 def create_processes_to_activities(main):
 
-    nest4 = create_sub_processes(main, "activity", None, 4)
-    nest3 = create_sub_processes(main, "level3", nest4, 3)
-    nest2 = create_sub_processes(main, "level2", nest3, 2)
-    nest1 = create_sub_processes(main, "level1", nest2, 1)
+    nest4 = create_sub_processes(main, "activity", "risk", None, 4)
+    nest3 = create_sub_processes(main, "level3", "activity", nest4, 3)
+    nest2 = create_sub_processes(main, "level2", "level3", nest3, 2)
+    nest1 = create_sub_processes(main, "level1", "level2", nest2, 1)
 
     return {"name": "root", 
             "children": nest1,  
