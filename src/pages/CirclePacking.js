@@ -26,7 +26,7 @@ function renderTooltip(riskVariable, updateHoverID) {
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`${type}: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]}</b>`);
+            .html(`${type}: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]===undefined? "NA": d.data.riskStatus[riskVariable]}</b>`);
 
         thisCircle
             .attr("stroke", "grey")
@@ -52,7 +52,7 @@ export default function CirclePacking() {
 
     let hoverValue = hover(data, hoverID, riskVariable);
 
-    const height = 932, width = 1000;
+    const height = 932, width = 932;
 
     function pack(data) {
         let x = d3.pack()

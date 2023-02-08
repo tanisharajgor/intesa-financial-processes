@@ -32,7 +32,7 @@ function renderTooltip(riskVariable, updateHoverID) {
             tooltip.style("visibility", "visible")
                 .style("top", `${y}px`)
                 .style("left", `${x}px`)
-                .html(`${type}: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]}</b>`);
+                .html(`${type}: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]===undefined? "NA": d.data.riskStatus[riskVariable]}</b>`);
 
             thisRect
                 .attr("stroke", "grey")
@@ -81,7 +81,7 @@ export default function TreeMap() {
     const colorScale = createColorScale(riskVariable, riskVariables);
     const opacityScale =  d3.scaleOrdinal()
             .domain([0, 1, 2, 3, 4])
-            .range([.3, .4, .5, .6, .25]);
+            .range([.3, .4, .5, .6, .9]);
 
     // Set-up hierarchical data
     const root = d3.hierarchy(data).sum(function(d) { return 1 }) // Here the size of each leave is given in the 'value' field in input data
