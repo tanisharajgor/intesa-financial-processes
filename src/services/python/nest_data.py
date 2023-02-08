@@ -87,7 +87,9 @@ return nested list
 """
 def create_risk_status(df):
 
-    temp = df[pd.isnull(df.riskID) == False]
+    # temp = df[pd.isnull(df.riskID) == False]
+    
+    temp = df
 
     if temp.shape[0] > 0:
 
