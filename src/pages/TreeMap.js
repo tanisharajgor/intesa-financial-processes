@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { riskVariables, createColorScale, applyColorScale, hover } from "../utils/global";
+import { riskVariables, createColorScale, applyColorScale, createLabelScale, hover } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -15,6 +15,8 @@ const margin = {top: 10, right: 10, bottom: 10, left: 10},
 
 // Tooltip
 function renderTooltip(riskVariable, updateHoverID) {
+
+    const labelScale = createLabelScale(riskVariable);
 
     const tooltip = d3.select(`#${id}`)
         .append("div")
@@ -32,7 +34,7 @@ function renderTooltip(riskVariable, updateHoverID) {
             tooltip.style("visibility", "visible")
                 .style("top", `${y}px`)
                 .style("left", `${x}px`)
-                .html(`${type}: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]===undefined? "NA": d.data.riskStatus[riskVariable]}</b>`);
+                .html(`${type}: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]===undefined? "NA": labelScale(d.data.riskStatus[riskVariable])}</b>`);
 
             thisRect
                 .attr("stroke", "grey")
