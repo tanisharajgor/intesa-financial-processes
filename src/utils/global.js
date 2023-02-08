@@ -65,6 +65,16 @@ export function createOpacityScale() {
     return scale;
 }
 
+export function createLabelScale(riskVariable) {
+
+    const scale = d3.scaleOrdinal()
+        .domain(riskVariables[riskVariable].values)
+        .range(riskVariables[riskVariable].labels);
+
+    return scale;
+}
+
+
 export function hover(data, hoverID, riskVariable) {
 
     if (data.children === undefined) {
