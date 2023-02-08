@@ -27,12 +27,12 @@ function renderTooltip(riskVariable, updateHoverID) {
             let x = e.layerX + 20;
             let y = e.layerY - 10;
 
-            // console.log(e)
+            let type = d.data.treeLevel === 4? "Activity": "Process";
 
             tooltip.style("visibility", "visible")
                 .style("top", `${y}px`)
                 .style("left", `${x}px`)
-                .html(`Process: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]}</b>`);
+                .html(`${type}: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]}</b>`);
 
             thisRect
                 .attr("stroke", "grey")
@@ -124,10 +124,9 @@ export default function TreeMap() {
     }, [])
 
     useEffect(() => {
-        const rect = d3.selectAll(`#${id} svg g rect`)
+        d3.selectAll(`#${id} svg g rect`)
             .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
 
-        renderTooltip(riskVariable, rect);
     }, [riskVariable])
 
     return(
