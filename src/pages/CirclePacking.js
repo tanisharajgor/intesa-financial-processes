@@ -23,6 +23,8 @@ function renderTooltip(riskVariable, updateHoverID) {
         let x = e.layerX + 20;
         let y = e.layerY - 10;
 
+        console.log(e, d)
+
         let type = d.data.treeLevel === 4? "Activity": "Process";
 
         let rs = d.data.riskStatus[riskVariable];

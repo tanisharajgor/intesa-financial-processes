@@ -13,8 +13,8 @@ function drawLegend(svg, t, hoverValue, variable) {
         t.values.push('NA')
     }
 
-    if (!t.labels.includes('na')) {
-        t.labels.push('na')
+    if (!t.labels.includes('NA')) {
+        t.labels.push('NA')
     }
 
     for (let i in t.values) {
@@ -61,9 +61,7 @@ function updateLegend(variable, variableLookup, hoverValue) {
     let t = variableLookup[variable];
 
     let svg = d3.select("#view-legend svg");
-
     d3.select("#view-legend svg g").remove();
-
     svg = svg.append("g");
 
     drawLegend(svg, t, hoverValue, variable);
