@@ -93,8 +93,6 @@ def create_risk_status(df):
     df.controlPeriodocity = df.controlPeriodocity.fillna('NA')
     df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('NA')
 
-    # import pdb; pdb.set_trace()
-
     if df.shape[0] > 0:
 
         row = {"nRisks": int(df.riskID.nunique()),
