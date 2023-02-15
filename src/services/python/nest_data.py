@@ -87,26 +87,34 @@ return nested list
 """
 def create_risk_status(df):
 
-    df = df[pd.isnull(df.riskID) == False]
+    # df = df[pd.isnull(df.riskID) == False]
+
+    df.controlType = df.controlType.fillna('NA')
+    df.controlPeriodocity = df.controlPeriodocity.fillna('NA')
+    df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('NA')
+
+    # import pdb; pdb.set_trace()
 
     if df.shape[0] > 0:
 
         row = {"nRisks": int(df.riskID.nunique()),
                "riskID": df.riskID.unique().astype(int).tolist()}
         
-        if pd.isnull(df.controlType).iloc[0]:
-            controlTypeMode = "NA"
-        else:
-            controlTypeMode = df.controlType.mode().iloc[0]
+        controlTypeMode = df.controlType.mode().iloc[0]
 
-        if pd.isnull(df.controlPeriodocity).iloc[0]:
-            controlPeriodocityMode = "NA"
-        else:
-            controlPeriodocityMode = float(df.controlPeriodocity.mode().iloc[0])
+        controlPeriodocityMode = df.controlPeriodocity.mode().iloc[0]
+
+        if (controlPeriodocityMode != "NA") & (controlPeriodocityMode != "Missing"):
+            controlPeriodocityMode = float(controlPeriodocityMode)
+
+        financialDisclosureRiskAny = df.financialDisclosureRisk.mode().iloc[0]
+
+        if (financialDisclosureRiskAny != "NA") & (financialDisclosureRiskAny != "Missing"):
+            financialDisclosureRiskAny = bool(financialDisclosureRiskAny)
 
         row = {"controlTypeMode": controlTypeMode,
                "controlPeriodocityMode": controlPeriodocityMode,
-               "financialDisclosureRiskAny": bool(any(df.financialDisclosureRisk))}
+               "financialDisclosureRiskAny": financialDisclosureRiskAny}
 
     else:
         row = {"nRisks": int(0)}

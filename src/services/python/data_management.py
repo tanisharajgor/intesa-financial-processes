@@ -154,6 +154,7 @@ def controls_dm(controls, config, raw_pth, processed_pth):
                     'Weekly':7, 
                     'Daily':1, 
                     'Per event':.1,
+                    'Missing': 'Missing'
                     }
 
     df = df.assign(controlPeriodocity = df.controlPeriodocity.map(period_mapping))
