@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { riskVariables, createColorScale, applyColorScale, createOpacityScale, hover } from "../utils/global";
+import { riskVariables, createColorScale, applyColorScale, createOpacityScale, createLabelScale, hover } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -10,6 +10,8 @@ const id = "circle-packing-chart";
 
 // Tooltip
 function renderTooltip(riskVariable, updateHoverID) {
+
+    const labelScale = createLabelScale(riskVariable);
 
     let tooltip = d3.select(`#${id}`)
         .append("div")
@@ -21,12 +23,16 @@ function renderTooltip(riskVariable, updateHoverID) {
         let x = e.layerX + 20;
         let y = e.layerY - 10;
 
+        console.log(e, d)
+
         let type = d.data.treeLevel === 4? "Activity": "Process";
+
+        let rs = d.data.riskStatus[riskVariable];
 
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`${type}: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]}</b>`);
+            .html(`${type}: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${rs===undefined? "NA": labelScale(d.data.riskStatus[riskVariable])}</b>`);
 
         thisCircle
             .attr("stroke", "grey")
@@ -52,7 +58,7 @@ export default function CirclePacking() {
 
     let hoverValue = hover(data, hoverID, riskVariable);
 
-    const height = 932, width = 1000;
+    const height = 932, width = 932;
 
     function pack(data) {
         let x = d3.pack()
@@ -126,6 +132,8 @@ export default function CirclePacking() {
     useEffect(() => {
         d3.selectAll(`#${id} svg circle`)
             .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
+
+        renderTooltip(riskVariable, updateHoverID);
     }, [riskVariable])
 
     return(

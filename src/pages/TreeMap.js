@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { riskVariables, createColorScale, applyColorScale, hover } from "../utils/global";
+import { riskVariables, createColorScale, applyColorScale, createLabelScale, hover } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -11,10 +11,12 @@ const id = "tree-map-chart";
 // Set-up layout
 const margin = {top: 10, right: 10, bottom: 10, left: 10},
     width = 700 - margin.left - margin.right,
-    height = 1000 - margin.top - margin.bottom;
+    height = 1200 - margin.top - margin.bottom;
 
 // Tooltip
 function renderTooltip(riskVariable, updateHoverID) {
+
+    const labelScale = createLabelScale(riskVariable);
 
     const tooltip = d3.select(`#${id}`)
         .append("div")
@@ -32,7 +34,7 @@ function renderTooltip(riskVariable, updateHoverID) {
             tooltip.style("visibility", "visible")
                 .style("top", `${y}px`)
                 .style("left", `${x}px`)
-                .html(`${type}: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]}</b>`);
+                .html(`${type}: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]===undefined? "NA": labelScale(d.data.riskStatus[riskVariable])}</b>`);
 
             thisRect
                 .attr("stroke", "grey")
@@ -81,7 +83,7 @@ export default function TreeMap() {
     const colorScale = createColorScale(riskVariable, riskVariables);
     const opacityScale =  d3.scaleOrdinal()
             .domain([0, 1, 2, 3, 4])
-            .range([.3, .4, .5, .6, .25]);
+            .range([.3, .4, .5, .6, .9]);
 
     // Set-up hierarchical data
     const root = d3.hierarchy(data).sum(function(d) { return 1 }) // Here the size of each leave is given in the 'value' field in input data
@@ -102,7 +104,8 @@ export default function TreeMap() {
             .attr("transform","rotate(90)")
             .append("g")
                 .attr("transform",
-                        `translate(${margin.left}, ${margin.top})`);
+                        `translate(${margin.left}, ${margin.top})`)
+                .attr("transform", `translate(${margin.left}, -450)`);
 
         const rectHeight = descendants[0].y1 - descendants[0].y0; // calculate the size of the root rect
         addProcessLabels(rectHeight);
@@ -127,6 +130,7 @@ export default function TreeMap() {
         d3.selectAll(`#${id} svg g rect`)
             .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
 
+        renderTooltip(riskVariable, updateHoverID);
     }, [riskVariable])
 
     return(
