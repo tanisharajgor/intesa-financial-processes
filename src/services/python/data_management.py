@@ -66,8 +66,6 @@ return dataframe
 """
 def activities_dm(actors, config, raw_pth, processed_pth):
 
-    # import pdb; pdb.set_trace()
-
     df = actors[["activityGUID", "activity", "activityType", "activityCategory"]].drop_duplicates()
     df = translate_config(df, config, 'activityType')
     df = translate_config(df, config, 'activityCategory')

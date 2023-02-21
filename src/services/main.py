@@ -92,18 +92,16 @@ def main():
     risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
     main = main_dm(data, level1Clean, level2Clean, level3Clean, activitiesClean, actorsClean, risksClean, controlsClean, activity_to_risk, risk_to_control)
 
-    # network = create_network(main)
-    # write_json(network, os.path.join(processed_pth, "nested"), "network2")
+    network = create_network(main)
+    write_json(network, os.path.join(processed_pth, "nested"), "network2")
 
-    # risksNested = create_risk_control(main)
-    # write_json(risksNested, os.path.join(processed_pth, "nested"), "risks")
+    risksNested = create_risk_control(main)
+    write_json(risksNested, os.path.join(processed_pth, "nested"), "risks")
 
     processesNested = create_processes_to_activities(main)
     write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
 
     processes = create_processes(main)
-
-    #import pdb; pdb.set_trace()
   
     lu = {
         "risk": create_lu(risksClean, "riskID", "risk"),
