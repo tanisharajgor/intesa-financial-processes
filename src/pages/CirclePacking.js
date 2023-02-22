@@ -141,7 +141,7 @@ export default function CirclePacking() {
             <div className="Content">
                 <Navigation/>
                 <div className="Query" id="FilterMenu"></div>
-                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id}/>
+                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id} data={data}/>
             </div>
         </StylesProvider>
     )

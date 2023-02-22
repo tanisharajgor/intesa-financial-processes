@@ -102,30 +102,48 @@ function shapeLegend(id) {
 }
 
 function shapeType(id) {
-    if (id === "network-chart") {
-        return(
-            <div className="layout_row">
-                <span className="layout_item key">
-                    Shape
-                </span>
-                <span className="layout_item"></span>
-                <div id="shape-legend"></div>
-            </div>
-        )
-    }
+    return(
+        <div className="layout_row">
+            <span className="layout_item key">
+                Shape
+            </span>
+            <span className="layout_item"></span>
+            <div id="shape-legend"></div>
+        </div>
+    )
 }
 
-function viewNodes(id) {
-    if (id === "network-chart") {
-        return(
-            <div className="layout_row">
-                <span className="layout_item key">
-                    Number of nodes: 
-                </span>
-                <span id="nNodes" className="layout_item"></span>
-            </div>
-        )
-    }
+function viewNNodes() {
+    return(
+        <div className="layout_row">
+            <span className="layout_item key">
+                Number of nodes: 
+            </span>
+            <span id="nNodes" className="layout_item"></span>
+        </div>
+    )
+}
+
+function viewNActors() {
+    return(
+        <div className="layout_row">
+            <span className="layout_item key">
+                Number of actors: 
+            </span>
+            <span id="nActors" className="layout_item"></span>
+        </div>
+    )
+}
+
+function viewNActivities() {
+    return(
+        <div className="layout_row">
+            <span className="layout_item key">
+                Number of activities: 
+            </span>
+            <span id="nActivities" className="layout_item"></span>
+        </div>
+    )
 }
 
 function riskType() {
@@ -144,7 +162,9 @@ function viewInfo(id) {
     return(
         <div className="inner">
             <div className="layout_group inline">
-                {viewNodes(id)}
+                {id === "network-chart"? viewNNodes(): <></> }
+                {id === "network-chart"? viewNActors(): <></> }
+                {id === "network-chart"? viewNActivities(): <></> }
                 {/* {shapeType(id)} */}
                 {riskType()}
             </div>
@@ -163,19 +183,29 @@ export default function View({id, riskVariable, updateRiskVariable, hoverValue, 
 
     useEffect(() => {
         shapeLegend(id)
-    }, [])
+    }, []);
 
     useEffect(() => {
         initiateLegend(riskVariable, riskVariables);
-    }, [])
+    }, []);
 
     useEffect(() => {
         updateLegend(riskVariable, riskVariables, hoverValue);
-    }, [riskVariable, hoverValue])
+    }, [riskVariable, hoverValue]);
 
     useEffect(() => {
+
+        if (id === "network-chart") {
+            
         d3.select("#nNodes")
-            .text(` ${data.nodes.length}`)
+        .text(` ${data.nodes.length}`);
+
+    d3.select("#nActors")
+        .text(` ${data.nodes.filter(d => d.group === "Actor").length}`);
+
+    d3.select("#nActivities")
+        .text(` ${data.nodes.filter(d => d.group === "Activity").length}`);
+        }
     }, [data])
 
     return(
