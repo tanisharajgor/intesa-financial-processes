@@ -66,15 +66,37 @@ function updateLegend(variable, variableLookup, hoverValue) {
     drawLegend(svg, t, hoverValue, variable);
 }
 
-function shapeLegend(id) {
-    if (id === "network-chart") {
-        const data = [{"name": "Actor", "type": "circle"},
-                      {"name": "Activity", "type": "triangle"}]
+export function symbolType(d) {
+
+    if (d.group === "Actor") {
+        return d3.symbolCircle;
+    } else {
+        if (d.type === "Process activity") {
+            return d3.symbolSquare;
+        } else if (d.type === "Control activity") {
+            return d3.symbolStar;
+        } else if (d.type === "Common process activity") {
+            return d3.symbolTriangle;
+        } else {
+            return d3.symbolDiamond;
+        }
+    }
+}
+
+function shapeLegend(networkChart) {
+    if (networkChart) {
+        const data = [{"group": "Actor", "type": "Actor"},
+                      {"group": "Activity", "type": "Process activity"},
+                      {"group": "Activity", "type": "Control activity"},
+                      {"group": "Activity", "type": "Common process activity"},
+                      {"group": "Activity", "type": "System activity"}]
+
+        let h = height + (data.length + 1)*20;
 
         var svg = d3.select(`#shape-legend`)
             .append("svg")
             .attr("width", width)
-            .attr("height", height);
+            .attr("height", h);
 
         svg
             .selectAll("path")
@@ -82,7 +104,7 @@ function shapeLegend(id) {
             .enter()
             .append("path")
             .attr("d", d3.symbol()
-            .type(function(d) { return d.type === "circle" ? d3.symbolCircle : d3.symbolTriangle; })
+            .type(((d) => symbolType(d)))
                 .size(100))
             .attr("transform", function(d, i) {
                 return 'translate(' + 10 + ', ' + (i*25 + 15) + ')';
@@ -96,7 +118,7 @@ function shapeLegend(id) {
             .append("text")
             .attr("x", 25)
             .attr("y", ((d, i) => i*25 + 20))
-            .text((d) => d.name)
+            .text((d) => d.type)
             .attr("fill", "white")
     }
 }
@@ -165,7 +187,7 @@ function viewInfo(networkChart) {
                 {networkChart? viewNNodes(): <></> }
                 {networkChart? viewNActors(): <></> }
                 {networkChart? viewNActivities(): <></> }
-                {/* {shapeType(id)} */}
+                {networkChart? shapeType(): <></>}
                 {riskType()}
             </div>
         </div>
@@ -199,7 +221,7 @@ export default function View({id, riskVariable, updateRiskVariable, hoverValue, 
     }
 
     useEffect(() => {
-        shapeLegend(id)
+        shapeLegend(networkChart);
     }, []);
 
     useEffect(() => {

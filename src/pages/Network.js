@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
 import { riskVariables, createColorScale, applyColorScale, hover } from "../utils/global";
+import { symbolType } from "../components/View";
 
 const id = "network-chart";
 let width = 1000;
@@ -63,25 +64,8 @@ function renderTooltip(data, updateHoverID) {
         updateHoverID(-1);
     });
 }
-function symbolType(d) {
 
-    if (d.group === "Actor") {
-        return d3.symbolCircle;
-    } else {
-        if (d.type === "Process activity") {
-            return d3.symbolSquare;
-        } else if (d.type === "Control activity") {
-            return d3.symbolStar;
-        } else if (d.type === "Common process activity") {
-            return d3.symbolTriangle;
-        } else {
-            return d3.symbolDiamond;
-        }
-    }
-}
-
-
-// Filtes the data by level3ID and activity Type
+// Filters the data by level3ID and activity Type
 function filterData(selectedLevel3ID, activityTypesChecks) {
     let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID));
 
