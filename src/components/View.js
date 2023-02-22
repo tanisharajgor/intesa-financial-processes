@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import { useEffect } from "react";
 
 const width = 216;
-let height = 100;
+const height = 15;
 var colorScale;
 
 function drawLegend(svg, t, hoverValue, variable) {
@@ -41,17 +41,12 @@ function drawLegend(svg, t, hoverValue, variable) {
 function initiateLegend(variable, variableLookup, hoverValue) {
 
     let t = variableLookup[variable];
-
-    console.log(t.values.length)
-
-    if (t.values.length > 2) {
-        height += (t.values.length + 1)*20;
-    }
+    let h = height + (t.values.length + 1)*20;
 
     const svg = d3.select("#view-legend")
         .append("svg")
         .attr('width', width)
-        .attr('height', height)
+        .attr('height', h)
         .append("g");
 
     drawLegend(svg, t, hoverValue, variable);
@@ -61,8 +56,10 @@ function initiateLegend(variable, variableLookup, hoverValue) {
 function updateLegend(variable, variableLookup, hoverValue) {
 
     let t = variableLookup[variable];
+    let h = height + (t.values.length + 1)*20;
 
     let svg = d3.select("#view-legend svg");
+    svg.attr("height", h)
     d3.select("#view-legend svg g").remove();
     svg = svg.append("g");
 
@@ -77,7 +74,7 @@ function shapeLegend(id) {
         var svg = d3.select(`#shape-legend`)
             .append("svg")
             .attr("width", width)
-            .attr("height", height);
+            // .attr("height", height);
 
         svg
             .selectAll("path")
@@ -118,18 +115,29 @@ function shapeType(id) {
     }
 }
 
+function Viewing(nNodes) {
+    return(
+        <div className="layout_row">
+            <span className="layout_item key">
+                Number of nodes:
+            </span>
+            <span className="layout_item"> {nNodes}</span>
+        </div>
+    )
+}
+
 function riskType() {
     return(
         <div className="layout_row">
             <span className="layout_item key">
-                Risk type
+                Risk type:
             </span>
             <span className="layout_item"></span>
         </div>
     )
 }
 
-export default function View({id, riskVariable, updateRiskVariable, hoverValue}) {
+export default function View({id, riskVariable, updateRiskVariable, hoverValue, data}) {
 
     colorScale = createColorScale(riskVariable, riskVariables);
 
@@ -152,8 +160,10 @@ export default function View({id, riskVariable, updateRiskVariable, hoverValue})
 
     return(
         <div>
+            <div>View</div>
             <div className="inner">
                 <div className="layout_group inline">
+                    {Viewing(data.nodes.length)}
                     {/* {shapeType(id)} */}
                     {riskType()}
                 </div>

@@ -210,7 +210,7 @@ export default function Network() {
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
                     <FilterType activityTypesChecks={activityTypesChecks} updateActivityTypeChecks = {updateActivityTypeChecks} typeValues={typeValues}/>
                 </div>
-                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id}/>                
+                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id} data={data}/>                
             </div>
         </StylesProvider>
     )
