@@ -157,14 +157,14 @@ function riskType() {
     )
 }
 
-function viewInfo(id) {
+function viewInfo(networkChart) {
 
     return(
         <div className="inner">
             <div className="layout_group inline">
-                {id === "network-chart"? viewNNodes(): <></> }
-                {id === "network-chart"? viewNActors(): <></> }
-                {id === "network-chart"? viewNActivities(): <></> }
+                {networkChart? viewNNodes(): <></> }
+                {networkChart? viewNActors(): <></> }
+                {networkChart? viewNActivities(): <></> }
                 {/* {shapeType(id)} */}
                 {riskType()}
             </div>
@@ -172,7 +172,24 @@ function viewInfo(id) {
     )
 }
 
+function updateViewInfo(networkChart, data) {
+    if (networkChart) {
+            
+        d3.select("#nNodes")
+        .text(` ${data.nodes.length}`);
+
+        d3.select("#nActors")
+            .text(` ${data.nodes.filter(d => d.group === "Actor").length}`);
+
+        d3.select("#nActivities")
+            .text(` ${data.nodes.filter(d => d.group === "Activity").length}`);
+    }
+}
+
 export default function View({id, riskVariable, updateRiskVariable, hoverValue, data}) {
+
+    const networkChart = id === "network-chart";
+    console.log(networkChart)
 
     colorScale = createColorScale(riskVariable, riskVariables);
 
@@ -194,24 +211,13 @@ export default function View({id, riskVariable, updateRiskVariable, hoverValue, 
     }, [riskVariable, hoverValue]);
 
     useEffect(() => {
-
-        if (id === "network-chart") {
-            
-        d3.select("#nNodes")
-        .text(` ${data.nodes.length}`);
-
-    d3.select("#nActors")
-        .text(` ${data.nodes.filter(d => d.group === "Actor").length}`);
-
-    d3.select("#nActivities")
-        .text(` ${data.nodes.filter(d => d.group === "Activity").length}`);
-        }
+        updateViewInfo(networkChart, data);
     }, [data])
 
     return(
         <div>
             <div>View</div>
-            {viewInfo(id)}
+            {viewInfo(networkChart)}
             <div className='View'>
                 <FormControl variant="outlined" size="small">
                     <Select
