@@ -115,15 +115,17 @@ function shapeType(id) {
     }
 }
 
-function Viewing(nNodes) {
-    return(
-        <div className="layout_row">
-            <span className="layout_item key">
-                Number of nodes:
-            </span>
-            <span className="layout_item"> {nNodes}</span>
-        </div>
-    )
+function Viewing(id) {
+    if (id === "network-chart") {
+        return(
+            <div className="layout_row">
+                <span className="layout_item key">
+                    Number of nodes: 
+                </span>
+                <span id="nNodes" className="layout_item"></span>
+            </div>
+        )
+    }
 }
 
 function riskType() {
@@ -158,12 +160,17 @@ export default function View({id, riskVariable, updateRiskVariable, hoverValue, 
         updateLegend(riskVariable, riskVariables, hoverValue);
     }, [riskVariable, hoverValue])
 
+    useEffect(() => {
+        d3.select("#nNodes")
+            .text(` ${data.nodes.length}`)
+    }, [data])
+
     return(
         <div>
             <div>View</div>
             <div className="inner">
                 <div className="layout_group inline">
-                    {Viewing(data.nodes.length)}
+                    {Viewing(id)}
                     {/* {shapeType(id)} */}
                     {riskType()}
                 </div>
