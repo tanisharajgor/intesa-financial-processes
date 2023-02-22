@@ -74,7 +74,7 @@ function shapeLegend(id) {
         var svg = d3.select(`#shape-legend`)
             .append("svg")
             .attr("width", width)
-            // .attr("height", height);
+            .attr("height", height);
 
         svg
             .selectAll("path")
@@ -115,7 +115,7 @@ function shapeType(id) {
     }
 }
 
-function Viewing(id) {
+function viewNodes(id) {
     if (id === "network-chart") {
         return(
             <div className="layout_row">
@@ -135,6 +135,19 @@ function riskType() {
                 Risk type:
             </span>
             <span className="layout_item"></span>
+        </div>
+    )
+}
+
+function viewInfo(id) {
+
+    return(
+        <div className="inner">
+            <div className="layout_group inline">
+                {viewNodes(id)}
+                {/* {shapeType(id)} */}
+                {riskType()}
+            </div>
         </div>
     )
 }
@@ -168,13 +181,7 @@ export default function View({id, riskVariable, updateRiskVariable, hoverValue, 
     return(
         <div>
             <div>View</div>
-            <div className="inner">
-                <div className="layout_group inline">
-                    {Viewing(id)}
-                    {/* {shapeType(id)} */}
-                    {riskType()}
-                </div>
-            </div>
+            {viewInfo(id)}
             <div className='View'>
                 <FormControl variant="outlined" size="small">
                     <Select
