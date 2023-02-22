@@ -28,11 +28,7 @@ function renderTooltip(data, updateHoverID) {
         const b = data.links
             .filter((i) => i.source.id === d.id || i.target.id === d.id)
             .map((d) => d.index);
-
-        console.log(b)
-
-        console.log(d.group)
-
+    
         inspect.style("display", "inline-block");
         inspect.style("visibility", "visible")
         inspect.select(".group .key").text(" " + d.group);

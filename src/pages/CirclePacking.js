@@ -13,26 +13,21 @@ function renderTooltip(riskVariable, updateHoverID) {
 
     const labelScale = createLabelScale(riskVariable);
 
-    let tooltip = d3.select(`#${id}`)
-        .append("div")
-        .attr("class", "tooltip");
+    let inspect = d3.select(".Inspect");
 
     d3.selectAll("circle").on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
-        let x = e.layerX + 20;
-        let y = e.layerY - 10;
-
-        console.log(e, d)
 
         let type = d.data.treeLevel === 4? "Activity": "Process";
-
         let rs = d.data.riskStatus[riskVariable];
 
-        tooltip.style("visibility", "visible")
-            .style("top", `${y}px`)
-            .style("left", `${x}px`)
-            .html(`${type}: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${rs===undefined? "NA": labelScale(d.data.riskStatus[riskVariable])}</b>`);
+        inspect.style("display", "inline-block");
+        inspect.style("visibility", "visible")
+        inspect.select(".name .key").text(" " + type);
+        inspect.select(".name .value").text(" " + d.data.name);
+        inspect.select(".risk .key").text(" " + riskVariables[riskVariable].label);
+        inspect.select(".risk .value").text(" " + labelScale(rs));
 
         thisCircle
             .attr("stroke", "grey")
@@ -42,7 +37,9 @@ function renderTooltip(riskVariable, updateHoverID) {
 
     }).on("mouseout", function() {
 
-        tooltip.style("visibility", "hidden");
+        inspect.style("visibility", "hidden");
+        inspect.style("display", "none");
+
         updateHoverID(-1);
 
         d3.selectAll('circle')
