@@ -9,18 +9,16 @@ import * as d3 from 'd3';
 import { riskVariables, createColorScale, applyColorScale, hover } from "../utils/global";
 
 const id = "network-chart";
-var width = 1000;
-var height = 600;
+let width = 1000;
+let height = 600;
 const linkColor = "#373d44";
-var colorScale;
-var nodes;
+let colorScale;
+let nodes;
 
 // Tooltip
 function renderTooltip(data, updateHoverID) {
 
-    var tooltip = d3.select(`#${id}`)
-        .append("div")
-        .attr("class", "tooltip");
+    let inspect = d3.select(".Inspect");
 
     nodes.on("mouseover", function(e, d) {
 
@@ -30,10 +28,11 @@ function renderTooltip(data, updateHoverID) {
 
         const b = data.links.filter((i) => i.source.id === d.id || i.target.id === d.id).map((d) => d.index)
 
-        tooltip.style("visibility", "visible")
-            .style("top", `${y}px`)
-            .style("left", `${x}px`)
-            .html(`<b>${d.group}</b>: <b>${d.name}</b> <br>Type: ${d.type}`);
+        inspect.style("display", "inline-block");
+        inspect.style("visibility", "visible")
+            // .style("top", `${y}px`)
+            // .style("left", `${x}px`)
+            // .html(`<b>${d.group}</b>: <b>${d.name}</b> <br>Type: ${d.type}`);
 
         thisCircle
             .attr("stroke", "white")
@@ -51,7 +50,8 @@ function renderTooltip(data, updateHoverID) {
 
     }).on("mouseout", function() {
 
-        tooltip.style("visibility", "hidden");
+        inspect.style("visibility", "hidden");
+        inspect.style("display", "none");
         nodes.attr("opacity", 1);
 
         d3.selectAll(`#${id} svg path`)

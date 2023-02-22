@@ -42,6 +42,8 @@ function initiateLegend(variable, variableLookup, hoverValue) {
 
     let t = variableLookup[variable];
 
+    console.log(t.values.length)
+
     if (t.values.length > 2) {
         height += (t.values.length + 1)*20;
     }
