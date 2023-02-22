@@ -23,8 +23,6 @@ function renderTooltip(data, updateHoverID) {
     nodes.on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
-        let x = e.layerX + 20;
-        let y = e.layerY - 10;
 
         const b = data.links.filter((i) => i.source.id === d.id || i.target.id === d.id).map((d) => d.index)
 
@@ -33,11 +31,6 @@ function renderTooltip(data, updateHoverID) {
         inspect.select(".group .key").text(" " + d.group);
         inspect.select(".group .value").text(" " + d.name);
         inspect.select(".type .value").text(" " + d.type);
-        // inspect.select(".id.layout_row").style("display", "inline-block");
-
-            // .style("top", `${y}px`)
-            // .style("left", `${x}px`)
-            // .html(`<b>${d.group}</b>: <b>${d.name}</b> <br>Type: ${d.type}`);
 
         thisCircle
             .attr("stroke", "white")
