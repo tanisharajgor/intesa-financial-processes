@@ -30,6 +30,11 @@ function renderTooltip(data, updateHoverID) {
 
         inspect.style("display", "inline-block");
         inspect.style("visibility", "visible")
+        inspect.select(".group .key").text(" " + d.group);
+        inspect.select(".group .value").text(" " + d.name);
+        inspect.select(".type .value").text(" " + d.type);
+        // inspect.select(".id.layout_row").style("display", "inline-block");
+
             // .style("top", `${y}px`)
             // .style("left", `${x}px`)
             // .html(`<b>${d.group}</b>: <b>${d.name}</b> <br>Type: ${d.type}`);
