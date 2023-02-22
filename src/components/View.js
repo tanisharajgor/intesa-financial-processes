@@ -180,7 +180,6 @@ function riskType() {
 }
 
 function viewInfo(networkChart) {
-
     return(
         <div className="inner">
             <div className="layout_group inline">
@@ -211,7 +210,6 @@ function updateViewInfo(networkChart, data) {
 export default function View({id, riskVariable, updateRiskVariable, hoverValue, data}) {
 
     const networkChart = id === "network-chart";
-    console.log(networkChart)
 
     colorScale = createColorScale(riskVariable, riskVariables);
 
