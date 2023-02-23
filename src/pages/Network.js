@@ -6,7 +6,7 @@ import { StylesProvider } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
-import { riskVariables, createColorScale, applyColorScale, hover } from "../utils/global";
+import { riskVariables, createColorScale, applyColorScale, hover, actorTypeValues, activityTypeValues } from "../utils/global";
 
 const id = "network-chart";
 var width = 1000;
@@ -166,11 +166,10 @@ function renderNetwork(data, riskVariable) {
 
 export default function Network() {
 
-    const typeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
     const [hoverID, updateHoverID] = useState(-1);
-    const [activityTypesChecks, updateActivityTypeChecks] = useState(typeValues);
+    const [activityTypesChecks, updateActivityTypeChecks] = useState(activityTypeValues);
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
 
     // Hover
@@ -208,7 +207,8 @@ export default function Network() {
                 <Navigation/>
                 <div className="Query" id="FilterMenu">
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
-                    <FilterActivityType activityTypesChecks={activityTypesChecks} updateActivityTypeChecks = {updateActivityTypeChecks} typeValues={typeValues}/>
+                    <FilterActivityType activityTypesChecks={activityTypesChecks} updateActivityTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues}/>
+                    {/* <FilterActivityType activityTypesChecks={activityTypesChecks} updateActivityTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues}/> */}
                 </div>
                 <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id}/>                
             </div>

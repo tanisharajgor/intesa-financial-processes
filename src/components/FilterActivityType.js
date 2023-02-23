@@ -4,7 +4,7 @@ import { FormControlLabel } from '@material-ui/core';
 import { useStyles } from '../utils/ComponentStyles';
 import Checkbox from '@material-ui/core/Checkbox';
 
-const id = "Filter-Type";
+const id = "Filter-Activity-Type";
 
 export default function FilterActivityType({activityTypesChecks, updateActivityTypeChecks, typeValues}) {
 
@@ -25,8 +25,8 @@ export default function FilterActivityType({activityTypesChecks, updateActivityT
         <Accordion className={Styles.card}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
-                aria-controls="type-filter-content"
-                id="type-filter-header"
+                aria-controls="activity-type-filter-content"
+                id="activity-type-filter-header"
             >
             <div>
                 <h4><span className='key'>Filter by Activity Type:</span>
