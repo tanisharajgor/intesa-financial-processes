@@ -84,10 +84,10 @@ function symbolType(d) {
 
 
 // Filtes the data by level3ID and activity Type
-function filterData(selectedLevel3ID, activityTypesChecks) {
-    let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID));
+function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
 
-    dataNew.nodes = dataNew.nodes.filter((d) => d.group === "Actor" || activityTypesChecks.includes(d.type));
+    let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID));
+    dataNew.nodes = dataNew.nodes.filter((d) => actorTypesChecks.concat(activityTypesChecks).includes(d.type));
     let ids = dataNew.nodes.map((d) => d.id)
     dataNew.links = dataNew.links.filter((d) => ids.includes(d.source.id === undefined ? d.source : d.source.id) && ids.includes(d.target.id === undefined ? d.target : d.target.id))
     return dataNew;
@@ -186,15 +186,15 @@ export default function Network() {
 
     // Filter data
     useEffect(() => {
-       updateData(filterData(selectedLevel3ID, activityTypesChecks))
-    }, [activityTypesChecks, selectedLevel3ID])
+       updateData(filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks))
+    }, [activityTypesChecks, actorTypesChecks, selectedLevel3ID])
 
     // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
     useEffect(() => {
         renderNetwork(data, riskVariable);
         nodes = d3.selectAll(`#${id} svg path`);
         renderTooltip(data, updateHoverID);
-    }, [selectedLevel3ID, activityTypesChecks, data])
+    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data])
 
     // Updates the color of the nodes without restarting the network simulation
     useEffect(() => {
