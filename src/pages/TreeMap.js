@@ -51,7 +51,7 @@ function renderTooltip(riskVariable, updateHoverValue) {
                 .attr("opacity", 1)
                 .attr("stroke", "none");
 
-            updateHoverValue(-1);
+            updateHoverValue(undefined);
         });
 }
 
@@ -76,7 +76,7 @@ function addProcessLabels(rectHeight) {
 export default function TreeMap() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
-    const [hoverValue, updateHoverValue] = useState(-1);
+    const [hoverValue, updateHoverValue] = useState(undefined);
 
     // Set-up scales
     const colorScale = createColorScale(riskVariable, riskVariables);

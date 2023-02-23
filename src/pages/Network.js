@@ -64,7 +64,7 @@ function renderTooltip(data, riskVariable, updateHoverValue) {
             .attr("opacity", 1)
             .attr("stroke", linkColor);
 
-        updateHoverValue(-1);
+        updateHoverValue(undefined);
     });
 }
 function symbolType(d) {
@@ -171,7 +171,7 @@ export default function Network() {
     const typeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
-    const [hoverValue, updateHoverValue] = useState(-1);
+    const [hoverValue, updateHoverValue] = useState(undefined);
     const [activityTypesChecks, updateActivityTypeChecks] = useState(typeValues);
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
  

@@ -43,7 +43,7 @@ function renderTooltip(riskVariable, updateHoverValue) {
     }).on("mouseout", function() {
 
         tooltip.style("visibility", "hidden");
-        updateHoverValue(-1);
+        updateHoverValue(undefined);
 
         d3.selectAll('circle')
             .attr("stroke-width", .5)
@@ -54,7 +54,7 @@ function renderTooltip(riskVariable, updateHoverValue) {
 export default function CirclePacking() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
-    const [hoverValue, updateHoverValue] = useState(-1);
+    const [hoverValue, updateHoverValue] = useState(undefined);
 
     const height = 932, width = 932;
 
