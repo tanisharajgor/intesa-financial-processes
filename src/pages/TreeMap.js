@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { riskVariables, createColorScale, applyColorScale, createLabelScale, hover } from "../utils/global";
+import { riskVariables, createColorScale, applyColorScale, createLabelScale } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -14,7 +14,7 @@ const margin = {top: 10, right: 10, bottom: 10, left: 10},
     height = 1200 - margin.top - margin.bottom;
 
 // Tooltip
-function renderTooltip(riskVariable, updateHoverID) {
+function renderTooltip(riskVariable, updateHoverValue) {
 
     const labelScale = createLabelScale(riskVariable);
 
@@ -36,11 +36,13 @@ function renderTooltip(riskVariable, updateHoverID) {
                 .style("left", `${x}px`)
                 .html(`${type}: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]===undefined? "NA": labelScale(d.data.riskStatus[riskVariable])}</b>`);
 
+            // console.log(d.data.riskStatus[riskVariable])
+
             thisRect
                 .attr("stroke", "grey")
                 .attr("stroke-width", 2);
 
-            updateHoverID(d.data.id);
+            updateHoverValue(d.data.riskStatus[riskVariable]);
 
         }).on("mouseout", function() {
 
@@ -49,7 +51,7 @@ function renderTooltip(riskVariable, updateHoverID) {
                 .attr("opacity", 1)
                 .attr("stroke", "none");
 
-            updateHoverID(-1);
+            updateHoverValue(-1);
         });
 }
 
@@ -74,10 +76,7 @@ function addProcessLabels(rectHeight) {
 export default function TreeMap() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
-    const [hoverID, updateHoverID] = useState(-1);
-
-    // Hover
-    let hoverValue = hover(data, hoverID, riskVariable);
+    const [hoverValue, updateHoverValue] = useState(-1);
 
     // Set-up scales
     const colorScale = createColorScale(riskVariable, riskVariables);
@@ -123,14 +122,14 @@ export default function TreeMap() {
             .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
             .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible");
 
-        renderTooltip(riskVariable, updateHoverID);
+        renderTooltip(riskVariable, updateHoverValue);
     }, [])
 
     useEffect(() => {
         d3.selectAll(`#${id} svg g rect`)
             .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
 
-        renderTooltip(riskVariable, updateHoverID);
+        renderTooltip(riskVariable, updateHoverValue);
     }, [riskVariable])
 
     return(
