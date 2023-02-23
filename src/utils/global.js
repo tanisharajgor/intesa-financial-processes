@@ -103,4 +103,4 @@ export function hover(data, hoverID, riskVariable) {
 }
 
 export const activityTypeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
-export const actorTypeValues = ["Organizational unit", "Position", "Person", "Missing", "External Organizational unit"];
+export const actorTypeValues = ["Organizational unit", "Position", "Person", "External Organizational unit", "Missing"];

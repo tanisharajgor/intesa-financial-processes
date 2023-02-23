@@ -1,7 +1,7 @@
 import Main from "../components/Main";
 import Navigation from "../components/Navigation";
 import FilterProcess from "../components/FilterProcess";
-import FilterActivityType from "../components/FilterActivityType";
+import FilterType from "../components/FilterType";
 import { StylesProvider } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
@@ -170,6 +170,7 @@ export default function Network() {
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
     const [hoverID, updateHoverID] = useState(-1);
     const [activityTypesChecks, updateActivityTypeChecks] = useState(activityTypeValues);
+    const [actorTypesChecks, updateActorTypeChecks] = useState(actorTypeValues);
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
 
     // Hover
@@ -207,8 +208,8 @@ export default function Network() {
                 <Navigation/>
                 <div className="Query" id="FilterMenu">
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
-                    <FilterActivityType activityTypesChecks={activityTypesChecks} updateActivityTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues}/>
-                    {/* <FilterActivityType activityTypesChecks={activityTypesChecks} updateActivityTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues}/> */}
+                    <FilterType typesChecks={activityTypesChecks} updateTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues} label="Filter by Activity Type:"/>
+                    <FilterType typesChecks={actorTypesChecks} updateTypeChecks = {updateActorTypeChecks} typeValues={actorTypeValues} label="Filter by Actor Type:"/>
                 </div>
                 <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id}/>                
             </div>
