@@ -1,7 +1,7 @@
 import Main from "../components/Main";
 import Navigation from "../components/Navigation";
 import FilterProcess from "../components/FilterProcess";
-import FilterType from "../components/FilterType";
+import FilterActivityType from "../components/FilterActivityType";
 import { StylesProvider } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
@@ -172,7 +172,7 @@ export default function Network() {
     const [hoverID, updateHoverID] = useState(-1);
     const [activityTypesChecks, updateActivityTypeChecks] = useState(typeValues);
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
- 
+
     // Hover
     let hoverValue = hover(data.nodes, hoverID, riskVariable);
 
@@ -208,7 +208,7 @@ export default function Network() {
                 <Navigation/>
                 <div className="Query" id="FilterMenu">
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
-                    <FilterType activityTypesChecks={activityTypesChecks} updateActivityTypeChecks = {updateActivityTypeChecks} typeValues={typeValues}/>
+                    <FilterActivityType activityTypesChecks={activityTypesChecks} updateActivityTypeChecks = {updateActivityTypeChecks} typeValues={typeValues}/>
                 </div>
                 <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id}/>                
             </div>

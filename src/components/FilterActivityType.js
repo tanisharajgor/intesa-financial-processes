@@ -6,7 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 const id = "Filter-Type";
 
-export default function FilterType({activityTypesChecks, updateActivityTypeChecks, typeValues}) {
+export default function FilterActivityType({activityTypesChecks, updateActivityTypeChecks, typeValues}) {
 
     const Styles = useStyles();
     let newSelectedTypes = [];
