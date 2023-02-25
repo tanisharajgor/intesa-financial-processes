@@ -17,8 +17,6 @@ function drawLegend(svg, t, hoverValue, variable) {
         t.labels.push('NA')
     }
 
-    console.log(hoverValue)
-
     for (let i in t.values) {
 
         svg

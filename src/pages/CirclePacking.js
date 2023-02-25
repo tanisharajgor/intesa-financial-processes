@@ -40,7 +40,6 @@ function renderTooltip(riskVariable, updateHoverValue) {
         inspect.style("visibility", "hidden");
         inspect.style("display", "none");
 
-        tooltip.style("visibility", "hidden");
         updateHoverValue(undefined);
 
         d3.selectAll('circle')
