@@ -6,36 +6,36 @@ import { StylesProvider } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
+import { symbolType } from "../components/View";
 import { riskVariables, createColorScale, applyColorScale } from "../utils/global";
 
 const id = "network-chart";
-var width = 1000;
-var height = 600;
+let width = 1000;
+let height = 600;
 const linkColor = "#373d44";
-var colorScale;
-var nodes;
+let colorScale;
+let nodes;
 
 // Tooltip
 function renderTooltip(data, riskVariable, updateHoverValue) {
 
-    var tooltip = d3.select(`#${id}`)
-        .append("div")
-        .attr("class", "tooltip");
+    let inspect = d3.select(".Inspect");
 
     nodes.on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
-        let x = e.layerX + 20;
-        let y = e.layerY - 10;
 
         const b = data.links
             .filter((i) => i.source.id === d.id || i.target.id === d.id)
             .map((d) => d.index);
-
-        tooltip.style("visibility", "visible")
-            .style("top", `${y}px`)
-            .style("left", `${x}px`)
-            .html(`<b>${d.group}</b>: <b>${d.name}</b> <br>Type: ${d.type}`);
+    
+        inspect.style("display", "inline-block");
+        inspect.style("visibility", "visible")
+        inspect.select(".group .key").text(" " + d.group);
+        inspect.select(".group .value").text(" " + d.name);
+        inspect.select(".type .value").text(" " + d.type);
+        // inspect.select(".connections .key").text(" " + d.group === "Activity"? "# activities": "# actors");
+        inspect.select(".connections .value").text(" " + b.length);
 
         thisCircle
             .attr("stroke", "white")
@@ -53,7 +53,8 @@ function renderTooltip(data, riskVariable, updateHoverValue) {
 
     }).on("mouseout", function() {
 
-        tooltip.style("visibility", "hidden");
+        inspect.style("visibility", "hidden");
+        inspect.style("display", "none");
         nodes.attr("opacity", 1);
 
         d3.selectAll(`#${id} svg path`)
@@ -67,25 +68,8 @@ function renderTooltip(data, riskVariable, updateHoverValue) {
         updateHoverValue(undefined);
     });
 }
-function symbolType(d) {
 
-    if (d.group === "Actor") {
-        return d3.symbolCircle;
-    } else {
-        if (d.type === "Process activity") {
-            return d3.symbolSquare;
-        } else if (d.type === "Control activity") {
-            return d3.symbolStar;
-        } else if (d.type === "Common process activity") {
-            return d3.symbolTriangle;
-        } else {
-            return d3.symbolDiamond;
-        }
-    }
-}
-
-
-// Filtes the data by level3ID and activity Type
+// Filters the data by level3ID and activity Type
 function filterData(selectedLevel3ID, activityTypesChecks) {
     let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID));
 
@@ -209,7 +193,7 @@ export default function Network() {
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
                     <FilterType activityTypesChecks={activityTypesChecks} updateActivityTypeChecks = {updateActivityTypeChecks} typeValues={typeValues}/>
                 </div>
-                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id}/>                
+                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id} data={data}/>                
             </div>
         </StylesProvider>
     )

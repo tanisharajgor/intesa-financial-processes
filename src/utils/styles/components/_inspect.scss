@@ -1,0 +1,13 @@
+// Inspect module
+
+.Inspect {
+    display: none;
+    border-radius: 0;
+    border: 1px solid $appBackgroundTransparent;
+    background-color: $appBackgroundTransparent;
+    pointer-events: none;
+    width: 100%;
+    .inner {
+        padding: $appPadding;
+    }
+}
