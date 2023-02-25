@@ -9,7 +9,7 @@ import { StylesProvider } from "@material-ui/core/styles";
 const id = "circle-packing-chart";
 
 // Tooltip
-function renderTooltip(riskVariable, updateHoverID) {
+function renderTooltip(riskVariable, updateHoverValue) {
 
     const labelScale = createLabelScale(riskVariable);
 
@@ -23,7 +23,7 @@ function renderTooltip(riskVariable, updateHoverID) {
         let x = e.layerX + 20;
         let y = e.layerY - 10;
 
-        console.log(e, d)
+        // console.log(e, d)
 
         let type = d.data.treeLevel === 4? "Activity": "Process";
 
@@ -38,12 +38,12 @@ function renderTooltip(riskVariable, updateHoverID) {
             .attr("stroke", "grey")
             .attr("stroke-width", 2);
 
-        updateHoverID(d.data.id);
+        updateHoverValue(d.data.riskStatus[riskVariable]);
 
     }).on("mouseout", function() {
 
         tooltip.style("visibility", "hidden");
-        updateHoverID(-1);
+        updateHoverValue(undefined);
 
         d3.selectAll('circle')
             .attr("stroke-width", .5)
@@ -54,9 +54,7 @@ function renderTooltip(riskVariable, updateHoverID) {
 export default function CirclePacking() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
-    const [hoverID, updateHoverID] = useState(-1);
-
-    let hoverValue = hover(data, hoverID, riskVariable);
+    const [hoverValue, updateHoverValue] = useState(undefined);
 
     const height = 932, width = 932;
 
@@ -124,7 +122,7 @@ export default function CirclePacking() {
             });
         }
 
-        renderTooltip(riskVariable, updateHoverID);
+        renderTooltip(riskVariable, updateHoverValue);
 
     }, [])
 
@@ -133,7 +131,7 @@ export default function CirclePacking() {
         d3.selectAll(`#${id} svg circle`)
             .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
 
-        renderTooltip(riskVariable, updateHoverID);
+        renderTooltip(riskVariable, updateHoverValue);
     }, [riskVariable])
 
     return(
