@@ -17,7 +17,7 @@ let colorScale;
 let nodes;
 
 // Tooltip
-function renderTooltip(data, riskVariable, updateHoverValue) {
+function renderTooltip(data, riskVariable, updateRiskHoverValue) {
 
     let inspect = d3.select(".Inspect");
 
@@ -49,7 +49,7 @@ function renderTooltip(data, riskVariable, updateHoverValue) {
             .attr("stroke", d => b.includes(d.index)? "grey": linkColor)
             .attr("stroke-width", d => b.includes(d.index)? 1.5: 1);
 
-        updateHoverValue(d.riskStatus[riskVariable]);
+        updateRiskHoverValue(d.riskStatus[riskVariable]);
 
     }).on("mouseout", function() {
 
@@ -65,7 +65,7 @@ function renderTooltip(data, riskVariable, updateHoverValue) {
             .attr("opacity", 1)
             .attr("stroke", linkColor);
 
-        updateHoverValue(undefined);
+        updateRiskHoverValue(undefined);
     });
 }
 
@@ -155,7 +155,7 @@ export default function Network() {
     const typeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
-    const [hoverValue, updateHoverValue] = useState(undefined);
+    const [riskHoverValue, updateRiskHoverValue] = useState(undefined);
     const [activityTypesChecks, updateActivityTypeChecks] = useState(typeValues);
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
  
@@ -176,7 +176,7 @@ export default function Network() {
     useEffect(() => {
         renderNetwork(data, riskVariable);
         nodes = d3.selectAll(`#${id} svg path`);
-        renderTooltip(data, riskVariable, updateHoverValue);
+        renderTooltip(data, riskVariable, updateRiskHoverValue);
     }, [selectedLevel3ID, activityTypesChecks, data])
 
     // Updates the color of the nodes without restarting the network simulation
@@ -193,7 +193,7 @@ export default function Network() {
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
                     <FilterType activityTypesChecks={activityTypesChecks} updateActivityTypeChecks = {updateActivityTypeChecks} typeValues={typeValues}/>
                 </div>
-                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id} data={data}/>                
+                <Main riskVariable={riskVariable} updateRiskHoverValue={updateRiskHoverValue} riskHoverValue={riskHoverValue} id={id} data={data}/>                
             </div>
         </StylesProvider>
     )

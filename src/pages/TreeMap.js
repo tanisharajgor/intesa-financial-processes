@@ -14,7 +14,7 @@ const margin = {top: 10, right: 10, bottom: 10, left: 10},
     height = 1200 - margin.top - margin.bottom;
 
 // Tooltip
-function renderTooltip(riskVariable, updateHoverValue) {
+function renderTooltip(riskVariable, updateRiskHoverValue) {
 
     const labelScale = createLabelScale(riskVariable);
 
@@ -40,7 +40,7 @@ function renderTooltip(riskVariable, updateHoverValue) {
                 .attr("stroke", "grey")
                 .attr("stroke-width", 2);
 
-            updateHoverValue(d.data.riskStatus[riskVariable]);
+            updateRiskHoverValue(d.data.riskStatus[riskVariable]);
 
         }).on("mouseout", function() {
 
@@ -51,7 +51,7 @@ function renderTooltip(riskVariable, updateHoverValue) {
                 .attr("opacity", 1)
                 .attr("stroke", "none");
 
-            updateHoverValue(undefined);
+            updateRiskHoverValue(undefined);
         });
 }
 
@@ -76,7 +76,7 @@ function addProcessLabels(rectHeight) {
 export default function TreeMap() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
-    const [hoverValue, updateHoverValue] = useState(undefined);
+    const [riskHoverValue, updateRiskHoverValue] = useState(undefined);
 
     // Set-up scales
     const colorScale = createColorScale(riskVariable, riskVariables);
@@ -122,14 +122,14 @@ export default function TreeMap() {
             .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
             .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible");
 
-        renderTooltip(riskVariable, updateHoverValue);
+        renderTooltip(riskVariable, updateRiskHoverValue);
     }, [])
 
     useEffect(() => {
         d3.selectAll(`#${id} svg g rect`)
             .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
 
-        renderTooltip(riskVariable, updateHoverValue);
+        renderTooltip(riskVariable, updateRiskHoverValue);
     }, [riskVariable])
 
     return(
@@ -137,7 +137,7 @@ export default function TreeMap() {
             <div className="Content">
                 <Navigation/>
                 <div className="Query" id="FilterMenu"></div>
-                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id} data={data}/>
+                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} id={id} data={data}/>
             </div>
         </StylesProvider>
     )

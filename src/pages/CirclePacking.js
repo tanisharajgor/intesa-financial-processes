@@ -9,7 +9,7 @@ import { StylesProvider } from "@material-ui/core/styles";
 const id = "circle-packing-chart";
 
 // Tooltip
-function renderTooltip(riskVariable, updateHoverValue) {
+function renderTooltip(riskVariable, updateRiskHoverValue) {
 
     const labelScale = createLabelScale(riskVariable);
 
@@ -33,14 +33,14 @@ function renderTooltip(riskVariable, updateHoverValue) {
             .attr("stroke", "grey")
             .attr("stroke-width", 2);
 
-        updateHoverValue(d.data.riskStatus[riskVariable]);
+        updateRiskHoverValue(d.data.riskStatus[riskVariable]);
 
     }).on("mouseout", function() {
 
         inspect.style("visibility", "hidden");
         inspect.style("display", "none");
 
-        updateHoverValue(undefined);
+        updateRiskHoverValue(undefined);
 
         d3.selectAll('circle')
             .attr("stroke-width", .5)
@@ -51,7 +51,7 @@ function renderTooltip(riskVariable, updateHoverValue) {
 export default function CirclePacking() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
-    const [hoverValue, updateHoverValue] = useState(undefined);
+    const [riskHoverValue, updateRiskHoverValue] = useState(undefined);
 
     const height = 932, width = 932;
 
@@ -119,7 +119,7 @@ export default function CirclePacking() {
             });
         }
 
-        renderTooltip(riskVariable, updateHoverValue);
+        renderTooltip(riskVariable, updateRiskHoverValue);
 
     }, [])
 
@@ -128,7 +128,7 @@ export default function CirclePacking() {
         d3.selectAll(`#${id} svg circle`)
             .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
 
-        renderTooltip(riskVariable, updateHoverValue);
+        renderTooltip(riskVariable, updateRiskHoverValue);
     }, [riskVariable])
 
     return(
@@ -136,7 +136,7 @@ export default function CirclePacking() {
             <div className="Content">
                 <Navigation/>
                 <div className="Query" id="FilterMenu"></div>
-                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id} data={data}/>
+                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} id={id} data={data}/>
             </div>
         </StylesProvider>
     )

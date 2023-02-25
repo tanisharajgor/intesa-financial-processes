@@ -7,7 +7,7 @@ const width = 216;
 const height = 15;
 var colorScale;
 
-function drawLegend(svg, t, hoverValue, variable) {
+function drawLegend(svg, t, riskHoverValue, variable) {
 
     if (!t.values.includes('NA')) {
         t.values.push('NA')
@@ -25,7 +25,7 @@ function drawLegend(svg, t, hoverValue, variable) {
             .attr('cy', ((d) => 20 + i*20))
             .attr('r', 5)
             .attr('fill', ((d) => t.values[i] === "NA" ? naColor: colorScale(t.values[i])))
-            .attr('opacity', ((d) => t.values[i] === hoverValue || hoverValue === undefined? 1: .5));
+            .attr('opacity', ((d) => t.values[i] === riskHoverValue || riskHoverValue === undefined? 1: .5));
 
         svg
             .append("text")
@@ -33,12 +33,12 @@ function drawLegend(svg, t, hoverValue, variable) {
             .attr("y", ((d) => 25 + i*20))
             .text(((d) => t.labels[i]))
             .style("fill", "white")
-            .attr('opacity', ((d) => t.values[i] === hoverValue || hoverValue === undefined? 1: .5));
+            .attr('opacity', ((d) => t.values[i] === riskHoverValue || riskHoverValue === undefined? 1: .5));
     }
 }
 
 // Initiates the legend svg and sets the non-changing attributes
-function initiateLegend(variable, variableLookup, hoverValue) {
+function initiateLegend(variable, variableLookup, riskHoverValue) {
 
     let t = variableLookup[variable];
     let h = height + (t.values.length + 1)*20;
@@ -49,11 +49,11 @@ function initiateLegend(variable, variableLookup, hoverValue) {
         .attr('height', h)
         .append("g");
 
-    drawLegend(svg, t, hoverValue, variable);
+    drawLegend(svg, t, riskHoverValue, variable);
 }
 
 // Updates the legend attributes on variable change
-function updateLegend(variable, variableLookup, hoverValue) {
+function updateLegend(variable, variableLookup, riskHoverValue) {
 
     let t = variableLookup[variable];
     let h = height + (t.values.length + 1)*20;
@@ -63,7 +63,7 @@ function updateLegend(variable, variableLookup, hoverValue) {
     d3.select("#view-legend svg g").remove();
     svg = svg.append("g");
 
-    drawLegend(svg, t, hoverValue, variable);
+    drawLegend(svg, t, riskHoverValue, variable);
 }
 
 export function symbolType(d) {
@@ -207,7 +207,7 @@ function updateViewInfo(networkChart, data) {
     }
 }
 
-export default function View({id, riskVariable, updateRiskVariable, hoverValue, data}) {
+export default function View({id, riskVariable, updateRiskVariable, riskHoverValue, data}) {
 
     const networkChart = id === "network-chart";
 
@@ -227,8 +227,8 @@ export default function View({id, riskVariable, updateRiskVariable, hoverValue, 
     }, []);
 
     useEffect(() => {
-        updateLegend(riskVariable, riskVariables, hoverValue);
-    }, [riskVariable, hoverValue]);
+        updateLegend(riskVariable, riskVariables, riskHoverValue);
+    }, [riskVariable, riskHoverValue]);
 
     useEffect(() => {
         updateViewInfo(networkChart, data);
