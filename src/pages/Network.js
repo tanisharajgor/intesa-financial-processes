@@ -6,8 +6,8 @@ import { StylesProvider } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
-import { riskVariables, createColorScale, applyColorScale, hover } from "../utils/global";
 import { symbolType } from "../components/View";
+import { riskVariables, createColorScale, applyColorScale } from "../utils/global";
 
 const id = "network-chart";
 let width = 1000;
@@ -17,7 +17,7 @@ let colorScale;
 let nodes;
 
 // Tooltip
-function renderTooltip(data, updateHoverID) {
+function renderTooltip(data, riskVariable, updateHoverValue) {
 
     let inspect = d3.select(".Inspect");
 
@@ -49,7 +49,7 @@ function renderTooltip(data, updateHoverID) {
             .attr("stroke", d => b.includes(d.index)? "grey": linkColor)
             .attr("stroke-width", d => b.includes(d.index)? 1.5: 1);
 
-        updateHoverID(d.id);
+        updateHoverValue(d.riskStatus[riskVariable]);
 
     }).on("mouseout", function() {
 
@@ -65,7 +65,7 @@ function renderTooltip(data, updateHoverID) {
             .attr("opacity", 1)
             .attr("stroke", linkColor);
 
-        updateHoverID(-1);
+        updateHoverValue(undefined);
     });
 }
 
@@ -155,13 +155,10 @@ export default function Network() {
     const typeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
-    const [hoverID, updateHoverID] = useState(-1);
+    const [hoverValue, updateHoverValue] = useState(undefined);
     const [activityTypesChecks, updateActivityTypeChecks] = useState(typeValues);
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
  
-    // Hover
-    let hoverValue = hover(data.nodes, hoverID, riskVariable);
-
     // Set-up scales
     colorScale = createColorScale(riskVariable, riskVariables);
 
@@ -179,7 +176,7 @@ export default function Network() {
     useEffect(() => {
         renderNetwork(data, riskVariable);
         nodes = d3.selectAll(`#${id} svg path`);
-        renderTooltip(data, updateHoverID);
+        renderTooltip(data, riskVariable, updateHoverValue);
     }, [selectedLevel3ID, activityTypesChecks, data])
 
     // Updates the color of the nodes without restarting the network simulation

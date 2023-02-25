@@ -80,22 +80,3 @@ export function createLabelScale(riskVariable) {
 
     return scale;
 }
-
-
-export function hover(data, hoverID, riskVariable) {
-
-    if (data.children === undefined) {
-        let rStatus = data.find((d) => d.id === hoverID);
-
-        if (rStatus !== undefined) {
-    
-            if (rStatus.riskStatus[riskVariable] === undefined) {
-                return "NA";
-            } else {
-                return rStatus.riskStatus[riskVariable];
-            }
-        } else {
-            return undefined;
-        }
-    }
-}
