@@ -7,6 +7,12 @@ const width = 216;
 const height = 15;
 var colorScale;
 
+const shapeData = [{"group": "Actor", "type": "Actor"},
+                      {"group": "Activity", "type": "Process activity"},
+                      {"group": "Activity", "type": "Control activity"},
+                      {"group": "Activity", "type": "Common process activity"},
+                      {"group": "Activity", "type": "System activity"}]
+
 function drawLegend(svg, t, riskHoverValue, variable) {
 
     if (!t.values.includes('NA')) {
@@ -38,7 +44,7 @@ function drawLegend(svg, t, riskHoverValue, variable) {
 }
 
 // Initiates the legend svg and sets the non-changing attributes
-function initiateLegend(variable, variableLookup, riskHoverValue) {
+function initRiskLegend(variable, variableLookup, riskHoverValue) {
 
     let t = variableLookup[variable];
     let h = height + (t.values.length + 1)*20;
@@ -83,24 +89,44 @@ export function symbolType(d) {
     }
 }
 
-function shapeLegend(networkChart) {
+
+export function symbolScale(d) {
+
+    if (d.group === "Actor") {
+        return 1;
+    } else {
+        if (d.type === "Process activity") {
+            return 2;
+        } else if (d.type === "Control activity") {
+            return 3;
+        } else if (d.type === "Common process activity") {
+            return 4;
+        } else {
+            return 5;
+        }
+    }
+}
+
+function initShapeLegend() {
+
+    let h = height + (shapeData.length + 1)*20;
+
+    d3.select(`#shape-legend`)
+        .append("svg")
+        .attr("width", width)
+        .attr("height", h);
+}
+
+function updateShapeLegend(networkChart, symbolHoverValue) {
+
+    // console.log(symbolHoverValue)
     if (networkChart) {
-        const data = [{"group": "Actor", "type": "Actor"},
-                      {"group": "Activity", "type": "Process activity"},
-                      {"group": "Activity", "type": "Control activity"},
-                      {"group": "Activity", "type": "Common process activity"},
-                      {"group": "Activity", "type": "System activity"}]
 
-        let h = height + (data.length + 1)*20;
-
-        var svg = d3.select(`#shape-legend`)
-            .append("svg")
-            .attr("width", width)
-            .attr("height", h);
+        let svg = d3.select("#shape-legend svg")
 
         svg
             .selectAll("path")
-            .data(data)
+            .data(shapeData)
             .enter()
             .append("path")
             .attr("d", d3.symbol()
@@ -110,20 +136,27 @@ function shapeLegend(networkChart) {
                 return 'translate(' + 10 + ', ' + (i*25 + 15) + ')';
             })
             .attr("fill", "white")
+            .attr('opacity', function(d) {
+                console.log(symbolScale(d))
+
+                console.log(symbolScale(d) === symbolHoverValue)
+            })
+            // .attr('opacity', ((d) => symbolScale(d) === symbolHoverValue || symbolHoverValue === undefined? 1: .5));
 
         svg
             .selectAll("text")
-            .data(data)
+            .data(shapeData)
             .enter()
             .append("text")
             .attr("x", 25)
             .attr("y", ((d, i) => i*25 + 20))
-            .text((d) => d.type)
             .attr("fill", "white")
+            .attr('opacity', ((d) => symbolScale(d) === symbolHoverValue || symbolHoverValue === undefined? 1: .5))
+            .text((d) => d.type);
     }
 }
 
-function shapeType(id) {
+function shapeType() {
     return(
         <div className="layout_row">
             <span className="layout_item key">
@@ -207,7 +240,7 @@ function updateViewInfo(networkChart, data) {
     }
 }
 
-export default function View({id, riskVariable, updateRiskVariable, riskHoverValue, data}) {
+export default function View({id, riskVariable, updateRiskVariable, riskHoverValue, symbolHoverValue, data}) {
 
     const networkChart = id === "network-chart";
 
@@ -219,11 +252,15 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
     }
 
     useEffect(() => {
-        shapeLegend(networkChart);
-    }, []);
+        initShapeLegend();
+    }, [])
 
     useEffect(() => {
-        initiateLegend(riskVariable, riskVariables);
+        updateShapeLegend(networkChart, symbolHoverValue);
+    }, [symbolHoverValue]);
+
+    useEffect(() => {
+        initRiskLegend(riskVariable, riskVariables);
     }, []);
 
     useEffect(() => {
