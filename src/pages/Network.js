@@ -173,13 +173,8 @@ export default function Network() {
     const [activityTypesChecks, updateActivityTypeChecks] = useState(typeValues);
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
 
-    // console.log(graph.find((d) => d.id === selectedLevel3ID))
-    // console.log(graph.filter((d) => d.id === selectedLevel3ID))
-    // console.log(data)
-
     // Filter data
     useEffect(() => {
-        // let d = graph.find((d) => d.id === selectedLevel3ID);
         updateData(filterData(selectedLevel3ID, activityTypesChecks))
     }, [selectedLevel3ID, activityTypesChecks])
 
@@ -190,11 +185,6 @@ export default function Network() {
     useEffect(() => {
         initNetwork(data, riskVariable);
     }, [])
-
-    // useEffect(() => {
-    //    updateData(filterData(selectedLevel3ID, activityTypesChecks))
-    // }, [activityTypesChecks, selectedLevel3ID])
-
 
     // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
     useEffect(() => {
