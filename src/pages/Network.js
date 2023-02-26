@@ -16,6 +16,15 @@ const linkColor = "#373d44";
 let colorScale;
 let nodes;
 
+var simulation = d3.forceSimulation()
+    .force("link", d3.forceLink().id(function(d) { return d.id; }))
+    .force("charge", d3.forceManyBody().strength(-1.5))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("collide", d3.forceCollide().strength(2).radius(8));
+
+const rScale = d3.scaleLinear()
+    .range([8, 15]);
+
 // Tooltip
 function renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue) {
 
@@ -81,54 +90,51 @@ function filterData(selectedLevel3ID, activityTypesChecks) {
     return dataNew;
 }
 
-function initNetwork() {
+function initNetwork(data, riskVariable) {
     d3.select(`#${id}`)
         .append("svg")
         .attr("width", width)
-        .attr("height", height)
-        .append("g");
+        .attr("height", height);
+
+    renderNetwork(data, riskVariable);
 }
 
 function renderNetwork(data, riskVariable) {
 
     var svg = d3.select(`#${id} svg`);
-    d3.select(`#${id} svg g`).remove();
-    svg = svg.append("g")
 
-    const rScale = d3.scaleLinear()
-        .domain(d3.extent(data.nodes, ((d) => d.nActivities === undefined ? 1: d.nActivities)))
-        .range([100, 300]);
-
-    var simulation = d3.forceSimulation()
-        .force("link", d3.forceLink().id(function(d) { return d.id; }))
-        .force("charge", d3.forceManyBody().strength(-1.5))
-        .force("center", d3.forceCenter(width / 2, height / 2))
-        .force("collide", d3.forceCollide().strength(2).radius(8));
+    rScale.domain = d3.extent(data.nodes, ((d) => d.nActivities === undefined ? 1: d.nActivities));
 
     var link = svg
-        .append("g")
-            .attr("class", "links")
-            .selectAll("line")
-            .data(data.links)
-            .enter()
-            .append("line")
-            .attr("stroke", linkColor)
-            .attr("id", d => `link-${d.index}`)
-            .attr("class", "link");
+        .selectAll("line")
+        .data(data.links, function (d) { return d.source.id + "-" + d.target.id; })
+        .join(
+            enter  => enter
+                .append("line")
+                .attr("stroke", linkColor)
+                .attr("id", d => `link-${d.index}`)
+                .attr("class", "link"),
+            update => update,         
+            exit   => exit.remove()
+        );
 
     var node = svg
-        .append("g")
-            .attr("class", "nodes")
-            .selectAll("path")
-            .data(data.nodes)
-            .enter()
-            .append("path")
-            .attr("d", d3.symbol()
-                .type(((d) => symbolType(d)))
-                .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
-            .attr("stroke-width", .5)
-            .attr("stroke", "white")
-            .attr("fill", d => applyColorScale(d.riskStatus, riskVariable, colorScale));
+        .selectAll("path")
+        .data(data.nodes, d => d.id)
+        .join(
+            enter  => enter
+                .append("path")
+                .attr("d", d3.symbol()
+                    .type(((d) => symbolType(d)))
+                    .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
+                .attr("stroke-width", .5)
+                .attr("stroke", "white")
+                .attr("fill", d => applyColorScale(d.riskStatus, riskVariable, colorScale)),
+            update => update,         
+            exit   => exit.remove()
+        );
+
+    simulation.alpha(1).restart();
 
     simulation
         .nodes(data.nodes)
@@ -167,7 +173,7 @@ export default function Network() {
 
     // React Hooks
     useEffect(() => {
-        initNetwork();
+        initNetwork(data, riskVariable);
     }, [])
 
     // Filter data
