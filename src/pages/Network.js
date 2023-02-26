@@ -6,34 +6,45 @@ import { StylesProvider } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
-import { riskVariables, createColorScale, applyColorScale, hover, actorTypeValues, activityTypeValues } from "../utils/global";
+import { symbolType, symbolScale } from "../components/View";
+import { riskVariables, createColorScale, applyColorScale, actorTypeValues, activityTypeValues } from "../utils/global";
 
 const id = "network-chart";
-var width = 1000;
-var height = 600;
+let width = 1000;
+let height = 600;
 const linkColor = "#373d44";
-var colorScale;
-var nodes;
+let colorScale;
+let nodes;
+
+var simulation = d3.forceSimulation()
+    .force("link", d3.forceLink().id(function(d) { return d.id; }))
+    .force("charge", d3.forceManyBody().strength(-1.5))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("collide", d3.forceCollide().strength(2).radius(8));
+
+const rScale = d3.scaleLinear()
+    .range([8, 15]);
 
 // Tooltip
-function renderTooltip(data, updateHoverID) {
+function renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue) {
 
-    var tooltip = d3.select(`#${id}`)
-        .append("div")
-        .attr("class", "tooltip");
+    let inspect = d3.select(".Inspect");
 
     nodes.on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
-        let x = e.layerX + 20;
-        let y = e.layerY - 10;
 
-        const b = data.links.filter((i) => i.source.id === d.id || i.target.id === d.id).map((d) => d.index)
-
-        tooltip.style("visibility", "visible")
-            .style("top", `${y}px`)
-            .style("left", `${x}px`)
-            .html(`<b>${d.group}</b>: <b>${d.name}</b> <br>Type: ${d.type}`);
+        const b = data.links
+            .filter((i) => i.source.id === d.id || i.target.id === d.id)
+            .map((d) => d.index);
+    
+        inspect.style("display", "inline-block");
+        inspect.style("visibility", "visible")
+        inspect.select(".group .key").text(" " + d.group);
+        inspect.select(".group .value").text(" " + d.name);
+        inspect.select(".type .value").text(" " + d.type);
+        // inspect.select(".connections .key").text(" " + d.group === "Activity"? "# activities": "# actors");
+        inspect.select(".connections .value").text(" " + b.length);
 
         thisCircle
             .attr("stroke", "white")
@@ -47,11 +58,13 @@ function renderTooltip(data, updateHoverID) {
             .attr("stroke", d => b.includes(d.index)? "grey": linkColor)
             .attr("stroke-width", d => b.includes(d.index)? 1.5: 1);
 
-        updateHoverID(d.id);
+        updateSymbolHoverValue(symbolScale(d));
+        updateRiskHoverValue(d.riskStatus[riskVariable]);
 
     }).on("mouseout", function() {
 
-        tooltip.style("visibility", "hidden");
+        inspect.style("visibility", "hidden");
+        inspect.style("display", "none");
         nodes.attr("opacity", 1);
 
         d3.selectAll(`#${id} svg path`)
@@ -62,85 +75,71 @@ function renderTooltip(data, updateHoverID) {
             .attr("opacity", 1)
             .attr("stroke", linkColor);
 
-        updateHoverID(-1);
+        updateRiskHoverValue(undefined);
+        updateSymbolHoverValue(undefined);
     });
 }
-function symbolType(d) {
 
-    if (d.group === "Actor") {
-        return d3.symbolCircle;
-    } else {
-        if (d.type === "Process activity") {
-            return d3.symbolSquare;
-        } else if (d.type === "Control activity") {
-            return d3.symbolStar;
-        } else if (d.type === "Common process activity") {
-            return d3.symbolTriangle;
-        } else {
-            return d3.symbolDiamond;
-        }
-    }
-}
-
-
-// Filtes the data by level3ID and activity Type
-function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
-
+// Filters the data by level3ID and activity Type
+function filterData(selectedLevel3ID, activityTypesChecks) {
     let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID));
-    dataNew.nodes = dataNew.nodes.filter((d) => actorTypesChecks.concat(activityTypesChecks).includes(d.type));
-    let ids = dataNew.nodes.map((d) => d.id)
-    dataNew.links = dataNew.links.filter((d) => ids.includes(d.source.id === undefined ? d.source : d.source.id) && ids.includes(d.target.id === undefined ? d.target : d.target.id))
+
+    let activityIds = dataNew.nodes.filter(d => activityTypesChecks.includes(d.type)).map(d => d.id);
+    let links = dataNew.links.filter(d => activityIds.includes(d.source.id));
+
+    let actorIds = [...new Set(links.map(d => d.target.id))];
+    let ids = activityIds.concat(actorIds)
+
+    dataNew.nodes = dataNew.nodes.filter((d) => ids.includes(d.id));
+    dataNew.links = links;
     return dataNew;
 }
 
-function initNetwork() {
+function initNetwork(data, riskVariable) {
     d3.select(`#${id}`)
         .append("svg")
         .attr("width", width)
-        .attr("height", height)
-        .append("g");
+        .attr("height", height);
+
+    renderNetwork(data, riskVariable);
 }
 
 function renderNetwork(data, riskVariable) {
 
     var svg = d3.select(`#${id} svg`);
-    d3.select(`#${id} svg g`).remove();
-    svg = svg.append("g")
 
-    const rScale = d3.scaleLinear()
-        .domain(d3.extent(data.nodes, ((d) => d.nActivities === undefined ? 1: d.nActivities)))
-        .range([100, 300]);
-
-    var simulation = d3.forceSimulation()
-        .force("link", d3.forceLink().id(function(d) { return d.id; }))
-        .force("charge", d3.forceManyBody().strength(-1.5))
-        .force("center", d3.forceCenter(width / 2, height / 2))
-        .force("collide", d3.forceCollide().strength(2).radius(8));
+    rScale.domain = d3.extent(data.nodes, ((d) => d.nActivities === undefined ? 1: d.nActivities));
 
     var link = svg
-        .append("g")
-            .attr("class", "links")
-            .selectAll("line")
-            .data(data.links)
-            .enter()
-            .append("line")
-            .attr("stroke", linkColor)
-            .attr("id", d => `link-${d.index}`)
-            .attr("class", "link");
+        .selectAll("line")
+        .data(data.links, function (d) { return d.source.id + "-" + d.target.id; })
+        .join(
+            enter  => enter
+                .append("line")
+                .attr("stroke", linkColor)
+                .attr("id", d => `link-${d.index}`)
+                .attr("class", "link"),
+            update => update,         
+            exit   => exit.remove()
+        );
 
     var node = svg
-        .append("g")
-            .attr("class", "nodes")
-            .selectAll("path")
-            .data(data.nodes)
-            .enter()
-            .append("path")
-            .attr("d", d3.symbol()
-                .type(((d) => symbolType(d)))
-                .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
-            .attr("stroke-width", .5)
-            .attr("stroke", "white")
-            .attr("fill", d => applyColorScale(d.riskStatus, riskVariable, colorScale));
+        .selectAll("path")
+        .data(data.nodes, d => d.id)
+        .join(
+            enter  => enter
+                .append("path")
+                .attr("d", d3.symbol()
+                    .type(((d) => symbolType(d)))
+                    .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
+                .attr("stroke-width", .5)
+                .attr("stroke", "white")
+                .attr("fill", d => applyColorScale(d.riskStatus, riskVariable, colorScale)),
+            update => update,         
+            exit   => exit.remove()
+        );
+
+    simulation.alpha(1).restart();
 
     simulation
         .nodes(data.nodes)
@@ -168,20 +167,18 @@ export default function Network() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
-    const [hoverID, updateHoverID] = useState(-1);
     const [activityTypesChecks, updateActivityTypeChecks] = useState(activityTypeValues);
     const [actorTypesChecks, updateActorTypeChecks] = useState(actorTypeValues);
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
-
-    // Hover
-    let hoverValue = hover(data.nodes, hoverID, riskVariable);
+    const [riskHoverValue, updateRiskHoverValue] = useState(undefined);
+    const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
 
     // Set-up scales
     colorScale = createColorScale(riskVariable, riskVariables);
 
     // React Hooks
     useEffect(() => {
-        initNetwork();
+        initNetwork(data, riskVariable);
     }, [])
 
     // Filter data
@@ -193,8 +190,12 @@ export default function Network() {
     useEffect(() => {
         renderNetwork(data, riskVariable);
         nodes = d3.selectAll(`#${id} svg path`);
-        renderTooltip(data, updateHoverID);
-    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data])
+        renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
+    }, [selectedLevel3ID, activityTypesChecks, data])
+
+    useEffect(() => {
+        renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
+    }, [selectedLevel3ID, activityTypesChecks, data, riskVariable])
 
     // Updates the color of the nodes without restarting the network simulation
     useEffect(() => {
@@ -211,7 +212,7 @@ export default function Network() {
                     <FilterType typesChecks={activityTypesChecks} updateTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues} label="Filter by Activity Type:"/>
                     <FilterType typesChecks={actorTypesChecks} updateTypeChecks = {updateActorTypeChecks} typeValues={actorTypeValues} label="Filter by Actor Type:"/>
                 </div>
-                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id}/>                
+                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} symbolHoverValue={symbolHoverValue} id={id} data={data}/>                
             </div>
         </StylesProvider>
     )

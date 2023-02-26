@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { riskVariables, createColorScale, applyColorScale, createLabelScale, hover } from "../utils/global";
+import { riskVariables, createColorScale, applyColorScale, createLabelScale } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -14,42 +14,44 @@ const margin = {top: 10, right: 10, bottom: 10, left: 10},
     height = 1200 - margin.top - margin.bottom;
 
 // Tooltip
-function renderTooltip(riskVariable, updateHoverID) {
+function renderTooltip(riskVariable, updateRiskHoverValue) {
 
     const labelScale = createLabelScale(riskVariable);
 
-    const tooltip = d3.select(`#${id}`)
-        .append("div")
-        .attr("class", "tooltip");
+    let inspect = d3.select(".Inspect");
 
     d3.selectAll("rect")
         .on("mouseover", function(e, d) {
 
             let thisRect = d3.select(this);
-            let x = e.layerX + 20;
-            let y = e.layerY - 10;
-
             let type = d.data.treeLevel === 4? "Activity": "Process";
+            let rs = d.data.riskStatus[riskVariable];
+    
+            inspect.style("display", "inline-block");
+            inspect.style("visibility", "visible")
+            inspect.select(".name .key").text(" " + type);
+            inspect.select(".name .value").text(" " + d.data.name);
+            inspect.select(".risk .key").text(" " + riskVariables[riskVariable].label);
+            inspect.select(".risk .value").text(" " + labelScale(rs));
 
-            tooltip.style("visibility", "visible")
-                .style("top", `${y}px`)
-                .style("left", `${x}px`)
-                .html(`${type}: <b>${d.data.name}</b><br>${riskVariables[riskVariable].label}: <b>${d.data.riskStatus[riskVariable]===undefined? "NA": labelScale(d.data.riskStatus[riskVariable])}</b>`);
+            // console.log(d.data.riskStatus[riskVariable])
 
             thisRect
                 .attr("stroke", "grey")
                 .attr("stroke-width", 2);
 
-            updateHoverID(d.data.id);
+            updateRiskHoverValue(d.data.riskStatus[riskVariable]);
 
         }).on("mouseout", function() {
 
-            tooltip.style("visibility", "hidden");
+            inspect.style("visibility", "hidden");
+            inspect.style("display", "none");
+
             d3.selectAll("rect")
                 .attr("opacity", 1)
                 .attr("stroke", "none");
 
-            updateHoverID(-1);
+            updateRiskHoverValue(undefined);
         });
 }
 
@@ -74,10 +76,7 @@ function addProcessLabels(rectHeight) {
 export default function TreeMap() {
 
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
-    const [hoverID, updateHoverID] = useState(-1);
-
-    // Hover
-    let hoverValue = hover(data, hoverID, riskVariable);
+    const [riskHoverValue, updateRiskHoverValue] = useState(undefined);
 
     // Set-up scales
     const colorScale = createColorScale(riskVariable, riskVariables);
@@ -123,14 +122,14 @@ export default function TreeMap() {
             .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
             .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible");
 
-        renderTooltip(riskVariable, updateHoverID);
+        renderTooltip(riskVariable, updateRiskHoverValue);
     }, [])
 
     useEffect(() => {
         d3.selectAll(`#${id} svg g rect`)
             .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
 
-        renderTooltip(riskVariable, updateHoverID);
+        renderTooltip(riskVariable, updateRiskHoverValue);
     }, [riskVariable])
 
     return(
@@ -138,7 +137,7 @@ export default function TreeMap() {
             <div className="Content">
                 <Navigation/>
                 <div className="Query" id="FilterMenu"></div>
-                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} hoverValue={hoverValue} id={id}/>
+                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} id={id} data={data}/>
             </div>
         </StylesProvider>
     )

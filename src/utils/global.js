@@ -10,20 +10,23 @@ const missingColor = "#4B4B4B";
 export const riskVariables = {
     "controlTypeMode": {
         label: "Control type mode",
-        values: ["Manual", "Semi-automatic", "Automatic", "Missing"],
-        labels: ["Manual", "Semi-automatic", "Automatic", "Missing"],
-        colors: ["#FF0000", "#FFC41F", "#0071BC", missingColor]
+        values: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
+        id: [1, 2, 3, 4, 5],
+        labels: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
+        colors: ["#FF0000", "#FFC41F", "#0071BC", missingColor, naColor]
     },
     "financialDisclosureRiskAny": {
         label: "Financial disclosure risk",
-        labels: ["Yes", "No", "Missing"],
-        values: [true, false, "Missing"],
-        colors: ["#FF0000", "#0071BC", missingColor]
+        labels: ["Yes", "No", "Missing", "NA"],
+        id: [6, 7, 8, 9],
+        values: [true, false, "Missing", "NA"],
+        colors: ["#FF0000", "#0071BC", missingColor, naColor]
     },
     "controlPeriodocityMode": {
         label: "Periodicity",
-        values: [3650, 365, 182, 91, 30, 7, 1, .1, 'Missing'],
-        labels: ['Decadal', 'Annually', 'Half yearly', 'Quarterly', 'Monthly', 'Weekly', 'Daily', 'Per event', 'Missing']
+        values: [3650, 365, 182, 91, 30, 7, 1, .1, 'Missing', 'NA'],
+        id: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+        labels: ['Decadal', 'Annually', 'Half yearly', 'Quarterly', 'Monthly', 'Weekly', 'Daily', 'Per event', 'Missing', 'NA']
     }
 }
 
@@ -34,8 +37,6 @@ export function createColorScale(variable, variableLookup) {
 
     let t = variableLookup[variable]
     if (variable === "controlPeriodocityMode") {
-
-        console.log(d3.extent(t.values))
 
         var scale = d3.scaleSequentialLog(d3.interpolate("orange", "purple"))
             .domain(d3.extent(t.values));
@@ -83,24 +84,5 @@ export function createLabelScale(riskVariable) {
     return scale;
 }
 
-
-export function hover(data, hoverID, riskVariable) {
-
-    if (data.children === undefined) {
-        let rStatus = data.find((d) => d.id === hoverID);
-
-        if (rStatus !== undefined) {
-    
-            if (rStatus.riskStatus[riskVariable] === undefined) {
-                return "NA";
-            } else {
-                return rStatus.riskStatus[riskVariable];
-            }
-        } else {
-            return undefined;
-        }
-    }
-}
-
+export const actorTypeValues = ["Organizational unit", "Position", "Person", "Missing", "External Organizational unit"];
 export const activityTypeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
-export const actorTypeValues = ["Organizational unit", "Position", "Person", "External Organizational unit", "Missing"];

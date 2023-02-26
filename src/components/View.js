@@ -4,116 +4,217 @@ import * as d3 from 'd3';
 import { useEffect } from "react";
 
 const width = 216;
-let height = 100;
-var colorScale;
+const height = 15;
+let colorScale;
 
-function drawLegend(svg, t, hoverValue, variable) {
+let riskLegendId = "Risk-Legend";
+let shapeLegendId = "Shape-Legend";
 
-    if (!t.values.includes('NA')) {
-        t.values.push('NA')
+const shapeData = [{"group": "Actor", "type": "Actor"},
+                      {"group": "Activity", "type": "Process activity"},
+                      {"group": "Activity", "type": "Control activity"},
+                      {"group": "Activity", "type": "Common process activity"},
+                      {"group": "Activity", "type": "System activity"}]
+
+function drawRiskLegend(t, riskHoverValue) {
+
+    let svg =  d3.select(`#${riskLegendId} svg`);
+
+    let riskData = []
+    for (let i in t.labels) {
+        riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i]})
     }
 
-    if (!t.labels.includes('NA')) {
-        t.labels.push('NA')
-    }
+    svg
+        .selectAll("circle")
+        .data(riskData, d => d.id)
+        .join(
+            enter  => enter
+                .append("circle")
+                .attr('cx', 10)
+                .attr('cy', ((d, i) => 20 + i*20))
+                .attr('r', 5)
+                .attr('fill', ((d) => d.value === "NA" ? naColor: colorScale(d.value))),
+            update => update
+            .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .3)),             
+            exit   => exit.remove()
+        );
 
-    for (let i in t.values) {
-
-        svg
-            .append("circle")
-            .attr('cx', 10)
-            .attr('cy', ((d) => 20 + i*20))
-            .attr('r', 5)
-            .attr('fill', ((d) => t.values[i] === "NA" ? naColor: colorScale(t.values[i])))
-            .attr('opacity', ((d) => t.values[i] === hoverValue || hoverValue === undefined? 1: .5));
-
-        svg
-            .append("text")
-            .attr("x", 20)
-            .attr("y", ((d) => 25 + i*20))
-            .text(((d) => t.labels[i]))
-            .style("fill", "white")
-            .attr('opacity', ((d) => t.values[i] === hoverValue || hoverValue === undefined? 1: .5));
-    }
+    svg
+        .selectAll("text")
+        .data(riskData, d => d.id)
+        .join(
+            enter  => enter
+                .append("text")
+                .attr("x", 20)
+                .attr("y", ((d, i) => 25 + i*20))
+                .text(((d) => d.label))
+                .style("fill", "white"),
+            update => update
+                .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .3)),
+            exit   => exit.remove()
+    );
 }
 
 // Initiates the legend svg and sets the non-changing attributes
-function initiateLegend(variable, variableLookup, hoverValue) {
+function initRiskLegend(variable, variableLookup, riskHoverValue) {
 
     let t = variableLookup[variable];
+    let h = height + (t.values.length + 1)*20;
 
-    if (t.values.length > 2) {
-        height += (t.values.length + 1)*20;
-    }
-
-    const svg = d3.select("#view-legend")
+    d3.select(`#${riskLegendId}`)
         .append("svg")
         .attr('width', width)
-        .attr('height', height)
-        .append("g");
+        .attr('height', h);
 
-    drawLegend(svg, t, hoverValue, variable);
+    drawRiskLegend(t, riskHoverValue);
 }
 
 // Updates the legend attributes on variable change
-function updateLegend(variable, variableLookup, hoverValue) {
+function updateRiskLegend(variable, variableLookup, riskHoverValue) {
 
     let t = variableLookup[variable];
+    let h = height + (t.values.length + 1)*20;
 
-    let svg = d3.select("#view-legend svg");
-    d3.select("#view-legend svg g").remove();
-    svg = svg.append("g");
+    let svg = d3.select(`#${riskLegendId} svg`);
+    svg.attr("height", h)
 
-    drawLegend(svg, t, hoverValue, variable);
+    drawRiskLegend(t, riskHoverValue);
 }
 
-function shapeLegend(id) {
-    if (id === "network-chart") {
-        const data = [{"name": "Actor", "type": "circle"},
-                      {"name": "Activity", "type": "triangle"}]
+export function symbolType(d) {
 
-        var svg = d3.select(`#shape-legend`)
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height);
+    if (d.group === "Actor") {
+        return d3.symbolCircle;
+    } else {
+        if (d.type === "Process activity") {
+            return d3.symbolSquare;
+        } else if (d.type === "Control activity") {
+            return d3.symbolStar;
+        } else if (d.type === "Common process activity") {
+            return d3.symbolTriangle;
+        } else {
+            return d3.symbolDiamond;
+        }
+    }
+}
+
+export function symbolScale(d) {
+
+    if (d.group === "Actor") {
+        return 1;
+    } else {
+        if (d.type === "Process activity") {
+            return 2;
+        } else if (d.type === "Control activity") {
+            return 3;
+        } else if (d.type === "Common process activity") {
+            return 4;
+        } else {
+            return 5;
+        }
+    }
+}
+
+function initShapeLegend(networkChart, symbolHoverValue) {
+
+    let h = height + (shapeData.length + 1)*20;
+
+    d3.select(`#${shapeLegendId}`)
+        .append("svg")
+        .attr("width", width)
+        .attr("height", h);
+
+    drawShapeLegend(networkChart, symbolHoverValue);
+}
+
+function drawShapeLegend(networkChart, symbolHoverValue) {
+    if (networkChart) {
+
+        let svg = d3.select(`#${shapeLegendId} svg`)
 
         svg
             .selectAll("path")
-            .data(data)
-            .enter()
-            .append("path")
-            .attr("d", d3.symbol()
-            .type(function(d) { return d.type === "circle" ? d3.symbolCircle : d3.symbolTriangle; })
-                .size(100))
-            .attr("transform", function(d, i) {
-                return 'translate(' + 10 + ', ' + (i*25 + 15) + ')';
-            })
-            .attr("fill", "white")
+            .data(shapeData, d => d.type)
+            .join(
+                enter  => enter
+                    .append("path")
+                    .attr("d", d3.symbol()
+                    .type(((d) => symbolType(d)))
+                        .size(100))
+                    .attr("transform", function(d, i) {
+                        return 'translate(' + 10 + ', ' + (i*25 + 15) + ')';
+                    })
+                    .attr("fill", "white"),
+                update => update
+                    .attr('opacity', ((d) => symbolScale(d) === symbolHoverValue || symbolHoverValue === undefined? 1: .3)),
+                exit   => exit.remove()
+            );
 
         svg
             .selectAll("text")
-            .data(data)
-            .enter()
-            .append("text")
-            .attr("x", 25)
-            .attr("y", ((d, i) => i*25 + 20))
-            .text((d) => d.name)
-            .attr("fill", "white")
+            .data(shapeData, d => d.type)
+            .join(
+                enter  => enter
+                    .append("text")
+                    .attr("x", 25)
+                    .attr("y", ((d, i) => i*25 + 20))
+                    .attr("fill", "white")
+                    .text((d) => d.type),
+                update => update
+                    .attr('opacity', ((d) => symbolScale(d) === symbolHoverValue || symbolHoverValue === undefined? 1: .3)),
+                exit   => exit.remove()
+            );
     }
 }
 
-function shapeType(id) {
-    if (id === "network-chart") {
-        return(
-            <div className="layout_row">
-                <span className="layout_item key">
-                    Shape
-                </span>
-                <span className="layout_item"></span>
-                <div id="shape-legend"></div>
-            </div>
-        )
-    }
+function updateShapeLegend(networkChart, symbolHoverValue) {
+    drawShapeLegend(networkChart, symbolHoverValue);
+}
+
+function shapeType() {
+    return(
+        <div className="layout_row">
+            <span className="layout_item key">
+                Shape
+            </span>
+            <span className="layout_item"></span>
+            <div id={shapeLegendId}></div>
+        </div>
+    )
+}
+
+function viewNNodes() {
+    return(
+        <div className="layout_row">
+            <span className="layout_item key">
+                Number of nodes: 
+            </span>
+            <span id="nNodes" className="layout_item"></span>
+        </div>
+    )
+}
+
+function viewNActors() {
+    return(
+        <div className="layout_row">
+            <span className="layout_item key">
+                Number of actors: 
+            </span>
+            <span id="nActors" className="layout_item"></span>
+        </div>
+    )
+}
+
+function viewNActivities() {
+    return(
+        <div className="layout_row">
+            <span className="layout_item key">
+                Number of activities: 
+            </span>
+            <span id="nActivities" className="layout_item"></span>
+        </div>
+    )
 }
 
 function riskType() {
@@ -127,35 +228,73 @@ function riskType() {
     )
 }
 
-export default function View({id, riskVariable, updateRiskVariable, hoverValue}) {
+function viewInfo(networkChart) {
+    return(
+        <div className="inner">
+            <div className="layout_group inline">
+                {networkChart? viewNNodes(): <></> }
+                {networkChart? viewNActors(): <></> }
+                {networkChart? viewNActivities(): <></> }
+                {networkChart? shapeType(): <></>}
+                {riskType()}
+            </div>
+        </div>
+    )
+}
+
+function updateViewInfo(networkChart, data) {
+    if (networkChart) {
+            
+        d3.select("#nNodes")
+        .text(` ${data.nodes.length}`);
+
+        d3.select("#nActors")
+            .text(` ${data.nodes.filter(d => d.group === "Actor").length}`);
+
+        d3.select("#nActivities")
+            .text(` ${data.nodes.filter(d => d.group === "Activity").length}`);
+    }
+}
+
+export default function View({id, riskVariable, updateRiskVariable, riskHoverValue, symbolHoverValue, data}) {
+
+    const networkChart = id === "network-chart";
 
     colorScale = createColorScale(riskVariable, riskVariables);
 
     const handleChange = (event) => {
-        let newView = (Object.keys(riskVariables).find((c) => riskVariables[c].label === event.target.value))
+        let newView = (Object.keys(riskVariables).find((c) => riskVariables[c].label === event.target.value));
         updateRiskVariable(newView)
     }
 
+    // Initiate the shape legend
     useEffect(() => {
-        shapeLegend(id)
+        initShapeLegend(networkChart, symbolHoverValue);
     }, [])
 
+    // Update the shape legend
     useEffect(() => {
-        initiateLegend(riskVariable, riskVariables);
-    }, [])
+        updateShapeLegend(networkChart, symbolHoverValue);
+    }, [symbolHoverValue]);
+
+    // Initiate the risk legend
+    useEffect(() => {
+        initRiskLegend(riskVariable, riskVariables);
+    }, []);
+
+    // Update the risk legend
+    useEffect(() => {
+        updateRiskLegend(riskVariable, riskVariables, riskHoverValue);
+    }, [riskVariable, riskHoverValue]);
 
     useEffect(() => {
-        updateLegend(riskVariable, riskVariables, hoverValue);
-    }, [riskVariable, hoverValue])
+        updateViewInfo(networkChart, data);
+    }, [data])
 
     return(
         <div>
-            <div className="inner">
-                <div className="layout_group inline">
-                    {/* {shapeType(id)} */}
-                    {riskType()}
-                </div>
-            </div>
+            <div>View</div>
+            {viewInfo(networkChart)}
             <div className='View'>
                 <FormControl variant="outlined" size="small">
                     <Select
@@ -173,7 +312,7 @@ export default function View({id, riskVariable, updateRiskVariable, hoverValue})
                             )
                         })}
                     </Select>
-                    <div id="view-legend"></div>
+                    <div id={riskLegendId}></div>
                 </FormControl>
             </div>
         </div>
