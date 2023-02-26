@@ -20,14 +20,6 @@ function drawRiskLegend(t, riskHoverValue) {
 
     let svg =  d3.select(`#${riskLegendId} svg`);
 
-    if (!t.values.includes('NA')) {
-        t.values.push('NA')
-    }
-
-    if (!t.labels.includes('NA')) {
-        t.labels.push('NA')
-    }
-
     let riskData = []
     for (let i in t.labels) {
         riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i]})
@@ -43,8 +35,12 @@ function drawRiskLegend(t, riskHoverValue) {
                 .attr('cy', ((d, i) => 20 + i*20))
                 .attr('r', 5)
                 .attr('fill', ((d) => d.value === "NA" ? naColor: colorScale(d.value)))
-                .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .5)),
-            update => update,             
+                .attr('opacity', function(d) {
+                    console.log(d)
+                    return 1;
+                }),
+            update => update
+            .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .5)),             
             exit   => exit.remove()
         );
 
@@ -57,9 +53,9 @@ function drawRiskLegend(t, riskHoverValue) {
                 .attr("x", 20)
                 .attr("y", ((d, i) => 25 + i*20))
                 .text(((d) => d.label))
-                .style("fill", "white")
+                .style("fill", "white"),
+            update => update
                 .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .5)),
-            update => update,             
             exit   => exit.remove()
     );
 }
