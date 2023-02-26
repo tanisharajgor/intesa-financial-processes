@@ -30,12 +30,12 @@ function drawRiskLegend(t, riskHoverValue) {
 
     let riskData = []
     for (let i in t.labels) {
-        riskData.push({"label": t.labels[i], "value": t.values[i]})
+        riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i]})
     }
 
     svg
         .selectAll("circle")
-        .data(riskData, d => d.label)
+        .data(riskData, d => d.id)
         .join(
             enter  => enter
                 .append("circle")
@@ -50,7 +50,7 @@ function drawRiskLegend(t, riskHoverValue) {
 
     svg
         .selectAll("text")
-        .data(riskData, d => d.label)
+        .data(riskData, d => d.id)
         .join(
             enter  => enter
                 .append("text")
