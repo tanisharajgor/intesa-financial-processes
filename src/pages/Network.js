@@ -183,6 +183,10 @@ export default function Network() {
         renderNetwork(data, riskVariable);
         nodes = d3.selectAll(`#${id} svg path`);
         renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
+    }, [selectedLevel3ID, activityTypesChecks, data])
+
+    useEffect(() => {
+        renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
     }, [selectedLevel3ID, activityTypesChecks, data, riskVariable])
 
     // Updates the color of the nodes without restarting the network simulation
