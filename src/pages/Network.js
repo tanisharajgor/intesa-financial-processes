@@ -85,9 +85,9 @@ function filterData(selectedLevel3ID, activityTypesChecks) {
     let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID));
 
     let activityIds = dataNew.nodes.filter(d => activityTypesChecks.includes(d.type)).map(d => d.id);
-    let links = dataNew.links.filter(d => activityIds.includes(d.source.id));
+    let links = dataNew.links.filter(d => d.source.id === undefined ? activityIds.includes(d.source) : activityIds.includes(d.source.id));
 
-    let actorIds = [...new Set(links.map(d => d.target.id))];
+    let actorIds = [...new Set(links.map(d => d.target.id === undefined ? d.target: d.target.id))];
     let ids = activityIds.concat(actorIds)
 
     dataNew.nodes = dataNew.nodes.filter((d) => ids.includes(d.id));
@@ -110,8 +110,10 @@ function renderNetwork(data, riskVariable) {
 
     rScale.domain = d3.extent(data.nodes, ((d) => d.nActivities === undefined ? 1: d.nActivities));
 
-    var link = svg
-        .selectAll("line")
+    svg.append("g").attr("class", "links");
+    svg.append("g").attr("class", "nodes");
+
+    var link = svg.select(".links").selectAll(".link")
         .data(data.links, function (d) { return d.source.id + "-" + d.target.id; })
         .join(
             enter  => enter
@@ -173,6 +175,11 @@ export default function Network() {
     const [riskHoverValue, updateRiskHoverValue] = useState(undefined);
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
 
+    // Filter data
+    useEffect(() => {
+        updateData(filterData(selectedLevel3ID, activityTypesChecks))
+    }, [selectedLevel3ID, activityTypesChecks])
+
     // Set-up scales
     colorScale = createColorScale(riskVariable, riskVariables);
 
@@ -180,11 +187,6 @@ export default function Network() {
     useEffect(() => {
         initNetwork(data, riskVariable);
     }, [])
-
-    // Filter data
-    useEffect(() => {
-       updateData(filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks))
-    }, [activityTypesChecks, actorTypesChecks, selectedLevel3ID])
 
     // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
     useEffect(() => {
