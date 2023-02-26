@@ -34,13 +34,9 @@ function drawRiskLegend(t, riskHoverValue) {
                 .attr('cx', 10)
                 .attr('cy', ((d, i) => 20 + i*20))
                 .attr('r', 5)
-                .attr('fill', ((d) => d.value === "NA" ? naColor: colorScale(d.value)))
-                .attr('opacity', function(d) {
-                    console.log(d)
-                    return 1;
-                }),
+                .attr('fill', ((d) => d.value === "NA" ? naColor: colorScale(d.value))),
             update => update
-            .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .5)),             
+            .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .3)),             
             exit   => exit.remove()
         );
 
@@ -55,7 +51,7 @@ function drawRiskLegend(t, riskHoverValue) {
                 .text(((d) => d.label))
                 .style("fill", "white"),
             update => update
-                .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .5)),
+                .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .3)),
             exit   => exit.remove()
     );
 }
@@ -120,7 +116,7 @@ export function symbolScale(d) {
     }
 }
 
-function initShapeLegend() {
+function initShapeLegend(networkChart, symbolHoverValue) {
 
     let h = height + (shapeData.length + 1)*20;
 
@@ -128,43 +124,52 @@ function initShapeLegend() {
         .append("svg")
         .attr("width", width)
         .attr("height", h);
+
+    drawShapeLegend(networkChart, symbolHoverValue);
 }
 
-function updateShapeLegend(networkChart, symbolHoverValue) {
-
+function drawShapeLegend(networkChart, symbolHoverValue) {
     if (networkChart) {
 
         let svg = d3.select(`#${shapeLegendId} svg`)
 
         svg
             .selectAll("path")
-            .data(shapeData)
-            .enter()
-            .append("path")
-            .attr("d", d3.symbol()
-            .type(((d) => symbolType(d)))
-                .size(100))
-            .attr("transform", function(d, i) {
-                return 'translate(' + 10 + ', ' + (i*25 + 15) + ')';
-            })
-            .attr("fill", "white")
-            .attr('opacity', function(d) {
-                console.log(symbolScale(d))
-                console.log(symbolScale(d) === symbolHoverValue)
-            })
-            // .attr('opacity', ((d) => symbolScale(d) === symbolHoverValue || symbolHoverValue === undefined? 1: .5));
+            .data(shapeData, d => d.type)
+            .join(
+                enter  => enter
+                    .append("path")
+                    .attr("d", d3.symbol()
+                    .type(((d) => symbolType(d)))
+                        .size(100))
+                    .attr("transform", function(d, i) {
+                        return 'translate(' + 10 + ', ' + (i*25 + 15) + ')';
+                    })
+                    .attr("fill", "white"),
+                update => update
+                    .attr('opacity', ((d) => symbolScale(d) === symbolHoverValue || symbolHoverValue === undefined? 1: .3)),
+                exit   => exit.remove()
+            );
 
         svg
             .selectAll("text")
-            .data(shapeData)
-            .enter()
-            .append("text")
-            .attr("x", 25)
-            .attr("y", ((d, i) => i*25 + 20))
-            .attr("fill", "white")
-            .attr('opacity', ((d) => symbolScale(d) === symbolHoverValue || symbolHoverValue === undefined? 1: .5))
-            .text((d) => d.type);
+            .data(shapeData, d => d.type)
+            .join(
+                enter  => enter
+                    .append("text")
+                    .attr("x", 25)
+                    .attr("y", ((d, i) => i*25 + 20))
+                    .attr("fill", "white")
+                    .text((d) => d.type),
+                update => update
+                    .attr('opacity', ((d) => symbolScale(d) === symbolHoverValue || symbolHoverValue === undefined? 1: .3)),
+                exit   => exit.remove()
+            );
     }
+}
+
+function updateShapeLegend(networkChart, symbolHoverValue) {
+    drawShapeLegend(networkChart, symbolHoverValue);
 }
 
 function shapeType() {
@@ -174,7 +179,7 @@ function shapeType() {
                 Shape
             </span>
             <span className="layout_item"></span>
-            <div id="shape-legend"></div>
+            <div id={shapeLegendId}></div>
         </div>
     )
 }
@@ -264,7 +269,7 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
 
     // Initiate the shape legend
     useEffect(() => {
-        initShapeLegend();
+        initShapeLegend(networkChart, symbolHoverValue);
     }, [])
 
     // Update the shape legend
