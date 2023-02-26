@@ -84,9 +84,14 @@ function renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHov
 function filterData(selectedLevel3ID, activityTypesChecks) {
     let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID));
 
-    dataNew.nodes = dataNew.nodes.filter((d) => d.group === "Actor" || activityTypesChecks.includes(d.type));
-    let ids = dataNew.nodes.map((d) => d.id)
-    dataNew.links = dataNew.links.filter((d) => ids.includes(d.source.id === undefined ? d.source : d.source.id) && ids.includes(d.target.id === undefined ? d.target : d.target.id))
+    let activityIds = dataNew.nodes.filter(d => activityTypesChecks.includes(d.type)).map(d => d.id);
+    let links = dataNew.links.filter(d => activityIds.includes(d.source.id));
+
+    let actorIds = [...new Set(links.map(d => d.target.id))];
+    let ids = activityIds.concat(actorIds)
+
+    dataNew.nodes = dataNew.nodes.filter((d) => ids.includes(d.id));
+    dataNew.links = links;
     return dataNew;
 }
 

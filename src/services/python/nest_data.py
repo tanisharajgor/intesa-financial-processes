@@ -210,7 +210,8 @@ def create_network(data):
 
         for j in range(0, df.shape[0] - 1):
             linkRow = {"target": int(df.actorID.iloc[j]),
-                       "source": int(df.activityID.iloc[j])}
+                       "source": int(df.activityID.iloc[j]),
+                       "id": str(df.actorID.iloc[j]) + "-" + str(df.activityID.iloc[j])}
 
             links.append(linkRow)
 
