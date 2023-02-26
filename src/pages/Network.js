@@ -20,7 +20,6 @@ let nodes;
 function renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue) {
 
     let inspect = d3.select(".Inspect");
-    console.log(riskVariable)
 
     nodes.on("mouseover", function(e, d) {
 
@@ -49,8 +48,6 @@ function renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHov
             .attr("opacity", d => b.includes(d.index) ? 1: .5)
             .attr("stroke", d => b.includes(d.index)? "grey": linkColor)
             .attr("stroke-width", d => b.includes(d.index)? 1.5: 1);
-
-        console.log(d.riskStatus[riskVariable])
 
         updateSymbolHoverValue(symbolScale(d));
         updateRiskHoverValue(d.riskStatus[riskVariable]);

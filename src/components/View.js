@@ -18,7 +18,7 @@ const shapeData = [{"group": "Actor", "type": "Actor"},
 
 function drawRiskLegend(t, riskHoverValue) {
 
-    let svg =  d3.select(`#${riskLegendId} svg g`);
+    let svg =  d3.select(`#${riskLegendId} svg`);
 
     if (!t.values.includes('NA')) {
         t.values.push('NA')
@@ -28,26 +28,40 @@ function drawRiskLegend(t, riskHoverValue) {
         t.labels.push('NA')
     }
 
-    // console.log(t)
-
-    for (let i in t.values) {
-
-        svg
-            .append("circle")
-            .attr('cx', 10)
-            .attr('cy', ((d) => 20 + i*20))
-            .attr('r', 5)
-            .attr('fill', ((d) => t.values[i] === "NA" ? naColor: colorScale(t.values[i])))
-            .attr('opacity', ((d) => t.values[i] === riskHoverValue || riskHoverValue === undefined? 1: .5));
-
-        svg
-            .append("text")
-            .attr("x", 20)
-            .attr("y", ((d) => 25 + i*20))
-            .text(((d) => t.labels[i]))
-            .style("fill", "white")
-            .attr('opacity', ((d) => t.values[i] === riskHoverValue || riskHoverValue === undefined? 1: .5));
+    let riskData = []
+    for (let i in t.labels) {
+        riskData.push({"label": t.labels[i], "value": t.values[i]})
     }
+
+    svg
+        .selectAll("circle")
+        .data(riskData, d => d.label)
+        .join(
+            enter  => enter
+                .append("circle")
+                .attr('cx', 10)
+                .attr('cy', ((d, i) => 20 + i*20))
+                .attr('r', 5)
+                .attr('fill', ((d) => d.value === "NA" ? naColor: colorScale(d.value)))
+                .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .5)),
+            update => update,             
+            exit   => exit.remove()
+        );
+
+    svg
+        .selectAll("text")
+        .data(riskData, d => d.label)
+        .join(
+            enter  => enter
+                .append("text")
+                .attr("x", 20)
+                .attr("y", ((d, i) => 25 + i*20))
+                .text(((d) => d.label))
+                .style("fill", "white")
+                .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .5)),
+            update => update,             
+            exit   => exit.remove()
+    );
 }
 
 // Initiates the legend svg and sets the non-changing attributes
@@ -59,8 +73,7 @@ function initRiskLegend(variable, variableLookup, riskHoverValue) {
     d3.select(`#${riskLegendId}`)
         .append("svg")
         .attr('width', width)
-        .attr('height', h)
-        .append("g");
+        .attr('height', h);
 
     drawRiskLegend(t, riskHoverValue);
 }
@@ -73,8 +86,6 @@ function updateRiskLegend(variable, variableLookup, riskHoverValue) {
 
     let svg = d3.select(`#${riskLegendId} svg`);
     svg.attr("height", h)
-    d3.select(`#${riskLegendId} svg g`).remove();
-    svg = svg.append("g");
 
     drawRiskLegend(t, riskHoverValue);
 }
@@ -95,7 +106,6 @@ export function symbolType(d) {
         }
     }
 }
-
 
 export function symbolScale(d) {
 
@@ -126,7 +136,6 @@ function initShapeLegend() {
 
 function updateShapeLegend(networkChart, symbolHoverValue) {
 
-    // console.log(symbolHoverValue)
     if (networkChart) {
 
         let svg = d3.select(`#${shapeLegendId} svg`)
@@ -211,7 +220,7 @@ function riskType() {
     return(
         <div className="layout_row">
             <span className="layout_item key">
-                Risk type:
+                Risk type
             </span>
             <span className="layout_item"></span>
         </div>
@@ -254,7 +263,6 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
 
     const handleChange = (event) => {
         let newView = (Object.keys(riskVariables).find((c) => riskVariables[c].label === event.target.value));
-        console.log(newView)
         updateRiskVariable(newView)
     }
 
