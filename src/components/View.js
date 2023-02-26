@@ -16,7 +16,9 @@ const shapeData = [{"group": "Actor", "type": "Actor"},
                       {"group": "Activity", "type": "Common process activity"},
                       {"group": "Activity", "type": "System activity"}]
 
-function drawRiskLegend(svg, t, riskHoverValue, variable) {
+function drawRiskLegend(t, riskHoverValue) {
+
+    let svg =  d3.select(`#${riskLegendId} svg g`);
 
     if (!t.values.includes('NA')) {
         t.values.push('NA')
@@ -25,6 +27,8 @@ function drawRiskLegend(svg, t, riskHoverValue, variable) {
     if (!t.labels.includes('NA')) {
         t.labels.push('NA')
     }
+
+    // console.log(t)
 
     for (let i in t.values) {
 
@@ -52,13 +56,13 @@ function initRiskLegend(variable, variableLookup, riskHoverValue) {
     let t = variableLookup[variable];
     let h = height + (t.values.length + 1)*20;
 
-    const svg = d3.select(`#${riskLegendId}`)
+    d3.select(`#${riskLegendId}`)
         .append("svg")
         .attr('width', width)
         .attr('height', h)
         .append("g");
 
-    drawRiskLegend(svg, t, riskHoverValue, variable);
+    drawRiskLegend(t, riskHoverValue);
 }
 
 // Updates the legend attributes on variable change
@@ -72,7 +76,7 @@ function updateRiskLegend(variable, variableLookup, riskHoverValue) {
     d3.select(`#${riskLegendId} svg g`).remove();
     svg = svg.append("g");
 
-    drawRiskLegend(svg, t, riskHoverValue, variable);
+    drawRiskLegend(t, riskHoverValue);
 }
 
 export function symbolType(d) {
@@ -122,7 +126,7 @@ function initShapeLegend() {
 
 function updateShapeLegend(networkChart, symbolHoverValue) {
 
-    console.log(symbolHoverValue)
+    // console.log(symbolHoverValue)
     if (networkChart) {
 
         let svg = d3.select(`#${shapeLegendId} svg`)
@@ -249,7 +253,8 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
     colorScale = createColorScale(riskVariable, riskVariables);
 
     const handleChange = (event) => {
-        let newView = (Object.keys(riskVariables).find((c) => riskVariables[c].label === event.target.value))
+        let newView = (Object.keys(riskVariables).find((c) => riskVariables[c].label === event.target.value));
+        console.log(newView)
         updateRiskVariable(newView)
     }
 
