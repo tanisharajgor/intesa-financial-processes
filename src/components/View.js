@@ -5,7 +5,10 @@ import { useEffect } from "react";
 
 const width = 216;
 const height = 15;
-var colorScale;
+let colorScale;
+
+let riskLegendId = "Risk-Legend";
+let shapeLegendId = "Shape-Legend";
 
 const shapeData = [{"group": "Actor", "type": "Actor"},
                       {"group": "Activity", "type": "Process activity"},
@@ -13,7 +16,7 @@ const shapeData = [{"group": "Actor", "type": "Actor"},
                       {"group": "Activity", "type": "Common process activity"},
                       {"group": "Activity", "type": "System activity"}]
 
-function drawLegend(svg, t, riskHoverValue, variable) {
+function drawRiskLegend(svg, t, riskHoverValue, variable) {
 
     if (!t.values.includes('NA')) {
         t.values.push('NA')
@@ -49,27 +52,27 @@ function initRiskLegend(variable, variableLookup, riskHoverValue) {
     let t = variableLookup[variable];
     let h = height + (t.values.length + 1)*20;
 
-    const svg = d3.select("#view-legend")
+    const svg = d3.select(`#${riskLegendId}`)
         .append("svg")
         .attr('width', width)
         .attr('height', h)
         .append("g");
 
-    drawLegend(svg, t, riskHoverValue, variable);
+    drawRiskLegend(svg, t, riskHoverValue, variable);
 }
 
 // Updates the legend attributes on variable change
-function updateLegend(variable, variableLookup, riskHoverValue) {
+function updateRiskLegend(variable, variableLookup, riskHoverValue) {
 
     let t = variableLookup[variable];
     let h = height + (t.values.length + 1)*20;
 
-    let svg = d3.select("#view-legend svg");
+    let svg = d3.select(`#${riskLegendId} svg`);
     svg.attr("height", h)
-    d3.select("#view-legend svg g").remove();
+    d3.select(`#${riskLegendId} svg g`).remove();
     svg = svg.append("g");
 
-    drawLegend(svg, t, riskHoverValue, variable);
+    drawRiskLegend(svg, t, riskHoverValue, variable);
 }
 
 export function symbolType(d) {
@@ -111,7 +114,7 @@ function initShapeLegend() {
 
     let h = height + (shapeData.length + 1)*20;
 
-    d3.select(`#shape-legend`)
+    d3.select(`#${shapeLegendId}`)
         .append("svg")
         .attr("width", width)
         .attr("height", h);
@@ -119,10 +122,10 @@ function initShapeLegend() {
 
 function updateShapeLegend(networkChart, symbolHoverValue) {
 
-    // console.log(symbolHoverValue)
+    console.log(symbolHoverValue)
     if (networkChart) {
 
-        let svg = d3.select("#shape-legend svg")
+        let svg = d3.select(`#${shapeLegendId} svg`)
 
         svg
             .selectAll("path")
@@ -138,7 +141,6 @@ function updateShapeLegend(networkChart, symbolHoverValue) {
             .attr("fill", "white")
             .attr('opacity', function(d) {
                 console.log(symbolScale(d))
-
                 console.log(symbolScale(d) === symbolHoverValue)
             })
             // .attr('opacity', ((d) => symbolScale(d) === symbolHoverValue || symbolHoverValue === undefined? 1: .5));
@@ -251,20 +253,24 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
         updateRiskVariable(newView)
     }
 
+    // Initiate the shape legend
     useEffect(() => {
         initShapeLegend();
     }, [])
 
+    // Update the shape legend
     useEffect(() => {
         updateShapeLegend(networkChart, symbolHoverValue);
     }, [symbolHoverValue]);
 
+    // Initiate the risk legend
     useEffect(() => {
         initRiskLegend(riskVariable, riskVariables);
     }, []);
 
+    // Update the risk legend
     useEffect(() => {
-        updateLegend(riskVariable, riskVariables, riskHoverValue);
+        updateRiskLegend(riskVariable, riskVariables, riskHoverValue);
     }, [riskVariable, riskHoverValue]);
 
     useEffect(() => {
@@ -292,7 +298,7 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
                             )
                         })}
                     </Select>
-                    <div id="view-legend"></div>
+                    <div id={riskLegendId}></div>
                 </FormControl>
             </div>
         </div>
