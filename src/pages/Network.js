@@ -110,8 +110,10 @@ function renderNetwork(data, riskVariable) {
 
     rScale.domain = d3.extent(data.nodes, ((d) => d.nActivities === undefined ? 1: d.nActivities));
 
-    var link = svg
-        .selectAll("line")
+    svg.append("g").attr("class", "links");
+    svg.append("g").attr("class", "nodes");
+
+    var link = svg.select(".links").selectAll(".link")
         .data(data.links, function (d) { return d.source.id + "-" + d.target.id; })
         .join(
             enter  => enter
