@@ -275,7 +275,7 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
         <div className='View'>
             <div>View</div>
             <div className="inner">
-                <Inspect id={id}/>
+                <Inspect/>
                 {viewInfo(networkChart)}
                 <FormControl variant="outlined" size="small">
                     <Select
