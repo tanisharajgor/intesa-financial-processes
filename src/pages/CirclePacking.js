@@ -5,6 +5,8 @@ import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import { StylesProvider } from "@material-ui/core/styles";
+import { inspectHierarchyDetail, inspectHierarchySummary } from "../components/Inspect";
+
 
 const id = "circle-packing-chart";
 
@@ -14,32 +16,21 @@ function renderTooltip(riskVariable, updateRiskHoverValue) {
     const labelScale = createLabelScale(riskVariable);
 
     let inspect = d3.select(".Inspect");
+    inspectHierarchySummary(inspect, data);
 
     d3.selectAll("circle").on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
-
-        let type = d.data.treeLevel === 4? "Activity": "Process";
-        let rs = d.data.riskStatus[riskVariable];
-
-        inspect.style("display", "inline-block");
-        inspect.style("visibility", "visible")
-        inspect.select(".name .key").text(" " + type);
-        inspect.select(".name .value").text(" " + d.data.name);
-        inspect.select(".risk .key").text(" " + riskVariables[riskVariable].label);
-        inspect.select(".risk .value").text(" " + labelScale(rs));
-
         thisCircle
             .attr("stroke", "grey")
             .attr("stroke-width", 2);
 
+        inspectHierarchyDetail(inspect, data, d, riskVariable);
         updateRiskHoverValue(d.data.riskStatus[riskVariable]);
 
     }).on("mouseout", function() {
 
-        inspect.style("visibility", "hidden");
-        inspect.style("display", "none");
-
+        inspectHierarchySummary(inspect, data);
         updateRiskHoverValue(undefined);
 
         d3.selectAll('circle')
