@@ -94,7 +94,7 @@ export function inspectTreeMap(data, riskVariable, updateRiskHoverValue) {
                 .attr("stroke", "grey")
                 .attr("stroke-width", 2);
 
-            inspectHierarchyDetail(inspect, data, d, riskVariable);
+            inspectHierarchyDetail(inspect, d, riskVariable);
             updateRiskHoverValue(d.data.riskStatus[riskVariable]);
 
         }).on("mouseout", function() {
