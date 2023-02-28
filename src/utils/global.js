@@ -83,3 +83,6 @@ export function createLabelScale(riskVariable) {
 
     return scale;
 }
+
+export const actorTypeValues = ["Organizational unit", "Position", "Person", "Missing", "External Organizational unit"];
+export const activityTypeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];

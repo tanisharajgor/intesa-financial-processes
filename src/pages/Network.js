@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
 import { symbolType, symbolScale } from "../components/View";
-import { riskVariables, createColorScale, applyColorScale } from "../utils/global";
+import { riskVariables, createColorScale, applyColorScale, actorTypeValues, activityTypeValues } from "../utils/global";
 import { inspectNetworkDetail, inspectNetworkSummary } from "../components/Inspect";
 
 const id = "network-chart";
@@ -77,13 +77,17 @@ function inspectNetwork(data, riskVariable, updateRiskHoverValue, updateSymbolHo
 }
 
 // Filters the data by level3ID and activity Type
-function filterData(selectedLevel3ID, activityTypesChecks) {
+function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
     let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID));
-
-    let activityIds = dataNew.nodes.filter(d => activityTypesChecks.includes(d.type)).map(d => d.id);
+    let activityIds = dataNew.nodes.filter(d => d.group === "Activity" && activityTypesChecks.includes(d.type)).map(d => d.id);
+    let actorIds = dataNew.nodes.filter(d => d.group === "Actor" && actorTypesChecks.includes(d.type)).map(d => d.id);
+    console.log(actorIds)
     let links = dataNew.links.filter(d => d.source.id === undefined ? activityIds.includes(d.source) : activityIds.includes(d.source.id));
+    links = links.filter(d => d.target.id === undefined ? actorIds.includes(d.target) : actorIds.includes(d.target.id));
 
-    let actorIds = [...new Set(links.map(d => d.target.id === undefined ? d.target: d.target.id))];
+    actorIds = links.map(d => d.target.id === undefined ? d.target: d.target.id);
+    activityIds = links.map(d => d.source.id === undefined ? d.source: d.source.id)
+
     let ids = activityIds.concat(actorIds)
 
     dataNew.nodes = dataNew.nodes.filter((d) => ids.includes(d.id));
@@ -163,43 +167,43 @@ function renderNetwork(data, riskVariable) {
 
 export default function Network() {
 
-    const typeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
     const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
+    const [activityTypesChecks, updateActivityTypeChecks] = useState(activityTypeValues);
+    const [actorTypesChecks, updateActorTypeChecks] = useState(actorTypeValues);
+    const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
     const [riskHoverValue, updateRiskHoverValue] = useState(undefined);
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
-    const [activityTypesChecks, updateActivityTypeChecks] = useState(typeValues);
-    const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
-
-    // Filter data
-    useEffect(() => {
-        updateData(filterData(selectedLevel3ID, activityTypesChecks))
-    }, [selectedLevel3ID, activityTypesChecks])
 
     // Set-up scales
     colorScale = createColorScale(riskVariable, riskVariables);
 
+    // Filter data
+    useEffect(() => {
+        updateData(filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks))
+    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks])
+
     // React Hooks
     useEffect(() => {
         initNetwork(data, riskVariable);
-    }, [])
+    }, []);
 
     // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
     useEffect(() => {
         renderNetwork(data, riskVariable);
         nodes = d3.selectAll(`#${id} svg path`);
-        inspectNetwork(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
-    }, [selectedLevel3ID, activityTypesChecks, data])
+        renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
+    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data]);
 
     useEffect(() => {
-        inspectNetwork(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
-    }, [selectedLevel3ID, activityTypesChecks, data, riskVariable])
+        renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
+    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data, riskVariable]);
 
     // Updates the color of the nodes without restarting the network simulation
     useEffect(() => {
         nodes
             .attr("fill", d => applyColorScale(d.riskStatus, riskVariable, colorScale));
-    }, [riskVariable])
+    }, [riskVariable]);
 
     return(
         <StylesProvider injectFirst>
@@ -207,7 +211,8 @@ export default function Network() {
                 <Navigation/>
                 <div className="Query" id="FilterMenu">
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
-                    <FilterType activityTypesChecks={activityTypesChecks} updateActivityTypeChecks = {updateActivityTypeChecks} typeValues={typeValues}/>
+                    <FilterType typesChecks={activityTypesChecks} updateTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues} label="Filter by Activity Type:"/>
+                    <FilterType typesChecks={actorTypesChecks} updateTypeChecks = {updateActorTypeChecks} typeValues={actorTypeValues} label="Filter by Actor Type:"/>
                 </div>
                 <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} symbolHoverValue={symbolHoverValue} id={id} data={data}/>                
             </div>
