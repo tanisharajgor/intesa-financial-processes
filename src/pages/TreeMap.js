@@ -5,7 +5,7 @@ import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import { StylesProvider } from "@material-ui/core/styles";
-import { inspectHierarchyDetail, inspectHierarchySummary } from "../components/Inspect";
+import { inspectTreeMap } from "../components/Inspect";
 
 const id = "tree-map-chart";
 
@@ -13,35 +13,6 @@ const id = "tree-map-chart";
 const margin = {top: 10, right: 10, bottom: 10, left: 10},
     width = 700 - margin.left - margin.right,
     height = 1200 - margin.top - margin.bottom;
-
-// Tooltip
-function renderInspect(riskVariable, updateRiskHoverValue) {
-
-    let inspect = d3.select(".Inspect");
-    inspectHierarchySummary(inspect, data);
-
-    d3.selectAll("rect")
-        .on("mouseover", function(e, d) {
-
-            let thisRect = d3.select(this);
-            thisRect
-                .attr("stroke", "grey")
-                .attr("stroke-width", 2);
-
-            inspectHierarchyDetail(inspect, data, d, riskVariable);
-            updateRiskHoverValue(d.data.riskStatus[riskVariable]);
-
-        }).on("mouseout", function() {
-
-            inspectHierarchySummary(inspect, data);
-
-            d3.selectAll("rect")
-                .attr("opacity", 1)
-                .attr("stroke", "none");
-
-            updateRiskHoverValue(undefined);
-        });
-}
 
 function addProcessLabels(rectHeight) {
 
@@ -73,7 +44,7 @@ export default function TreeMap() {
             .range([.3, .4, .5, .6, .9]);
 
     // Set-up hierarchical data
-    const root = d3.hierarchy(data).sum(function(d) { return 1 }) // Here the size of each leave is given in the 'value' field in input data
+    const root = d3.hierarchy(data).sum(function(d) { return d.children ? 0: 1 }) // Here the size of each leave is given in the 'value' field in input data
     d3.partition()
         .size([height - margin.top - margin.bottom, width - margin.left - margin.right])
         .padding(2)
@@ -110,14 +81,14 @@ export default function TreeMap() {
             .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
             .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible");
 
-        renderInspect(riskVariable, updateRiskHoverValue);
+        inspectTreeMap(data, riskVariable, updateRiskHoverValue);
     }, [])
 
     useEffect(() => {
         d3.selectAll(`#${id} svg g rect`)
             .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
 
-        renderInspect(riskVariable, updateRiskHoverValue);
+        inspectTreeMap(data, riskVariable, updateRiskHoverValue);
     }, [riskVariable])
 
     return(

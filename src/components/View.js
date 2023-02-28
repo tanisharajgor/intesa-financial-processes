@@ -2,7 +2,7 @@ import { FormControl, Select, MenuItem } from "@material-ui/core";
 import { riskVariables, createColorScale, naColor } from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
-import Inspect from "./Inspect";
+import { InspectHTML } from "./Inspect";
 
 const width = 216;
 const height = 15;
@@ -275,7 +275,7 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
         <div className='View'>
             <div>View</div>
             <div className="inner">
-                <Inspect/>
+                <InspectHTML/>
                 {viewInfo(networkChart)}
                 <FormControl variant="outlined" size="small">
                     <Select

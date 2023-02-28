@@ -5,39 +5,9 @@ import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import { StylesProvider } from "@material-ui/core/styles";
-import { inspectHierarchyDetail, inspectHierarchySummary } from "../components/Inspect";
-
+import { inspectCirclePacking } from "../components/Inspect";
 
 const id = "circle-packing-chart";
-
-// Tooltip
-function renderTooltip(riskVariable, updateRiskHoverValue) {
-
-    const labelScale = createLabelScale(riskVariable);
-
-    let inspect = d3.select(".Inspect");
-    inspectHierarchySummary(inspect, data);
-
-    d3.selectAll("circle").on("mouseover", function(e, d) {
-
-        let thisCircle = d3.select(this);
-        thisCircle
-            .attr("stroke", "grey")
-            .attr("stroke-width", 2);
-
-        inspectHierarchyDetail(inspect, data, d, riskVariable);
-        updateRiskHoverValue(d.data.riskStatus[riskVariable]);
-
-    }).on("mouseout", function() {
-
-        inspectHierarchySummary(inspect, data);
-        updateRiskHoverValue(undefined);
-
-        d3.selectAll('circle')
-            .attr("stroke-width", .5)
-            .attr("stroke", "grey"); 
-    });
-}
 
 export default function CirclePacking() {
 
@@ -110,7 +80,7 @@ export default function CirclePacking() {
             });
         }
 
-        renderTooltip(riskVariable, updateRiskHoverValue);
+        inspectCirclePacking(data, riskVariable, updateRiskHoverValue);
 
     }, [])
 
@@ -119,7 +89,7 @@ export default function CirclePacking() {
         d3.selectAll(`#${id} svg circle`)
             .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
 
-        renderTooltip(riskVariable, updateRiskHoverValue);
+        inspectCirclePacking(data, riskVariable, updateRiskHoverValue);
     }, [riskVariable])
 
     return(

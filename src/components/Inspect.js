@@ -1,9 +1,12 @@
 import { riskVariables, createLabelScale } from "../utils/global";
+import { symbolScale } from "./View";
 import * as d3 from 'd3';
 
 const treeLevelScale = d3.scaleOrdinal()
     .domain([0, 1, 2, 3, 4])
     .range(["root", "Process 1", "Process 2", "Process 3", "Activity"])
+
+const linkColor = "#373d44";
 
 export function inspectNetworkSummary(inspect, data) {
 
@@ -50,9 +53,8 @@ export function inspectHierarchySummary(inspect, data) {
 
 export function inspectHierarchyDetail(inspect, data, d, riskVariable) {
 
-    console.log(d.data.treeLevel)
+    console.log(d.data)
 
-    let type = d.data.treeLevel === 4? "Activity": "Process";
     let rs = d.data.riskStatus[riskVariable];
     const labelScale = createLabelScale(riskVariable);
     let nActivities = 0;
@@ -67,8 +69,62 @@ export function inspectHierarchyDetail(inspect, data, d, riskVariable) {
     inspect.select(".value3 .value").text(" " + labelScale(rs));
 }
 
+export function inspectCirclePacking(data, riskVariable, updateRiskHoverValue) {
+
+    let inspect = d3.select(".Inspect");
+    inspectHierarchySummary(inspect, data);
+
+    d3.selectAll("circle").on("mouseover", function(e, d) {
+
+        let thisCircle = d3.select(this);
+        thisCircle
+            .attr("stroke", "grey")
+            .attr("stroke-width", 2);
+
+        inspectHierarchyDetail(inspect, data, d, riskVariable);
+        updateRiskHoverValue(d.data.riskStatus[riskVariable]);
+
+    }).on("mouseout", function() {
+
+        inspectHierarchySummary(inspect, data);
+        updateRiskHoverValue(undefined);
+
+        d3.selectAll('circle')
+            .attr("stroke-width", .5)
+            .attr("stroke", "grey"); 
+    });
+}
+
+export function inspectTreeMap(data, riskVariable, updateRiskHoverValue) {
+
+    let inspect = d3.select(".Inspect");
+    inspectHierarchySummary(inspect, data);
+
+    d3.selectAll("rect")
+        .on("mouseover", function(e, d) {
+
+            let thisRect = d3.select(this);
+            thisRect
+                .attr("stroke", "grey")
+                .attr("stroke-width", 2);
+
+            inspectHierarchyDetail(inspect, data, d, riskVariable);
+            updateRiskHoverValue(d.data.riskStatus[riskVariable]);
+
+        }).on("mouseout", function() {
+
+            inspectHierarchySummary(inspect, data);
+
+            d3.selectAll("rect")
+                .attr("opacity", 1)
+                .attr("stroke", "none");
+
+            updateRiskHoverValue(undefined);
+        });
+}
+
 /*Creates the inspect html dom object*/
-export default function Inspect() {
+export function InspectHTML() {
 
     return (
         <div className="Inspect">

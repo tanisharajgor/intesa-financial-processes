@@ -27,7 +27,7 @@ const rScale = d3.scaleLinear()
     .range([8, 15]);
 
 // Tooltip
-function inspectTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue) {
+function inspectNetwork(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue) {
 
     let inspect = d3.select(".Inspect");
     inspectNetworkSummary(inspect, data);
@@ -188,11 +188,11 @@ export default function Network() {
     useEffect(() => {
         renderNetwork(data, riskVariable);
         nodes = d3.selectAll(`#${id} svg path`);
-        inspectTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
+        inspectNetwork(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
     }, [selectedLevel3ID, activityTypesChecks, data])
 
     useEffect(() => {
-        inspectTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
+        inspectNetwork(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
     }, [selectedLevel3ID, activityTypesChecks, data, riskVariable])
 
     // Updates the color of the nodes without restarting the network simulation
