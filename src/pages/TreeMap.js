@@ -44,7 +44,11 @@ export default function TreeMap() {
             .range([.3, .4, .5, .6, .9]);
 
     // Set-up hierarchical data
-    const root = d3.hierarchy(data).sum(function(d) { return d.children ? 0: 1 }) // Here the size of each leave is given in the 'value' field in input data
+    const root = d3.hierarchy(data).sum(function(d) { return 1 }) // Here the size of each leave is given in the 'value' field in input data
+    root.sum(d => d.children ? 0: 1);
+    // console.log(root)
+    // const summed = root.copy().sum(d => d.children ? 0: 1)
+    // console.log(summed)
     d3.partition()
         .size([height - margin.top - margin.bottom, width - margin.left - margin.right])
         .padding(2)

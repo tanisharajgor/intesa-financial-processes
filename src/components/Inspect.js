@@ -1,12 +1,9 @@
 import { riskVariables, createLabelScale } from "../utils/global";
-import { symbolScale } from "./View";
 import * as d3 from 'd3';
 
 const treeLevelScale = d3.scaleOrdinal()
     .domain([0, 1, 2, 3, 4])
     .range(["root", "Process 1", "Process 2", "Process 3", "Activity"])
-
-const linkColor = "#373d44";
 
 export function inspectNetworkSummary(inspect, data) {
 
@@ -17,7 +14,6 @@ export function inspectNetworkSummary(inspect, data) {
     inspect.select(".value1 .value").text(`${nActors}`);
     inspect.select(".value2 .key").text("Number of activities: ");
     inspect.select(".value2 .value").text(`${nActivities}`);
-    // inspect.select(".value3 .layout_row").style("margin-top", 0);
     inspect.select(".value3 .key").text("");
     inspect.select(".value3 .value").text(" ");
 }
@@ -35,36 +31,26 @@ export function inspectNetworkDetail(inspect, d, b) {
 
 export function inspectHierarchySummary(inspect, data) {
 
-    console.log(data.children)
-    // let nActors = data.nodes.filter(d => d.group === "Actor").length;
-    // let nActivities = data.nodes.filter(d => d.group === "Activity").length;
-    let nActivities = 0;
-
     inspect.select(".value1 .key").text("Processes showing: ");
     inspect.select(".value1 .value").text(`1, 2, 3`);
     inspect.select(".value2 .key").text("Number of activities: ");
-    inspect.select(".value2 .value").text(`${nActivities}`);
+    inspect.select(".value2 .value").text(`${d3.hierarchy(data).sum(d => d.children ? 0: 1).value}`);
     inspect.select(".value3 .key").text("");
     inspect.select(".value3 .value").text(" ");
-    // inspect.select(".value4 .key").text("");
-    // inspect.select(".value4 .value").text(" ");
 
 }
 
-export function inspectHierarchyDetail(inspect, data, d, riskVariable) {
-
-    console.log(d.data)
+export function inspectHierarchyDetail(inspect, d, riskVariable) {
 
     let rs = d.data.riskStatus[riskVariable];
     const labelScale = createLabelScale(riskVariable);
-    let nActivities = 0;
 
     inspect.style("display", "inline-block");
     inspect.style("visibility", "visible")
     inspect.select(".value1 .key").text(`${treeLevelScale(d.data.treeLevel)}: `);
     inspect.select(".value1 .value").text(" " + d.data.name);
     inspect.select(".value2 .key").text("Number of activities: ");
-    inspect.select(".value2 .value").text(`${nActivities}`);
+    inspect.select(".value2 .value").text(`${d.sum(d => d.children ? 0: 1).value}`);
     inspect.select(".value3 .key").text(`${riskVariables[riskVariable].label}: `);
     inspect.select(".value3 .value").text(" " + labelScale(rs));
 }
@@ -81,7 +67,7 @@ export function inspectCirclePacking(data, riskVariable, updateRiskHoverValue) {
             .attr("stroke", "grey")
             .attr("stroke-width", 2);
 
-        inspectHierarchyDetail(inspect, data, d, riskVariable);
+        inspectHierarchyDetail(inspect, d, riskVariable);
         updateRiskHoverValue(d.data.riskStatus[riskVariable]);
 
     }).on("mouseout", function() {
@@ -139,10 +125,6 @@ export function InspectHTML() {
                         <span className="layout_item value"></span>
                     </div>
                     <div className="value3 layout_row">
-                        <span className="layout_item key"></span>
-                        <span className="layout_item value"></span>
-                    </div>
-                    <div className="value4 layout_row">
                         <span className="layout_item key"></span>
                         <span className="layout_item value"></span>
                     </div>
