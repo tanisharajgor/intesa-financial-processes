@@ -2,6 +2,14 @@
 
 .View {
     margin-top: $appPadding;
+    border-radius: 0;
+    border: 1px solid $appBackgroundTransparent;
+    background-color: $appBackgroundTransparent;
+    padding: $appPadding;
+
+    .inner {
+        padding: $appPadding;
+    }
 }
 
 .ViewInfo {

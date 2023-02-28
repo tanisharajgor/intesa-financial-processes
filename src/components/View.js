@@ -2,6 +2,7 @@ import { FormControl, Select, MenuItem } from "@material-ui/core";
 import { riskVariables, createColorScale, naColor } from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
+import Inspect from "./Inspect";
 
 const width = 216;
 const height = 15;
@@ -232,28 +233,11 @@ function viewInfo(networkChart) {
     return(
         <div className="inner">
             <div className="layout_group inline">
-                {networkChart? viewNNodes(): <></> }
-                {networkChart? viewNActors(): <></> }
-                {networkChart? viewNActivities(): <></> }
                 {networkChart? shapeType(): <></>}
                 {riskType()}
             </div>
         </div>
     )
-}
-
-function updateViewInfo(networkChart, data) {
-    if (networkChart) {
-            
-        d3.select("#nNodes")
-        .text(` ${data.nodes.length}`);
-
-        d3.select("#nActors")
-            .text(` ${data.nodes.filter(d => d.group === "Actor").length}`);
-
-        d3.select("#nActivities")
-            .text(` ${data.nodes.filter(d => d.group === "Activity").length}`);
-    }
 }
 
 export default function View({id, riskVariable, updateRiskVariable, riskHoverValue, symbolHoverValue, data}) {
@@ -287,15 +271,12 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
         updateRiskLegend(riskVariable, riskVariables, riskHoverValue);
     }, [riskVariable, riskHoverValue]);
 
-    useEffect(() => {
-        updateViewInfo(networkChart, data);
-    }, [data])
-
     return(
-        <div>
+        <div className='View'>
             <div>View</div>
+            <Inspect id={id}/>
             {viewInfo(networkChart)}
-            <div className='View'>
+            <div className="inner">
                 <FormControl variant="outlined" size="small">
                     <Select
                         labelId="view-select-label"

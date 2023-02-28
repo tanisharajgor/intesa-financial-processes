@@ -34,7 +34,6 @@ function renderTooltip(riskVariable, updateRiskHoverValue) {
             inspect.select(".risk .key").text(" " + riskVariables[riskVariable].label);
             inspect.select(".risk .value").text(" " + labelScale(rs));
 
-            // console.log(d.data.riskStatus[riskVariable])
 
             thisRect
                 .attr("stroke", "grey")
@@ -44,8 +43,8 @@ function renderTooltip(riskVariable, updateRiskHoverValue) {
 
         }).on("mouseout", function() {
 
-            inspect.style("visibility", "hidden");
-            inspect.style("display", "none");
+            // inspect.style("visibility", "hidden");
+            // inspect.style("display", "none");
 
             d3.selectAll("rect")
                 .attr("opacity", 1)

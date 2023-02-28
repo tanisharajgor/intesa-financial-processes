@@ -25,10 +25,36 @@ var simulation = d3.forceSimulation()
 const rScale = d3.scaleLinear()
     .range([8, 15]);
 
+
+function tooltipSummary(inspect, data) {
+
+    let nActors = data.nodes.filter(d => d.group === "Actor").length;
+    let nActivities = data.nodes.filter(d => d.group === "Activity").length;
+
+    inspect.select(".value1 .key").text("Number of actors: ");
+    inspect.select(".value1 .value").text(`${nActors}`);
+    inspect.select(".value2 .key").text("Number of activities: ");
+    inspect.select(".value2 .value").text(`${nActivities}`);
+    // inspect.select(".value3 .layout_row").style("margin-top", 0);
+    inspect.select(".value3 .key").text("");
+    inspect.select(".value3 .value").text(" ");
+}
+
+function tooltipDetail(inspect, d, b) {
+    inspect.select(".value1 .key").text(`${d.group}: `);
+    inspect.select(".value1 .value").text(" " + d.name);
+    inspect.select(".value2 .key").text("Type: ");
+    inspect.select(".value2 .value").text(" " + d.type);
+    // inspect.select(".connections .key").text(" " + d.group === "Activity"? "# activities": "# actors");
+    inspect.select(".value3 .key").text("Number of connections: ");
+    inspect.select(".value3 .value").text(" " + b.length);
+}
+
 // Tooltip
 function renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue) {
 
     let inspect = d3.select(".Inspect");
+    tooltipSummary(inspect, data);
 
     nodes.on("mouseover", function(e, d) {
 
@@ -37,14 +63,8 @@ function renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHov
         const b = data.links
             .filter((i) => i.source.id === d.id || i.target.id === d.id)
             .map((d) => d.index);
-    
-        inspect.style("display", "inline-block");
-        inspect.style("visibility", "visible")
-        inspect.select(".group .key").text(" " + d.group);
-        inspect.select(".group .value").text(" " + d.name);
-        inspect.select(".type .value").text(" " + d.type);
-        // inspect.select(".connections .key").text(" " + d.group === "Activity"? "# activities": "# actors");
-        inspect.select(".connections .value").text(" " + b.length);
+
+        tooltipDetail(inspect, d, b);
 
         thisCircle
             .attr("stroke", "white")
@@ -63,8 +83,8 @@ function renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHov
 
     }).on("mouseout", function() {
 
-        inspect.style("visibility", "hidden");
-        inspect.style("display", "none");
+        tooltipSummary(inspect, data);
+        
         nodes.attr("opacity", 1);
 
         d3.selectAll(`#${id} svg path`)
