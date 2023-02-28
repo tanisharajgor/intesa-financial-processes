@@ -8,6 +8,7 @@ import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
 import { symbolType, symbolScale } from "../components/View";
 import { riskVariables, createColorScale, applyColorScale } from "../utils/global";
+import { inspectNetworkDetail, inspectNetworkSummary } from "../components/Inspect";
 
 const id = "network-chart";
 let width = 1000;
@@ -25,36 +26,11 @@ var simulation = d3.forceSimulation()
 const rScale = d3.scaleLinear()
     .range([8, 15]);
 
-
-function inspectSummary(inspect, data) {
-
-    let nActors = data.nodes.filter(d => d.group === "Actor").length;
-    let nActivities = data.nodes.filter(d => d.group === "Activity").length;
-
-    inspect.select(".value1 .key").text("Number of actors: ");
-    inspect.select(".value1 .value").text(`${nActors}`);
-    inspect.select(".value2 .key").text("Number of activities: ");
-    inspect.select(".value2 .value").text(`${nActivities}`);
-    // inspect.select(".value3 .layout_row").style("margin-top", 0);
-    inspect.select(".value3 .key").text("");
-    inspect.select(".value3 .value").text(" ");
-}
-
-function inspectDetail(inspect, d, b) {
-    inspect.select(".value1 .key").text(`${d.group}: `);
-    inspect.select(".value1 .value").text(" " + d.name);
-    inspect.select(".value2 .key").text("Type: ");
-    inspect.select(".value2 .value").text(" " + d.type);
-    // inspect.select(".connections .key").text(" " + d.group === "Activity"? "# activities": "# actors");
-    inspect.select(".value3 .key").text("Number of connections: ");
-    inspect.select(".value3 .value").text(" " + b.length);
-}
-
 // Tooltip
 function inspectTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue) {
 
     let inspect = d3.select(".Inspect");
-    inspectSummary(inspect, data);
+    inspectNetworkSummary(inspect, data);
 
     nodes.on("mouseover", function(e, d) {
 
@@ -64,7 +40,7 @@ function inspectTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHo
             .filter((i) => i.source.id === d.id || i.target.id === d.id)
             .map((d) => d.index);
 
-        inspectDetail(inspect, d, b);
+        inspectNetworkDetail(inspect, d, b);
 
         thisCircle
             .attr("stroke", "white")
@@ -83,7 +59,7 @@ function inspectTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHo
 
     }).on("mouseout", function() {
 
-        inspectSummary(inspect, data);
+        inspectNetworkSummary(inspect, data);
         
         nodes.attr("opacity", 1);
 
