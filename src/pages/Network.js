@@ -81,13 +81,17 @@ function renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHov
 }
 
 // Filters the data by level3ID and activity Type
-function filterData(selectedLevel3ID, activityTypesChecks) {
+function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
     let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID));
-
-    let activityIds = dataNew.nodes.filter(d => activityTypesChecks.includes(d.type)).map(d => d.id);
+    let activityIds = dataNew.nodes.filter(d => d.group === "Activity" && activityTypesChecks.includes(d.type)).map(d => d.id);
+    let actorIds = dataNew.nodes.filter(d => d.group === "Actor" && actorTypesChecks.includes(d.type)).map(d => d.id);
+    console.log(actorIds)
     let links = dataNew.links.filter(d => d.source.id === undefined ? activityIds.includes(d.source) : activityIds.includes(d.source.id));
+    links = links.filter(d => d.target.id === undefined ? actorIds.includes(d.target) : actorIds.includes(d.target.id));
 
-    let actorIds = [...new Set(links.map(d => d.target.id === undefined ? d.target: d.target.id))];
+    actorIds = links.map(d => d.target.id === undefined ? d.target: d.target.id);
+    activityIds = links.map(d => d.source.id === undefined ? d.source: d.source.id)
+
     let ids = activityIds.concat(actorIds)
 
     dataNew.nodes = dataNew.nodes.filter((d) => ids.includes(d.id));
@@ -177,8 +181,8 @@ export default function Network() {
 
     // Filter data
     useEffect(() => {
-        updateData(filterData(selectedLevel3ID, activityTypesChecks))
-    }, [selectedLevel3ID, activityTypesChecks])
+        updateData(filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks))
+    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks])
 
     // Set-up scales
     colorScale = createColorScale(riskVariable, riskVariables);
@@ -193,11 +197,11 @@ export default function Network() {
         renderNetwork(data, riskVariable);
         nodes = d3.selectAll(`#${id} svg path`);
         renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
-    }, [selectedLevel3ID, activityTypesChecks, data])
+    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data])
 
     useEffect(() => {
         renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
-    }, [selectedLevel3ID, activityTypesChecks, data, riskVariable])
+    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data, riskVariable])
 
     // Updates the color of the nodes without restarting the network simulation
     useEffect(() => {
