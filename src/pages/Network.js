@@ -26,7 +26,7 @@ const rScale = d3.scaleLinear()
     .range([8, 15]);
 
 
-function tooltipSummary(inspect, data) {
+function inspectSummary(inspect, data) {
 
     let nActors = data.nodes.filter(d => d.group === "Actor").length;
     let nActivities = data.nodes.filter(d => d.group === "Activity").length;
@@ -40,7 +40,7 @@ function tooltipSummary(inspect, data) {
     inspect.select(".value3 .value").text(" ");
 }
 
-function tooltipDetail(inspect, d, b) {
+function inspectDetail(inspect, d, b) {
     inspect.select(".value1 .key").text(`${d.group}: `);
     inspect.select(".value1 .value").text(" " + d.name);
     inspect.select(".value2 .key").text("Type: ");
@@ -51,10 +51,10 @@ function tooltipDetail(inspect, d, b) {
 }
 
 // Tooltip
-function renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue) {
+function inspectTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue) {
 
     let inspect = d3.select(".Inspect");
-    tooltipSummary(inspect, data);
+    inspectSummary(inspect, data);
 
     nodes.on("mouseover", function(e, d) {
 
@@ -64,7 +64,7 @@ function renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHov
             .filter((i) => i.source.id === d.id || i.target.id === d.id)
             .map((d) => d.index);
 
-        tooltipDetail(inspect, d, b);
+        inspectDetail(inspect, d, b);
 
         thisCircle
             .attr("stroke", "white")
@@ -83,7 +83,7 @@ function renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHov
 
     }).on("mouseout", function() {
 
-        tooltipSummary(inspect, data);
+        inspectSummary(inspect, data);
         
         nodes.attr("opacity", 1);
 
@@ -212,11 +212,11 @@ export default function Network() {
     useEffect(() => {
         renderNetwork(data, riskVariable);
         nodes = d3.selectAll(`#${id} svg path`);
-        renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
+        inspectTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
     }, [selectedLevel3ID, activityTypesChecks, data])
 
     useEffect(() => {
-        renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
+        inspectTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
     }, [selectedLevel3ID, activityTypesChecks, data, riskVariable])
 
     // Updates the color of the nodes without restarting the network simulation

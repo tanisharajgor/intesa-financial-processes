@@ -13,38 +13,61 @@ const margin = {top: 10, right: 10, bottom: 10, left: 10},
     width = 700 - margin.left - margin.right,
     height = 1200 - margin.top - margin.bottom;
 
-// Tooltip
-function renderTooltip(riskVariable, updateRiskHoverValue) {
+function inspectSummary(inspect, data) {
 
+    console.log(data)
+    // let nActors = data.nodes.filter(d => d.group === "Actor").length;
+    // let nActivities = data.nodes.filter(d => d.group === "Activity").length;
+    let nActivities = 0;
+
+    inspect.select(".value1 .key").text("Processes showing: ");
+    inspect.select(".value1 .value").text(`1, 2, 3`);
+    inspect.select(".value2 .key").text("Number of activities: ");
+    inspect.select(".value2 .value").text(`${nActivities}`);
+    inspect.select(".value3 .key").text("");
+    inspect.select(".value3 .value").text(" ");
+
+}
+
+function inspectDetail(inspect, data, d, riskVariable) {
+
+    let type = d.data.treeLevel === 4? "Activity": "Process";
+    let rs = d.data.riskStatus[riskVariable];
     const labelScale = createLabelScale(riskVariable);
+    let nActivities = 0;
+
+    inspect.style("display", "inline-block");
+    inspect.style("visibility", "visible")
+    inspect.select(".value1 .key").text(" " + type);
+    inspect.select(".value1 .value").text(" " + d.data.name);
+    inspect.select(".value2 .key").text("Number of activities: ");
+    inspect.select(".value2 .value").text(`${nActivities}`);
+    inspect.select(".value3 .key").text(" " + riskVariables[riskVariable].label);
+    inspect.select(".value3 .value").text(" " + labelScale(rs));
+}
+    
+
+
+// Tooltip
+function renderInspect(riskVariable, updateRiskHoverValue) {
 
     let inspect = d3.select(".Inspect");
+    inspectSummary(inspect, data);
 
     d3.selectAll("rect")
         .on("mouseover", function(e, d) {
 
             let thisRect = d3.select(this);
-            let type = d.data.treeLevel === 4? "Activity": "Process";
-            let rs = d.data.riskStatus[riskVariable];
-    
-            inspect.style("display", "inline-block");
-            inspect.style("visibility", "visible")
-            inspect.select(".name .key").text(" " + type);
-            inspect.select(".name .value").text(" " + d.data.name);
-            inspect.select(".risk .key").text(" " + riskVariables[riskVariable].label);
-            inspect.select(".risk .value").text(" " + labelScale(rs));
-
-
             thisRect
                 .attr("stroke", "grey")
                 .attr("stroke-width", 2);
 
+                inspectDetail(inspect, data, d, riskVariable);
             updateRiskHoverValue(d.data.riskStatus[riskVariable]);
 
         }).on("mouseout", function() {
 
-            // inspect.style("visibility", "hidden");
-            // inspect.style("display", "none");
+            inspectSummary(inspect, data);
 
             d3.selectAll("rect")
                 .attr("opacity", 1)
@@ -121,14 +144,14 @@ export default function TreeMap() {
             .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
             .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible");
 
-        renderTooltip(riskVariable, updateRiskHoverValue);
+        renderInspect(riskVariable, updateRiskHoverValue);
     }, [])
 
     useEffect(() => {
         d3.selectAll(`#${id} svg g rect`)
             .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
 
-        renderTooltip(riskVariable, updateRiskHoverValue);
+        renderInspect(riskVariable, updateRiskHoverValue);
     }, [riskVariable])
 
     return(
