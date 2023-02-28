@@ -5,48 +5,9 @@ import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import { StylesProvider } from "@material-ui/core/styles";
+import { inspectCirclePacking } from "../components/Inspect";
 
 const id = "circle-packing-chart";
-
-// Tooltip
-function renderTooltip(riskVariable, updateRiskHoverValue) {
-
-    const labelScale = createLabelScale(riskVariable);
-
-    let inspect = d3.select(".Inspect");
-
-    d3.selectAll("circle").on("mouseover", function(e, d) {
-
-        let thisCircle = d3.select(this);
-
-        let type = d.data.treeLevel === 4? "Activity": "Process";
-        let rs = d.data.riskStatus[riskVariable];
-
-        inspect.style("display", "inline-block");
-        inspect.style("visibility", "visible")
-        inspect.select(".name .key").text(" " + type);
-        inspect.select(".name .value").text(" " + d.data.name);
-        inspect.select(".risk .key").text(" " + riskVariables[riskVariable].label);
-        inspect.select(".risk .value").text(" " + labelScale(rs));
-
-        thisCircle
-            .attr("stroke", "grey")
-            .attr("stroke-width", 2);
-
-        updateRiskHoverValue(d.data.riskStatus[riskVariable]);
-
-    }).on("mouseout", function() {
-
-        inspect.style("visibility", "hidden");
-        inspect.style("display", "none");
-
-        updateRiskHoverValue(undefined);
-
-        d3.selectAll('circle')
-            .attr("stroke-width", .5)
-            .attr("stroke", "grey"); 
-    });
-}
 
 export default function CirclePacking() {
 
@@ -67,6 +28,8 @@ export default function CirclePacking() {
     }
 
     const root = pack(data);
+    root.sum(d => d.children ? 0: 1);
+    // console.log(root)
     let focus = root;
     let view;
 
@@ -119,7 +82,7 @@ export default function CirclePacking() {
             });
         }
 
-        renderTooltip(riskVariable, updateRiskHoverValue);
+        inspectCirclePacking(data, riskVariable, updateRiskHoverValue);
 
     }, [])
 
@@ -128,7 +91,7 @@ export default function CirclePacking() {
         d3.selectAll(`#${id} svg circle`)
             .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
 
-        renderTooltip(riskVariable, updateRiskHoverValue);
+        inspectCirclePacking(data, riskVariable, updateRiskHoverValue);
     }, [riskVariable])
 
     return(
