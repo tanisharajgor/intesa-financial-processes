@@ -8,6 +8,7 @@ import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
 import { symbolType, symbolScale } from "../components/View";
 import { riskVariables, createColorScale, applyColorScale } from "../utils/global";
+import { inspectNetworkDetail, inspectNetworkSummary } from "../components/Inspect";
 
 const id = "network-chart";
 let width = 1000;
@@ -26,9 +27,10 @@ const rScale = d3.scaleLinear()
     .range([8, 15]);
 
 // Tooltip
-function renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue) {
+function inspectNetwork(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue) {
 
     let inspect = d3.select(".Inspect");
+    inspectNetworkSummary(inspect, data);
 
     nodes.on("mouseover", function(e, d) {
 
@@ -37,14 +39,8 @@ function renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHov
         const b = data.links
             .filter((i) => i.source.id === d.id || i.target.id === d.id)
             .map((d) => d.index);
-    
-        inspect.style("display", "inline-block");
-        inspect.style("visibility", "visible")
-        inspect.select(".group .key").text(" " + d.group);
-        inspect.select(".group .value").text(" " + d.name);
-        inspect.select(".type .value").text(" " + d.type);
-        // inspect.select(".connections .key").text(" " + d.group === "Activity"? "# activities": "# actors");
-        inspect.select(".connections .value").text(" " + b.length);
+
+        inspectNetworkDetail(inspect, d, b);
 
         thisCircle
             .attr("stroke", "white")
@@ -63,8 +59,8 @@ function renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHov
 
     }).on("mouseout", function() {
 
-        inspect.style("visibility", "hidden");
-        inspect.style("display", "none");
+        inspectNetworkSummary(inspect, data);
+        
         nodes.attr("opacity", 1);
 
         d3.selectAll(`#${id} svg path`)
@@ -192,11 +188,11 @@ export default function Network() {
     useEffect(() => {
         renderNetwork(data, riskVariable);
         nodes = d3.selectAll(`#${id} svg path`);
-        renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
+        inspectNetwork(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
     }, [selectedLevel3ID, activityTypesChecks, data])
 
     useEffect(() => {
-        renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
+        inspectNetwork(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
     }, [selectedLevel3ID, activityTypesChecks, data, riskVariable])
 
     // Updates the color of the nodes without restarting the network simulation
