@@ -179,35 +179,35 @@ export default function Network() {
     const [riskHoverValue, updateRiskHoverValue] = useState(undefined);
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
 
+    // Set-up scales
+    colorScale = createColorScale(riskVariable, riskVariables);
+
     // Filter data
     useEffect(() => {
         updateData(filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks))
     }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks])
 
-    // Set-up scales
-    colorScale = createColorScale(riskVariable, riskVariables);
-
     // React Hooks
     useEffect(() => {
         initNetwork(data, riskVariable);
-    }, [])
+    }, []);
 
     // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
     useEffect(() => {
         renderNetwork(data, riskVariable);
         nodes = d3.selectAll(`#${id} svg path`);
         renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
-    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data])
+    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data]);
 
     useEffect(() => {
         renderTooltip(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
-    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data, riskVariable])
+    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data, riskVariable]);
 
     // Updates the color of the nodes without restarting the network simulation
     useEffect(() => {
         nodes
             .attr("fill", d => applyColorScale(d.riskStatus, riskVariable, colorScale));
-    }, [riskVariable])
+    }, [riskVariable]);
 
     return(
         <StylesProvider injectFirst>
