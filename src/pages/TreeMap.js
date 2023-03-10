@@ -47,7 +47,7 @@ export default function TreeMap() {
     const root = d3.hierarchy(data).sum(function(d) { return 1 }) // Here the size of each leave is given in the 'value' field in input data
     root.sum(d => d.children ? 0: 1);
     d3.partition()
-        .size([height - margin.top - margin.bottom, width - margin.left - margin.right])
+        .size([width, height])
         .padding(2)
         .round(false)
         (root);
@@ -57,17 +57,17 @@ export default function TreeMap() {
     useEffect(() => {
         const svg = d3.select(`#${id}`)
             .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .attr("transform",`translate(${width/2},${height/2})`)
+            .attr("width", width)
+            .attr("height", height )
+            // .attr("transform",`translate(${width/2},${height/2})`)
             .attr("transform","rotate(90)")
             // .append("g")
             //     .attr("transform",
             //             `translate(${margin.left}, ${margin.top})`)
-            //     .attr("transform", `translate(${margin.left}, -450)`);
+                // .attr("transform", `translate(${margin.left}, -450)`);
 
         const rectHeight = descendants[0].y1 - descendants[0].y0; // calculate the size of the root rect
-        addProcessLabels(rectHeight);
+        // addProcessLabels(rectHeight);
 
         const g = svg
             .selectAll("g")
