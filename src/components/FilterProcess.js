@@ -43,11 +43,11 @@ function initTooltip() {
 }
 
 // Tooltip
-function renderTooltip(node, selectedLevel3ID) {
+function renderTooltip(selectedLevel3ID) {
 
     let tooltip = d3.select(`#${id} .tooltip`)
 
-    node.on("mouseover", function(e, d) {
+    d3.selectAll('.Process-Node').on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
 
@@ -174,9 +174,8 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
 
     // Update SVG Visualization
     useEffect(() => {
-        const node = d3.selectAll(".Process-Node");
         clickProcess(updateLevel3ID);
-        renderTooltip(node, selectedLevel3ID);
+        renderTooltip(selectedLevel3ID);
     }, [selectedLevel1ID, selectedLevel3ID]);
 
     return(
