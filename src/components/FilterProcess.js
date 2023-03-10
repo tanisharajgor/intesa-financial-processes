@@ -34,13 +34,18 @@ function fillScale(d, selectedLevel3ID) {
     }
 }
 
-// Tooltip
-function renderTooltip(node, selectedLevel3ID) {
 
-    let tooltip = d3.select(`#${id}`)
+function initTooltip() {
+    d3.select(`#${id}`)
         .append("div")
         .attr("class", "tooltip")
         .attr("z-index", 500);
+}
+
+// Tooltip
+function renderTooltip(node, selectedLevel3ID) {
+
+    let tooltip = d3.select(`#${id} .tooltip`)
 
     node.on("mouseover", function(e, d) {
 
@@ -158,20 +163,21 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
     };
 
     useEffect(() => {
+        initTooltip();
         initFilter();
-    }, [])
+    }, []);
 
     // Initialize SVG Visualization
     useEffect(() => {
         updateFilter(root, selectedLevel3ID);
-    }, [selectedLevel1ID])
+    }, [selectedLevel1ID]);
 
     // Update SVG Visualization
     useEffect(() => {
         const node = d3.selectAll(".Process-Node");
         clickProcess(updateLevel3ID);
         renderTooltip(node, selectedLevel3ID);
-    }, [selectedLevel1ID, selectedLevel3ID])
+    }, [selectedLevel1ID, selectedLevel3ID]);
 
     return(
         <Accordion className={Styles.card}>
