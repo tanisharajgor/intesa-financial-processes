@@ -34,7 +34,6 @@ function fillScale(d, selectedLevel3ID) {
     }
 }
 
-
 function initTooltip() {
     d3.select(`#${id}`)
         .append("div")

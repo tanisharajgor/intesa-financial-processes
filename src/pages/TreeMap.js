@@ -12,18 +12,18 @@ const id = "tree-map-chart";
 // Set-up layout
 const margin = {top: 10, right: 10, bottom: 10, left: 10},
     width = 700 - margin.left - margin.right,
-    height = 1200 - margin.top - margin.bottom;
+    height = 700 - margin.top - margin.bottom;
 
 function addProcessLabels(rectHeight) {
 
-    const labels = ["Level 1 Processes", "Level 2 Processes", "Level 3 Processes", "Activities"]
+    const labels = ["Level 1", "Level 2", "Level 3", "Activities"]
 
     for (let i in labels) {
         d3.select(`#${id} svg`)
             .append("text")
             .attr("font-family", "sans-serif")
             .attr("font-size", 14)
-            .attr("x", -110 - height)
+            .attr("x", -50 - height)
             .attr("y", rectHeight/2 + rectHeight*i + margin.left) //+ height
             .attr("fill", "white")
             .attr("transform",`translate(${width/2},${height/2})`)
@@ -61,10 +61,10 @@ export default function TreeMap() {
             .attr("height", height + margin.top + margin.bottom)
             .attr("transform",`translate(${width/2},${height/2})`)
             .attr("transform","rotate(90)")
-            .append("g")
-                .attr("transform",
-                        `translate(${margin.left}, ${margin.top})`)
-                .attr("transform", `translate(${margin.left}, -450)`);
+            // .append("g")
+            //     .attr("transform",
+            //             `translate(${margin.left}, ${margin.top})`)
+            //     .attr("transform", `translate(${margin.left}, -450)`);
 
         const rectHeight = descendants[0].y1 - descendants[0].y0; // calculate the size of the root rect
         addProcessLabels(rectHeight);
