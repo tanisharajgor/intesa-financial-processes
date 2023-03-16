@@ -1,8 +1,5 @@
-import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
+import { Accordion, AccordionHeader, AccordionDetails, MenuItem, Form, Select } from 'cfd-react-components';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import lu from '../data/processed/nested/lu.json';
@@ -176,7 +173,7 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
 
     return(
         <Accordion className={Styles.card}>
-            <AccordionSummary
+            <AccordionHeader
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="process-filter-content"
                 id="process-filter-header"
@@ -186,12 +183,12 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
                     <span className='spec'> {level3Descr}</span>
                 </h4>
             </div>
-            </AccordionSummary>
+            </AccordionHeader>
             <AccordionDetails>
                 <div className="layout_group">
                         <div className="layout_row">
                             <div className="layout_item push">
-                                <FormControl variant="outlined" size="small">
+                                <Form variant="outlined" size="small">
                                     <Select
                                         labelId="process1-select-label"
                                         id="process1-select"
@@ -205,7 +202,7 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
                                             )
                                         })}
                                     </Select>
-                                </FormControl>
+                                </Form>
                             </div>
                         </div>
                         <div className="layout_row">

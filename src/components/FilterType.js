@@ -1,8 +1,6 @@
-import { Accordion, AccordionSummary, AccordionDetails, } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { FormControlLabel } from '@material-ui/core';
+import { Accordion, AccordionHeader, AccordionDetails, FormLabel, Checkbox } from 'cfd-react-components';
+// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useStyles } from '../utils/ComponentStyles';
-import Checkbox from '@material-ui/core/Checkbox';
 
 const id = "Filter-Activity-Type";
 
@@ -23,8 +21,7 @@ export default function FilterType({typesChecks, updateTypeChecks, typeValues, l
 
     return(
         <Accordion className={Styles.card}>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
+            <AccordionHeader
                 aria-controls="activity-type-filter-content"
                 id="activity-type-filter-header"
             >
@@ -33,7 +30,7 @@ export default function FilterType({typesChecks, updateTypeChecks, typeValues, l
                     <span className='spec'></span>
                 </h4>
             </div>
-            </AccordionSummary>
+            </AccordionHeader>
             <AccordionDetails>
                 <div className="layout_group">
                         <div className="layout_row">
@@ -42,7 +39,7 @@ export default function FilterType({typesChecks, updateTypeChecks, typeValues, l
                                 {typeValues.map((value, index) => {
                                     return (
                                         <li key={index}>
-                                                <FormControlLabel
+                                                <FormLabel
                                                 control={<Checkbox color="primary" 
                                                 checked={typesChecks.includes(value)} 
                                                 name={value} 

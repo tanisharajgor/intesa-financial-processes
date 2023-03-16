@@ -1,4 +1,4 @@
-import { FormControl, Select, MenuItem } from "@material-ui/core";
+import { Form, Select, MenuItem } from "cfd-react-components";
 import { riskVariables, createColorScale, naColor } from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
@@ -277,7 +277,7 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
             <div className="inner">
                 <InspectHTML/>
                 {viewInfo(networkChart)}
-                <FormControl variant="outlined" size="small">
+                <Form variant="outlined" size="small">
                     <Select
                         labelId="view-select-label"
                         id="view-select"
@@ -294,7 +294,7 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
                         })}
                     </Select>
                     <div id={riskLegendId}></div>
-                </FormControl>
+                </Form>
             </div>
         </div>
     )
