@@ -9,7 +9,6 @@ import {
 
 // Pages
 import CirclePacking from "./pages/CirclePacking";
-import TreeMap from "./pages/TreeMap";
 import Network from "./pages/Network";
 
 // Styles
@@ -54,7 +53,6 @@ root.render(
     <HashRouter>
       <Routes>
         <Route path="/" element={<CirclePacking />} />
-          <Route path="/TreeMap" element={<TreeMap />} />
           <Route path="/Network" element={<Network />} />
       </Routes>
     </HashRouter>

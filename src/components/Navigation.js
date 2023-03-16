@@ -16,9 +16,6 @@ export default function Navigation() {
                         <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Circle Packing</NavLink>
                     </li>
                     <li className="Navigation_link">
-                        <NavLink to="/TreeMap" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Tree Map</NavLink>
-                    </li>
-                    <li className="Navigation_link">
                         <NavLink to="/Network" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Network</NavLink>
                     </li>
                     {/* <li className="Navigation_link">

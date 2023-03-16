@@ -81,34 +81,6 @@ export function inspectCirclePacking(data, riskVariable, updateRiskHoverValue) {
     });
 }
 
-export function inspectTreeMap(data, riskVariable, updateRiskHoverValue) {
-
-    let inspect = d3.select(".Inspect");
-    inspectHierarchySummary(inspect, data);
-
-    d3.selectAll("rect")
-        .on("mouseover", function(e, d) {
-
-            let thisRect = d3.select(this);
-            thisRect
-                .attr("stroke", "grey")
-                .attr("stroke-width", 2);
-
-            inspectHierarchyDetail(inspect, d, riskVariable);
-            updateRiskHoverValue(d.data.riskStatus[riskVariable]);
-
-        }).on("mouseout", function() {
-
-            inspectHierarchySummary(inspect, data);
-
-            d3.selectAll("rect")
-                .attr("opacity", 1)
-                .attr("stroke", "none");
-
-            updateRiskHoverValue(undefined);
-        });
-}
-
 /*Creates the inspect html dom object*/
 export function InspectHTML() {
 
