@@ -88,7 +88,9 @@ function clickProcess(updateLevel3ID) {
     d3.selectAll('.Process-Node').each(function (d, i) {
         d3.select(this)
             .on('click', (e, datum) => {
-                updateLevel3ID(datum.data.data.id);
+                if(datum.data.data.treeLevel === 3) {
+                    updateLevel3ID(datum.data.data.id);
+                }
             })
     })
 }
