@@ -2,7 +2,6 @@ import Main from "../components/Main";
 import Navigation from "../components/Navigation";
 import FilterProcess from "../components/FilterProcess";
 import FilterType from "../components/FilterType";
-import { StylesProvider } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
@@ -206,16 +205,14 @@ export default function Network() {
     }, [riskVariable]);
 
     return(
-        <StylesProvider injectFirst>
-            <div className="Content">
-                <Navigation/>
-                <div className="Query" id="FilterMenu">
-                    <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
-                    <FilterType typesChecks={activityTypesChecks} updateTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues} label="Filter by Activity Type:"/>
-                    <FilterType typesChecks={actorTypesChecks} updateTypeChecks = {updateActorTypeChecks} typeValues={actorTypeValues} label="Filter by Actor Type:"/>
-                </div>
-                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} symbolHoverValue={symbolHoverValue} id={id} data={data}/>                
+        <div className="Content">
+            <Navigation/>
+            <div className="Query" id="FilterMenu">
+                <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
+                <FilterType typesChecks={activityTypesChecks} updateTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues} label="Filter by Activity Type:"/>
+                <FilterType typesChecks={actorTypesChecks} updateTypeChecks = {updateActorTypeChecks} typeValues={actorTypeValues} label="Filter by Actor Type:"/>
             </div>
-        </StylesProvider>
+            <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} symbolHoverValue={symbolHoverValue} id={id} data={data}/>                
+        </div>
     )
 }

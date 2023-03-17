@@ -1,12 +1,9 @@
 import { Accordion, AccordionHeader, AccordionDetails, FormLabel, Checkbox } from 'cfd-react-components';
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { useStyles } from '../utils/ComponentStyles';
 
 const id = "Filter-Activity-Type";
 
 export default function FilterType({typesChecks, updateTypeChecks, typeValues, label}) {
 
-    const Styles = useStyles();
     let newSelectedTypes = [];
 
     const updateSelectedRange = (selected) => {
@@ -20,7 +17,7 @@ export default function FilterType({typesChecks, updateTypeChecks, typeValues, l
     }
 
     return(
-        <Accordion className={Styles.card}>
+        <Accordion className={'Card'}>
             <AccordionHeader
                 aria-controls="activity-type-filter-content"
                 id="activity-type-filter-header"
