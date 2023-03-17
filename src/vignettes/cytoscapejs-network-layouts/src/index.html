@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>My First Parcel App</title>
+<style>
+  body {
+      margin: 0;
+      color: #ffffff;
+      background: #22252a;
+      font-family: sans-serif;
+  }
+  nav {
+      padding: 0.5em;
+      position: absolute;
+      z-index: +1;    
+  }
+  label {
+      font-size: 0.875em;
+      color: #999999;
+  }
+  button, select {
+      padding: 0.5em;
+      height: 2.5em;
+      border-radius: 0;
+      border: 1px solid #919295;
+      color: #919295;
+      background-color: #22252a;
+  }
+  #cy {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      background: #08090b;
+  }
+  #legend {
+      padding: 1em 0.5em;
+      position: absolute;
+      z-index: +1;
+      right: 0;
+      bottom: 0;
+      font-size: 0.75em;
+      color: #999999;
+      opacity: 0.6;
+  }
+  #legend p {
+      margin: 0;
+  }
+  #legend span {
+      display: inline-block;
+      width: 1.5em;
+      text-align: center;
+  }
+  </style>
+  </head>
+  <body>
+  <nav>
+      <label for="layout">Layout</label>
+      <select name="layout" id="layout">
+        <option value="grid">Geometric: Grid</option>
+        <option value="circle" selected>Geometric: Circle</option>
+        <option value="concentric">Geometric/Hierarchical: Concentric</option>
+        <option value="random">Random</option>
+        <option value="dagre">Hierarchical: Dagre</option>
+        <option value="breadthfirst">Hierarchical: Breadthfirst</option>
+        <option value="klay">Hierarchical: Klay</option>
+        <option value="cose">Force-driected: Cose</option>
+        <option value="fcose">Force-driected: Fcose</option>
+        <option value="cola">Force-driected: Cola</option>
+        <option value="euler">Force-driected: Euler</option>
+          <!-- <option value="elk">elk</option> -->
+          <!-- <option value="spread">spread</option> -->
+          <!-- <option value="avsdf">avsdf</option> -->
+          <!-- <option value="cise">cise</option> -->
+      </select>
+      &nbsp;
+      <label for="reset">Zoom/Pan</label>
+      <button id="reset">reset</button>
+      &nbsp;
+      <label for="none">pinch to zoom, click + drag to pan</label>
+      &nbsp;
+  </nav>
+  <div id="legend"></div>
+  <div id="cy"></div>
+</body>
+<script type="module" src="main.js"></script>
+</html>
