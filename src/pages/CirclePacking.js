@@ -4,7 +4,6 @@ import { riskVariables, createColorScale, applyColorScale, createOpacityScale, c
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
-import { StylesProvider } from "@material-ui/core/styles";
 import { inspectCirclePacking } from "../components/Inspect";
 
 const id = "circle-packing-chart";
@@ -95,12 +94,10 @@ export default function CirclePacking() {
     }, [riskVariable])
 
     return(
-        <StylesProvider>
-            <div className="Content">
-                <Navigation/>
-                <div className="Query" id="FilterMenu"></div>
-                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} id={id} data={data}/>
-            </div>
-        </StylesProvider>
+        <div className="Content">
+            <Navigation/>
+            <div className="Query" id="FilterMenu"></div>
+            <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} id={id} data={data}/>
+        </div>
     )
 }

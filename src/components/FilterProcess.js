@@ -1,9 +1,7 @@
 import { Accordion, AccordionHeader, AccordionDetails, MenuItem, Form, Select } from 'cfd-react-components';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import lu from '../data/processed/nested/lu.json';
-import { useStyles } from '../utils/ComponentStyles';
 
 // constants
 const width = 345,
@@ -139,7 +137,6 @@ function updateFilter(root, selectedLevel3ID) {
 }
 
 export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
-    const Styles = useStyles();
     const level3Descr = lu["level3"].find((d) => d.id === selectedLevel3ID).descr;
     const [selectedLevel1ID, updateLevel1] = useState(level1[0].id);
     const levelsFiltered = lu["processes"].children.find((d) => d.id === selectedLevel1ID);
@@ -174,9 +171,8 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
     }, [selectedLevel1ID, selectedLevel3ID]);
 
     return(
-        <Accordion className={Styles.card}>
+        <Accordion className={'Card'}>
             <AccordionHeader
-                expandIcon={<ExpandMoreIcon />}
                 aria-controls="process-filter-content"
                 id="process-filter-header"
             >
