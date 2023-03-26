@@ -96,8 +96,10 @@ export default function CirclePacking() {
     return(
         <div className="Content">
             <Navigation/>
-            <div className="Query" id="FilterMenu"></div>
-            <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} id={id} data={data}/>
+            <div style={{display: 'flex'}}>
+                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} id={id} data={data}/>
+            </div>
+            {/* <div className="Query" id="FilterMenu"></div> */}
         </div>
     )
 }

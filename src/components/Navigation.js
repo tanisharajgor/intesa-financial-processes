@@ -1,3 +1,4 @@
+import { LayoutHeader } from "cfd-react-components";
 import { NavLink } from "react-router-dom";
 
 /**
@@ -6,7 +7,7 @@ import { NavLink } from "react-router-dom";
  */
 export default function Navigation() {
     return (
-        <div className="Navigation">
+        <LayoutHeader>
             <div className="Navigation_branding">
                 <h2><NavLink to="/">Banca Intesa Processes</NavLink></h2>
             </div>
@@ -23,6 +24,6 @@ export default function Navigation() {
                     </li> */}
                 </ul>
             </div>
-        </div>
+        </LayoutHeader>
     )
 }

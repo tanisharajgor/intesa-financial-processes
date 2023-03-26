@@ -8,6 +8,7 @@ import * as d3 from 'd3';
 import { symbolType, symbolScale } from "../components/View";
 import { riskVariables, createColorScale, applyColorScale, actorTypeValues, activityTypeValues } from "../utils/global";
 import { inspectNetworkDetail, inspectNetworkSummary } from "../components/Inspect";
+import { QueryMenu } from "cfd-react-components";
 
 const id = "network-chart";
 let width = 1000;
@@ -207,12 +208,14 @@ export default function Network() {
     return(
         <div className="Content">
             <Navigation/>
-            <div className="Query" id="FilterMenu">
-                <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
-                <FilterType typesChecks={activityTypesChecks} updateTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues} label="Filter by Activity Type:"/>
-                <FilterType typesChecks={actorTypesChecks} updateTypeChecks = {updateActorTypeChecks} typeValues={actorTypeValues} label="Filter by Actor Type:"/>
-            </div>
-            <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} symbolHoverValue={symbolHoverValue} id={id} data={data}/>                
+            <div style={{display: 'flex'}}>
+                <QueryMenu className="Query" id="FilterMenu" width={"40rem"}>
+                    <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
+                    <FilterType typesChecks={activityTypesChecks} updateTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues} label="Filter by Activity Type:"/>
+                    <FilterType typesChecks={actorTypesChecks} updateTypeChecks = {updateActorTypeChecks} typeValues={actorTypeValues} label="Filter by Actor Type:"/>
+                </QueryMenu>
+                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} symbolHoverValue={symbolHoverValue} id={id} data={data}/>        
+            </div>        
         </div>
     )
 }
