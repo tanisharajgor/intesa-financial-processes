@@ -11,7 +11,7 @@ const NavigationBranding = styled('div')`
     padding: 0.625rem;
 
     h2 {
-        color: ${props =>  props.theme.colorFocus };
+        color: ${props =>  props.theme.color.focus };
         font-family: ${props => props.theme.font.family };
         font-size: 1.25rem;
     }
@@ -19,6 +19,42 @@ const NavigationBranding = styled('div')`
 
 const StyledLayoutHeader = styled(LayoutHeader)`
     border-bottom: 1px solid #4e5155;
+`
+
+const NavigationLinks = styled('div')`
+    flex: 1;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+
+    padding: 0.625rem;
+`
+
+const LinkList = styled('ul')`
+    list-style: none;
+`
+
+const Link = styled(`li`)`
+    display: inline-block;
+    flex-grow: 0;
+    flex: 0;
+    color: ${props =>  props.theme.color.secondary };
+
+    a {
+    padding: 0.625rem;
+    border-radius: 0.375rem;
+    }
+    
+    a.active {
+    color: ${props =>  props.theme.color.main };
+    }  
+
+    a:hover {
+    color: ${props =>  props.theme.color.main };
+    background-color: ${props =>  props.theme.color.border };
+    }
 `
 
 /**
@@ -33,19 +69,19 @@ export default function Navigation() {
                     <NavLink to="/">Banca Intesa Processes</NavLink>
                 </h2>
             </NavigationBranding>
-            <div className="Navigation_links">
-                <ul id="Navigation_list">
-                    <li className="Navigation_link">
+            <NavigationLinks>
+                <LinkList>
+                    <Link>
                         <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Circle Packing</NavLink>
-                    </li>
-                    <li className="Navigation_link">
+                    </Link>
+                    <Link>
                         <NavLink to="/Network" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Network</NavLink>
-                    </li>
-                    {/* <li className="Navigation_link">
+                    </Link>
+                    {/* <Link className="Navigation_link">
                         <NavLink to="/Help" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Help</NavLink>
-                    </li> */}
-                </ul>
-            </div>
+                    </Link> */}
+                </LinkList>
+            </NavigationLinks>
         </StyledLayoutHeader>
     )
 }
