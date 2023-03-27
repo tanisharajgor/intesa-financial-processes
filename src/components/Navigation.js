@@ -17,13 +17,17 @@ const NavigationBranding = styled('div')`
     }
 `
 
+const StyledLayoutHeader = styled(LayoutHeader)`
+    border-bottom: 1px solid #4e5155;
+`
+
 /**
  * Menu Navigation bar to navigate to different parts of the project
  * @returns 
  */
 export default function Navigation() {
     return (
-        <LayoutHeader>
+        <StyledLayoutHeader>
             <NavigationBranding className="Navigation_branding">
                 <h2>
                     <NavLink to="/">Banca Intesa Processes</NavLink>
@@ -42,6 +46,6 @@ export default function Navigation() {
                     </li> */}
                 </ul>
             </div>
-        </LayoutHeader>
+        </StyledLayoutHeader>
     )
 }
