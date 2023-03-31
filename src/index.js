@@ -35,7 +35,8 @@ const theme = {
     lineHeight: '1.4rem',
   },
   headerWeight: "48px",
-  padding: '0.625rem'
+  padding: '0.625rem',
+  viewColWidth: '16rem'
 
 }
 
@@ -54,13 +55,13 @@ const GlobalStyles = createGlobalStyle`
 
   .Card {
     border-bottom: 1px solid #4e5155;
+    Cursor: pointer;
   }
 
   .Query {
     border-right: 1px solid #4e5155;
     padding-left: 8px;
     padding-right: 8px;
-    Cursor: pointer;
   }
 
   #process1-select {
