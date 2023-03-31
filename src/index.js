@@ -28,14 +28,14 @@ const theme = {
     main: '#21252b',
   },
   font: {
-    family: 'Plex, Verdana, Geneva, Tahoma, sans-serif',
+    family: 'Geneva, Plex, Verdana, Tahoma, sans-serif',
     heading: '',
     subHeading: '',
-    text: '14px',
-    primaryColor: '',
-    secondaryColor: '',
+    baseSize: '14px',
+    lineHeight: '1.4rem',
   },
   headerWeight: "48px",
+  padding: '0.625rem'
 
 }
 
@@ -47,6 +47,24 @@ const GlobalStyles = createGlobalStyle`
     color: ${props =>  props.theme.color.main };
     background-color: ${props =>  props.theme.backgroundColor.main };
     font-family: ${props =>  props.theme.font.family };
+    font-size: ${props =>  props.theme.font.baseSize };
+    line-height: ${props =>  props.theme.font.lineHeight };
+    margin: 0px;
+  }
+
+  .Card {
+    border-bottom: 1px solid #4e5155;
+  }
+
+  .Query {
+    border-right: 1px solid #4e5155;
+    padding-left: 8px;
+    padding-right: 8px;
+    Cursor: pointer;
+  }
+
+  #process1-select {
+    width: 100%;
   }
 `
 

@@ -14,6 +14,7 @@ const NavigationBranding = styled('div')`
         color: ${props =>  props.theme.color.focus };
         font-family: ${props => props.theme.font.family };
         font-size: 1.25rem;
+        text-decoration: none;
     }
 `
 

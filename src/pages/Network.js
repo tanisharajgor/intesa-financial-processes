@@ -209,7 +209,7 @@ export default function Network() {
         <div className="Content">
             <Navigation/>
             <div style={{display: 'flex'}}>
-                <QueryMenu className="Query" id="FilterMenu" width={"40rem"}>
+                <QueryMenu className="Query" id="FilterMenu" width={"20rem"}>
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
                     <FilterType typesChecks={activityTypesChecks} updateTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues} label="Filter by Activity Type:"/>
                     <FilterType typesChecks={actorTypesChecks} updateTypeChecks = {updateActorTypeChecks} typeValues={actorTypeValues} label="Filter by Actor Type:"/>

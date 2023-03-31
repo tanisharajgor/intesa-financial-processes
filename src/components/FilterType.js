@@ -1,4 +1,6 @@
 import { Accordion, AccordionHeader, AccordionDetails, FormLabel, Checkbox } from 'cfd-react-components';
+import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../component-styles/query-layout';
+import { Key } from '../component-styles/key'
 
 const id = "Filter-Activity-Type";
 
@@ -22,38 +24,37 @@ export default function FilterType({typesChecks, updateTypeChecks, typeValues, l
                 aria-controls="activity-type-filter-content"
                 id="activity-type-filter-header"
             >
-            <div>
-                <h4><span className='key'>{label}</span>
+                <h4>
+                    <Key>{label}</Key>
                     <span className='spec'></span>
                 </h4>
-            </div>
             </AccordionHeader>
             <AccordionDetails>
-                <div className="layout_group">
-                        <div className="layout_row">
-                            <div className="layout_item push">
-                            <ul>
-                                {typeValues.map((value, index) => {
-                                    return (
-                                        <li key={index}>
-                                                <FormLabel
-                                                control={<Checkbox color="primary" 
-                                                checked={typesChecks.includes(value)} 
-                                                name={value} 
-                                                onChange={() => updateSelectedRange(value)} />}
-                                                label={value}
-                                            />
-                                        </li>
-                                        )
-                                    })
-                                }
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="layout_row">
+                <LayoutGroup>
+                        <LayoutRow>
+                            <LayoutItem className="push">
+                                <FilterList>
+                                    {typeValues.map((value, index) => {
+                                        return (
+                                            <li key={index}>
+                                                    <FormLabel
+                                                    control={<Checkbox color="primary" 
+                                                    checked={typesChecks.includes(value)} 
+                                                    name={value} 
+                                                    onChange={() => updateSelectedRange(value)} />}
+                                                    label={value}
+                                                />
+                                            </li>
+                                            )
+                                        })
+                                    }
+                                </FilterList>
+                            </LayoutItem>
+                        </LayoutRow>
+                        <LayoutRow>
                             <div id={id}></div>
-                        </div>
-                    </div>
+                        </LayoutRow>
+                    </LayoutGroup>
             </AccordionDetails>
         </Accordion>
     )
