@@ -41,8 +41,9 @@ export default function FilterType({typesChecks, updateTypeChecks, typeValues, l
                                                     control={<Checkbox color="primary" 
                                                     checked={typesChecks.includes(value)} 
                                                     name={value} 
-                                                    onChange={() => updateSelectedRange(value)} />}
+                                                    onChange={() => updateSelectedRange(value)}
                                                     label={value}
+                                                    />}                                     
                                                 />
                                             </li>
                                             )

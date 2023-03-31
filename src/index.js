@@ -67,6 +67,10 @@ const GlobalStyles = createGlobalStyle`
   #process1-select {
     width: 100%;
   }
+
+  #Filter-Process {
+    width: 100%;
+  }
 `
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
