@@ -10,7 +10,7 @@ const NavigationBranding = styled('div')`
     justify-content: start;
     padding: 0.625rem;
 
-    h2 {
+    a {
         color: ${props =>  props.theme.color.focus };
         font-family: ${props => props.theme.font.family };
         font-size: 1.25rem;
@@ -41,10 +41,17 @@ const Link = styled(`li`)`
     flex-grow: 0;
     flex: 0;
     color: ${props =>  props.theme.color.secondary };
-
-    a {
     padding: 0.625rem;
     border-radius: 0.375rem;
+    font-size: ${props =>  props.theme.font.text };
+
+    &:hover {
+        background-color: ${props =>  props.theme.color.secondary };
+    }
+
+    a {
+    color: ${props =>  props.theme.color.secondary };
+    text-decoration: none;
     }
     
     a.active {

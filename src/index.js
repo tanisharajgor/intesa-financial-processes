@@ -29,11 +29,13 @@ const theme = {
   },
   font: {
     family: 'Plex, Verdana, Geneva, Tahoma, sans-serif',
+    heading: '',
+    subHeading: '',
+    text: '14px',
     primaryColor: '',
     secondaryColor: '',
   },
   headerWeight: "48px",
-  baseFontSize: "14px"
 
 }
 
@@ -44,6 +46,7 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     color: ${props =>  props.theme.color.main };
     background-color: ${props =>  props.theme.backgroundColor.main };
+    font-family: ${props =>  props.theme.font.family };
   }
 `
 
