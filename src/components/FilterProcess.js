@@ -152,7 +152,7 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
     cluster(root);
 
     const handleChange = (event) => {
-        let level1 = event.target.value;
+        let level1 = parseInt(event.target.value);
         updateLevel1(level1)
     };
 
