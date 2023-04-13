@@ -200,49 +200,98 @@ def create_network(data):
     for i in data.level3ID.unique():
 
         df = data[data.level3ID == i].drop_duplicates()
+        df.riskType = df.riskType.fillna('NA')
+        df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('NA')
+        df.controlPeriodocity = df.controlPeriodocity.fillna('NA')
+        df.controlType = df.controlType.fillna('NA')
+        df.controlCategory = df.controlCategory.fillna('NA')
 
-        actorsID = df.actorID.unique()
-        activitiesID = df.activityID.unique()
+        actorsID = df[pd.isnull(df.actorID) == False].actorID.unique()
+        activitiesID = df[pd.isnull(df.activityID) == False].activityID.unique()
+        riskID = df[pd.isnull(df.riskID) == False].riskID.unique()
+        controlID = df[pd.isnull(df.controlID) == False].controlID.unique()
 
-        actorsArray = []
-        activitiesArray = []
+        # actorsArray = []
+        # activitiesArray = []
+        # riskArray = []
+        # controlArray = []
         links = []
-
-        for j in range(0, df.shape[0] - 1):
-            linkRow = {"target": int(df.actorID.iloc[j]),
-                       "source": int(df.activityID.iloc[j]),
-                       "id": str(df.actorID.iloc[j]) + "-" + str(df.activityID.iloc[j])}
-
-            links.append(linkRow)
+        nodes = []
 
         for k in actorsID:
 
-            actorRow = {"id": int(k),
-                        "group": "Actor",
-                        "name": df[df.actorID == k].actor.iloc[0],
-                        "type": df[df.actorID == k].actorType.iloc[0],
-                        "nActivities": int(df[df.actorID == k].activityID.nunique()),
-                        "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
-                        "riskStatus": create_risk_status(df[df.actorID == k]),
-                        "levels": levelsObject(df[df.actorID == k])
-                        }
+            row = {"id": int(k),
+                   "group": "Actor",
+                   "name": df[df.actorID == k].actor.iloc[0],
+                   "type": df[df.actorID == k].actorType.iloc[0],
+                   "nActivities": int(df[df.actorID == k].activityID.nunique()),
+                   "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
+                   "riskStatus": create_risk_status(df[df.actorID == k]),
+                   "levels": levelsObject(df[df.actorID == k])
+                   }
 
-            actorsArray.append(actorRow)
+            nodes.append(row)
 
         for l in activitiesID:
-            activityRow = {"id": int(l),
-                           "group": "Activity",
-                           "name": df[df.activityID == l].activity.iloc[0],
-                           "type": df[df.activityID == l].activityType.iloc[0],
-                           "nActors": int(df[df.activityID == l].actorID.nunique()),
-                           "actorsID": df[df.activityID == l].actorID.unique().tolist(),
-                           "riskStatus": create_risk_status(df[df.activityID == l]),
-                           "levels": levelsObject(df[df.activityID == l])
-                           }
+            row = {"id": int(l),
+                    "group": "Activity",
+                    "name": df[df.activityID == l].activity.iloc[0],
+                    "type": df[df.activityID == l].activityType.iloc[0],
+                    "nActors": int(df[df.activityID == l].actorID.nunique()),
+                    "actorsID": df[df.activityID == l].actorID.unique().tolist(),
+                    "riskStatus": create_risk_status(df[df.activityID == l]),
+                    "levels": levelsObject(df[df.activityID == l])
+                    }
 
-            activitiesArray.append(activityRow)
+            nodes.append(row)
 
-        nodes = actorsArray + activitiesArray
+        for m in riskID:
+            row = {"id": int(m),
+                       "group": "Risk",
+                       "name": df[df.riskID == m].risk.iloc[0],
+                       "type": df[df.riskID == m].riskType.iloc[0],
+                       "financialDisclosureRisk": df[df.riskID == m].financialDisclosureRisk.iloc[0],
+                       }
+
+            nodes.append(row)
+
+        for k in controlID:
+            row = {"id": int(k),
+                   "group": "Control",
+                   "name": df[df.controlID == k].control.iloc[0],
+                   "type": df[df.controlID == k].controlType.iloc[0],
+                   "periodocity": df[df.controlID == k].controlPeriodocity.iloc[0],
+                   "category": df[df.controlID == k].controlCategory.iloc[0]
+                    }
+
+            nodes.append(row)
+
+        linkData = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)][['actorID', 'activityID']].drop_duplicates()
+
+        for j in range(0, linkData.shape[0] - 1):
+            row = {"target": int(linkData.actorID.iloc[j]),
+                   "source": int(linkData.activityID.iloc[j]),
+                   "id": str(linkData.actorID.iloc[j]) + "-" + str(linkData.activityID.iloc[j])}
+
+            links.append(row)
+
+        linkData = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.riskID) == False)][['activityID', 'riskID']].drop_duplicates()
+
+        for j in range(0, linkData.shape[0] - 1):
+            row = {"target": int(linkData.activityID.iloc[j]),
+                   "source": int(linkData.riskID.iloc[j]),
+                   "id": str(linkData.activityID.iloc[j]) + "-" + str(linkData.riskID.iloc[j])}
+
+            links.append(row)
+
+        linkData = df[(pd.isnull(df.riskID) == False) & (pd.isnull(df.controlID) == False)][['riskID', 'controlID']].drop_duplicates()
+
+        for j in range(0, linkData.shape[0] - 1):
+            row = {"target": int(linkData.riskID.iloc[j]),
+                   "source": int(linkData.controlID.iloc[j]),
+                   "id": str(linkData.riskID.iloc[j]) + "-" + str(linkData.controlID.iloc[j])}
+
+            links.append(row)
 
         network = {
             "id": int(i),

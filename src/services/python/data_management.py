@@ -445,8 +445,6 @@ def main_dm(data, level1, level2, level3, activities, actors, risks, controls, a
     df = pd.merge(df, risk_to_control, how="left", on="riskID")
     df = pd.merge(df, controls, how="left", on="controlID")
 
-    import pdb; pdb.set_trace()
-
     df = df.drop(["level1GUID", "level2GUID", "level3GUID", "modelGUID", "activityGUID", "actorGUID"], axis = 1)
 
     return df
