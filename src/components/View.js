@@ -12,10 +12,10 @@ let riskLegendId = "Risk-Legend";
 let shapeLegendId = "Shape-Legend";
 
 const shapeData = [{"group": "Actor", "type": "Actor"},
-                      {"group": "Activity", "type": "Process activity"},
-                      {"group": "Activity", "type": "Control activity"},
-                      {"group": "Activity", "type": "Common process activity"},
-                      {"group": "Activity", "type": "System activity"}]
+                      {"group": "Activity", "type": "Activity"},
+                      {"group": "Risk", "type": "Risk"},
+                      {"group": "Control", "type": "Control"}]
+                      
 
 function drawRiskLegend(t, riskHoverValue) {
 
@@ -85,18 +85,27 @@ function updateRiskLegend(variable, variableLookup, riskHoverValue) {
 
 export function symbolType(d) {
 
+    // console.log(d.group)
+
     if (d.group === "Actor") {
         return d3.symbolCircle;
+    } else if(d.group === "Activity") {
+        return d3.symbolSquare;
+        // if (d.type === "Process activity") {
+        //     return d3.symbolSquare;
+        // } else if (d.type === "Control activity") {
+        //     return d3.symbolStar;
+        // } else if (d.type === "Common process activity") {
+        //     return d3.symbolTriangle;
+        // } else {
+        //     return d3.symbolDiamond;
+        // }
+    } else if (d.group === "Risk") {
+        return d3.symbolTriangle;
+    } else if (d.group === "Control") {
+        return d3.symbolStar;
     } else {
-        if (d.type === "Process activity") {
-            return d3.symbolSquare;
-        } else if (d.type === "Control activity") {
-            return d3.symbolStar;
-        } else if (d.type === "Common process activity") {
-            return d3.symbolTriangle;
-        } else {
-            return d3.symbolDiamond;
-        }
+        return d3.symbolDiamond;
     }
 }
 

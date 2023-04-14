@@ -211,10 +211,6 @@ def create_network(data):
         riskID = df[pd.isnull(df.riskID) == False].riskID.unique()
         controlID = df[pd.isnull(df.controlID) == False].controlID.unique()
 
-        # actorsArray = []
-        # activitiesArray = []
-        # riskArray = []
-        # controlArray = []
         links = []
         nodes = []
 
@@ -250,7 +246,7 @@ def create_network(data):
                        "group": "Risk",
                        "name": df[df.riskID == m].risk.iloc[0],
                        "type": df[df.riskID == m].riskType.iloc[0],
-                       "financialDisclosureRisk": df[df.riskID == m].financialDisclosureRisk.iloc[0],
+                       "financialDisclosureRisk": bool(df[df.riskID == m].financialDisclosureRisk.iloc[0]),
                        }
 
             nodes.append(row)

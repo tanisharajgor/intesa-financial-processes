@@ -134,8 +134,8 @@ function renderNetwork(data, riskVariable) {
                     .type(((d) => symbolType(d)))
                     .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
                 .attr("stroke-width", .5)
-                .attr("stroke", "white")
-                .attr("fill", d => applyColorScale(d.riskStatus, riskVariable, colorScale)),
+                .attr("stroke", "white"),
+                // .attr("fill", d => applyColorScale(d.riskStatus, riskVariable, colorScale)),
             update => update,         
             exit   => exit.remove()
         );
@@ -174,12 +174,14 @@ export default function Network() {
     const [riskHoverValue, updateRiskHoverValue] = useState(undefined);
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
 
+    console.log(data)
+
     // Set-up scales
     colorScale = createColorScale(riskVariable, riskVariables);
 
     // Filter data
     useEffect(() => {
-        updateData(filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks))
+        // updateData(filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks))
     }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks])
 
     // React Hooks
@@ -200,8 +202,8 @@ export default function Network() {
 
     // Updates the color of the nodes without restarting the network simulation
     useEffect(() => {
-        nodes
-            .attr("fill", d => applyColorScale(d.riskStatus, riskVariable, colorScale));
+        // nodes
+        //     .attr("fill", d => applyColorScale(d.riskStatus, riskVariable, colorScale));
     }, [riskVariable]);
 
     return(
