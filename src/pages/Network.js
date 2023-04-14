@@ -53,8 +53,8 @@ function inspectNetwork(data, riskVariable, updateRiskHoverValue, updateSymbolHo
             .attr("stroke", d => b.includes(d.index)? "grey": linkColor)
             .attr("stroke-width", d => b.includes(d.index)? 1.5: 1);
 
-        updateSymbolHoverValue(symbolScale(d));
-        updateRiskHoverValue(d.riskStatus[riskVariable]);
+        updateSymbolHoverValue(symbolType(d.group));
+        updateRiskHoverValue(d.group);
 
     }).on("mouseout", function() {
 
@@ -131,7 +131,7 @@ function renderNetwork(data, riskVariable) {
             enter  => enter
                 .append("path")
                 .attr("d", d3.symbol()
-                    .type(((d) => symbolType(d)))
+                    .type(((d) => symbolType(d.group)))
                     .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
                 .attr("stroke-width", .5)
                 .attr("stroke", "white"),

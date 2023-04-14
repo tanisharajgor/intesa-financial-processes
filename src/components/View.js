@@ -87,9 +87,9 @@ export function symbolType(d) {
 
     // console.log(d.group)
 
-    if (d.group === "Actor") {
+    if (d === "Actor") {
         return d3.symbolCircle;
-    } else if(d.group === "Activity") {
+    } else if(d === "Activity") {
         return d3.symbolSquare;
         // if (d.type === "Process activity") {
         //     return d3.symbolSquare;
@@ -100,9 +100,9 @@ export function symbolType(d) {
         // } else {
         //     return d3.symbolDiamond;
         // }
-    } else if (d.group === "Risk") {
+    } else if (d === "Risk") {
         return d3.symbolTriangle;
-    } else if (d.group === "Control") {
+    } else if (d === "Control") {
         return d3.symbolStar;
     } else {
         return d3.symbolDiamond;
@@ -143,22 +143,23 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
 
         let svg = d3.select(`#${shapeLegendId} svg`)
 
+        console.log(symbolHoverValue)
+
         svg
             .selectAll("path")
-            .data(shapeData, d => d.type)
+            .data(shapeData, d => d.group)
             .join(
                 enter  => enter
                     .append("path")
                     .attr("d", d3.symbol()
-                    .type(((d) => symbolType(d)))
+                    .type(((d) => symbolType(d.group)))
                         .size(100))
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*25 + 15) + ')';
                     })
                     .attr("fill", "white"),
                 update => update
-                    .attr('opacity', ((d) => symbolScale(d) === symbolHoverValue || symbolHoverValue === undefined? 1: .3)),
-                exit   => exit.remove()
+                    .attr('opacity', ((d) => symbolType(d.group) === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
 
         svg
@@ -172,8 +173,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .attr("fill", "white")
                     .text((d) => d.type),
                 update => update
-                    .attr('opacity', ((d) => symbolScale(d) === symbolHoverValue || symbolHoverValue === undefined? 1: .3)),
-                exit   => exit.remove()
+                    .attr('opacity', ((d) => symbolType(d.group) === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
     }
 }
