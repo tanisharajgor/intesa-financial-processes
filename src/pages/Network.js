@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
 import { symbolType, symbolScale } from "../components/View";
-import { viewVariables, createColorScale, applyColorScale, actorTypeValues, activityTypeValues } from "../utils/global";
+import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues } from "../utils/global";
 import { inspectNetworkDetail, inspectNetworkSummary } from "../components/Inspect";
 
 const id = "network-chart";
@@ -177,7 +177,7 @@ export default function Network() {
     console.log(data)
 
     // Set-up scales
-    // colorScale = createColorScale(viewVariable, viewVariables);
+    colorScale = createColorScale(viewVariable);
 
     // Filter data
     useEffect(() => {

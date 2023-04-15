@@ -49,12 +49,16 @@ export const viewVariables = {
     }
 }
 
+export const viewVars = Object.keys(viewVariables['riskType']).concat(Object.keys(viewVariables['controlType']));
+export const viewObj = {...viewVariables['riskType'], ...viewVariables['controlType']}
+
 // Creates a colorScales for different types of variables
 // yellow: #FFC41F
 // orange: #FF831D
-export function createColorScale(variable, variableLookup) {
+export function createColorScale(variable) {
 
-    let t = variableLookup[variable]
+    let t = viewObj[variable];
+
     if (variable === "controlPeriodocityMode") {
 
         var scale = d3.scaleSequentialLog(d3.interpolate("orange", "purple"))

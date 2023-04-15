@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { viewVariables, createColorScale, applyColorScale, createOpacityScale, createLabelScale, hover } from "../utils/global";
+import { createColorScale, applyColorScale, createOpacityScale, createLabelScale, hover } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -33,7 +33,7 @@ export default function CirclePacking() {
     let view;
 
     // Set-up scales
-    // const colorScale = createColorScale(viewVariable, viewVariables);
+    const colorScale = createColorScale(viewVariable);
     const opacityScale = createOpacityScale();
 
     // Draw circle packing once

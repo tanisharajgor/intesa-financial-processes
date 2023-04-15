@@ -1,5 +1,5 @@
 import { Form, Select, MenuItem } from "cfd-react-components";
-import { viewVariables, createColorScale, naColor } from "../utils/global";
+import { viewVariables, viewVars, viewObj, createColorScale, naColor } from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
 import { InspectHTML } from "./Inspect";
@@ -249,12 +249,9 @@ function viewInfo(networkChart) {
 
 export default function View({id, viewVariable, updateViewVariable, riskHoverValue, symbolHoverValue, data}) {
 
-    const viewVars = Object.keys(viewVariables['riskType']).concat(Object.keys(viewVariables['controlType']));
-    const viewObj = {...viewVariables['riskType'], ...viewVariables['controlType']}
-
     const networkChart = id === "network-chart";
 
-    // colorScale = createColorScale(viewVariable, viewVariables);
+    colorScale = createColorScale(viewVariable);
 
     const handleChange = (event) => {
         let newView = (Object.keys(viewVariables).find((c) => viewVariables[c].label === event.target.value));

@@ -37,7 +37,6 @@ export function inspectHierarchySummary(inspect, data) {
     inspect.select(".value2 .value").text(`${d3.hierarchy(data).sum(d => d.children ? 0: 1).value}`);
     inspect.select(".value3 .key").text("");
     inspect.select(".value3 .value").text(" ");
-
 }
 
 export function inspectHierarchyDetail(inspect, d, viewVariable) {
