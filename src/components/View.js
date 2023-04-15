@@ -34,8 +34,8 @@ function drawRiskLegend(t, riskHoverValue) {
                 .append("circle")
                 .attr('cx', 10)
                 .attr('cy', ((d, i) => 20 + i*20))
-                .attr('r', 5)
-                .attr('fill', ((d) => d.value === "NA" ? naColor: colorScale(d.value))),
+                .attr('r', 5),
+                // .attr('fill', ((d) => d.value === "NA" ? naColor: colorScale(d.value))),
             update => update
             .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .3)),             
             exit   => exit.remove()
@@ -249,9 +249,12 @@ function viewInfo(networkChart) {
 
 export default function View({id, riskVariable, updateRiskVariable, riskHoverValue, symbolHoverValue, data}) {
 
+    const viewVars = Object.keys(riskVariables['riskType']).concat(Object.keys(riskVariables['controlType']));
+    const viewObj = {...riskVariables['riskType'], ...riskVariables['controlType']}
+
     const networkChart = id === "network-chart";
 
-    colorScale = createColorScale(riskVariable, riskVariables);
+    // colorScale = createColorScale(riskVariable, riskVariables);
 
     const handleChange = (event) => {
         let newView = (Object.keys(riskVariables).find((c) => riskVariables[c].label === event.target.value));
@@ -270,12 +273,12 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
 
     // Initiate the risk legend
     useEffect(() => {
-        initRiskLegend(riskVariable, riskVariables);
+        // initRiskLegend(riskVariable, riskVariables);
     }, []);
 
     // Update the risk legend
     useEffect(() => {
-        updateRiskLegend(riskVariable, riskVariables, riskHoverValue);
+        // updateRiskLegend(riskVariable, riskVariables, riskHoverValue);
     }, [riskVariable, riskHoverValue]);
 
     return(
@@ -289,14 +292,15 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
                         labelId="view-select-label"
                         id="view-select"
                         displayEmpty
-                        value={riskVariables[riskVariable].label}
+                        value={viewObj[riskVariable].label}
                         onChange={handleChange}
                     >
                         {
-                        Object.keys(riskVariables).map((viewBy) => {
-                            let variable = riskVariables[viewBy];
+                        viewVars.map((viewBy) => {
+
+                            let variable = viewObj[viewBy];
                             return (
-                                <MenuItem key={variable.label} value={variable.label}><em>{variable.label}</em></MenuItem>
+                                <MenuItem key={variable.id} value={variable.label}><em>{variable.label}</em></MenuItem>
                             )
                         })}
                     </Select>

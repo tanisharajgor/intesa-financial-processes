@@ -197,6 +197,8 @@ def create_network(data):
 
     data = data[pd.isnull(data.actorID) == False]
 
+    # import pdb; pdb.set_trace()
+
     for i in data.level3ID.unique():
 
         df = data[data.level3ID == i].drop_duplicates()
@@ -243,13 +245,14 @@ def create_network(data):
 
         for m in riskID:
             row = {"id": int(m),
-                       "group": "Risk",
-                       "name": df[df.riskID == m].risk.iloc[0],
-                       "riskStatus": {
+                    "group": "Risk",
+                    "name": df[df.riskID == m].risk.iloc[0],
+                    "riskType": {
                         "financialDisclosureRisk": bool(df[df.riskID == m].financialDisclosureRisk.iloc[0]),
-                        "type": df[df.riskID == m].riskType.iloc[0],
-                        }
-                       }
+                        "riskType": df[df.riskID == m].riskType.iloc[0],
+                        "nControl": int(df[(df.riskID == m) & (pd.isnull(df.controlID) == False)].shape[0])
+                    }
+                }
 
             nodes.append(row)
 

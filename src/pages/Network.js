@@ -177,7 +177,7 @@ export default function Network() {
     console.log(data)
 
     // Set-up scales
-    colorScale = createColorScale(riskVariable, riskVariables);
+    // colorScale = createColorScale(riskVariable, riskVariables);
 
     // Filter data
     useEffect(() => {
