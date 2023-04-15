@@ -40,10 +40,10 @@ export function inspectHierarchySummary(inspect, data) {
 
 }
 
-export function inspectHierarchyDetail(inspect, d, riskVariable) {
+export function inspectHierarchyDetail(inspect, d, viewVariable) {
 
-    let rs = d.data.riskStatus[riskVariable];
-    const labelScale = createLabelScale(riskVariable);
+    let rs = d.data.riskStatus[viewVariable];
+    const labelScale = createLabelScale(viewVariable);
 
     inspect.style("display", "inline-block");
     inspect.style("visibility", "visible")
@@ -51,11 +51,11 @@ export function inspectHierarchyDetail(inspect, d, riskVariable) {
     inspect.select(".value1 .value").text(" " + d.data.name);
     inspect.select(".value2 .key").text("Number of activities: ");
     inspect.select(".value2 .value").text(`${d.sum(d => d.children ? 0: 1).value}`);
-    inspect.select(".value3 .key").text(`${riskVariables[riskVariable].label}: `);
+    inspect.select(".value3 .key").text(`${riskVariables[viewVariable].label}: `);
     inspect.select(".value3 .value").text(" " + labelScale(rs));
 }
 
-export function inspectCirclePacking(data, riskVariable, updateRiskHoverValue) {
+export function inspectCirclePacking(data, viewVariable, updateRiskHoverValue) {
 
     let inspect = d3.select(".Inspect");
     inspectHierarchySummary(inspect, data);
@@ -67,8 +67,8 @@ export function inspectCirclePacking(data, riskVariable, updateRiskHoverValue) {
             .attr("stroke", "grey")
             .attr("stroke-width", 2);
 
-        inspectHierarchyDetail(inspect, d, riskVariable);
-        updateRiskHoverValue(d.data.riskStatus[riskVariable]);
+        inspectHierarchyDetail(inspect, d, viewVariable);
+        updateRiskHoverValue(d.data.riskStatus[viewVariable]);
 
     }).on("mouseout", function() {
 

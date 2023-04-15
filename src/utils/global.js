@@ -79,10 +79,10 @@ export function createColorScale(variable, variableLookup) {
     }
 }
 
-export function applyColorScale(d, riskVariable, colorScale) {
+export function applyColorScale(d, viewVariable, colorScale) {
 
     console.log(d)
-    // return d[riskVariable] === undefined || d[riskVariable] === "NA" ? naColor : colorScale(d[riskVariable])
+    // return d[viewVariable] === undefined || d[viewVariable] === "NA" ? naColor : colorScale(d[viewVariable])
 
     return "grey";
 
@@ -97,11 +97,11 @@ export function createOpacityScale() {
     return scale;
 }
 
-export function createLabelScale(riskVariable) {
+export function createLabelScale(viewVariable) {
 
     const scale = d3.scaleOrdinal()
-        .domain(riskVariables[riskVariable].values)
-        .range(riskVariables[riskVariable].labels);
+        .domain(riskVariables[viewVariable].values)
+        .range(riskVariables[viewVariable].labels);
 
     return scale;
 }

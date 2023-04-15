@@ -1,10 +1,10 @@
 import View from "./View";
 
-export default function Status({id, riskVariable, updateRiskVariable, riskHoverValue, symbolHoverValue, data}) {
+export default function Status({id, viewVariable, updateRiskVariable, riskHoverValue, symbolHoverValue, data}) {
     
     return (
         <div className="Status">
-            <View id={id} riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} symbolHoverValue={symbolHoverValue} data={data}/>
+            <View id={id} viewVariable={viewVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} symbolHoverValue={symbolHoverValue} data={data}/>
         </div>
     )
 }

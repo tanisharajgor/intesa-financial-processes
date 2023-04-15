@@ -247,10 +247,10 @@ function viewInfo(networkChart) {
     )
 }
 
-export default function View({id, riskVariable, updateRiskVariable, riskHoverValue, symbolHoverValue, data}) {
+export default function View({id, viewVariable, updateRiskVariable, riskHoverValue, symbolHoverValue, data}) {
 
     const viewVars = Object.keys(riskVariables['riskType']).concat(Object.keys(riskVariables['controlType']));
-    const viewObj = {...riskVariables['riskType'], ...riskVariables['controlType']}
+    const viewObj = {...viewVariable['riskType'], ...riskVariables['controlType']}
 
     const networkChart = id === "network-chart";
 
@@ -273,13 +273,13 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
 
     // Initiate the risk legend
     useEffect(() => {
-        // initRiskLegend(riskVariable, riskVariables);
+        // initRiskLegend(viewVariable, riskVariables);
     }, []);
 
     // Update the risk legend
     useEffect(() => {
-        // updateRiskLegend(riskVariable, riskVariables, riskHoverValue);
-    }, [riskVariable, riskHoverValue]);
+        // updateRiskLegend(viewVariable, riskVariables, riskHoverValue);
+    }, [viewVariable, riskHoverValue]);
 
     return(
         <div className='View'>
@@ -292,7 +292,7 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
                         labelId="view-select-label"
                         id="view-select"
                         displayEmpty
-                        value={viewObj[riskVariable].label}
+                        value={viewObj[viewVariable].label}
                         onChange={handleChange}
                     >
                         {

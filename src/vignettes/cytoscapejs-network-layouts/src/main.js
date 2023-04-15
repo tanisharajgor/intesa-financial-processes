@@ -72,9 +72,9 @@ fetchDataJSON().then(data => {
     const links = processLinks(n.links);
     const elems = [...nodes, ...links];
 
-    const riskVariable = "controlTypeMode";
+    const viewVariable = "controlTypeMode";
 
-    colorScale = createColorScale(riskVariable, riskVariables);
+    colorScale = createColorScale(viewVariable, riskVariables);
 
     console.log(
         elems[10]
@@ -89,7 +89,7 @@ fetchDataJSON().then(data => {
                 "background-color": "#3b75af",
                 "background-color": d=>{
                     return colorScale(
-                            d.data('riskStatus')[`${riskVariable}`]
+                            d.data('riskStatus')[`${viewVariable}`]
                         );
                 },
                 "font-size": "9px",
@@ -155,14 +155,14 @@ function processLinks(linksRaw){
 
 // Joli's functions ---------------------------------------
 
-// colorScale = createColorScale(riskVariable, riskVariables);
+// colorScale = createColorScale(viewVariable, riskVariables);
 // colorScale(d.value)
 
 const palette = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#bcbd22', '#17becf', '#aec7e8', '#ffbb78', '#98df8a', '#ff9896', '#c5b0d5', '#c49c94', '#f7b6d2', '#c7c7c7', '#dbdb8d', '#9edae5'];
 const naColor = "#ADADAD";
 const missingColor = "#4B4B4B";
 
-const riskVariables = {
+const viewVariable = {
     "controlTypeMode": {
         label: "Control type mode",
         values: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],

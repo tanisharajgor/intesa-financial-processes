@@ -26,7 +26,7 @@ const rScale = d3.scaleLinear()
     .range([8, 15]);
 
 // Tooltip
-function inspectNetwork(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue) {
+function inspectNetwork(data, viewVariable, updateRiskHoverValue, updateSymbolHoverValue) {
 
     let inspect = d3.select(".Inspect");
     inspectNetworkSummary(inspect, data);
@@ -94,16 +94,16 @@ function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
     return dataNew;
 }
 
-function initNetwork(data, riskVariable) {
+function initNetwork(data, viewVariable) {
     d3.select(`#${id}`)
         .append("svg")
         .attr("width", width)
         .attr("height", height);
 
-    renderNetwork(data, riskVariable);
+    renderNetwork(data, viewVariable);
 }
 
-function renderNetwork(data, riskVariable) {
+function renderNetwork(data, viewVariable) {
 
     var svg = d3.select(`#${id} svg`);
 
@@ -135,7 +135,7 @@ function renderNetwork(data, riskVariable) {
                     .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
                 .attr("stroke-width", .5)
                 .attr("stroke", "white"),
-                // .attr("fill", d => applyColorScale(d.riskStatus, riskVariable, colorScale)),
+                // .attr("fill", d => applyColorScale(d.riskStatus, viewVariable, colorScale)),
             update => update,         
             exit   => exit.remove()
         );
@@ -166,7 +166,7 @@ function renderNetwork(data, riskVariable) {
 
 export default function Network() {
 
-    const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
+    const [viewVariable, updateRiskVariable] = useState("controlTypeMode");
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
     const [activityTypesChecks, updateActivityTypeChecks] = useState(activityTypeValues);
     const [actorTypesChecks, updateActorTypeChecks] = useState(actorTypeValues);
@@ -177,7 +177,7 @@ export default function Network() {
     console.log(data)
 
     // Set-up scales
-    // colorScale = createColorScale(riskVariable, riskVariables);
+    // colorScale = createColorScale(viewVariable, riskVariables);
 
     // Filter data
     useEffect(() => {
@@ -186,25 +186,25 @@ export default function Network() {
 
     // React Hooks
     useEffect(() => {
-        initNetwork(data, riskVariable);
+        initNetwork(data, viewVariable);
     }, []);
 
     // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
     useEffect(() => {
-        renderNetwork(data, riskVariable);
+        renderNetwork(data, viewVariable);
         nodes = d3.selectAll(`#${id} svg path`);
-        inspectNetwork(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
+        inspectNetwork(data, viewVariable, updateRiskHoverValue, updateSymbolHoverValue);
     }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data]);
 
     useEffect(() => {
-        inspectNetwork(data, riskVariable, updateRiskHoverValue, updateSymbolHoverValue);
-    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data, riskVariable]);
+        inspectNetwork(data, viewVariable, updateRiskHoverValue, updateSymbolHoverValue);
+    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data, viewVariable]);
 
     // Updates the color of the nodes without restarting the network simulation
     useEffect(() => {
         // nodes
-        //     .attr("fill", d => applyColorScale(d.riskStatus, riskVariable, colorScale));
-    }, [riskVariable]);
+        //     .attr("fill", d => applyColorScale(d.riskStatus, viewVariable, colorScale));
+    }, [viewVariable]);
 
     return(
         <div className="Content">
@@ -214,7 +214,7 @@ export default function Network() {
                 <FilterType typesChecks={activityTypesChecks} updateTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues} label="Filter by Activity Type:"/>
                 <FilterType typesChecks={actorTypesChecks} updateTypeChecks = {updateActorTypeChecks} typeValues={actorTypeValues} label="Filter by Actor Type:"/>
             </div>
-            <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} symbolHoverValue={symbolHoverValue} id={id} data={data}/>                
+            <Main viewVariable={viewVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} symbolHoverValue={symbolHoverValue} id={id} data={data}/>                
         </div>
     )
 }

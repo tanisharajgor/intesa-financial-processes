@@ -10,7 +10,7 @@ const id = "circle-packing-chart";
 
 export default function CirclePacking() {
 
-    const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
+    const [viewVariable, updateRiskVariable] = useState("controlTypeMode");
     const [riskHoverValue, updateRiskHoverValue] = useState(undefined);
 
     const height = 932, width = 932;
@@ -33,7 +33,7 @@ export default function CirclePacking() {
     let view;
 
     // Set-up scales
-    // const colorScale = createColorScale(riskVariable, riskVariables);
+    // const colorScale = createColorScale(viewVariable, riskVariables);
     const opacityScale = createOpacityScale();
 
     // Draw circle packing once
@@ -49,7 +49,7 @@ export default function CirclePacking() {
             .selectAll("circle")
             .data(root.descendants().slice(1))
             .join("circle")
-                // .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
+                // .attr("fill", d => applyColorScale(d.data.riskStatus, viewVariable, colorScale))
                 .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
                 .on("mouseout", function() { d3.select(this).attr("stroke", null); })
                 .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()))
@@ -81,23 +81,23 @@ export default function CirclePacking() {
             });
         }
 
-        inspectCirclePacking(data, riskVariable, updateRiskHoverValue);
+        inspectCirclePacking(data, viewVariable, updateRiskHoverValue);
 
     }, [])
 
     // Update the visual aesthetics of the visualization that change with a user input
     useEffect(() => {
         // d3.selectAll(`#${id} svg circle`)
-        //     .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
+        //     .attr("fill", d => applyColorScale(d.data.riskStatus, viewVariablee, colorScale))
 
-        inspectCirclePacking(data, riskVariable, updateRiskHoverValue);
-    }, [riskVariable])
+        inspectCirclePacking(data, viewVariable, updateRiskHoverValue);
+    }, [viewVariable])
 
     return(
         <div className="Content">
             <Navigation/>
             <div className="Query" id="FilterMenu"></div>
-            <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} id={id} data={data}/>
+            <Main viewVariable={viewVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} id={id} data={data}/>
         </div>
     )
 }
