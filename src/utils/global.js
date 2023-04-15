@@ -59,8 +59,6 @@ export function createColorScale(variable) {
 
     let t = viewObj[variable];
 
-    console.log(t)
-
     if (variable === "controlPeriodocityMode") {
 
         var scale = d3.scaleSequentialLog(d3.interpolate("orange", "purple"))
@@ -88,10 +86,7 @@ export function createColorScale(variable) {
 export function applyColorScale(d, viewVariable, colorScale) {
 
     console.log(d)
-    // return d[viewVariable] === undefined || d[viewVariable] === "NA" ? naColor : colorScale(d[viewVariable])
-
-    return "grey";
-
+    return d[viewVariable] === undefined || d[viewVariable] === "NA" ? naColor : colorScale(d[viewVariable]);
 }
 
 export function createOpacityScale() {

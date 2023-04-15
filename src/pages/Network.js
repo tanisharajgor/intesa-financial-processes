@@ -134,8 +134,8 @@ function renderNetwork(data, viewVariable) {
                     .type(((d) => symbolType(d.group)))
                     .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
                 .attr("stroke-width", .5)
-                .attr("stroke", "white"),
-                // .attr("fill", d => applyColorScale(d.riskStatus, viewVariable, colorScale)),
+                .attr("stroke", "white")
+                .attr("fill", d => applyColorScale(d, viewVariable, colorScale)),
             update => update,         
             exit   => exit.remove()
         );
@@ -175,6 +175,7 @@ export default function Network() {
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
 
     console.log(data)
+    console.log(viewVariable)
 
     // Set-up scales
     colorScale = createColorScale(viewVariable);
@@ -202,8 +203,8 @@ export default function Network() {
 
     // Updates the color of the nodes without restarting the network simulation
     useEffect(() => {
-        // nodes
-        //     .attr("fill", d => applyColorScale(d.riskStatus, viewVariable, colorScale));
+        nodes
+            .attr("fill", d => applyColorScale(d, viewVariable, colorScale));
     }, [viewVariable]);
 
     return(
