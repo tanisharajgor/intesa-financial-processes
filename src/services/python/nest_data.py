@@ -98,7 +98,7 @@ def create_risk_status(df):
         row = {"nRisks": int(df.riskID.nunique()),
                "riskID": df.riskID.unique().astype(int).tolist()}
         
-        controlTypeMode = df.controlType.mode().iloc[0]
+        controlType = df.controlType.mode().iloc[0]
 
         controlPeriodocityMode = df.controlPeriodocity.mode().iloc[0]
 
@@ -110,7 +110,7 @@ def create_risk_status(df):
         if (financialDisclosureRiskAny != "NA") & (financialDisclosureRiskAny != "Missing"):
             financialDisclosureRiskAny = bool(financialDisclosureRiskAny)
 
-        row = {"controlTypeMode": controlTypeMode,
+        row = {"controlType": controlType,
                "controlPeriodocityMode": controlPeriodocityMode,
                "financialDisclosureRiskAny": financialDisclosureRiskAny}
 
@@ -260,10 +260,10 @@ def create_network(data):
             row = {"id": int(k),
                    "group": "Control",
                    "name": df[df.controlID == k].control.iloc[0],
-                   "type": df[df.controlID == k].controlType.iloc[0],
-                    "controlType": {
-                        "periodocity": df[df.controlID == k].controlPeriodocity.iloc[0],
-                        "category": df[df.controlID == k].controlCategory.iloc[0]
+                   "controlType": {
+                        "controlPeriodocity": df[df.controlID == k].controlPeriodocity.iloc[0],
+                        "controlCategory": df[df.controlID == k].controlCategory.iloc[0],
+                        "controlType": df[df.controlID == k].controlType.iloc[0],
                     }
                 }
 
