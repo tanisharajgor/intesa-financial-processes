@@ -58,9 +58,9 @@ function drawRiskLegend(t, viewHoverValue) {
 }
 
 // Initiates the legend svg and sets the non-changing attributes
-function initRiskLegend(variable, variableLookup, viewHoverValue) {
+function initRiskLegend(variable, viewHoverValue) {
 
-    let t = variableLookup[variable];
+    let t = viewObj[variable];
     let h = height + (t.values.length + 1)*20;
 
     d3.select(`#${riskLegendId}`)
@@ -72,9 +72,9 @@ function initRiskLegend(variable, variableLookup, viewHoverValue) {
 }
 
 // Updates the legend attributes on variable change
-function updateRiskLegend(variable, variableLookup, viewHoverValue) {
+function updateRiskLegend(variable, viewHoverValue) {
 
-    let t = variableLookup[variable];
+    let t = viewObj[variable];
     let h = height + (t.values.length + 1)*20;
 
     let svg = d3.select(`#${riskLegendId} svg`);
@@ -270,12 +270,12 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
 
     // Initiate the risk legend
     useEffect(() => {
-        // initRiskLegend(viewVariable, viewVariables);
+        initRiskLegend(viewVariable);
     }, []);
 
     // Update the risk legend
     useEffect(() => {
-        // updateRiskLegend(viewVariable, viewVariables, viewHoverValue);
+        updateRiskLegend(viewVariable, viewHoverValue);
     }, [viewVariable, viewHoverValue]);
 
     return(
