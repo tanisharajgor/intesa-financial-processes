@@ -72,7 +72,7 @@ fetchDataJSON().then(data => {
     const links = processLinks(n.links);
     const elems = [...nodes, ...links];
 
-    const viewVariable = "controlTypeMode";
+    const viewVariable = "controlType";
 
     colorScale = createColorScale(viewVariable);
 
@@ -163,7 +163,7 @@ const naColor = "#ADADAD";
 const missingColor = "#4B4B4B";
 
 const viewVariable = {
-    "controlTypeMode": {
+    "controlType": {
         label: "Control type mode",
         values: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
         id: [1, 2, 3, 4, 5],

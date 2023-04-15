@@ -166,7 +166,7 @@ function renderNetwork(data, viewVariable) {
 
 export default function Network() {
 
-    const [viewVariable, updateViewVariable] = useState("controlTypeMode");
+    const [viewVariable, updateViewVariable] = useState("controlType");
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
     const [activityTypesChecks, updateActivityTypeChecks] = useState(activityTypeValues);
     const [actorTypesChecks, updateActorTypeChecks] = useState(actorTypeValues);

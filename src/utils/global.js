@@ -33,14 +33,14 @@ export const viewVariables = {
         }
     },
     "controlType": {
-        "controlTypeMode": {
+        "controlType": {
             label: "Control type",
             values: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
             id: [1, 2, 3, 4, 5],
             labels: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
             colors: ["#FF0000", "#FFC41F", "#0071BC", missingColor, naColor]
         },
-        "controlPeriodocityMode": {
+        "controlPeriodocity": {
             label: "Control periodicity",
             values: [3650, 365, 182, 91, 30, 7, 1, .1, 'Missing', 'NA'],
             id: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
@@ -56,6 +56,8 @@ export const viewObj = {...viewVariables['riskType'], ...viewVariables['controlT
 // yellow: #FFC41F
 // orange: #FF831D
 export function createColorScale(variable) {
+
+    console.log(variable)
 
     let t = viewObj[variable];
 
@@ -86,7 +88,23 @@ export function createColorScale(variable) {
 export function applyColorScale(d, viewVariable, colorScale) {
 
     console.log(d)
-    return d[viewVariable] === undefined || d[viewVariable] === "NA" ? naColor : colorScale(d[viewVariable]);
+    if (d.group === "Risk") {
+
+        if (Object.keys(viewVariables['riskType']).includes(viewVariable)) {
+            return d[viewVariable] === "NA" ? naColor : colorScale(d['riskType'][viewVariable]);
+        } else {
+            return naColor;
+        }
+    } else if (d.group === "Control") {
+
+        if (Object.keys(viewVariables['controlType']).includes(viewVariable)) {
+            return d[viewVariable] === "NA" ? naColor : colorScale(d['controlType'][viewVariable]);
+        } else {
+            return naColor;
+        }
+    } else {
+        return naColor;
+    }
 }
 
 export function createOpacityScale() {

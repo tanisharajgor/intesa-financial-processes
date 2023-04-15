@@ -10,7 +10,7 @@ const id = "circle-packing-chart";
 
 export default function CirclePacking() {
 
-    const [viewVariable, updateViewVariable] = useState("controlTypeMode");
+    const [viewVariable, updateViewVariable] = useState("controlType");
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
 
     const height = 932, width = 932;
