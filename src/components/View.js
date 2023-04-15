@@ -254,7 +254,7 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
     colorScale = createColorScale(viewVariable);
 
     const handleChange = (event) => {
-        let newView = (Object.keys(viewVariables).find((c) => viewVariables[c].label === event.target.value));
+        let newView = (Object.keys(viewObj).find((c) => viewObj[c].label === event.target.value));
         updateViewVariable(newView)
     }
 
