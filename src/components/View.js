@@ -1,5 +1,5 @@
 import { Form, Select, MenuItem } from "cfd-react-components";
-import { viewVariables, viewVars, viewObj, createColorScale, naColor } from "../utils/global";
+import { viewVars, viewObj, createColorScale, naColor } from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
 import { InspectHTML } from "./Inspect";
@@ -34,8 +34,8 @@ function drawRiskLegend(t, viewHoverValue) {
                 .append("circle")
                 .attr('cx', 10)
                 .attr('cy', ((d, i) => 20 + i*20))
-                .attr('r', 5),
-                // .attr('fill', ((d) => d.value === "NA" ? naColor: colorScale(d.value))),
+                .attr('r', 5)
+                .attr('fill', ((d) => d.value === "NA" ? naColor: colorScale(d.value))),
             update => update
             .attr('opacity', ((d) => d.value === viewHoverValue || viewHoverValue === undefined? 1: .3)),             
             exit   => exit.remove()

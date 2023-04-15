@@ -57,9 +57,9 @@ export const viewObj = {...viewVariables['riskType'], ...viewVariables['controlT
 // orange: #FF831D
 export function createColorScale(variable) {
 
-    console.log(variable)
-
     let t = viewObj[variable];
+
+    console.log(t)
 
     if (variable === "controlPeriodocityMode") {
 
