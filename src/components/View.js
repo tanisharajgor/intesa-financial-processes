@@ -141,9 +141,7 @@ function initShapeLegend(networkChart, symbolHoverValue) {
 function drawShapeLegend(networkChart, symbolHoverValue) {
     if (networkChart) {
 
-        let svg = d3.select(`#${shapeLegendId} svg`)
-
-        console.log(symbolHoverValue)
+        let svg = d3.select(`#${shapeLegendId} svg`);
 
         svg
             .selectAll("path")

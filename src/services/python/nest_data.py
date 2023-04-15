@@ -245,8 +245,10 @@ def create_network(data):
             row = {"id": int(m),
                        "group": "Risk",
                        "name": df[df.riskID == m].risk.iloc[0],
-                       "type": df[df.riskID == m].riskType.iloc[0],
-                       "financialDisclosureRisk": bool(df[df.riskID == m].financialDisclosureRisk.iloc[0]),
+                       "riskStatus": {
+                        "financialDisclosureRisk": bool(df[df.riskID == m].financialDisclosureRisk.iloc[0]),
+                        "type": df[df.riskID == m].riskType.iloc[0],
+                        }
                        }
 
             nodes.append(row)
@@ -256,9 +258,11 @@ def create_network(data):
                    "group": "Control",
                    "name": df[df.controlID == k].control.iloc[0],
                    "type": df[df.controlID == k].controlType.iloc[0],
-                   "periodocity": df[df.controlID == k].controlPeriodocity.iloc[0],
-                   "category": df[df.controlID == k].controlCategory.iloc[0]
+                    "controlType": {
+                        "periodocity": df[df.controlID == k].controlPeriodocity.iloc[0],
+                        "category": df[df.controlID == k].controlCategory.iloc[0]
                     }
+                }
 
             nodes.append(row)
 

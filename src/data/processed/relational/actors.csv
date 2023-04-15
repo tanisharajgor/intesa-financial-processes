@@ -182,7 +182,7 @@ Position,ISPB - Team Leader,949
 Missing,OFS-enabled manager,1811
 Position,ISPB - Agent,908
 Person,ISIA,2059
-External Organizational unit,Intesa Sanpaolo Vita,2825
+External organizational unit,Intesa Sanpaolo Vita,2825
 Position,Territorial Coordination Specialist for Products and Segments - Impact Department,1965
 Organizational unit,Digital Payments and Services,1708
 Organizational unit,Banca dei Territori Division - Business Sales & Marketing Department,92
@@ -852,7 +852,7 @@ Organizational unit,Credit Controls - IMI CIB Division,2207
 Missing,Assistant,1249
 Position,Corporate Analyst - Foreign Branch Hub,190
 Organizational unit,Corporate and Third Sector Loans,1639
-External Organizational unit,VUB bank,98
+External organizational unit,VUB bank,98
 Person,Group banks and companies,462
 Missing,Trustees,824
 Missing,European Central Bank,823
@@ -1131,7 +1131,7 @@ Missing,Operating Points,2936
 Organizational unit,Management coordination,2402
 Organizational unit,Transformation and Strategic Projects,729
 Organizational unit,New Non-Banking Activities,1649
-External Organizational unit,Intesa Sanpaolo Vita - Personnel and Organization,1226
+External organizational unit,Intesa Sanpaolo Vita - Personnel and Organization,1226
 Missing,Employee,1668
 Person,Society,3014
 Organizational unit,Personnel and Network Assistance - Agribusiness Management,1434
@@ -1273,7 +1273,7 @@ Person,IMI Bank,2076
 Organizational unit,"Corporate Consulting, Corporate Compliance and Parent Company Governance",587
 Missing,Bank of Italy,2840
 Missing,Council body,2365
-External Organizational unit,Intesa Sanpaolo Insurance,1234
+External organizational unit,Intesa Sanpaolo Insurance,1234
 Organizational unit,Industry Research,2321
 Organizational unit,Data Warehouse & Analytics,2205
 Organizational unit,Commercial Performance Analysis - IMI CIB Division,2423
@@ -1348,7 +1348,7 @@ Missing,Special Purpose Vehicle,580
 Missing,Customer,579
 Missing,CP Placement Agent,29
 Missing,ECP dealer,2323
-External Organizational unit,Fideuram Intesa Sanpaolo Private Banking - ISPB Resource Management and Fideuram Banking Network,150
+External organizational unit,Fideuram Intesa Sanpaolo Private Banking - ISPB Resource Management and Fideuram Banking Network,150
 Missing,Application Referent,1035
 Person,External resource,345
 Organizational unit,Internal Corporate Credit Systems and Management Models,1478
@@ -1415,7 +1415,7 @@ Missing,Control functions,269
 Organizational unit,Investment Products Structuring,1562
 Organizational unit,International Research Network coordination,2320
 Organizational unit,Eurizon Capital,2308
-External Organizational unit,Banca Intesa (Russian Federation),40
+External organizational unit,Banca Intesa (Russian Federation),40
 Organizational unit,Management Control and Data Protection,771
 Organizational unit,"Conflicts of Interest, Privileged Information and Personal Transactions",281
 Organizational unit,Retail Research,112
@@ -1455,7 +1455,7 @@ Missing,Appointed structure,2188
 Person,Society,291
 Person,Group company,3202
 Missing,Head of Management,1679
-External Organizational unit,Private branch - ISPB,2173
+External organizational unit,Private branch - ISPB,2173
 Missing,Country Manager USA & Americas,1715
 Organizational unit,Innovation and Retailization Spaces,1173
 Organizational unit,Processes and Quality Assurance Know Your Customer,2435
@@ -1557,7 +1557,7 @@ Organizational unit,Communication Areas of Government and International,2026
 Organizational unit,Chief Operating Officer Projects and Other Governance Areas,2685
 Organizational unit,Banking Research,2322
 Organizational unit,International Subsidiary Financial Monitoring,493
-External Organizational unit,ISDA Association,11
+External organizational unit,ISDA Association,11
 Missing,Employee,1669
 Person,Travel agency,340
 Missing,Head of the UOG,2051
@@ -1737,7 +1737,7 @@ Position,Director of Area Exclusive,3167
 Organizational unit,Agribusiness Sales Management,1435
 Organizational unit,Exclusive Sales Management,3172
 Organizational unit,Area - Global Corporate Management,643
-External Organizational unit,Marketing - ISPB,1341
+External organizational unit,Marketing - ISPB,1341
 Missing,Structures Product/service managers,1707
 Missing,Paying Structures on SLM Parent Company,2866
 Missing,competent structures,2886
@@ -2021,7 +2021,7 @@ Missing,Operational and business functions,1049
 Missing,Deliberating Organ Secretariat,1221
 Missing,Structures concerned,1477
 Missing,Placement Banks,529
-External Organizational unit,Intesa Sanpaolo Private Banking,3300
+External organizational unit,Intesa Sanpaolo Private Banking,3300
 Missing,Consob,1995
 Person,Auditing firm,3078
 Organizational unit,ESG & Sustainability,2902
@@ -2083,7 +2083,7 @@ Missing,Corporate Secretariats Banks / Subsidiaries and competent HR functions,1
 Missing,Society,659
 Person,Nexi,321
 Person,Counterpart,2095
-External Organizational unit,Concession Financial Institutions,338
+External organizational unit,Concession Financial Institutions,338
 Missing,Compliance ISP IMI SEC,417
 Organizational unit,Cybersecurity Incident Response Team,2086
 Missing,Owner of the fund,1233
@@ -2290,8 +2290,8 @@ Organizational unit,Privacy Controls and Reporting,1089
 Person,Counting room,1028
 Person,External Legal,1572
 Missing,Structure and Society in the area,1050
-External Organizational unit,Fideuram Intesa Sanpaolo Private Banking,2307
-External Organizational unit,Eurizon Capital,2308
+External organizational unit,Fideuram Intesa Sanpaolo Private Banking,2307
+External organizational unit,Eurizon Capital,2308
 Person,Consob,3232
 Person,Group company,610
 Missing,Group company,618
@@ -2367,7 +2367,7 @@ Missing,Group company,552
 Organizational unit,Infrastructural Investments,1016
 Organizational unit,Coordination and Transversal Initiatives,785
 Organizational unit,Planning & Control - ISB Division,941
-External Organizational unit,Fideuram Investimenti SGR,1777
+External organizational unit,Fideuram Investimenti SGR,1777
 Person,Administrative structure Bank / Subsidiary company,1905
 Missing,Corporate Secretariat Bank with widespread shares,2655
 Missing,Structure responsible for the operation,1525
@@ -2490,13 +2490,13 @@ Missing,Local ORMD function (Decentralized Operational Risk Management),3053
 Missing,Structures inside the CRO Area,471
 Missing,CRO area - Market/liquidity/operational/credit risks,1030
 Missing,CRO Area - Credit Risks,1009
-External Organizational unit,ISP life,2638
+External organizational unit,ISP life,2638
 Missing,Long absent employee,2552
 Missing,Employee,1753
 Person,Trading Desk,1410
 Missing,Group banks and companies,2445
 Person,Servicers,2386
-External Organizational unit,Large Corporate Loans,3149
+External organizational unit,Large Corporate Loans,3149
 Missing,The Supervisor,850
 Missing,Head of the UOG,1944
 Organizational unit,Oversight of Transversal Data Initiatives,3012
@@ -2543,7 +2543,7 @@ Organizational unit,Intesa Sanpaolo House,141
 Person,Servicers,870
 Organizational unit,International Legal,1551
 Person,Customer,1262
-External Organizational unit,Hub Hong Kong Branch,3273
+External organizational unit,Hub Hong Kong Branch,3273
 Missing,Organizational Unit contact person,705
 Person,Supplier,412
 Missing,requesting employee,704
@@ -2678,7 +2678,7 @@ Missing,Application contact person,2011
 Missing,Referent group,479
 Missing,Operation management,1943
 Missing,Certificate contact person,1396
-External Organizational unit,Fideuram Intesa Sanpaolo Private Banking - Training,3179
+External organizational unit,Fideuram Intesa Sanpaolo Private Banking - Training,3179
 Organizational unit,"IMI CIB audits, Public and Project Finance",120
 Missing,Applicant structure,2111
 Missing,Recipients of communication of certification of the model,52
@@ -2772,7 +2772,7 @@ Missing,Data Technology Owner,3118
 Missing,Data User,3120
 Missing,Responsible for the Data Owner structure,3119
 Missing,Organizational unit dedicated to issues relating to the Data Governance model,3061
-External Organizational unit,Fideuram Life,2194
+External organizational unit,Fideuram Life,2194
 Person,External professional,1338
 Missing,Addressee structure of the deed,2964
 Missing,Employee,807
@@ -2822,7 +2822,7 @@ Missing,Financial Market Coverage Department - Price-Sensitive Communication,288
 Missing,Auditing firm,2243
 Missing,Financial Market Coverage Department - Price-Sensitive Communication,1131
 Missing,Shareholders meeting,1833
-External Organizational unit,Intesa Sanpaolo Innovation Center,2704
+External organizational unit,Intesa Sanpaolo Innovation Center,2704
 Missing,proposing structure,1508
 Missing,Secretariats Decision-making bodies,1522
 Missing,Other facility involved,1509
@@ -2944,7 +2944,7 @@ Missing,Structure responsible for the Varied Match,2673
 Person,Customer,2048
 Person,Cassa di Compensazione e Garanzia,2796
 Person,Reviewers,2049
-External Organizational unit,Intesa Sanpaolo Holding International,2834
+External organizational unit,Intesa Sanpaolo Holding International,2834
 Person,Bank of Italy,3080
 Missing,Certification Bodies,2329
 Missing,Structure responsible for the operation,1818
@@ -3118,9 +3118,9 @@ Missing,Data Owner,1667
 Person,Counterpart,442
 Missing,Facility manager,419
 Person,Monte Titoli,1750
-External Organizational unit,Fideuram Intesa Sanpaolo Private Banking - Corporate Affairs,2733
-External Organizational unit,ISPB - Marketing,2732
-External Organizational unit,"Fideuram Intesa Sanpaolo Private Banking - Planning, BDG and Contr. of ISPB Management",2734
+External organizational unit,Fideuram Intesa Sanpaolo Private Banking - Corporate Affairs,2733
+External organizational unit,ISPB - Marketing,2732
+External organizational unit,"Fideuram Intesa Sanpaolo Private Banking - Planning, BDG and Contr. of ISPB Management",2734
 Person,Servicers,2462
 Person,Engineering,3340
 Organizational unit,Administered savings products and consultancy services,1077
@@ -3176,7 +3176,7 @@ Person,External supplier,3051
 Missing,Editorial structure of the applicant,978
 Person,Tax structure of the company in perimeter,1190
 Organizational unit,Market Strategist,1593
-External Organizational unit,Financial Taxation,1401
+External organizational unit,Financial Taxation,1401
 Missing,Subsidiary company,1632
 Person,Organization Function of CIB Banks,484
 Missing,Group company,3329
