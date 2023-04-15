@@ -11,7 +11,7 @@ const id = "circle-packing-chart";
 export default function CirclePacking() {
 
     const [viewVariable, updateViewVariable] = useState("controlTypeMode");
-    const [riskHoverValue, updateRiskHoverValue] = useState(undefined);
+    const [viewHoverValue, updateViewHoverValue] = useState(undefined);
 
     const height = 932, width = 932;
 
@@ -81,7 +81,7 @@ export default function CirclePacking() {
             });
         }
 
-        inspectCirclePacking(data, viewVariable, updateRiskHoverValue);
+        inspectCirclePacking(data, viewVariable, updateViewHoverValue);
 
     }, [])
 
@@ -90,14 +90,14 @@ export default function CirclePacking() {
         // d3.selectAll(`#${id} svg circle`)
         //     .attr("fill", d => applyColorScale(d.data.riskStatus, viewVariable, colorScale))
 
-        inspectCirclePacking(data, viewVariable, updateRiskHoverValue);
+        inspectCirclePacking(data, viewVariable, updateViewHoverValue);
     }, [viewVariable])
 
     return(
         <div className="Content">
             <Navigation/>
             <div className="Query" id="FilterMenu"></div>
-            <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} riskHoverValue={riskHoverValue} id={id} data={data}/>
+            <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id} data={data}/>
         </div>
     )
 }

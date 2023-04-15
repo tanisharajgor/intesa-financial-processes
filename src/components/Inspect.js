@@ -54,7 +54,7 @@ export function inspectHierarchyDetail(inspect, d, viewVariable) {
     inspect.select(".value3 .value").text(" " + labelScale(rs));
 }
 
-export function inspectCirclePacking(data, viewVariable, updateRiskHoverValue) {
+export function inspectCirclePacking(data, viewVariable, updateViewHoverValue) {
 
     let inspect = d3.select(".Inspect");
     inspectHierarchySummary(inspect, data);
@@ -67,12 +67,12 @@ export function inspectCirclePacking(data, viewVariable, updateRiskHoverValue) {
             .attr("stroke-width", 2);
 
         inspectHierarchyDetail(inspect, d, viewVariable);
-        updateRiskHoverValue(d.data.riskStatus[viewVariable]);
+        updateViewHoverValue(d.data.riskStatus[viewVariable]);
 
     }).on("mouseout", function() {
 
         inspectHierarchySummary(inspect, data);
-        updateRiskHoverValue(undefined);
+        updateViewHoverValue(undefined);
 
         d3.selectAll('circle')
             .attr("stroke-width", .5)

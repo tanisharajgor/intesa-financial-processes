@@ -17,7 +17,7 @@ const shapeData = [{"group": "Actor", "type": "Actor"},
                       {"group": "Control", "type": "Control"}]
                       
 
-function drawRiskLegend(t, riskHoverValue) {
+function drawRiskLegend(t, viewHoverValue) {
 
     let svg =  d3.select(`#${riskLegendId} svg`);
 
@@ -37,7 +37,7 @@ function drawRiskLegend(t, riskHoverValue) {
                 .attr('r', 5),
                 // .attr('fill', ((d) => d.value === "NA" ? naColor: colorScale(d.value))),
             update => update
-            .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .3)),             
+            .attr('opacity', ((d) => d.value === viewHoverValue || viewHoverValue === undefined? 1: .3)),             
             exit   => exit.remove()
         );
 
@@ -52,13 +52,13 @@ function drawRiskLegend(t, riskHoverValue) {
                 .text(((d) => d.label))
                 .style("fill", "white"),
             update => update
-                .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .3)),
+                .attr('opacity', ((d) => d.value === viewHoverValue || viewHoverValue === undefined? 1: .3)),
             exit   => exit.remove()
     );
 }
 
 // Initiates the legend svg and sets the non-changing attributes
-function initRiskLegend(variable, variableLookup, riskHoverValue) {
+function initRiskLegend(variable, variableLookup, viewHoverValue) {
 
     let t = variableLookup[variable];
     let h = height + (t.values.length + 1)*20;
@@ -68,11 +68,11 @@ function initRiskLegend(variable, variableLookup, riskHoverValue) {
         .attr('width', width)
         .attr('height', h);
 
-    drawRiskLegend(t, riskHoverValue);
+    drawRiskLegend(t, viewHoverValue);
 }
 
 // Updates the legend attributes on variable change
-function updateRiskLegend(variable, variableLookup, riskHoverValue) {
+function updateRiskLegend(variable, variableLookup, viewHoverValue) {
 
     let t = variableLookup[variable];
     let h = height + (t.values.length + 1)*20;
@@ -80,7 +80,7 @@ function updateRiskLegend(variable, variableLookup, riskHoverValue) {
     let svg = d3.select(`#${riskLegendId} svg`);
     svg.attr("height", h)
 
-    drawRiskLegend(t, riskHoverValue);
+    drawRiskLegend(t, viewHoverValue);
 }
 
 export function symbolType(d) {
@@ -247,7 +247,7 @@ function viewInfo(networkChart) {
     )
 }
 
-export default function View({id, viewVariable, updateViewVariable, riskHoverValue, symbolHoverValue, data}) {
+export default function View({id, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue, data}) {
 
     const networkChart = id === "network-chart";
 
@@ -275,8 +275,8 @@ export default function View({id, viewVariable, updateViewVariable, riskHoverVal
 
     // Update the risk legend
     useEffect(() => {
-        // updateRiskLegend(viewVariable, viewVariables, riskHoverValue);
-    }, [viewVariable, riskHoverValue]);
+        // updateRiskLegend(viewVariable, viewVariables, viewHoverValue);
+    }, [viewVariable, viewHoverValue]);
 
     return(
         <div className='View'>

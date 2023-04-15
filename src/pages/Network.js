@@ -5,7 +5,7 @@ import FilterType from "../components/FilterType";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
-import { symbolType, symbolScale } from "../components/View";
+import { symbolType } from "../components/View";
 import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues } from "../utils/global";
 import { inspectNetworkDetail, inspectNetworkSummary } from "../components/Inspect";
 
@@ -26,7 +26,7 @@ const rScale = d3.scaleLinear()
     .range([8, 15]);
 
 // Tooltip
-function inspectNetwork(data, viewVariable, updateRiskHoverValue, updateSymbolHoverValue) {
+function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue) {
 
     let inspect = d3.select(".Inspect");
     inspectNetworkSummary(inspect, data);
@@ -54,7 +54,7 @@ function inspectNetwork(data, viewVariable, updateRiskHoverValue, updateSymbolHo
             .attr("stroke-width", d => b.includes(d.index)? 1.5: 1);
 
         updateSymbolHoverValue(symbolType(d.group));
-        updateRiskHoverValue(d.group);
+        updateViewHoverValue(viewVariable);
 
     }).on("mouseout", function() {
 
@@ -70,7 +70,7 @@ function inspectNetwork(data, viewVariable, updateRiskHoverValue, updateSymbolHo
             .attr("opacity", 1)
             .attr("stroke", linkColor);
 
-        updateRiskHoverValue(undefined);
+        updateViewHoverValue(undefined);
         updateSymbolHoverValue(undefined);
     });
 }
@@ -171,7 +171,7 @@ export default function Network() {
     const [activityTypesChecks, updateActivityTypeChecks] = useState(activityTypeValues);
     const [actorTypesChecks, updateActorTypeChecks] = useState(actorTypeValues);
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
-    const [riskHoverValue, updateRiskHoverValue] = useState(undefined);
+    const [viewHoverValue, updateViewHoverValue] = useState(undefined);
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
 
     console.log(data)
@@ -193,11 +193,11 @@ export default function Network() {
     useEffect(() => {
         renderNetwork(data, viewVariable);
         nodes = d3.selectAll(`#${id} svg path`);
-        inspectNetwork(data, viewVariable, updateRiskHoverValue, updateSymbolHoverValue);
+        inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue);
     }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data]);
 
     useEffect(() => {
-        inspectNetwork(data, viewVariable, updateRiskHoverValue, updateSymbolHoverValue);
+        inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue);
     }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data, viewVariable]);
 
     // Updates the color of the nodes without restarting the network simulation
@@ -214,7 +214,7 @@ export default function Network() {
                 <FilterType typesChecks={activityTypesChecks} updateTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues} label="Filter by Activity Type:"/>
                 <FilterType typesChecks={actorTypesChecks} updateTypeChecks = {updateActorTypeChecks} typeValues={actorTypeValues} label="Filter by Actor Type:"/>
             </div>
-            <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} riskHoverValue={riskHoverValue} symbolHoverValue={symbolHoverValue} id={id} data={data}/>                
+            <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} id={id} data={data}/>                
         </div>
     )
 }
