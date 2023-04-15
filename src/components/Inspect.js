@@ -1,4 +1,4 @@
-import { riskVariables, createLabelScale } from "../utils/global";
+import { viewVariables, createLabelScale } from "../utils/global";
 import * as d3 from 'd3';
 
 const treeLevelScale = d3.scaleOrdinal()
@@ -51,7 +51,7 @@ export function inspectHierarchyDetail(inspect, d, viewVariable) {
     inspect.select(".value1 .value").text(" " + d.data.name);
     inspect.select(".value2 .key").text("Number of activities: ");
     inspect.select(".value2 .value").text(`${d.sum(d => d.children ? 0: 1).value}`);
-    inspect.select(".value3 .key").text(`${riskVariables[viewVariable].label}: `);
+    inspect.select(".value3 .key").text(`${viewVariables[viewVariable].label}: `);
     inspect.select(".value3 .value").text(" " + labelScale(rs));
 }
 

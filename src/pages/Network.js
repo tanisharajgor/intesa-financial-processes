@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
 import { symbolType, symbolScale } from "../components/View";
-import { riskVariables, createColorScale, applyColorScale, actorTypeValues, activityTypeValues } from "../utils/global";
+import { viewVariables, createColorScale, applyColorScale, actorTypeValues, activityTypeValues } from "../utils/global";
 import { inspectNetworkDetail, inspectNetworkSummary } from "../components/Inspect";
 
 const id = "network-chart";
@@ -166,7 +166,7 @@ function renderNetwork(data, viewVariable) {
 
 export default function Network() {
 
-    const [viewVariable, updateRiskVariable] = useState("controlTypeMode");
+    const [viewVariable, updateViewVariable] = useState("controlTypeMode");
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
     const [activityTypesChecks, updateActivityTypeChecks] = useState(activityTypeValues);
     const [actorTypesChecks, updateActorTypeChecks] = useState(actorTypeValues);
@@ -177,7 +177,7 @@ export default function Network() {
     console.log(data)
 
     // Set-up scales
-    // colorScale = createColorScale(viewVariable, riskVariables);
+    // colorScale = createColorScale(viewVariable, viewVariables);
 
     // Filter data
     useEffect(() => {
@@ -214,7 +214,7 @@ export default function Network() {
                 <FilterType typesChecks={activityTypesChecks} updateTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues} label="Filter by Activity Type:"/>
                 <FilterType typesChecks={actorTypesChecks} updateTypeChecks = {updateActorTypeChecks} typeValues={actorTypeValues} label="Filter by Actor Type:"/>
             </div>
-            <Main viewVariable={viewVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} symbolHoverValue={symbolHoverValue} id={id} data={data}/>                
+            <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} riskHoverValue={riskHoverValue} symbolHoverValue={symbolHoverValue} id={id} data={data}/>                
         </div>
     )
 }

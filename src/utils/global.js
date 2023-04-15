@@ -7,7 +7,7 @@ export const palette = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '
 export const naColor = "#ADADAD";
 const missingColor = "#4B4B4B";
 
-export const riskVariables = {
+export const viewVariables = {
 
     "riskType": {
         // "financialDisclosureRiskAny": {
@@ -100,8 +100,8 @@ export function createOpacityScale() {
 export function createLabelScale(viewVariable) {
 
     const scale = d3.scaleOrdinal()
-        .domain(riskVariables[viewVariable].values)
-        .range(riskVariables[viewVariable].labels);
+        .domain(viewVariables[viewVariable].values)
+        .range(viewVariables[viewVariable].labels);
 
     return scale;
 }

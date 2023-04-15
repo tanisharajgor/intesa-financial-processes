@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { riskVariables, createColorScale, applyColorScale, createOpacityScale, createLabelScale, hover } from "../utils/global";
+import { viewVariables, createColorScale, applyColorScale, createOpacityScale, createLabelScale, hover } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ const id = "circle-packing-chart";
 
 export default function CirclePacking() {
 
-    const [viewVariable, updateRiskVariable] = useState("controlTypeMode");
+    const [viewVariable, updateViewVariable] = useState("controlTypeMode");
     const [riskHoverValue, updateRiskHoverValue] = useState(undefined);
 
     const height = 932, width = 932;
@@ -33,7 +33,7 @@ export default function CirclePacking() {
     let view;
 
     // Set-up scales
-    // const colorScale = createColorScale(viewVariable, riskVariables);
+    // const colorScale = createColorScale(viewVariable, viewVariables);
     const opacityScale = createOpacityScale();
 
     // Draw circle packing once
@@ -88,7 +88,7 @@ export default function CirclePacking() {
     // Update the visual aesthetics of the visualization that change with a user input
     useEffect(() => {
         // d3.selectAll(`#${id} svg circle`)
-        //     .attr("fill", d => applyColorScale(d.data.riskStatus, viewVariablee, colorScale))
+        //     .attr("fill", d => applyColorScale(d.data.riskStatus, viewVariable, colorScale))
 
         inspectCirclePacking(data, viewVariable, updateRiskHoverValue);
     }, [viewVariable])
@@ -97,7 +97,7 @@ export default function CirclePacking() {
         <div className="Content">
             <Navigation/>
             <div className="Query" id="FilterMenu"></div>
-            <Main viewVariable={viewVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} id={id} data={data}/>
+            <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} riskHoverValue={riskHoverValue} id={id} data={data}/>
         </div>
     )
 }

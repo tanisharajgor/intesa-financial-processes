@@ -1,5 +1,5 @@
 import { Form, Select, MenuItem } from "cfd-react-components";
-import { riskVariables, createColorScale, naColor } from "../utils/global";
+import { viewVariables, createColorScale, naColor } from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
 import { InspectHTML } from "./Inspect";
@@ -247,18 +247,18 @@ function viewInfo(networkChart) {
     )
 }
 
-export default function View({id, viewVariable, updateRiskVariable, riskHoverValue, symbolHoverValue, data}) {
+export default function View({id, viewVariable, updateViewVariable, riskHoverValue, symbolHoverValue, data}) {
 
-    const viewVars = Object.keys(riskVariables['riskType']).concat(Object.keys(riskVariables['controlType']));
-    const viewObj = {...viewVariable['riskType'], ...riskVariables['controlType']}
+    const viewVars = Object.keys(viewVariables['riskType']).concat(Object.keys(viewVariables['controlType']));
+    const viewObj = {...viewVariables['riskType'], ...viewVariables['controlType']}
 
     const networkChart = id === "network-chart";
 
-    // colorScale = createColorScale(riskVariable, riskVariables);
+    // colorScale = createColorScale(viewVariable, viewVariables);
 
     const handleChange = (event) => {
-        let newView = (Object.keys(riskVariables).find((c) => riskVariables[c].label === event.target.value));
-        updateRiskVariable(newView)
+        let newView = (Object.keys(viewVariables).find((c) => viewVariables[c].label === event.target.value));
+        updateViewVariable(newView)
     }
 
     // Initiate the shape legend
@@ -273,12 +273,12 @@ export default function View({id, viewVariable, updateRiskVariable, riskHoverVal
 
     // Initiate the risk legend
     useEffect(() => {
-        // initRiskLegend(viewVariable, riskVariables);
+        // initRiskLegend(viewVariable, viewVariables);
     }, []);
 
     // Update the risk legend
     useEffect(() => {
-        // updateRiskLegend(viewVariable, riskVariables, riskHoverValue);
+        // updateRiskLegend(viewVariable, viewVariables, riskHoverValue);
     }, [viewVariable, riskHoverValue]);
 
     return(
