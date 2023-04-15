@@ -61,7 +61,7 @@ export function createColorScale(variable) {
 
     let t = viewObj[variable];
 
-    if (variable === "controlPeriodocityMode") {
+    if (variable === "controlPeriodocity") {
 
         var scale = d3.scaleSequentialLog(d3.interpolate("orange", "purple"))
             .domain(d3.extent(t.values));
@@ -87,7 +87,6 @@ export function createColorScale(variable) {
 
 export function applyColorScale(d, viewVariable, colorScale) {
 
-    console.log(d)
     if (d.group === "Risk") {
 
         if (Object.keys(viewVariables['riskType']).includes(viewVariable)) {

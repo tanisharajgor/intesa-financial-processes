@@ -228,9 +228,7 @@ function viewNActivities() {
 function riskType() {
     return(
         <div className="layout_row">
-            <span className="layout_item key">
-                Risk type
-            </span>
+            <span className="layout_item key"></span>
             <span className="layout_item"></span>
         </div>
     )
