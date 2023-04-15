@@ -54,7 +54,7 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
             .attr("stroke-width", d => b.includes(d.index)? 1.5: 1);
 
         updateSymbolHoverValue(symbolType(d.group));
-        updateViewHoverValue(viewVariable);
+        updateViewHoverValue(applyColorScale(d, viewVariable, colorScale));
 
     }).on("mouseout", function() {
 
@@ -175,7 +175,6 @@ export default function Network() {
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
 
     console.log(data)
-    console.log(viewVariable)
 
     // Set-up scales
     colorScale = createColorScale(viewVariable);

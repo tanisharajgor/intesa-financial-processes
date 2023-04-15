@@ -23,8 +23,11 @@ function drawRiskLegend(t, viewHoverValue) {
 
     let riskData = []
     for (let i in t.labels) {
-        riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i]})
+        riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i], "color": colorScale(t.values[i])})
     }
+
+    console.log(viewHoverValue)
+    console.log(riskData)
 
     svg
         .selectAll("circle")
@@ -35,9 +38,9 @@ function drawRiskLegend(t, viewHoverValue) {
                 .attr('cx', 10)
                 .attr('cy', ((d, i) => 20 + i*20))
                 .attr('r', 5)
-                .attr('fill', ((d) => d.value === "NA" ? naColor: colorScale(d.value))),
+                .attr('fill', ((d) => d.color)),
             update => update
-            .attr('opacity', ((d) => d.value === viewHoverValue || viewHoverValue === undefined? 1: .3)),             
+                .attr('opacity', ((d) => d.color === viewHoverValue? 1: .3)),             
             exit   => exit.remove()
         );
 
