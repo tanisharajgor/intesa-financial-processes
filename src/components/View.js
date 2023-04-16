@@ -189,39 +189,6 @@ function shapeType() {
     )
 }
 
-function viewNNodes() {
-    return(
-        <div className="layout_row">
-            <span className="layout_item key">
-                Number of nodes: 
-            </span>
-            <span id="nNodes" className="layout_item"></span>
-        </div>
-    )
-}
-
-function viewNActors() {
-    return(
-        <div className="layout_row">
-            <span className="layout_item key">
-                Number of actors: 
-            </span>
-            <span id="nActors" className="layout_item"></span>
-        </div>
-    )
-}
-
-function viewNActivities() {
-    return(
-        <div className="layout_row">
-            <span className="layout_item key">
-                Number of activities: 
-            </span>
-            <span id="nActivities" className="layout_item"></span>
-        </div>
-    )
-}
-
 function riskType() {
     return(
         <div className="layout_row">
