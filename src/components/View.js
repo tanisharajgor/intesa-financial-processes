@@ -38,12 +38,12 @@ function drawRiskLegend(t, viewHoverValue) {
                 enter  => enter
                     .append("path")
                     .attr("d", d3.symbol()
-                    .type(((d) => symbolType(d.group)))
+                    .type((d => symbolType(d.group)))
                         .size(60))
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
-                    .attr('fill', ((d) => d.color)),
+                    .attr('fill', (d => d.color)),
                 update => update
                     // .attr('opacity', function(d) {
 
@@ -55,7 +55,8 @@ function drawRiskLegend(t, viewHoverValue) {
                     //     return viewHoverValue === undefined || d.color === viewHoverValue? 1: .3
 
                     // })
-                    .attr('opacity', ((d) => viewHoverValue === undefined || d.color === viewHoverValue? 1: .3))
+                    .attr('opacity', (d => viewHoverValue === undefined || d.color === viewHoverValue? 1: .3)),
+                    exit   => exit.remove()
             );
 
     svg
@@ -66,10 +67,10 @@ function drawRiskLegend(t, viewHoverValue) {
                 .append("text")
                 .attr("x", 25)
                 .attr("y", ((d, i) => i*23 + 20))
-                .text(((d) => d.label))
+                .text((d => d.label))
                 .style("fill", "white"),
             update => update
-                .attr('opacity', ((d) => viewHoverValue === undefined || d.color === viewHoverValue ? 1: .3)),
+                .attr('opacity', (d => viewHoverValue === undefined || d.color === viewHoverValue ? 1: .3)),
             exit   => exit.remove()
     );
 }
