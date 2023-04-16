@@ -57,8 +57,6 @@ export const viewObj = {...viewVariables['riskType'], ...viewVariables['controlT
 // orange: #FF831D
 export function createColorScale(variable) {
 
-    console.log(variable)
-
     let t = viewObj[variable];
 
     if (variable === "controlPeriodocity") {
@@ -68,6 +66,7 @@ export function createColorScale(variable) {
 
         let interp = [3650, 365, 182, 91, 30, 7, 1, .1].map(d => scale(d))
         interp.push(missingColor)
+        interp.push(naColor)
 
         var s = d3.scaleOrdinal()
             .domain(t.values)

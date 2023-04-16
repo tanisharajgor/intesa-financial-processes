@@ -244,6 +244,8 @@ def create_network(data):
             nodes.append(row)
 
         for m in riskID:
+
+            import pdb; pdb.set_trace()
             row = {"id": int(m),
                     "group": "Risk",
                     "name": df[df.riskID == m].risk.iloc[0],
