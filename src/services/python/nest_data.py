@@ -201,6 +201,8 @@ def create_network(data):
 
     for i in data.level3ID.unique():
 
+        # import pdb; pdb.set_trace()
+
         df = data[data.level3ID == i].drop_duplicates()
         df.riskType = df.riskType.fillna('Missing')
         df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('Missing')
@@ -238,7 +240,10 @@ def create_network(data):
                     "nActors": int(df[df.activityID == l].actorID.nunique()),
                     "actorsID": df[df.activityID == l].actorID.unique().tolist(),
                     # "riskStatus": create_risk_status(df[df.activityID == l]),
-                    "levels": levelsObject(df[df.activityID == l])
+                    "levels": levelsObject(df[df.activityID == l]),
+                    "activityType": {
+                        "nRisk": int(df[(df.activityID == l) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0])
+                        }
                     }
 
             nodes.append(row)
@@ -272,7 +277,7 @@ def create_network(data):
 
         linkData = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)][['actorID', 'activityID']].drop_duplicates()
 
-        for j in range(0, linkData.shape[0] - 1):
+        for j in range(0, linkData.shape[0]):
             row = {"target": int(linkData.actorID.iloc[j]),
                    "source": int(linkData.activityID.iloc[j]),
                    "id": str(linkData.actorID.iloc[j]) + "-" + str(linkData.activityID.iloc[j])}
@@ -281,7 +286,7 @@ def create_network(data):
 
         linkData = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.riskID) == False)][['activityID', 'riskID']].drop_duplicates()
 
-        for j in range(0, linkData.shape[0] - 1):
+        for j in range(0, linkData.shape[0]):
             row = {"target": int(linkData.activityID.iloc[j]),
                    "source": int(linkData.riskID.iloc[j]),
                    "id": str(linkData.activityID.iloc[j]) + "-" + str(linkData.riskID.iloc[j])}
@@ -290,7 +295,7 @@ def create_network(data):
 
         linkData = df[(pd.isnull(df.riskID) == False) & (pd.isnull(df.controlID) == False)][['riskID', 'controlID']].drop_duplicates()
 
-        for j in range(0, linkData.shape[0] - 1):
+        for j in range(0, linkData.shape[0]):
             row = {"target": int(linkData.riskID.iloc[j]),
                    "source": int(linkData.controlID.iloc[j]),
                    "id": str(linkData.riskID.iloc[j]) + "-" + str(linkData.controlID.iloc[j])}

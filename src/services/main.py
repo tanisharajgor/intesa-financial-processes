@@ -94,7 +94,7 @@ def main():
 
     #da1a6f66-23f4-11eb-275f-001dd8b72a50
 
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
 
     network = create_network(main)
     write_json(network, os.path.join(processed_pth, "nested"), "network2")
