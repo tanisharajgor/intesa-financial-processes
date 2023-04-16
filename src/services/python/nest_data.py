@@ -74,7 +74,7 @@ def create_risk_control(main):
         df = main[main.riskID == id]
         dict = {"id": int(id),
                 "name": df.risk.iloc[0],
-                "riskStatus": create_risk_status(df)
+                "riskType": create_risk_type(df)
         }
 
         array.append(dict)
@@ -85,37 +85,53 @@ def create_risk_control(main):
 Creates a risk status attribute at the activity level
 return nested list
 """
-def create_risk_status(df):
+def create_risk_type(df):
 
-    # df = df[pd.isnull(df.riskID) == False]
+    df = df[pd.isnull(df.riskID) == False]
 
-    df.controlType = df.controlType.fillna('NA')
-    df.controlPeriodocity = df.controlPeriodocity.fillna('NA')
-    df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('NA')
+    df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('Missing')
+    df.riskType = df.riskType.fillna('Missing')
 
     if df.shape[0] > 0:
 
-        row = {"nRisks": int(df.riskID.nunique()),
-               "riskID": df.riskID.unique().astype(int).tolist()}
-        
-        controlType = df.controlType.mode().iloc[0]
-
-        controlPeriodocityMode = df.controlPeriodocity.mode().iloc[0]
-
-        if (controlPeriodocityMode != "NA") & (controlPeriodocityMode != "Missing"):
-            controlPeriodocityMode = float(controlPeriodocityMode)
-
+        riskType = df.riskType.mode().iloc[0]
         financialDisclosureRiskAny = df.financialDisclosureRisk.mode().iloc[0]
 
         if (financialDisclosureRiskAny != "NA") & (financialDisclosureRiskAny != "Missing"):
             financialDisclosureRiskAny = bool(financialDisclosureRiskAny)
 
-        row = {"controlType": controlType,
-               "controlPeriodocityMode": controlPeriodocityMode,
-               "financialDisclosureRiskAny": financialDisclosureRiskAny}
+        row = {"financialDisclosureRiskAny": financialDisclosureRiskAny,
+               "riskType": str(riskType)}
 
     else:
-        row = {"nRisks": int(0)}
+        row = {}
+
+    return row
+
+"""
+Creates a risk status attribute at the activity level
+return nested list
+"""
+def create_control_type(df):
+
+    df = df[pd.isnull(df.controlID) == False]
+
+    df.controlType = df.controlType.fillna('Missing')
+    df.controlPeriodocity = df.controlPeriodocity.fillna('Missing')
+
+    if df.shape[0] > 0:
+
+        controlType = df.controlType.mode().iloc[0]
+        controlPeriodocityMode = df.controlPeriodocity.mode().iloc[0]
+
+        if (controlPeriodocityMode != "NA") & (controlPeriodocityMode != "Missing"):
+            controlPeriodocityMode = float(controlPeriodocityMode)
+
+        row = {"controlType": str(controlType),
+               "controlPeriodocity": controlPeriodocityMode}
+
+    else:
+        row = {}
 
     return row
 
@@ -140,7 +156,8 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
         d = {"id": int(id),
             "name": df_sub[df_sub[root1ID] == id][root1].iloc[0],
             # "childrenIDs": childrenIDs,
-            # "riskStatus": create_risk_status(df_sub),
+            "riskType": create_risk_type(df_sub),
+            "controlType": create_control_type(df_sub),
             "treeLevel": int(tree_level)
             }
 
@@ -165,7 +182,8 @@ def create_processes_to_activities(main):
     return {"name": "root", 
             "children": nest1,  
             "childrenIDs": main.level1ID.unique().tolist(),
-            "riskStatus": "NA",
+            "riskType": {},
+            "riskControl": {},
             "treeLevel": int(0)}
 
 """
@@ -197,11 +215,7 @@ def create_network(data):
 
     data = data[pd.isnull(data.actorID) == False]
 
-    # import pdb; pdb.set_trace()
-
     for i in data.level3ID.unique():
-
-        # import pdb; pdb.set_trace()
 
         df = data[data.level3ID == i].drop_duplicates()
         df.riskType = df.riskType.fillna('Missing')
@@ -226,7 +240,7 @@ def create_network(data):
                    "type": df[df.actorID == k].actorType.iloc[0],
                    "nActivities": int(df[df.actorID == k].activityID.nunique()),
                    "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
-                #    "riskStatus": create_risk_status(df[df.actorID == k]),
+                #    "riskStatus": create_risk_type(df[df.actorID == k]),
                    "levels": levelsObject(df[df.actorID == k])
                    }
 
@@ -239,7 +253,7 @@ def create_network(data):
                     "type": df[df.activityID == l].activityType.iloc[0],
                     "nActors": int(df[df.activityID == l].actorID.nunique()),
                     "actorsID": df[df.activityID == l].actorID.unique().tolist(),
-                    # "riskStatus": create_risk_status(df[df.activityID == l]),
+                    # "riskStatus": create_risk_type(df[df.activityID == l]),
                     "levels": levelsObject(df[df.activityID == l]),
                     "activityType": {
                         "nRisk": int(df[(df.activityID == l) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0])
