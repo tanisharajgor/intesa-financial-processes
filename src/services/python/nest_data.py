@@ -245,14 +245,13 @@ def create_network(data):
 
         for m in riskID:
 
-            import pdb; pdb.set_trace()
             row = {"id": int(m),
                     "group": "Risk",
                     "name": df[df.riskID == m].risk.iloc[0],
                     "riskType": {
                         "financialDisclosureRisk": bool(df[df.riskID == m].financialDisclosureRisk.iloc[0]),
                         "riskType": df[df.riskID == m].riskType.iloc[0],
-                        "nControl": int(df[(df.riskID == m) & (pd.isnull(df.controlID) == False)].shape[0])
+                        "nControl": int(df[(df.riskID == m) & (pd.isnull(df.controlID) == False)][['controlID']].drop_duplicates().shape[0])
                     }
                 }
 
