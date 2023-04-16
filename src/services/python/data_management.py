@@ -94,7 +94,7 @@ def actors_dm(actors, config, raw_pth, processed_pth):
     df = pd.merge(df, dfTranslated, on="actor", how="left").drop("actor", axis=1).rename(columns={'English': "actor"})
     df = clean_strings(df, "actor")
     df = df[pd.isnull(df.actor) == False]
-    df = num_id(df, "actorGUID")
+    df = num_id(df, "actorGUID", 1000000)
 
     ## Write the cleaned data out
     df.drop('actorGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'actors' + ".csv"), index = False)
@@ -117,7 +117,7 @@ def risks_dm(risks, config, raw_pth, processed_pth):
     df = pd.merge(df, dfTranslated, on="risk", how="left").drop("risk", axis=1).rename(columns={'English': "risk"})
     df = clean_strings(df, "risk")
     df = df[pd.isnull(df.risk) == False]
-    df = num_id(df, "riskGUID")
+    df = num_id(df, "riskGUID", 10000)
     df = translate_config(df, config, 'riskType')
     df["financialDisclosureRisk"] = df.riskType == "Financial Information Risk (ex 262/2005)"
 
@@ -161,7 +161,7 @@ def controls_dm(controls, config, raw_pth, processed_pth):
     df = pd.merge(df, dfTranslated, on="control", how="left").drop("control", axis=1).rename(columns={'English': "control"})
     df = clean_strings(df, "control")
     df = df[pd.isnull(df.control) == False]
-    df = num_id(df, "controlGUID")
+    df = num_id(df, "controlGUID", 1000)
     df = df.rename(columns={'activityCategory': 'controlCategory'})
     df.controlCategory = df.controlCategory.fillna('NA')
     df['control'] = df['control'].replace(r"^ +", regex=True)
