@@ -78,8 +78,8 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
 // Filters the data by level3ID and activity Type
 function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
     let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID));
-    // let activityIds = dataNew.nodes.filter(d => d.group === "Activity" && activityTypesChecks.includes(d.type)).map(d => d.id);
-    // let actorIds = dataNew.nodes.filter(d => d.group === "Actor" && actorTypesChecks.includes(d.type)).map(d => d.id);
+    let activityIds = dataNew.nodes.filter(d => d.group === "Activity" && activityTypesChecks.includes(d.type)).map(d => d.id);
+    let actorIds = dataNew.nodes.filter(d => d.group === "Actor" && actorTypesChecks.includes(d.type)).map(d => d.id);
 
     // let links = dataNew.links.filter(d => d.source.id === undefined ? activityIds.includes(d.source) : activityIds.includes(d.source.id));
     // links = links.filter(d => d.target.id === undefined ? actorIds.includes(d.target) : actorIds.includes(d.target.id));
@@ -166,7 +166,7 @@ function renderNetwork(data, viewVariable) {
 
 export default function Network() {
 
-    const [viewVariable, updateViewVariable] = useState("controlType");
+    const [viewVariable, updateViewVariable] = useState("riskType");
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
     const [activityTypesChecks, updateActivityTypeChecks] = useState(activityTypeValues);
     const [actorTypesChecks, updateActorTypeChecks] = useState(actorTypeValues);
