@@ -140,7 +140,7 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
         d = {"id": int(id),
             "name": df_sub[df_sub[root1ID] == id][root1].iloc[0],
             # "childrenIDs": childrenIDs,
-            "riskStatus": create_risk_status(df_sub),
+            # "riskStatus": create_risk_status(df_sub),
             "treeLevel": int(tree_level)
             }
 
@@ -306,7 +306,6 @@ def create_network(data):
         array.append(network)
 
     return array
-
 
 def create_processes(main):
     l1Array = []
