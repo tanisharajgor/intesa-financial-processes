@@ -127,5 +127,13 @@ export function createLabelScale(viewVariable) {
     return scale;
 }
 
+// import graph from "../data/processed/nested/network2.json";
+// let g = graph.map(d => d.nodes.filter(d => d.group === "Actor")).flat(1);
+
+export const rScale = d3.scaleSqrt()
+    // .domain(d3.extent(g, (d => d.nActivities)))
+    .domain([1, 300])
+    .range([20, 400]);
+
 export const actorTypeValues = ["Organizational unit", "Position", "Person", "Missing", "External Organizational unit"];
 export const activityTypeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];

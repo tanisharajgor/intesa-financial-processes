@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
 import { symbolType } from "../components/View";
-import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues } from "../utils/global";
-import { inspectNetworkDetail, inspectNetworkSummary } from "../components/Inspect";
+import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues, rScale } from "../utils/global";
+import { inspectNetworkSummary } from "../components/Inspect";
 
 const id = "network-chart";
 let width = 1000;
@@ -22,9 +22,6 @@ var simulation = d3.forceSimulation()
     .force("charge", d3.forceManyBody().strength(-1.5))
     .force("center", d3.forceCenter(width / 2, height / 2))
     .force("collide", d3.forceCollide().strength(2).radius(8));
-
-const rScale = d3.scaleLinear()
-    .range([8, 15]);
 
 // Tooltip
 function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue) {
@@ -78,8 +75,6 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
             .attr("opacity", d => l1.includes(d.index) ? 1: .5)
             .attr("stroke", d => l1.includes(d.index)? "grey": linkColor)
             .attr("stroke-width", d => l1.includes(d.index)? 1.5: 1);
-
-        console.log(applyColorScale(d, viewVariable, colorScale))
 
         updateSymbolHoverValue(symbolType(d.group));
         updateViewHoverValue(applyColorScale(d, viewVariable, colorScale));
@@ -143,8 +138,6 @@ function renderNetwork(data, viewVariable) {
 
     var svg = d3.select(`#${id} svg`);
 
-    rScale.domain = d3.extent(data.nodes, ((d) => d.nActivities === undefined ? 1: d.nActivities));
-
     svg.append("g").attr("class", "links");
     svg.append("g").attr("class", "nodes");
 
@@ -168,7 +161,7 @@ function renderNetwork(data, viewVariable) {
                 .append("path")
                 .attr("d", d3.symbol()
                     .type(((d) => symbolType(d.group)))
-                    .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
+                    .size(((d) => d.group === "Actor" ? rScale(d.nActivities): 40)))
                 .attr("stroke-width", .5)
                 .attr("stroke", "white")
                 .attr("id", d => d.id)

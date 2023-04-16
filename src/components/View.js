@@ -14,22 +14,22 @@ let shapeLegendId = "Shape-Legend";
 const shapeData = [{"group": "Actor", "type": "Actor"},
                       {"group": "Activity", "type": "Activity"},
                       {"group": "Risk", "type": "Risk"},
-                      {"group": "Control", "type": "Control"}]
-                      
+                      {"group": "Control", "type": "Control"}];
+
+const sizeData = [{"size": 1},
+                    {"size": 50},
+                    {"size": 100},
+                    {"size": 200}]
+
 
 function drawRiskLegend(t, viewHoverValue) {
 
     let svg =  d3.select(`#${riskLegendId} svg`);
 
-    console.log(t.values)
-
     let riskData = []
     for (let i in t.labels) {
         riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i], "color": colorScale(t.values[i]), "group": t.group})
     }
-
-    console.log(riskData)
-    console.log(viewHoverValue)
 
     svg
             .selectAll("path")

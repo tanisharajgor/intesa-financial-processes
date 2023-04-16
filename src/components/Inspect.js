@@ -18,17 +18,6 @@ export function inspectNetworkSummary(inspect, data) {
     inspect.select(".value3 .value").text(" ");
 }
 
-export function inspectNetworkDetail(inspect, d, b) {
-
-    inspect.select(".value1 .key").text(`${d.group}: `);
-    inspect.select(".value1 .value").text(" " + d.name);
-    inspect.select(".value2 .key").text("Type: ");
-    inspect.select(".value2 .value").text(" " + d.type);
-    // inspect.select(".connections .key").text(" " + d.group === "Activity"? "# activities": "# actors");
-    inspect.select(".value3 .key").text("Number of connections: ");
-    inspect.select(".value3 .value").text(" " + b.length);
-}
-
 export function inspectHierarchySummary(inspect, data) {
 
     inspect.select(".value1 .key").text("Processes showing: ");
