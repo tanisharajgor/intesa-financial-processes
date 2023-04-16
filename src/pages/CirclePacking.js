@@ -45,7 +45,6 @@ export function inspectCirclePacking(data, viewVariable, updateViewHoverValue) {
     });
 }
 
-
 export default function CirclePacking() {
 
     const [viewVariable, updateViewVariable] = useState("riskType");
@@ -66,7 +65,7 @@ export default function CirclePacking() {
 
     const root = pack(data);
     root.sum(d => d.children ? 0: 1);
-    console.log(root)
+    // console.log(root)
     let focus = root;
     let view;
 

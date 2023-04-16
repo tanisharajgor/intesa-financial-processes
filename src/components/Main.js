@@ -13,11 +13,11 @@ const Visualization = styled('div')`
     background-color: black;
 `
 
-export default function Main({viewVariable, updateViewVariable, riskHoverValue, symbolHoverValue, id}) {
+export default function Main({viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue, id}) {
     return(
         <StyledMain>
             <Visualization id={id} className="Visualization"></Visualization>
-            <Status id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} riskHoverValue={riskHoverValue} symbolHoverValue={symbolHoverValue}/>
+            <Status id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue}/>
         </StyledMain>
     )
 }

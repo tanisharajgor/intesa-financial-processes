@@ -18,10 +18,10 @@ const shapeData = [{"group": "Actor", "type": "Actor"},
                       {"group": "Control", "type": "Control"}];
 
 const sizeData = [{"size": 1, "group": "Actor"},
-                    {"size": 25, "group": "Actor"},
-                   {"size": 50, "group": "Actor"},
-                {"size": 100, "group": "Actor"},
-                {"size": 300, "group": "Actor"}];
+                  {"size": 25, "group": "Actor"},
+                  {"size": 50, "group": "Actor"},
+                  {"size": 100, "group": "Actor"},
+                  {"size": 300, "group": "Actor"}];
          
 
 function drawRiskLegend(t, viewHoverValue) {
@@ -293,7 +293,6 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
                     >
                         {
                         viewVars.map((viewBy) => {
-
                             let variable = viewObj[viewBy];
                             return (
                                 <MenuItem key={variable.id} value={variable.label}><em>{variable.label}</em></MenuItem>
