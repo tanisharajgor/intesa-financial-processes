@@ -34,15 +34,16 @@ export const viewVariables = {
             values: ['Financial Information Risk (ex 262/2005)', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'Missing', 'NA'],
             colors: ['#ff7f0e', '#9467bd', '#2ca02c', '#e377c2', missingColor, naColor],
             group: "Risk"
-        },
-        "nControl": {
-            label: "Number of controls",
-            labels: [0, 1],
-            id: [25, 26],
-            values: [0, 1],
-            colors: ["#FF0000", "#0071BC"],
-            group: "Risk"
         }
+        // ,
+        // "nControl": {
+        //     label: "Number of controls",
+        //     labels: [0, 1],
+        //     id: [25, 26],
+        //     values: [0, 1],
+        //     colors: ["#FF0000", "#0071BC"],
+        //     group: "Risk"
+        // }
     },
     "controlType": {
         "controlType": {
