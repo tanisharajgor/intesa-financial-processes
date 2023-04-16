@@ -28,8 +28,6 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
     let inspect = d3.select(".Inspect");
     inspectNetworkSummary(inspect, data);
 
-    console.log(data)
-
     nodes.on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
@@ -58,23 +56,21 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
         let connectedNodeIds = [d.id].concat(l2source.concat([l2target]));
         let connectedNodes = nodes.filter(function(i) {
             return connectedNodeIds.includes(i.id);
-        })
-
-        // console.log(connectedNodes)
+        });
 
         d3.selectAll(`#${id} svg path`)
             .attr("opacity", .5);
 
         connectedNodes
             .attr("stroke", "white")
-            .attr("stroke-width", 2)
+            .attr("stroke-width", 1)
             .attr("opacity", 1)
             .raise();
 
         d3.selectAll(`#${id} .link`)
             .attr("opacity", d => l1.includes(d.index) ? 1: .5)
-            .attr("stroke", d => l1.includes(d.index)? "grey": linkColor)
-            .attr("stroke-width", d => l1.includes(d.index)? 1.5: 1);
+            .attr("stroke", d => l1.includes(d.index)? "white": linkColor)
+            .attr("stroke-width", d => l1.includes(d.index)? 1: .5);
 
         updateSymbolHoverValue(d.group);
         updateViewHoverValue(applyColorScale(d, viewVariable, colorScale));
