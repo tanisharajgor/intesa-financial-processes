@@ -164,7 +164,6 @@ function renderNetwork(data, viewVariable) {
                     .size(((d) => d.group === "Actor" ? rScale(d.nActivities): 40)))
                 .attr("stroke-width", .5)
                 .attr("stroke", "white")
-                .attr("id", d => d.id)
                 .attr("fill", d => applyColorScale(d, viewVariable, colorScale)),
             update => update,         
             exit   => exit.remove()

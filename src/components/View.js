@@ -1,5 +1,5 @@
 import { Form, Select, MenuItem } from "cfd-react-components";
-import { viewVars, viewObj, createColorScale, naColor } from "../utils/global";
+import { viewVars, viewObj, createColorScale, rScale } from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
 import { InspectHTML } from "./Inspect";
@@ -10,16 +10,16 @@ let colorScale;
 
 let riskLegendId = "Risk-Legend";
 let shapeLegendId = "Shape-Legend";
+let sizeLegendId = "Size-Legend";
 
 const shapeData = [{"group": "Actor", "type": "Actor"},
                       {"group": "Activity", "type": "Activity"},
                       {"group": "Risk", "type": "Risk"},
                       {"group": "Control", "type": "Control"}];
 
-const sizeData = [{"size": 1},
-                    {"size": 50},
-                    {"size": 100},
-                    {"size": 200}]
+const sizeData = [{"size": 1, "group": "Actor"},
+                {"size": 100, "group": "Actor"},
+                {"size": 300, "group": "Actor"}];
 
 
 function drawRiskLegend(t, viewHoverValue) {
@@ -58,7 +58,7 @@ function drawRiskLegend(t, viewHoverValue) {
                 .attr("x", 25)
                 .attr("y", ((d, i) => i*23 + 20))
                 .text((d => d.label))
-                .style("fill", "white"),
+                .attr("fill", "#cbcbcb"),
             update => update
                 .attr('opacity', (d => viewHoverValue === undefined || d.color === viewHoverValue ? 1: .3)),
             exit   => exit.remove()
@@ -152,7 +152,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
-                    .attr("fill", "white"),
+                    .attr("fill", "#cbcbcb"),
                 update => update
                     .attr('opacity', ((d) => symbolType(d.group) === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
@@ -165,7 +165,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .append("text")
                     .attr("x", 25)
                     .attr("y", ((d, i) => i*23 + 20))
-                    .attr("fill", "white")
+                    .attr("fill", "#cbcbcb")
                     .text((d) => d.type),
                 update => update
                     .attr('opacity', ((d) => symbolType(d.group) === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
@@ -175,6 +175,47 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
 
 function updateShapeLegend(networkChart, symbolHoverValue) {
     drawShapeLegend(networkChart, symbolHoverValue);
+}
+
+function initSizeLegend(networkChart) {
+
+    let h = height + (sizeData.length + 1)*20;
+
+    d3.select(`#${sizeLegendId}`)
+        .append("svg")
+        .attr("width", width)
+        .attr("height", h);
+
+    drawSizeLegend(networkChart);
+}
+
+function drawSizeLegend(networkChart) {
+    if (networkChart) {
+
+        const h = 40;
+
+        let svg = d3.select(`#${sizeLegendId} svg`);
+
+        let shape = svg.append("g")
+            .selectAll("circle")
+                .data(sizeData, d => d.size)
+                .enter()
+                .append("g")
+            .attr("transform", (d, i) => `translate(${(i * 70) + 30}, ${h / 3})`);
+
+        shape.append("path")
+            .attr("d", d3.symbol()
+                .type(((d) => symbolType(d.group)))
+                .size(((d) => rScale(d.size))))
+            .attr("fill", "#cbcbcb");
+
+        shape.append("text")
+            .attr("text-anchor", "middle")
+            .attr("y", 20)
+            .attr("font-size", 12)
+            .attr("fill", "#cbcbcb")
+            .text(d => d.size);
+    }
 }
 
 function shapeType() {
@@ -188,6 +229,19 @@ function shapeType() {
         </div>
     )
 }
+
+function sizeType() {
+    return(
+        <div className="layout_row">
+            <span className="layout_item key">
+                Size
+            </span>
+            <span className="layout_item"></span>
+            <div id={sizeLegendId}></div>
+        </div>
+    )
+}
+
 
 function riskType() {
     return(
@@ -203,6 +257,7 @@ function viewInfo(networkChart) {
         <div className="inner">
             <div className="layout_group inline">
                 {networkChart? shapeType(): <></>}
+                {networkChart? sizeType(): <></>}
                 {riskType()}
             </div>
         </div>
@@ -220,20 +275,17 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
         updateViewVariable(newView)
     }
 
-    // Initiate the shape legend
+    // Initiate legends
     useEffect(() => {
         initShapeLegend(networkChart, symbolHoverValue);
+        initSizeLegend(networkChart);
+        initRiskLegend(viewVariable);
     }, [])
 
     // Update the shape legend
     useEffect(() => {
         updateShapeLegend(networkChart, symbolHoverValue);
     }, [symbolHoverValue]);
-
-    // Initiate the risk legend
-    useEffect(() => {
-        initRiskLegend(viewVariable);
-    }, []);
 
     // Update the risk legend
     useEffect(() => {
