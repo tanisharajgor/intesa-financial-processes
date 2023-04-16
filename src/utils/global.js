@@ -120,6 +120,15 @@ export function applyColorScale(d, viewVariable, colorScale) {
     }
 }
 
+export function applyColorScaleMode(d, viewVariable, colorScale) {
+
+    if (Object.keys(viewVariables['riskType']).includes(viewVariable)) {
+        return d[viewVariable] === "NA" ? naColor : colorScale(d['riskType'][viewVariable]);
+    } else if (Object.keys(viewVariables['controlType']).includes(viewVariable)) {
+        return d[viewVariable] === "NA" ? naColor : colorScale(d['controlType'][viewVariable]);
+    }
+}
+
 export function createOpacityScale() {
 
     const scale = d3.scaleOrdinal()

@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { createColorScale, applyColorScale, createOpacityScale, createLabelScale, hover } from "../utils/global";
+import { createColorScale, applyColorScaleMode, createOpacityScale } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -49,7 +49,7 @@ export default function CirclePacking() {
             .selectAll("circle")
             .data(root.descendants().slice(1))
             .join("circle")
-                .attr("fill", d => applyColorScale(d.data, viewVariable, colorScale))
+                .attr("fill", d => applyColorScaleMode(d.data, viewVariable, colorScale))
                 .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
                 .on("mouseout", function() { d3.select(this).attr("stroke", null); })
                 .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()))
@@ -88,7 +88,7 @@ export default function CirclePacking() {
     // Update the visual aesthetics of the visualization that change with a user input
     useEffect(() => {
         d3.selectAll(`#${id} svg circle`)
-            .attr("fill", d => applyColorScale(d.data, viewVariable, colorScale));
+            .attr("fill", d => applyColorScaleMode(d.data, viewVariable, colorScale));
 
         inspectCirclePacking(data, viewVariable, updateViewHoverValue);
     }, [viewVariable])

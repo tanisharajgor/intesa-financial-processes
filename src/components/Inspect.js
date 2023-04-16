@@ -55,7 +55,6 @@ export function inspectCirclePacking(data, viewVariable, updateViewHoverValue) {
             .attr("stroke", "grey")
             .attr("stroke-width", 2);
 
-        inspectHierarchyDetail(inspect, d, viewVariable);
         updateViewHoverValue(d.data.riskStatus[viewVariable]);
 
     }).on("mouseout", function() {
