@@ -96,8 +96,10 @@ export default function CirclePacking() {
     return(
         <div className="Content">
             <Navigation/>
-            <div className="Query" id="FilterMenu"></div>
-            <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id} data={data}/>
+            <div style={{display: 'flex'}}>
+                <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id}/>
+            </div>
+            {/* <div className="Query" id="FilterMenu"></div> */}
         </div>
     )
 }

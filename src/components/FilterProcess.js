@@ -2,6 +2,8 @@ import { Accordion, AccordionHeader, AccordionDetails, MenuItem, Form, Select } 
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import lu from '../data/processed/nested/lu.json';
+import { Key } from '../component-styles/key'
+import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
 
 // constants
 const width = 345,
@@ -150,7 +152,7 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
     cluster(root);
 
     const handleChange = (event) => {
-        let level1 = event.target.value;
+        let level1 = parseInt(event.target.value);
         updateLevel1(level1)
     };
 
@@ -176,16 +178,15 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
                 aria-controls="process-filter-content"
                 id="process-filter-header"
             >
-            <div>
-                <h4><span className='key'>Filter by Process:</span>
-                    <span className='spec'> {level3Descr}</span>
+                <h4>
+                    <Key>Filter by Process:</Key>
+                    <span> {level3Descr}</span>
                 </h4>
-            </div>
             </AccordionHeader>
             <AccordionDetails>
-                <div className="layout_group">
-                        <div className="layout_row">
-                            <div className="layout_item push">
+                <LayoutGroup>
+                        <LayoutRow className="layout_row">
+                            <LayoutItem className="push">
                                 <Form variant="outlined" size="small">
                                     <Select
                                         labelId="process1-select-label"
@@ -201,12 +202,12 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
                                         })}
                                     </Select>
                                 </Form>
-                            </div>
-                        </div>
-                        <div className="layout_row">
+                            </LayoutItem>
+                        </LayoutRow>
+                        <LayoutRow>
                             <div id={id}></div>
-                        </div>
-                    </div>
+                        </LayoutRow>
+                    </LayoutGroup>
             </AccordionDetails>
         </Accordion>
     )
