@@ -152,21 +152,3 @@ export function symbolType(d) {
         return d3.symbolDiamond;
     }
 }
-
-export function symbolScale(d) {
-
-    if (d.group === "Actor") {
-        return 1;
-    } else {
-        if (d.type === "Process activity") {
-            return 2;
-        } else if (d.type === "Control activity") {
-            return 3;
-        } else if (d.type === "Common process activity") {
-            return 4;
-        } else {
-            return 5;
-        }
-    }
-}
-       

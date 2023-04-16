@@ -75,7 +75,7 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
             .attr("stroke", d => l1.includes(d.index)? "grey": linkColor)
             .attr("stroke-width", d => l1.includes(d.index)? 1.5: 1);
 
-        updateSymbolHoverValue(symbolType(d.group));
+        updateSymbolHoverValue(d.group);
         updateViewHoverValue(applyColorScale(d, viewVariable, colorScale));
 
     }).on("mouseout", function() {

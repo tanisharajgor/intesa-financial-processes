@@ -1,5 +1,5 @@
 import { Form, Select, MenuItem } from "cfd-react-components";
-import { viewVars, viewObj, createColorScale, rScale, symbolScale, symbolType } from "../utils/global";
+import { viewVars, viewObj, createColorScale, rScale, symbolType } from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
 import { InspectHTML } from "./Inspect";
@@ -123,7 +123,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     })
                     .attr("fill", "#cbcbcb"),
                 update => update
-                    .attr('opacity', ((d) => symbolType(d.group) === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
+                    .attr('opacity', ((d) => d.group === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
 
         svg
@@ -138,13 +138,12 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .attr("font-size", 12)
                     .text((d) => d.type),
                 update => update
-                    .attr('opacity', ((d) => symbolType(d.group) === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
+                    .attr('opacity', ((d) => d.group === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
     }
 }
 
 function updateShapeLegend(networkChart, symbolHoverValue) {
-    console.log(symbolHoverValue)
     drawShapeLegend(networkChart, symbolHoverValue);
 }
 
@@ -165,9 +164,7 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
         let svg = d3.select(`#${sizeLegendId} svg`)
             .attr("height", h);
 
-        console.log(symbolHoverValue)
-
-        svg.append("g")
+        svg
             .selectAll("path")
                 .data(sizeData, d => d.size)
                 .join(
@@ -178,11 +175,11 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
                                 .size(((d) => rScale(d.size))))
                             .attr("fill", "#cbcbcb"),
                 update => update
-                    .attr('opacity', ((d) => symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3))
+                    .attr('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3)
                 )
             .attr("transform", (d, i) => `translate(${(i * 70) + 30}, ${h / 3})`);
 
-        svg.append("g")
+        svg
             .selectAll("text")
                 .data(sizeData, d => d.size)
                 .join(
@@ -194,7 +191,7 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
                             .attr("fill", "#cbcbcb")
                             .text(d => d.size),
                     update => update
-                        .attr('opacity', ((d) => symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3))
+                        .attr('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3)
                     )
                 .attr("transform", (d, i) => `translate(${(i * 70) + 30}, ${h / 3})`);
     }
