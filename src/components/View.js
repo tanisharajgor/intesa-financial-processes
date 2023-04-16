@@ -21,10 +21,15 @@ function drawRiskLegend(t, viewHoverValue) {
 
     let svg =  d3.select(`#${riskLegendId} svg`);
 
+    console.log(t.values)
+
     let riskData = []
     for (let i in t.labels) {
         riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i], "color": colorScale(t.values[i]), "group": t.group})
     }
+
+    console.log(riskData)
+    console.log(viewHoverValue)
 
     svg
             .selectAll("path")
@@ -40,6 +45,16 @@ function drawRiskLegend(t, viewHoverValue) {
                     })
                     .attr('fill', ((d) => d.color)),
                 update => update
+                    // .attr('opacity', function(d) {
+
+                    //     console.log("color", d.color)
+                    //     console.log("hovervalue", viewHoverValue)
+
+                    //     console.log(d.color == viewHoverValue)
+
+                    //     return viewHoverValue === undefined || d.color === viewHoverValue? 1: .3
+
+                    // })
                     .attr('opacity', ((d) => viewHoverValue === undefined || d.color === viewHoverValue? 1: .3))
             );
 
@@ -54,7 +69,7 @@ function drawRiskLegend(t, viewHoverValue) {
                 .text(((d) => d.label))
                 .style("fill", "white"),
             update => update
-                .attr('opacity', ((d) => d.value === viewHoverValue || viewHoverValue === undefined? 1: .3)),
+                .attr('opacity', ((d) => viewHoverValue === undefined || d.color === viewHoverValue ? 1: .3)),
             exit   => exit.remove()
     );
 }

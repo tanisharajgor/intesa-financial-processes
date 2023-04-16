@@ -52,18 +52,18 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
             .html(`${d.group}: ${d.name} <br> Number of connections: ${l1.length}`);
 
         // console.log(l2)
-        console.log(d.id)
-        console.log(l1)
+        // console.log(d.id)
+        // console.log(l1)
         // console.log(d.group)
 
         let connectedNodeIds = l1.concat([d.id]);
-        console.log(connectedNodeIds)
+        // console.log(connectedNodeIds)
 
         let connectedNodes = nodes.filter(function(d) {
             return connectedNodeIds.includes(d.id);
         })
 
-        console.log(connectedNodes)
+        // console.log(connectedNodes)
 
         d3.selectAll(`#${id} svg path`)
             .attr("opacity", .5);
@@ -78,6 +78,8 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
             .attr("opacity", d => l1.includes(d.index) ? 1: .5)
             .attr("stroke", d => l1.includes(d.index)? "grey": linkColor)
             .attr("stroke-width", d => l1.includes(d.index)? 1.5: 1);
+
+        console.log(applyColorScale(d, viewVariable, colorScale))
 
         updateSymbolHoverValue(symbolType(d.group));
         updateViewHoverValue(applyColorScale(d, viewVariable, colorScale));
