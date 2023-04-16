@@ -34,9 +34,9 @@ function drawRiskLegend(t, viewHoverValue) {
                     .append("path")
                     .attr("d", d3.symbol()
                     .type(((d) => symbolType(d.group)))
-                        .size(80))
+                        .size(60))
                     .attr("transform", function(d, i) {
-                        return 'translate(' + 10 + ', ' + (i*25 + 15) + ')';
+                        return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
                     .attr('fill', ((d) => d.color)),
                 update => update
@@ -50,7 +50,7 @@ function drawRiskLegend(t, viewHoverValue) {
             enter  => enter
                 .append("text")
                 .attr("x", 25)
-                .attr("y", ((d, i) => i*25 + 20))
+                .attr("y", ((d, i) => i*23 + 20))
                 .text(((d) => d.label))
                 .style("fill", "white"),
             update => update
@@ -142,9 +142,9 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .append("path")
                     .attr("d", d3.symbol()
                     .type(((d) => symbolType(d.group)))
-                        .size(80))
+                        .size(60))
                     .attr("transform", function(d, i) {
-                        return 'translate(' + 10 + ', ' + (i*25 + 15) + ')';
+                        return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
                     .attr("fill", "white"),
                 update => update
@@ -158,7 +158,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                 enter  => enter
                     .append("text")
                     .attr("x", 25)
-                    .attr("y", ((d, i) => i*25 + 20))
+                    .attr("y", ((d, i) => i*23 + 20))
                     .attr("fill", "white")
                     .text((d) => d.type),
                 update => update
