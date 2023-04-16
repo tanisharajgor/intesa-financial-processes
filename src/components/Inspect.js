@@ -43,31 +43,6 @@ export function inspectHierarchyDetail(inspect, d, viewVariable) {
     inspect.select(".value3 .value").text(" " + labelScale(rs));
 }
 
-export function inspectCirclePacking(data, viewVariable, updateViewHoverValue) {
-
-    let inspect = d3.select(".Inspect");
-    inspectHierarchySummary(inspect, data);
-
-    d3.selectAll("circle").on("mouseover", function(e, d) {
-
-        let thisCircle = d3.select(this);
-        thisCircle
-            .attr("stroke", "grey")
-            .attr("stroke-width", 2);
-
-        updateViewHoverValue(d.data.riskStatus[viewVariable]);
-
-    }).on("mouseout", function() {
-
-        inspectHierarchySummary(inspect, data);
-        updateViewHoverValue(undefined);
-
-        d3.selectAll('circle')
-            .attr("stroke-width", .5)
-            .attr("stroke", "grey"); 
-    });
-}
-
 /*Creates the inspect html dom object*/
 export function InspectHTML() {
 

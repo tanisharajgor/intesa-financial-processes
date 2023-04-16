@@ -4,9 +4,47 @@ import { createColorScale, applyColorScaleMode, createOpacityScale } from "../ut
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
-import { inspectCirclePacking } from "../components/Inspect";
+import { inspectHierarchySummary } from "../components/Inspect";
 
 const id = "circle-packing-chart";
+let tooltip;
+let colorScale;
+
+export function inspectCirclePacking(data, viewVariable, updateViewHoverValue) {
+
+    let inspect = d3.select(".Inspect");
+    inspectHierarchySummary(inspect, data);
+
+    d3.selectAll("circle").on("mouseover", function(e, d) {
+
+        let thisCircle = d3.select(this);
+        let x = +d3.select(this).attr("cx") + 20;
+        let y = +d3.select(this).attr("cy") - 10;
+
+        tooltip.style("visibility", "visible")
+            .style("top", `${y}px`)
+            .style("left", `${x}px`)
+            .html(`tooltip test`);
+
+        thisCircle
+            .attr("stroke", "grey")
+            .attr("stroke-width", 2);
+
+        updateViewHoverValue(applyColorScaleMode(d.data, viewVariable, colorScale));
+
+    }).on("mouseout", function() {
+
+        inspectHierarchySummary(inspect, data);
+        updateViewHoverValue(undefined);
+
+        tooltip.style("visibility", "hidden");
+
+        d3.selectAll('circle')
+            .attr("stroke-width", .5)
+            .attr("stroke", "grey"); 
+    });
+}
+
 
 export default function CirclePacking() {
 
@@ -33,7 +71,7 @@ export default function CirclePacking() {
     let view;
 
     // Set-up scales
-    const colorScale = createColorScale(viewVariable);
+    colorScale = createColorScale(viewVariable);
     const opacityScale = createOpacityScale();
 
     // Draw circle packing once
@@ -44,6 +82,11 @@ export default function CirclePacking() {
             .attr("transform","rotate(-90)")
             .style("cursor", "pointer")
             .on("click", (event) => zoom(event, root));
+
+        //tooltip
+        tooltip = d3.select(`#${id}`)
+            .append("div")
+            .attr("class", "tooltip");
     
         const circle = svg.append("g")
             .selectAll("circle")
