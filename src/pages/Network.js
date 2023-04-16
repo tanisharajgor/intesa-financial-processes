@@ -38,30 +38,46 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
         let x = +d3.select(this).attr("x") + 20;
         let y = +d3.select(this).attr("y") - 10;
 
-        const b = data.links
+        const l1 = data.links
             .filter((i) => i.source.id === d.id || i.target.id === d.id)
+            .map((d) => d.index);
+
+        const l2 = data.links
+            .filter((i) => l1.includes(i.source.id) || l1.includes(i.target.id))
             .map((d) => d.index);
 
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`${d.group}: ${d.name} <br> Number of connections: ${b.length}`);
+            .html(`${d.group}: ${d.name} <br> Number of connections: ${l1.length}`);
 
-        // console.log(data.links)
-        // console.log(d.id)
+        // console.log(l2)
+        console.log(d.id)
+        console.log(l1)
         // console.log(d.group)
 
-        thisCircle
-            .attr("stroke", "white")
-            .attr("stroke-width", 2);
+        let connectedNodeIds = l1.concat([d.id]);
+        console.log(connectedNodeIds)
 
-        d3.selectAll(`#${id} svg path`).attr("opacity", .5)
-        d3.select(this).attr("opacity", 1).raise();
+        let connectedNodes = nodes.filter(function(d) {
+            return connectedNodeIds.includes(d.id);
+        })
+
+        console.log(connectedNodes)
+
+        d3.selectAll(`#${id} svg path`)
+            .attr("opacity", .5);
+
+        connectedNodes
+            .attr("stroke", "white")
+            .attr("stroke-width", 2)
+            .attr("opacity", 1)
+            .raise();
 
         d3.selectAll(`#${id} .link`)
-            .attr("opacity", d => b.includes(d.index) ? 1: .5)
-            .attr("stroke", d => b.includes(d.index)? "grey": linkColor)
-            .attr("stroke-width", d => b.includes(d.index)? 1.5: 1);
+            .attr("opacity", d => l1.includes(d.index) ? 1: .5)
+            .attr("stroke", d => l1.includes(d.index)? "grey": linkColor)
+            .attr("stroke-width", d => l1.includes(d.index)? 1.5: 1);
 
         updateSymbolHoverValue(symbolType(d.group));
         updateViewHoverValue(applyColorScale(d, viewVariable, colorScale));
@@ -153,6 +169,7 @@ function renderNetwork(data, viewVariable) {
                     .size(((d) => d.nActivities === undefined ? 35: rScale(d.nActivities))))
                 .attr("stroke-width", .5)
                 .attr("stroke", "white")
+                .attr("id", d => d.id)
                 .attr("fill", d => applyColorScale(d, viewVariable, colorScale)),
             update => update,         
             exit   => exit.remove()
