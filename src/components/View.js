@@ -165,25 +165,66 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
             .attr("height", h);
 
         let shape = svg.append("g")
-            .selectAll("circle")
+            .selectAll("path")
                 .data(sizeData, d => d.size)
-                .enter()
-                .append("g")
+                .join(
+                    enter  => enter
+                        .append("path")
+                            .attr("d", d3.symbol()
+                                .type(((d) => symbolType(d.group)))
+                                .size(((d) => rScale(d.size))))
+                            .attr("fill", "#cbcbcb")
+                )
             .attr("transform", (d, i) => `translate(${(i * 70) + 30}, ${h / 3})`);
 
-        shape.append("path")
-            .attr("d", d3.symbol()
-                .type(((d) => symbolType(d.group)))
-                .size(((d) => rScale(d.size))))
-            .attr("fill", "#cbcbcb");
-
-        shape.append("text")
-            .attr("text-anchor", "middle")
-            .attr("y", 25)
-            .attr("font-size", 12)
-            .attr("fill", "#cbcbcb")
-            .text(d => d.size);
+         svg.append("g")
+            .selectAll("path")
+                .data(sizeData, d => d.size)
+                .join(
+                    enter  => enter
+                         .append("text")
+                            .attr("text-anchor", "middle")
+                            .attr("y", 25)
+                            .attr("font-size", 12)
+                            .attr("fill", "#cbcbcb")
+                            .text(d => d.size)
+                                )
+                            .attr("transform", (d, i) => `translate(${(i * 70) + 30}, ${h / 3})`);
     }
+
+
+    //     svg
+    //         .selectAll("path")
+    //         .data(shapeData, d => d.group)
+    //         .join(
+    //             enter  => enter
+    //                 .append("path")
+    //                 .attr("d", d3.symbol()
+    //                 .type(((d) => symbolType(d.group)))
+    //                     .size(60))
+    //                 .attr("transform", function(d, i) {
+    //                     return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
+    //                 })
+    //                 .attr("fill", "#cbcbcb"),
+    //             update => update
+    //                 .attr('opacity', ((d) => symbolType(d.group) === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
+    //         );
+
+    //     svg
+    //         .selectAll("text")
+    //         .data(shapeData, d => d.type)
+    //         .join(
+    //             enter  => enter
+    //                 .append("text")
+    //                 .attr("x", 25)
+    //                 .attr("y", ((d, i) => i*23 + 20))
+    //                 .attr("fill", "#cbcbcb")
+    //                 .attr("font-size", 12)
+    //                 .text((d) => d.type),
+    //             update => update
+    //                 .attr('opacity', ((d) => symbolType(d.group) === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
+    //         );
+    
 }
 
 function updateSizeLegend(networkChart, symbolHoverValue) {
