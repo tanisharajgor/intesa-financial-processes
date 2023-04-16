@@ -45,17 +45,7 @@ function drawRiskLegend(t, viewHoverValue) {
                     })
                     .attr('fill', (d => d.color)),
                 update => update
-                    // .attr('opacity', function(d) {
-
-                    //     console.log("color", d.color)
-                    //     console.log("hovervalue", viewHoverValue)
-
-                    //     console.log(d.color == viewHoverValue)
-
-                    //     return viewHoverValue === undefined || d.color === viewHoverValue? 1: .3
-
-                    // })
-                    .attr('opacity', (d => viewHoverValue === undefined || d.color === viewHoverValue? 1: .3)),
+                    .attr('opacity', (d => viewHoverValue === undefined || d.color == viewHoverValue? 1: .3)),
                     exit   => exit.remove()
             );
 
