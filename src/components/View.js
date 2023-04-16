@@ -87,7 +87,7 @@ function updateRiskLegend(variable, viewHoverValue) {
     let h = height + (t.values.length + 1)*20;
 
     let svg = d3.select(`#${riskLegendId} svg`);
-    svg.attr("height", h)
+    svg.attr("height", h);
 
     drawRiskLegend(t, viewHoverValue);
 }
@@ -144,6 +144,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
 }
 
 function updateShapeLegend(networkChart, symbolHoverValue) {
+    console.log(symbolHoverValue)
     drawShapeLegend(networkChart, symbolHoverValue);
 }
 
@@ -164,7 +165,9 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
         let svg = d3.select(`#${sizeLegendId} svg`)
             .attr("height", h);
 
-        let shape = svg.append("g")
+        console.log(symbolHoverValue)
+
+        svg.append("g")
             .selectAll("path")
                 .data(sizeData, d => d.size)
                 .join(
@@ -173,12 +176,14 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
                             .attr("d", d3.symbol()
                                 .type(((d) => symbolType(d.group)))
                                 .size(((d) => rScale(d.size))))
-                            .attr("fill", "#cbcbcb")
+                            .attr("fill", "#cbcbcb"),
+                update => update
+                    .attr('opacity', ((d) => symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3))
                 )
             .attr("transform", (d, i) => `translate(${(i * 70) + 30}, ${h / 3})`);
 
-         svg.append("g")
-            .selectAll("path")
+        svg.append("g")
+            .selectAll("text")
                 .data(sizeData, d => d.size)
                 .join(
                     enter  => enter
@@ -187,44 +192,12 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
                             .attr("y", 25)
                             .attr("font-size", 12)
                             .attr("fill", "#cbcbcb")
-                            .text(d => d.size)
-                                )
-                            .attr("transform", (d, i) => `translate(${(i * 70) + 30}, ${h / 3})`);
+                            .text(d => d.size),
+                    update => update
+                        .attr('opacity', ((d) => symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3))
+                    )
+                .attr("transform", (d, i) => `translate(${(i * 70) + 30}, ${h / 3})`);
     }
-
-
-    //     svg
-    //         .selectAll("path")
-    //         .data(shapeData, d => d.group)
-    //         .join(
-    //             enter  => enter
-    //                 .append("path")
-    //                 .attr("d", d3.symbol()
-    //                 .type(((d) => symbolType(d.group)))
-    //                     .size(60))
-    //                 .attr("transform", function(d, i) {
-    //                     return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
-    //                 })
-    //                 .attr("fill", "#cbcbcb"),
-    //             update => update
-    //                 .attr('opacity', ((d) => symbolType(d.group) === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
-    //         );
-
-    //     svg
-    //         .selectAll("text")
-    //         .data(shapeData, d => d.type)
-    //         .join(
-    //             enter  => enter
-    //                 .append("text")
-    //                 .attr("x", 25)
-    //                 .attr("y", ((d, i) => i*23 + 20))
-    //                 .attr("fill", "#cbcbcb")
-    //                 .attr("font-size", 12)
-    //                 .text((d) => d.type),
-    //             update => update
-    //                 .attr('opacity', ((d) => symbolType(d.group) === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
-    //         );
-    
 }
 
 function updateSizeLegend(networkChart, symbolHoverValue) {
@@ -276,7 +249,7 @@ function viewInfo(networkChart) {
     )
 }
 
-export default function View({id, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue, data}) {
+export default function View({id, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue}) {
 
     const networkChart = id === "network-chart";
 
