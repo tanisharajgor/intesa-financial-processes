@@ -147,24 +147,22 @@ function updateShapeLegend(networkChart, symbolHoverValue) {
     drawShapeLegend(networkChart, symbolHoverValue);
 }
 
-function initSizeLegend(networkChart) {
-
-    let h = height + (sizeData.length + 1)*20;
+function initSizeLegend(networkChart, symbolHoverValue) {
 
     d3.select(`#${sizeLegendId}`)
         .append("svg")
-        .attr("width", width)
-        .attr("height", h);
+        .attr("width", width);
 
-    drawSizeLegend(networkChart);
+    drawSizeLegend(networkChart, symbolHoverValue);
 }
 
-function drawSizeLegend(networkChart) {
+function drawSizeLegend(networkChart, symbolHoverValue) {
     if (networkChart) {
 
         const h = 40;
 
-        let svg = d3.select(`#${sizeLegendId} svg`);
+        let svg = d3.select(`#${sizeLegendId} svg`)
+            .attr("height", h);
 
         let shape = svg.append("g")
             .selectAll("circle")
@@ -186,6 +184,10 @@ function drawSizeLegend(networkChart) {
             .attr("fill", "#cbcbcb")
             .text(d => d.size);
     }
+}
+
+function updateSizeLegend(networkChart, symbolHoverValue) {
+    drawSizeLegend(networkChart, symbolHoverValue);
 }
 
 function shapeType() {
@@ -211,7 +213,6 @@ function sizeType() {
         </div>
     )
 }
-
 
 function riskType() {
     return(
@@ -248,13 +249,14 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
     // Initiate legends
     useEffect(() => {
         initShapeLegend(networkChart, symbolHoverValue);
-        initSizeLegend(networkChart);
+        initSizeLegend(networkChart, symbolHoverValue);
         initRiskLegend(viewVariable);
     }, [])
 
     // Update the shape legend
     useEffect(() => {
         updateShapeLegend(networkChart, symbolHoverValue);
+        updateSizeLegend(networkChart, symbolHoverValue);
     }, [symbolHoverValue]);
 
     // Update the risk legend
