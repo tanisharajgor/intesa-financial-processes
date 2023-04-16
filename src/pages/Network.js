@@ -30,6 +30,7 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
 
     nodes.on("mouseover", function(e, d) {
 
+        // Data management steps
         let x = +d3.select(this).attr("x") + 20;
         let y = +d3.select(this).attr("y") - 10;
 
@@ -38,18 +39,28 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
 
         const l1source = l1.map(j => j.source.id);
         const l1target = l1.map(j => j.target.id);
-        let connectedNodeIds = [d.id].concat(l1source.concat(l1target));
+        let l1connectedNodeIds = [...new Set([d.id].concat(l1source.concat(l1target)))];
 
         l1 = l1.map((d) => d.index);
 
+        let l2 = data.links
+            .filter((i) => l1connectedNodeIds.includes(i.source.id) || l1connectedNodeIds.includes(i.target.id));
+
+        const l2source = l2.map(j => j.source.id);
+        const l2target = l2.map(j => j.target.id);
+        let l2connectedNodeIds = [...new Set([d.id].concat(l2source.concat(l2target)))];
+
+        // console.log(l2connectedNodeIds)
+
+        let connectedNodes = nodes.filter(function(i) {
+            return l1connectedNodeIds.includes(i.id);
+        });
+
+        // Applying the aesthetic changes
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
             .html(`${d.group}: ${d.name} <br> Number of connections: ${l1.length}`);
-
-        let connectedNodes = nodes.filter(function(i) {
-            return connectedNodeIds.includes(i.id);
-        });
 
         d3.selectAll(`#${id} svg path`)
             .attr("opacity", .5);

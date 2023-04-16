@@ -9,6 +9,16 @@ const missingColor = "#4B4B4B";
 
 export const viewVariables = {
 
+    "activityType": {
+        "nRisk": {
+            label: "Number of risks",
+            labels: [0, 1, 2],
+            id: [27, 28, 29],
+            values: [0, 1, 2],
+            colors: ["#0071BC", "#FFC41F", "#FF0000"],
+            group: "Activity"
+        }
+    },
     "riskType": {
         // "financialDisclosureRiskAny": {
         //     label: "Financial disclosure risk",
