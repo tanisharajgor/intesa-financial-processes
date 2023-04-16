@@ -15,6 +15,7 @@ let height = 600;
 const linkColor = "#373d44";
 let colorScale;
 let nodes;
+let tooltip;
 
 var simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function(d) { return d.id; }))
@@ -34,6 +35,17 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
     nodes.on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
+        let x = +d3.select(this).attr("x") + 20;
+        let y = +d3.select(this).attr("y") - 10;
+
+        tooltip.style("visibility", "visible")
+            .style("top", `${y}px`)
+            .style("left", `${x}px`)
+            .html(`${d.group}: ${d.name} <br> Number of connections: ${b.length}`);
+
+        // console.log(data.links)
+        // console.log(d.id)
+        // console.log(d.group)
 
         const b = data.links
             .filter((i) => i.source.id === d.id || i.target.id === d.id)
@@ -59,6 +71,8 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
     }).on("mouseout", function() {
 
         inspectNetworkSummary(inspect, data);
+
+        tooltip.style("visibility", "hidden");
         
         nodes.attr("opacity", 1);
 
@@ -95,10 +109,16 @@ function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
 }
 
 function initNetwork(data, viewVariable) {
+    //chart svg
     d3.select(`#${id}`)
         .append("svg")
         .attr("width", width)
         .attr("height", height);
+
+    //tooltip
+    tooltip = d3.select(`#${id}`)
+        .append("div")
+        .attr("class", "tooltip");
 
     renderNetwork(data, viewVariable);
 }
@@ -160,7 +180,10 @@ function renderNetwork(data, viewVariable) {
             .attr("x2", function(d) { return d.target.x; })
             .attr("y2", function(d) { return d.target.y; });
 
-        node.attr("transform", transform)
+        node.attr("transform", transform);
+
+        node.attr("x", d => d.x);
+        node.attr("y", d => d.y);
     }
 }
 
@@ -174,7 +197,7 @@ export default function Network() {
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
 
-    console.log(data)
+    // console.log(data)
 
     // Set-up scales
     colorScale = createColorScale(viewVariable);

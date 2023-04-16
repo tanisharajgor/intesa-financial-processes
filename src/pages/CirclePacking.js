@@ -49,7 +49,7 @@ export default function CirclePacking() {
             .selectAll("circle")
             .data(root.descendants().slice(1))
             .join("circle")
-                // .attr("fill", d => applyColorScale(d.data.riskStatus, viewVariable, colorScale))
+                .attr("fill", d => applyColorScale(d.data, viewVariable, colorScale))
                 .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
                 .on("mouseout", function() { d3.select(this).attr("stroke", null); })
                 .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()))
@@ -87,8 +87,8 @@ export default function CirclePacking() {
 
     // Update the visual aesthetics of the visualization that change with a user input
     useEffect(() => {
-        // d3.selectAll(`#${id} svg circle`)
-        //     .attr("fill", d => applyColorScale(d.data.riskStatus, viewVariable, colorScale))
+        d3.selectAll(`#${id} svg circle`)
+            .attr("fill", d => applyColorScale(d.data, viewVariable, colorScale));
 
         inspectCirclePacking(data, viewVariable, updateViewHoverValue);
     }, [viewVariable])
