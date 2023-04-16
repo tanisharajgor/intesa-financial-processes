@@ -38,6 +38,10 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
         let x = +d3.select(this).attr("x") + 20;
         let y = +d3.select(this).attr("y") - 10;
 
+        const b = data.links
+            .filter((i) => i.source.id === d.id || i.target.id === d.id)
+            .map((d) => d.index);
+
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
@@ -46,12 +50,6 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
         // console.log(data.links)
         // console.log(d.id)
         // console.log(d.group)
-
-        const b = data.links
-            .filter((i) => i.source.id === d.id || i.target.id === d.id)
-            .map((d) => d.index);
-
-        inspectNetworkDetail(inspect, d, b);
 
         thisCircle
             .attr("stroke", "white")
