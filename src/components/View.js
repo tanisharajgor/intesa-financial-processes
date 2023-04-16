@@ -18,6 +18,8 @@ const shapeData = [{"group": "Actor", "type": "Actor"},
                       {"group": "Control", "type": "Control"}];
 
 const sizeData = [{"size": 1, "group": "Actor"},
+                    {"size": 25, "group": "Actor"},
+                   {"size": 50, "group": "Actor"},
                 {"size": 100, "group": "Actor"},
                 {"size": 300, "group": "Actor"}];
          
@@ -177,7 +179,7 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
                 update => update
                     .attr('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3)
                 )
-            .attr("transform", (d, i) => `translate(${(i * 70) + 30}, ${h / 3})`);
+            .attr("transform", (d, i) => `translate(${(i * 40) + 10}, ${h / 3})`);
 
         svg
             .selectAll("text")
@@ -193,7 +195,7 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
                     update => update
                         .attr('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3)
                     )
-                .attr("transform", (d, i) => `translate(${(i * 70) + 30}, ${h / 3})`);
+                .attr("transform", (d, i) => `translate(${(i * 40) + 10}, ${h / 3})`);
     }
 }
 

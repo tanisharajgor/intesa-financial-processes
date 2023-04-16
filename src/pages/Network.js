@@ -59,7 +59,7 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
             return connectedNodeIds.includes(d.id);
         })
 
-        // console.log(connectedNodes)
+        console.log(connectedNodes)
 
         d3.selectAll(`#${id} svg path`)
             .attr("opacity", .5);
