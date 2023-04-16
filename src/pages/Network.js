@@ -30,7 +30,6 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
 
     nodes.on("mouseover", function(e, d) {
 
-        let thisCircle = d3.select(this);
         let x = +d3.select(this).attr("x") + 20;
         let y = +d3.select(this).attr("y") - 10;
 
@@ -39,13 +38,16 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
             .map((d) => d.index);
 
         const l2 = data.links
-            .filter((i) => i.source.id === d.id || i.target.id === d.id)
+            .filter((i) => i.source.id === d.id || i.target.id === d.id);
 
-        const l2source = l2.map(j => j.source.id)
-        const l2target = l2.map(j => j.target.id)
+        const l2source = l2.map(j => j.source.id);
+        const l2target = l2.map(j => j.target.id);
+        let connectedNodeIds = [d.id].concat(l2source.concat(l2target));
 
+        console.log(l2)
         console.log(l2source)
         console.log(l2target)
+        console.log(connectedNodeIds)
 
 
         tooltip.style("visibility", "visible")
@@ -53,7 +55,6 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
             .style("left", `${x}px`)
             .html(`${d.group}: ${d.name} <br> Number of connections: ${l1.length}`);
 
-        let connectedNodeIds = [d.id].concat(l2source.concat([l2target]));
         let connectedNodes = nodes.filter(function(i) {
             return connectedNodeIds.includes(i.id);
         });
