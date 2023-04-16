@@ -137,3 +137,36 @@ export const rScale = d3.scaleSqrt()
 
 export const actorTypeValues = ["Organizational unit", "Position", "Person", "Missing", "External Organizational unit"];
 export const activityTypeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
+
+export function symbolType(d) {
+
+    if (d === "Actor") {
+        return d3.symbolCircle;
+    } else if(d === "Activity") {
+        return d3.symbolSquare;
+    } else if (d === "Risk") {
+        return d3.symbolTriangle;
+    } else if (d === "Control") {
+        return d3.symbolStar;
+    } else {
+        return d3.symbolDiamond;
+    }
+}
+
+export function symbolScale(d) {
+
+    if (d.group === "Actor") {
+        return 1;
+    } else {
+        if (d.type === "Process activity") {
+            return 2;
+        } else if (d.type === "Control activity") {
+            return 3;
+        } else if (d.type === "Common process activity") {
+            return 4;
+        } else {
+            return 5;
+        }
+    }
+}
+       

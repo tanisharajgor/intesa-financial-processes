@@ -5,8 +5,7 @@ import FilterType from "../components/FilterType";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
-import { symbolType } from "../components/View";
-import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues, rScale } from "../utils/global";
+import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues, rScale, symbolType } from "../utils/global";
 import { inspectNetworkSummary } from "../components/Inspect";
 
 const id = "network-chart";

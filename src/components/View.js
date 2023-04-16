@@ -1,5 +1,5 @@
 import { Form, Select, MenuItem } from "cfd-react-components";
-import { viewVars, viewObj, createColorScale, rScale } from "../utils/global";
+import { viewVars, viewObj, createColorScale, rScale, symbolScale, symbolType } from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
 import { InspectHTML } from "./Inspect";
@@ -20,7 +20,7 @@ const shapeData = [{"group": "Actor", "type": "Actor"},
 const sizeData = [{"size": 1, "group": "Actor"},
                 {"size": 100, "group": "Actor"},
                 {"size": 300, "group": "Actor"}];
-
+         
 
 function drawRiskLegend(t, viewHoverValue) {
 
@@ -58,6 +58,7 @@ function drawRiskLegend(t, viewHoverValue) {
                 .attr("x", 25)
                 .attr("y", ((d, i) => i*23 + 20))
                 .text((d => d.label))
+                .attr("font-size", 12)
                 .attr("fill", "#cbcbcb"),
             update => update
                 .attr('opacity', (d => viewHoverValue === undefined || d.color === viewHoverValue ? 1: .3)),
@@ -89,38 +90,6 @@ function updateRiskLegend(variable, viewHoverValue) {
     svg.attr("height", h)
 
     drawRiskLegend(t, viewHoverValue);
-}
-
-export function symbolType(d) {
-
-    if (d === "Actor") {
-        return d3.symbolCircle;
-    } else if(d === "Activity") {
-        return d3.symbolSquare;
-    } else if (d === "Risk") {
-        return d3.symbolTriangle;
-    } else if (d === "Control") {
-        return d3.symbolStar;
-    } else {
-        return d3.symbolDiamond;
-    }
-}
-
-export function symbolScale(d) {
-
-    if (d.group === "Actor") {
-        return 1;
-    } else {
-        if (d.type === "Process activity") {
-            return 2;
-        } else if (d.type === "Control activity") {
-            return 3;
-        } else if (d.type === "Common process activity") {
-            return 4;
-        } else {
-            return 5;
-        }
-    }
 }
 
 function initShapeLegend(networkChart, symbolHoverValue) {
@@ -166,6 +135,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .attr("x", 25)
                     .attr("y", ((d, i) => i*23 + 20))
                     .attr("fill", "#cbcbcb")
+                    .attr("font-size", 12)
                     .text((d) => d.type),
                 update => update
                     .attr('opacity', ((d) => symbolType(d.group) === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
@@ -211,7 +181,7 @@ function drawSizeLegend(networkChart) {
 
         shape.append("text")
             .attr("text-anchor", "middle")
-            .attr("y", 20)
+            .attr("y", 25)
             .attr("font-size", 12)
             .attr("fill", "#cbcbcb")
             .text(d => d.size);
