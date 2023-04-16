@@ -202,11 +202,11 @@ def create_network(data):
     for i in data.level3ID.unique():
 
         df = data[data.level3ID == i].drop_duplicates()
-        df.riskType = df.riskType.fillna('NA')
-        df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('NA')
-        df.controlPeriodocity = df.controlPeriodocity.fillna('NA')
-        df.controlType = df.controlType.fillna('NA')
-        df.controlCategory = df.controlCategory.fillna('NA')
+        df.riskType = df.riskType.fillna('Missing')
+        df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('Missing')
+        df.controlPeriodocity = df.controlPeriodocity.fillna('Missing')
+        df.controlType = df.controlType.fillna('Missing')
+        df.controlCategory = df.controlCategory.fillna('Missing')
 
         actorsID = df[pd.isnull(df.actorID) == False].actorID.unique()
         activitiesID = df[pd.isnull(df.activityID) == False].activityID.unique()
