@@ -33,22 +33,14 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
         let x = +d3.select(this).attr("x") + 20;
         let y = +d3.select(this).attr("y") - 10;
 
-        const l1 = data.links
+        let l1 = data.links
             .filter((i) => i.source.id === d.id || i.target.id === d.id)
-            .map((d) => d.index);
 
-        const l2 = data.links
-            .filter((i) => i.source.id === d.id || i.target.id === d.id);
+        const l1source = l1.map(j => j.source.id);
+        const l1target = l1.map(j => j.target.id);
+        let connectedNodeIds = [d.id].concat(l1source.concat(l1target));
 
-        const l2source = l2.map(j => j.source.id);
-        const l2target = l2.map(j => j.target.id);
-        let connectedNodeIds = [d.id].concat(l2source.concat(l2target));
-
-        console.log(l2)
-        console.log(l2source)
-        console.log(l2target)
-        console.log(connectedNodeIds)
-
+        l1 = l1.map((d) => d.index);
 
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
