@@ -18,8 +18,8 @@ export function inspectCirclePacking(data, viewVariable, updateViewHoverValue) {
     d3.selectAll("circle").on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
-        let x = +d3.select(this).attr("cx") + 20;
-        let y = +d3.select(this).attr("cy") - 10;
+        let x = +thisCircle.attr("cx") + 20;
+        let y = +thisCircle.attr("cy") - 10;
 
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
