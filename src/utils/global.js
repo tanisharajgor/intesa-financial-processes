@@ -22,14 +22,16 @@ export const viewVariables = {
             labels: ['Financial Information Risk', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'NA'],
             id: [20, 21, 22, 23, 24],
             values: ['Financial Information Risk (ex 262/2005)', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'NA'],
-            colors: ['#ff7f0e', '#9467bd', '#2ca02c', '#e377c2', naColor]
+            colors: ['#ff7f0e', '#9467bd', '#2ca02c', '#e377c2', naColor],
+            group: "Risk"
         },
         "nControl": {
             label: "Number of controls",
             labels: [0, 1],
             id: [25, 26],
             values: [0, 1],
-            colors: ["#FF0000", "#0071BC"]
+            colors: ["#FF0000", "#0071BC"],
+            group: "Risk"
         }
     },
     "controlType": {
@@ -38,13 +40,15 @@ export const viewVariables = {
             values: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
             id: [1, 2, 3, 4, 5],
             labels: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
-            colors: ["#FF0000", "#FFC41F", "#0071BC", missingColor, naColor]
+            colors: ["#FF0000", "#FFC41F", "#0071BC", missingColor, naColor],
+            group: "Control"
         },
         "controlPeriodocity": {
             label: "Control periodicity",
             values: [3650, 365, 182, 91, 30, 7, 1, .1, 'Missing', 'NA'],
             id: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
-            labels: ['Decadal', 'Annually', 'Half yearly', 'Quarterly', 'Monthly', 'Weekly', 'Daily', 'Per event', 'Missing', 'NA']
+            labels: ['Decadal', 'Annually', 'Half yearly', 'Quarterly', 'Monthly', 'Weekly', 'Daily', 'Per event', 'Missing', 'NA'],
+            group: "Control"
         }
     }
 }

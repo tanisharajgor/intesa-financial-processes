@@ -23,23 +23,25 @@ function drawRiskLegend(t, viewHoverValue) {
 
     let riskData = []
     for (let i in t.labels) {
-        riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i], "color": colorScale(t.values[i])})
+        riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i], "color": colorScale(t.values[i]), "group": t.group})
     }
 
     svg
-        .selectAll("circle")
-        .data(riskData, d => d.id)
-        .join(
-            enter  => enter
-                .append("circle")
-                .attr('cx', 10)
-                .attr('cy', ((d, i) => 20 + i*20))
-                .attr('r', 5)
-                .attr('fill', ((d) => d.color)),
-            update => update
-                .attr('opacity', ((d) => viewHoverValue === undefined || d.color === viewHoverValue? 1: .3)),             
-            exit   => exit.remove()
-        );
+            .selectAll("path")
+            .data(riskData, d => d.id)
+            .join(
+                enter  => enter
+                    .append("path")
+                    .attr("d", d3.symbol()
+                    .type(((d) => symbolType(d.group)))
+                        .size(80))
+                    .attr("transform", function(d, i) {
+                        return 'translate(' + 10 + ', ' + (i*25 + 15) + ')';
+                    })
+                    .attr('fill', ((d) => d.color)),
+                update => update
+                    .attr('opacity', ((d) => viewHoverValue === undefined || d.color === viewHoverValue? 1: .3))
+            );
 
     svg
         .selectAll("text")
@@ -47,8 +49,8 @@ function drawRiskLegend(t, viewHoverValue) {
         .join(
             enter  => enter
                 .append("text")
-                .attr("x", 20)
-                .attr("y", ((d, i) => 25 + i*20))
+                .attr("x", 25)
+                .attr("y", ((d, i) => i*25 + 20))
                 .text(((d) => d.label))
                 .style("fill", "white"),
             update => update
@@ -85,21 +87,10 @@ function updateRiskLegend(variable, viewHoverValue) {
 
 export function symbolType(d) {
 
-    // console.log(d.group)
-
     if (d === "Actor") {
         return d3.symbolCircle;
     } else if(d === "Activity") {
         return d3.symbolSquare;
-        // if (d.type === "Process activity") {
-        //     return d3.symbolSquare;
-        // } else if (d.type === "Control activity") {
-        //     return d3.symbolStar;
-        // } else if (d.type === "Common process activity") {
-        //     return d3.symbolTriangle;
-        // } else {
-        //     return d3.symbolDiamond;
-        // }
     } else if (d === "Risk") {
         return d3.symbolTriangle;
     } else if (d === "Control") {
@@ -151,7 +142,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .append("path")
                     .attr("d", d3.symbol()
                     .type(((d) => symbolType(d.group)))
-                        .size(100))
+                        .size(80))
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*25 + 15) + ')';
                     })
