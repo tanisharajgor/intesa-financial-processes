@@ -165,6 +165,10 @@ def controls_dm(controls, config, raw_pth, processed_pth):
     df = df.rename(columns={'activityCategory': 'controlCategory'})
     df.controlCategory = df.controlCategory.fillna('NA')
     df['control'] = df['control'].replace(r"^ +", regex=True)
+
+    #da1a6f66-23f4-11eb-275f-001dd8b72a50
+
+    # import pdb; pdb.set_trace()
  
     ## Write the cleaned data out
     df.drop('controlGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'controls' + ".csv"), index = False)
