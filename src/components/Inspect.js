@@ -1,4 +1,4 @@
-import { riskVariables, createLabelScale } from "../utils/global";
+import { viewVariables, createLabelScale } from "../utils/global";
 import * as d3 from 'd3';
 
 const treeLevelScale = d3.scaleOrdinal()
@@ -18,17 +18,6 @@ export function inspectNetworkSummary(inspect, data) {
     inspect.select(".value3 .value").text(" ");
 }
 
-export function inspectNetworkDetail(inspect, d, b) {
-
-    inspect.select(".value1 .key").text(`${d.group}: `);
-    inspect.select(".value1 .value").text(" " + d.name);
-    inspect.select(".value2 .key").text("Type: ");
-    inspect.select(".value2 .value").text(" " + d.type);
-    // inspect.select(".connections .key").text(" " + d.group === "Activity"? "# activities": "# actors");
-    inspect.select(".value3 .key").text("Number of connections: ");
-    inspect.select(".value3 .value").text(" " + b.length);
-}
-
 export function inspectHierarchySummary(inspect, data) {
 
     inspect.select(".value1 .key").text("Processes showing: ");
@@ -37,13 +26,12 @@ export function inspectHierarchySummary(inspect, data) {
     inspect.select(".value2 .value").text(`${d3.hierarchy(data).sum(d => d.children ? 0: 1).value}`);
     inspect.select(".value3 .key").text("");
     inspect.select(".value3 .value").text(" ");
-
 }
 
-export function inspectHierarchyDetail(inspect, d, riskVariable) {
+export function inspectHierarchyDetail(inspect, d, viewVariable) {
 
-    let rs = d.data.riskStatus[riskVariable];
-    const labelScale = createLabelScale(riskVariable);
+    let rs = d.data.riskStatus[viewVariable];
+    const labelScale = createLabelScale(viewVariable);
 
     inspect.style("display", "inline-block");
     inspect.style("visibility", "visible")
@@ -51,34 +39,8 @@ export function inspectHierarchyDetail(inspect, d, riskVariable) {
     inspect.select(".value1 .value").text(" " + d.data.name);
     inspect.select(".value2 .key").text("Number of activities: ");
     inspect.select(".value2 .value").text(`${d.sum(d => d.children ? 0: 1).value}`);
-    inspect.select(".value3 .key").text(`${riskVariables[riskVariable].label}: `);
+    inspect.select(".value3 .key").text(`${viewVariables[viewVariable].label}: `);
     inspect.select(".value3 .value").text(" " + labelScale(rs));
-}
-
-export function inspectCirclePacking(data, riskVariable, updateRiskHoverValue) {
-
-    let inspect = d3.select(".Inspect");
-    inspectHierarchySummary(inspect, data);
-
-    d3.selectAll("circle").on("mouseover", function(e, d) {
-
-        let thisCircle = d3.select(this);
-        thisCircle
-            .attr("stroke", "grey")
-            .attr("stroke-width", 2);
-
-        inspectHierarchyDetail(inspect, d, riskVariable);
-        updateRiskHoverValue(d.data.riskStatus[riskVariable]);
-
-    }).on("mouseout", function() {
-
-        inspectHierarchySummary(inspect, data);
-        updateRiskHoverValue(undefined);
-
-        d3.selectAll('circle')
-            .attr("stroke-width", .5)
-            .attr("stroke", "grey"); 
-    });
 }
 
 /*Creates the inspect html dom object*/

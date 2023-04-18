@@ -7,18 +7,17 @@ const StyledMain = styled('div')`
     // display: flex;
     width: 100%;
 `
-
 const Visualization = styled('div')`
     width: 100%;
     height: 100%;
     background-color: black;
 `
 
-export default function Main({riskVariable, updateRiskVariable, riskHoverValue, symbolHoverValue, id, data}) {
+export default function Main({viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue, id}) {
     return(
         <StyledMain>
             <Visualization id={id} className="Visualization"></Visualization>
-            <Status id={id} riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} symbolHoverValue={symbolHoverValue} data={data}/>
+            <Status id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue}/>
         </StyledMain>
     )
 }

@@ -8,7 +8,7 @@ translate:
     activityCategoryEnglish: ["Professional", "Operational", "Commercial"]
   actorType:
     actorType: ["Unità organizzativa", "Posizione", "Persona", "Gruppo Vuoto", "Unità organizzativa esterna"]
-    actorTypeEnglish: ["Organizational unit", "Position", "Person", "Missing", "External Organizational unit"]
+    actorTypeEnglish: ["Organizational unit", "Position", "Person", "Missing", "External organizational unit"]
   controlType:
     controlType: ['Manuale', 'vuoto', 'Semiautomatico', 'Automatico', 'N.A.']
     controlTypeEnglish: ['Manual', 'Missing', 'Semi-automatic', 'Automatic', 'NA']

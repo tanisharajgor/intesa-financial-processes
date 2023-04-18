@@ -74,7 +74,7 @@ def create_risk_control(main):
         df = main[main.riskID == id]
         dict = {"id": int(id),
                 "name": df.risk.iloc[0],
-                "riskStatus": create_risk_status(df)
+                "riskType": create_risk_type(df)
         }
 
         array.append(dict)
@@ -85,37 +85,53 @@ def create_risk_control(main):
 Creates a risk status attribute at the activity level
 return nested list
 """
-def create_risk_status(df):
+def create_risk_type(df):
 
-    # df = df[pd.isnull(df.riskID) == False]
+    df = df[pd.isnull(df.riskID) == False]
 
-    df.controlType = df.controlType.fillna('NA')
-    df.controlPeriodocity = df.controlPeriodocity.fillna('NA')
-    df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('NA')
+    df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('Missing')
+    df.riskType = df.riskType.fillna('Missing')
 
     if df.shape[0] > 0:
 
-        row = {"nRisks": int(df.riskID.nunique()),
-               "riskID": df.riskID.unique().astype(int).tolist()}
-        
-        controlTypeMode = df.controlType.mode().iloc[0]
-
-        controlPeriodocityMode = df.controlPeriodocity.mode().iloc[0]
-
-        if (controlPeriodocityMode != "NA") & (controlPeriodocityMode != "Missing"):
-            controlPeriodocityMode = float(controlPeriodocityMode)
-
+        riskType = df.riskType.mode().iloc[0]
         financialDisclosureRiskAny = df.financialDisclosureRisk.mode().iloc[0]
 
         if (financialDisclosureRiskAny != "NA") & (financialDisclosureRiskAny != "Missing"):
             financialDisclosureRiskAny = bool(financialDisclosureRiskAny)
 
-        row = {"controlTypeMode": controlTypeMode,
-               "controlPeriodocityMode": controlPeriodocityMode,
-               "financialDisclosureRiskAny": financialDisclosureRiskAny}
+        row = {"financialDisclosureRiskAny": financialDisclosureRiskAny,
+               "riskType": str(riskType)}
 
     else:
-        row = {"nRisks": int(0)}
+        row = {}
+
+    return row
+
+"""
+Creates a risk status attribute at the activity level
+return nested list
+"""
+def create_control_type(df):
+
+    df = df[pd.isnull(df.controlID) == False]
+
+    df.controlType = df.controlType.fillna('Missing')
+    df.controlPeriodocity = df.controlPeriodocity.fillna('Missing')
+
+    if df.shape[0] > 0:
+
+        controlType = df.controlType.mode().iloc[0]
+        controlPeriodocityMode = df.controlPeriodocity.mode().iloc[0]
+
+        if (controlPeriodocityMode != "NA") & (controlPeriodocityMode != "Missing"):
+            controlPeriodocityMode = float(controlPeriodocityMode)
+
+        row = {"controlType": str(controlType),
+               "controlPeriodocity": controlPeriodocityMode}
+
+    else:
+        row = {}
 
     return row
 
@@ -140,7 +156,8 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
         d = {"id": int(id),
             "name": df_sub[df_sub[root1ID] == id][root1].iloc[0],
             # "childrenIDs": childrenIDs,
-            "riskStatus": create_risk_status(df_sub),
+            "riskType": create_risk_type(df_sub),
+            "controlType": create_control_type(df_sub),
             "treeLevel": int(tree_level)
             }
 
@@ -165,7 +182,8 @@ def create_processes_to_activities(main):
     return {"name": "root", 
             "children": nest1,  
             "childrenIDs": main.level1ID.unique().tolist(),
-            "riskStatus": "NA",
+            "riskType": {},
+            "riskControl": {},
             "treeLevel": int(0)}
 
 """
@@ -200,49 +218,103 @@ def create_network(data):
     for i in data.level3ID.unique():
 
         df = data[data.level3ID == i].drop_duplicates()
+        df.riskType = df.riskType.fillna('Missing')
+        df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('Missing')
+        df.controlPeriodocity = df.controlPeriodocity.fillna('Missing')
+        df.controlType = df.controlType.fillna('Missing')
+        df.controlCategory = df.controlCategory.fillna('Missing')
 
-        actorsID = df.actorID.unique()
-        activitiesID = df.activityID.unique()
+        actorsID = df[pd.isnull(df.actorID) == False].actorID.unique()
+        activitiesID = df[pd.isnull(df.activityID) == False].activityID.unique()
+        riskID = df[pd.isnull(df.riskID) == False].riskID.unique()
+        controlID = df[pd.isnull(df.controlID) == False].controlID.unique()
 
-        actorsArray = []
-        activitiesArray = []
         links = []
-
-        for j in range(0, df.shape[0] - 1):
-            linkRow = {"target": int(df.actorID.iloc[j]),
-                       "source": int(df.activityID.iloc[j]),
-                       "id": str(df.actorID.iloc[j]) + "-" + str(df.activityID.iloc[j])}
-
-            links.append(linkRow)
+        nodes = []
 
         for k in actorsID:
 
-            actorRow = {"id": int(k),
-                        "group": "Actor",
-                        "name": df[df.actorID == k].actor.iloc[0],
-                        "type": df[df.actorID == k].actorType.iloc[0],
-                        "nActivities": int(df[df.actorID == k].activityID.nunique()),
-                        "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
-                        "riskStatus": create_risk_status(df[df.actorID == k]),
-                        "levels": levelsObject(df[df.actorID == k])
-                        }
+            row = {"id": int(k),
+                   "group": "Actor",
+                   "name": df[df.actorID == k].actor.iloc[0],
+                   "type": df[df.actorID == k].actorType.iloc[0],
+                   "nActivities": int(df[df.actorID == k].activityID.nunique()),
+                   "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
+                #    "riskStatus": create_risk_type(df[df.actorID == k]),
+                   "levels": levelsObject(df[df.actorID == k])
+                   }
 
-            actorsArray.append(actorRow)
+            nodes.append(row)
 
         for l in activitiesID:
-            activityRow = {"id": int(l),
-                           "group": "Activity",
-                           "name": df[df.activityID == l].activity.iloc[0],
-                           "type": df[df.activityID == l].activityType.iloc[0],
-                           "nActors": int(df[df.activityID == l].actorID.nunique()),
-                           "actorsID": df[df.activityID == l].actorID.unique().tolist(),
-                           "riskStatus": create_risk_status(df[df.activityID == l]),
-                           "levels": levelsObject(df[df.activityID == l])
-                           }
+            row = {"id": int(l),
+                    "group": "Activity",
+                    "name": df[df.activityID == l].activity.iloc[0],
+                    "type": df[df.activityID == l].activityType.iloc[0],
+                    "nActors": int(df[df.activityID == l].actorID.nunique()),
+                    "actorsID": df[df.activityID == l].actorID.unique().tolist(),
+                    # "riskStatus": create_risk_type(df[df.activityID == l]),
+                    "levels": levelsObject(df[df.activityID == l]),
+                    "activityType": {
+                        "nRisk": int(df[(df.activityID == l) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0])
+                        }
+                    }
 
-            activitiesArray.append(activityRow)
+            nodes.append(row)
 
-        nodes = actorsArray + activitiesArray
+        for m in riskID:
+
+            row = {"id": int(m),
+                    "group": "Risk",
+                    "name": df[df.riskID == m].risk.iloc[0],
+                    "riskType": {
+                        "financialDisclosureRisk": bool(df[df.riskID == m].financialDisclosureRisk.iloc[0]),
+                        "riskType": df[df.riskID == m].riskType.iloc[0],
+                        "nControl": int(df[(df.riskID == m) & (pd.isnull(df.controlID) == False)][['controlID']].drop_duplicates().shape[0])
+                    }
+                }
+
+            nodes.append(row)
+
+        for k in controlID:
+            row = {"id": int(k),
+                   "group": "Control",
+                   "name": df[df.controlID == k].control.iloc[0],
+                   "controlType": {
+                        "controlPeriodocity": df[df.controlID == k].controlPeriodocity.iloc[0],
+                        "controlCategory": df[df.controlID == k].controlCategory.iloc[0],
+                        "controlType": df[df.controlID == k].controlType.iloc[0],
+                    }
+                }
+
+            nodes.append(row)
+
+        linkData = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)][['actorID', 'activityID']].drop_duplicates()
+
+        for j in range(0, linkData.shape[0]):
+            row = {"target": int(linkData.actorID.iloc[j]),
+                   "source": int(linkData.activityID.iloc[j]),
+                   "id": str(linkData.actorID.iloc[j]) + "-" + str(linkData.activityID.iloc[j])}
+
+            links.append(row)
+
+        linkData = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.riskID) == False)][['activityID', 'riskID']].drop_duplicates()
+
+        for j in range(0, linkData.shape[0]):
+            row = {"target": int(linkData.activityID.iloc[j]),
+                   "source": int(linkData.riskID.iloc[j]),
+                   "id": str(linkData.activityID.iloc[j]) + "-" + str(linkData.riskID.iloc[j])}
+
+            links.append(row)
+
+        linkData = df[(pd.isnull(df.riskID) == False) & (pd.isnull(df.controlID) == False)][['riskID', 'controlID']].drop_duplicates()
+
+        for j in range(0, linkData.shape[0]):
+            row = {"target": int(linkData.riskID.iloc[j]),
+                   "source": int(linkData.controlID.iloc[j]),
+                   "id": str(linkData.riskID.iloc[j]) + "-" + str(linkData.controlID.iloc[j])}
+
+            links.append(row)
 
         network = {
             "id": int(i),
@@ -253,7 +325,6 @@ def create_network(data):
         array.append(network)
 
     return array
-
 
 def create_processes(main):
     l1Array = []

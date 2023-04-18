@@ -1,17 +1,54 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { riskVariables, createColorScale, applyColorScale, createOpacityScale, createLabelScale, hover } from "../utils/global";
+import { createColorScale, applyColorScaleMode, createOpacityScale } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
-import { inspectCirclePacking } from "../components/Inspect";
+import { inspectHierarchySummary } from "../components/Inspect";
 
 const id = "circle-packing-chart";
+let tooltip;
+let colorScale;
+
+export function inspectCirclePacking(data, viewVariable, updateViewHoverValue) {
+
+    let inspect = d3.select(".Inspect");
+    inspectHierarchySummary(inspect, data);
+
+    d3.selectAll("circle").on("mouseover", function(e, d) {
+
+        let thisCircle = d3.select(this);
+        let x = +thisCircle.attr("cx") + 20;
+        let y = +thisCircle.attr("cy") - 10;
+
+        tooltip.style("visibility", "visible")
+            .style("top", `${y}px`)
+            .style("left", `${x}px`)
+            .html(`tooltip test`);
+
+        thisCircle
+            .attr("stroke", "grey")
+            .attr("stroke-width", 2);
+
+        updateViewHoverValue(applyColorScaleMode(d.data, viewVariable, colorScale));
+
+    }).on("mouseout", function() {
+
+        inspectHierarchySummary(inspect, data);
+        updateViewHoverValue(undefined);
+
+        tooltip.style("visibility", "hidden");
+
+        d3.selectAll('circle')
+            .attr("stroke-width", .5)
+            .attr("stroke", "grey"); 
+    });
+}
 
 export default function CirclePacking() {
 
-    const [riskVariable, updateRiskVariable] = useState("controlTypeMode");
-    const [riskHoverValue, updateRiskHoverValue] = useState(undefined);
+    const [viewVariable, updateViewVariable] = useState("riskType");
+    const [viewHoverValue, updateViewHoverValue] = useState(undefined);
 
     const height = 932, width = 932;
 
@@ -33,7 +70,7 @@ export default function CirclePacking() {
     let view;
 
     // Set-up scales
-    const colorScale = createColorScale(riskVariable, riskVariables);
+    colorScale = createColorScale(viewVariable);
     const opacityScale = createOpacityScale();
 
     // Draw circle packing once
@@ -44,12 +81,17 @@ export default function CirclePacking() {
             .attr("transform","rotate(-90)")
             .style("cursor", "pointer")
             .on("click", (event) => zoom(event, root));
+
+        //tooltip
+        tooltip = d3.select(`#${id}`)
+            .append("div")
+            .attr("class", "tooltip");
     
         const circle = svg.append("g")
             .selectAll("circle")
             .data(root.descendants().slice(1))
             .join("circle")
-                .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
+                .attr("fill", d => applyColorScaleMode(d.data, viewVariable, colorScale))
                 .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
                 .on("mouseout", function() { d3.select(this).attr("stroke", null); })
                 .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()))
@@ -81,23 +123,23 @@ export default function CirclePacking() {
             });
         }
 
-        inspectCirclePacking(data, riskVariable, updateRiskHoverValue);
+        inspectCirclePacking(data, viewVariable, updateViewHoverValue);
 
     }, [])
 
     // Update the visual aesthetics of the visualization that change with a user input
     useEffect(() => {
         d3.selectAll(`#${id} svg circle`)
-            .attr("fill", d => applyColorScale(d.data.riskStatus, riskVariable, colorScale))
+            .attr("fill", d => applyColorScaleMode(d.data, viewVariable, colorScale));
 
-        inspectCirclePacking(data, riskVariable, updateRiskHoverValue);
-    }, [riskVariable])
+        inspectCirclePacking(data, viewVariable, updateViewHoverValue);
+    }, [viewVariable])
 
     return(
         <div className="Content">
             <Navigation/>
             <div style={{display: 'flex'}}>
-                <Main riskVariable={riskVariable} updateRiskVariable={updateRiskVariable} riskHoverValue={riskHoverValue} id={id} data={data}/>
+                <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id}/>
             </div>
             {/* <div className="Query" id="FilterMenu"></div> */}
         </div>

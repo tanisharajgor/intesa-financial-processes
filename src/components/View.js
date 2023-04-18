@@ -1,5 +1,5 @@
 import { Form, Select, MenuItem } from "cfd-react-components";
-import { riskVariables, createColorScale, naColor } from "../utils/global";
+import { viewVars, viewObj, createColorScale, rScale, symbolType } from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
 import { InspectHTML } from "./Inspect";
@@ -10,36 +10,46 @@ let colorScale;
 
 let riskLegendId = "Risk-Legend";
 let shapeLegendId = "Shape-Legend";
+let sizeLegendId = "Size-Legend";
 
 const shapeData = [{"group": "Actor", "type": "Actor"},
-                      {"group": "Activity", "type": "Process activity"},
-                      {"group": "Activity", "type": "Control activity"},
-                      {"group": "Activity", "type": "Common process activity"},
-                      {"group": "Activity", "type": "System activity"}]
+                      {"group": "Activity", "type": "Activity"},
+                      {"group": "Risk", "type": "Risk"},
+                      {"group": "Control", "type": "Control"}];
 
-function drawRiskLegend(t, riskHoverValue) {
+const sizeData = [{"size": 1, "group": "Actor"},
+                  {"size": 25, "group": "Actor"},
+                  {"size": 50, "group": "Actor"},
+                  {"size": 100, "group": "Actor"},
+                  {"size": 300, "group": "Actor"}];
+         
+
+function drawRiskLegend(t, viewHoverValue) {
 
     let svg =  d3.select(`#${riskLegendId} svg`);
 
     let riskData = []
     for (let i in t.labels) {
-        riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i]})
+        riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i], "color": colorScale(t.values[i]), "group": t.group})
     }
 
     svg
-        .selectAll("circle")
-        .data(riskData, d => d.id)
-        .join(
-            enter  => enter
-                .append("circle")
-                .attr('cx', 10)
-                .attr('cy', ((d, i) => 20 + i*20))
-                .attr('r', 5)
-                .attr('fill', ((d) => d.value === "NA" ? naColor: colorScale(d.value))),
-            update => update
-            .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .3)),             
-            exit   => exit.remove()
-        );
+            .selectAll("path")
+            .data(riskData, d => d.id)
+            .join(
+                enter  => enter
+                    .append("path")
+                    .attr("d", d3.symbol()
+                    .type((d => symbolType(d.group)))
+                        .size(60))
+                    .attr("transform", function(d, i) {
+                        return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
+                    })
+                    .attr('fill', (d => d.color)),
+                update => update
+                    .attr('opacity', (d => viewHoverValue === undefined || d.color == viewHoverValue? 1: .3)),
+                    exit   => exit.remove()
+            );
 
     svg
         .selectAll("text")
@@ -47,20 +57,21 @@ function drawRiskLegend(t, riskHoverValue) {
         .join(
             enter  => enter
                 .append("text")
-                .attr("x", 20)
-                .attr("y", ((d, i) => 25 + i*20))
-                .text(((d) => d.label))
-                .attr('fill', 'white'),
+                .attr("x", 25)
+                .attr("y", ((d, i) => i*23 + 20))
+                .text((d => d.label))
+                .attr("font-size", 12)
+                .attr("fill", "#cbcbcb"),
             update => update
-                .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .3)),
+                .attr('opacity', (d => viewHoverValue === undefined || d.color === viewHoverValue ? 1: .3)),
             exit   => exit.remove()
     );
 }
 
 // Initiates the legend svg and sets the non-changing attributes
-function initRiskLegend(variable, variableLookup, riskHoverValue) {
+function initRiskLegend(variable, viewHoverValue) {
 
-    let t = variableLookup[variable];
+    let t = viewObj[variable];
     let h = height + (t.values.length + 1)*20;
 
     d3.select(`#${riskLegendId}`)
@@ -68,53 +79,19 @@ function initRiskLegend(variable, variableLookup, riskHoverValue) {
         .attr('width', width)
         .attr('height', h);
 
-    drawRiskLegend(t, riskHoverValue);
+    drawRiskLegend(t, viewHoverValue);
 }
 
 // Updates the legend attributes on variable change
-function updateRiskLegend(variable, variableLookup, riskHoverValue) {
+function updateRiskLegend(variable, viewHoverValue) {
 
-    let t = variableLookup[variable];
+    let t = viewObj[variable];
     let h = height + (t.values.length + 1)*20;
 
     let svg = d3.select(`#${riskLegendId} svg`);
-    svg.attr("height", h)
+    svg.attr("height", h);
 
-    drawRiskLegend(t, riskHoverValue);
-}
-
-export function symbolType(d) {
-
-    if (d.group === "Actor") {
-        return d3.symbolCircle;
-    } else {
-        if (d.type === "Process activity") {
-            return d3.symbolSquare;
-        } else if (d.type === "Control activity") {
-            return d3.symbolStar;
-        } else if (d.type === "Common process activity") {
-            return d3.symbolTriangle;
-        } else {
-            return d3.symbolDiamond;
-        }
-    }
-}
-
-export function symbolScale(d) {
-
-    if (d.group === "Actor") {
-        return 1;
-    } else {
-        if (d.type === "Process activity") {
-            return 2;
-        } else if (d.type === "Control activity") {
-            return 3;
-        } else if (d.type === "Common process activity") {
-            return 4;
-        } else {
-            return 5;
-        }
-    }
+    drawRiskLegend(t, viewHoverValue);
 }
 
 function initShapeLegend(networkChart, symbolHoverValue) {
@@ -132,24 +109,23 @@ function initShapeLegend(networkChart, symbolHoverValue) {
 function drawShapeLegend(networkChart, symbolHoverValue) {
     if (networkChart) {
 
-        let svg = d3.select(`#${shapeLegendId} svg`)
+        let svg = d3.select(`#${shapeLegendId} svg`);
 
         svg
             .selectAll("path")
-            .data(shapeData, d => d.type)
+            .data(shapeData, d => d.group)
             .join(
                 enter  => enter
                     .append("path")
                     .attr("d", d3.symbol()
-                    .type(((d) => symbolType(d)))
-                        .size(100))
+                    .type(((d) => symbolType(d.group)))
+                        .size(60))
                     .attr("transform", function(d, i) {
-                        return 'translate(' + 10 + ', ' + (i*25 + 15) + ')';
+                        return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
-                    .attr('fill', 'white'),
+                    .attr("fill", "#cbcbcb"),
                 update => update
-                    .attr('opacity', ((d) => symbolScale(d) === symbolHoverValue || symbolHoverValue === undefined? 1: .3)),
-                exit   => exit.remove()
+                    .attr('opacity', ((d) => d.group === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
 
         svg
@@ -159,18 +135,72 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                 enter  => enter
                     .append("text")
                     .attr("x", 25)
-                    .attr("y", ((d, i) => i*25 + 20))
-                    .text((d) => d.type)
-                    .attr('fill', 'white'),
+                    .attr("y", ((d, i) => i*23 + 20))
+                    .attr("fill", "#cbcbcb")
+                    .attr("font-size", 12)
+                    .text((d) => d.type),
                 update => update
-                    .attr('opacity', ((d) => symbolScale(d) === symbolHoverValue || symbolHoverValue === undefined? 1: .3)),
-                exit   => exit.remove()
+                    .attr('opacity', ((d) => d.group === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
     }
 }
 
 function updateShapeLegend(networkChart, symbolHoverValue) {
     drawShapeLegend(networkChart, symbolHoverValue);
+}
+
+function initSizeLegend(networkChart, symbolHoverValue) {
+
+    d3.select(`#${sizeLegendId}`)
+        .append("svg")
+        .attr("width", width);
+
+    drawSizeLegend(networkChart, symbolHoverValue);
+}
+
+function drawSizeLegend(networkChart, symbolHoverValue) {
+    if (networkChart) {
+
+        const h = 40;
+
+        let svg = d3.select(`#${sizeLegendId} svg`)
+            .attr("height", h);
+
+        svg
+            .selectAll("path")
+                .data(sizeData, d => d.size)
+                .join(
+                    enter  => enter
+                        .append("path")
+                            .attr("d", d3.symbol()
+                                .type(((d) => symbolType(d.group)))
+                                .size(((d) => rScale(d.size))))
+                            .attr("fill", "#cbcbcb"),
+                update => update
+                    .attr('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3)
+                )
+            .attr("transform", (d, i) => `translate(${(i * 40) + 10}, ${h / 3})`);
+
+        svg
+            .selectAll("text")
+                .data(sizeData, d => d.size)
+                .join(
+                    enter  => enter
+                         .append("text")
+                            .attr("text-anchor", "middle")
+                            .attr("y", 25)
+                            .attr("font-size", 12)
+                            .attr("fill", "#cbcbcb")
+                            .text(d => d.size),
+                    update => update
+                        .attr('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3)
+                    )
+                .attr("transform", (d, i) => `translate(${(i * 40) + 10}, ${h / 3})`);
+    }
+}
+
+function updateSizeLegend(networkChart, symbolHoverValue) {
+    drawSizeLegend(networkChart, symbolHoverValue);
 }
 
 function shapeType() {
@@ -185,35 +215,14 @@ function shapeType() {
     )
 }
 
-function viewNNodes() {
+function sizeType() {
     return(
         <div className="layout_row">
             <span className="layout_item key">
-                Number of nodes: 
+                Size
             </span>
-            <span id="nNodes" className="layout_item"></span>
-        </div>
-    )
-}
-
-function viewNActors() {
-    return(
-        <div className="layout_row">
-            <span className="layout_item key">
-                Number of actors: 
-            </span>
-            <span id="nActors" className="layout_item"></span>
-        </div>
-    )
-}
-
-function viewNActivities() {
-    return(
-        <div className="layout_row">
-            <span className="layout_item key">
-                Number of activities: 
-            </span>
-            <span id="nActivities" className="layout_item"></span>
+            <span className="layout_item"></span>
+            <div id={sizeLegendId}></div>
         </div>
     )
 }
@@ -221,9 +230,7 @@ function viewNActivities() {
 function riskType() {
     return(
         <div className="layout_row">
-            <span className="layout_item key">
-                Risk type
-            </span>
+            <span className="layout_item key"></span>
             <span className="layout_item"></span>
         </div>
     )
@@ -234,42 +241,41 @@ function viewInfo(networkChart) {
         <div className="inner">
             <div className="layout_group inline">
                 {networkChart? shapeType(): <></>}
+                {networkChart? sizeType(): <></>}
                 {riskType()}
             </div>
         </div>
     )
 }
 
-export default function View({id, riskVariable, updateRiskVariable, riskHoverValue, symbolHoverValue, data}) {
+export default function View({id, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue}) {
 
     const networkChart = id === "network-chart";
 
-    colorScale = createColorScale(riskVariable, riskVariables);
+    colorScale = createColorScale(viewVariable);
 
     const handleChange = (event) => {
-        let newView = (Object.keys(riskVariables).find((c) => riskVariables[c].label === event.target.value));
-        updateRiskVariable(newView)
+        let newView = (Object.keys(viewObj).find((c) => viewObj[c].label === event.target.value));
+        updateViewVariable(newView)
     }
 
-    // Initiate the shape legend
+    // Initiate legends
     useEffect(() => {
         initShapeLegend(networkChart, symbolHoverValue);
+        initSizeLegend(networkChart, symbolHoverValue);
+        initRiskLegend(viewVariable);
     }, [])
 
     // Update the shape legend
     useEffect(() => {
         updateShapeLegend(networkChart, symbolHoverValue);
+        updateSizeLegend(networkChart, symbolHoverValue);
     }, [symbolHoverValue]);
-
-    // Initiate the risk legend
-    useEffect(() => {
-        initRiskLegend(riskVariable, riskVariables);
-    }, []);
 
     // Update the risk legend
     useEffect(() => {
-        updateRiskLegend(riskVariable, riskVariables, riskHoverValue);
-    }, [riskVariable, riskHoverValue]);
+        updateRiskLegend(viewVariable, viewHoverValue);
+    }, [viewVariable, viewHoverValue]);
 
     return(
         <div className='View'>
@@ -282,14 +288,14 @@ export default function View({id, riskVariable, updateRiskVariable, riskHoverVal
                         labelId="view-select-label"
                         id="view-select"
                         displayEmpty
-                        value={riskVariables[riskVariable].label}
+                        value={viewObj[viewVariable].label}
                         onChange={handleChange}
                     >
                         {
-                        Object.keys(riskVariables).map((viewBy) => {
-                            let variable = riskVariables[viewBy];
+                        viewVars.map((viewBy) => {
+                            let variable = viewObj[viewBy];
                             return (
-                                <MenuItem key={variable.label} value={variable.label}><em>{variable.label}</em></MenuItem>
+                                <MenuItem key={variable.id} value={variable.label}><em>{variable.label}</em></MenuItem>
                             )
                         })}
                     </Select>
