@@ -50,7 +50,7 @@ function drawRiskLegend(t, riskHoverValue) {
                 .attr("x", 20)
                 .attr("y", ((d, i) => 25 + i*20))
                 .text(((d) => d.label))
-                .style("fill", "white"),
+                .attr('fill', 'white'),
             update => update
                 .attr('opacity', ((d) => d.value === riskHoverValue || riskHoverValue === undefined? 1: .3)),
             exit   => exit.remove()
@@ -146,7 +146,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*25 + 15) + ')';
                     })
-                    .attr("fill", "white"),
+                    .attr('fill', 'white'),
                 update => update
                     .attr('opacity', ((d) => symbolScale(d) === symbolHoverValue || symbolHoverValue === undefined? 1: .3)),
                 exit   => exit.remove()
@@ -160,8 +160,8 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .append("text")
                     .attr("x", 25)
                     .attr("y", ((d, i) => i*25 + 20))
-                    .attr("fill", "white")
-                    .text((d) => d.type),
+                    .text((d) => d.type)
+                    .attr('fill', 'white'),
                 update => update
                     .attr('opacity', ((d) => symbolScale(d) === symbolHoverValue || symbolHoverValue === undefined? 1: .3)),
                 exit   => exit.remove()
