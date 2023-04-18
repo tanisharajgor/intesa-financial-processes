@@ -8,6 +8,7 @@ import * as d3 from 'd3';
 import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues, rScale, symbolType  } from "../utils/global";
 import { inspectNetworkSummary } from "../components/Inspect";
 import { QueryMenu } from "cfd-react-components";
+import NetworkVisualization from "../visualization/network-visualization";
 
 const id = "network-chart";
 let width = 1000;
@@ -207,7 +208,7 @@ export default function Network() {
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
 
-    // console.log(data)
+    const networkDiagram = new NetworkVisualization(data)
 
     // Set-up scales
     colorScale = createColorScale(viewVariable);
@@ -219,7 +220,12 @@ export default function Network() {
 
     // React Hooks
     useEffect(() => {
-        initNetwork(data, viewVariable);
+        // initNetwork(data, riskVariable);
+
+        networkDiagram.init(id)
+        networkDiagram.draw()
+        networkDiagram.animate()
+        //networkDiagram.layout()
     }, []);
 
     // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
