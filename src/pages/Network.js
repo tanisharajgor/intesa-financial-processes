@@ -106,19 +106,20 @@ function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
 
     let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID));
     let actorIds = dataNew.nodes.filter(d => d.group === "Actor" && actorTypesChecks.includes(d.type)).map(d => d.id);
-    let activityIds = dataNew.nodes.filter(d => d.group === "Activity" && activityTypesChecks.includes(d.type)).map(d => d.id);
+    // let activityIds = dataNew.nodes.filter(d => d.group === "Activity" && activityTypesChecks.includes(d.type)).map(d => d.id);
 
-    let controlIds = dataNew.nodes.filter(d => d.group === "Control").map(d => d.id);
-    let riskIds = dataNew.nodes.filter(d => d.group === "Risk").map(d => d.id);
+    // let controlIds = dataNew.nodes.filter(d => d.group === "Control").map(d => d.id);
+    // let riskIds = dataNew.nodes.filter(d => d.group === "Risk").map(d => d.id);
 
-    let ids = activityIds.concat(actorIds);
+    // let ids = activityIds.concat(actorIds);
+    let ids = actorIds;
     let links = dataNew.links.filter(d => d.source.id === undefined ? ids.includes(d.source) || ids.includes(d.target): ids.includes(d.source.id) || ids.includes(d.target.id));
 
     let nodes = links.map(d => d.source.id === undefined ? d.source || d.target: d.source.id || d.target.id);
 
     dataNew.nodes = dataNew.nodes.filter(d => nodes.concat(ids).includes(d.id));
     dataNew.links = links;
-    console.log(dataNew)
+    // console.log(dataNew)
     return dataNew;
 }
 
