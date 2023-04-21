@@ -35,33 +35,25 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
         let x = +d3.select(this).attr("x") + 20;
         let y = +d3.select(this).attr("y") - 10;
 
+        let activityIds = filterLinks(data.links, [d.id]);
+        let riskIds = filterLinks(data.links, activityIds);
+        let controlIds = filterLinks(data.links, riskIds);
+
+        let ids = controlIds.concat(riskIds.concat(activityIds.concat(d.id)));
+
         let l1 = data.links
-            .filter((i) => i.source.id === d.id || i.target.id === d.id)
-
-        const l1source = l1.map(j => j.source.id);
-        const l1target = l1.map(j => j.target.id);
-        let l1connectedNodeIds = [...new Set([d.id].concat(l1source.concat(l1target)))];
-
-        l1 = l1.map((d) => d.index);
-
-        let l2 = data.links
-            .filter((i) => l1connectedNodeIds.includes(i.source.id) || l1connectedNodeIds.includes(i.target.id));
-
-        const l2source = l2.map(j => j.source.id);
-        const l2target = l2.map(j => j.target.id);
-        let l2connectedNodeIds = [...new Set([d.id].concat(l2source.concat(l2target)))];
-
-        // console.log(l2connectedNodeIds)
+            .filter(d => ids.includes(d.source.id) && ids.includes(d.target.id))
+            .map((d) => d.index);
 
         let connectedNodes = nodes.filter(function(i) {
-            return l1connectedNodeIds.includes(i.id);
+            return ids.includes(i.id);
         });
 
         // Applying the aesthetic changes
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`Type: ${d.type} <br> ${d.group}: ${d.name} <br> Number of connections: ${l1.length} `);
+            .html(`Type: ${d.type} <br> ${d.group}: ${d.name}`);
 
         d3.selectAll(`#${id} svg path`)
             .attr("opacity", .5);
