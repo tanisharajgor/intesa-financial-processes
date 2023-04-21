@@ -36,7 +36,12 @@ function highlightNetworkNodes(data, d) {
 
     } else if (d.group === "Activity") {
 
-        return [d.id];
+        let actorIds = filterLinksTargetToSource(data.links, [d.id]);
+        let riskIds = filterLinksSourceToTarget(data.links, [d.id]);
+        let controlIds = filterLinksSourceToTarget(data.links, riskIds);
+
+        let ids = controlIds.concat(riskIds.concat(actorIds.concat(d.id)));
+        return ids;
 
     } else if (d.group === "Risk") {
 
@@ -115,11 +120,21 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
     });
 }
 
-
+//
 function filterLinksSourceToTarget(data, ids) {
 
     let links = data.filter(d => d.source.id === undefined ? ids.includes(d.source): ids.includes(d.source.id))
         .map(d => d.target.id === undefined ? d.target: d.target.id);
+    links = [...new Set(links)];
+
+    return links;
+}
+
+//
+function filterLinksTargetToSource(data, ids) {
+
+    let links = data.filter(d => d.target.id === undefined ? ids.includes(d.target): ids.includes(d.target.id))
+        .map(d => d.source.id === undefined ? d.source: d.source.id);
     links = [...new Set(links)];
 
     return links;
