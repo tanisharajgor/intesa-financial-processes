@@ -196,6 +196,11 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
                         .attr('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3)
                     )
                 .attr("transform", (d, i) => `translate(${(i * 40) + 10}, ${h / 3})`);
+
+        d3.select(".size_legend > span")
+            .style('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3)
+
+            // .size_legend > span:nth-child(1)
     }
 }
 
@@ -217,7 +222,7 @@ function shapeType() {
 
 function sizeType() {
     return(
-        <div className="layout_row">
+        <div className="layout_row size_legend">
             <span className="layout_item key">
                 Size
             </span>
