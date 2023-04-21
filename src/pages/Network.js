@@ -39,8 +39,8 @@ function highlightNetworkNodes(data, d) {
         let actorIds = filterLinksTargetToSource(data.links, [d.id]);
         let riskIds = filterLinksSourceToTarget(data.links, [d.id]);
         let controlIds = filterLinksSourceToTarget(data.links, riskIds);
-
         let ids = controlIds.concat(riskIds.concat(actorIds.concat(d.id)));
+
         return ids;
 
     } else if (d.group === "Risk") {
@@ -48,7 +48,6 @@ function highlightNetworkNodes(data, d) {
         let controlIds = filterLinksSourceToTarget(data.links, [d.id]);
         let activityIds = filterLinksTargetToSource(data.links, [d.id]);
         let actorIds = filterLinksTargetToSource(data.links, activityIds);
-
         let ids = actorIds.concat(activityIds.concat(controlIds.concat(d.id)));
 
         return ids;
@@ -58,7 +57,6 @@ function highlightNetworkNodes(data, d) {
         let riskIds = filterLinksTargetToSource(data.links, [d.id]);
         let activityIds = filterLinksTargetToSource(data.links, riskIds);
         let actorIds = filterLinksTargetToSource(data.links, activityIds);
-
         let ids = actorIds.concat(activityIds.concat(riskIds.concat(d.id)));
 
         return ids;
@@ -132,7 +130,7 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
     });
 }
 
-//
+// Filters source ids and returns corresponding target ids
 function filterLinksSourceToTarget(data, ids) {
 
     let links = data.filter(d => d.source.id === undefined ? ids.includes(d.source): ids.includes(d.source.id))
@@ -142,7 +140,7 @@ function filterLinksSourceToTarget(data, ids) {
     return links;
 }
 
-//
+// Filters targets ids and returns corresponding source ids
 function filterLinksTargetToSource(data, ids) {
 
     let links = data.filter(d => d.target.id === undefined ? ids.includes(d.target): ids.includes(d.target.id))
