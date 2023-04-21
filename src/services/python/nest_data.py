@@ -292,8 +292,10 @@ def create_network(data):
         linkData = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)][['actorID', 'activityID']].drop_duplicates()
 
         for j in range(0, linkData.shape[0]):
-            row = {"target": int(linkData.actorID.iloc[j]),
-                   "source": int(linkData.activityID.iloc[j]),
+            row = {"source": int(linkData.actorID.iloc[j]),
+                   "sourceType": str("Actor"),
+                   "target": int(linkData.activityID.iloc[j]),
+                   "targetType": str("Activity"),
                    "id": str(linkData.actorID.iloc[j]) + "-" + str(linkData.activityID.iloc[j])}
 
             links.append(row)
@@ -301,8 +303,10 @@ def create_network(data):
         linkData = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.riskID) == False)][['activityID', 'riskID']].drop_duplicates()
 
         for j in range(0, linkData.shape[0]):
-            row = {"target": int(linkData.activityID.iloc[j]),
-                   "source": int(linkData.riskID.iloc[j]),
+            row = {"source": int(linkData.activityID.iloc[j]),
+                   "sourceType": str("Activity"),
+                   "target": int(linkData.riskID.iloc[j]),
+                   "targetType": str("Risk"),
                    "id": str(linkData.activityID.iloc[j]) + "-" + str(linkData.riskID.iloc[j])}
 
             links.append(row)
@@ -310,8 +314,10 @@ def create_network(data):
         linkData = df[(pd.isnull(df.riskID) == False) & (pd.isnull(df.controlID) == False)][['riskID', 'controlID']].drop_duplicates()
 
         for j in range(0, linkData.shape[0]):
-            row = {"target": int(linkData.riskID.iloc[j]),
-                   "source": int(linkData.controlID.iloc[j]),
+            row = {"source": int(linkData.riskID.iloc[j]),
+                   "sourceType": str("Risk"),
+                   "target": int(linkData.controlID.iloc[j]),
+                   "targetType": str("Control"),
                    "id": str(linkData.riskID.iloc[j]) + "-" + str(linkData.controlID.iloc[j])}
 
             links.append(row)
