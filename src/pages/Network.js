@@ -63,6 +63,41 @@ function highlightNetworkNodes(data, d) {
     }
 }
 
+function tooltipText(data, d) {
+    if (d.group === "Actor") {
+
+        let activityIds = filterLinksSourceToTarget(data.links, [d.id]);
+        let riskIds = filterLinksSourceToTarget(data.links, activityIds);
+        let controlIds = filterLinksSourceToTarget(data.links, riskIds);
+
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # activities: ${activityIds.length} <br> # risks: ${riskIds.length} <br> # controls: ${controlIds.length}`;
+
+    } else if (d.group === "Activity") {
+
+        let actorIds = filterLinksTargetToSource(data.links, [d.id]);
+        let riskIds = filterLinksSourceToTarget(data.links, [d.id]);
+        let controlIds = filterLinksSourceToTarget(data.links, riskIds);
+
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # risks: ${riskIds.length} <br> # controls: ${controlIds.length}`;
+
+    } else if (d.group === "Risk") {
+
+        let controlIds = filterLinksSourceToTarget(data.links, [d.id]);
+        let activityIds = filterLinksTargetToSource(data.links, [d.id]);
+        let actorIds = filterLinksTargetToSource(data.links, activityIds);
+
+        return `${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # activity: ${activityIds.length} <br> # control: ${controlIds.length}`;
+
+    } else if (d.group === "Control") {
+
+        let riskIds = filterLinksTargetToSource(data.links, [d.id]);
+        let activityIds = filterLinksTargetToSource(data.links, riskIds);
+        let actorIds = filterLinksTargetToSource(data.links, activityIds);
+
+        return `${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # activity: ${activityIds.length} <br> # risks: ${riskIds.length}`;
+    }
+}
+
 // Tooltip
 function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue) {
 
@@ -70,7 +105,6 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
     inspectNetworkSummary(inspect, data);
 
     nodes.on("mouseover", function(e, d) {
-        console.log(d)
 
         // Data management steps
         let x = +d3.select(this).attr("x") + 20;
@@ -90,7 +124,7 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`Type: ${d.type} <br> ${d.group}: ${d.name}`);
+            .html(tooltipText(data, d));
 
         d3.selectAll(`#${id} svg path`)
             .attr("opacity", .5);
