@@ -18,17 +18,19 @@ export function inspectCirclePacking(data, viewVariable, updateViewHoverValue) {
     d3.selectAll("circle").on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
-        let x = +thisCircle.attr("cx") + 20;
-        let y = +thisCircle.attr("cy") - 10;
+        let x = e.layerX + 20;
+        let y = e.layerY - 10;
+
+        let type = d.data.treeLevel === 4? "Activity": "Process";
 
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`tooltip test`);
+            .html(`${type}: ${d.data.name}`);
 
         thisCircle
             .attr("stroke", "grey")
-            .attr("stroke-width", 2);
+            .attr("stroke-width", 1.5);
 
         updateViewHoverValue(applyColorScaleMode(d.data, viewVariable, colorScale));
 
@@ -85,7 +87,19 @@ export default function CirclePacking() {
         //tooltip
         tooltip = d3.select(`#${id}`)
             .append("div")
-            .attr("class", "tooltip");
+            .attr("class", "tooltip")
+            .style("position", "absolute")
+            .style("left", "0px")
+            .style("top", "0px")
+            .style("visibility", "hidden")
+            .style("padding", "10px")
+            .style("pointer-events", "none")
+            .style("border-radius", "5px")
+            .style("background-color", "rgba(0, 0, 0, 0.65)")
+            .style("font-family", '"Helvetica Neue", Helvetica, Arial, sans-serif')
+            .style("font-weight", "normal")
+            .style("border", "1px solid rgba(78, 81, 85, 0.7)")
+            .style("font-size", "16px");
     
         const circle = svg.append("g")
             .selectAll("circle")
