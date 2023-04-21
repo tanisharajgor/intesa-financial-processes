@@ -61,7 +61,7 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`${d.group}: ${d.name} <br> Number of connections: ${l1.length}`);
+            .html(`Type: ${d.type} <br> ${d.group}: ${d.name} <br> Number of connections: ${l1.length} `);
 
         d3.selectAll(`#${id} svg path`)
             .attr("opacity", .5);
@@ -216,6 +216,8 @@ export default function Network() {
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
     const [activityTypes, updateActivityType] = useState([...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))]);
     const [actorTypes, updateActorType] = useState([...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
+
+    // console.log(activityTypes, actorTypes)
 
     // Set-up scales
     colorScale = createColorScale(viewVariable);
