@@ -15,7 +15,7 @@ export default function FilterType({typesChecks, updateTypeChecks, typeValues, l
             typesChecks.push(selected)
             newSelectedTypes = [...typesChecks];
         }
-        updateTypeChecks(newSelectedTypes)
+        updateTypeChecks(newSelectedTypes);
     }
 
     return(

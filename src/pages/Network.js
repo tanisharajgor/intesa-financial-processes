@@ -103,20 +103,22 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
 
 // Filters the data by level3ID and activity Type
 function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
+
     let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID));
-    let activityIds = dataNew.nodes.filter(d => d.group === "Activity" && activityTypesChecks.includes(d.type)).map(d => d.id);
     let actorIds = dataNew.nodes.filter(d => d.group === "Actor" && actorTypesChecks.includes(d.type)).map(d => d.id);
+    let activityIds = dataNew.nodes.filter(d => d.group === "Activity" && activityTypesChecks.includes(d.type)).map(d => d.id);
+
     let controlIds = dataNew.nodes.filter(d => d.group === "Control").map(d => d.id);
     let riskIds = dataNew.nodes.filter(d => d.group === "Risk").map(d => d.id);
 
-    let ids = riskIds.concat(controlIds.concat(activityIds.concat(actorIds)));
+    let ids = activityIds.concat(actorIds);
+    let links = dataNew.links.filter(d => d.source.id === undefined ? ids.includes(d.source) || ids.includes(d.target): ids.includes(d.source.id) || ids.includes(d.target.id));
 
-    let nodes = dataNew.nodes.filter(d => ids.includes(d.id));
-    let links = dataNew.links.filter(d => d.source.id === undefined ? ids.includes(d.source) : ids.includes(d.source.id));
-    links = links.filter(d => d.target.id === undefined ? ids.includes(d.target) : ids.includes(d.target.id));
+    let nodes = links.map(d => d.source.id === undefined ? d.source || d.target: d.source.id || d.target.id);
 
-    dataNew.nodes = nodes;
+    dataNew.nodes = dataNew.nodes.filter(d => nodes.concat(ids).includes(d.id));
     dataNew.links = links;
+    console.log(dataNew)
     return dataNew;
 }
 
@@ -206,15 +208,21 @@ export default function Network() {
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
-
-    // console.log(data)
+    const [activityTypes, updateActivityType] = useState([...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))]);
+    const [actorTypes, updateActorType] = useState([...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
 
     // Set-up scales
     colorScale = createColorScale(viewVariable);
 
+    // Update filter possibilities when level changes
+    useEffect(() => {
+        updateActivityType([...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))]);
+        updateActorType([...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
+    }, [selectedLevel3ID])
+
     // Filter data
     useEffect(() => {
-        updateData(filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks))
+        updateData(filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks));
     }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks])
 
     // React Hooks
@@ -245,8 +253,8 @@ export default function Network() {
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
-                    <FilterType typesChecks={activityTypesChecks} updateTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues} label="Filter by Activity Type:"/>
-                    <FilterType typesChecks={actorTypesChecks} updateTypeChecks = {updateActorTypeChecks} typeValues={actorTypeValues} label="Filter by Actor Type:"/>
+                    <FilterType typesChecks={activityTypesChecks} updateTypeChecks={updateActivityTypeChecks} typeValues={activityTypes} label="Filter by Activity Type:"/>
+                    <FilterType typesChecks={actorTypesChecks} updateTypeChecks={updateActorTypeChecks} typeValues={actorTypes} label="Filter by Actor Type:"/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} id={id}/>        
             </div>        
