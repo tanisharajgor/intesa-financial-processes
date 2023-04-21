@@ -123,7 +123,7 @@ function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
     let ids = controlIds.concat(riskIds.concat(actorIds.concat(activityIds)));
 
     dataNew.nodes = dataNew.nodes.filter(d => ids.includes(d.id));
-    dataNew.links = dataNew.links.filter(d => d.source.id === undefined ? ids.includes(d.source) || ids.includes(d.target): ids.includes(d.source.id) || ids.includes(d.target.id));
+    dataNew.links = dataNew.links.filter(d => d.source.id === undefined ? ids.includes(d.source) && ids.includes(d.target): ids.includes(d.source.id) && ids.includes(d.target.id));
 
     return dataNew;
 }
