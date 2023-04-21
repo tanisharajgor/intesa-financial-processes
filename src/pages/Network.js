@@ -23,6 +23,31 @@ var simulation = d3.forceSimulation()
     .force("center", d3.forceCenter(width / 2, height / 2).strength(1.7))
     .force("collide", d3.forceCollide().strength(2).radius(8));
 
+
+function highlightNetworkNodes(data, d) {
+    if (d.group === "Actor") {
+
+        let activityIds = filterLinks(data.links, [d.id]);
+        let riskIds = filterLinks(data.links, activityIds);
+        let controlIds = filterLinks(data.links, riskIds);
+        let ids = controlIds.concat(riskIds.concat(activityIds.concat(d.id)));
+
+        return ids
+
+    } else if (d.group === "Activity") {
+
+        return [d.id]
+
+    } else if (d.group === "Risk") {
+
+        return [d.id]
+
+    } else if (d.group === "Control") {
+
+        return [d.id]
+    }
+}
+
 // Tooltip
 function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue) {
 
@@ -30,16 +55,13 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
     inspectNetworkSummary(inspect, data);
 
     nodes.on("mouseover", function(e, d) {
+        console.log(d)
 
         // Data management steps
         let x = +d3.select(this).attr("x") + 20;
         let y = +d3.select(this).attr("y") - 10;
 
-        let activityIds = filterLinks(data.links, [d.id]);
-        let riskIds = filterLinks(data.links, activityIds);
-        let controlIds = filterLinks(data.links, riskIds);
-
-        let ids = controlIds.concat(riskIds.concat(activityIds.concat(d.id)));
+        let ids = highlightNetworkNodes(data, d);
 
         let l1 = data.links
             .filter(d => ids.includes(d.source.id) && ids.includes(d.target.id))
