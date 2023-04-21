@@ -197,10 +197,9 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
                     )
                 .attr("transform", (d, i) => `translate(${(i * 40) + 10}, ${h / 3})`);
 
+        // Change opacity of the legend title
         d3.select(".size_legend > span")
-            .style('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3)
-
-            // .size_legend > span:nth-child(1)
+            .style('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3);
     }
 }
 
