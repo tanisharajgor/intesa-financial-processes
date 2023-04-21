@@ -45,7 +45,13 @@ function highlightNetworkNodes(data, d) {
 
     } else if (d.group === "Risk") {
 
-        return [d.id];
+        let controlIds = filterLinksSourceToTarget(data.links, [d.id]);
+        let activityIds = filterLinksTargetToSource(data.links, [d.id]);
+        let actorIds = filterLinksTargetToSource(data.links, activityIds);
+
+        let ids = actorIds.concat(activityIds.concat(controlIds.concat(d.id)));
+
+        return ids;
 
     } else if (d.group === "Control") {
 
