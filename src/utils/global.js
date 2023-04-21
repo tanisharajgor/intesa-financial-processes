@@ -32,7 +32,7 @@ export const viewVariables = {
             labels: ['Financial Information Risk', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'Missing', 'NA'],
             id: [20, 21, 22, 23, 24],
             values: ['Financial Information Risk (ex 262/2005)', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'Missing', 'NA'],
-            colors: ['#ff7f0e', '#9467bd', '#2ca02c', '#e377c2', missingColor, naColor],
+            colors: ['#f28e2b', '#76b7b2', '#edc948', '#b07aa1', missingColor, naColor],
             group: "Risk"
         }
         // ,
