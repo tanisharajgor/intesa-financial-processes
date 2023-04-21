@@ -27,24 +27,24 @@ var simulation = d3.forceSimulation()
 function highlightNetworkNodes(data, d) {
     if (d.group === "Actor") {
 
-        let activityIds = filterLinks(data.links, [d.id]);
-        let riskIds = filterLinks(data.links, activityIds);
-        let controlIds = filterLinks(data.links, riskIds);
+        let activityIds = filterLinksSourceToTarget(data.links, [d.id]);
+        let riskIds = filterLinksSourceToTarget(data.links, activityIds);
+        let controlIds = filterLinksSourceToTarget(data.links, riskIds);
         let ids = controlIds.concat(riskIds.concat(activityIds.concat(d.id)));
 
         return ids
 
     } else if (d.group === "Activity") {
 
-        return [d.id]
+        return [d.id];
 
     } else if (d.group === "Risk") {
 
-        return [d.id]
+        return [d.id];
 
     } else if (d.group === "Control") {
 
-        return [d.id]
+        return [d.id];
     }
 }
 
@@ -116,7 +116,7 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
 }
 
 
-function filterLinks(data, ids) {
+function filterLinksSourceToTarget(data, ids) {
 
     let links = data.filter(d => d.source.id === undefined ? ids.includes(d.source): ids.includes(d.source.id))
         .map(d => d.target.id === undefined ? d.target: d.target.id);
@@ -130,9 +130,9 @@ function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
 
     let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID));
     let actorIds = dataNew.nodes.filter(d => d.group === "Actor" && actorTypesChecks.includes(d.type)).map(d => d.id);
-    let activityIds = filterLinks(dataNew.links, actorIds)
-    let riskIds = filterLinks(dataNew.links, activityIds);
-    let controlIds = filterLinks(dataNew.links, riskIds);
+    let activityIds = filterLinksSourceToTarget(dataNew.links, actorIds)
+    let riskIds = filterLinksSourceToTarget(dataNew.links, activityIds);
+    let controlIds = filterLinksSourceToTarget(dataNew.links, riskIds);
 
     let ids = controlIds.concat(riskIds.concat(actorIds.concat(activityIds)));
 
