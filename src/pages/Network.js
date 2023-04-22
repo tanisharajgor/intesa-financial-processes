@@ -188,8 +188,14 @@ function filterLinksTargetToSource(data, ids) {
 function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
 
     let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID));
-    let actorIds = dataNew.nodes.filter(d => d.group === "Actor" && actorTypesChecks.includes(d.type)).map(d => d.id);
-    let activityIds = filterLinksSourceToTarget(dataNew.links, actorIds)
+
+    let actorIdsFiltered = dataNew.nodes.filter(d => d.group === "Actor" && actorTypesChecks.includes(d.type)).map(d => d.id);
+    let activityIdsFiltered = dataNew.nodes.filter(d => d.group === "Activity" && activityTypesChecks.includes(d.type)).map(d => d.id);
+
+    let links = dataNew.links.filter(d => d.source.id === undefined ? actorIdsFiltered.includes(d.source) && activityIdsFiltered.includes(d.target): actorIdsFiltered.includes(d.source.id) && activityIdsFiltered.includes(d.target.id));
+    let actorIds = links.map(d => d.source.id === undefined ? d.source: d.source.id);
+    let activityIds = links.map(d => d.target.id === undefined ? d.target: d.target.id);
+
     let riskIds = filterLinksSourceToTarget(dataNew.links, activityIds);
     let controlIds = filterLinksSourceToTarget(dataNew.links, riskIds);
 
