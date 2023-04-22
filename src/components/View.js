@@ -22,9 +22,8 @@ const sizeData = [{"size": 1, "group": "Actor"},
                   {"size": 50, "group": "Actor"},
                   {"size": 100, "group": "Actor"},
                   {"size": 300, "group": "Actor"}];
-         
 
-function drawRiskLegend(t, viewHoverValue) {
+function drawRiskLegend(t, viewHoverValue, networkChart) {
 
     let svg =  d3.select(`#${riskLegendId} svg`);
 
@@ -40,7 +39,7 @@ function drawRiskLegend(t, viewHoverValue) {
                 enter  => enter
                     .append("path")
                     .attr("d", d3.symbol()
-                    .type((d => symbolType(d.group)))
+                    .type((d => networkChart? symbolType(d.group): d3.symbolCircle))
                         .size(60))
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
@@ -69,9 +68,9 @@ function drawRiskLegend(t, viewHoverValue) {
 }
 
 // Initiates the legend svg and sets the non-changing attributes
-function initRiskLegend(variable, viewHoverValue) {
+function initRiskLegend(viewVariable, viewHoverValue, networkChart) {
 
-    let t = viewObj[variable];
+    let t = viewObj[viewVariable];
     let h = height + (t.values.length + 1)*20;
 
     d3.select(`#${riskLegendId}`)
@@ -79,7 +78,7 @@ function initRiskLegend(variable, viewHoverValue) {
         .attr('width', width)
         .attr('height', h);
 
-    drawRiskLegend(t, viewHoverValue);
+    drawRiskLegend(t, viewHoverValue, networkChart);
 }
 
 // Updates the legend attributes on variable change
@@ -267,7 +266,7 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
     useEffect(() => {
         initShapeLegend(networkChart, symbolHoverValue);
         initSizeLegend(networkChart, symbolHoverValue);
-        initRiskLegend(viewVariable);
+        initRiskLegend(viewVariable, viewHoverValue, networkChart);
     }, [])
 
     // Update the shape legend
@@ -278,7 +277,7 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
 
     // Update the risk legend
     useEffect(() => {
-        updateRiskLegend(viewVariable, viewHoverValue);
+        updateRiskLegend(viewVariable, viewHoverValue, networkChart);
     }, [viewVariable, viewHoverValue]);
 
     return(
