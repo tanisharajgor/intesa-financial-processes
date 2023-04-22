@@ -240,8 +240,12 @@ def create_network(data):
                    "type": df[df.actorID == k].actorType.iloc[0],
                    "nActivities": int(df[df.actorID == k].activityID.nunique()),
                    "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
-                #    "riskStatus": create_risk_type(df[df.actorID == k]),
-                   "levels": levelsObject(df[df.actorID == k])
+                   "levels": levelsObject(df[df.actorID == k]),
+                   "actorType": {
+                        "nActivity": int(df[(df.actorID == k) & (pd.isnull(df.activityID) == False)][['activityID']].drop_duplicates().shape[0]),
+                        "nRisk": int(df[(df.actorID == k) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0]),
+                        "nControl": int(df[(df.actorID == k) & (pd.isnull(df.controlID) == False)][['controlID']].drop_duplicates().shape[0])
+                        }
                    }
 
             nodes.append(row)
@@ -253,10 +257,11 @@ def create_network(data):
                     "type": df[df.activityID == l].activityType.iloc[0],
                     "nActors": int(df[df.activityID == l].actorID.nunique()),
                     "actorsID": df[df.activityID == l].actorID.unique().tolist(),
-                    # "riskStatus": create_risk_type(df[df.activityID == l]),
                     "levels": levelsObject(df[df.activityID == l]),
                     "activityType": {
-                        "nRisk": int(df[(df.activityID == l) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0])
+                        "nActor": int(df[(df.activityID == l) & (pd.isnull(df.actorID) == False)][['actorID']].drop_duplicates().shape[0]),
+                        "nRisk": int(df[(df.activityID == l) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0]),
+                        "nControl": int(df[(df.activityID == l) & (pd.isnull(df.controlID) == False)][['controlID']].drop_duplicates().shape[0])
                         }
                     }
 
@@ -270,6 +275,8 @@ def create_network(data):
                     "riskType": {
                         "financialDisclosureRisk": bool(df[df.riskID == m].financialDisclosureRisk.iloc[0]),
                         "riskType": df[df.riskID == m].riskType.iloc[0],
+                        "nActor": int(df[(df.riskID == m) & (pd.isnull(df.actorID) == False)][['actorID']].drop_duplicates().shape[0]),
+                        "nActivity": int(df[(df.riskID == m) & (pd.isnull(df.activityID) == False)][['activityID']].drop_duplicates().shape[0]),
                         "nControl": int(df[(df.riskID == m) & (pd.isnull(df.controlID) == False)][['controlID']].drop_duplicates().shape[0])
                     }
                 }
@@ -283,7 +290,10 @@ def create_network(data):
                    "controlType": {
                         "controlPeriodocity": df[df.controlID == k].controlPeriodocity.iloc[0],
                         "controlCategory": df[df.controlID == k].controlCategory.iloc[0],
-                        "controlType": df[df.controlID == k].controlType.iloc[0],
+                        "controlType": df[df.controlID == k].controlType.iloc[0]
+                        # "nActor": int(df[(df.controlID == k) & (pd.isnull(df.actorID) == False)][['actorID']].drop_duplicates().shape[0]),
+                        # "nActivity": int(df[(df.controlID == k) & (pd.isnull(df.activityID) == False)][['activityID']].drop_duplicates().shape[0]),
+                        # "nRisk": int(df[(df.controlID == k) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0])
                     }
                 }
 
