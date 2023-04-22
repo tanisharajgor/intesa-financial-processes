@@ -13,9 +13,9 @@ let shapeLegendId = "Shape-Legend";
 let sizeLegendId = "Size-Legend";
 
 const shapeData = [{"group": "Actor", "type": "Actor"},
-                      {"group": "Activity", "type": "Activity"},
-                      {"group": "Risk", "type": "Risk"},
-                      {"group": "Control", "type": "Control"}];
+                   {"group": "Control", "type": "Control activity"},
+                   {"group": "Activity", "type": "Other activity"},
+                   {"group": "Risk", "type": "Risk"}];
 
 const sizeData = [{"size": 1, "group": "Actor"},
                   {"size": 25, "group": "Actor"},

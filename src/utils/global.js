@@ -163,7 +163,11 @@ export function symbolType(d) {
     if (d.group === "Actor") {
         return d3.symbolSquare;
     } else if(d.group === "Activity") {
-        return d3.symbolCircle;
+        if (d.type === "Control activity") {
+            return d3.symbolStar;
+        } else {
+            return d3.symbolCircle;
+        }
     } else if (d.group === "Risk") {
         return d3.symbolTriangle;
     } else if (d.group === "Control") {
