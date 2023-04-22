@@ -240,8 +240,10 @@ def create_network(data):
                    "type": df[df.actorID == k].actorType.iloc[0],
                    "nActivities": int(df[df.actorID == k].activityID.nunique()),
                    "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
-                #    "riskStatus": create_risk_type(df[df.actorID == k]),
-                   "levels": levelsObject(df[df.actorID == k])
+                   "levels": levelsObject(df[df.actorID == k]),
+                   "actorType": {
+                        "nActivity": int(df[(df.actorID == k) & (pd.isnull(df.activityID) == False)][['activityID']].drop_duplicates().shape[0])
+                        }
                    }
 
             nodes.append(row)
@@ -253,7 +255,6 @@ def create_network(data):
                     "type": df[df.activityID == l].activityType.iloc[0],
                     "nActors": int(df[df.activityID == l].actorID.nunique()),
                     "actorsID": df[df.activityID == l].actorID.unique().tolist(),
-                    # "riskStatus": create_risk_type(df[df.activityID == l]),
                     "levels": levelsObject(df[df.activityID == l]),
                     "activityType": {
                         "nRisk": int(df[(df.activityID == l) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0])
