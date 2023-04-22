@@ -5,7 +5,7 @@ import FilterType from "../components/FilterType";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
-import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues, rScale, symbolType  } from "../utils/global";
+import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues, rScale, symbolType } from "../utils/global";
 import { inspectNetworkSummary } from "../components/Inspect";
 import { QueryMenu } from "cfd-react-components";
 
@@ -248,7 +248,7 @@ function renderNetwork(data, viewVariable) {
             enter  => enter
                 .append("path")
                 .attr("d", d3.symbol()
-                    .type(((d) => symbolType(d.group)))
+                    .type(((d) => symbolType(d)))
                     .size(((d) => d.group === "Actor" ? rScale(d.nActivities): 40)))
                 .attr("stroke-width", .5)
                 .attr("stroke", "white")

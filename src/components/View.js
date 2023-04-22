@@ -39,7 +39,7 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
                 enter  => enter
                     .append("path")
                     .attr("d", d3.symbol()
-                    .type((d => networkChart? symbolType(d.group): d3.symbolCircle))
+                    .type((d => networkChart? symbolType(d): d3.symbolCircle))
                         .size(60))
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
@@ -117,7 +117,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                 enter  => enter
                     .append("path")
                     .attr("d", d3.symbol()
-                    .type(((d) => symbolType(d.group)))
+                    .type(((d) => symbolType(d)))
                         .size(60))
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
@@ -172,7 +172,7 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
                     enter  => enter
                         .append("path")
                             .attr("d", d3.symbol()
-                                .type(((d) => symbolType(d.group)))
+                                .type(((d) => symbolType(d)))
                                 .size(((d) => rScale(d.size))))
                             .attr("fill", "#cbcbcb"),
                 update => update
