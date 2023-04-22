@@ -236,7 +236,8 @@ function renderNetwork(data, viewVariable) {
                 .append("line")
                 .attr("stroke", linkColor)
                 .attr("id", d => `link-${d.index}`)
-                .attr("class", "link"),
+                .attr("class", "link")
+                .attr('marker-start', 'url(#arrow)'),
             update => update,         
             exit   => exit.remove()
         );
@@ -250,7 +251,7 @@ function renderNetwork(data, viewVariable) {
                 .attr("d", d3.symbol()
                     .type(((d) => symbolType(d)))
                     .size(((d) => d.group === "Actor" ? rScale(d.nActivities): 40)))
-                .attr("stroke-width", .5)
+                .attr("stroke-width", 1)
                 .attr("stroke", "white")
                 .attr("fill", d => applyColorScale(d, viewVariable, colorScale)),
             update => update,         

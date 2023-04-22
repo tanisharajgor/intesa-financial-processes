@@ -54,11 +54,11 @@ def main():
     # translate_text(data["MODEL NAME ITA"].unique(), os.path.join(raw_pth, "translated"), 'model', project_id)
 
     # ## Clean data
-    activitiesClean = activities_dm(data, config, raw_pth, processed_pth)
+    controlsClean = controls_dm(controls, data, config, raw_pth, processed_pth)
+    activitiesClean = activities_dm(data, controlsClean, config, raw_pth, processed_pth)
     actorsClean = actors_dm(data, config, raw_pth, processed_pth)
     risksClean = risks_dm(risks, config, raw_pth, processed_pth)
     applicationsClean = applications_dm(applications, raw_pth, processed_pth)
-    controlsClean = controls_dm(controls, config, raw_pth, processed_pth)
     level1Clean = level1_dm(data, raw_pth, processed_pth)
     level2Clean = level2_dm(data, raw_pth, processed_pth)
     level3Clean = level3_dm(data, raw_pth, processed_pth)
@@ -91,8 +91,6 @@ def main():
     activity_to_application = activity_to_application_dm(applications, activitiesClean, applicationsClean, processed_pth)
     risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
     main = main_dm(data, level1Clean, level2Clean, level3Clean, activitiesClean, actorsClean, risksClean, controlsClean, activity_to_risk, risk_to_control)
-
-    # import pdb; pdb.set_trace()
 
     network = create_network(main)
     write_json(network, os.path.join(processed_pth, "nested"), "network2")
