@@ -462,12 +462,12 @@ def main_dm(data, level1, level2, level3, activities, actors, risks, controls, a
     df = pd.merge(df, risk_to_control, how="left", on="riskID")
     df = pd.merge(df, controls, how="left", on="controlID")
 
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
 
-    dfsub = df[df.level3ID == 247]
+    # dfsub = df[df.level3ID == 247]
 
-    controlAct = dfsub[dfsub.activityType == "Control activity"].activityGUID.unique()
-    dfsub[dfsub.controlGUID.isin(controlAct)]
+    # controlAct = dfsub[dfsub.activityType == "Control activity"].activityGUID.unique()
+    # dfsub[dfsub.controlGUID.isin(controlAct)]
 
     df = df.drop(["level1GUID", "level2GUID", "level3GUID", "modelGUID", "activityGUID", "actorGUID"], axis = 1)
 

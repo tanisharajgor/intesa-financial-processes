@@ -253,8 +253,8 @@ def create_network(data):
         for l in activitiesID:
             row = {"id": int(l),
                     "group": "Activity",
-                    "name": df[df.activityID == l].activity.iloc[0],
                     "type": df[df.activityID == l].activityType.iloc[0],
+                    "name": df[df.activityID == l].activity.iloc[0],
                     "nActors": int(df[df.activityID == l].actorID.nunique()),
                     "actorsID": df[df.activityID == l].actorID.unique().tolist(),
                     "levels": levelsObject(df[df.activityID == l]),
@@ -285,7 +285,8 @@ def create_network(data):
 
         for k in controlID:
             row = {"id": int(k),
-                   "group": "Control",
+                   "group": "Activity",
+                   "type": "Control activity",
                    "name": df[df.controlID == k].control.iloc[0],
                    "controlType": {
                         "controlPeriodocity": df[df.controlID == k].controlPeriodocity.iloc[0],
@@ -298,6 +299,12 @@ def create_network(data):
                 }
 
             nodes.append(row)
+
+        import pdb; pdb.set_trace()
+        # 123502 controlID
+        # 13622.0 riskID
+        # 123503 activityID
+        #  1002771, 1000604, 1000606 actorID
 
         linkData = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)][['actorID', 'activityID']].drop_duplicates()
 

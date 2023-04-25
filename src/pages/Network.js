@@ -63,12 +63,55 @@ function highlightNetworkNodes(data, d) {
     }
 }
 
+function tooltipType(d) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text("Type: ")
+        t.append("span").attr("class", "layout_item value").text(`${d.type}`)
+}
+
+function tooltipGroup(d) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text(`${d.group}: `)
+        t.append("span").attr("class", "layout_item value").text(`${d.name}`)
+}
+
+function tooltipNActor(nActor) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text("# actors")
+        t.append("span").attr("class", "layout_item value").text(`${nActor}`)
+}
+
+function tooltipNActivity(nActivity) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text("# activities")
+        t.append("span").attr("class", "layout_item value").text(`${nActivity}`)
+}
+
+function tooltipNRisk(nRisk) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text("# risks")
+        t.append("span").attr("class", "layout_item value").text(`${nRisk}`)
+}
+
+function tooltipNControl(nControl) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text("# risks")
+        t.append("span").attr("class", "layout_item value").text(`${nControl}`)
+}
+
 function tooltipText(data, d) {
     if (d.group === "Actor") {
 
         let activityIds = filterLinksSourceToTarget(data.links, [d.id]);
         let riskIds = filterLinksSourceToTarget(data.links, activityIds);
         let controlIds = filterLinksSourceToTarget(data.links, riskIds);
+            console.log(d)
+
+        // tooltipType(d);
+        // tooltipGroup(d);
+        // tooltipNActivity(d.actorType.nActivity);
+        // tooltipNRisk(d.actorType.nRisk);
+        // tooltipNControl(d.actorType.nControl);
 
         return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # activities: ${activityIds.length} <br> # risks: ${riskIds.length} <br> # controls: ${controlIds.length}`;
 
@@ -78,7 +121,7 @@ function tooltipText(data, d) {
         let riskIds = filterLinksSourceToTarget(data.links, [d.id]);
         let controlIds = filterLinksSourceToTarget(data.links, riskIds);
 
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # risks: ${riskIds.length} <br> # controls: ${controlIds.length}`;
+        return `${d.id} <br> Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # risks: ${riskIds.length} <br> # controls: ${controlIds.length}`;
 
     } else if (d.group === "Risk") {
 
@@ -94,7 +137,7 @@ function tooltipText(data, d) {
         let activityIds = filterLinksTargetToSource(data.links, riskIds);
         let actorIds = filterLinksTargetToSource(data.links, activityIds);
 
-        return `${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # activity: ${activityIds.length} <br> # risks: ${riskIds.length}`;
+        return `${d.id} <br> ${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # activity: ${activityIds.length} <br> # risks: ${riskIds.length}`;
     }
 }
 
