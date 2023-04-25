@@ -236,7 +236,7 @@ def create_network(data):
 
             row = {"id": int(k),
                    "group": "Actor",
-                   "hoverID": "Actor",
+                   "viewId": "Actor",
                    "name": df[df.actorID == k].actor.iloc[0],
                    "type": df[df.actorID == k].actorType.iloc[0],
                    "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
@@ -253,7 +253,7 @@ def create_network(data):
         for l in activitiesID:
             row = {"id": int(l),
                     "group": "Activity",
-                    "hoverID": "Other activity",
+                    "viewId": "Other activity",
                     "type": df[df.activityID == l].activityType.iloc[0],
                     "name": df[df.activityID == l].activity.iloc[0],
                     "actorsID": df[df.activityID == l].actorID.unique().tolist(),
@@ -271,7 +271,7 @@ def create_network(data):
 
             row = {"id": int(m),
                     "group": "Risk",
-                    "hoverID": "Risk",
+                    "viewId": "Risk",
                     "name": df[df.riskID == m].risk.iloc[0],
                     "riskType": {
                         "financialDisclosureRisk": bool(df[df.riskID == m].financialDisclosureRisk.iloc[0]),
@@ -288,7 +288,7 @@ def create_network(data):
             row = {"id": int(k),
                    "group": "Activity",
                    "type": "Control activity",
-                   "hoverID": "Control activity",
+                   "viewId": "Control activity",
                    "name": df[df.controlID == k].control.iloc[0],
                    "activityType": {
                         "controlPeriodocity": df[df.controlID == k].controlPeriodocity.iloc[0],
