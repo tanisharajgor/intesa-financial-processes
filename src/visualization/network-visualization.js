@@ -6,6 +6,7 @@ import lookUp from "../data/processed/nested/lu.json";
 import graph from "../data/processed/nested/network2.json";
 import { Viewport } from 'pixi-viewport'
 import * as forceInABox from "force-in-a-box";
+import '@pixi/graphics-extras';
 
 export default class NetworkVisualization {
 
@@ -30,7 +31,7 @@ export default class NetworkVisualization {
   viewBy;
   yScale;
   rScale = d3.scaleLinear()
-    .range([8, 15]);
+    .range([5, 13])
 
   constructor(data = graph) {
     this.data = data;
@@ -72,11 +73,12 @@ export default class NetworkVisualization {
       worldWidth: this.width,
       worldHeight: this.height,
       passiveWheel: false,
-      interaction: this.app.renderer.plugins.interaction // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
-    })
-
-    this.app.stage.addChild(this.viewport)
-
+        interaction: this.app.renderer.plugins.interaction, // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
+        events: this.app.renderer.events
+      })
+  
+      this.app.stage.addChild(this.viewport)
+  
     this.viewport
       .pinch({ percent: 1 })
       .wheel({ percent: 0.1 })
@@ -87,7 +89,6 @@ export default class NetworkVisualization {
 
   // Initializes the links
   drawLinks() {
-
     this.containerLinks = new PIXI.Container();
 
     // Links
@@ -103,18 +104,42 @@ export default class NetworkVisualization {
   }
 
   // Initializes the nodes
-  drawNodes() {
-
-    this.rScale.domain = d3.extent(this.data.nodes, ((d) => d.nActivities === undefined ? 1: d.nActivities));
-
+  drawNodes(viewVariable) {
+    this.rScale.domain(d3.extent(this.data.nodes, ((d) => d.nActivities === undefined ? 1: d.nActivities)));
     this.containerNodes = new PIXI.Container();
 
     this.nodes = [];
     this.data.nodes.forEach((node) => {
+      const rSize = node.group === "Actor" ? this.rScale(node.nActivities): 10
+
       node.gfx = new PIXI.Graphics();
       node.gfx.lineStyle(this.strokeScale(node), 0xFFFFFF);
-      node.gfx.beginFill(0xffffff) // applyColorScale(node.riskStatus, riskVariable, this.colorScale));
-      node.gfx.drawCircle(0, 0, 5)// this.rScale(node));
+      node.gfx.beginFill(Global.applyColorScale(node, viewVariable, Global.createColorScale(viewVariable))) //0xffffff) // applyColorScale(node.riskStatus, riskVariable, this.colorScale));
+
+      switch(node.group) {
+        case "Actor":
+          node.gfx.drawCircle(0, 0, rSize);
+          node.shape = "circle"
+          break;
+        case "Activity":
+          node.gfx.drawRect(0, 0, rSize, rSize);
+          node.shape = "square"
+          break;
+        case "Control":
+          node.gfx.drawStar(0, 0, 5, rSize);
+          node.shape = "start"
+          break;
+        case "Risk":
+          node.gfx.drawRegularPolygon(0, 0, rSize, 3);
+          node.shape = "triangle"
+          break;          
+        default:
+          node.gfx.drawRegularPolygon(0, 0, rSize, 4, 1.7);
+          node.shape = "diamond"
+          break;
+      }
+      node.size = rSize
+
       node.gfx.x = this.width * 0.5;
       node.gfx.y = this.height * 0.5;
       node.gfx.interactive = true;
@@ -124,25 +149,6 @@ export default class NetworkVisualization {
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx);
-
-      // switch(node.group) {
-      //   case "Actor":
-      //     node.gfx.drawCircle(0, 0, this.rScale(node));
-      //     break;
-      //   case "Process activity":
-      //     node.gfx.drawRect(0, 0, this.rScale(node), this.rScale(node));
-      //     break;
-      //   case "Control activity":
-      //     node.gfx.drawStar(0, 0, 5, this.rScale(node));
-      //     break;
-      //   case "Common process activity":
-      //     node.gfx.drawRegularPolygon(0, 0, this.rScale(node));
-      //     break;          
-      //   default:
-      //     node.gfx.drawRect(0, 0, this.rScale(node), this.rScale(node));
-      //     node.gfx.rotation = 3.14 / 2;
-      //     break;
-      // }
     });
 
     this.viewport.addChild(this.containerNodes);
@@ -161,10 +167,11 @@ export default class NetworkVisualization {
       if (analyzeLineStyle) {
         this.links.lineStyle(2, 0x888888);
       } else {
-        this.links.lineStyle(1, 0x444444);
+        this.links.lineStyle(1, 0x888888);
       }
-      this.links.moveTo(target.x, target.y);
-      this.links.lineTo(source.x, source.y);
+
+      this.links.moveTo(target.x + (target.size / 2), target.y + (target.size / 2));
+      this.links.lineTo(source.x + (source.size / 2), source.y + (source.size / 2));
     });
 
     this.activeLinks.clear();
@@ -190,7 +197,8 @@ export default class NetworkVisualization {
         gfx.tint = 0xffffff;
         gfx.zIndex = 1;
       } else {
-        gfx.tint = 0x444444;
+        gfx.tint = 0xffffff;
+        // 0x444444;
         gfx.zIndex = 0;
       }
     });
@@ -292,7 +300,7 @@ export default class NetworkVisualization {
       .domain(["0", "1"])
       .range([0, 1.5])
 
-    return node.simulated === undefined ? "0" : scale(node.simulated);
+    return scale(node.simulated);
   }
 
   // Inspect functions ------------------------------------------------------
@@ -351,20 +359,18 @@ export default class NetworkVisualization {
     return this.simulation;
   }
 
-  draw() {
+  draw(viewVariable) {
     this.drawLinks();
-    this.drawNodes();
+    this.drawNodes(viewVariable);
   }
 
-  updateDraw() {
+  updateDraw(viewVariable) {
       this.destroyLinks();
       this.destroyNodes();
-      this.draw();
+      this.draw(viewVariable);
   }
 
   animate(analyzeLineStyle = false) {
-    //this.run();
-    //this.drag();
     this.app.ticker.add(() => {
         this.updateLinkPosition(analyzeLineStyle);
         this.updateNodePosition();
