@@ -121,7 +121,7 @@ function tooltipText(data, d) {
         let riskIds = filterLinksSourceToTarget(data.links, [d.id]);
         let controlIds = filterLinksSourceToTarget(data.links, riskIds);
 
-        return `${d.id} <br> Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # risks: ${riskIds.length} <br> # controls: ${controlIds.length}`;
+        return `<br> Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # risks: ${riskIds.length} <br> # controls: ${controlIds.length}`;
 
     } else if (d.group === "Risk") {
 
@@ -137,7 +137,7 @@ function tooltipText(data, d) {
         let activityIds = filterLinksTargetToSource(data.links, riskIds);
         let actorIds = filterLinksTargetToSource(data.links, activityIds);
 
-        return `${d.id} <br> ${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # activity: ${activityIds.length} <br> # risks: ${riskIds.length}`;
+        return `<br> ${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # activity: ${activityIds.length} <br> # risks: ${riskIds.length}`;
     }
 }
 
@@ -183,7 +183,7 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
             .attr("stroke", d => l1.includes(d.index)? "white": linkColor)
             .attr("stroke-width", d => l1.includes(d.index)? 1: .5);
 
-        updateSymbolHoverValue(d.group);
+        updateSymbolHoverValue(d.viewId);
         updateViewHoverValue(applyColorScale(d, viewVariable, colorScale));
 
     }).on("mouseout", function() {

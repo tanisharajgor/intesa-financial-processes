@@ -12,16 +12,16 @@ let riskLegendId = "Risk-Legend";
 let shapeLegendId = "Shape-Legend";
 let sizeLegendId = "Size-Legend";
 
-const shapeData = [{"group": "Actor", "type": "Actor"},
-                   {"group": "Control", "type": "Control activity"},
-                   {"group": "Activity", "type": "Other activity"},
-                   {"group": "Risk", "type": "Risk"}];
+const shapeData = [{"group": "Actor", "viewId": "Actor"},
+                   {"group": "Control", "viewId": "Control activity"},
+                   {"group": "Activity", "viewId": "Other activity"},
+                   {"group": "Risk", "viewId": "Risk"}];
 
-const sizeData = [{"size": 1, "group": "Actor"},
-                  {"size": 25, "group": "Actor"},
-                  {"size": 50, "group": "Actor"},
-                  {"size": 100, "group": "Actor"},
-                  {"size": 300, "group": "Actor"}];
+const sizeData = [{"size": 1, "group": "Actor", "viewId": "Actor"},
+                  {"size": 25, "group": "Actor", "viewId": "Actor"},
+                  {"size": 50, "group": "Actor", "viewId": "Actor"},
+                  {"size": 100, "group": "Actor", "viewId": "Actor"},
+                  {"size": 300, "group": "Actor", "viewId": "Actor"}];
 
 function drawRiskLegend(t, viewHoverValue, networkChart) {
 
@@ -29,7 +29,7 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
 
     let riskData = []
     for (let i in t.labels) {
-        riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i], "color": colorScale(t.values[i]), "group": t.group})
+        riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i], "color": colorScale(t.values[i]), "viewId": t.viewId})
     }
 
     svg
@@ -112,7 +112,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
 
         svg
             .selectAll("path")
-            .data(shapeData, d => d.group)
+            .data(shapeData, d => d.viewId)
             .join(
                 enter  => enter
                     .append("path")
@@ -129,7 +129,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
 
         svg
             .selectAll("text")
-            .data(shapeData, d => d.type)
+            .data(shapeData, d => d.viewId)
             .join(
                 enter  => enter
                     .append("text")
@@ -137,7 +137,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .attr("y", ((d, i) => i*23 + 20))
                     .attr("fill", "#cbcbcb")
                     .attr("font-size", 12)
-                    .text((d) => d.type),
+                    .text((d) => d.viewId),
                 update => update
                     .attr('opacity', ((d) => d.group === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
