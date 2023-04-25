@@ -45,7 +45,7 @@ export const viewVariables = {
         //     group: "Risk"
         // }
     },
-    "controlType": {
+    "controlActivityType": {
         "controlType": {
             label: "Control type",
             values: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
@@ -64,8 +64,8 @@ export const viewVariables = {
     }
 }
 
-export const viewVars = Object.keys(viewVariables['riskType']).concat(Object.keys(viewVariables['controlType']));
-export const viewObj = {...viewVariables['riskType'], ...viewVariables['controlType']}
+export const viewVars = Object.keys(viewVariables['riskType']).concat(Object.keys(viewVariables['controlActivityType']));
+export const viewObj = {...viewVariables['riskType'], ...viewVariables['controlActivityType']}
 
 // Creates a colorScales for different types of variables
 // yellow: #FFC41F
@@ -87,7 +87,7 @@ export function createColorScale(variable) {
             .domain(t.values)
             .range(interp)
 
-        return s
+        return s;
 
     } else {
 
@@ -95,23 +95,23 @@ export function createColorScale(variable) {
             .domain(t.values)
             .range(t.colors);
 
-        return scale
+        return scale;
     }
 }
 
 export function applyColorScale(d, viewVariable, colorScale) {
 
-    if (d.group === "Risk") {
+    if (d.hoverID === "Risk") {
 
         if (Object.keys(viewVariables['riskType']).includes(viewVariable)) {
             return d[viewVariable] === "NA" ? naColor : colorScale(d['riskType'][viewVariable]);
         } else {
             return naColor;
         }
-    } else if (d.group === "Control") {
+    } else if (d.hoverID === "Control Activity") {
 
-        if (Object.keys(viewVariables['controlType']).includes(viewVariable)) {
-            return d[viewVariable] === "NA" ? naColor : colorScale(d['controlType'][viewVariable]);
+        if (Object.keys(viewVariables['controlActivityType']).includes(viewVariable)) {
+            return d[viewVariable] === "NA" ? naColor : colorScale(d['controlActivityType'][viewVariable]);
         } else {
             return naColor;
         }
@@ -124,8 +124,8 @@ export function applyColorScaleMode(d, viewVariable, colorScale) {
 
     if (Object.keys(viewVariables['riskType']).includes(viewVariable)) {
         return d[viewVariable] === "NA" ? naColor : colorScale(d['riskType'][viewVariable]);
-    } else if (Object.keys(viewVariables['controlType']).includes(viewVariable)) {
-        return d[viewVariable] === "NA" ? naColor : colorScale(d['controlType'][viewVariable]);
+    } else if (Object.keys(viewVariables['controlActivityType']).includes(viewVariable)) {
+        return d[viewVariable] === "NA" ? naColor : colorScale(d['controlActivityType'][viewVariable]);
     }
 }
 

@@ -305,12 +305,10 @@ function renderNetwork(data, viewVariable) {
                 .append("path")
                 .attr("d", d3.symbol()
                     .type(((d) => symbolType(d)))
-                    .size(((d) => d.group === "Actor" ? rScale(d.nActivities): 40)))
-                .attr("stroke-width", 1)
+                    .size(((d) => d.group === "Actor" ? rScale(d.actorType.nActivity): 40)))
+                .attr("stroke-width", .5)
                 .attr("stroke", "white")
-                .attr("fill", d => applyColorScale(d, viewVariable, colorScale)),
-            update => update,         
-            exit   => exit.remove()
+                .attr("fill", d => applyColorScale(d, viewVariable, colorScale))
         );
 
     simulation.alpha(1).restart();
@@ -351,8 +349,6 @@ export default function Network() {
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
     const [activityTypes, updateActivityType] = useState([...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))]);
     const [actorTypes, updateActorType] = useState([...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
-
-    // console.log(activityTypes, actorTypes)
 
     // Set-up scales
     colorScale = createColorScale(viewVariable);
