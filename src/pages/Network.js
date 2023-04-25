@@ -220,13 +220,11 @@ export default function Network() {
 
     // React Hooks
     useEffect(() => {
-        // initNetwork(data, riskVariable);
-
         networkDiagram.init(id)
-        networkDiagram.draw()
+        networkDiagram.draw(viewVariable)
         networkDiagram.animate()
-        //networkDiagram.layout()
-    }, []);
+        // networkDiagram.layout()
+    }, [viewVariable]);
 
     // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
     useEffect(() => {
