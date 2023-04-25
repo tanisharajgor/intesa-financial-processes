@@ -1,11 +1,11 @@
 import * as d3 from 'd3';
 
-export const palette = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', 
-'#e377c2', '#bcbd22', '#17becf', '#aec7e8', '#ffbb78', '#98df8a', '#ff9896', 
-'#c5b0d5', '#c49c94', '#f7b6d2', '#c7c7c7', '#dbdb8d', '#9edae5'];
+export const palette = [0x1f77b4, 0xff7f0e, 0x2ca02c, 0xd62728, 0x9467bd, 0x8c564b, 
+    0xe377c2, 0xbcbd22, 0x17becf, 0xaec7e8, 0xffbb78, 0x98df8a, 0xff9896, 
+    0xc5b0d5, 0xc49c94, 0xf7b6d2, 0xc7c7c7, 0xdbdb8d, 0x9edae5];
 
-export const naColor = "#ADADAD";
-const missingColor = "#4B4B4B";
+export const naColor = 0xADADAD;
+const missingColor = 0x4B4B4B;
 
 export const viewVariables = {
 
@@ -32,7 +32,7 @@ export const viewVariables = {
             labels: ['Financial Information Risk', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'Missing', 'NA'],
             id: [20, 21, 22, 23, 24],
             values: ['Financial Information Risk (ex 262/2005)', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'Missing', 'NA'],
-            colors: ['#ff7f0e', '#9467bd', '#2ca02c', '#e377c2', missingColor, naColor],
+            colors: [0xff7f0e, 0x9467bd, 0x2ca02c, 0xe377c2, missingColor, naColor],
             group: "Risk"
         }
         // ,
@@ -51,7 +51,7 @@ export const viewVariables = {
             values: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
             id: [1, 2, 3, 4, 5],
             labels: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
-            colors: ["#FF0000", "#FFC41F", "#0071BC", missingColor, naColor],
+            colors: [0xFF0000, 0xFFC41F, 0x0071BC, missingColor, naColor],
             group: "Control"
         },
         "controlPeriodocity": {
@@ -80,8 +80,8 @@ export function createColorScale(variable) {
             .domain(d3.extent(t.values));
 
         let interp = [3650, 365, 182, 91, 30, 7, 1, .1].map(d => scale(d))
-        interp.push(missingColor)
-        interp.push(naColor)
+        interp.push('#4B4B4B')
+        interp.push('#ADADAD')
 
         var s = d3.scaleOrdinal()
             .domain(t.values)
