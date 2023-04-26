@@ -90,10 +90,11 @@ export function createColorScale(variable) {
         return s
 
     } else {
+        const hexColors = t.colors.map(col => `#${col.toString(16)}`)
 
         const scale = d3.scaleOrdinal()
             .domain(t.values)
-            .range(t.colors);
+            .range(hexColors);
 
         return scale
     }

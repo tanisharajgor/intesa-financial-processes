@@ -209,7 +209,9 @@ export default class NetworkVisualization {
   // Destroys the links on data update
   destroyLinks() {
 
-    this.containerLinks.destroy();
+    if (this.containerLinks) {
+      this.containerLinks.destroy();
+    }
 
     if (this.links !== undefined) {
       this.links.destroy();
@@ -221,7 +223,9 @@ export default class NetworkVisualization {
 
   // Destroys the nodes on data update
   destroyNodes() {
-    this.containerNodes.destroy();
+    if (this.containerNodes) {
+      this.containerNodes.destroy();
+    }
   }
 
   // Dragging functions ------------------------------------------------------

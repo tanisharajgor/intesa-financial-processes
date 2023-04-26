@@ -52,8 +52,6 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
         const l2target = l2.map(j => j.target.id);
         let l2connectedNodeIds = [...new Set([d.id].concat(l2source.concat(l2target)))];
 
-        // console.log(l2connectedNodeIds)
-
         let connectedNodes = nodes.filter(function(i) {
             return l1connectedNodeIds.includes(i.id);
         });
@@ -223,15 +221,16 @@ export default function Network() {
         networkDiagram.init(id)
         networkDiagram.draw(viewVariable)
         networkDiagram.animate()
-        // networkDiagram.layout()
-    }, [viewVariable]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
     useEffect(() => {
+        // networkDiagram.updateDraw(viewVariable)
         renderNetwork(data, viewVariable);
         nodes = d3.selectAll(`#${id} svg path`);
         inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue);
-    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data]);
+    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data, viewVariable]);
 
     useEffect(() => {
         inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue);
