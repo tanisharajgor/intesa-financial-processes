@@ -100,12 +100,7 @@ function tooltipNControl(nControl) {
 }
 
 function tooltipText(data, d) {
-    if (d.group === "Actor") {
-
-        let activityIds = filterLinksSourceToTarget(data.links, [d.id]);
-        let riskIds = filterLinksSourceToTarget(data.links, activityIds);
-        let controlIds = filterLinksSourceToTarget(data.links, riskIds);
-            console.log(d)
+    if (d.viewId === "Actor") {
 
         // tooltipType(d);
         // tooltipGroup(d);
@@ -113,31 +108,19 @@ function tooltipText(data, d) {
         // tooltipNRisk(d.actorType.nRisk);
         // tooltipNControl(d.actorType.nControl);
 
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # activities: ${activityIds.length} <br> # risks: ${riskIds.length} <br> # controls: ${controlIds.length}`;
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # activities: ${d.actorType.nActivity} <br> # risks: ${d.actorType.nRisk} <br> # controls: ${d.actorType.nControl}`;
 
-    } else if (d.group === "Activity") {
+    } else if (d.viewId === "Other activity") {
 
-        let actorIds = filterLinksTargetToSource(data.links, [d.id]);
-        let riskIds = filterLinksSourceToTarget(data.links, [d.id]);
-        let controlIds = filterLinksSourceToTarget(data.links, riskIds);
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.activityType.nActor} <br> # risks: ${d.activityType.nRisk} <br> # controls: ${d.activityType.nControl}`;
 
-        return `<br> Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # risks: ${riskIds.length} <br> # controls: ${controlIds.length}`;
+    } else if (d.viewId === "Risk") {
+    
+        return `${d.group}: ${d.name} <br> # actors: ${d.riskType.nActor} <br> # activity: ${d.riskType.nActivity} <br> # control: ${d.riskType.nControl}`;
 
-    } else if (d.group === "Risk") {
-
-        let controlIds = filterLinksSourceToTarget(data.links, [d.id]);
-        let activityIds = filterLinksTargetToSource(data.links, [d.id]);
-        let actorIds = filterLinksTargetToSource(data.links, activityIds);
-
-        return `${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # activity: ${activityIds.length} <br> # control: ${controlIds.length}`;
-
-    } else if (d.group === "Control") {
-
-        let riskIds = filterLinksTargetToSource(data.links, [d.id]);
-        let activityIds = filterLinksTargetToSource(data.links, riskIds);
-        let actorIds = filterLinksTargetToSource(data.links, activityIds);
-
-        return `<br> ${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # activity: ${activityIds.length} <br> # risks: ${riskIds.length}`;
+    } else if (d.viewId === "Control activity") {
+    
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.activityType.nActor} <br> # risks: ${d.activityType.nRisks}`;
     }
 }
 

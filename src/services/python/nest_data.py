@@ -295,7 +295,6 @@ def create_network(data):
                         "controlCategory": df[df.controlID == k].controlCategory.iloc[0],
                         "controlType": df[df.controlID == k].controlType.iloc[0],
                         "nActor": int(df[(df.controlID == k) & (pd.isnull(df.actorID) == False)][['actorID']].drop_duplicates().shape[0]),
-                        "nActivity": int(df[(df.controlID == k) & (pd.isnull(df.activityID) == False)][['activityID']].drop_duplicates().shape[0]),
                         "nRisk": int(df[(df.controlID == k) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0])
                     }
                 }
