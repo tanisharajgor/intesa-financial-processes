@@ -5,7 +5,7 @@ import FilterType from "../components/FilterType";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
-import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues, rScale, symbolType  } from "../utils/global";
+import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues, rScale, symbolType } from "../utils/global";
 import { inspectNetworkSummary } from "../components/Inspect";
 import { QueryMenu } from "cfd-react-components";
 
@@ -63,38 +63,64 @@ function highlightNetworkNodes(data, d) {
     }
 }
 
+function tooltipType(d) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text("Type: ")
+        t.append("span").attr("class", "layout_item value").text(`${d.type}`)
+}
+
+function tooltipGroup(d) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text(`${d.group}: `)
+        t.append("span").attr("class", "layout_item value").text(`${d.name}`)
+}
+
+function tooltipNActor(nActor) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text("# actors")
+        t.append("span").attr("class", "layout_item value").text(`${nActor}`)
+}
+
+function tooltipNActivity(nActivity) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text("# activities")
+        t.append("span").attr("class", "layout_item value").text(`${nActivity}`)
+}
+
+function tooltipNRisk(nRisk) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text("# risks")
+        t.append("span").attr("class", "layout_item value").text(`${nRisk}`)
+}
+
+function tooltipNControl(nControl) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text("# risks")
+        t.append("span").attr("class", "layout_item value").text(`${nControl}`)
+}
+
 function tooltipText(data, d) {
-    if (d.group === "Actor") {
+    if (d.viewId === "Actor") {
 
-        let activityIds = filterLinksSourceToTarget(data.links, [d.id]);
-        let riskIds = filterLinksSourceToTarget(data.links, activityIds);
-        let controlIds = filterLinksSourceToTarget(data.links, riskIds);
+        // tooltipType(d);
+        // tooltipGroup(d);
+        // tooltipNActivity(d.actorType.nActivity);
+        // tooltipNRisk(d.actorType.nRisk);
+        // tooltipNControl(d.actorType.nControl);
 
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # activities: ${activityIds.length} <br> # risks: ${riskIds.length} <br> # controls: ${controlIds.length}`;
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # activities: ${d.actorType.nActivity} <br> # risks: ${d.actorType.nRisk} <br> # controls: ${d.actorType.nControl}`;
 
-    } else if (d.group === "Activity") {
+    } else if (d.viewId === "Other activity") {
 
-        let actorIds = filterLinksTargetToSource(data.links, [d.id]);
-        let riskIds = filterLinksSourceToTarget(data.links, [d.id]);
-        let controlIds = filterLinksSourceToTarget(data.links, riskIds);
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.activityType.nActor} <br> # risks: ${d.activityType.nRisk} <br> # controls: ${d.activityType.nControl}`;
 
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # risks: ${riskIds.length} <br> # controls: ${controlIds.length}`;
+    } else if (d.viewId === "Risk") {
+    
+        return `${d.group}: ${d.name} <br> # actors: ${d.riskType.nActor} <br> # activity: ${d.riskType.nActivity} <br> # control: ${d.riskType.nControl}`;
 
-    } else if (d.group === "Risk") {
-
-        let controlIds = filterLinksSourceToTarget(data.links, [d.id]);
-        let activityIds = filterLinksTargetToSource(data.links, [d.id]);
-        let actorIds = filterLinksTargetToSource(data.links, activityIds);
-
-        return `${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # activity: ${activityIds.length} <br> # control: ${controlIds.length}`;
-
-    } else if (d.group === "Control") {
-
-        let riskIds = filterLinksTargetToSource(data.links, [d.id]);
-        let activityIds = filterLinksTargetToSource(data.links, riskIds);
-        let actorIds = filterLinksTargetToSource(data.links, activityIds);
-
-        return `${d.group}: ${d.name} <br> # actors: ${actorIds.length} <br> # activity: ${activityIds.length} <br> # risks: ${riskIds.length}`;
+    } else if (d.viewId === "Control activity") {
+    
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.activityType.nActor} <br> # risks: ${d.activityType.nRisks}`;
     }
 }
 
@@ -140,7 +166,7 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
             .attr("stroke", d => l1.includes(d.index)? "white": linkColor)
             .attr("stroke-width", d => l1.includes(d.index)? 1: .5);
 
-        updateSymbolHoverValue(d.group);
+        updateSymbolHoverValue(d.viewId);
         updateViewHoverValue(applyColorScale(d, viewVariable, colorScale));
 
     }).on("mouseout", function() {
@@ -248,7 +274,8 @@ function renderNetwork(data, viewVariable) {
                 .append("line")
                 .attr("stroke", linkColor)
                 .attr("id", d => `link-${d.index}`)
-                .attr("class", "link"),
+                .attr("class", "link")
+                .attr('marker-start', 'url(#arrow)'),
             update => update,         
             exit   => exit.remove()
         );
@@ -260,13 +287,11 @@ function renderNetwork(data, viewVariable) {
             enter  => enter
                 .append("path")
                 .attr("d", d3.symbol()
-                    .type(((d) => symbolType(d.group)))
-                    .size(((d) => d.group === "Actor" ? rScale(d.nActivities): 40)))
+                    .type(((d) => symbolType(d)))
+                    .size(((d) => d.group === "Actor" ? rScale(d.actorType.nActivity): 40)))
                 .attr("stroke-width", .5)
                 .attr("stroke", "white")
-                .attr("fill", d => applyColorScale(d, viewVariable, colorScale)),
-            update => update,         
-            exit   => exit.remove()
+                .attr("fill", d => applyColorScale(d, viewVariable, colorScale))
         );
 
     simulation.alpha(1).restart();
@@ -307,8 +332,6 @@ export default function Network() {
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
     const [activityTypes, updateActivityType] = useState([...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))]);
     const [actorTypes, updateActorType] = useState([...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
-
-    // console.log(activityTypes, actorTypes)
 
     // Set-up scales
     colorScale = createColorScale(viewVariable);

@@ -12,16 +12,16 @@ let riskLegendId = "Risk-Legend";
 let shapeLegendId = "Shape-Legend";
 let sizeLegendId = "Size-Legend";
 
-const shapeData = [{"group": "Actor", "type": "Actor"},
-                      {"group": "Activity", "type": "Activity"},
-                      {"group": "Risk", "type": "Risk"},
-                      {"group": "Control", "type": "Control"}];
+const shapeData = [{"group": "Actor", "viewId": "Actor"},
+                   {"group": "Control", "viewId": "Control activity"},
+                   {"group": "Activity", "viewId": "Other activity"},
+                   {"group": "Risk", "viewId": "Risk"}];
 
-const sizeData = [{"size": 1, "group": "Actor"},
-                  {"size": 25, "group": "Actor"},
-                  {"size": 50, "group": "Actor"},
-                  {"size": 100, "group": "Actor"},
-                  {"size": 300, "group": "Actor"}];
+const sizeData = [{"size": 1, "group": "Actor", "viewId": "Actor"},
+                  {"size": 25, "group": "Actor", "viewId": "Actor"},
+                  {"size": 50, "group": "Actor", "viewId": "Actor"},
+                  {"size": 100, "group": "Actor", "viewId": "Actor"},
+                  {"size": 300, "group": "Actor", "viewId": "Actor"}];
 
 function drawRiskLegend(t, viewHoverValue, networkChart) {
 
@@ -29,7 +29,7 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
 
     let riskData = []
     for (let i in t.labels) {
-        riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i], "color": colorScale(t.values[i]), "group": t.group})
+        riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i], "color": colorScale(t.values[i]), "viewId": t.viewId})
     }
 
     svg
@@ -39,7 +39,7 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
                 enter  => enter
                     .append("path")
                     .attr("d", d3.symbol()
-                    .type((d => networkChart? symbolType(d.group): d3.symbolCircle))
+                    .type((d => networkChart? symbolType(d): d3.symbolCircle))
                         .size(60))
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
@@ -112,24 +112,24 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
 
         svg
             .selectAll("path")
-            .data(shapeData, d => d.group)
+            .data(shapeData, d => d.viewId)
             .join(
                 enter  => enter
                     .append("path")
                     .attr("d", d3.symbol()
-                    .type(((d) => symbolType(d.group)))
+                    .type(((d) => symbolType(d)))
                         .size(60))
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
                     .attr("fill", "#cbcbcb"),
                 update => update
-                    .attr('opacity', ((d) => d.group === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
+                    .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
 
         svg
             .selectAll("text")
-            .data(shapeData, d => d.type)
+            .data(shapeData, d => d.viewId)
             .join(
                 enter  => enter
                     .append("text")
@@ -137,9 +137,9 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .attr("y", ((d, i) => i*23 + 20))
                     .attr("fill", "#cbcbcb")
                     .attr("font-size", 12)
-                    .text((d) => d.type),
+                    .text((d) => d.viewId),
                 update => update
-                    .attr('opacity', ((d) => d.group === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
+                    .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
     }
 }
@@ -172,7 +172,7 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
                     enter  => enter
                         .append("path")
                             .attr("d", d3.symbol()
-                                .type(((d) => symbolType(d.group)))
+                                .type(((d) => symbolType(d)))
                                 .size(((d) => rScale(d.size))))
                             .attr("fill", "#cbcbcb"),
                 update => update

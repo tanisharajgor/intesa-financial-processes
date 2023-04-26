@@ -33,7 +33,7 @@ export const viewVariables = {
             id: [20, 21, 22, 23, 24],
             values: ['Financial Information Risk (ex 262/2005)', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'Missing', 'NA'],
             colors: ['#f28e2b', '#76b7b2', '#edc948', '#b07aa1', missingColor, naColor],
-            group: "Risk"
+            viewId: "Risk"
         }
         // ,
         // "nControl": {
@@ -45,27 +45,27 @@ export const viewVariables = {
         //     group: "Risk"
         // }
     },
-    "controlType": {
+    "activityType": {
         "controlType": {
             label: "Control type",
             values: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
             id: [1, 2, 3, 4, 5],
             labels: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
             colors: ["#FF0000", "#FFC41F", "#0071BC", missingColor, naColor],
-            group: "Control"
+            viewId: "Control activity"
         },
         "controlPeriodocity": {
             label: "Control periodicity",
             values: [3650, 365, 182, 91, 30, 7, 1, .1, 'Missing', 'NA'],
             id: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
             labels: ['Decadal', 'Annually', 'Half yearly', 'Quarterly', 'Monthly', 'Weekly', 'Daily', 'Per event', 'Missing', 'NA'],
-            group: "Control"
+            viewId: "Control activity"
         }
     }
 }
 
-export const viewVars = Object.keys(viewVariables['riskType']).concat(Object.keys(viewVariables['controlType']));
-export const viewObj = {...viewVariables['riskType'], ...viewVariables['controlType']}
+export const viewVars = Object.keys(viewVariables['riskType']).concat(Object.keys(viewVariables['activityType']));
+export const viewObj = {...viewVariables['riskType'], ...viewVariables['activityType']}
 
 // Creates a colorScales for different types of variables
 // yellow: #FFC41F
@@ -87,7 +87,7 @@ export function createColorScale(variable) {
             .domain(t.values)
             .range(interp)
 
-        return s
+        return s;
 
     } else {
 
@@ -95,23 +95,23 @@ export function createColorScale(variable) {
             .domain(t.values)
             .range(t.colors);
 
-        return scale
+        return scale;
     }
 }
 
 export function applyColorScale(d, viewVariable, colorScale) {
 
-    if (d.group === "Risk") {
+    if (d.viewId === "Risk") {
 
         if (Object.keys(viewVariables['riskType']).includes(viewVariable)) {
             return d[viewVariable] === "NA" ? naColor : colorScale(d['riskType'][viewVariable]);
         } else {
             return naColor;
         }
-    } else if (d.group === "Control") {
+    } else if (d.viewId === "Control activity") {
 
-        if (Object.keys(viewVariables['controlType']).includes(viewVariable)) {
-            return d[viewVariable] === "NA" ? naColor : colorScale(d['controlType'][viewVariable]);
+        if (Object.keys(viewVariables['activityType']).includes(viewVariable)) {
+            return d[viewVariable] === "NA" ? naColor : colorScale(d['activityType'][viewVariable]);
         } else {
             return naColor;
         }
@@ -124,8 +124,8 @@ export function applyColorScaleMode(d, viewVariable, colorScale) {
 
     if (Object.keys(viewVariables['riskType']).includes(viewVariable)) {
         return d[viewVariable] === "NA" ? naColor : colorScale(d['riskType'][viewVariable]);
-    } else if (Object.keys(viewVariables['controlType']).includes(viewVariable)) {
-        return d[viewVariable] === "NA" ? naColor : colorScale(d['controlType'][viewVariable]);
+    } else if (Object.keys(viewVariables['activityType']).includes(viewVariable)) {
+        return d[viewVariable] === "NA" ? naColor : colorScale(d['activityType'][viewVariable]);
     }
 }
 
@@ -160,14 +160,14 @@ export const activityTypeValues = ["Process activity", "Control activity", "Comm
 
 export function symbolType(d) {
 
-    if (d === "Actor") {
+    if (d.viewId === "Actor") {
         return d3.symbolSquare;
-    } else if(d === "Activity") {
-        return d3.symbolCircle;
-    } else if (d === "Risk") {
-        return d3.symbolTriangle;
-    } else if (d === "Control") {
+    } else if (d.viewId === "Control activity") {
         return d3.symbolStar;
+    } else if(d.viewId === "Other activity") {
+        return d3.symbolCircle;
+    } else if (d.viewId === "Risk") {
+        return d3.symbolTriangle;
     } else {
         return d3.symbolDiamond;
     }
