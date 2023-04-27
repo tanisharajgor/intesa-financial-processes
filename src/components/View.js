@@ -25,6 +25,8 @@ const sizeData = [{"size": 1, "group": "Actor", "viewId": "Actor"},
 
 function drawRiskLegend(t, viewHoverValue, networkChart) {
 
+    console.log(t)
+
     let svg =  d3.select(`#${riskLegendId} svg`);
 
     let riskData = []

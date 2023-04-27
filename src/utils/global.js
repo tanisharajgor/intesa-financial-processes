@@ -33,7 +33,7 @@ export const viewVariables = {
             id: [20, 21, 22, 23, 24],
             values: ['Financial Information Risk (ex 262/2005)', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'Missing', 'NA'],
             colors: [0xff7f0e, 0x9467bd, 0x2ca02c, 0xe377c2, missingColor, naColor],
-            group: "Risk"
+            viewId: "Risk"
         }
         // ,
         // "nControl": {
@@ -52,7 +52,7 @@ export const viewVariables = {
             id: [1, 2, 3, 4, 5],
             labels: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
             colors: [0xFF0000, 0xFFC41F, 0x0071BC, missingColor, naColor],
-            group: "Control"
+            viewId: "Control type"
         },
         "controlPeriodocity": {
             label: "Control periodicity",
@@ -163,7 +163,7 @@ export function symbolType(d) {
 
     if (d.viewId === "Actor") {
         return d3.symbolSquare;
-    } else if (d.viewId === "Control activity") {
+    } else if (d.viewId === "Control activity" || d.viewId === "Control type") {
         return d3.symbolStar;
     } else if(d.viewId === "Other activity") {
         return d3.symbolCircle;
