@@ -10,12 +10,16 @@ const id = "circle-packing-chart";
 let tooltip;
 let colorScale;
 
+function transform(d) {
+    return "translate(" + d.x + "," + d.y + ")";
+}
+
 export function inspectCirclePacking(data, viewVariable, updateViewHoverValue) {
 
     let inspect = d3.select(".Inspect");
     inspectHierarchySummary(inspect, data);
 
-    d3.selectAll("circle").on("mouseover", function(e, d) {
+    d3.selectAll("node").on("mouseover", function(e, d) {
 
         let thisCircle = d3.select(this);
         let x = e.layerX + 20;
@@ -41,9 +45,9 @@ export function inspectCirclePacking(data, viewVariable, updateViewHoverValue) {
 
         tooltip.style("visibility", "hidden");
 
-        d3.selectAll('circle')
+        d3.selectAll('node')
             .attr("stroke-width", .5)
-            .attr("stroke", "grey"); 
+            .attr("stroke", "white"); 
     });
 }
 
@@ -78,7 +82,8 @@ export default function CirclePacking() {
     // Draw circle packing once
     useEffect(() => {
 
-        const svg = d3.select(`#${id}`).append("svg")
+        const svg = d3.select(`#${id}`)
+            .append("svg")
             .attr("viewBox", `-${width / 2} -${height / 2} ${width} ${height}`)
             .attr("transform","rotate(-90)")
             .style("cursor", "pointer")
@@ -101,9 +106,12 @@ export default function CirclePacking() {
             .style("border", "1px solid rgba(78, 81, 85, 0.7)")
             .style("font-size", "16px");
     
+        let processData = root.descendants().slice(1).filter(d => d.data.treeLevel < 4);
+        let activityData = root.descendants().slice(1).filter(d => d.data.treeLevel === 4)
+
         const circle = svg.append("g")
             .selectAll("circle")
-            .data(root.descendants().slice(1))
+            .data(processData)
             .join("circle")
                 .attr("fill", d => applyColorScaleMode(d.data, viewVariable, colorScale))
                 .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
@@ -111,8 +119,26 @@ export default function CirclePacking() {
                 .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()))
                 .attr("stroke-width", .5)
                 .attr("stroke", "grey")
+                .attr("class", "node")
                 .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
                 .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible");
+
+        console.log(activityData)
+
+        var node = svg
+            .selectAll("path")
+            .data(activityData, d => d.data.id)
+            .join(
+                enter  => enter
+                    .append("path")
+                    .attr("class", "node")
+                    .attr("d", d3.symbol()
+                        // .type(((d) => symbolType(d)))
+                        .type(d => d3.symbolStar)
+                        .size(5))
+                    .attr("transform", transform)
+                    // .attr("fill", d => applyColorScaleMode(d, viewVariable, colorScale))
+            );
 
         zoomTo([root.x, root.y, root.r * 2]);
 
@@ -121,6 +147,7 @@ export default function CirclePacking() {
 
             view = v;
             circle.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
+            node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
             circle.attr("r", d => d.r * k);
         }
 
