@@ -161,11 +161,11 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
             "treeLevel": int(tree_level)
             }
 
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         if children is not None:
             d["children"] = subset_list(childrenIDs, children)
         else:
-            d["type"] = "Process activity"
+            d["viewId"] = df_sub[df_sub[root1ID] == id].activityType.iloc[0]
 
         array.append(d)
 

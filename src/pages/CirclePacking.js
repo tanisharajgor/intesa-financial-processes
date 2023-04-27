@@ -137,7 +137,7 @@ export default function CirclePacking() {
                         .type(d => d3.symbolStar)
                         .size(5))
                     .attr("transform", transform)
-                    // .attr("fill", d => applyColorScaleMode(d, viewVariable, colorScale))
+                    .attr("fill", d => applyColorScaleMode(d.data, viewVariable, colorScale))
             );
 
         zoomTo([root.x, root.y, root.r * 2]);

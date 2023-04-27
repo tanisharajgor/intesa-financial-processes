@@ -160,7 +160,7 @@ function initSizeLegend(networkChart, symbolHoverValue) {
 function drawSizeLegend(networkChart, symbolHoverValue) {
     if (networkChart) {
 
-        const h = 40;
+        const h = 50;
 
         let svg = d3.select(`#${sizeLegendId} svg`)
             .attr("height", h);

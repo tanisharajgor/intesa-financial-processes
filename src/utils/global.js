@@ -161,13 +161,13 @@ export const activityTypeValues = ["Process activity", "Control activity", "Comm
 export function symbolType(d) {
 
     if (d.viewId === "Actor") {
-        return d3.symbolSquare;
-    } else if (d.viewId === "Control activity") {
-        return d3.symbolStar;
-    } else if(d.viewId === "Other activity") {
-        return d3.symbolCircle;
-    } else if (d.viewId === "Risk") {
         return d3.symbolTriangle;
+    } else if (d.viewId === "Control activity") {
+        return d3.symbolDiamond2;
+    } else if(d.viewId === "Other activity") {
+        return d3.symbolSquare;
+    } else if (d.viewId === "Risk") {
+        return d3.symbolStar;
     } else {
         return d3.symbolDiamond;
     }
