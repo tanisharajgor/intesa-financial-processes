@@ -16,13 +16,15 @@ const linkColor = "#373d44";
 let colorScale;
 let nodes;
 let tooltip;
+let adjustmentFactor = .171
 
 var simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function(d) { return d.id; }))
-    .force("charge", d3.forceManyBody().strength(-1.65))
-    .force("center", d3.forceCenter(width / 2, height / 2).strength(1.7))
-    .force("collide", d3.forceCollide().strength(2).radius(8));
-
+    .force("charge", d3.forceManyBody().strength(-50))
+    .force("center", d3.forceCenter(width / 2, height / 2).strength(1))
+    .force("collide", d3.forceCollide().strength(2).radius(8))
+    .force("x", d3.forceX().strength(0.1))
+    .force("y", d3.forceY().strength((adjustmentFactor * width) / height));
 
 function highlightNetworkNodes(data, d) {
     if (d.group === "Actor") {
