@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { createColorScale, applyColorScaleMode, createOpacityScale, symbolType } from "../utils/global";
+import { createColorScale, applyColorScaleMode, symbolType } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -12,6 +12,15 @@ let colorScale;
 
 function transform(d) {
     return "translate(" + d.x + "," + d.y + ")";
+}
+
+function createOpacityScale() {
+
+    const scale = d3.scaleOrdinal()
+        .domain([0, 1, 2, 3, 4])
+        .range([.05, .3, .4, .5, 1.00]);
+
+    return scale;
 }
 
 export function inspectCirclePacking(data, viewVariable, updateViewHoverValue) {
@@ -33,8 +42,8 @@ export function inspectCirclePacking(data, viewVariable, updateViewHoverValue) {
             .html(`${type}: ${d.data.name}`);
 
         thisCircle
-            .attr("stroke", "grey")
-            .attr("stroke-width", 1.5);
+            .attr("stroke", "white")
+            .attr("stroke-width", 1);
 
         updateViewHoverValue(applyColorScaleMode(d.data, viewVariable, colorScale));
 
@@ -123,8 +132,6 @@ export default function CirclePacking() {
                 .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
                 .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible");
 
-        console.log(activityData)
-
         var node = svg
             .selectAll("path")
             .data(activityData, d => d.data.id)
@@ -133,11 +140,10 @@ export default function CirclePacking() {
                     .append("path")
                     .attr("class", "node")
                     .attr("d", d3.symbol()
-                        .type(((d) => symbolType(d.data)))
-                        // .type(d => d3.symbolSquare)
+                        .type(d => symbolType(d.data))
                         .size(5))
                         .attr("stroke-width", .5)
-                        .attr("stroke", "grey")
+                        .attr("stroke", "white")
                     .attr("transform", transform)
                     .attr("fill", d => applyColorScaleMode(d.data, viewVariable, colorScale))
             );
@@ -151,6 +157,7 @@ export default function CirclePacking() {
             circle.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
             node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
             circle.attr("r", d => d.r * k);
+            node.attr("d", d3.symbol().type(d => symbolType(d.data)).size(5*k))
         }
 
         function zoom(event, d) {

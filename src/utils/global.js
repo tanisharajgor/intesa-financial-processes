@@ -129,15 +129,6 @@ export function applyColorScaleMode(d, viewVariable, colorScale) {
     }
 }
 
-export function createOpacityScale() {
-
-    const scale = d3.scaleOrdinal()
-        .domain([0, 1, 2, 3, 4])
-        .range([.05, .2, .3, .3, 1.00]);
-
-    return scale;
-}
-
 export function createLabelScale(viewVariable) {
 
     const scale = d3.scaleOrdinal()
