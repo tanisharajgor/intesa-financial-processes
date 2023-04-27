@@ -12,10 +12,14 @@ let riskLegendId = "Risk-Legend";
 let shapeLegendId = "Shape-Legend";
 let sizeLegendId = "Size-Legend";
 
-const shapeData = [{"group": "Actor", "viewId": "Actor"},
-                   {"group": "Control", "viewId": "Control activity"},
-                   {"group": "Activity", "viewId": "Other activity"},
-                   {"group": "Risk", "viewId": "Risk"}];
+const shapeData = [{"viewId": "Actor"},
+                   {"viewId": "Control activity"},
+                   {"viewId": "Other activity"},
+                   {"viewId": "Risk"}];
+
+const shapeData2 = [{"viewId": "Process"},
+                    {"viewId": "Control activity"},
+                    {"viewId": "Other activity"}];
 
 const sizeData = [{"size": 1, "group": "Actor", "viewId": "Actor"},
                   {"size": 25, "group": "Actor", "viewId": "Actor"},
@@ -106,9 +110,10 @@ function initShapeLegend(networkChart, symbolHoverValue) {
 }
 
 function drawShapeLegend(networkChart, symbolHoverValue) {
-    if (networkChart) {
 
-        let svg = d3.select(`#${shapeLegendId} svg`);
+    let svg = d3.select(`#${shapeLegendId} svg`);
+
+    if (networkChart) {
 
         svg
             .selectAll("path")
@@ -141,6 +146,38 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                 update => update
                     .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
+    } else {
+        svg
+        .selectAll("path")
+        .data(shapeData2, d => d.viewId)
+        .join(
+            enter  => enter
+                .append("path")
+                .attr("d", d3.symbol()
+                .type(((d) => symbolType(d)))
+                    .size(60))
+                .attr("transform", function(d, i) {
+                    return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
+                })
+                .attr("fill", "#cbcbcb"),
+            update => update
+                .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
+        );
+
+    svg
+        .selectAll("text")
+        .data(shapeData2, d => d.viewId)
+        .join(
+            enter  => enter
+                .append("text")
+                .attr("x", 25)
+                .attr("y", ((d, i) => i*23 + 20))
+                .attr("fill", "#cbcbcb")
+                .attr("font-size", 12)
+                .text((d) => d.viewId),
+            update => update
+                .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
+        );
     }
 }
 
@@ -243,7 +280,7 @@ function viewInfo(networkChart) {
     return(
         <div className="inner">
             <div className="layout_group inline">
-                {networkChart? shapeType(): <></>}
+                {shapeType()}
                 {networkChart? sizeType(): <></>}
                 {riskType()}
             </div>

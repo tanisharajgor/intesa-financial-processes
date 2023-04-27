@@ -169,6 +169,6 @@ export function symbolType(d) {
     } else if (d.viewId === "Risk") {
         return d3.symbolStar;
     } else {
-        return d3.symbolDiamond;
+        return d3.symbolCircle;
     }
 }
