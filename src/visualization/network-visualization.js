@@ -49,9 +49,11 @@ export default class NetworkVisualization {
     this.simulation = d3.forceSimulation()
     .nodes(this.data.nodes)
     .force("link", d3.forceLink().id(function(d) { return d.id; }))
-    .force("charge", d3.forceManyBody().strength(-1.65))
-    .force("center", d3.forceCenter(this.width / 2, this.height / 2).strength(1.7))
-    .force("collide", d3.forceCollide().strength(2).radius(8));
+    .force("charge", d3.forceManyBody().strength(-60))
+    .force("center", d3.forceCenter(this.width / 2, this.height / 2).strength(1))
+    .force("collide", d3.forceCollide().strength(2).radius(8))
+    .force("x", d3.forceX().strength(0.2))
+    .force("y", d3.forceY().strength((0.161 * this.width) / this.height));
 
     // create canvas
     this.app = new PIXI.Application({
@@ -118,24 +120,24 @@ export default class NetworkVisualization {
 
     this.nodes = [];
     this.data.nodes.forEach((node) => {
-      const rSize = node.group === "Actor" ? this.rScale(node.nActivities): 10
+      const rSize = node.viewId === "Actor" ? this.rScale(node.actorType.nActivity): 5
 
       node.gfx = new PIXI.Graphics();
       node.gfx.lineStyle(this.strokeScale(node), 0xFFFFFF);
       node.gfx.beginFill(Global.applyColorScale(node, viewVariable, Global.createColorScale(viewVariable)))
 
-      switch(node.group) {
-        case "Actor":
+      switch(node.viewId) {
+        case "Other activity":
           node.gfx.drawCircle(0, 0, rSize);
           node.shape = "circle"
           break;
-        case "Activity":
+        case "Actor":
           node.gfx.drawRect(0, 0, rSize, rSize);
           node.shape = "square"
           break;
-        case "Control":
+        case "Control activity":
           node.gfx.drawStar(0, 0, 5, rSize);
-          node.shape = "start"
+          node.shape = "star"
           break;
         case "Risk":
           node.gfx.drawRegularPolygon(0, 0, rSize, 3);
