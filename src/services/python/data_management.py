@@ -10,6 +10,18 @@ def dict_to_df(dictionary):
 
     return pd.DataFrame.from_dict(dictionary)
 
+def activity_id(activities, controls):
+
+    act = activities.activityGUID.unique()
+    con = controls.controlGUID.unique()
+
+    df = pd.DataFrame(data={"activityGUID": np.unique(np.concatenate((act, con))),
+                            "controlGUID": np.unique(np.concatenate((act, con)))})
+    df["activityID"] = df.groupby("activityGUID").ngroup() + 100000
+    df["controlID"] = df.groupby("controlGUID").ngroup() + 100000
+
+    return df
+
 """
 Update Ids to numeric
 param df dataframe
@@ -23,7 +35,6 @@ def num_id(df, var_name, n = 0):
     df = df[df[new_var] != -1]
 
     return df
-
 
 """
 Clean up strings
@@ -64,17 +75,20 @@ def translate_config(df, config, colName):
 Data management steps for activities
 return dataframe
 """
-def activities_dm(actors, config, raw_pth, processed_pth):
+def activities_dm(actors, controls, config, raw_pth, processed_pth):
 
     df = actors[["activityGUID", "activity", "activityType", "activityCategory"]].drop_duplicates()
     df = translate_config(df, config, 'activityType')
     df = translate_config(df, config, 'activityCategory')
+
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "activities.csv")).rename(columns={'Italian': 'activity'})
     df = pd.merge(df, dfTranslated, on="activity", how="left").drop("activity", axis=1).rename(columns={'English': "activity"})
     df = clean_strings(df, "activity")
     df = df[pd.isnull(df.activity) == False]
-    df = num_id(df, "activityGUID", 100000)
     df.activityCategory = df.activityCategory.fillna('NA')
+
+    id = activity_id(df, controls)
+    df = pd.merge(df, id[["activityGUID", "activityID"]], on="activityGUID", how="left")
 
     ## Write the cleaned data out
     df.drop('activityGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'activities' + ".csv"), index = False)
@@ -130,7 +144,7 @@ def risks_dm(risks, config, raw_pth, processed_pth):
 Data management steps for controls
 return dataframe
 """
-def controls_dm(controls, config, raw_pth, processed_pth):
+def controls_dm(controls, activities, config, raw_pth, processed_pth):
 
     df = controls.rename(columns={
                                 'Activity Name': 'control',
@@ -161,14 +175,13 @@ def controls_dm(controls, config, raw_pth, processed_pth):
     df = pd.merge(df, dfTranslated, on="control", how="left").drop("control", axis=1).rename(columns={'English': "control"})
     df = clean_strings(df, "control")
     df = df[pd.isnull(df.control) == False]
-    df = num_id(df, "controlGUID", 1000)
+
+    id = activity_id(activities[["activityGUID"]].drop_duplicates(), df)
+    df = pd.merge(df, id[["controlGUID", "controlID"]], on="controlGUID", how="left")
+
     df = df.rename(columns={'activityCategory': 'controlCategory'})
     df.controlCategory = df.controlCategory.fillna('NA')
     df['control'] = df['control'].replace(r"^ +", regex=True)
-
-    #da1a6f66-23f4-11eb-275f-001dd8b72a50
-
-    # import pdb; pdb.set_trace()
  
     ## Write the cleaned data out
     df.drop('controlGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'controls' + ".csv"), index = False)
