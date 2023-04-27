@@ -2,7 +2,7 @@ import { Accordion, AccordionHeader, AccordionDetails, MenuItem, Form, Select } 
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import lu from '../data/processed/nested/lu.json';
-import { Key } from '../component-styles/key'
+import { Key } from '../component-styles/key';
 import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
 
 // constants

@@ -80,7 +80,7 @@ export default function Navigation() {
             <NavigationLinks>
                 <LinkList>
                     <Link>
-                        <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Circle Packing</NavLink>
+                        <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Processes Ecosystem</NavLink>
                     </Link>
                     <Link>
                         <NavLink to="/Network" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Network</NavLink>

@@ -5,7 +5,7 @@ import FilterType from "../components/FilterType";
 import { useEffect, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
-import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues, rScale, symbolType  } from "../utils/global";
+import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues, rScale, symbolType } from "../utils/global";
 import { inspectNetworkSummary } from "../components/Inspect";
 import { QueryMenu } from "cfd-react-components";
 import NetworkVisualization from "../visualization/network-visualization";
@@ -24,6 +24,107 @@ var simulation = d3.forceSimulation()
     .force("center", d3.forceCenter(width / 2, height / 2).strength(1.7))
     .force("collide", d3.forceCollide().strength(2).radius(8));
 
+
+function highlightNetworkNodes(data, d) {
+    if (d.group === "Actor") {
+
+        let activityIds = filterLinksSourceToTarget(data.links, [d.id]);
+        let riskIds = filterLinksSourceToTarget(data.links, activityIds);
+        let controlIds = filterLinksSourceToTarget(data.links, riskIds);
+        let ids = controlIds.concat(riskIds.concat(activityIds.concat(d.id)));
+
+        return ids
+
+    } else if (d.group === "Activity") {
+
+        let actorIds = filterLinksTargetToSource(data.links, [d.id]);
+        let riskIds = filterLinksSourceToTarget(data.links, [d.id]);
+        let controlIds = filterLinksSourceToTarget(data.links, riskIds);
+        let ids = controlIds.concat(riskIds.concat(actorIds.concat(d.id)));
+
+        return ids;
+
+    } else if (d.group === "Risk") {
+
+        let controlIds = filterLinksSourceToTarget(data.links, [d.id]);
+        let activityIds = filterLinksTargetToSource(data.links, [d.id]);
+        let actorIds = filterLinksTargetToSource(data.links, activityIds);
+        let ids = actorIds.concat(activityIds.concat(controlIds.concat(d.id)));
+
+        return ids;
+
+    } else if (d.group === "Control") {
+
+        let riskIds = filterLinksTargetToSource(data.links, [d.id]);
+        let activityIds = filterLinksTargetToSource(data.links, riskIds);
+        let actorIds = filterLinksTargetToSource(data.links, activityIds);
+        let ids = actorIds.concat(activityIds.concat(riskIds.concat(d.id)));
+
+        return ids;
+    }
+}
+
+function tooltipType(d) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text("Type: ")
+        t.append("span").attr("class", "layout_item value").text(`${d.type}`)
+}
+
+function tooltipGroup(d) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text(`${d.group}: `)
+        t.append("span").attr("class", "layout_item value").text(`${d.name}`)
+}
+
+function tooltipNActor(nActor) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text("# actors")
+        t.append("span").attr("class", "layout_item value").text(`${nActor}`)
+}
+
+function tooltipNActivity(nActivity) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text("# activities")
+        t.append("span").attr("class", "layout_item value").text(`${nActivity}`)
+}
+
+function tooltipNRisk(nRisk) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text("# risks")
+        t.append("span").attr("class", "layout_item value").text(`${nRisk}`)
+}
+
+function tooltipNControl(nControl) {
+    let t = tooltip.append("div").attr("class", "layout_row")
+        t.append("span").attr("class", "layout_item key").text("# risks")
+        t.append("span").attr("class", "layout_item value").text(`${nControl}`)
+}
+
+function tooltipText(data, d) {
+    if (d.viewId === "Actor") {
+
+        // tooltipType(d);
+        // tooltipGroup(d);
+        // tooltipNActivity(d.actorType.nActivity);
+        // tooltipNRisk(d.actorType.nRisk);
+        // tooltipNControl(d.actorType.nControl);
+
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # activities: ${d.actorType.nActivity} <br> # risks: ${d.actorType.nRisk} <br> # controls: ${d.actorType.nControl}`;
+
+    } else if (d.viewId === "Other activity") {
+
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.activityType.nActor} <br> # risks: ${d.activityType.nRisk} <br> # controls: ${d.activityType.nControl}`;
+
+    } else if (d.viewId === "Risk") {
+    
+        return `${d.group}: ${d.name} <br> # actors: ${d.riskType.nActor} <br> # activity: ${d.riskType.nActivity} <br> # control: ${d.riskType.nControl}`;
+
+    } else if (d.viewId === "Control activity") {
+    
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.activityType.nActor} <br> # risks: ${d.activityType.nRisk}`;
+    }
+}
+
 // Tooltip
 function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue) {
 
@@ -36,31 +137,21 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
         let x = +d3.select(this).attr("x") + 20;
         let y = +d3.select(this).attr("y") - 10;
 
+        let ids = highlightNetworkNodes(data, d);
+
         let l1 = data.links
-            .filter((i) => i.source.id === d.id || i.target.id === d.id)
-
-        const l1source = l1.map(j => j.source.id);
-        const l1target = l1.map(j => j.target.id);
-        let l1connectedNodeIds = [...new Set([d.id].concat(l1source.concat(l1target)))];
-
-        l1 = l1.map((d) => d.index);
-
-        let l2 = data.links
-            .filter((i) => l1connectedNodeIds.includes(i.source.id) || l1connectedNodeIds.includes(i.target.id));
-
-        const l2source = l2.map(j => j.source.id);
-        const l2target = l2.map(j => j.target.id);
-        let l2connectedNodeIds = [...new Set([d.id].concat(l2source.concat(l2target)))];
+            .filter(d => ids.includes(d.source.id) && ids.includes(d.target.id))
+            .map((d) => d.index);
 
         let connectedNodes = nodes.filter(function(i) {
-            return l1connectedNodeIds.includes(i.id);
+            return ids.includes(i.id);
         });
 
         // Applying the aesthetic changes
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`${d.group}: ${d.name} <br> Number of connections: ${l1.length}`);
+            .html(tooltipText(data, d));
 
         d3.selectAll(`#${id} svg path`)
             .attr("opacity", .5);
@@ -76,7 +167,7 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
             .attr("stroke", d => l1.includes(d.index)? "white": linkColor)
             .attr("stroke-width", d => l1.includes(d.index)? 1: .5);
 
-        updateSymbolHoverValue(d.group);
+        updateSymbolHoverValue(d.viewId);
         updateViewHoverValue(applyColorScale(d, viewVariable, colorScale));
 
     }).on("mouseout", function() {
@@ -100,22 +191,46 @@ function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHo
     });
 }
 
+// Filters source ids and returns corresponding target ids
+function filterLinksSourceToTarget(data, ids) {
+
+    let links = data.filter(d => d.source.id === undefined ? ids.includes(d.source): ids.includes(d.source.id))
+        .map(d => d.target.id === undefined ? d.target: d.target.id);
+    links = [...new Set(links)];
+
+    return links;
+}
+
+// Filters targets ids and returns corresponding source ids
+function filterLinksTargetToSource(data, ids) {
+
+    let links = data.filter(d => d.target.id === undefined ? ids.includes(d.target): ids.includes(d.target.id))
+        .map(d => d.source.id === undefined ? d.source: d.source.id);
+    links = [...new Set(links)];
+
+    return links;
+}
+
 // Filters the data by level3ID and activity Type
 function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
+
     let dataNew = Object.assign({}, graph.find((d) => d.id === selectedLevel3ID));
-    let activityIds = dataNew.nodes.filter(d => d.group === "Activity" && activityTypesChecks.includes(d.type)).map(d => d.id);
-    let actorIds = dataNew.nodes.filter(d => d.group === "Actor" && actorTypesChecks.includes(d.type)).map(d => d.id);
-    let controlIds = dataNew.nodes.filter(d => d.group === "Control").map(d => d.id);
-    let riskIds = dataNew.nodes.filter(d => d.group === "Risk").map(d => d.id);
 
-    let ids = riskIds.concat(controlIds.concat(activityIds.concat(actorIds)));
+    let actorIdsFiltered = dataNew.nodes.filter(d => d.group === "Actor" && actorTypesChecks.includes(d.type)).map(d => d.id);
+    let activityIdsFiltered = dataNew.nodes.filter(d => d.group === "Activity" && activityTypesChecks.includes(d.type)).map(d => d.id);
 
-    let nodes = dataNew.nodes.filter(d => ids.includes(d.id));
-    let links = dataNew.links.filter(d => d.source.id === undefined ? ids.includes(d.source) : ids.includes(d.source.id));
-    links = links.filter(d => d.target.id === undefined ? ids.includes(d.target) : ids.includes(d.target.id));
+    let links = dataNew.links.filter(d => d.source.id === undefined ? actorIdsFiltered.includes(d.source) && activityIdsFiltered.includes(d.target): actorIdsFiltered.includes(d.source.id) && activityIdsFiltered.includes(d.target.id));
+    let actorIds = links.map(d => d.source.id === undefined ? d.source: d.source.id);
+    let activityIds = links.map(d => d.target.id === undefined ? d.target: d.target.id);
 
-    dataNew.nodes = nodes;
-    dataNew.links = links;
+    let riskIds = filterLinksSourceToTarget(dataNew.links, activityIds);
+    let controlIds = filterLinksSourceToTarget(dataNew.links, riskIds);
+
+    let ids = controlIds.concat(riskIds.concat(actorIds.concat(activityIds)));
+
+    dataNew.nodes = dataNew.nodes.filter(d => ids.includes(d.id));
+    dataNew.links = dataNew.links.filter(d => d.source.id === undefined ? ids.includes(d.source) && ids.includes(d.target): ids.includes(d.source.id) && ids.includes(d.target.id));
+
     return dataNew;
 }
 
@@ -129,7 +244,19 @@ function initNetwork(data, viewVariable) {
     //tooltip
     tooltip = d3.select(`#${id}`)
         .append("div")
-        .attr("class", "tooltip");
+        .attr("class", "tooltip")
+        .style("position", "absolute")
+        .style("left", "0px")
+        .style("top", "0px")
+        .style("visibility", "hidden")
+        .style("padding", "10px")
+        .style("pointer-events", "none")
+        .style("border-radius", "5px")
+        .style("background-color", "rgba(0, 0, 0, 0.65)")
+        .style("font-family", '"Helvetica Neue", Helvetica, Arial, sans-serif')
+        .style("font-weight", "normal")
+        .style("border", "1px solid rgba(78, 81, 85, 0.7)")
+        .style("font-size", "16px");
 
     renderNetwork(data, viewVariable);
 }
@@ -184,6 +311,8 @@ export default function Network() {
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
 
     const networkDiagram = new NetworkVisualization(data)
+    const [activityTypes, updateActivityType] = useState([...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))]);
+    const [actorTypes, updateActorType] = useState([...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
 
     // Set-up scales
     colorScale = createColorScale(viewVariable);
@@ -197,10 +326,16 @@ export default function Network() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // Update filter possibilities when level changes
+    useEffect(() => {
+        updateActivityType([...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))]);
+        updateActorType([...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
+    }, [selectedLevel3ID])
+
     // Filter data
     useEffect(() => {
         console.log('test1')
-        updateData(filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks))
+        updateData(filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks));
     }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks])
 
     // // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
@@ -229,8 +364,8 @@ export default function Network() {
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
-                    <FilterType typesChecks={activityTypesChecks} updateTypeChecks = {updateActivityTypeChecks} typeValues={activityTypeValues} label="Filter by Activity Type:"/>
-                    <FilterType typesChecks={actorTypesChecks} updateTypeChecks = {updateActorTypeChecks} typeValues={actorTypeValues} label="Filter by Actor Type:"/>
+                    <FilterType typesChecks={activityTypesChecks} updateTypeChecks={updateActivityTypeChecks} typeValues={activityTypes} label="Filter by Activity Type:"/>
+                    <FilterType typesChecks={actorTypesChecks} updateTypeChecks={updateActorTypeChecks} typeValues={actorTypes} label="Filter by Actor Type:"/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} id={id}/>        
             </div>        
