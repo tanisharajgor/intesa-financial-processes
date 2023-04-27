@@ -301,44 +301,26 @@ def create_network(data):
 
             nodes.append(row)
 
-        linkData = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)][['actorID', 'activityID']].drop_duplicates()
+        linkData1 = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)][['actorID', 'activityID']].rename(columns={'actorID': 'source',
+                                                                                                                                           'activityID': 'target'})
+        linkData2 = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.riskID) == False)][['activityID', 'riskID']].rename(columns={'activityID': 'source',
+                                                                                                                                        'riskID': 'target'})
+        linkData3 = df[(pd.isnull(df.riskID) == False) & (pd.isnull(df.controlID) == False)][['riskID', 'controlID']].rename(columns={'riskID': 'source',
+                                                                                                                                      'controlID': 'target'})
+        linkData4 = df[(pd.isnull(df.actorID) == False) & (pd.isnull(df.controlID) == False) & (df.controlID.isin(df.controlID))][['actorID', 'controlID']].rename(columns={'actorID': 'source',
+                                                                                                                                      'controlID': 'target'})
+        linkData = linkData1.append(linkData2)
+        linkData = linkData.append(linkData3)
+        linkData = linkData.append(linkData4).drop_duplicates()
 
         for j in range(0, linkData.shape[0]):
-            row = {"source": int(linkData.actorID.iloc[j]),
-                   "sourceType": str("Actor"),
-                   "target": int(linkData.activityID.iloc[j]),
-                   "targetType": str("Activity"),
-                   "id": str(linkData.actorID.iloc[j]) + "-" + str(linkData.activityID.iloc[j])}
+            row = {"source": int(linkData.source.iloc[j]),
+                #    "sourceType": str("Actor"),
+                   "target": int(linkData.target.iloc[j]),
+                #    "targetType": str("Activity"),
+                   "id": str(linkData.source.iloc[j]) + "-" + str(linkData.target.iloc[j])}
 
             links.append(row)
-
-        linkData = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.riskID) == False)][['activityID', 'riskID']].drop_duplicates()
-
-        for j in range(0, linkData.shape[0]):
-            row = {"source": int(linkData.activityID.iloc[j]),
-                   "sourceType": str("Activity"),
-                   "target": int(linkData.riskID.iloc[j]),
-                   "targetType": str("Risk"),
-                   "id": str(linkData.activityID.iloc[j]) + "-" + str(linkData.riskID.iloc[j])}
-
-            links.append(row)
-
-        linkData = df[(pd.isnull(df.riskID) == False) & (pd.isnull(df.controlID) == False)][['riskID', 'controlID']].drop_duplicates()
-
-        for j in range(0, linkData.shape[0]):
-            row = {"source": int(linkData.riskID.iloc[j]),
-                   "sourceType": str("Risk"),
-                   "target": int(linkData.controlID.iloc[j]),
-                   "targetType": str("Control"),
-                   "id": str(linkData.riskID.iloc[j]) + "-" + str(linkData.controlID.iloc[j])}
-
-            links.append(row)
-
-        #import pdb; pdb.set_trace()
-        # 123502 controlID
-        # 13622.0 riskID
-        # 123503 activityID
-        # 1002771, 1000604, 1000606 actorID
 
         network = {
             "id": int(i),

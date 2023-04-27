@@ -120,7 +120,7 @@ function tooltipText(data, d) {
 
     } else if (d.viewId === "Control activity") {
     
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.activityType.nActor} <br> # risks: ${d.activityType.nRisks}`;
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.activityType.nActor} <br> # risks: ${d.activityType.nRisk}`;
     }
 }
 
