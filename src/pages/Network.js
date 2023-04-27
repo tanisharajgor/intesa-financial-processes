@@ -23,6 +23,28 @@ var simulation = d3.forceSimulation()
     .force("center", d3.forceCenter(width / 2, height / 2).strength(1.7))
     .force("collide", d3.forceCollide().strength(2).radius(8));
 
+// Adapted fromhttps://observablehq.com/@d3/sticky-force-layout
+
+function dragstart() {
+    d3.select(this).classed("fixed", true);
+}
+
+function dragged(event, d) {
+    d.fx = clamp(event.x, 0, width);
+    d.fy = clamp(event.y, 0, height);
+    simulation.alpha(1).restart();
+}
+
+function click(event, d) {
+    delete d.fx;
+    delete d.fy;
+    d3.select(this).classed("fixed", false);
+    simulation.alpha(1).restart();
+}
+
+function clamp(x, lo, hi) {
+    return x < lo ? lo : x > hi ? hi : x;
+}
 
 function highlightNetworkNodes(data, d) {
     if (d.group === "Actor") {
@@ -294,6 +316,13 @@ function renderNetwork(data, viewVariable) {
                 .attr("fill", d => applyColorScale(d, viewVariable, colorScale))
         );
 
+    const drag = d3
+        .drag()
+        .on("start", dragstart)
+        .on("drag", dragged);
+
+    node.call(drag).on("click", click);
+    
     simulation.alpha(1).restart();
 
     simulation
