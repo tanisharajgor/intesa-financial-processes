@@ -142,32 +142,9 @@ function renderNetwork(data, viewVariable) {
     svg.append("g").attr("class", "nodes");
 
     var link = svg.select(".links").selectAll(".link")
-        .data(data.links, function (d) { return d.source.id + "-" + d.target.id; })
-        .join(
-            enter  => enter
-                .append("line")
-                .attr("stroke", linkColor)
-                .attr("id", d => `link-${d.index}`)
-                .attr("class", "link"),
-            update => update,         
-            exit   => exit.remove()
-        );
 
     var node = svg
         .selectAll("path")
-        .data(data.nodes, d => d.id)
-        .join(
-            enter  => enter
-                .append("path")
-                .attr("d", d3.symbol()
-                    .type(((d) => symbolType(d.group)))
-                    .size(((d) => d.group === "Actor" ? rScale(d.nActivities): 40)))
-                .attr("stroke-width", .5)
-                .attr("stroke", "white")
-                .attr("fill", d => applyColorScale(d, viewVariable, colorScale)),
-            update => update,         
-            exit   => exit.remove()
-        );
 
     simulation.alpha(1).restart();
 
@@ -211,36 +188,40 @@ export default function Network() {
     // Set-up scales
     colorScale = createColorScale(viewVariable);
 
-    // Filter data
-    useEffect(() => {
-        updateData(filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks))
-    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks])
-
     // React Hooks
     useEffect(() => {
+        console.log('test2')
         networkDiagram.init(id)
         networkDiagram.draw(viewVariable)
         networkDiagram.animate()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
+    // Filter data
     useEffect(() => {
-        // networkDiagram.updateDraw(viewVariable)
-        renderNetwork(data, viewVariable);
-        nodes = d3.selectAll(`#${id} svg path`);
-        inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue);
-    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data, viewVariable]);
+        console.log('test1')
+        updateData(filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks))
+    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks])
 
-    useEffect(() => {
-        inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue);
-    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data, viewVariable]);
+    // // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
+    // useEffect(() => {
+    //     // networkDiagram.updateDraw(viewVariable)
+    //     // renderNetwork(data, viewVariable);
+    //     // networkDiagram.animate()
+    //     networkDiagram.init(id)
+    //     nodes = d3.selectAll(`#${id} svg path`);
+    //     inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue);
+    // }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data, viewVariable]);
+
+    // useEffect(() => {
+    //     inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue);
+    // }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data, viewVariable]);
 
     // Updates the color of the nodes without restarting the network simulation
-    useEffect(() => {
-        nodes
-            .attr("fill", d => applyColorScale(d, viewVariable, colorScale));
-    }, [viewVariable]);
+    // useEffect(() => {
+    //     nodes
+    //         .attr("fill", d => applyColorScale(d, viewVariable, colorScale));
+    // }, [viewVariable]);
 
     return(
         <div className="Content">

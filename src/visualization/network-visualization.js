@@ -37,8 +37,6 @@ export default class NetworkVisualization {
     this.data = data;
     this.maxRadius = 25;
     this.nodeRadius = [1, d3.max(this.data.nodes, (d) => d.radius)];
-    this.simulation = d3.forceSimulation()
-      .nodes(this.data.nodes);
     this.value = "score";
   }
 
@@ -47,6 +45,13 @@ export default class NetworkVisualization {
     this.rootDOM = document.getElementById(selector);
     this.width = this.rootDOM.clientWidth;
     this.height = this.rootDOM.clientHeight;
+
+    this.simulation = d3.forceSimulation()
+    .nodes(this.data.nodes)
+    .force("link", d3.forceLink().id(function(d) { return d.id; }))
+    .force("charge", d3.forceManyBody().strength(-1.65))
+    .force("center", d3.forceCenter(this.width / 2, this.height / 2).strength(1.7))
+    .force("collide", d3.forceCollide().strength(2).radius(8));
 
     // create canvas
     this.app = new PIXI.Application({
@@ -101,6 +106,9 @@ export default class NetworkVisualization {
     this.activeLinks.alpha = 0.8;
     this.containerLinks.addChild(this.activeLinks);
     this.viewport.addChild(this.containerLinks);
+
+    this.simulation.force("link")
+    .links(this.data.links);
   }
 
   // Initializes the nodes
@@ -114,7 +122,7 @@ export default class NetworkVisualization {
 
       node.gfx = new PIXI.Graphics();
       node.gfx.lineStyle(this.strokeScale(node), 0xFFFFFF);
-      node.gfx.beginFill(Global.applyColorScale(node, viewVariable, Global.createColorScale(viewVariable))) //0xffffff) // applyColorScale(node.riskStatus, riskVariable, this.colorScale));
+      node.gfx.beginFill(Global.applyColorScale(node, viewVariable, Global.createColorScale(viewVariable)))
 
       switch(node.group) {
         case "Actor":
@@ -272,32 +280,6 @@ export default class NetworkVisualization {
   }
 
   // Update aesthetic functions ------------------------------------------------------
-  convertNumericHex(d) {
-    return parseInt(d.slice(1), 16)
-  }
-
-  colorScale(d, defaultColor = '#e0e0e0') {
-
-    let lu = lookUp[this.viewBy];
-    let uniqueGroups = Array.from(new Set(this.data.nodes.map((d) => d[this.viewBy])));
-    lu = lu.filter((d) => uniqueGroups.includes(d.id)).sort((a, b) => a.id - b.id);
-
-    let scale = d3.scaleOrdinal()
-      .domain(lu.map((d) => d.id))
-      .range(Global.palette);
-
-    return d === "area" || d === undefined ? this.convertNumericHex(defaultColor) : this.convertNumericHex(scale(d));
-  }
-
-  radiusScale(node) {
-    const scale = d3
-      .scaleSqrt()
-      .domain(this.nodeRadius)
-      .range([3, this.maxRadius]);
-
-    return scale(node.radius);
-  }
-
   strokeScale(node) {
     const scale = d3
       .scaleOrdinal()
@@ -366,12 +348,14 @@ export default class NetworkVisualization {
   draw(viewVariable) {
     this.drawLinks();
     this.drawNodes(viewVariable);
+    this.simulation.alpha(1).restart();
   }
 
   updateDraw(viewVariable) {
       this.destroyLinks();
       this.destroyNodes();
       this.draw(viewVariable);
+      this.animate()
   }
 
   animate(analyzeLineStyle = false) {
@@ -390,34 +374,6 @@ export default class NetworkVisualization {
     for (let n in this.diagram.data.nodes) {
         this.diagram.data.nodes[n].focus = identifiedNodes.includes(this.diagram.data.nodes[n].id);
     }
-}
-
-  layout() {
-    let w = this.width * 0.5;
-    let h = this.height * 0.5;
-
-    this.simulation
-      .alpha(1).restart()
-      .nodes(this.data.nodes)
-      .force('link', d3.forceLink().id((d) => d.id).distance(30)) // .distance(30) // .strength(0.3)
-      .force('charge', d3.forceManyBody().strength(-1.5)) // spreads things out
-      .force("center", d3.forceCenter(w / 2, h / 2))
-      .force("collide", d3.forceCollide().strength(2).radius(8))
-      .force('x', d3.forceX()
-        .x(function (d) {
-            return d.xRadial === undefined ? w : d.xRadial;
-          })
-        )
-      .force('y', d3.forceY()
-          .y(function (d) {
-              return d.yRadial === undefined ? h : d.yRadial;
-          })
-      )
-      .force("forceInABox", forceInABox()
-          .strength(0.5)
-          // .forceNodeSize(d => 10)
-          .size([this.width, this.height])
-      )
-      this.simulation.force("link").links(this.data.links);
   }
+
 }
