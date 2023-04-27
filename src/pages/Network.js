@@ -2,7 +2,7 @@ import Main from "../components/Main";
 import Navigation from "../components/Navigation";
 import FilterProcess from "../components/FilterProcess";
 import FilterType from "../components/FilterType";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
 import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues, rScale, symbolType } from "../utils/global";
@@ -310,7 +310,7 @@ export default function Network() {
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
 
-    const networkDiagram = new NetworkVisualization(data)
+    const networkDiagram = useRef(new NetworkVisualization(data))
     const [activityTypes, updateActivityType] = useState([...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))]);
     const [actorTypes, updateActorType] = useState([...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
 
@@ -319,12 +319,19 @@ export default function Network() {
 
     // React Hooks
     useEffect(() => {
-        console.log('test2')
-        networkDiagram.init(id)
-        networkDiagram.draw(viewVariable)
-        networkDiagram.animate()
+        networkDiagram.current.init(id)
+        networkDiagram.current.draw(viewVariable)
+        networkDiagram.current.animate()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // Filter data
+    useEffect(() => {
+        const filteredData = filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks)
+        updateData(filteredData);
+        networkDiagram.current.data = filteredData
+        networkDiagram.current.updateDraw(viewVariable)
+    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks])
 
     // Update filter possibilities when level changes
     useEffect(() => {
@@ -332,31 +339,9 @@ export default function Network() {
         updateActorType([...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
     }, [selectedLevel3ID])
 
-    // Filter data
     useEffect(() => {
-        console.log('test1')
-        updateData(filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks));
-    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks])
-
-    // // Renders the network and tooltip and updates when a new level3 is selected of activity is checkec on/off
-    // useEffect(() => {
-    //     // networkDiagram.updateDraw(viewVariable)
-    //     // renderNetwork(data, viewVariable);
-    //     // networkDiagram.animate()
-    //     networkDiagram.init(id)
-    //     nodes = d3.selectAll(`#${id} svg path`);
-    //     inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue);
-    // }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data, viewVariable]);
-
-    // useEffect(() => {
-    //     inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue);
-    // }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks, data, viewVariable]);
-
-    // Updates the color of the nodes without restarting the network simulation
-    // useEffect(() => {
-    //     nodes
-    //         .attr("fill", d => applyColorScale(d, viewVariable, colorScale));
-    // }, [viewVariable]);
+        networkDiagram.current.updateDraw(viewVariable)
+    }, [viewVariable])
 
     return(
         <div className="Content">

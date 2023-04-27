@@ -168,17 +168,14 @@ export default class NetworkVisualization {
   // Updating the draw functions during the animation ------------------------------------------------------
 
   // Update the links position
-  updateLinkPosition(analyzeLineStyle = false) {
+  updateLinkPosition() {
 
     this.links.clear();
     this.data.links.forEach((link) => {
       let { source, target } = link;
 
-      if (analyzeLineStyle) {
-        this.links.lineStyle(2, 0x888888);
-      } else {
-        this.links.lineStyle(1, 0x888888);
-      }
+      this.links.lineStyle(1, 0x888888);
+    
 
       this.links.moveTo(target.x + (target.size / 2), target.y + (target.size / 2));
       this.links.lineTo(source.x + (source.size / 2), source.y + (source.size / 2));
@@ -354,16 +351,16 @@ export default class NetworkVisualization {
   }
 
   updateDraw(viewVariable) {
-      this.destroyLinks();
-      this.destroyNodes();
-      this.draw(viewVariable);
-      this.animate()
+    this.destroyLinks();
+    this.destroyNodes();
+    this.draw(viewVariable);
+    this.animate()
   }
 
-  animate(analyzeLineStyle = false) {
+  animate() {
     this.app.ticker.add(() => {
-        this.updateLinkPosition(analyzeLineStyle);
-        this.updateNodePosition();
+      this.updateLinkPosition();
+      this.updateNodePosition();
     });
   }
 
