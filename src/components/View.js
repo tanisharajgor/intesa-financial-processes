@@ -82,7 +82,7 @@ function initRiskLegend(viewVariable, viewHoverValue, networkChart) {
 }
 
 // Updates the legend attributes on variable change
-function updateRiskLegend(variable, viewHoverValue) {
+function updateRiskLegend(variable, viewHoverValue, networkChart) {
 
     let t = viewObj[variable];
     let h = height + (t.values.length + 1)*20;
@@ -90,7 +90,7 @@ function updateRiskLegend(variable, viewHoverValue) {
     let svg = d3.select(`#${riskLegendId} svg`);
     svg.attr("height", h);
 
-    drawRiskLegend(t, viewHoverValue);
+    drawRiskLegend(t, viewHoverValue, networkChart);
 }
 
 function initShapeLegend(networkChart, symbolHoverValue) {
