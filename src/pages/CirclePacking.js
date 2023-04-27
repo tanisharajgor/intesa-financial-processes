@@ -143,7 +143,7 @@ export default function CirclePacking() {
                         .type(d => symbolType(d.data))
                         .size(5))
                         .attr("stroke-width", .5)
-                        .attr("stroke", "white")
+                        .attr("stroke", "#cbcbcb")
                     .attr("transform", transform)
                     .attr("fill", d => applyColorScaleMode(d.data, viewVariable, colorScale))
             );
