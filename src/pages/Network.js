@@ -10,20 +10,20 @@ import { inspectNetworkSummary } from "../components/Inspect";
 import { QueryMenu } from "cfd-react-components";
 
 const id = "network-chart";
-let width = 1000;
+let width = 950;
 let height = 600;
 const linkColor = "#373d44";
 let colorScale;
 let nodes;
 let tooltip;
-let adjustmentFactor = .171
+let adjustmentFactor = .161
 
 var simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function(d) { return d.id; }))
-    .force("charge", d3.forceManyBody().strength(-50))
+    .force("charge", d3.forceManyBody().strength(-60))
     .force("center", d3.forceCenter(width / 2, height / 2).strength(1))
     .force("collide", d3.forceCollide().strength(2).radius(8))
-    .force("x", d3.forceX().strength(0.1))
+    .force("x", d3.forceX().strength(0.2))
     .force("y", d3.forceY().strength((adjustmentFactor * width) / height));
 
 // Adapted fromhttps://observablehq.com/@d3/sticky-force-layout
