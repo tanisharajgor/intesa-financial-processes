@@ -157,7 +157,7 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
             "name": df_sub[df_sub[root1ID] == id][root1].iloc[0],
             # "childrenIDs": childrenIDs,
             "riskType": create_risk_type(df_sub),
-            "controlType": create_control_type(df_sub),
+            "activityType": create_control_type(df_sub),
             "treeLevel": int(tree_level)
             }
 
