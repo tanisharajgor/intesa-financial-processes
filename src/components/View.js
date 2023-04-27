@@ -48,7 +48,7 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
-                    .attr('fill', (d => d.color)),
+                    .attr('fill', d => d.color),
                 update => update
                     .attr('opacity', (d => viewHoverValue === undefined || d.color == viewHoverValue? 1: .3)),
                     exit   => exit.remove()

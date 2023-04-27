@@ -1,6 +1,6 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { createColorScale, applyColorScaleMode, createOpacityScale } from "../utils/global";
+import { createColorScale, applyColorScaleMode, createOpacityScale, symbolType } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
@@ -133,9 +133,11 @@ export default function CirclePacking() {
                     .append("path")
                     .attr("class", "node")
                     .attr("d", d3.symbol()
-                        // .type(((d) => symbolType(d)))
-                        .type(d => d3.symbolStar)
+                        .type(((d) => symbolType(d.data)))
+                        // .type(d => d3.symbolSquare)
                         .size(5))
+                        .attr("stroke-width", .5)
+                        .attr("stroke", "grey")
                     .attr("transform", transform)
                     .attr("fill", d => applyColorScaleMode(d.data, viewVariable, colorScale))
             );
