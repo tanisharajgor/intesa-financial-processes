@@ -317,7 +317,7 @@ export default function Network() {
     // Set-up scales
     colorScale = createColorScale(viewVariable);
 
-    // React Hooks
+    // // React Hooks
     useEffect(() => {
         networkDiagram.current.init(id)
         networkDiagram.current.draw(viewVariable)
@@ -330,6 +330,7 @@ export default function Network() {
         const filteredData = filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks)
         updateData(filteredData);
         networkDiagram.current.data = filteredData
+        networkDiagram.current.initSimulation()
         networkDiagram.current.updateDraw(viewVariable)
     }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks])
 

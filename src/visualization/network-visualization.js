@@ -40,12 +40,7 @@ export default class NetworkVisualization {
     this.value = "score";
   }
 
-  // Initializes the application
-  init(selector) {
-    this.rootDOM = document.getElementById(selector);
-    this.width = this.rootDOM.clientWidth;
-    this.height = this.rootDOM.clientHeight;
-
+  initSimulation() {
     this.simulation = d3.forceSimulation()
     .nodes(this.data.nodes)
     .force("link", d3.forceLink().id(function(d) { return d.id; }))
@@ -53,7 +48,16 @@ export default class NetworkVisualization {
     .force("center", d3.forceCenter(this.width / 2, this.height / 2).strength(1))
     .force("collide", d3.forceCollide().strength(2).radius(8))
     .force("x", d3.forceX().strength(0.2))
-    .force("y", d3.forceY().strength((0.161 * this.width) / this.height));
+    .force("y", d3.forceY().strength((0.25 * this.width) / this.height));
+  }
+
+  // Initializes the application
+  init(selector) {
+    this.rootDOM = document.getElementById(selector);
+    this.width = this.rootDOM.clientWidth;
+    this.height = this.rootDOM.clientHeight;
+
+    this.initSimulation()
 
     // create canvas
     this.app = new PIXI.Application({
