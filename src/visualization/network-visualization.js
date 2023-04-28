@@ -13,12 +13,10 @@ export default class NetworkVisualization {
   activeLinks;
   activeLink;
   app;
-  average;
   containerLabels;
   containerNodes;
   containerLinks;
   data;
-  deviation;
   height;
   inspect;
   links;
@@ -26,18 +24,13 @@ export default class NetworkVisualization {
   rootDOM;
   simulation;
   width;
-  value;
   viewport;
-  viewBy;
   yScale;
   rScale = d3.scaleLinear()
     .range([5, 13])
 
   constructor(data = graph) {
     this.data = data;
-    this.maxRadius = 25;
-    this.nodeRadius = [1, d3.max(this.data.nodes, (d) => d.radius)];
-    this.value = "score";
   }
 
   initSimulation() {
@@ -367,16 +360,4 @@ export default class NetworkVisualization {
       this.updateNodePosition();
     });
   }
-
-  updateReactParams(cluster, clusterBy, viewBy, identifiedNodes) {
-
-    this.diagram.cluster = cluster;
-    this.diagram.viewBy = viewBy;
-    this.diagram.clusterBy = clusterBy;
-
-    for (let n in this.diagram.data.nodes) {
-        this.diagram.data.nodes[n].focus = identifiedNodes.includes(this.diagram.data.nodes[n].id);
-    }
-  }
-
 }
