@@ -89,7 +89,7 @@ export default function CirclePacking() {
         circlePackingDiagram.current.draw(viewVariable)
 
         inspectCirclePacking(data, viewVariable, updateViewHoverValue);
-    }, [viewVariable])
+    }, [])
 
     // Update the visual aesthetics of the visualization that change with a user input
     useEffect(() => {
