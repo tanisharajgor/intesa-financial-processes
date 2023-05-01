@@ -16,11 +16,13 @@ export class CirclePackingDiagram {
     width;
     viewport;
     yScale;
+    zoomedNodeId
     rScale = d3.scaleLinear()
       .range([5, 13])
   
     constructor(data = graph) {
       this.data = data
+      this.zoomedNodeId = 0
     }
   
     // Initializes the application
@@ -58,18 +60,28 @@ export class CirclePackingDiagram {
         events: this.app.renderer.events
         })
   
-      this.app.stage.addChild(this.viewport)
-  
-      this.viewport
-        .pinch({ percent: 1 })
-        .wheel({ percent: 0.1 })
-        .drag()
+      this.app.stage.addChild(this.viewport)  
     }
   
     // Drawing functions ------------------------------------------------------
     
-    // Initializes the nodes
     draw(viewVariable) {
+        this.drawBackground()
+        this.drawNodes(viewVariable)
+    }
+
+    drawBackground() {
+        const bkgrd = new PIXI.Graphics();
+        bkgrd.beginFill(0xFFFFFF, 0.01)
+        bkgrd.drawRect(0, 0, this.width, this.height)
+        bkgrd.interactive = true;
+        bkgrd.on("click", (e) => this.onClick({depth: 0, id: 0}, e))
+
+        this.viewport.addChild(bkgrd)
+    }
+
+    // Initializes the nodes
+    drawNodes(viewVariable) {
         this.containerNodes = new PIXI.Container();
         this.nodes = []
 
@@ -86,12 +98,12 @@ export class CirclePackingDiagram {
             node.gfx.buttonMode = true;
             node.gfx.on("pointerover", (e) => this.pointerOver(node, e));
             node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
+            node.gfx.on("click", (e) => this.onClick(node, e))
 
             this.nodes.push(node);
-            this.containerNodes.addChild(node.gfx);            
+            this.containerNodes.addChild(node.gfx); 
         })
 
-        // this.app.stage.addChild(this.containerNodes)
         this.viewport.addChild(this.containerNodes);
     }
   
@@ -103,6 +115,27 @@ export class CirclePackingDiagram {
 
     pointerOut(node, e) {
         node.gfx.alpha = 0.1
+    }
+
+    onClick(node) {
+        console.log(node.id, this.zoomedNodeId, node)
+        const getZoomWidth = d3.scaleLinear()
+                                .range([1, 20])
+                                .domain([0, 4])
+
+        const getCenter = () => {
+            if (node.depth === 0 || node.data.id === this.zoomedNodeId) {
+                return new PIXI.Point(this.width / 2, this.height / 2)
+            } else {
+                return new PIXI.Point(node.x, node.y)
+            }
+        }
+
+        this.viewport.animate({
+            position: getCenter(),
+            scale: node.data.id === this.zoomedNodeId ? getZoomWidth(0) : getZoomWidth(node.depth),
+        })
+        this.zoomedNodeId = node.data.id
     }
   
     // Destroys the nodes on data update
