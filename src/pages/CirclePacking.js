@@ -55,44 +55,47 @@ export default function CirclePacking() {
 
     const height = 932, width = 932;
 
-    function pack(data) {
-        let x = d3.pack()
-            .size([width, height])
-            .padding(3)
-            (d3.hierarchy(data)
-            .sum(d => 1)
-            .sort((a, b) => b.value - a.value));
-
-        return x;
-    }
-
-    const root = pack(data);
-    root.sum(d => d.children ? 0: 1);
-    // console.log(root)
-    let focus = root;
-    let view;
+    const root = d3.pack()
+        .size([width, height])
+        .padding(3)
+        (d3.hierarchy(data)
+        .sum(d => 1)
+        .sort((a, b) => b.value - a.value));
 
     // Set-up scales
     colorScale = createColorScale(viewVariable);
-    const opacityScale = createOpacityScale();
-
-    // console.log(root, root.descendants())
 
     const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1)))
 
     useEffect(() => {
+        //tooltip
+        tooltip = d3.select(`#${id}`)
+            .append("div")
+            .attr("class", "tooltip")
+            .style("position", "absolute")
+            .style("left", "0px")
+            .style("top", "0px")
+            .style("visibility", "hidden")
+            .style("padding", "10px")
+            .style("pointer-events", "none")
+            .style("border-radius", "5px")
+            .style("background-color", "rgba(0, 0, 0, 0.65)")
+            .style("font-family", '"Helvetica Neue", Helvetica, Arial, sans-serif')
+            .style("font-weight", "normal")
+            .style("border", "1px solid rgba(78, 81, 85, 0.7)")
+            .style("font-size", "16px");
+
         circlePackingDiagram.current.init(id)
         circlePackingDiagram.current.draw(viewVariable)
-    }, [])
+
+        inspectCirclePacking(data, viewVariable, updateViewHoverValue);
+    }, [viewVariable])
 
     // Update the visual aesthetics of the visualization that change with a user input
     useEffect(() => {
-        d3.selectAll(`#${id} svg circle`)
-            .attr("fill", d => applyColorScaleMode(d.data, viewVariable, colorScale));
-
         circlePackingDiagram.current.updateDraw(viewVariable)
 
-        // inspectCirclePacking(data, viewVariable, updateViewHoverValue);
+        inspectCirclePacking(data, viewVariable, updateViewHoverValue);
     }, [viewVariable])
 
     return(
@@ -101,7 +104,6 @@ export default function CirclePacking() {
             <div style={{display: 'flex'}}>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id}/>
             </div>
-            {/* <div className="Query" id="FilterMenu"></div> */}
         </div>
     )
 }

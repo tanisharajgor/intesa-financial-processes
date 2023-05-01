@@ -90,7 +90,7 @@ export class CirclePackingDiagram {
             node.gfx.lineStyle(1, 0xFFFFFF, 1);
             node.gfx.beginFill(Global.applyColorScaleMode(node.data, viewVariable, Global.createColorScale(viewVariable)));
             node.gfx.lineWidth = 5;
-            node.gfx.drawCircle(0, 0, node.r); //node.radius?
+            node.gfx.drawCircle(0, 0, node.r);
             node.gfx.x = node.x;
             node.gfx.y = node.y;
             node.gfx.alpha = 0.1
