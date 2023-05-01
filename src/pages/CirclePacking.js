@@ -1,11 +1,11 @@
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import { createColorScale, applyColorScaleMode, createOpacityScale } from "../utils/global";
+import { createColorScale, applyColorScaleMode } from "../utils/global";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
 import { useEffect, useRef, useState } from "react";
 import { inspectHierarchySummary } from "../components/Inspect";
-import { CirclePackingDiagram } from "../visualization/circle-packing";
+import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
 
 const id = "circle-packing-chart";
 let tooltip;
