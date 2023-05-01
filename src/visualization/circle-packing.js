@@ -84,31 +84,25 @@ export class CirclePackingDiagram {
             node.gfx.alpha = 0.1
             node.gfx.interactive = true;
             node.gfx.buttonMode = true;
+            node.gfx.on("pointerover", (e) => this.pointerOver(node, e));
+            node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
 
             this.nodes.push(node);
             this.containerNodes.addChild(node.gfx);            
         })
 
+        // this.app.stage.addChild(this.containerNodes)
         this.viewport.addChild(this.containerNodes);
     }
   
-    // Updating the draw functions during the animation ------------------------------------------------------
-  
-    // Update the nodes position
-    updateNodePosition() {
-      this.nodes.forEach((node) => {
-        let { x, y, focus, gfx } = node;
-        gfx.x = x;
-        gfx.y = y;
-        if (focus) {
-          gfx.tint = 0xffffff;
-          gfx.zIndex = 1;
-        } else {
-          gfx.tint = 0xffffff;
-          // 0x444444;
-          gfx.zIndex = 0;
-        }
-      });
+    // Updating the draw functions on mouse interaction ------------------------------------------------------
+
+    pointerOver(node, e) {
+        node.gfx.alpha = 0.5
+    }
+
+    pointerOut(node, e) {
+        node.gfx.alpha = 0.1
     }
   
     // Destroys the nodes on data update
