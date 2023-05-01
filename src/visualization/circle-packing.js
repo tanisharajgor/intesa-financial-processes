@@ -59,7 +59,7 @@ export class CirclePackingDiagram {
         interaction: this.app.renderer.plugins.interaction, // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
         events: this.app.renderer.events
         })
-  
+
       this.app.stage.addChild(this.viewport)  
     }
   
@@ -73,7 +73,7 @@ export class CirclePackingDiagram {
     drawBackground() {
         const bkgrd = new PIXI.Graphics();
         bkgrd.beginFill(0xFFFFFF, 0.01)
-        bkgrd.drawRect(0, 0, this.width, this.height)
+        bkgrd.drawRect(-466, -466, this.width * 2, this.height * 2)
         bkgrd.interactive = true;
         bkgrd.on("click", (e) => this.onClick({depth: 0, id: 0}, e))
 
@@ -118,14 +118,16 @@ export class CirclePackingDiagram {
     }
 
     onClick(node) {
-        console.log(node.id, this.zoomedNodeId, node)
+        const currentNodeId = node.depth !== 0 ? node.data.id : 0
         const getZoomWidth = d3.scaleLinear()
                                 .range([1, 20])
                                 .domain([0, 4])
 
         const getCenter = () => {
-            if (node.depth === 0 || node.data.id === this.zoomedNodeId) {
+            if (node.depth === 0) {
                 return new PIXI.Point(this.width / 2, this.height / 2)
+            } else if (currentNodeId === this.zoomedNodeId) {
+                return new PIXI.Point(node.parent.x, node.parent.y)
             } else {
                 return new PIXI.Point(node.x, node.y)
             }
@@ -133,9 +135,10 @@ export class CirclePackingDiagram {
 
         this.viewport.animate({
             position: getCenter(),
-            scale: node.data.id === this.zoomedNodeId ? getZoomWidth(0) : getZoomWidth(node.depth),
+            scale: currentNodeId === this.zoomedNodeId ? getZoomWidth(0) : getZoomWidth(node.depth),
         })
-        this.zoomedNodeId = node.data.id
+
+        this.zoomedNodeId = currentNodeId
     }
   
     // Destroys the nodes on data update
