@@ -90,7 +90,9 @@ export default function CirclePacking() {
         d3.selectAll(`#${id} svg circle`)
             .attr("fill", d => applyColorScaleMode(d.data, viewVariable, colorScale));
 
-        inspectCirclePacking(data, viewVariable, updateViewHoverValue);
+        circlePackingDiagram.current.updateDraw(viewVariable)
+
+        // inspectCirclePacking(data, viewVariable, updateViewHoverValue);
     }, [viewVariable])
 
     return(
