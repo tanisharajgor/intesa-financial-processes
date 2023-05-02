@@ -6,6 +6,25 @@ import graph from "../data/processed/nested/network2.json";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
 
+const labelZAxisDefault = 100;
+
+const labelStyle = {
+  align: "center",
+  fill: 0xffffff,
+  fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
+  fontSize: 11,
+  padding: 5,
+  textBaseline: "middle",
+  wordWrap: true,
+  wordWrapWidth: 90,
+  leading: -2,
+  dropShadow: true, // add text drop shadow to labels
+  dropShadowAngle: 90,
+  dropShadowBlur: 5,
+  dropShadowDistance: 2,
+  dropShadowColor: 0x21252b
+}
+
 export default class NetworkVisualization {
 
   activeLinks;
@@ -23,6 +42,7 @@ export default class NetworkVisualization {
   nodes;
   rootDOM;
   simulation;
+  tooltip;
   width;
   viewport;
 
@@ -32,6 +52,7 @@ export default class NetworkVisualization {
     this.data = data;
     this.activeLink = [];
     this.activeNodes = [];
+    this.labelStyle = new PIXI.TextStyle(labelStyle);
   }
 
   initSimulation() {
@@ -296,11 +317,25 @@ export default class NetworkVisualization {
 
         return ids;
     }
-}
+  }
+
+  showTooltip(d) {
+    this.tooltip = new PIXI.Container();
+    const textMetrics = PIXI.TextMetrics.measureText(d.name, this.labelStyle);
+    const width = textMetrics.maxLineWidth + 15;
+    const height = textMetrics.lineHeight * textMetrics.lines.length + 15;
+
+    const text = new PIXI.Text(d.name, this.labelStyle);
+      text.zIndex = labelZAxisDefault;
+      text.x = d.x + width/2;
+      text.y = d.y + height/2;
+      text.anchor.set(.5, .5);
+
+    this.tooltip.addChild(text);
+    this.viewport.addChild(this.tooltip);
+  }
 
   pointerOver(d, viewVariable) {
-    
-    // this.showInspect(d);
 
     this.activeLink = this.highlightNetworkNodes(d);
     this.activeNodes = this.data.nodes.filter(z => this.activeLink.includes(z.id));
@@ -322,10 +357,10 @@ export default class NetworkVisualization {
 
     this.updateSymbolHoverValue(d.viewId);
     this.updateViewHoverValue(Global.applyColorScale(d, viewVariable, this.colorScale));
+    this.showTooltip(d);
   }
 
   pointerOut(d) {
-    // this.hideInspect(d);
 
     this.activeNodes
       .forEach((node) => {
@@ -339,6 +374,7 @@ export default class NetworkVisualization {
 
     this.updateViewHoverValue(undefined);
     this.updateSymbolHoverValue(undefined);
+    this.viewport.removeChild(this.tooltip);
   }
 
   // Main functions ------------------------------------------------------
