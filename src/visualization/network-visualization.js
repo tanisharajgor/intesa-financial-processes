@@ -14,7 +14,7 @@ const labelStyle = {
   fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
   fontSize: 11,
   padding: 5,
-  textBaseline: "middle",
+  // textBaseline: "middle",
   wordWrap: false,
   // wordWrapWidth: 65,
   leading: 1.3,
@@ -153,7 +153,6 @@ export default class NetworkVisualization {
       node.gfx.buttonMode = true;
       node.gfx.on("pointerover", () => this.pointerOver(node, viewVariable));
       node.gfx.on("pointerout", () => this.pointerOut(node));
-      // node.gfx.anchor.set(.5, .5);
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx);
@@ -322,28 +321,28 @@ export default class NetworkVisualization {
   tooltipText(d) {
     if (d.viewId === "Actor") {
 
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # activities: ${d.actorType.nActivity} <br> # risks: ${d.actorType.nRisk} <br> # controls: ${d.actorType.nControl}`;
+        return `Type: ${d.type} \n ${d.group}: ${d.name} \n # activities: ${d.actorType.nActivity} \n # risks: ${d.actorType.nRisk} \n # controls: ${d.actorType.nControl}`;
 
     } else if (d.viewId === "Other activity") {
 
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.activityType.nActor} <br> # risks: ${d.activityType.nRisk} <br> # controls: ${d.activityType.nControl}`;
+        return `Type: ${d.type} \n ${d.group}: ${d.name} \n # actors: ${d.activityType.nActor} \n # risks: ${d.activityType.nRisk} \n # controls: ${d.activityType.nControl}`;
 
     } else if (d.viewId === "Risk") {
     
-        return `${d.group}: ${d.name} <br> # actors: ${d.riskType.nActor} <br> # activity: ${d.riskType.nActivity} <br> # control: ${d.riskType.nControl}`;
+        return `${d.group}: ${d.name} \n # actors: ${d.riskType.nActor} \n # activity: ${d.riskType.nActivity} \n # control: ${d.riskType.nControl}`;
 
     } else if (d.viewId === "Control activity") {
     
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.activityType.nActor} <br> # risks: ${d.activityType.nRisk}`;
+        return `Type: ${d.type} \n ${d.group}: ${d.name} \n # actors: ${d.activityType.nActor} \n # risks: ${d.activityType.nRisk}`;
     }
   }
 
   showTooltip(d) {
     this.tooltip = new PIXI.Container();
 
-    const textMetrics = PIXI.TextMetrics.measureText(`${d.group}: ${d.name}`, this.labelStyle);
+    const textMetrics = PIXI.TextMetrics.measureText(this.tooltipText(d), this.labelStyle);
     const width = textMetrics.maxLineWidth + 15;
-    const height = textMetrics.lineHeight * textMetrics.lines.length +15
+    const height = textMetrics.lineHeight * textMetrics.lines.length + 15;
 
     // label
     const rect = new PIXI.Graphics();
@@ -360,7 +359,7 @@ export default class NetworkVisualization {
     this.tooltip.addChild(rect);
 
     // text
-    const text = new PIXI.Text(`${d.group}: ${d.name}`, this.labelStyle);
+    const text = new PIXI.Text(this.tooltipText(d), this.labelStyle);
       text.zIndex = labelZAxisDefault;
       text.x = (d.x + width/2) + 20;
       text.y = (d.y + height/2) -10;
