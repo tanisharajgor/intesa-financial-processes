@@ -11,44 +11,10 @@ import { QueryMenu } from "cfd-react-components";
 import NetworkVisualization from "../visualization/network-visualization";
 
 const id = "network-chart";
-let width = 950;
-let height = 600;
 const linkColor = "#373d44";
 let colorScale;
 let nodes;
 let tooltip;
-let adjustmentFactor = .161
-
-var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function(d) { return d.id; }))
-    .force("charge", d3.forceManyBody().strength(-60))
-    .force("center", d3.forceCenter(width / 2, height / 2).strength(1))
-    .force("collide", d3.forceCollide().strength(2).radius(8))
-    .force("x", d3.forceX().strength(0.2))
-    .force("y", d3.forceY().strength((adjustmentFactor * width) / height));
-
-// Adapted fromhttps://observablehq.com/@d3/sticky-force-layout
-
-function dragstart() {
-    d3.select(this).classed("fixed", true);
-}
-
-function dragged(event, d) {
-    d.fx = clamp(event.x, 0, width);
-    d.fy = clamp(event.y, 0, height);
-    simulation.alpha(1).restart();
-}
-
-function click(event, d) {
-    delete d.fx;
-    delete d.fy;
-    d3.select(this).classed("fixed", false);
-    simulation.alpha(1).restart();
-}
-
-function clamp(x, lo, hi) {
-    return x < lo ? lo : x > hi ? hi : x;
-}
 
 function highlightNetworkNodes(data, d) {
     if (d.group === "Actor") {
@@ -257,79 +223,6 @@ function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
     dataNew.links = dataNew.links.filter(d => d.source.id === undefined ? ids.includes(d.source) && ids.includes(d.target): ids.includes(d.source.id) && ids.includes(d.target.id));
 
     return dataNew;
-}
-
-function initNetwork(data, viewVariable) {
-    //chart svg
-    d3.select(`#${id}`)
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height);
-
-    //tooltip
-    tooltip = d3.select(`#${id}`)
-        .append("div")
-        .attr("class", "tooltip")
-        .style("position", "absolute")
-        .style("left", "0px")
-        .style("top", "0px")
-        .style("visibility", "hidden")
-        .style("padding", "10px")
-        .style("pointer-events", "none")
-        .style("border-radius", "5px")
-        .style("background-color", "rgba(0, 0, 0, 0.65)")
-        .style("font-family", '"Helvetica Neue", Helvetica, Arial, sans-serif')
-        .style("font-weight", "normal")
-        .style("border", "1px solid rgba(78, 81, 85, 0.7)")
-        .style("font-size", "16px");
-
-    renderNetwork(data, viewVariable);
-}
-
-function renderNetwork(data, viewVariable) {
-
-    var svg = d3.select(`#${id} svg`);
-
-    svg.append("g").attr("class", "links");
-    svg.append("g").attr("class", "nodes");
-
-    var link = svg.select(".links").selectAll(".link")
-
-    var node = svg
-        .selectAll("path")
-
-    const drag = d3
-        .drag()
-        .on("start", dragstart)
-        .on("drag", dragged);
-
-    node.call(drag).on("click", click);
-    
-    simulation.alpha(1).restart();
-
-    simulation
-        .nodes(data.nodes)
-        .on("tick", ticked);
-
-    simulation.force("link")
-        .links(data.links);
-
-    function transform(d) {
-        return "translate(" + d.x + "," + d.y + ")";
-    }
-
-    function ticked() {
-        link
-            .attr("x1", function(d) { return d.source.x; })
-            .attr("y1", function(d) { return d.source.y; })
-            .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; });
-
-        node.attr("transform", transform);
-
-        node.attr("x", d => d.x);
-        node.attr("y", d => d.y);
-    }
 }
 
 export default function Network() {

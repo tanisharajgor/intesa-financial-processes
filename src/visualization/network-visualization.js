@@ -34,6 +34,9 @@ export default class NetworkVisualization {
   }
 
   initSimulation() {
+
+    let adjustmentFactor = .161;
+
     this.simulation = d3.forceSimulation()
     .nodes(this.data.nodes)
     .force("link", d3.forceLink().id(function(d) { return d.id; }))
@@ -41,7 +44,7 @@ export default class NetworkVisualization {
     .force("center", d3.forceCenter(this.width / 2, this.height / 2).strength(1))
     .force("collide", d3.forceCollide().strength(2).radius(8))
     .force("x", d3.forceX().strength(0.2))
-    .force("y", d3.forceY().strength((0.25 * this.width) / this.height));
+    .force("y", d3.forceY().strength((adjustmentFactor * this.width) / this.height));
   }
 
   // Initializes the application
@@ -81,7 +84,7 @@ export default class NetworkVisualization {
         events: this.app.renderer.events
       })
   
-      this.app.stage.addChild(this.viewport)
+    this.app.stage.addChild(this.viewport)
   
     this.viewport
       .pinch({ percent: 1 })
@@ -172,7 +175,6 @@ export default class NetworkVisualization {
       let { source, target } = link;
 
       this.links.lineStyle(1, 0x888888);
-    
 
       this.links.moveTo(target.x + (target.size / 2), target.y + (target.size / 2));
       this.links.lineTo(source.x + (source.size / 2), source.y + (source.size / 2));
