@@ -148,7 +148,7 @@ export default class NetworkVisualization {
     this.links.clear();
     this.data.links.forEach((link) => {
       let { source, target } = link;
-      this.links.lineStyle(1, 0x888888);
+      this.links.lineStyle(.5, 0x888888);
       this.links.moveTo(target.x + (target.size / 2), target.y + (target.size / 2));
       this.links.lineTo(source.x + (source.size / 2), source.y + (source.size / 2));
     });
@@ -156,11 +156,6 @@ export default class NetworkVisualization {
     this.activeLinks.clear();
     const activeLinkData = this.data.links
             .filter(d => this.activeLink.includes(d.source.id) && this.activeLink.includes(d.target.id));
-
-
-//             .attr("opacity", d => l1.includes(d.index) ? 1: .5)
-//             .attr("stroke", d => l1.includes(d.index)? "white": linkColor)
-//             .attr("stroke-width", d => l1.includes(d.index)? 1: .5);
 
     activeLinkData.forEach((link) => {
       let { source, target } = link;
