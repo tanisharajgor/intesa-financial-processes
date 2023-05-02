@@ -11,68 +11,6 @@ import * as Global from "../utils/global";
 const id = "network-chart";
 const linkColor = "#373d44";
 let colorScale;
-let tooltip;
-
-function tooltipType(d) {
-    let t = tooltip.append("div").attr("class", "layout_row")
-        t.append("span").attr("class", "layout_item key").text("Type: ")
-        t.append("span").attr("class", "layout_item value").text(`${d.type}`)
-}
-
-function tooltipGroup(d) {
-    let t = tooltip.append("div").attr("class", "layout_row")
-        t.append("span").attr("class", "layout_item key").text(`${d.group}: `)
-        t.append("span").attr("class", "layout_item value").text(`${d.name}`)
-}
-
-function tooltipNActor(nActor) {
-    let t = tooltip.append("div").attr("class", "layout_row")
-        t.append("span").attr("class", "layout_item key").text("# actors")
-        t.append("span").attr("class", "layout_item value").text(`${nActor}`)
-}
-
-function tooltipNActivity(nActivity) {
-    let t = tooltip.append("div").attr("class", "layout_row")
-        t.append("span").attr("class", "layout_item key").text("# activities")
-        t.append("span").attr("class", "layout_item value").text(`${nActivity}`)
-}
-
-function tooltipNRisk(nRisk) {
-    let t = tooltip.append("div").attr("class", "layout_row")
-        t.append("span").attr("class", "layout_item key").text("# risks")
-        t.append("span").attr("class", "layout_item value").text(`${nRisk}`)
-}
-
-function tooltipNControl(nControl) {
-    let t = tooltip.append("div").attr("class", "layout_row")
-        t.append("span").attr("class", "layout_item key").text("# risks")
-        t.append("span").attr("class", "layout_item value").text(`${nControl}`)
-}
-
-function tooltipText(data, d) {
-    if (d.viewId === "Actor") {
-
-        // tooltipType(d);
-        // tooltipGroup(d);
-        // tooltipNActivity(d.actorType.nActivity);
-        // tooltipNRisk(d.actorType.nRisk);
-        // tooltipNControl(d.actorType.nControl);
-
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # activities: ${d.actorType.nActivity} <br> # risks: ${d.actorType.nRisk} <br> # controls: ${d.actorType.nControl}`;
-
-    } else if (d.viewId === "Other activity") {
-
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.activityType.nActor} <br> # risks: ${d.activityType.nRisk} <br> # controls: ${d.activityType.nControl}`;
-
-    } else if (d.viewId === "Risk") {
-    
-        return `${d.group}: ${d.name} <br> # actors: ${d.riskType.nActor} <br> # activity: ${d.riskType.nActivity} <br> # control: ${d.riskType.nControl}`;
-
-    } else if (d.viewId === "Control activity") {
-    
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.activityType.nActor} <br> # risks: ${d.activityType.nRisk}`;
-    }
-}
 
 // Filters the data by level3ID and activity Type
 function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {

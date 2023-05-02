@@ -318,6 +318,25 @@ export default class NetworkVisualization {
     }
   }
 
+  tooltipText(d) {
+    if (d.viewId === "Actor") {
+
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # activities: ${d.actorType.nActivity} <br> # risks: ${d.actorType.nRisk} <br> # controls: ${d.actorType.nControl}`;
+
+    } else if (d.viewId === "Other activity") {
+
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.activityType.nActor} <br> # risks: ${d.activityType.nRisk} <br> # controls: ${d.activityType.nControl}`;
+
+    } else if (d.viewId === "Risk") {
+    
+        return `${d.group}: ${d.name} <br> # actors: ${d.riskType.nActor} <br> # activity: ${d.riskType.nActivity} <br> # control: ${d.riskType.nControl}`;
+
+    } else if (d.viewId === "Control activity") {
+    
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.activityType.nActor} <br> # risks: ${d.activityType.nRisk}`;
+    }
+  }
+
   showTooltip(d) {
     this.tooltip = new PIXI.Container();
 
@@ -334,9 +353,9 @@ export default class NetworkVisualization {
         width, 
         height,
         5);
+    rect.lineStyle(1, 0x4e5155);
     rect.endFill();
-    rect.lineStyle(5, 0x4e5155);
-    rect.alpha = 0.7;
+    rect.alpha = 0.8;
     this.tooltip.addChild(rect);
 
     // text
