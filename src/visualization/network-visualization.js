@@ -346,6 +346,7 @@ export default class NetworkVisualization {
 
     // label
     const rect = new PIXI.Graphics();
+    rect.lineStyle(1, 0x4e5155);
     rect.beginFill(0x000000)
         .drawFilletRect(
         d.x + 20,
@@ -353,7 +354,6 @@ export default class NetworkVisualization {
         width, 
         height,
         5);
-    rect.lineStyle(1, 0x4e5155);
     rect.endFill();
     rect.alpha = 0.8;
     this.tooltip.addChild(rect);
