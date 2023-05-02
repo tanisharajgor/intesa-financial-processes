@@ -124,7 +124,7 @@ export default class NetworkVisualization {
       node.gfx = new PIXI.Graphics();
       node.gfx.lineStyle(this.strokeScale(node), 0xFFFFFF);
       node.gfx.beginFill(Global.applyColorScale(node, viewVariable, Global.createColorScale(viewVariable)))
-      Global.symbolTypePixi(node, rSize);
+      Global.symbolScalePixi(node, rSize);
 
       node.size = rSize;
 
@@ -141,7 +141,6 @@ export default class NetworkVisualization {
 
     this.viewport.addChild(this.containerNodes);
   }
-
 
   // Updating the draw functions during the animation ------------------------------------------------------
 

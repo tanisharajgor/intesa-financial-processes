@@ -1,5 +1,5 @@
 import { Form, Select, MenuItem } from "cfd-react-components";
-import { viewVars, viewObj, createColorScale, rScale, symbolType } from "../utils/global";
+import { viewVars, viewObj, createColorScale, rScale, symbolScaleD3 } from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
 import { InspectHTML } from "./Inspect";
@@ -39,7 +39,7 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
                 enter  => enter
                     .append("path")
                     .attr("d", d3.symbol()
-                    .type((d => networkChart? symbolType(d): d3.symbolCircle))
+                    .type((d => networkChart? symbolScaleD3(d): d3.symbolCircle))
                         .size(60))
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
@@ -117,7 +117,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                 enter  => enter
                     .append("path")
                     .attr("d", d3.symbol()
-                    .type(((d) => symbolType(d)))
+                    .type(((d) => symbolScaleD3(d)))
                         .size(60))
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
@@ -172,7 +172,7 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
                     enter  => enter
                         .append("path")
                             .attr("d", d3.symbol()
-                                .type(((d) => symbolType(d)))
+                                .type(((d) => symbolScaleD3(d)))
                                 .size(((d) => rScale(d.size))))
                             .attr("fill", "#cbcbcb"),
                 update => update

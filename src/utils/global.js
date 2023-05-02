@@ -160,7 +160,7 @@ export const actorTypeValues = ["Organizational unit", "Position", "Person", "Mi
 export const activityTypeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
 
 // Symbol Scale for D3
-export function symbolType(node) {
+export function symbolScaleD3(node) {
 
     if (node.viewId === "Actor") {
         return d3.symbolSquare;
@@ -176,7 +176,7 @@ export function symbolType(node) {
 }
 
 // Symbol Scale for Pixi
-export function symbolTypePixi(node, rSize) {
+export function symbolScalePixi(node, rSize) {
 
     switch(node.viewId) {
         case "Other activity":
