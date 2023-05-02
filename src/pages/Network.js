@@ -7,6 +7,8 @@ import graph from "../data/processed/nested/network2.json";
 import { QueryMenu } from "cfd-react-components";
 import NetworkVisualization from "../visualization/network-visualization";
 import * as Global from "../utils/global";
+import { inspectNetworkSummary } from "../components/Inspect";
+import * as d3 from 'd3';
 
 const id = "network-chart";
 const linkColor = "#373d44";
@@ -54,19 +56,23 @@ export default function Network() {
 
     // React Hooks
     useEffect(() => {
-        networkDiagram.current.init(id)
-        networkDiagram.current.draw(viewVariable)
-        networkDiagram.current.animate()
+        networkDiagram.current.init(id);
+        networkDiagram.current.draw(viewVariable);
+        networkDiagram.current.animate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Filter data
     useEffect(() => {
+
         const filteredData = filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks)
         updateData(filteredData);
-        networkDiagram.current.data = filteredData
-        networkDiagram.current.initSimulation()
-        networkDiagram.current.updateDraw(viewVariable)
+        networkDiagram.current.data = filteredData;
+        networkDiagram.current.initSimulation();
+        networkDiagram.current.updateDraw(viewVariable);
+
+        let inspect = d3.select(".Inspect");
+        inspectNetworkSummary(inspect, filteredData);
     }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks])
 
     // Update filter possibilities when level changes
@@ -76,7 +82,7 @@ export default function Network() {
     }, [selectedLevel3ID])
 
     useEffect(() => {
-        networkDiagram.current.updateDraw(viewVariable)
+        networkDiagram.current.updateDraw(viewVariable);
     }, [viewVariable])
 
     return(
