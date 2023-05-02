@@ -74,69 +74,6 @@ function tooltipText(data, d) {
     }
 }
 
-// Tooltip
-// function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue) {
-
-//     let inspect = d3.select(".Inspect");
-//     inspectNetworkSummary(inspect, data);
-
-//     nodes.on("mouseover", function(e, d) {
-
-//         // Data management steps
-//         let x = +d3.select(this).attr("x") + 20;
-//         let y = +d3.select(this).attr("y") - 10;
-
-//         // let ids = highlightNetworkNodes(data, d);
-
-//         let l1 = data.links
-//             .filter(d => ids.includes(d.source.id) && ids.includes(d.target.id))
-//             .map((d) => d.index);
-
-//         let connectedNodes = nodes.filter(function(i) {
-//             return ids.includes(i.id);
-//         });
-
-//         // Applying the aesthetic changes
-//         tooltip.style("visibility", "visible")
-//             .style("top", `${y}px`)
-//             .style("left", `${x}px`)
-//             .html(tooltipText(data, d));
-
-//         d3.selectAll(`#${id} svg path`)
-//             .attr("opacity", .5);
-
-//         connectedNodes
-//             .attr("stroke", "white")
-//             .attr("stroke-width", 1)
-//             .attr("opacity", 1)
-//             .raise();
-
-//         d3.selectAll(`#${id} .link`)
-//             .attr("opacity", d => l1.includes(d.index) ? 1: .5)
-//             .attr("stroke", d => l1.includes(d.index)? "white": linkColor)
-//             .attr("stroke-width", d => l1.includes(d.index)? 1: .5);
-
-//     }).on("mouseout", function() {
-
-//         inspectNetworkSummary(inspect, data);
-
-//         tooltip.style("visibility", "hidden");
-        
-//         nodes.attr("opacity", 1);
-
-//         d3.selectAll(`#${id} svg path`)
-//             .attr("stroke-width", .5)
-//             .attr("stroke", "white");
-
-//         d3.selectAll(`#${id} .link`)
-//             .attr("opacity", 1)
-//             .attr("stroke", linkColor);
-
-//         updateViewHoverValue(undefined);
-//         updateSymbolHoverValue(undefined);
-//     });
-// }
-
 // Filters the data by level3ID and activity Type
 function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
 

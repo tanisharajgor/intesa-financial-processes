@@ -9,15 +9,15 @@ import '@pixi/graphics-extras';
 const labelZAxisDefault = 100;
 
 const labelStyle = {
-  align: "center",
+  align: "left",
   fill: 0xffffff,
   fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
   fontSize: 11,
   padding: 5,
   textBaseline: "middle",
-  wordWrap: true,
-  wordWrapWidth: 90,
-  leading: -2,
+  wordWrap: false,
+  // wordWrapWidth: 65,
+  leading: 1.3,
   dropShadow: true, // add text drop shadow to labels
   dropShadowAngle: 90,
   dropShadowBlur: 5,
@@ -147,7 +147,6 @@ export default class NetworkVisualization {
       Global.symbolScalePixi(node, rSize);
 
       node.size = rSize;
-
       node.gfx.x = this.width * 0.5;
       node.gfx.y = this.height * 0.5;
       node.gfx.interactive = true;
@@ -321,14 +320,30 @@ export default class NetworkVisualization {
 
   showTooltip(d) {
     this.tooltip = new PIXI.Container();
-    const textMetrics = PIXI.TextMetrics.measureText(d.name, this.labelStyle);
-    const width = textMetrics.maxLineWidth + 15;
-    const height = textMetrics.lineHeight * textMetrics.lines.length + 15;
 
-    const text = new PIXI.Text(d.name, this.labelStyle);
+    const textMetrics = PIXI.TextMetrics.measureText(`${d.group}: ${d.name}`, this.labelStyle);
+    const width = textMetrics.maxLineWidth + 15;
+    const height = textMetrics.lineHeight * textMetrics.lines.length +15
+
+    // label
+    const rect = new PIXI.Graphics();
+    rect.beginFill(0x000000)
+        .drawFilletRect(
+        d.x + 20,
+        d.y - 10,
+        width, 
+        height,
+        5);
+    rect.endFill();
+    rect.lineStyle(5, 0x4e5155);
+    rect.alpha = 0.7;
+    this.tooltip.addChild(rect);
+
+    // text
+    const text = new PIXI.Text(`${d.group}: ${d.name}`, this.labelStyle);
       text.zIndex = labelZAxisDefault;
-      text.x = d.x + width/2;
-      text.y = d.y + height/2;
+      text.x = (d.x + width/2) + 20;
+      text.y = (d.y + height/2) -10;
       text.anchor.set(.5, .5);
 
     this.tooltip.addChild(text);
