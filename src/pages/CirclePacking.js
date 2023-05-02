@@ -67,7 +67,6 @@ export default function CirclePacking() {
 
     const root = pack(data);
     root.sum(d => d.children ? 0: 1);
-    // console.log(root)
     let focus = root;
     let view;
 
