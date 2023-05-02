@@ -116,9 +116,6 @@ function tooltipText(data, d) {
 //             .attr("stroke", d => l1.includes(d.index)? "white": linkColor)
 //             .attr("stroke-width", d => l1.includes(d.index)? 1: .5);
 
-//         updateSymbolHoverValue(d.viewId);
-//         updateViewHoverValue(applyColorScale(d, viewVariable, colorScale));
-
 //     }).on("mouseout", function() {
 
 //         inspectNetworkSummary(inspect, data);

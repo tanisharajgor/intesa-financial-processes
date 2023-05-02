@@ -10,6 +10,7 @@ export default class NetworkVisualization {
 
   activeLinks;
   activeLink;
+  activeNode;
   app;
   containerLabels;
   containerNodes;
@@ -147,22 +148,12 @@ export default class NetworkVisualization {
     this.links.clear();
     this.data.links.forEach((link) => {
       let { source, target } = link;
-
       this.links.lineStyle(1, 0x888888);
-
       this.links.moveTo(target.x + (target.size / 2), target.y + (target.size / 2));
       this.links.lineTo(source.x + (source.size / 2), source.y + (source.size / 2));
     });
 
-    console.log(this.activeLink)
     this.activeLinks.clear();
-
-    console.log(this.data.links)
-    // const activeLinkData = this.data.links.filter((d) =>
-    //   d.source.id === this.activeLink ||
-    //   d.target.id === this.activeLink
-    // );
-
     const activeLinkData = this.data.links
             .filter(d => this.activeLink.includes(d.source.id) && this.activeLink.includes(d.target.id));
 
@@ -173,7 +164,7 @@ export default class NetworkVisualization {
 
     activeLinkData.forEach((link) => {
       let { source, target } = link;
-      this.activeLinks.lineStyle(1, 0x999999); // darken the lines
+      this.activeLinks.lineStyle(1, 0xffffff); // darken the lines
       this.activeLinks.moveTo(source.x, source.y);
       this.activeLinks.lineTo(target.x, target.y);
     });
@@ -272,27 +263,6 @@ export default class NetworkVisualization {
     return scale(node.simulated);
   }
 
-  // Inspect functions ------------------------------------------------------
-
-  // showInspect(d) {
-  //   let thisCircle = d3.select(this);
-
-  //   thisCircle
-  //     .attr("stroke", "white")
-  //     .attr("stroke-width", 2);
-
-  //   d3.selectAll(`#${id} svg path`).attr("opacity", .5)
-  //   d3.select(this).attr("opacity", 1).raise();
-
-  //   d3.selectAll(`#${id} .link`)
-  //     .attr("opacity", d => b.includes(d.index) ? 1: .5)
-  //     .attr("stroke", d => b.includes(d.index)? "grey": linkColor)
-  //     .attr("stroke-width", d => b.includes(d.index)? 1.5: 1);
-
-  //   updateSymbolHoverValue(symbolScale(d));
-  //   updateRiskHoverValue(d.riskStatus[riskVariable]);
-  // }
-
   highlightNetworkNodes(d) {
     if (d.group === "Actor") {
 
@@ -333,6 +303,7 @@ export default class NetworkVisualization {
 }
 
   pointerOver(d, viewVariable) {
+    
     // this.showInspect(d);
     d.gfx.filters = [
       new GlowFilter({
@@ -344,7 +315,11 @@ export default class NetworkVisualization {
       }),
     ];
     d.gfx.zIndex = 1;
+
     this.activeLink = this.highlightNetworkNodes(d);
+    // this.activeNode = this.data.nodes.filter(function(i) {
+    //       return this.activeLink.includes(i.id);
+    //     });
 
     this.updateSymbolHoverValue(d.viewId);
     this.updateViewHoverValue(Global.applyColorScale(d, viewVariable, this.colorScale));
@@ -355,6 +330,7 @@ export default class NetworkVisualization {
     d.gfx.filters.pop();
     d.gfx.zIndex = 0;
     this.activeLink = [];
+    // this.activeNode = [];
 
     this.updateViewHoverValue(undefined);
     this.updateSymbolHoverValue(undefined);
