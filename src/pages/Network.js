@@ -5,7 +5,7 @@ import FilterType from "../components/FilterType";
 import { useEffect, useRef, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
 import * as d3 from 'd3';
-import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues, rScale, symbolType } from "../utils/global";
+import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues } from "../utils/global";
 import { inspectNetworkSummary } from "../components/Inspect";
 import { QueryMenu } from "cfd-react-components";
 import NetworkVisualization from "../visualization/network-visualization";

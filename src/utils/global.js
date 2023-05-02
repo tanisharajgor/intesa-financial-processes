@@ -159,17 +159,45 @@ export const rScale = d3.scaleSqrt()
 export const actorTypeValues = ["Organizational unit", "Position", "Person", "Missing", "External Organizational unit"];
 export const activityTypeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
 
-export function symbolType(d) {
+// Symbol Scale for D3
+export function symbolType(node) {
 
-    if (d.viewId === "Actor") {
+    if (node.viewId === "Actor") {
         return d3.symbolSquare;
-    } else if (d.viewId === "Control activity" || d.viewId === "Control type") {
+    } else if (node.viewId === "Control activity") {
         return d3.symbolStar;
-    } else if(d.viewId === "Other activity") {
+    } else if(node.viewId === "Other activity") {
         return d3.symbolCircle;
-    } else if (d.viewId === "Risk") {
+    } else if (node.viewId === "Risk") {
         return d3.symbolTriangle;
     } else {
         return d3.symbolDiamond;
+    }
+}
+
+// Symbol Scale for Pixi
+export function symbolTypePixi(node, rSize) {
+
+    switch(node.viewId) {
+        case "Other activity":
+          node.gfx.drawCircle(0, 0, rSize);
+          node.shape = "circle"
+          break;
+        case "Actor":
+          node.gfx.drawRect(0, 0, rSize, rSize);
+          node.shape = "square"
+          break;
+        case "Control activity":
+          node.gfx.drawStar(0, 0, 5, rSize);
+          node.shape = "star"
+          break;
+        case "Risk":
+          node.gfx.drawRegularPolygon(0, 0, rSize, 3);
+          node.shape = "triangle"
+          break;          
+        default:
+          node.gfx.drawRegularPolygon(0, 0, rSize, 4, 1.7);
+          node.shape = "diamond"
+          break;
     }
 }

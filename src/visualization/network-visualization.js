@@ -118,35 +118,14 @@ export default class NetworkVisualization {
 
     this.nodes = [];
     this.data.nodes.forEach((node) => {
-      console.log(node)
+
       const rSize = node.viewId === "Actor" ? Global.rScale(node.actorType.nActivity): 5;
 
       node.gfx = new PIXI.Graphics();
       node.gfx.lineStyle(this.strokeScale(node), 0xFFFFFF);
       node.gfx.beginFill(Global.applyColorScale(node, viewVariable, Global.createColorScale(viewVariable)))
+      Global.symbolTypePixi(node, rSize);
 
-      switch(node.viewId) {
-        case "Other activity":
-          node.gfx.drawCircle(0, 0, rSize);
-          node.shape = "circle"
-          break;
-        case "Actor":
-          node.gfx.drawRect(0, 0, rSize, rSize);
-          node.shape = "square"
-          break;
-        case "Control activity":
-          node.gfx.drawStar(0, 0, 5, rSize);
-          node.shape = "star"
-          break;
-        case "Risk":
-          node.gfx.drawRegularPolygon(0, 0, rSize, 3);
-          node.shape = "triangle"
-          break;          
-        default:
-          node.gfx.drawRegularPolygon(0, 0, rSize, 4, 1.7);
-          node.shape = "diamond"
-          break;
-      }
       node.size = rSize;
 
       node.gfx.x = this.width * 0.5;
