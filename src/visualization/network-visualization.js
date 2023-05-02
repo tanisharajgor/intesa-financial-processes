@@ -10,7 +10,7 @@ export default class NetworkVisualization {
 
   activeLinks;
   activeLink;
-  activeNode;
+  activeNodes;
   app;
   containerLabels;
   containerNodes;
@@ -30,6 +30,8 @@ export default class NetworkVisualization {
     this.updateSymbolHoverValue = updateSymbolHoverValue;
     this.updateViewHoverValue = updateViewHoverValue;
     this.data = data;
+    this.activeLink = [];
+    this.activeNodes = [];
   }
 
   initSimulation() {
@@ -67,7 +69,6 @@ export default class NetworkVisualization {
 
     this.app.stage.sortableChildren = true;
     this.rootDOM.appendChild(this.app.view);
-    this.activeLink = [];
 
     this.viewport = new Viewport({
       screenWidth: this.width,
@@ -300,21 +301,24 @@ export default class NetworkVisualization {
   pointerOver(d, viewVariable) {
     
     // this.showInspect(d);
-    d.gfx.filters = [
-      new GlowFilter({
-        distance: 5,
-        innerStrength: 0,
-        outerStrength: 2,
-        color: 0xffffff,
-        quality: 1,
-      }),
-    ];
-    d.gfx.zIndex = 1;
 
     this.activeLink = this.highlightNetworkNodes(d);
-    // this.activeNode = this.data.nodes.filter(function(i) {
-    //       return this.activeLink.includes(i.id);
-    //     });
+    this.activeNodes = this.data.nodes.filter(z => this.activeLink.includes(z.id));
+
+    this.activeNodes
+      .forEach((node) => {
+        let { gfx } = node;
+        gfx.filters = [
+          new GlowFilter({
+            distance: 5,
+            innerStrength: 0,
+            outerStrength: 2,
+            color: 0xffffff,
+            quality: 1,
+          }),
+        ];
+        gfx.zIndex = 1;
+      });
 
     this.updateSymbolHoverValue(d.viewId);
     this.updateViewHoverValue(Global.applyColorScale(d, viewVariable, this.colorScale));
@@ -322,10 +326,16 @@ export default class NetworkVisualization {
 
   pointerOut(d) {
     // this.hideInspect(d);
-    d.gfx.filters.pop();
-    d.gfx.zIndex = 0;
+
+    this.activeNodes
+      .forEach((node) => {
+        let { gfx } = node;
+        gfx.filters.pop();
+        gfx.zIndex = 0;
+      });
+
     this.activeLink = [];
-    // this.activeNode = [];
+    this.activeNode = [];
 
     this.updateViewHoverValue(undefined);
     this.updateSymbolHoverValue(undefined);
