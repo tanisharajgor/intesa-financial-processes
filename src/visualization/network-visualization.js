@@ -48,7 +48,7 @@ export default class NetworkVisualization {
     this.width = this.rootDOM.clientWidth*.75; //fraction of the width until with view becomes moveable and collapseable
     this.height = this.rootDOM.clientHeight;
 
-    this.initSimulation()
+    this.initSimulation();
 
     // create canvas
     this.app = new PIXI.Application({
@@ -63,6 +63,7 @@ export default class NetworkVisualization {
 
     this.app.stage.sortableChildren = true;
     this.rootDOM.appendChild(this.app.view);
+    this.activeLink = [];
 
     this.viewport = new Viewport({
       screenWidth: this.width,
@@ -72,7 +73,7 @@ export default class NetworkVisualization {
       passiveWheel: false,
         interaction: this.app.renderer.plugins.interaction, // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
         events: this.app.renderer.events
-      })
+      });
 
     this.app.stage.addChild(this.viewport);
 
@@ -151,10 +152,21 @@ export default class NetworkVisualization {
 
     console.log(this.activeLink)
     this.activeLinks.clear();
-    const activeLinkData = this.data.links.filter((d) =>
-      d.source.id === this.activeLink ||
-      d.target.id === this.activeLink
-    );
+
+    console.log(this.data.links)
+    // const activeLinkData = this.data.links.filter((d) =>
+    //   d.source.id === this.activeLink ||
+    //   d.target.id === this.activeLink
+    // );
+
+    const activeLinkData = this.data.links
+            .filter(d => this.activeLink.includes(d.source.id) && this.activeLink.includes(d.target.id));
+
+
+//             .attr("opacity", d => l1.includes(d.index) ? 1: .5)
+//             .attr("stroke", d => l1.includes(d.index)? "white": linkColor)
+//             .attr("stroke-width", d => l1.includes(d.index)? 1: .5);
+
     activeLinkData.forEach((link) => {
       let { source, target } = link;
       this.activeLinks.lineStyle(1, 0x999999); // darken the lines
@@ -261,12 +273,6 @@ export default class NetworkVisualization {
   // showInspect(d) {
   //   let thisCircle = d3.select(this);
 
-  //   const b = this.data.links
-  //       .filter((i) => i.source.id === d.id || i.target.id === d.id)
-  //       .map((d) => d.index);
-
-  //   inspectNetworkDetail(inspect, d, b);
-
   //   thisCircle
   //     .attr("stroke", "white")
   //     .attr("stroke-width", 2);
@@ -283,39 +289,39 @@ export default class NetworkVisualization {
   //   updateRiskHoverValue(d.riskStatus[riskVariable]);
   // }
 
-  highlightNetworkNodes(data, d) {
+  highlightNetworkNodes(d) {
     if (d.group === "Actor") {
 
-        let activityIds = Global.filterLinksSourceToTarget(data.links, [d.id]);
-        let riskIds = Global.filterLinksSourceToTarget(data.links, activityIds);
-        let controlIds = Global.filterLinksSourceToTarget(data.links, riskIds);
+        let activityIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
+        let riskIds = Global.filterLinksSourceToTarget(this.data.links, activityIds);
+        let controlIds = Global.filterLinksSourceToTarget(this.data.links, riskIds);
         let ids = controlIds.concat(riskIds.concat(activityIds.concat(d.id)));
 
         return ids
 
     } else if (d.group === "Activity") {
 
-        let actorIds = Global.filterLinksTargetToSource(data.links, [d.id]);
-        let riskIds = Global.filterLinksSourceToTarget(data.links, [d.id]);
-        let controlIds = Global.filterLinksSourceToTarget(data.links, riskIds);
+        let actorIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
+        let riskIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
+        let controlIds = Global.filterLinksSourceToTarget(this.data.links, riskIds);
         let ids = controlIds.concat(riskIds.concat(actorIds.concat(d.id)));
 
         return ids;
 
     } else if (d.group === "Risk") {
 
-        let controlIds = Global.filterLinksSourceToTarget(data.links, [d.id]);
-        let activityIds = Global.filterLinksTargetToSource(data.links, [d.id]);
-        let actorIds = Global.filterLinksTargetToSource(data.links, activityIds);
+        let controlIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
+        let activityIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
+        let actorIds = Global.filterLinksTargetToSource(this.data.links, activityIds);
         let ids = actorIds.concat(activityIds.concat(controlIds.concat(d.id)));
 
         return ids;
 
     } else if (d.group === "Control") {
 
-        let riskIds = Global.filterLinksTargetToSource(data.links, [d.id]);
-        let activityIds = Global.filterLinksTargetToSource(data.links, riskIds);
-        let actorIds = Global.filterLinksTargetToSource(data.links, activityIds);
+        let riskIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
+        let activityIds = Global.filterLinksTargetToSource(this.data.links, riskIds);
+        let actorIds = Global.filterLinksTargetToSource(this.data.links, activityIds);
         let ids = actorIds.concat(activityIds.concat(riskIds.concat(d.id)));
 
         return ids;
@@ -334,15 +340,14 @@ export default class NetworkVisualization {
       }),
     ];
     d.gfx.zIndex = 1;
-
-    this.activeLink = d.id;
+    this.activeLink = this.highlightNetworkNodes(d);
   }
 
   pointerOut(d) {
     // this.hideInspect(d);
     d.gfx.filters.pop();
     d.gfx.zIndex = 0;
-    this.activeLink = null;
+    this.activeLink = [];
   }
 
   // Main functions ------------------------------------------------------

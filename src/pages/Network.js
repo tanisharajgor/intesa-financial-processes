@@ -11,7 +11,6 @@ import * as Global from "../utils/global";
 const id = "network-chart";
 const linkColor = "#373d44";
 let colorScale;
-let nodes;
 let tooltip;
 
 function tooltipType(d) {
