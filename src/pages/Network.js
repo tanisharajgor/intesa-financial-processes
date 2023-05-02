@@ -4,56 +4,15 @@ import FilterProcess from "../components/FilterProcess";
 import FilterType from "../components/FilterType";
 import { useEffect, useRef, useState } from "react";
 import graph from "../data/processed/nested/network2.json";
-import * as d3 from 'd3';
-import { createColorScale, applyColorScale, actorTypeValues, activityTypeValues } from "../utils/global";
-import { inspectNetworkSummary } from "../components/Inspect";
 import { QueryMenu } from "cfd-react-components";
 import NetworkVisualization from "../visualization/network-visualization";
+import * as Global from "../utils/global";
 
 const id = "network-chart";
 const linkColor = "#373d44";
 let colorScale;
 let nodes;
 let tooltip;
-
-function highlightNetworkNodes(data, d) {
-    if (d.group === "Actor") {
-
-        let activityIds = filterLinksSourceToTarget(data.links, [d.id]);
-        let riskIds = filterLinksSourceToTarget(data.links, activityIds);
-        let controlIds = filterLinksSourceToTarget(data.links, riskIds);
-        let ids = controlIds.concat(riskIds.concat(activityIds.concat(d.id)));
-
-        return ids
-
-    } else if (d.group === "Activity") {
-
-        let actorIds = filterLinksTargetToSource(data.links, [d.id]);
-        let riskIds = filterLinksSourceToTarget(data.links, [d.id]);
-        let controlIds = filterLinksSourceToTarget(data.links, riskIds);
-        let ids = controlIds.concat(riskIds.concat(actorIds.concat(d.id)));
-
-        return ids;
-
-    } else if (d.group === "Risk") {
-
-        let controlIds = filterLinksSourceToTarget(data.links, [d.id]);
-        let activityIds = filterLinksTargetToSource(data.links, [d.id]);
-        let actorIds = filterLinksTargetToSource(data.links, activityIds);
-        let ids = actorIds.concat(activityIds.concat(controlIds.concat(d.id)));
-
-        return ids;
-
-    } else if (d.group === "Control") {
-
-        let riskIds = filterLinksTargetToSource(data.links, [d.id]);
-        let activityIds = filterLinksTargetToSource(data.links, riskIds);
-        let actorIds = filterLinksTargetToSource(data.links, activityIds);
-        let ids = actorIds.concat(activityIds.concat(riskIds.concat(d.id)));
-
-        return ids;
-    }
-}
 
 function tooltipType(d) {
     let t = tooltip.append("div").attr("class", "layout_row")
@@ -117,90 +76,70 @@ function tooltipText(data, d) {
 }
 
 // Tooltip
-function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue) {
+// function inspectNetwork(data, viewVariable, updateViewHoverValue, updateSymbolHoverValue) {
 
-    let inspect = d3.select(".Inspect");
-    inspectNetworkSummary(inspect, data);
+//     let inspect = d3.select(".Inspect");
+//     inspectNetworkSummary(inspect, data);
 
-    nodes.on("mouseover", function(e, d) {
+//     nodes.on("mouseover", function(e, d) {
 
-        // Data management steps
-        let x = +d3.select(this).attr("x") + 20;
-        let y = +d3.select(this).attr("y") - 10;
+//         // Data management steps
+//         let x = +d3.select(this).attr("x") + 20;
+//         let y = +d3.select(this).attr("y") - 10;
 
-        let ids = highlightNetworkNodes(data, d);
+//         // let ids = highlightNetworkNodes(data, d);
 
-        let l1 = data.links
-            .filter(d => ids.includes(d.source.id) && ids.includes(d.target.id))
-            .map((d) => d.index);
+//         let l1 = data.links
+//             .filter(d => ids.includes(d.source.id) && ids.includes(d.target.id))
+//             .map((d) => d.index);
 
-        let connectedNodes = nodes.filter(function(i) {
-            return ids.includes(i.id);
-        });
+//         let connectedNodes = nodes.filter(function(i) {
+//             return ids.includes(i.id);
+//         });
 
-        // Applying the aesthetic changes
-        tooltip.style("visibility", "visible")
-            .style("top", `${y}px`)
-            .style("left", `${x}px`)
-            .html(tooltipText(data, d));
+//         // Applying the aesthetic changes
+//         tooltip.style("visibility", "visible")
+//             .style("top", `${y}px`)
+//             .style("left", `${x}px`)
+//             .html(tooltipText(data, d));
 
-        d3.selectAll(`#${id} svg path`)
-            .attr("opacity", .5);
+//         d3.selectAll(`#${id} svg path`)
+//             .attr("opacity", .5);
 
-        connectedNodes
-            .attr("stroke", "white")
-            .attr("stroke-width", 1)
-            .attr("opacity", 1)
-            .raise();
+//         connectedNodes
+//             .attr("stroke", "white")
+//             .attr("stroke-width", 1)
+//             .attr("opacity", 1)
+//             .raise();
 
-        d3.selectAll(`#${id} .link`)
-            .attr("opacity", d => l1.includes(d.index) ? 1: .5)
-            .attr("stroke", d => l1.includes(d.index)? "white": linkColor)
-            .attr("stroke-width", d => l1.includes(d.index)? 1: .5);
+//         d3.selectAll(`#${id} .link`)
+//             .attr("opacity", d => l1.includes(d.index) ? 1: .5)
+//             .attr("stroke", d => l1.includes(d.index)? "white": linkColor)
+//             .attr("stroke-width", d => l1.includes(d.index)? 1: .5);
 
-        updateSymbolHoverValue(d.viewId);
-        updateViewHoverValue(applyColorScale(d, viewVariable, colorScale));
+//         updateSymbolHoverValue(d.viewId);
+//         updateViewHoverValue(applyColorScale(d, viewVariable, colorScale));
 
-    }).on("mouseout", function() {
+//     }).on("mouseout", function() {
 
-        inspectNetworkSummary(inspect, data);
+//         inspectNetworkSummary(inspect, data);
 
-        tooltip.style("visibility", "hidden");
+//         tooltip.style("visibility", "hidden");
         
-        nodes.attr("opacity", 1);
+//         nodes.attr("opacity", 1);
 
-        d3.selectAll(`#${id} svg path`)
-            .attr("stroke-width", .5)
-            .attr("stroke", "white");
+//         d3.selectAll(`#${id} svg path`)
+//             .attr("stroke-width", .5)
+//             .attr("stroke", "white");
 
-        d3.selectAll(`#${id} .link`)
-            .attr("opacity", 1)
-            .attr("stroke", linkColor);
+//         d3.selectAll(`#${id} .link`)
+//             .attr("opacity", 1)
+//             .attr("stroke", linkColor);
 
-        updateViewHoverValue(undefined);
-        updateSymbolHoverValue(undefined);
-    });
-}
-
-// Filters source ids and returns corresponding target ids
-function filterLinksSourceToTarget(data, ids) {
-
-    let links = data.filter(d => d.source.id === undefined ? ids.includes(d.source): ids.includes(d.source.id))
-        .map(d => d.target.id === undefined ? d.target: d.target.id);
-    links = [...new Set(links)];
-
-    return links;
-}
-
-// Filters targets ids and returns corresponding source ids
-function filterLinksTargetToSource(data, ids) {
-
-    let links = data.filter(d => d.target.id === undefined ? ids.includes(d.target): ids.includes(d.target.id))
-        .map(d => d.source.id === undefined ? d.source: d.source.id);
-    links = [...new Set(links)];
-
-    return links;
-}
+//         updateViewHoverValue(undefined);
+//         updateSymbolHoverValue(undefined);
+//     });
+// }
 
 // Filters the data by level3ID and activity Type
 function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
@@ -214,8 +153,8 @@ function filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks) {
     let actorIds = links.map(d => d.source.id === undefined ? d.source: d.source.id);
     let activityIds = links.map(d => d.target.id === undefined ? d.target: d.target.id);
 
-    let riskIds = filterLinksSourceToTarget(dataNew.links, activityIds);
-    let controlIds = filterLinksSourceToTarget(dataNew.links, riskIds);
+    let riskIds = Global.filterLinksSourceToTarget(dataNew.links, activityIds);
+    let controlIds = Global.filterLinksSourceToTarget(dataNew.links, riskIds);
 
     let ids = controlIds.concat(riskIds.concat(actorIds.concat(activityIds)));
 
@@ -229,8 +168,8 @@ export default function Network() {
 
     const [viewVariable, updateViewVariable] = useState("riskType");
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
-    const [activityTypesChecks, updateActivityTypeChecks] = useState(activityTypeValues);
-    const [actorTypesChecks, updateActorTypeChecks] = useState(actorTypeValues);
+    const [activityTypesChecks, updateActivityTypeChecks] = useState(Global.activityTypeValues);
+    const [actorTypesChecks, updateActorTypeChecks] = useState(Global.actorTypeValues);
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
@@ -240,7 +179,7 @@ export default function Network() {
     const [actorTypes, updateActorType] = useState([...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
 
     // Set-up scales
-    colorScale = createColorScale(viewVariable);
+    colorScale = Global.createColorScale(viewVariable);
 
     // React Hooks
     useEffect(() => {

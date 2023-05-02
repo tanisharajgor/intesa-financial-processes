@@ -33,13 +33,13 @@ export default class NetworkVisualization {
     let adjustmentFactor = .161;
 
     this.simulation = d3.forceSimulation()
-    .nodes(this.data.nodes)
-    .force("link", d3.forceLink().id(function(d) { return d.id; }))
-    .force("charge", d3.forceManyBody().strength(-60))
-    .force("center", d3.forceCenter(this.width / 2, this.height / 2).strength(1))
-    .force("collide", d3.forceCollide().strength(2).radius(8))
-    .force("x", d3.forceX().strength(0.1))
-    .force("y", d3.forceY().strength((adjustmentFactor * this.width) / this.height));
+      .nodes(this.data.nodes)
+      .force("link", d3.forceLink().id(function(d) { return d.id; }))
+      .force("charge", d3.forceManyBody().strength(-60))
+      .force("center", d3.forceCenter(this.width / 2, this.height / 2).strength(1))
+      .force("collide", d3.forceCollide().strength(2).radius(8))
+      .force("x", d3.forceX().strength(0.1))
+      .force("y", d3.forceY().strength((adjustmentFactor * this.width) / this.height));
   }
 
   // Initializes the application
@@ -73,9 +73,9 @@ export default class NetworkVisualization {
         interaction: this.app.renderer.plugins.interaction, // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
         events: this.app.renderer.events
       })
-  
+
     this.app.stage.addChild(this.viewport);
-  
+
     this.viewport
       .pinch({ percent: 1 })
       .wheel({ percent: 0.1 })
@@ -124,8 +124,8 @@ export default class NetworkVisualization {
       node.gfx.y = this.height * 0.5;
       node.gfx.interactive = true;
       node.gfx.buttonMode = true;
-      // node.gfx.on("pointerover", () => this.pointerOver(node));
-      // node.gfx.on("pointerout", () => this.pointerOut(node));
+      node.gfx.on("pointerover", () => this.pointerOver(node));
+      node.gfx.on("pointerout", () => this.pointerOut(node));
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx);
@@ -149,6 +149,7 @@ export default class NetworkVisualization {
       this.links.lineTo(source.x + (source.size / 2), source.y + (source.size / 2));
     });
 
+    console.log(this.activeLink)
     this.activeLinks.clear();
     const activeLinkData = this.data.links.filter((d) =>
       d.source.id === this.activeLink ||
@@ -282,8 +283,47 @@ export default class NetworkVisualization {
   //   updateRiskHoverValue(d.riskStatus[riskVariable]);
   // }
 
+  highlightNetworkNodes(data, d) {
+    if (d.group === "Actor") {
+
+        let activityIds = Global.filterLinksSourceToTarget(data.links, [d.id]);
+        let riskIds = Global.filterLinksSourceToTarget(data.links, activityIds);
+        let controlIds = Global.filterLinksSourceToTarget(data.links, riskIds);
+        let ids = controlIds.concat(riskIds.concat(activityIds.concat(d.id)));
+
+        return ids
+
+    } else if (d.group === "Activity") {
+
+        let actorIds = Global.filterLinksTargetToSource(data.links, [d.id]);
+        let riskIds = Global.filterLinksSourceToTarget(data.links, [d.id]);
+        let controlIds = Global.filterLinksSourceToTarget(data.links, riskIds);
+        let ids = controlIds.concat(riskIds.concat(actorIds.concat(d.id)));
+
+        return ids;
+
+    } else if (d.group === "Risk") {
+
+        let controlIds = Global.filterLinksSourceToTarget(data.links, [d.id]);
+        let activityIds = Global.filterLinksTargetToSource(data.links, [d.id]);
+        let actorIds = Global.filterLinksTargetToSource(data.links, activityIds);
+        let ids = actorIds.concat(activityIds.concat(controlIds.concat(d.id)));
+
+        return ids;
+
+    } else if (d.group === "Control") {
+
+        let riskIds = Global.filterLinksTargetToSource(data.links, [d.id]);
+        let activityIds = Global.filterLinksTargetToSource(data.links, riskIds);
+        let actorIds = Global.filterLinksTargetToSource(data.links, activityIds);
+        let ids = actorIds.concat(activityIds.concat(riskIds.concat(d.id)));
+
+        return ids;
+    }
+}
+
   pointerOver(d) {
-    this.showInspect(d);
+    // this.showInspect(d);
     d.gfx.filters = [
       new GlowFilter({
         distance: 5,
@@ -299,7 +339,7 @@ export default class NetworkVisualization {
   }
 
   pointerOut(d) {
-    this.hideInspect(d);
+    // this.hideInspect(d);
     d.gfx.filters.pop();
     d.gfx.zIndex = 0;
     this.activeLink = null;

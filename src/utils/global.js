@@ -201,3 +201,23 @@ export function symbolScalePixi(node, rSize) {
           break;
     }
 }
+
+// Filters source ids and returns corresponding target ids
+export function filterLinksSourceToTarget(data, ids) {
+
+    let links = data.filter(d => d.source.id === undefined ? ids.includes(d.source): ids.includes(d.source.id))
+        .map(d => d.target.id === undefined ? d.target: d.target.id);
+    links = [...new Set(links)];
+
+    return links;
+}
+
+// Filters targets ids and returns corresponding source ids
+export function filterLinksTargetToSource(data, ids) {
+
+    let links = data.filter(d => d.target.id === undefined ? ids.includes(d.target): ids.includes(d.target.id))
+        .map(d => d.source.id === undefined ? d.source: d.source.id);
+    links = [...new Set(links)];
+
+    return links;
+}
