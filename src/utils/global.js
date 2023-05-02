@@ -180,7 +180,7 @@ export function symbolScalePixi(node, rSize) {
 
     switch(node.viewId) {
         case "Other activity":
-          node.gfx.drawCircle(0, 0, rSize);
+          node.gfx.drawCircle(0, 0, rSize*.8);
           node.shape = "circle"
           break;
         case "Actor":

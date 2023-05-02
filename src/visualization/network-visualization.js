@@ -14,6 +14,7 @@ export default class NetworkVisualization {
   containerLabels;
   containerNodes;
   containerLinks;
+  colorScale;
   data;
   height;
   inspect;
@@ -24,7 +25,9 @@ export default class NetworkVisualization {
   width;
   viewport;
 
-  constructor(data = graph) {
+  constructor(data = graph, updateSymbolHoverValue, updateViewHoverValue) {
+    this.updateSymbolHoverValue = updateSymbolHoverValue;
+    this.updateViewHoverValue = updateViewHoverValue;
     this.data = data;
   }
 
@@ -108,6 +111,7 @@ export default class NetworkVisualization {
   drawNodes(viewVariable) {
 
     this.containerNodes = new PIXI.Container();
+    this.colorScale = Global.createColorScale(viewVariable);
 
     this.nodes = [];
     this.data.nodes.forEach((node) => {
@@ -116,7 +120,7 @@ export default class NetworkVisualization {
 
       node.gfx = new PIXI.Graphics();
       node.gfx.lineStyle(this.strokeScale(node), 0xFFFFFF);
-      node.gfx.beginFill(Global.applyColorScale(node, viewVariable, Global.createColorScale(viewVariable)))
+      node.gfx.beginFill(Global.applyColorScale(node, viewVariable, this.colorScale))
       Global.symbolScalePixi(node, rSize);
 
       node.size = rSize;
@@ -125,7 +129,7 @@ export default class NetworkVisualization {
       node.gfx.y = this.height * 0.5;
       node.gfx.interactive = true;
       node.gfx.buttonMode = true;
-      node.gfx.on("pointerover", () => this.pointerOver(node));
+      node.gfx.on("pointerover", () => this.pointerOver(node, viewVariable));
       node.gfx.on("pointerout", () => this.pointerOut(node));
 
       this.nodes.push(node);
@@ -328,7 +332,7 @@ export default class NetworkVisualization {
     }
 }
 
-  pointerOver(d) {
+  pointerOver(d, viewVariable) {
     // this.showInspect(d);
     d.gfx.filters = [
       new GlowFilter({
@@ -341,6 +345,9 @@ export default class NetworkVisualization {
     ];
     d.gfx.zIndex = 1;
     this.activeLink = this.highlightNetworkNodes(d);
+
+    this.updateSymbolHoverValue(d.viewId);
+    this.updateViewHoverValue(Global.applyColorScale(d, viewVariable, this.colorScale));
   }
 
   pointerOut(d) {
@@ -348,6 +355,9 @@ export default class NetworkVisualization {
     d.gfx.filters.pop();
     d.gfx.zIndex = 0;
     this.activeLink = [];
+
+    this.updateViewHoverValue(undefined);
+    this.updateSymbolHoverValue(undefined);
   }
 
   // Main functions ------------------------------------------------------
