@@ -153,6 +153,7 @@ export default class NetworkVisualization {
       node.gfx.buttonMode = true;
       node.gfx.on("pointerover", () => this.pointerOver(node, viewVariable));
       node.gfx.on("pointerout", () => this.pointerOut(node));
+      // node.gfx.anchor.set(.5, .5);
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx);

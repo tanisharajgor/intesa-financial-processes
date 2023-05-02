@@ -181,23 +181,23 @@ export function symbolScalePixi(node, rSize) {
     switch(node.viewId) {
         case "Other activity":
           node.gfx.drawCircle(0, 0, rSize*.8);
-          node.shape = "circle"
+          node.shape = "circle";
           break;
         case "Actor":
-          node.gfx.drawRect(0, 0, rSize, rSize);
-          node.shape = "square"
+          node.gfx.drawRect(-rSize/2, -rSize/2, rSize, rSize);
+          node.shape = "square";
           break;
         case "Control activity":
           node.gfx.drawStar(0, 0, 5, rSize);
-          node.shape = "star"
+          node.shape = "star";
           break;
         case "Risk":
           node.gfx.drawRegularPolygon(0, 0, rSize, 3);
-          node.shape = "triangle"
-          break;          
+          node.shape = "triangle";
+          break;
         default:
           node.gfx.drawRegularPolygon(0, 0, rSize, 4, 1.7);
-          node.shape = "diamond"
+          node.shape = "diamond";
           break;
     }
 }
