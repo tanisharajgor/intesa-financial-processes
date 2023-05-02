@@ -173,7 +173,7 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
                         .append("path")
                             .attr("d", d3.symbol()
                                 .type(((d) => Global.symbolScaleD3(d)))
-                                .size(((d) => Global.rScale(d.size))))
+                                .size(((d) => Global.rScale(d.size*200)))) //approximate size fix
                             .attr("fill", "#cbcbcb"),
                 update => update
                     .attr('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3)
