@@ -120,10 +120,8 @@ export class CirclePackingDiagram {
 
     onClick(node) {
         const currentNodeId = node.depth !== 0 ? node.data.id : 0
-        const getZoomWidth = d3.scaleLinear()
-                                .range([1, 20])
-                                .domain([0, 4])
 
+        console.log(currentNodeId, this.zoomedNodeId)
         const getCenter = () => {
             if (node.depth === 0) {
                 return new PIXI.Point(this.width / 2, this.height / 2)
@@ -134,9 +132,22 @@ export class CirclePackingDiagram {
             }
         }
 
+        const getZoomWidth = (depth) => {
+          const scale = d3.scaleLinear()
+          .range([1, 20])
+          .domain([0, 4])
+
+          console.log(currentNodeId === this.zoomedNodeId && depth !== 0, depth)
+          if (currentNodeId === this.zoomedNodeId && depth !== 0) {
+            return scale(node.depth - 1)
+          }
+            
+          return scale(node.depth)
+        }
+
         this.viewport.animate({
             position: getCenter(),
-            scale: currentNodeId === this.zoomedNodeId ? getZoomWidth(0) : getZoomWidth(node.depth),
+            scale: getZoomWidth(node.depth),
         })
 
         this.zoomedNodeId = currentNodeId
