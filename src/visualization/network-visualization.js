@@ -23,9 +23,6 @@ export default class NetworkVisualization {
   simulation;
   width;
   viewport;
-  yScale;
-  // rScale = d3.scaleLinear()
-  //   .range([5, 13]);
 
   constructor(data = graph) {
     this.data = data;
@@ -48,7 +45,7 @@ export default class NetworkVisualization {
   // Initializes the application
   init(selector) {
     this.rootDOM = document.getElementById(selector);
-    this.width = this.rootDOM.clientWidth;
+    this.width = this.rootDOM.clientWidth*.75; //fraction of the width until with view becomes moveable and collapseable
     this.height = this.rootDOM.clientHeight;
 
     this.initSimulation()
@@ -66,11 +63,6 @@ export default class NetworkVisualization {
 
     this.app.stage.sortableChildren = true;
     this.rootDOM.appendChild(this.app.view);
-
-    this.yScale = d3
-      .scaleLinear()
-      .domain([1, 5])
-      .range([this.height]); // - Global.margin.bottom, Global.margin.top]);
 
     this.viewport = new Viewport({
       screenWidth: this.width,
