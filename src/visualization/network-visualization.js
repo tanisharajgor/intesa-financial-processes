@@ -2,10 +2,8 @@ import * as d3 from "d3";
 import * as PIXI from "pixi.js";
 import { GlowFilter } from "@pixi/filter-glow";
 import * as Global from "../utils/global";
-import lookUp from "../data/processed/nested/lu.json";
 import graph from "../data/processed/nested/network2.json";
 import { Viewport } from 'pixi-viewport'
-import * as forceInABox from "force-in-a-box";
 import '@pixi/graphics-extras';
 
 export default class NetworkVisualization {
@@ -26,8 +24,8 @@ export default class NetworkVisualization {
   width;
   viewport;
   yScale;
-  rScale = d3.scaleLinear()
-    .range([5, 13])
+  // rScale = d3.scaleLinear()
+  //   .range([5, 13]);
 
   constructor(data = graph) {
     this.data = data;
@@ -43,7 +41,7 @@ export default class NetworkVisualization {
     .force("charge", d3.forceManyBody().strength(-60))
     .force("center", d3.forceCenter(this.width / 2, this.height / 2).strength(1))
     .force("collide", d3.forceCollide().strength(2).radius(8))
-    .force("x", d3.forceX().strength(0.2))
+    .force("x", d3.forceX().strength(0.1))
     .force("y", d3.forceY().strength((adjustmentFactor * this.width) / this.height));
   }
 
@@ -84,12 +82,12 @@ export default class NetworkVisualization {
         events: this.app.renderer.events
       })
   
-    this.app.stage.addChild(this.viewport)
+    this.app.stage.addChild(this.viewport);
   
     this.viewport
       .pinch({ percent: 1 })
       .wheel({ percent: 0.1 })
-      .drag()
+      .drag();
   }
 
   // Drawing functions ------------------------------------------------------
@@ -115,12 +113,13 @@ export default class NetworkVisualization {
 
   // Initializes the nodes
   drawNodes(viewVariable) {
-    this.rScale.domain(d3.extent(this.data.nodes, ((d) => d.nActivities === undefined ? 1: d.nActivities)));
+
     this.containerNodes = new PIXI.Container();
 
     this.nodes = [];
     this.data.nodes.forEach((node) => {
-      const rSize = node.viewId === "Actor" ? this.rScale(node.actorType.nActivity): 5
+      console.log(node)
+      const rSize = node.viewId === "Actor" ? Global.rScale(node.actorType.nActivity): 5;
 
       node.gfx = new PIXI.Graphics();
       node.gfx.lineStyle(this.strokeScale(node), 0xFFFFFF);
@@ -148,7 +147,7 @@ export default class NetworkVisualization {
           node.shape = "diamond"
           break;
       }
-      node.size = rSize
+      node.size = rSize;
 
       node.gfx.x = this.width * 0.5;
       node.gfx.y = this.height * 0.5;
@@ -218,7 +217,6 @@ export default class NetworkVisualization {
     if (this.containerLinks) {
       this.containerLinks.destroy();
     }
-
     if (this.links !== undefined) {
       this.links.destroy();
     }

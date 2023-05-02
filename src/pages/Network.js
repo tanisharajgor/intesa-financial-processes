@@ -242,7 +242,7 @@ export default function Network() {
     // Set-up scales
     colorScale = createColorScale(viewVariable);
 
-    // // React Hooks
+    // React Hooks
     useEffect(() => {
         networkDiagram.current.init(id)
         networkDiagram.current.draw(viewVariable)
