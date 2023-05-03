@@ -1,5 +1,5 @@
 import { Form, Select, MenuItem } from "cfd-react-components";
-import { viewVars, viewObj, createColorScale, rScale, symbolType } from "../utils/global";
+import * as Global from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
 import { InspectHTML } from "./Inspect";
@@ -43,7 +43,7 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
                 enter  => enter
                     .append("path")
                     .attr("d", d3.symbol()
-                    .type((d => networkChart? symbolType(d): d3.symbolCircle))
+                    .type((d => networkChart? Global.symbolScaleD3(d): d3.symbolCircle))
                         .size(60))
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
@@ -74,7 +74,7 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
 // Initiates the legend svg and sets the non-changing attributes
 function initRiskLegend(viewVariable, viewHoverValue, networkChart) {
 
-    let t = viewObj[viewVariable];
+    let t = Global.viewObj[viewVariable];
     let h = height + (t.values.length + 1)*20;
 
     d3.select(`#${riskLegendId}`)
@@ -88,7 +88,7 @@ function initRiskLegend(viewVariable, viewHoverValue, networkChart) {
 // Updates the legend attributes on variable change
 function updateRiskLegend(variable, viewHoverValue, networkChart) {
 
-    let t = viewObj[variable];
+    let t = Global.viewObj[variable];
     let h = height + (t.values.length + 1)*20;
 
     let svg = d3.select(`#${riskLegendId} svg`);
@@ -122,7 +122,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                 enter  => enter
                     .append("path")
                     .attr("d", d3.symbol()
-                    .type(((d) => symbolType(d)))
+                    .type(((d) => Global.symbolScaleD3(d)))
                         .size(60))
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
@@ -154,7 +154,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
             enter  => enter
                 .append("path")
                 .attr("d", d3.symbol()
-                .type(((d) => symbolType(d)))
+                .type(((d) => Global.symbolScaleD3(d)))
                     .size(60))
                 .attr("transform", function(d, i) {
                     return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
@@ -209,8 +209,8 @@ function drawSizeLegend(networkChart, symbolHoverValue) {
                     enter  => enter
                         .append("path")
                             .attr("d", d3.symbol()
-                                .type(((d) => symbolType(d)))
-                                .size(((d) => rScale(d.size))))
+                                .type(((d) => Global.symbolScaleD3(d)))
+                                .size(((d) => Global.rScale(d.size*200)))) //approximate size fix
                             .attr("fill", "#cbcbcb"),
                 update => update
                     .attr('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3)
@@ -292,10 +292,10 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
 
     const networkChart = id === "network-chart";
 
-    colorScale = createColorScale(viewVariable);
+    colorScale = Global.createColorScale(viewVariable);
 
     const handleChange = (event) => {
-        let newView = (Object.keys(viewObj).find((c) => viewObj[c].label === event.target.value));
+        let newView = (Object.keys(Global.viewObj).find((c) => Global.viewObj[c].label === event.target.value));
         updateViewVariable(newView)
     }
 
@@ -328,12 +328,12 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
                         labelId="view-select-label"
                         id="view-select"
                         displayEmpty
-                        value={viewObj[viewVariable].label}
+                        value={Global.viewObj[viewVariable].label}
                         onChange={handleChange}
                     >
                         {
-                        viewVars.map((viewBy) => {
-                            let variable = viewObj[viewBy];
+                        Global.viewVars.map((viewBy) => {
+                            let variable = Global.viewObj[viewBy];
                             return (
                                 <MenuItem key={variable.id} value={variable.label}><em>{variable.label}</em></MenuItem>
                             )

@@ -1,11 +1,11 @@
 import * as d3 from 'd3';
 
-export const palette = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', 
-'#e377c2', '#bcbd22', '#17becf', '#aec7e8', '#ffbb78', '#98df8a', '#ff9896', 
-'#c5b0d5', '#c49c94', '#f7b6d2', '#c7c7c7', '#dbdb8d', '#9edae5'];
+export const palette = [0x1f77b4, 0xff7f0e, 0x2ca02c, 0xd62728, 0x9467bd, 0x8c564b, 
+    0xe377c2, 0xbcbd22, 0x17becf, 0xaec7e8, 0xffbb78, 0x98df8a, 0xff9896, 
+    0xc5b0d5, 0xc49c94, 0xf7b6d2, 0xc7c7c7, 0xdbdb8d, 0x9edae5];
 
-export const naColor = "#ADADAD";
-const missingColor = "#4B4B4B";
+export const naColor = 0xADADAD;
+const missingColor = 0x4B4B4B;
 
 export const viewVariables = {
 
@@ -32,7 +32,7 @@ export const viewVariables = {
             labels: ['Financial Information Risk', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'Missing', 'NA'],
             id: [20, 21, 22, 23, 24],
             values: ['Financial Information Risk (ex 262/2005)', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'Missing', 'NA'],
-            colors: ['#f27800', '#35b7ad', '#edb900', '#b04492', missingColor, naColor],
+            colors: [0xff7f0e, 0x9467bd, 0x2ca02c, 0xe377c2, missingColor, naColor],
             viewId: "Risk"
         }
         // ,
@@ -51,8 +51,8 @@ export const viewVariables = {
             values: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
             id: [1, 2, 3, 4, 5],
             labels: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
-            colors: ["#FF0000", "#FFC41F", "#0071BC", missingColor, naColor],
-            viewId: "Control activity"
+            colors: [0xFF0000, 0xFFC41F, 0x0071BC, missingColor, naColor],
+            viewId: "Control type"
         },
         "controlPeriodocity": {
             label: "Control periodicity",
@@ -80,8 +80,8 @@ export function createColorScale(variable) {
             .domain(d3.extent(t.values));
 
         let interp = [3650, 365, 182, 91, 30, 7, 1, .1].map(d => scale(d))
-        interp.push(missingColor)
-        interp.push(naColor)
+        interp.push('#4B4B4B')
+        interp.push('#ADADAD')
 
         var s = d3.scaleOrdinal()
             .domain(t.values)
@@ -90,10 +90,11 @@ export function createColorScale(variable) {
         return s;
 
     } else {
+        const hexColors = t.colors.map(col => `#${col.toString(16)}`)
 
         const scale = d3.scaleOrdinal()
             .domain(t.values)
-            .range(t.colors);
+            .range(hexColors);
 
         return scale;
     }
@@ -144,22 +145,88 @@ export function createLabelScale(viewVariable) {
 export const rScale = d3.scaleSqrt()
     // .domain(d3.extent(g, (d => d.nActivities)))
     .domain([1, 300])
-    .range([20, 400]);
+    .range([5, 30]);
 
 export const actorTypeValues = ["Organizational unit", "Position", "Person", "Missing", "External Organizational unit"];
 export const activityTypeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
 
-export function symbolType(d) {
+// Symbol Scale for D3
+export function symbolScaleD3(node) {
 
-    if (d.viewId === "Actor") {
+    if (node.viewId === "Actor") {
         return d3.symbolTriangle;
-    } else if (d.viewId === "Control activity") {
+    } else if (node.viewId === "Control activity") {
         return d3.symbolDiamond2;
-    } else if(d.viewId === "Other activity") {
+    } else if(node.viewId === "Other activity") {
         return d3.symbolSquare;
-    } else if (d.viewId === "Risk") {
+    } else if (node.viewId === "Risk") {
         return d3.symbolStar;
     } else {
         return d3.symbolCircle;
     }
 }
+
+// Symbol Scale for Pixi
+export function symbolScalePixi(node, rSize) {
+
+    switch(node.viewId) {
+        case "Other activity":
+          node.gfx.drawCircle(0, 0, rSize*.8);
+          node.shape = "circle";
+          break;
+        case "Actor":
+          node.gfx.drawRect(-rSize/2, -rSize/2, rSize, rSize);
+          node.shape = "square";
+          break;
+        case "Control activity":
+          node.gfx.drawStar(0, 0, 5, rSize);
+          node.shape = "star";
+          break;
+        case "Risk":
+          node.gfx.drawRegularPolygon(0, 0, rSize, 3);
+          node.shape = "triangle";
+          break;
+        default:
+          node.gfx.drawRegularPolygon(0, 0, rSize, 4, 1.7);
+          node.shape = "diamond";
+          break;
+    }
+}
+
+// Filters source ids and returns corresponding target ids
+export function filterLinksSourceToTarget(data, ids) {
+
+    let links = data.filter(d => d.source.id === undefined ? ids.includes(d.source): ids.includes(d.source.id))
+        .map(d => d.target.id === undefined ? d.target: d.target.id);
+    links = [...new Set(links)];
+
+    return links;
+}
+
+// Filters targets ids and returns corresponding source ids
+export function filterLinksTargetToSource(data, ids) {
+
+    let links = data.filter(d => d.target.id === undefined ? ids.includes(d.target): ids.includes(d.target.id))
+        .map(d => d.source.id === undefined ? d.source: d.source.id);
+    links = [...new Set(links)];
+
+    return links;
+}
+
+export const labelStyle = {
+    align: "left",
+    fill: 0xffffff,
+    fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
+    fontSize: 11,
+    padding: 5,
+    // textBaseline: "middle",
+    wordWrap: false,
+    // wordWrapWidth: 65,
+    leading: 1.3,
+    dropShadow: true, // add text drop shadow to labels
+    dropShadowAngle: 90,
+    dropShadowBlur: 5,
+    dropShadowDistance: 2,
+    dropShadowColor: 0x21252b
+}
+  
