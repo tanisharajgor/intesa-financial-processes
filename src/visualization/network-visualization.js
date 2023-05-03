@@ -6,25 +6,6 @@ import graph from "../data/processed/nested/network2.json";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
 
-const labelZAxisDefault = 100;
-
-const labelStyle = {
-  align: "left",
-  fill: 0xffffff,
-  fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
-  fontSize: 11,
-  padding: 5,
-  // textBaseline: "middle",
-  wordWrap: false,
-  // wordWrapWidth: 65,
-  leading: 1.3,
-  dropShadow: true, // add text drop shadow to labels
-  dropShadowAngle: 90,
-  dropShadowBlur: 5,
-  dropShadowDistance: 2,
-  dropShadowColor: 0x21252b
-}
-
 export default class NetworkVisualization {
 
   activeLinks;
@@ -52,7 +33,7 @@ export default class NetworkVisualization {
     this.data = data;
     this.activeLink = [];
     this.activeNodes = [];
-    this.labelStyle = new PIXI.TextStyle(labelStyle);
+    this.labelStyle = new PIXI.TextStyle(Global.labelStyle);
   }
 
   initSimulation() {
@@ -360,7 +341,7 @@ export default class NetworkVisualization {
 
     // text
     const text = new PIXI.Text(this.tooltipText(d), this.labelStyle);
-      text.zIndex = labelZAxisDefault;
+      text.zIndex = 100;
       text.x = (d.x + width/2) + 20;
       text.y = (d.y + height/2) -10;
       text.anchor.set(.5, .5);

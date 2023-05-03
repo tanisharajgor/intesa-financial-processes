@@ -221,3 +221,21 @@ export function filterLinksTargetToSource(data, ids) {
 
     return links;
 }
+
+export const labelStyle = {
+    align: "left",
+    fill: 0xffffff,
+    fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
+    fontSize: 11,
+    padding: 5,
+    // textBaseline: "middle",
+    wordWrap: false,
+    // wordWrapWidth: 65,
+    leading: 1.3,
+    dropShadow: true, // add text drop shadow to labels
+    dropShadowAngle: 90,
+    dropShadowBlur: 5,
+    dropShadowDistance: 2,
+    dropShadowColor: 0x21252b
+}
+  

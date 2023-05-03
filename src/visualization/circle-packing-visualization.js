@@ -11,15 +11,18 @@ export class CirclePackingDiagram {
     data;
     height;
     inspect;
+    labelStyle;
     nodes;
     rootDOM;
+    tooltip;
     width;
     viewport;
     zoomedNodeId
   
     constructor(data = graph) {
-      this.data = data
-      this.zoomedNodeId = 0
+      this.data = data;
+      this.zoomedNodeId = 0;
+      this.labelStyle = new PIXI.TextStyle(Global.labelStyle);
     }
   
     // Initializes the application
@@ -102,12 +105,50 @@ export class CirclePackingDiagram {
   
     // Updating the draw functions on mouse interaction ------------------------------------------------------
 
+    tooltipText(d) {
+      return `${d.data.treeLevel === 4? "Activity": "Process"}: ${d.data.name}`;
+    }
+
+    showTooltip(d) {
+      this.tooltip = new PIXI.Container();
+  
+      const textMetrics = PIXI.TextMetrics.measureText(this.tooltipText(d), this.labelStyle);
+      const width = textMetrics.maxLineWidth + 15;
+      const height = textMetrics.lineHeight * textMetrics.lines.length + 15;
+  
+      // label
+      const rect = new PIXI.Graphics();
+      rect.lineStyle(1, 0x4e5155);
+      rect.beginFill(0x000000)
+          .drawFilletRect(
+          d.x + 20,
+          d.y - 10,
+          width, 
+          height,
+          5);
+      rect.endFill();
+      rect.alpha = 0.8;
+      this.tooltip.addChild(rect);
+  
+      // text
+      const text = new PIXI.Text(this.tooltipText(d), this.labelStyle);
+        text.zIndex = 100;
+        text.x = (d.x + width/2) + 20;
+        text.y = (d.y + height/2) -10;
+        text.anchor.set(.5, .5);
+  
+      this.tooltip.addChild(text);
+      this.viewport.addChild(this.tooltip);
+    }
+
     pointerOver(node, e) {
-        node.gfx.alpha = 0.5
+        node.gfx.alpha = 0.5;
+        this.showTooltip(node);
     }
 
     pointerOut(node, e) {
-        node.gfx.alpha = 0.1
+        node.gfx.alpha = 0.1;
+        this.viewport.removeChild(this.tooltip);
     }
 
     onClick(node) {
