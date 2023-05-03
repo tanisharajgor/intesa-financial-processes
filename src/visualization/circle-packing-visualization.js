@@ -15,10 +15,7 @@ export class CirclePackingDiagram {
     rootDOM;
     width;
     viewport;
-    yScale;
     zoomedNodeId
-    rScale = d3.scaleLinear()
-      .range([5, 13])
   
     constructor(data = graph) {
       this.data = data
@@ -44,11 +41,6 @@ export class CirclePackingDiagram {
   
       this.app.stage.sortableChildren = true;
       this.rootDOM.appendChild(this.app.view);
-  
-      this.yScale = d3
-        .scaleLinear()
-        .domain([1, 5])
-        .range([this.height]);
   
       this.viewport = new Viewport({
         screenWidth: this.width,
@@ -121,7 +113,7 @@ export class CirclePackingDiagram {
     onClick(node) {
         const currentNodeId = node.depth !== 0 ? node.data.id : 0
 
-        console.log(currentNodeId, this.zoomedNodeId)
+        // console.log(currentNodeId, this.zoomedNodeId)
         const getCenter = () => {
             if (node.depth === 0) {
                 return new PIXI.Point(this.width / 2, this.height / 2)
@@ -137,7 +129,7 @@ export class CirclePackingDiagram {
           .range([1, 20])
           .domain([0, 4])
 
-          console.log(currentNodeId === this.zoomedNodeId && depth !== 0, depth)
+          // console.log(currentNodeId === this.zoomedNodeId && depth !== 0, depth)
           if (currentNodeId === this.zoomedNodeId && depth !== 0) {
             return scale(node.depth - 1)
           }
