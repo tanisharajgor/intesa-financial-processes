@@ -126,7 +126,7 @@ export function applyColorScaleMode(d, viewVariable, colorScale) {
     if (Object.keys(viewVariables['riskType']).includes(viewVariable)) {
         return d[viewVariable] === "NA" ? naColor : colorScale(d['riskType'][viewVariable]);
     } else if (Object.keys(viewVariables['activityType']).includes(viewVariable)) {
-        return d[viewVariable] === "NA" ? naColor : colorScale(d['activityType'][viewVariable]);
+        return d[viewVariable] === "NA" ? naColor : colorScale(d['controlType'][viewVariable]);
     }
 }
 
