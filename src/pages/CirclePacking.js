@@ -65,7 +65,7 @@ export default function CirclePacking() {
     // Set-up scales
     colorScale = createColorScale(viewVariable);
 
-    const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1)))
+    const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1), updateViewHoverValue))
 
     useEffect(() => {
         circlePackingDiagram.current.init(id)

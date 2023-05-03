@@ -7,6 +7,7 @@ import '@pixi/graphics-extras';
 
 export class CirclePackingDiagram {
     app;
+    colorScale;
     containerNodes;
     data;
     height;
@@ -19,10 +20,11 @@ export class CirclePackingDiagram {
     viewport;
     zoomedNodeId
   
-    constructor(data = graph) {
+    constructor(data = graph, updateViewHoverValue) {
       this.data = data;
       this.zoomedNodeId = 0;
       this.labelStyle = new PIXI.TextStyle(Global.labelStyle);
+      this.updateViewHoverValue = updateViewHoverValue;
     }
   
     // Initializes the application
@@ -61,9 +63,9 @@ export class CirclePackingDiagram {
     // Drawing functions ------------------------------------------------------
     
     draw(viewVariable) {
-        this.drawBackground()
-        this.drawNodes(viewVariable)
-        this.viewport.animate({position: new PIXI.Point(466, 566)})
+        this.drawBackground();
+        this.drawNodes(viewVariable);
+        this.viewport.animate({position: new PIXI.Point(466, 566)});
     }
 
     drawBackground() {
@@ -79,12 +81,13 @@ export class CirclePackingDiagram {
     // Initializes the nodes
     drawNodes(viewVariable) {
         this.containerNodes = new PIXI.Container();
-        this.nodes = []
+        this.nodes = [];
+        this.colorScale = Global.createColorScale(viewVariable);
 
         this.data.forEach((node) => {
             node.gfx = new PIXI.Graphics();
             node.gfx.lineStyle(1, 0xFFFFFF, 1);
-            node.gfx.beginFill(Global.applyColorScaleMode(node.data, viewVariable, Global.createColorScale(viewVariable)));
+            node.gfx.beginFill(Global.applyColorScaleMode(node.data, viewVariable, this.colorScale));
             node.gfx.lineWidth = 5;
             node.gfx.drawCircle(0, 0, node.r);
             node.gfx.x = node.x;
@@ -92,7 +95,7 @@ export class CirclePackingDiagram {
             node.gfx.alpha = 0.1
             node.gfx.interactive = true;
             node.gfx.buttonMode = true;
-            node.gfx.on("pointerover", (e) => this.pointerOver(node, e));
+            node.gfx.on("pointerover", (e) => this.pointerOver(node, e, viewVariable));
             node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
             node.gfx.on("click", (e) => this.onClick(node, e))
 
@@ -141,14 +144,16 @@ export class CirclePackingDiagram {
       this.viewport.addChild(this.tooltip);
     }
 
-    pointerOver(node, e) {
+    pointerOver(node, e, viewVariable) {
         node.gfx.alpha = 0.5;
         this.showTooltip(node);
+        this.updateViewHoverValue(Global.applyColorScaleMode(node.data, viewVariable, this.colorScale));
     }
 
     pointerOut(node, e) {
         node.gfx.alpha = 0.1;
         this.viewport.removeChild(this.tooltip);
+        this.updateViewHoverValue(undefined);
     }
 
     onClick(node) {
