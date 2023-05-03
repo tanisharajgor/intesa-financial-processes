@@ -170,26 +170,26 @@ export function symbolScaleD3(node) {
 export function symbolScalePixi(node, rSize) {
 
     switch(node.viewId) {
-        case "Other activity":
-          node.gfx.drawCircle(0, 0, rSize*.8);
-          node.shape = "circle";
-          break;
         case "Actor":
-          node.gfx.drawRect(-rSize/2, -rSize/2, rSize, rSize);
-          node.shape = "square";
-          break;
+            node.gfx.drawRegularPolygon(0, 0, rSize, 3);
+            node.shape = "triangle";
+            break;
         case "Control activity":
-          node.gfx.drawStar(0, 0, 5, rSize);
-          node.shape = "star";
-          break;
+            node.gfx.drawRegularPolygon(0, 0, rSize, 4, 1.7);
+            node.shape = "diamond";
+            break;
+        case "Other activity":
+            node.gfx.drawRect(-rSize/2, -rSize/2, rSize, rSize);
+            node.shape = "square";
+            break;
         case "Risk":
-          node.gfx.drawRegularPolygon(0, 0, rSize, 3);
-          node.shape = "triangle";
-          break;
+            node.gfx.drawStar(0, 0, 5, rSize);
+            node.shape = "star";
+            break;
         default:
-          node.gfx.drawRegularPolygon(0, 0, rSize, 4, 1.7);
-          node.shape = "diamond";
-          break;
+            node.gfx.drawCircle(0, 0, rSize*.8);
+            node.shape = "circle";
+            break;
     }
 }
 
