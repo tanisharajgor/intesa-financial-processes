@@ -52,7 +52,7 @@ export const viewVariables = {
             id: [1, 2, 3, 4, 5],
             labels: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
             colors: [0xFF0000, 0xFFC41F, 0x0071BC, missingColor, naColor],
-            viewId: "Control type"
+            viewId: "Control activity"
         },
         "controlPeriodocity": {
             label: "Control periodicity",
