@@ -81,39 +81,30 @@ export class CirclePackingDiagram {
     // Initializes the nodes
     drawNodes(viewVariable) {
 
-        let processData = this.data.filter(d => d.data.treeLevel < 4);
-        let activityData = this.data.filter(d => d.data.treeLevel === 4);
-
         const opacityScale = d3.scaleOrdinal()
           .domain([0, 1, 2, 3, 4])
           .range([.05, .3, .4, .5, .6]);
-
-        // var node = svg
-        //     .selectAll("path")
-        //     .data(activityData, d => d.data.id)
-        //     .join(
-        //         enter  => enter
-        //             .append("path")
-        //             .attr("class", "node")
-        //             .attr("d", d3.symbol()
-        //                 .type(d => symbolType(d.data))
-        //                 .size(5))
-        //                 .attr("stroke-width", .5)
-        //                 .attr("stroke", "#cbcbcb")
-        //             .attr("transform", transform)
-        //             .attr("fill", d => applyColorScaleMode(d.data, viewVariable, colorScale))
-        //     );
 
         this.containerNodes = new PIXI.Container();
         this.nodes = [];
         this.colorScale = Global.createColorScale(viewVariable);
 
-        processData.forEach((node) => {
+        this.data.forEach((node) => {
             node.gfx = new PIXI.Graphics();
             node.gfx.lineStyle(1, 0xFFFFFF, 1);
             node.gfx.beginFill(Global.applyColorScaleMode(node.data, viewVariable, this.colorScale));
             node.gfx.lineWidth = 5;
-            node.gfx.drawCircle(0, 0, node.r);
+
+            if (node.data.treeLevel < 4) {
+              node.gfx.drawCircle(0, 0, node.r);
+            } else {
+              if (node.data.viewId === "Control activity") {
+                node.gfx.drawRegularPolygon(0, 0, node.r, 4, 1.7);
+              } else {
+                node.gfx.drawRect(0, 0, node.r, node.r);
+              }
+            }
+
             node.gfx.x = node.x;
             node.gfx.y = node.y;
             node.gfx.alpha = opacityScale(node.data.treeLevel);
@@ -126,25 +117,6 @@ export class CirclePackingDiagram {
             this.nodes.push(node);
             this.containerNodes.addChild(node.gfx); 
         });
-
-        activityData.forEach((node) => {
-          node.gfx = new PIXI.Graphics();
-          node.gfx.lineStyle(1, 0xFFFFFF, 1);
-          node.gfx.beginFill(Global.applyColorScaleMode(node.data, viewVariable, this.colorScale));
-          node.gfx.lineWidth = 5;
-          node.gfx.drawCircle(0, 0, node.r);
-          node.gfx.x = node.x;
-          node.gfx.y = node.y;
-          node.gfx.alpha = opacityScale(node.data.treeLevel);
-          node.gfx.interactive = true;
-          node.gfx.buttonMode = true;
-          node.gfx.on("pointerover", (e) => this.pointerOver(node, e, viewVariable));
-          node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
-          node.gfx.on("click", (e) => this.onClick(node, e))
-
-          this.nodes.push(node);
-          this.containerNodes.addChild(node.gfx); 
-      });
 
         this.viewport.addChild(this.containerNodes);
     }
