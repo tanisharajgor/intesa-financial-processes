@@ -55,9 +55,9 @@ export class CirclePackingDiagram {
         passiveWheel: false,
         interaction: this.app.renderer.plugins.interaction, // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
         events: this.app.renderer.events
-        })
+        });
 
-      this.app.stage.addChild(this.viewport)  
+      this.app.stage.addChild(this.viewport);
     }
   
     // Drawing functions ------------------------------------------------------
@@ -75,7 +75,7 @@ export class CirclePackingDiagram {
         bkgrd.interactive = true;
         bkgrd.on("click", (e) => this.onClick({depth: 0, id: 0}, e))
 
-        this.viewport.addChild(bkgrd)
+        this.viewport.addChild(bkgrd);
     }
 
     // Initializes the nodes
@@ -101,7 +101,7 @@ export class CirclePackingDiagram {
 
             this.nodes.push(node);
             this.containerNodes.addChild(node.gfx); 
-        })
+        });
 
         this.viewport.addChild(this.containerNodes);
     }
@@ -173,7 +173,7 @@ export class CirclePackingDiagram {
         const getZoomWidth = (depth) => {
           const scale = d3.scaleLinear()
           .range([1, 20])
-          .domain([0, 4])
+          .domain([0, 4]);
 
           // console.log(currentNodeId === this.zoomedNodeId && depth !== 0, depth)
           if (currentNodeId === this.zoomedNodeId && depth !== 0) {
