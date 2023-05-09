@@ -222,8 +222,8 @@ export default class NetworkVisualization {
   // Update the links position
   updateLinkPosition() {
 
+    // Links
     this.links.clear();
-
     this.data.links.forEach((link) => {
       let { source, target } = link;
 
@@ -234,6 +234,7 @@ export default class NetworkVisualization {
       }
     });
 
+    // Hover on links
     this.activeLinks.clear();
     const activeLinkData = this.data.links
             .filter(d => this.activeLink.includes(d.source.id) && this.activeLink.includes(d.target.id));
