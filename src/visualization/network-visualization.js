@@ -142,7 +142,7 @@ export default class NetworkVisualization {
       const rSize = node.viewId === "Actor" ? Global.rScale(node.actorType.nActivity): 5;
 
       node.gfx = new PIXI.Graphics();
-      node.gfx.lineStyle(this.strokeScale(node), 0xFFFFFF);
+      node.gfx.lineStyle(1, 0xFFFFFF);
       node.gfx.beginFill(Global.applyColorScale(node, viewVariable, this.colorScale))
       Global.symbolScalePixi(node, rSize);
 
@@ -167,7 +167,7 @@ export default class NetworkVisualization {
   updateLinkPosition() {
 
     this.links.clear();
-    this.data.links.forEach((link) => {
+    this.data.links.forEach(link => {
       let { source, target } = link;
       this.links.lineStyle(.5, 0x888888);
       this.links.moveTo(target.x + (target.size / 2), target.y + (target.size / 2));
@@ -178,7 +178,7 @@ export default class NetworkVisualization {
     const activeLinkData = this.data.links
             .filter(d => this.activeLink.includes(d.source.id) && this.activeLink.includes(d.target.id));
 
-    activeLinkData.forEach((link) => {
+    activeLinkData.forEach(link => {
       let { source, target } = link;
       this.activeLinks.lineStyle(1, 0xffffff); // darken the lines
       this.activeLinks.moveTo(source.x, source.y);
@@ -270,14 +270,6 @@ export default class NetworkVisualization {
   }
 
   // Update aesthetic functions ------------------------------------------------------
-  strokeScale(node) {
-    const scale = d3
-      .scaleOrdinal()
-      .domain(["0", "1"])
-      .range([0, 1.5])
-
-    return scale(node.simulated);
-  }
 
   highlightNetworkNodes(d) {
     if (d.group === "Actor") {
@@ -375,7 +367,7 @@ export default class NetworkVisualization {
     this.activeNodes = this.data.nodes.filter(z => this.activeLink.includes(z.id));
 
     this.activeNodes
-      .forEach((node) => {
+      .forEach(node => {
         let { gfx } = node;
         gfx.filters = [
           new GlowFilter({
@@ -397,7 +389,7 @@ export default class NetworkVisualization {
   pointerOut(d) {
 
     this.activeNodes
-      .forEach((node) => {
+      .forEach(node => {
         let { gfx } = node;
         gfx.filters.pop();
         gfx.zIndex = 0;
