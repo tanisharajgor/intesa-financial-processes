@@ -303,34 +303,25 @@ def create_network(data):
 
         linkData1 = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)][['actorID', 'activityID']].rename(columns={'actorID': 'source',
                                                                                                                                            'activityID': 'target'})
-        linkData1["sourceType"] = "actor"
-        linkData1["targetType"] = "activity"
 
         linkData2 = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.riskID) == False)][['activityID', 'riskID']].rename(columns={'activityID': 'source',
                                                                                                                                         'riskID': 'target'})
-        linkData2["sourceType"] = "activity"
-        linkData2["targetType"] = "risk"
 
         linkData3 = df[(pd.isnull(df.riskID) == False) & (pd.isnull(df.controlID) == False)][['riskID', 'controlID']].rename(columns={'riskID': 'source',
                                                                                                                                       'controlID': 'target'})
-        linkData3["sourceType"] = "risk"
-        linkData3["targetType"] = "control"
 
         linkData4 = df[(pd.isnull(df.actorID) == False) & (pd.isnull(df.controlID) == False) & (df.controlID.isin(df.controlID))][['actorID', 'controlID']].rename(columns={'actorID': 'source',
                                                                                                                                       'controlID': 'target'})
-        linkData4["sourceType"] = "actor"
-        linkData4["targetType"] = "control"
 
-        linkData = linkData1.append(linkData2)
-        linkData = linkData.append(linkData3)
-        linkData = linkData.append(linkData4).drop_duplicates()
+        linkData = pd.concat(linkData1, linkData2)
+        linkData = pd.concat(linkData, linkData3)
+        linkData = pd.concat(linkData, linkData4)
+        linkData.drop_duplicates(inplace = True)
 
         # import pdb; pdb.set_trace()
         for j in range(0, linkData.shape[0]):
             row = {"source": int(linkData.source.iloc[j]),
-                   "sourceType": str(linkData.sourceType.iloc[j]),
                    "target": int(linkData.target.iloc[j]),
-                   "targetType": str(linkData.targetType.iloc[j]),
                    "id": str(linkData.source.iloc[j]) + "-" + str(linkData.target.iloc[j])}
 
             links.append(row)

@@ -127,7 +127,7 @@ export default class NetworkVisualization {
     this.viewport.addChild(this.containerLinks);
 
     this.simulation.force("link")
-    .links(this.data.links);
+      .links(this.data.links);
   }
 
   // Initializes the nodes
@@ -163,15 +163,46 @@ export default class NetworkVisualization {
 
   // Updating the draw functions during the animation ------------------------------------------------------
 
+  distance(p1,p2){
+    return Math.hypot(p2.x-p1.x, p2.y-p1.y)
+  }
+
   // Update the links position
   updateLinkPosition() {
 
     this.links.clear();
+
     this.data.links.forEach((link) => {
-      let { source, target } = link;
-      this.links.lineStyle(.5, 0x888888);
-      this.links.moveTo(target.x + (target.size / 2), target.y + (target.size / 2));
-      this.links.lineTo(source.x + (source.size / 2), source.y + (source.size / 2));
+      let { source, target, sourceType, targetType } = link;
+
+      if (source.group === "Actor" && target.group === "Activity") {
+        this.links.lineStyle(.5, 0x888888);
+        this.links.moveTo(target.x + (target.size / 2), target.y + (target.size / 2));
+        this.links.lineTo(source.x + (source.size / 2), source.y + (source.size / 2));
+      } else {
+        this.links.lineStyle(.5, 0x888888);
+        this.links.moveTo(target.x + (target.size / 2), target.y + (target.size / 2));
+        this.links.lineTo(source.x + (source.size / 2), source.y + (source.size / 2));
+        const line = new PIXI.Graphics()
+        line.setParent(this.viewport)
+        const dash = 5;
+        const gap = 5;
+        const p1 = {x:20, y:150.333}
+        const p2 = {x:200, y:150.333}
+        const len = this.distance(p1, p2);
+        const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len}
+        line.lineStyle(0.5, 0x888888)
+        line.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y)
+        var progress = dash+gap
+        while (progress<len){
+          line.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y)
+          progress += dash
+          line.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y)
+          progress += gap
+        }
+      }
+
+
     });
 
     this.activeLinks.clear();
