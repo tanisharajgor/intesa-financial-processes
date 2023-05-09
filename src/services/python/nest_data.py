@@ -87,7 +87,7 @@ return nested list
 """
 def create_risk_type(df):
 
-    df = df[pd.isnull(df.riskID) == False]
+    df = df[pd.isnull(df.riskID) == False].copy()
 
     df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('Missing')
     df.riskType = df.riskType.fillna('Missing')
@@ -114,7 +114,7 @@ return nested list
 """
 def create_control_type(df):
 
-    df = df[pd.isnull(df.controlID) == False]
+    df = df[pd.isnull(df.controlID) == False].copy()
 
     df.controlType = df.controlType.fillna('Missing')
     df.controlPeriodocity = df.controlPeriodocity.fillna('Missing')
