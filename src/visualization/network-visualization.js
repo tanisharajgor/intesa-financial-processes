@@ -169,7 +169,7 @@ export default class NetworkVisualization {
 
   solidLine(source, target) {
     this.links.lineStyle(.5, 0x888888);
-    this.links.moveTo(target.x, target.y );
+    this.links.moveTo(target.x, target.y);
     this.links.lineTo(source.x, source.y);
   }
 
