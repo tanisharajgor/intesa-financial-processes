@@ -184,7 +184,7 @@ export default class NetworkVisualization {
     this.links.lineStyle(0.5, 0x888888)
     this.links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y)
     var progress = dash+gap
-    while (progress<len){
+    while (progress < len) {
       this.links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y)
       progress += dash
       this.links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y)
@@ -200,7 +200,7 @@ export default class NetworkVisualization {
     this.data.links.forEach((link) => {
       let { source, target } = link;
 
-      if (source.group === "Actor" && target.group === "Activity") {
+      if (source.viewId === "Actor" && target.viewId === "Other activity") {
         this.solidLine(source, target);
       } else {
         this.dashedLine(source, target);

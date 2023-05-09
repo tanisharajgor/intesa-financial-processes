@@ -313,12 +313,12 @@ def create_network(data):
         linkData4 = df[(pd.isnull(df.actorID) == False) & (pd.isnull(df.controlID) == False) & (df.controlID.isin(df.controlID))][['actorID', 'controlID']].rename(columns={'actorID': 'source',
                                                                                                                                       'controlID': 'target'})
 
+        import pdb; pdb.set_trace()
         linkData = pd.concat(linkData1, linkData2)
         linkData = pd.concat(linkData, linkData3)
         linkData = pd.concat(linkData, linkData4)
         linkData.drop_duplicates(inplace = True)
 
-        # import pdb; pdb.set_trace()
         for j in range(0, linkData.shape[0]):
             row = {"source": int(linkData.source.iloc[j]),
                    "target": int(linkData.target.iloc[j]),
