@@ -169,8 +169,8 @@ export default class NetworkVisualization {
 
   solidLine(source, target) {
     this.links.lineStyle(.5, 0x888888);
-    this.links.moveTo(target.x + (target.size / 2), target.y + (target.size / 2));
-    this.links.lineTo(source.x + (source.size / 2), source.y + (source.size / 2));
+    this.links.moveTo(target.x, target.y );
+    this.links.lineTo(source.x, source.y);
   }
 
   highlightSolidLine(source, target) {
@@ -183,8 +183,8 @@ export default class NetworkVisualization {
   dashedLine(source, target) {
     const dash = 5;
     const gap = 5;
-    const p1 = {x: target.x + (target.size / 2), y: target.y + (target.size / 2)};
-    const p2 = {x: source.x + (source.size / 2), y: source.y + (source.size / 2)};
+    const p1 = {x: target.x, y: target.y};
+    const p2 = {x: source.x, y: source.y};
     const len = this.distance(p1, p2);
     const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
     this.links.lineStyle(0.5, 0x888888);
@@ -203,8 +203,8 @@ export default class NetworkVisualization {
 
     const dash = 5;
     const gap = 5;
-    const p1 = {x: target.x + (target.size / 2), y: target.y + (target.size / 2)};
-    const p2 = {x: source.x + (source.size / 2), y: source.y + (source.size / 2)};
+    const p1 = {x: target.x, y: target.y};
+    const p2 = {x: source.x, y: source.y};
     const len = this.distance(p1, p2);
     const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
     this.activeLinks.lineStyle(1, 0xffffff);
