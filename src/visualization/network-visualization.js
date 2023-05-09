@@ -180,29 +180,22 @@ export default class NetworkVisualization {
         this.links.moveTo(target.x + (target.size / 2), target.y + (target.size / 2));
         this.links.lineTo(source.x + (source.size / 2), source.y + (source.size / 2));
       } else {
-        this.links.lineStyle(.5, 0x888888);
-        this.links.moveTo(target.x + (target.size / 2), target.y + (target.size / 2));
-        this.links.lineTo(source.x + (source.size / 2), source.y + (source.size / 2));
-        const line = new PIXI.Graphics()
-        line.setParent(this.viewport)
         const dash = 5;
         const gap = 5;
-        const p1 = {x:20, y:150.333}
-        const p2 = {x:200, y:150.333}
+        const p1 = {x:target.x + (target.size / 2), y:target.y + (target.size / 2)}
+        const p2 = {x:source.x + (source.size / 2), y:source.y + (source.size / 2)}
         const len = this.distance(p1, p2);
         const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len}
-        line.lineStyle(0.5, 0x888888)
-        line.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y)
+        this.links.lineStyle(0.5, 0x888888)
+        this.links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y)
         var progress = dash+gap
         while (progress<len){
-          line.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y)
+          this.links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y)
           progress += dash
-          line.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y)
+          this.links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y)
           progress += gap
         }
       }
-
-
     });
 
     this.activeLinks.clear();
