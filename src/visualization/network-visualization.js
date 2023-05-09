@@ -142,7 +142,7 @@ export default class NetworkVisualization {
       const rSize = node.viewId === "Actor" ? Global.rScale(node.actorType.nActivity): 5;
 
       node.gfx = new PIXI.Graphics();
-      node.gfx.lineStyle(1, 0xFFFFFF);
+      // node.gfx.lineStyle(1, 0xFFFFFF);
       node.gfx.beginFill(Global.applyColorScale(node, viewVariable, this.colorScale))
       Global.symbolScalePixi(node, rSize);
 
@@ -371,7 +371,7 @@ export default class NetworkVisualization {
         let { gfx } = node;
         gfx.filters = [
           new GlowFilter({
-            distance: 5,
+            distance: 1,
             innerStrength: 0,
             outerStrength: 2,
             color: 0xffffff,
