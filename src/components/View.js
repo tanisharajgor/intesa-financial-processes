@@ -10,18 +10,11 @@ let colorScale;
 
 let riskLegendId = "Risk-Legend";
 let shapeLegendId = "Shape-Legend";
-let sizeLegendId = "Size-Legend";
 
 const shapeData = [{"group": "Actor", "viewId": "Actor"},
                    {"group": "Control", "viewId": "Control activity"},
                    {"group": "Activity", "viewId": "Other activity"},
                    {"group": "Risk", "viewId": "Risk"}];
-
-const sizeData = [{"size": 1, "group": "Actor", "viewId": "Actor"},
-                  {"size": 25, "group": "Actor", "viewId": "Actor"},
-                  {"size": 50, "group": "Actor", "viewId": "Actor"},
-                  {"size": 100, "group": "Actor", "viewId": "Actor"},
-                  {"size": 300, "group": "Actor", "viewId": "Actor"}];
 
 function drawRiskLegend(t, viewHoverValue, networkChart) {
 
@@ -148,63 +141,6 @@ function updateShapeLegend(networkChart, symbolHoverValue) {
     drawShapeLegend(networkChart, symbolHoverValue);
 }
 
-function initSizeLegend(networkChart, symbolHoverValue) {
-
-    d3.select(`#${sizeLegendId}`)
-        .append("svg")
-        .attr("width", width);
-
-    drawSizeLegend(networkChart, symbolHoverValue);
-}
-
-function drawSizeLegend(networkChart, symbolHoverValue) {
-    if (networkChart) {
-
-        const h = 40;
-
-        let svg = d3.select(`#${sizeLegendId} svg`)
-            .attr("height", h);
-
-        svg
-            .selectAll("path")
-                .data(sizeData, d => d.size)
-                .join(
-                    enter  => enter
-                        .append("path")
-                            .attr("d", d3.symbol()
-                                .type(((d) => Global.symbolScaleD3(d)))
-                                .size(((d) => Global.rScale(d.size*200)))) //approximate size fix
-                            .attr("fill", "#cbcbcb"),
-                update => update
-                    .attr('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3)
-                )
-            .attr("transform", (d, i) => `translate(${(i * 40) + 10}, ${h / 3})`);
-
-        svg
-            .selectAll("text")
-                .data(sizeData, d => d.size)
-                .join(
-                    enter  => enter
-                         .append("text")
-                            .attr("text-anchor", "middle")
-                            .attr("y", 25)
-                            .attr("font-size", 12)
-                            .attr("fill", "#cbcbcb")
-                            .text(d => d.size),
-                    update => update
-                        .attr('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3)
-                    )
-                .attr("transform", (d, i) => `translate(${(i * 40) + 10}, ${h / 3})`);
-
-        // Change opacity of the legend title
-        d3.select(".size_legend > span")
-            .style('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3);
-    }
-}
-
-function updateSizeLegend(networkChart, symbolHoverValue) {
-    drawSizeLegend(networkChart, symbolHoverValue);
-}
 
 function shapeType() {
     return(
@@ -214,18 +150,6 @@ function shapeType() {
             </span>
             <span className="layout_item"></span>
             <div id={shapeLegendId}></div>
-        </div>
-    )
-}
-
-function sizeType() {
-    return(
-        <div className="layout_row size_legend">
-            <span className="layout_item key">
-                Size
-            </span>
-            <span className="layout_item"></span>
-            <div id={sizeLegendId}></div>
         </div>
     )
 }
@@ -244,7 +168,6 @@ function viewInfo(networkChart) {
         <div className="inner">
             <div className="layout_group inline">
                 {networkChart? shapeType(): <></>}
-                {networkChart? sizeType(): <></>}
                 {riskType()}
             </div>
         </div>
@@ -265,14 +188,12 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
     // Initiate legends
     useEffect(() => {
         initShapeLegend(networkChart, symbolHoverValue);
-        initSizeLegend(networkChart, symbolHoverValue);
         initRiskLegend(viewVariable, viewHoverValue, networkChart);
     }, [])
 
     // Update the shape legend
     useEffect(() => {
         updateShapeLegend(networkChart, symbolHoverValue);
-        updateSizeLegend(networkChart, symbolHoverValue);
     }, [symbolHoverValue]);
 
     // Update the risk legend
