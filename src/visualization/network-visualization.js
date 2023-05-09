@@ -163,8 +163,33 @@ export default class NetworkVisualization {
 
   // Updating the draw functions during the animation ------------------------------------------------------
 
-  distance(p1,p2){
+  distance(p1, p2) {
     return Math.hypot(p2.x-p1.x, p2.y-p1.y)
+  }
+
+  solidLine(source, target) {
+    this.links.lineStyle(.5, 0x888888);
+    this.links.moveTo(target.x + (target.size / 2), target.y + (target.size / 2));
+    this.links.lineTo(source.x + (source.size / 2), source.y + (source.size / 2));
+  }
+
+  // Adapated from https://codepen.io/shepelevstas/pen/WKbYyw
+  dashedLine(source, target) {
+    const dash = 5;
+    const gap = 5;
+    const p1 = {x:target.x + (target.size / 2), y:target.y + (target.size / 2)}
+    const p2 = {x:source.x + (source.size / 2), y:source.y + (source.size / 2)}
+    const len = this.distance(p1, p2);
+    const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len}
+    this.links.lineStyle(0.5, 0x888888)
+    this.links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y)
+    var progress = dash+gap
+    while (progress<len){
+      this.links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y)
+      progress += dash
+      this.links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y)
+      progress += gap
+    }
   }
 
   // Update the links position
@@ -173,28 +198,12 @@ export default class NetworkVisualization {
     this.links.clear();
 
     this.data.links.forEach((link) => {
-      let { source, target, sourceType, targetType } = link;
+      let { source, target } = link;
 
       if (source.group === "Actor" && target.group === "Activity") {
-        this.links.lineStyle(.5, 0x888888);
-        this.links.moveTo(target.x + (target.size / 2), target.y + (target.size / 2));
-        this.links.lineTo(source.x + (source.size / 2), source.y + (source.size / 2));
+        this.solidLine(source, target);
       } else {
-        const dash = 5;
-        const gap = 5;
-        const p1 = {x:target.x + (target.size / 2), y:target.y + (target.size / 2)}
-        const p2 = {x:source.x + (source.size / 2), y:source.y + (source.size / 2)}
-        const len = this.distance(p1, p2);
-        const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len}
-        this.links.lineStyle(0.5, 0x888888)
-        this.links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y)
-        var progress = dash+gap
-        while (progress<len){
-          this.links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y)
-          progress += dash
-          this.links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y)
-          progress += gap
-        }
+        this.dashedLine(source, target);
       }
     });
 
