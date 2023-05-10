@@ -32,6 +32,7 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
         riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i], "color": colorScale(t.values[i]), "viewId": t.viewId})
     }
 
+    console.log(riskData)
     svg
             .selectAll("path")
             .data(riskData, d => d.id)
@@ -44,7 +45,9 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
-                    .attr('fill', (d => d.color)),
+                    .attr('fill', d => d.color)
+                    // .attr("stroke",  d => d.label === "Missing"? Global.naColorHex: d.color)
+                    .attr('stroke-width', 1),
                 update => update
                     .attr('opacity', (d => viewHoverValue === undefined || d.color == viewHoverValue? 1: .3)),
                     exit   => exit.remove()
@@ -122,7 +125,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
-                    .attr("fill", "#cbcbcb"),
+                    .attr("fill", Global.naColorHex),
                 update => update
                     .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );

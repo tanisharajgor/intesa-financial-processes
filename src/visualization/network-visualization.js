@@ -139,7 +139,7 @@ export default class NetworkVisualization {
       const rSize = node.viewId === "Actor" ? Global.rScale(node.viewType.nActivity): 5;
 
       node.gfx = new PIXI.Graphics();
-      // node.gfx.lineStyle(1, Global.applyColorScale(node, viewVariable));
+      // node.gfx.lineStyle(Global.applyStrokeScaleWeight(node, viewVariable), Global.missingColorBorder);
       node.gfx.beginFill(Global.applyColorScale(node, viewVariable))
       Global.symbolScalePixi(node, rSize);
 

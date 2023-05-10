@@ -4,8 +4,11 @@ export const palette = [0x1f77b4, 0xff7f0e, 0x2ca02c, 0xd62728, 0x9467bd, 0x8c56
     0xe377c2, 0xbcbd22, 0x17becf, 0xaec7e8, 0xffbb78, 0x98df8a, 0xff9896, 
     0xc5b0d5, 0xc49c94, 0xf7b6d2, 0xc7c7c7, 0xdbdb8d, 0x9edae5];
 
-export const naColor = 0xADADAD;
-const missingColor = 0x4B4B4B;
+export const naColor = 0x777777;
+export const naColorHex = "#777777";
+export const missingColor = 0xD7D7D7;
+export const missingColorHex = "#D7D7D7";
+export const missingColorBorder = 0xADADAD;
 
 export const viewVariables = {
 
@@ -71,8 +74,8 @@ export function createColorScale(variable) {
             .domain(d3.extent(t.values));
 
         let interp = [3650, 365, 182, 91, 30, 7, 1, .1].map(d => scale(d))
-        interp.push('#4B4B4B')
-        interp.push('#ADADAD')
+        interp.push(missingColorHex)
+        interp.push(naColorHex)
 
         var s = d3.scaleOrdinal()
             .domain(t.values)
@@ -100,19 +103,8 @@ export function applyColorScale(d, viewVariable) {
 
 export function applyStrokeScaleWeight(d, viewVariable) {
 
-    console.log(viewVariable)
-    console.log(d)
-
-    if (Object.keys(viewVariables).includes(viewVariable)) {
-
-
-        return 0;
-        // if (d.riskType[viewVariable] === "Missing") {
-        //     return 2;
-        // } else {
-        //     return 0;
-        // }
-
+    if (d.viewType[viewVariable] === "Missing") {
+        return .75;
     } else {
         return 0;
     }
