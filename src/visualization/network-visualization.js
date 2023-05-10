@@ -33,6 +33,7 @@ export default class NetworkVisualization {
   app;
   clickNode;
   clickViewport;
+  clickCount;
   containerLabels;
   containerNodes;
   containerLinks;
@@ -55,6 +56,7 @@ export default class NetworkVisualization {
     this.activeNodes = [];
     this.clickNode = false;
     this.clickViewport = false;
+    this.clickCount = 0;
     this.labelStyle = new PIXI.TextStyle(labelStyle);
   }
 
@@ -115,7 +117,14 @@ export default class NetworkVisualization {
   }
 
   clickOff() {
-    // this.clickViewport = !this.clickViewport;
+    // this.clickNode = !this.clickNode;
+    // this.clickViewport = true;
+
+    // if (this.clickViewport && this.clickNode) {
+      // this.clickNode = false;
+    //   this.clickViewport = false;
+    // }
+    // this.clickNode = !this.clickNode;
 
     // console.log(this.clickViewport)
     // if (this.clickViewPort) {
@@ -128,6 +137,12 @@ export default class NetworkVisualization {
   clickOn(node) {
     // this.clickNode = !this.clickNode;
     this.clickNode = true;
+    this.clickCount++;
+    if (this.clickCount > 1) {
+      this.clickNode = false;
+      this.clickCount = 0;
+    }
+
     this.activeNodes
       .forEach(node => {
         let { gfx } = node;
