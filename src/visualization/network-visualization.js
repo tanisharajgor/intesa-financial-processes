@@ -31,7 +31,8 @@ export default class NetworkVisualization {
   activeLink;
   activeNodes;
   app;
-  clicked;
+  clickNode;
+  clickViewPort;
   containerLabels;
   containerNodes;
   containerLinks;
@@ -53,7 +54,8 @@ export default class NetworkVisualization {
     this.data = data;
     this.activeLink = [];
     this.activeNodes = [];
-    this.clicked = false;
+    this.clickNode = false;
+    this.clickViewPort = false;
     this.labelStyle = new PIXI.TextStyle(labelStyle);
   }
 
@@ -109,14 +111,22 @@ export default class NetworkVisualization {
       .pinch({ percent: 1 })
       .wheel({ percent: 0.1 })
       .drag();
+
+    this.viewport.on('click', () => this.clickOff());
+  }
+
+  clickOff() {
+    // this.clicked = false;
+    // this.activeLink = [];
+    // this.activeNode = [];
+  }
+
+  clickOn(node, viewVariable) {
+    this.clickNode = true;
+    this.highlightNetworkNodes(node);
   }
 
   // Drawing functions ------------------------------------------------------
-
-  click(node, viewVariable) {
-    this.clicked = true;
-    this.highlightNetworkNodes(node);
-  }
 
   // Initializes the links
   drawLinks() {
@@ -160,8 +170,7 @@ export default class NetworkVisualization {
       node.gfx.buttonMode = true;
       node.gfx.on("pointerover", () => this.pointerOver(node, viewVariable));
       node.gfx.on("pointerout", () => this.pointerOut(node));
-      node.gfx.on('click', () => this.click(node, viewVariable));
-
+      node.gfx.on('click', () => this.clickOn(node, viewVariable));
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx);
@@ -400,7 +409,7 @@ export default class NetworkVisualization {
 
   pointerOver(d, viewVariable) {
 
-    if (!this.clicked) {
+    if (!this.clickNode) {
       this.highlightNetworkNodes(d);
     }
     this.updateSymbolHoverValue(d.viewId);
@@ -410,7 +419,7 @@ export default class NetworkVisualization {
 
   pointerOut(d) {
 
-    if (!this.clicked) {
+    if (!this.clickNode) {
       this.activeNodes
       .forEach((node) => {
         let { gfx } = node;
