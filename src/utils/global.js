@@ -97,7 +97,6 @@ export function createColorScale(variable) {
 export function applyColorScale(d, viewVariable) {
 
     let colorScale = createColorScale(viewVariable);
-
     return d.viewType[viewVariable] === "NA" || d.viewType[viewVariable] === undefined? naColor : colorScale(d.viewType[viewVariable]);   
 }
 
@@ -108,10 +107,6 @@ export function applyStrokeScaleWeight(d, viewVariable) {
     } else {
         return 0;
     }
-}
-
-export function applyColorScaleMode(d, viewVariable, colorScale) {
-    return d[viewVariable] === "NA" ? naColor : colorScale(d[viewVariable]);
 }
 
 export function createOpacityScale() {
