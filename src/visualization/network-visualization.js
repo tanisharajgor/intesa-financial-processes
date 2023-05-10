@@ -115,16 +115,25 @@ export default class NetworkVisualization {
   }
 
   clickOff() {
-    this.clickViewPort = true;
+    // this.clickViewport = !this.clickViewport;
 
+    // console.log(this.clickViewport)
     // if (this.clickViewPort) {
-    //   // this.activeLink = [];
-    //   // this.activeNode = [];
+    //   this.activeLink = [];
+    //   this.activeNodes = [];
+    //   this.clickNode = !this.clickNode;
     // }
   }
 
   clickOn(node) {
-    this.clickNode = !this.clickNode;
+    // this.clickNode = !this.clickNode;
+    this.clickNode = true;
+    this.activeNodes
+      .forEach(node => {
+        let { gfx } = node;
+        gfx.filters.pop();
+        gfx.zIndex = 0;
+      });
     this.highlightNetworkNodes(node);
   }
 
