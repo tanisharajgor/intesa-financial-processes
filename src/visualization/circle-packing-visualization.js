@@ -86,24 +86,13 @@ export class CirclePackingDiagram {
 
       this.containerNodes = new PIXI.Container();
       this.nodes = [];
-
       this.data.forEach((node) => {
+          node.viewId = node.data.viewId;
           node.gfx = new PIXI.Graphics();
           node.gfx.lineStyle(1, 0xFFFFFF, 1);
           node.gfx.beginFill(Global.applyColorScale(node.data, viewVariable));
           node.gfx.lineWidth = 5;
-
-          if (node.data.treeLevel < 4) {
-            node.gfx.drawCircle(0, 0, node.r);
-          } else {
-            if (node.data.viewId === "Control activity") {
-              node.gfx.drawRegularPolygon(0, 0, node.r, 4, 1.7);
-              node.shape = "diamond";
-            } else {
-              node.gfx.drawRect(0, 0, node.r, node.r);
-              node.shape = "square";
-            }
-          }
+          Global.symbolScalePixi(node, node.r);
 
           node.gfx.x = node.x;
           node.gfx.y = node.y;

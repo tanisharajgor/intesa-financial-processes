@@ -133,11 +133,11 @@ export const activityTypeValues = ["Process activity", "Control activity", "Comm
 export function symbolScaleD3(node) {
 
     if (node.viewId === "Actor") {
-        return d3.symbolTriangle;
+        return d3.symbolSquare;
     } else if (node.viewId === "Control activity") {
         return d3.symbolDiamond2;
     } else if(node.viewId === "Other activity") {
-        return d3.symbolSquare;
+        return d3.symbolTriangle;
     } else if (node.viewId === "Risk") {
         return d3.symbolStar;
     } else {
@@ -150,23 +150,23 @@ export function symbolScalePixi(node, rSize) {
 
     switch(node.viewId) {
         case "Actor":
-            node.gfx.drawRegularPolygon(0, 0, rSize, 3);
-            node.shape = "triangle";
+            node.gfx.drawRect(-rSize/2, -rSize/2, rSize, rSize);
+            node.shape = "square";
             break;
         case "Control activity":
             node.gfx.drawRegularPolygon(0, 0, rSize, 4, 1.7);
             node.shape = "diamond";
             break;
         case "Other activity":
-            node.gfx.drawRect(-rSize/2, -rSize/2, rSize, rSize);
-            node.shape = "square";
+            node.gfx.drawRegularPolygon(0, 0, rSize, 3);
+            node.shape = "triangle";
             break;
         case "Risk":
             node.gfx.drawStar(0, 0, 5, rSize);
             node.shape = "star";
             break;
         default:
-            node.gfx.drawCircle(0, 0, rSize*.8);
+            node.gfx.drawCircle(0, 0, rSize);
             node.shape = "circle";
             break;
     }
