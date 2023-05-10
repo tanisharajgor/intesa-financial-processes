@@ -32,7 +32,7 @@ export default class NetworkVisualization {
   activeNodes;
   app;
   clickNode;
-  clickViewPort;
+  clickViewport;
   containerLabels;
   containerNodes;
   containerLinks;
@@ -54,7 +54,7 @@ export default class NetworkVisualization {
     this.activeLink = [];
     this.activeNodes = [];
     this.clickNode = false;
-    this.clickViewPort = false;
+    this.clickViewport = false;
     this.labelStyle = new PIXI.TextStyle(labelStyle);
   }
 
@@ -115,13 +115,16 @@ export default class NetworkVisualization {
   }
 
   clickOff() {
-    // this.clicked = false;
-    // this.activeLink = [];
-    // this.activeNode = [];
+    this.clickViewPort = true;
+
+    // if (this.clickViewPort) {
+    //   // this.activeLink = [];
+    //   // this.activeNode = [];
+    // }
   }
 
-  clickOn(node, viewVariable) {
-    this.clickNode = true;
+  clickOn(node) {
+    this.clickNode = !this.clickNode;
     this.highlightNetworkNodes(node);
   }
 
@@ -167,7 +170,7 @@ export default class NetworkVisualization {
       node.gfx.buttonMode = true;
       node.gfx.on("pointerover", () => this.pointerOver(node, viewVariable));
       node.gfx.on("pointerout", () => this.pointerOut(node));
-      node.gfx.on('click', () => this.clickOn(node, viewVariable));
+      node.gfx.on('click', () => this.clickOn(node));
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx);
@@ -328,7 +331,6 @@ export default class NetworkVisualization {
   highlightNetworkNodes(d) {
     this.activeLink = this.listHighlightNetworkNodes(d);
     this.activeNodes = this.data.nodes.filter(z => this.activeLink.includes(z.id));
-
     this.activeNodes
       .forEach(node => {
         let { gfx } = node;
@@ -374,17 +376,17 @@ export default class NetworkVisualization {
 
     // label
     const rect = new PIXI.Graphics();
-    rect.lineStyle(1, 0x4e5155);
-    rect.beginFill(0x000000)
-        .drawFilletRect(
-        d.x + 20,
-        d.y - 10,
-        width, 
-        height,
-        5);
-    rect.endFill();
-    rect.alpha = 0.8;
-    this.tooltip.addChild(rect);
+      rect.lineStyle(1, 0x4e5155);
+      rect.beginFill(0x000000)
+          .drawFilletRect(
+          d.x + 20,
+          d.y - 10,
+          width, 
+          height,
+          5);
+      rect.endFill();
+      rect.alpha = 0.8;
+      this.tooltip.addChild(rect);
 
     // text
     const text = new PIXI.Text(this.tooltipText(d), this.labelStyle);
@@ -412,7 +414,7 @@ export default class NetworkVisualization {
 
     if (!this.clickNode) {
       this.activeNodes
-      .forEach( node => {
+      .forEach(node => {
         let { gfx } = node;
         gfx.filters.pop();
         gfx.zIndex = 0;
