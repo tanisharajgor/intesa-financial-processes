@@ -7,7 +7,6 @@ import '@pixi/graphics-extras';
 
 export class CirclePackingDiagram {
     app;
-    colorScale;
     containerNodes;
     data;
     height;
@@ -87,12 +86,11 @@ export class CirclePackingDiagram {
 
         this.containerNodes = new PIXI.Container();
         this.nodes = [];
-        this.colorScale = Global.createColorScale(viewVariable);
 
         this.data.forEach((node) => {
             node.gfx = new PIXI.Graphics();
             node.gfx.lineStyle(1, 0xFFFFFF, 1);
-            node.gfx.beginFill(Global.applyColorScaleMode(node.data, viewVariable, this.colorScale));
+            node.gfx.beginFill(Global.applyColorScale(node.data, viewVariable));
             node.gfx.lineWidth = 5;
 
             if (node.data.treeLevel < 4) {
@@ -162,7 +160,7 @@ export class CirclePackingDiagram {
     pointerOver(node, e, viewVariable) {
         node.gfx.alpha = 0.5;
         this.showTooltip(node);
-        this.updateViewHoverValue(Global.applyColorScaleMode(node.data, viewVariable, this.colorScale));
+        this.updateViewHoverValue(Global.applyColorScale(node.data, viewVariable));
     }
 
     pointerOut(node, e) {
