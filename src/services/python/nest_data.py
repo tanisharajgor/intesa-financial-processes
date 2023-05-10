@@ -74,7 +74,7 @@ def create_risk_control(main):
         df = main[main.riskID == id]
         dict = {"id": int(id),
                 "name": df.risk.iloc[0],
-                "riskType": create_risk_type(df)
+                "viewType": create_view_type(df)
         }
 
         array.append(dict)
@@ -85,53 +85,40 @@ def create_risk_control(main):
 Creates a risk status attribute at the activity level
 return nested list
 """
-def create_risk_type(df):
+def create_view_type(df):
 
-    df = df[pd.isnull(df.riskID) == False].copy()
+    df2 = df[(pd.isnull(df.riskID) == False) | (pd.isnull(df.controlID) == False)].copy()
 
-    df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('Missing')
-    df.riskType = df.riskType.fillna('Missing')
+    df2.financialDisclosureRisk = df2.financialDisclosureRisk.fillna('Missing')
+    df2.riskType = df2.riskType.fillna('Missing')
+    df2.controlType = df2.controlType.fillna('Missing')
+    df2.controlPeriodocity = df2.controlPeriodocity.fillna('Missing')
 
-    if df.shape[0] > 0:
+    if df2.shape[0] > 0:
 
-        riskType = df.riskType.mode().iloc[0]
-        financialDisclosureRiskAny = df.financialDisclosureRisk.mode().iloc[0]
+        riskType = df2.riskType.mode().iloc[0]
+        financialDisclosureRiskAny = df2.financialDisclosureRisk.mode().iloc[0]
+        controlType = df2.controlType.mode().iloc[0]
+        controlPeriodocityMode = df2.controlPeriodocity.mode().iloc[0]
 
         if (financialDisclosureRiskAny != "NA") & (financialDisclosureRiskAny != "Missing"):
             financialDisclosureRiskAny = bool(financialDisclosureRiskAny)
-
-        row = {"financialDisclosureRiskAny": financialDisclosureRiskAny,
-               "riskType": str(riskType)}
-
-    else:
-        row = {}
-
-    return row
-
-"""
-Creates a risk status attribute at the activity level
-return nested list
-"""
-def create_control_type(df):
-
-    df = df[pd.isnull(df.controlID) == False].copy()
-
-    df.controlType = df.controlType.fillna('Missing')
-    df.controlPeriodocity = df.controlPeriodocity.fillna('Missing')
-
-    if df.shape[0] > 0:
-
-        controlType = df.controlType.mode().iloc[0]
-        controlPeriodocityMode = df.controlPeriodocity.mode().iloc[0]
-
+            
         if (controlPeriodocityMode != "NA") & (controlPeriodocityMode != "Missing"):
             controlPeriodocityMode = float(controlPeriodocityMode)
 
-        row = {"controlType": str(controlType),
+        row = {"financialDisclosureRiskAny": financialDisclosureRiskAny,
+               "riskType": str(riskType),
+               "controlType": str(controlType),
                "controlPeriodocity": controlPeriodocityMode}
 
     else:
-        row = {}
+        row = {
+            "financialDisclosureRiskAny": "Missing",
+            "riskType": "Missing",
+            "controlType": "Missing",
+            "controlPeriodocity": "Missing"
+        }
 
     return row
 
@@ -156,8 +143,7 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
         d = {"id": int(id),
             "name": df_sub[df_sub[root1ID] == id][root1].iloc[0],
             # "childrenIDs": childrenIDs,
-            "riskType": create_risk_type(df_sub),
-            "activityType": create_control_type(df_sub),
+            "viewType": create_view_type(df_sub),
             "treeLevel": int(tree_level)
             }
 
@@ -241,7 +227,7 @@ def create_network(data):
                    "type": df[df.actorID == k].actorType.iloc[0],
                    "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
                    "levels": levelsObject(df[df.actorID == k]),
-                   "actorType": {
+                   "viewType": {
                         "nActivity": int(df[(df.actorID == k) & (pd.isnull(df.activityID) == False)][['activityID']].drop_duplicates().shape[0]),
                         "nRisk": int(df[(df.actorID == k) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0]),
                         "nControl": int(df[(df.actorID == k) & (pd.isnull(df.controlID) == False)][['controlID']].drop_duplicates().shape[0])
@@ -258,7 +244,7 @@ def create_network(data):
                     "name": df[df.activityID == l].activity.iloc[0],
                     "actorsID": df[df.activityID == l].actorID.unique().tolist(),
                     "levels": levelsObject(df[df.activityID == l]),
-                    "activityType": {
+                    "viewType": {
                         "nActor": int(df[(df.activityID == l) & (pd.isnull(df.actorID) == False)][['actorID']].drop_duplicates().shape[0]),
                         "nRisk": int(df[(df.activityID == l) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0]),
                         "nControl": int(df[(df.activityID == l) & (pd.isnull(df.controlID) == False)][['controlID']].drop_duplicates().shape[0])
@@ -273,7 +259,7 @@ def create_network(data):
                     "group": "Risk",
                     "viewId": "Risk",
                     "name": df[df.riskID == m].risk.iloc[0],
-                    "riskType": {
+                    "viewType": {
                         "financialDisclosureRisk": bool(df[df.riskID == m].financialDisclosureRisk.iloc[0]),
                         "riskType": df[df.riskID == m].riskType.iloc[0],
                         "nActor": int(df[(df.riskID == m) & (pd.isnull(df.actorID) == False)][['actorID']].drop_duplicates().shape[0]),
@@ -290,7 +276,7 @@ def create_network(data):
                    "type": "Control activity",
                    "viewId": "Control activity",
                    "name": df[df.controlID == k].control.iloc[0],
-                   "activityType": {
+                   "viewType": {
                         "controlPeriodocity": df[df.controlID == k].controlPeriodocity.iloc[0],
                         "controlCategory": df[df.controlID == k].controlCategory.iloc[0],
                         "controlType": df[df.controlID == k].controlType.iloc[0],
@@ -347,19 +333,19 @@ def create_processes(main):
             for k in l3:
                 r3 = {"id": int(k),
                      "name": main[main.level3ID == k].level3.iloc[0],
-                     "treeLevel": 3}
+                     "treeLevel": int(3)}
                 l3Array.append(r3)
 
             r2 = {"id": int(j),
                  "name": main[main.level2ID == j].level2.iloc[0],
                  "children": l3Array,
-                 "treeLevel": 2}
+                 "treeLevel": int(2)}
             l2Array.append(r2)
 
         r1 = {"id": int(i),
               "name": main[main.level1ID == i].level1.iloc[0],
               "children": l2Array,
-              "treeLevel": 1}
+              "treeLevel": int(1)}
         l1Array.append(r1)
 
     return l1Array

@@ -10,18 +10,11 @@ let colorScale;
 
 let riskLegendId = "Risk-Legend";
 let shapeLegendId = "Shape-Legend";
-let sizeLegendId = "Size-Legend";
 
 const shapeData = [{"group": "Actor", "viewId": "Actor"},
                    {"group": "Control", "viewId": "Control activity"},
                    {"group": "Activity", "viewId": "Other activity"},
                    {"group": "Risk", "viewId": "Risk"}];
-
-const sizeData = [{"size": 1, "group": "Actor", "viewId": "Actor"},
-                  {"size": 25, "group": "Actor", "viewId": "Actor"},
-                  {"size": 50, "group": "Actor", "viewId": "Actor"},
-                  {"size": 100, "group": "Actor", "viewId": "Actor"},
-                  {"size": 300, "group": "Actor", "viewId": "Actor"}];
 
 function drawRiskLegend(t, viewHoverValue, networkChart) {
 
@@ -44,7 +37,9 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
-                    .attr('fill', (d => d.color)),
+                    .attr('fill', d => d.color)
+                    // .attr("stroke",  d => d.label === "Missing"? Global.naColorHex: d.color)
+                    .attr('stroke-width', 1),
                 update => update
                     .attr('opacity', (d => viewHoverValue === undefined || d.color == viewHoverValue? 1: .3)),
                     exit   => exit.remove()
@@ -70,7 +65,7 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
 // Initiates the legend svg and sets the non-changing attributes
 function initRiskLegend(viewVariable, viewHoverValue, networkChart) {
 
-    let t = Global.viewObj[viewVariable];
+    let t = Global.viewVariables[viewVariable];
     let h = height + (t.values.length + 1)*20;
 
     d3.select(`#${riskLegendId}`)
@@ -84,7 +79,7 @@ function initRiskLegend(viewVariable, viewHoverValue, networkChart) {
 // Updates the legend attributes on variable change
 function updateRiskLegend(variable, viewHoverValue, networkChart) {
 
-    let t = Global.viewObj[variable];
+    let t = Global.viewVariables[variable];
     let h = height + (t.values.length + 1)*20;
 
     let svg = d3.select(`#${riskLegendId} svg`);
@@ -122,7 +117,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
-                    .attr("fill", "#cbcbcb"),
+                    .attr("fill", Global.naColorHex),
                 update => update
                     .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
@@ -148,63 +143,6 @@ function updateShapeLegend(networkChart, symbolHoverValue) {
     drawShapeLegend(networkChart, symbolHoverValue);
 }
 
-function initSizeLegend(networkChart, symbolHoverValue) {
-
-    d3.select(`#${sizeLegendId}`)
-        .append("svg")
-        .attr("width", width);
-
-    drawSizeLegend(networkChart, symbolHoverValue);
-}
-
-function drawSizeLegend(networkChart, symbolHoverValue) {
-    if (networkChart) {
-
-        const h = 40;
-
-        let svg = d3.select(`#${sizeLegendId} svg`)
-            .attr("height", h);
-
-        svg
-            .selectAll("path")
-                .data(sizeData, d => d.size)
-                .join(
-                    enter  => enter
-                        .append("path")
-                            .attr("d", d3.symbol()
-                                .type(((d) => Global.symbolScaleD3(d)))
-                                .size(((d) => Global.rScale(d.size*200)))) //approximate size fix
-                            .attr("fill", "#cbcbcb"),
-                update => update
-                    .attr('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3)
-                )
-            .attr("transform", (d, i) => `translate(${(i * 40) + 10}, ${h / 3})`);
-
-        svg
-            .selectAll("text")
-                .data(sizeData, d => d.size)
-                .join(
-                    enter  => enter
-                         .append("text")
-                            .attr("text-anchor", "middle")
-                            .attr("y", 25)
-                            .attr("font-size", 12)
-                            .attr("fill", "#cbcbcb")
-                            .text(d => d.size),
-                    update => update
-                        .attr('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3)
-                    )
-                .attr("transform", (d, i) => `translate(${(i * 40) + 10}, ${h / 3})`);
-
-        // Change opacity of the legend title
-        d3.select(".size_legend > span")
-            .style('opacity', symbolHoverValue === "Actor" || symbolHoverValue === undefined? 1: .3);
-    }
-}
-
-function updateSizeLegend(networkChart, symbolHoverValue) {
-    drawSizeLegend(networkChart, symbolHoverValue);
-}
 
 function shapeType() {
     return(
@@ -214,18 +152,6 @@ function shapeType() {
             </span>
             <span className="layout_item"></span>
             <div id={shapeLegendId}></div>
-        </div>
-    )
-}
-
-function sizeType() {
-    return(
-        <div className="layout_row size_legend">
-            <span className="layout_item key">
-                Size
-            </span>
-            <span className="layout_item"></span>
-            <div id={sizeLegendId}></div>
         </div>
     )
 }
@@ -244,7 +170,6 @@ function viewInfo(networkChart) {
         <div className="inner">
             <div className="layout_group inline">
                 {networkChart? shapeType(): <></>}
-                {networkChart? sizeType(): <></>}
                 {riskType()}
             </div>
         </div>
@@ -258,21 +183,19 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
     colorScale = Global.createColorScale(viewVariable);
 
     const handleChange = (event) => {
-        let newView = (Object.keys(Global.viewObj).find((c) => Global.viewObj[c].label === event.target.value));
+        let newView = (Object.keys(Global.viewVariables).find((c) => Global.viewVariables[c].label === event.target.value));
         updateViewVariable(newView)
     }
 
     // Initiate legends
     useEffect(() => {
         initShapeLegend(networkChart, symbolHoverValue);
-        initSizeLegend(networkChart, symbolHoverValue);
         initRiskLegend(viewVariable, viewHoverValue, networkChart);
     }, [])
 
     // Update the shape legend
     useEffect(() => {
         updateShapeLegend(networkChart, symbolHoverValue);
-        updateSizeLegend(networkChart, symbolHoverValue);
     }, [symbolHoverValue]);
 
     // Update the risk legend
@@ -291,12 +214,12 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
                         labelId="view-select-label"
                         id="view-select"
                         displayEmpty
-                        value={Global.viewObj[viewVariable].label}
+                        value={Global.viewVariables[viewVariable].label}
                         onChange={handleChange}
                     >
                         {
-                        Global.viewVars.map((viewBy) => {
-                            let variable = Global.viewObj[viewBy];
+                        Object.keys(Global.viewVariables).map((viewBy) => {
+                            let variable = Global.viewVariables[viewBy];
                             return (
                                 <MenuItem key={variable.id} value={variable.label}><em>{variable.label}</em></MenuItem>
                             )
