@@ -37,7 +37,9 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
-                    .attr('fill', (d => d.color)),
+                    .attr('fill', d => d.color)
+                    // .attr("stroke",  d => d.label === "Missing"? Global.naColorHex: d.color)
+                    .attr('stroke-width', 1),
                 update => update
                     .attr('opacity', (d => viewHoverValue === undefined || d.color == viewHoverValue? 1: .3)),
                     exit   => exit.remove()
@@ -63,7 +65,7 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
 // Initiates the legend svg and sets the non-changing attributes
 function initRiskLegend(viewVariable, viewHoverValue, networkChart) {
 
-    let t = Global.viewObj[viewVariable];
+    let t = Global.viewVariables[viewVariable];
     let h = height + (t.values.length + 1)*20;
 
     d3.select(`#${riskLegendId}`)
@@ -77,7 +79,7 @@ function initRiskLegend(viewVariable, viewHoverValue, networkChart) {
 // Updates the legend attributes on variable change
 function updateRiskLegend(variable, viewHoverValue, networkChart) {
 
-    let t = Global.viewObj[variable];
+    let t = Global.viewVariables[variable];
     let h = height + (t.values.length + 1)*20;
 
     let svg = d3.select(`#${riskLegendId} svg`);
@@ -115,7 +117,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
-                    .attr("fill", "#cbcbcb"),
+                    .attr("fill", Global.naColorHex),
                 update => update
                     .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
@@ -181,7 +183,7 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
     colorScale = Global.createColorScale(viewVariable);
 
     const handleChange = (event) => {
-        let newView = (Object.keys(Global.viewObj).find((c) => Global.viewObj[c].label === event.target.value));
+        let newView = (Object.keys(Global.viewVariables).find((c) => Global.viewVariables[c].label === event.target.value));
         updateViewVariable(newView)
     }
 
@@ -212,12 +214,12 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
                         labelId="view-select-label"
                         id="view-select"
                         displayEmpty
-                        value={Global.viewObj[viewVariable].label}
+                        value={Global.viewVariables[viewVariable].label}
                         onChange={handleChange}
                     >
                         {
-                        Global.viewVars.map((viewBy) => {
-                            let variable = Global.viewObj[viewBy];
+                        Object.keys(Global.viewVariables).map((viewBy) => {
+                            let variable = Global.viewVariables[viewBy];
                             return (
                                 <MenuItem key={variable.id} value={variable.label}><em>{variable.label}</em></MenuItem>
                             )
