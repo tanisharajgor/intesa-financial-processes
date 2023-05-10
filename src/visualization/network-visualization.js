@@ -111,6 +111,11 @@ export default class NetworkVisualization {
 
   // Drawing functions ------------------------------------------------------
 
+  click(node, viewVariable) {
+    console.log("clicked")
+
+  }
+
   // Initializes the links
   drawLinks() {
     this.containerLinks = new PIXI.Container();
@@ -153,6 +158,8 @@ export default class NetworkVisualization {
       node.gfx.buttonMode = true;
       node.gfx.on("pointerover", () => this.pointerOver(node, viewVariable));
       node.gfx.on("pointerout", () => this.pointerOut(node));
+      node.gfx.on('click', () => this.click(node, viewVariable));
+
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx);
@@ -279,7 +286,7 @@ export default class NetworkVisualization {
     return scale(node.simulated);
   }
 
-  highlightNetworkNodes(d) {
+  listHighlightNetworkNodes(d) {
     if (d.group === "Actor") {
 
         let activityIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
@@ -287,7 +294,7 @@ export default class NetworkVisualization {
         let controlIds = Global.filterLinksSourceToTarget(this.data.links, riskIds);
         let ids = controlIds.concat(riskIds.concat(activityIds.concat(d.id)));
 
-        return ids
+        return ids;
 
     } else if (d.group === "Activity") {
 
@@ -316,6 +323,26 @@ export default class NetworkVisualization {
 
         return ids;
     }
+  }
+
+  highlightNetworkNodes(d) {
+    this.activeLink = this.listHighlightNetworkNodes(d);
+    this.activeNodes = this.data.nodes.filter(z => this.activeLink.includes(z.id));
+
+    this.activeNodes
+      .forEach((node) => {
+        let { gfx } = node;
+        gfx.filters = [
+          new GlowFilter({
+            distance: 5,
+            innerStrength: 0,
+            outerStrength: 2,
+            color: 0xffffff,
+            quality: 1,
+          }),
+        ];
+        gfx.zIndex = 1;
+      });
   }
 
   tooltipText(d) {
@@ -371,24 +398,7 @@ export default class NetworkVisualization {
 
   pointerOver(d, viewVariable) {
 
-    this.activeLink = this.highlightNetworkNodes(d);
-    this.activeNodes = this.data.nodes.filter(z => this.activeLink.includes(z.id));
-
-    this.activeNodes
-      .forEach((node) => {
-        let { gfx } = node;
-        gfx.filters = [
-          new GlowFilter({
-            distance: 5,
-            innerStrength: 0,
-            outerStrength: 2,
-            color: 0xffffff,
-            quality: 1,
-          }),
-        ];
-        gfx.zIndex = 1;
-      });
-
+    this.highlightNetworkNodes(d);
     this.updateSymbolHoverValue(d.viewId);
     this.updateViewHoverValue(Global.applyColorScale(d, viewVariable, this.colorScale));
     this.showTooltip(d);
