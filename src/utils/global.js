@@ -4,75 +4,69 @@ export const palette = [0x1f77b4, 0xff7f0e, 0x2ca02c, 0xd62728, 0x9467bd, 0x8c56
     0xe377c2, 0xbcbd22, 0x17becf, 0xaec7e8, 0xffbb78, 0x98df8a, 0xff9896, 
     0xc5b0d5, 0xc49c94, 0xf7b6d2, 0xc7c7c7, 0xdbdb8d, 0x9edae5];
 
-export const naColor = 0xADADAD;
-const missingColor = 0x4B4B4B;
+export const naColor = 0x777777;
+export const naColorHex = "#777777";
+export const missingColor = 0xD7D7D7;
+export const missingColorHex = "#D7D7D7";
+export const missingColorBorder = 0xADADAD;
 
 export const viewVariables = {
 
-    "activityType": {
-        "nRisk": {
-            label: "Number of risks",
-            labels: [0, 1, 2],
-            id: [27, 28, 29],
-            values: [0, 1, 2],
-            colors: ["#0071BC", "#FFC41F", "#FF0000"],
-            group: "Activity"
-        }
-    },
+    // "financialDisclosureRiskAny": {
+    //     label: "Financial disclosure risk",
+    //     labels: ["Yes", "No", "Missing", "NA"],
+    //     id: [6, 7, 8, 9],
+    //     values: [true, false, "Missing", "NA"],
+    //     colors: ["#FF0000", "#0071BC", missingColor, naColor]
+    // },
+    // ,
+    // "nControl": {
+    //     label: "Number of controls",
+    //     labels: [0, 1],
+    //     id: [25, 26],
+    //     values: [0, 1],
+    //     colors: ["#FF0000", "#0071BC"],
+    //     group: "Risk"
+    // },
+    // "nRisk": {
+    //     label: "Number of risks",
+    //     labels: [0, 1, 2],
+    //     id: [27, 28, 29],
+    //     values: [0, 1, 2],
+    //     colors: ["#0071BC", "#FFC41F", "#FF0000"],
+    //     group: "Activity"
+    // },
     "riskType": {
-        // "financialDisclosureRiskAny": {
-        //     label: "Financial disclosure risk",
-        //     labels: ["Yes", "No", "Missing", "NA"],
-        //     id: [6, 7, 8, 9],
-        //     values: [true, false, "Missing", "NA"],
-        //     colors: ["#FF0000", "#0071BC", missingColor, naColor]
-        // },
-        "riskType": {
-            label: "Risk type",
-            labels: ['Financial Information Risk', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'Missing', 'NA'],
-            id: [20, 21, 22, 23, 24],
-            values: ['Financial Information Risk (ex 262/2005)', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'Missing', 'NA'],
-            colors: [0xf27800, 0x35b7ad, 0xedb900, 0xb04492, missingColor, naColor],
-            viewId: "Risk"
-        }
-        // ,
-        // "nControl": {
-        //     label: "Number of controls",
-        //     labels: [0, 1],
-        //     id: [25, 26],
-        //     values: [0, 1],
-        //     colors: ["#FF0000", "#0071BC"],
-        //     group: "Risk"
-        // }
+        label: "Risk type",
+        labels: ['Financial Information Risk', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'Missing', 'NA'],
+        id: [20, 21, 22, 23, 24],
+        values: ['Financial Information Risk (ex 262/2005)', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'Missing', 'NA'],
+        colors: [0xf27800, 0x35b7ad, 0xedb900, 0xb04492, missingColor, naColor],
+        viewId: "Risk"
     },
-    "activityType": {
-        "controlType": {
-            label: "Control type",
-            values: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
-            id: [1, 2, 3, 4, 5],
-            labels: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
-            colors: [0xFF0000, 0xFFC41F, 0x0071BC, missingColor, naColor],
-            viewId: "Control activity"
-        },
-        "controlPeriodocity": {
-            label: "Control periodicity",
-            values: [3650, 365, 182, 91, 30, 7, 1, .1, 'Missing', 'NA'],
-            id: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
-            labels: ['Decadal', 'Annually', 'Half yearly', 'Quarterly', 'Monthly', 'Weekly', 'Daily', 'Per event', 'Missing', 'NA'],
-            viewId: "Control activity"
-        }
+    "controlType": {
+        label: "Control type",
+        values: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
+        id: [1, 2, 3, 4, 5],
+        labels: ["Manual", "Semi-automatic", "Automatic", "Missing", "NA"],
+        colors: [0xFF0000, 0xFFC41F, 0x0071BC, missingColor, naColor],
+        viewId: "Control activity"
+    },
+    "controlPeriodocity": {
+        label: "Control periodicity",
+        values: [3650, 365, 182, 91, 30, 7, 1, .1, 'Missing', 'NA'],
+        id: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+        labels: ['Decadal', 'Annually', 'Half yearly', 'Quarterly', 'Monthly', 'Weekly', 'Daily', 'Per event', 'Missing', 'NA'],
+        viewId: "Control activity"
     }
 }
-
-export const viewVars = Object.keys(viewVariables['riskType']).concat(Object.keys(viewVariables['activityType']));
-export const viewObj = {...viewVariables['riskType'], ...viewVariables['activityType']}
 
 // Creates a colorScales for different types of variables
 // yellow: #FFC41F
 // orange: #FF831D
 export function createColorScale(variable) {
 
-    let t = viewObj[variable];
+    let t = viewVariables[variable];
 
     if (variable === "controlPeriodocity") {
 
@@ -80,8 +74,8 @@ export function createColorScale(variable) {
             .domain(d3.extent(t.values));
 
         let interp = [3650, 365, 182, 91, 30, 7, 1, .1].map(d => scale(d))
-        interp.push('#4B4B4B')
-        interp.push('#ADADAD')
+        interp.push(missingColorHex)
+        interp.push(naColorHex)
 
         var s = d3.scaleOrdinal()
             .domain(t.values)
@@ -100,33 +94,18 @@ export function createColorScale(variable) {
     }
 }
 
-export function applyColorScale(d, viewVariable, colorScale) {
+export function applyColorScale(d, viewVariable) {
 
-    if (d.viewId === "Risk") {
-
-        if (Object.keys(viewVariables['riskType']).includes(viewVariable)) {
-            return d[viewVariable] === "NA" ? naColor : colorScale(d['riskType'][viewVariable]);
-        } else {
-            return naColor;
-        }
-    } else if (d.viewId === "Control activity") {
-
-        if (Object.keys(viewVariables['activityType']).includes(viewVariable)) {
-            return d[viewVariable] === "NA" ? naColor : colorScale(d['activityType'][viewVariable]);
-        } else {
-            return naColor;
-        }
-    } else {
-        return naColor;
-    }
+    let colorScale = createColorScale(viewVariable);
+    return d.viewType[viewVariable] === "NA" || d.viewType[viewVariable] === undefined? naColor : colorScale(d.viewType[viewVariable]);   
 }
 
-export function applyColorScaleMode(d, viewVariable, colorScale) {
+export function applyStrokeScaleWeight(d, viewVariable) {
 
-    if (Object.keys(viewVariables['riskType']).includes(viewVariable)) {
-        return d[viewVariable] === "NA" ? naColor : colorScale(d['riskType'][viewVariable]);
-    } else if (Object.keys(viewVariables['activityType']).includes(viewVariable)) {
-        return d[viewVariable] === "NA" ? naColor : colorScale(d['controlType'][viewVariable]);
+    if (d.viewType[viewVariable] === "Missing") {
+        return .75;
+    } else {
+        return 0;
     }
 }
 
