@@ -34,7 +34,6 @@ export default class NetworkVisualization {
   containerLabels;
   containerNodes;
   containerLinks;
-  colorScale;
   data;
   height;
   inspect;
@@ -134,16 +133,14 @@ export default class NetworkVisualization {
   drawNodes(viewVariable) {
 
     this.containerNodes = new PIXI.Container();
-    this.colorScale = Global.createColorScale(viewVariable);
-
     this.nodes = [];
     this.data.nodes.forEach((node) => {
 
-      const rSize = node.viewId === "Actor" ? Global.rScale(node.actorType.nActivity): 5;
+      const rSize = node.viewId === "Actor" ? Global.rScale(node.viewType.nActivity): 5;
 
       node.gfx = new PIXI.Graphics();
-      // node.gfx.lineStyle(1, 0xFFFFFF);
-      node.gfx.beginFill(Global.applyColorScale(node, viewVariable, this.colorScale))
+      // node.gfx.lineStyle(1, Global.applyColorScale(node, viewVariable));
+      node.gfx.beginFill(Global.applyColorScale(node, viewVariable))
       Global.symbolScalePixi(node, rSize);
 
       node.size = rSize;
@@ -369,6 +366,7 @@ export default class NetworkVisualization {
     this.activeNodes
       .forEach(node => {
         let { gfx } = node;
+
         gfx.filters = [
           new GlowFilter({
             distance: 1,
@@ -382,7 +380,7 @@ export default class NetworkVisualization {
       });
 
     this.updateSymbolHoverValue(d.viewId);
-    this.updateViewHoverValue(Global.applyColorScale(d, viewVariable, this.colorScale));
+    this.updateViewHoverValue(Global.applyColorScale(d, viewVariable));
     this.showTooltip(d);
   }
 
