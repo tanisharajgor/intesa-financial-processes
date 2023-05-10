@@ -117,31 +117,32 @@ export default class NetworkVisualization {
   }
 
   clickOff() {
-    // this.clickNode = !this.clickNode;
-    // this.clickViewport = true;
 
-    // if (this.clickViewport && this.clickNode) {
-      // this.clickNode = false;
-    //   this.clickViewport = false;
-    // }
-    // this.clickNode = !this.clickNode;
+    this.clickCount++;
+    if (this.clickCount > 2) {
+      this.clickNode = false;
+      this.clickCount = 0;
+      this.activeNodes
+        .forEach(node => {
+          let { gfx } = node;
+          gfx.filters.pop();
+          gfx.zIndex = 0;
+        });
 
-    // console.log(this.clickViewport)
-    // if (this.clickViewPort) {
-    //   this.activeLink = [];
-    //   this.activeNodes = [];
-    //   this.clickNode = !this.clickNode;
-    // }
+        this.activeLink = [];
+        this.activeNode = [];
+    }
   }
 
   clickOn(node) {
-    // this.clickNode = !this.clickNode;
+
     this.clickNode = true;
     this.clickCount++;
-    if (this.clickCount > 1) {
+    if (this.clickCount > 3) {
       this.clickNode = false;
       this.clickCount = 0;
     }
+    console.log(this.clickCount)
 
     this.activeNodes
       .forEach(node => {
