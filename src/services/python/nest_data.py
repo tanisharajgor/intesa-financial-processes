@@ -147,12 +147,10 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
             "treeLevel": int(tree_level)
             }
 
-        # import pdb; pdb.set_trace()
         if children is not None:
             d["children"] = subset_list(childrenIDs, children)
             d["viewId"] = "Process"
         else:
-            
             if df_sub[df_sub[root1ID] == id].activityType.iloc[0] == "Control activity":
                 d["viewId"] = "Control activity"
             else:

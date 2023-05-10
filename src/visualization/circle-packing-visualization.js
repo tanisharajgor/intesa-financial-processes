@@ -5,6 +5,10 @@ import graph from "../data/processed/nested/network2.json";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
 
+const opacityScale = d3.scaleOrdinal()
+  .domain([0, 1, 2, 3, 4])
+  .range([.05, .3, .4, .5, .6]);
+
 export class CirclePackingDiagram {
     app;
     containerNodes;
@@ -80,43 +84,41 @@ export class CirclePackingDiagram {
     // Initializes the nodes
     drawNodes(viewVariable) {
 
-        const opacityScale = d3.scaleOrdinal()
-          .domain([0, 1, 2, 3, 4])
-          .range([.05, .3, .4, .5, .6]);
+      this.containerNodes = new PIXI.Container();
+      this.nodes = [];
 
-        this.containerNodes = new PIXI.Container();
-        this.nodes = [];
+      this.data.forEach((node) => {
+          node.gfx = new PIXI.Graphics();
+          node.gfx.lineStyle(1, 0xFFFFFF, 1);
+          node.gfx.beginFill(Global.applyColorScale(node.data, viewVariable));
+          node.gfx.lineWidth = 5;
 
-        this.data.forEach((node) => {
-            node.gfx = new PIXI.Graphics();
-            node.gfx.lineStyle(1, 0xFFFFFF, 1);
-            node.gfx.beginFill(Global.applyColorScale(node.data, viewVariable));
-            node.gfx.lineWidth = 5;
-
-            if (node.data.treeLevel < 4) {
-              node.gfx.drawCircle(0, 0, node.r);
+          if (node.data.treeLevel < 4) {
+            node.gfx.drawCircle(0, 0, node.r);
+          } else {
+            if (node.data.viewId === "Control activity") {
+              node.gfx.drawRegularPolygon(0, 0, node.r, 4, 1.7);
+              node.shape = "diamond";
             } else {
-              if (node.data.viewId === "Control activity") {
-                node.gfx.drawRegularPolygon(0, 0, node.r, 4, 1.7);
-              } else {
-                node.gfx.drawRect(0, 0, node.r, node.r);
-              }
+              node.gfx.drawRect(0, 0, node.r, node.r);
+              node.shape = "square";
             }
+          }
 
-            node.gfx.x = node.x;
-            node.gfx.y = node.y;
-            node.gfx.alpha = opacityScale(node.data.treeLevel);
-            node.gfx.interactive = true;
-            node.gfx.buttonMode = true;
-            node.gfx.on("pointerover", (e) => this.pointerOver(node, e, viewVariable));
-            node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
-            node.gfx.on("click", (e) => this.onClick(node, e))
+          node.gfx.x = node.x;
+          node.gfx.y = node.y;
+          node.gfx.alpha = opacityScale(node.data.treeLevel);
+          node.gfx.interactive = true;
+          node.gfx.buttonMode = true;
+          node.gfx.on("pointerover", (e) => this.pointerOver(node, e, viewVariable));
+          node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
+          node.gfx.on("click", (e) => this.onClick(node, e))
 
-            this.nodes.push(node);
-            this.containerNodes.addChild(node.gfx); 
-        });
+          this.nodes.push(node);
+          this.containerNodes.addChild(node.gfx); 
+      });
 
-        this.viewport.addChild(this.containerNodes);
+      this.viewport.addChild(this.containerNodes);
     }
   
     // Updating the draw functions on mouse interaction ------------------------------------------------------
@@ -158,13 +160,13 @@ export class CirclePackingDiagram {
     }
 
     pointerOver(node, e, viewVariable) {
-        node.gfx.alpha = 0.5;
+        node.gfx.alpha = 0.7;
         this.showTooltip(node);
         this.updateViewHoverValue(Global.applyColorScale(node.data, viewVariable));
     }
 
     pointerOut(node, e) {
-        node.gfx.alpha = 0.1;
+        node.gfx.alpha = opacityScale(node.data.treeLevel);
         this.viewport.removeChild(this.tooltip);
         this.updateViewHoverValue(undefined);
     }

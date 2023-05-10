@@ -208,4 +208,3 @@ export const labelStyle = {
     dropShadowDistance: 2,
     dropShadowColor: 0x21252b
 }
-  
