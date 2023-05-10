@@ -31,6 +31,7 @@ export default class NetworkVisualization {
   activeLink;
   activeNodes;
   app;
+  clicked;
   containerLabels;
   containerNodes;
   containerLinks;
@@ -52,6 +53,7 @@ export default class NetworkVisualization {
     this.data = data;
     this.activeLink = [];
     this.activeNodes = [];
+    this.clicked = false;
     this.labelStyle = new PIXI.TextStyle(labelStyle);
   }
 
@@ -112,8 +114,8 @@ export default class NetworkVisualization {
   // Drawing functions ------------------------------------------------------
 
   click(node, viewVariable) {
-    console.log("clicked")
-
+    this.clicked = true;
+    this.highlightNetworkNodes(node);
   }
 
   // Initializes the links
@@ -132,7 +134,7 @@ export default class NetworkVisualization {
     this.viewport.addChild(this.containerLinks);
 
     this.simulation.force("link")
-    .links(this.data.links);
+      .links(this.data.links);
   }
 
   // Initializes the nodes
@@ -398,7 +400,9 @@ export default class NetworkVisualization {
 
   pointerOver(d, viewVariable) {
 
-    this.highlightNetworkNodes(d);
+    if (!this.clicked) {
+      this.highlightNetworkNodes(d);
+    }
     this.updateSymbolHoverValue(d.viewId);
     this.updateViewHoverValue(Global.applyColorScale(d, viewVariable, this.colorScale));
     this.showTooltip(d);
@@ -406,15 +410,17 @@ export default class NetworkVisualization {
 
   pointerOut(d) {
 
-    this.activeNodes
+    if (!this.clicked) {
+      this.activeNodes
       .forEach((node) => {
         let { gfx } = node;
         gfx.filters.pop();
         gfx.zIndex = 0;
       });
 
-    this.activeLink = [];
-    this.activeNode = [];
+      this.activeLink = [];
+      this.activeNode = [];
+    }
 
     this.updateViewHoverValue(undefined);
     this.updateSymbolHoverValue(undefined);
