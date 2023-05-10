@@ -32,7 +32,6 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
         riskData.push({"id": t.id[i], "label": t.labels[i], "value": t.values[i], "color": colorScale(t.values[i]), "viewId": t.viewId})
     }
 
-    console.log(riskData)
     svg
             .selectAll("path")
             .data(riskData, d => d.id)
