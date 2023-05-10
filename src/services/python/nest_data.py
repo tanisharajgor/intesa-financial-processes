@@ -74,7 +74,7 @@ def create_risk_control(main):
         df = main[main.riskID == id]
         dict = {"id": int(id),
                 "name": df.risk.iloc[0],
-                "riskType": create_risk_type(df)
+                "viewType": create_view_type(df)
         }
 
         array.append(dict)
@@ -85,53 +85,40 @@ def create_risk_control(main):
 Creates a risk status attribute at the activity level
 return nested list
 """
-def create_risk_type(df):
+def create_view_type(df):
 
-    df = df[pd.isnull(df.riskID) == False]
+    df2 = df[(pd.isnull(df.riskID) == False) | (pd.isnull(df.controlID) == False)]
 
-    df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('Missing')
-    df.riskType = df.riskType.fillna('Missing')
+    df2.financialDisclosureRisk = df2.financialDisclosureRisk.fillna('Missing')
+    df2.riskType = df2.riskType.fillna('Missing')
+    df2.controlType = df2.controlType.fillna('Missing')
+    df2.controlPeriodocity = df2.controlPeriodocity.fillna('Missing')
 
-    if df.shape[0] > 0:
+    if df2.shape[0] > 0:
 
-        riskType = df.riskType.mode().iloc[0]
-        financialDisclosureRiskAny = df.financialDisclosureRisk.mode().iloc[0]
+        riskType = df2.riskType.mode().iloc[0]
+        financialDisclosureRiskAny = df2.financialDisclosureRisk.mode().iloc[0]
+        controlType = df2.controlType.mode().iloc[0]
+        controlPeriodocityMode = df2.controlPeriodocity.mode().iloc[0]
 
         if (financialDisclosureRiskAny != "NA") & (financialDisclosureRiskAny != "Missing"):
             financialDisclosureRiskAny = bool(financialDisclosureRiskAny)
 
-        row = {"financialDisclosureRiskAny": financialDisclosureRiskAny,
-               "riskType": str(riskType)}
-
-    else:
-        row = {}
-
-    return row
-
-"""
-Creates a risk status attribute at the activity level
-return nested list
-"""
-def create_control_type(df):
-
-    df = df[pd.isnull(df.controlID) == False]
-
-    df.controlType = df.controlType.fillna('Missing')
-    df.controlPeriodocity = df.controlPeriodocity.fillna('Missing')
-
-    if df.shape[0] > 0:
-
-        controlType = df.controlType.mode().iloc[0]
-        controlPeriodocityMode = df.controlPeriodocity.mode().iloc[0]
-
         if (controlPeriodocityMode != "NA") & (controlPeriodocityMode != "Missing"):
             controlPeriodocityMode = float(controlPeriodocityMode)
 
-        row = {"controlType": str(controlType),
+        row = {"financialDisclosureRiskAny": financialDisclosureRiskAny,
+               "riskType": str(riskType),
+               "controlType": str(controlType),
                "controlPeriodocity": controlPeriodocityMode}
 
     else:
-        row = {}
+        row = {
+            "financialDisclosureRiskAny": "Missing",
+            "riskType": "Missing",
+            "controlType": "Missing",
+            "controlPeriodocity": "Missing"
+        }
 
     return row
 
@@ -156,8 +143,7 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
         d = {"id": int(id),
             "name": df_sub[df_sub[root1ID] == id][root1].iloc[0],
             # "childrenIDs": childrenIDs,
-            "riskType": create_risk_type(df_sub),
-            "activityType": create_control_type(df_sub),
+            "viewType": create_view_type(df_sub),
             "treeLevel": int(tree_level)
             }
 

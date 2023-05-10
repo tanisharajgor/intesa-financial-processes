@@ -310,19 +310,19 @@ export default class NetworkVisualization {
   tooltipText(d) {
     if (d.viewId === "Actor") {
 
-        return `Type: ${d.type} \n ${d.group}: ${d.name} \n # activities: ${d.actorType.nActivity} \n # risks: ${d.actorType.nRisk} \n # controls: ${d.actorType.nControl}`;
+        return `Type: ${d.type} \n ${d.group}: ${d.name} \n # activities: ${d.viewType.nActivity} \n # risks: ${d.viewType.nRisk} \n # controls: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Other activity") {
 
-        return `Type: ${d.type} \n ${d.group}: ${d.name} \n # actors: ${d.activityType.nActor} \n # risks: ${d.activityType.nRisk} \n # controls: ${d.activityType.nControl}`;
+        return `Type: ${d.type} \n ${d.group}: ${d.name} \n # actors: ${d.viewType.nActor} \n # risks: ${d.viewType.nRisk} \n # controls: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Risk") {
     
-        return `${d.group}: ${d.name} \n # actors: ${d.riskType.nActor} \n # activity: ${d.riskType.nActivity} \n # control: ${d.riskType.nControl}`;
+        return `${d.group}: ${d.name} \n # actors: ${d.viewType.nActor} \n # activity: ${d.viewType.nActivity} \n # control: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Control activity") {
     
-        return `Type: ${d.type} \n ${d.group}: ${d.name} \n # actors: ${d.activityType.nActor} \n # risks: ${d.activityType.nRisk}`;
+        return `Type: ${d.type} \n ${d.group}: ${d.name} \n # actors: ${d.viewType.nActor} \n # risks: ${d.viewType.nRisk}`;
     }
   }
 
