@@ -241,7 +241,7 @@ def create_network(data):
                    "type": df[df.actorID == k].actorType.iloc[0],
                    "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
                    "levels": levelsObject(df[df.actorID == k]),
-                   "actorType": {
+                   "viewType": {
                         "nActivity": int(df[(df.actorID == k) & (pd.isnull(df.activityID) == False)][['activityID']].drop_duplicates().shape[0]),
                         "nRisk": int(df[(df.actorID == k) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0]),
                         "nControl": int(df[(df.actorID == k) & (pd.isnull(df.controlID) == False)][['controlID']].drop_duplicates().shape[0])
@@ -258,7 +258,7 @@ def create_network(data):
                     "name": df[df.activityID == l].activity.iloc[0],
                     "actorsID": df[df.activityID == l].actorID.unique().tolist(),
                     "levels": levelsObject(df[df.activityID == l]),
-                    "activityType": {
+                    "viewType": {
                         "nActor": int(df[(df.activityID == l) & (pd.isnull(df.actorID) == False)][['actorID']].drop_duplicates().shape[0]),
                         "nRisk": int(df[(df.activityID == l) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0]),
                         "nControl": int(df[(df.activityID == l) & (pd.isnull(df.controlID) == False)][['controlID']].drop_duplicates().shape[0])
@@ -273,7 +273,7 @@ def create_network(data):
                     "group": "Risk",
                     "viewId": "Risk",
                     "name": df[df.riskID == m].risk.iloc[0],
-                    "riskType": {
+                    "viewType": {
                         "financialDisclosureRisk": bool(df[df.riskID == m].financialDisclosureRisk.iloc[0]),
                         "riskType": df[df.riskID == m].riskType.iloc[0],
                         "nActor": int(df[(df.riskID == m) & (pd.isnull(df.actorID) == False)][['actorID']].drop_duplicates().shape[0]),
@@ -290,7 +290,7 @@ def create_network(data):
                    "type": "Control activity",
                    "viewId": "Control activity",
                    "name": df[df.controlID == k].control.iloc[0],
-                   "activityType": {
+                   "viewType": {
                         "controlPeriodocity": df[df.controlID == k].controlPeriodocity.iloc[0],
                         "controlCategory": df[df.controlID == k].controlCategory.iloc[0],
                         "controlType": df[df.controlID == k].controlType.iloc[0],
@@ -345,19 +345,19 @@ def create_processes(main):
             for k in l3:
                 r3 = {"id": int(k),
                      "name": main[main.level3ID == k].level3.iloc[0],
-                     "treeLevel": 3}
+                     "treeLevel": int(3)}
                 l3Array.append(r3)
 
             r2 = {"id": int(j),
                  "name": main[main.level2ID == j].level2.iloc[0],
                  "children": l3Array,
-                 "treeLevel": 2}
+                 "treeLevel": int(2)}
             l2Array.append(r2)
 
         r1 = {"id": int(i),
               "name": main[main.level1ID == i].level1.iloc[0],
               "children": l2Array,
-              "treeLevel": 1}
+              "treeLevel": int(1)}
         l1Array.append(r1)
 
     return l1Array
