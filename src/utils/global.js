@@ -97,6 +97,7 @@ export function createColorScale(variable) {
 export function applyColorScale(d, viewVariable) {
 
     let colorScale = createColorScale(viewVariable);
+    // console.log(d.viewType[viewVariable])
     return d.viewType[viewVariable] === "NA" || d.viewType[viewVariable] === undefined? naColor : colorScale(d.viewType[viewVariable]);   
 }
 

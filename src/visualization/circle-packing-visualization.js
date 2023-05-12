@@ -86,12 +86,13 @@ export class CirclePackingDiagram {
 
       this.containerNodes = new PIXI.Container();
       this.nodes = [];
+      console.log(this.data)
       this.data.forEach((node) => {
           node.viewId = node.data.viewId;
           node.gfx = new PIXI.Graphics();
           node.gfx.lineStyle(1, 0xFFFFFF, 1);
           node.gfx.beginFill(Global.applyColorScale(node.data, viewVariable));
-          node.gfx.lineWidth = 5;
+          // node.gfx.lineWidth = 5;
           Global.symbolScalePixi(node, node.r);
 
           node.gfx.x = node.x;
@@ -176,8 +177,8 @@ export class CirclePackingDiagram {
 
         const getZoomWidth = (depth) => {
           const scale = d3.scaleLinear()
-          .range([1, 20])
-          .domain([0, 4]);
+            .range([1, 20])
+            .domain([0, 4]);
 
           // console.log(currentNodeId === this.zoomedNodeId && depth !== 0, depth)
           if (currentNodeId === this.zoomedNodeId && depth !== 0) {
@@ -192,7 +193,7 @@ export class CirclePackingDiagram {
             scale: getZoomWidth(node.depth),
         })
 
-        this.zoomedNodeId = currentNodeId
+        this.zoomedNodeId = currentNodeId;
     }
   
     // Destroys the nodes on data update
