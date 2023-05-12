@@ -3,11 +3,9 @@ import os
 import yaml
 from python.data_management import actors_rename, activities_dm, actors_dm, risks_dm, \
     applications_dm, controls_dm, level1_dm, level2_dm, level3_dm, model_dm, \
-    level1_to_level2_dm, level2_to_level3_dm, level3_to_model_dm, model_to_activity_dm, \
-    activity_to_risk_dm, risk_to_control_dm, activity_to_actor_dm, activity_to_application_dm, main_dm, \
-    level3_to_activity_dm
+    activity_to_risk_dm, risk_to_control_dm, main_dm
 
-from python.nest_data import create_processes_to_activities, create_risk_control, \
+from python.nest_data import create_processes_to_activities, \
      create_network, create_processes
 
 from python.translate import translate_text, authenticate_implicit_with_adc
@@ -85,8 +83,8 @@ def main():
     risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
     main = main_dm(data, level1Clean, level2Clean, level3Clean, activitiesClean, actorsClean, risksClean, controlsClean, activity_to_risk, risk_to_control)
 
-    network = create_network(main)
-    write_json(network, os.path.join(processed_pth, "nested"), "network2")
+    # network = create_network(main)
+    # write_json(network, os.path.join(processed_pth, "nested"), "network2")
 
     processesNested = create_processes_to_activities(main)
     write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
