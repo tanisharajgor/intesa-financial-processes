@@ -206,26 +206,90 @@ export default class NetworkVisualization {
 
   // Updating the draw functions during the animation ------------------------------------------------------
 
+  distance(p1, p2) {
+    return Math.hypot(p2.x-p1.x, p2.y-p1.y)
+  }
+
+  solidLine(source, target) {
+    this.links.lineStyle(.5, 0x888888);
+    this.links.moveTo(target.x, target.y);
+    this.links.lineTo(source.x, source.y);
+  }
+
+  highlightSolidLine(source, target) {
+    this.activeLinks.lineStyle(1, 0xffffff);
+    this.activeLinks.moveTo(source.x, source.y);
+    this.activeLinks.lineTo(target.x, target.y);
+  }
+
+  // Adapated from https://codepen.io/shepelevstas/pen/WKbYyw
+  dashedLine(source, target) {
+    const dash = 5;
+    const gap = 5;
+    const p1 = {x: target.x, y: target.y};
+    const p2 = {x: source.x, y: source.y};
+    const len = this.distance(p1, p2);
+    const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
+    this.links.lineStyle(0.5, 0x888888);
+    this.links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
+    let progress = dash+gap;
+  
+    while (progress < len) {
+      this.links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      progress += dash;
+      this.links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      progress += gap;
+    }
+  }
+
+  highlightDashedLine(source, target) {
+
+    const dash = 5;
+    const gap = 5;
+    const p1 = {x: target.x, y: target.y};
+    const p2 = {x: source.x, y: source.y};
+    const len = this.distance(p1, p2);
+    const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
+    this.activeLinks.lineStyle(1, 0xffffff);
+    this.activeLinks.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
+    let progress = dash+gap;
+
+    while (progress < len) {
+      this.activeLinks.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      progress += dash;
+      this.activeLinks.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      progress += gap;
+    }
+  }
+
   // Update the links position
   updateLinkPosition() {
 
+    // Links
     this.links.clear();
     this.data.links.forEach(link => {
       let { source, target } = link;
-      this.links.lineStyle(.5, 0x888888);
-      this.links.moveTo(target.x + (target.size / 2), target.y + (target.size / 2));
-      this.links.lineTo(source.x + (source.size / 2), source.y + (source.size / 2));
+
+      if (source.viewId === "Actor" && target.viewId === "Other activity") {
+        this.solidLine(source, target);
+      } else {
+        this.dashedLine(source, target);
+      }
     });
 
+    // Hover on links
     this.activeLinks.clear();
     const activeLinkData = this.data.links
             .filter(d => this.activeLink.includes(d.source.id) && this.activeLink.includes(d.target.id));
 
     activeLinkData.forEach(link => {
       let { source, target } = link;
-      this.activeLinks.lineStyle(1, 0xffffff); // darken the lines
-      this.activeLinks.moveTo(source.x, source.y);
-      this.activeLinks.lineTo(target.x, target.y);
+
+      if (source.viewId === "Actor" && target.viewId === "Other activity") {
+        this.highlightSolidLine(source, target);
+      } else {
+        this.highlightDashedLine(source, target);
+      }
     });
   }
 

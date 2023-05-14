@@ -87,7 +87,7 @@ return nested list
 """
 def create_view_type(df):
 
-    df2 = df[(pd.isnull(df.riskID) == False) | (pd.isnull(df.controlID) == False)]
+    df2 = df[(pd.isnull(df.riskID) == False) | (pd.isnull(df.controlID) == False)].copy()
 
     df2.financialDisclosureRisk = df2.financialDisclosureRisk.fillna('Missing')
     df2.riskType = df2.riskType.fillna('Missing')
@@ -103,7 +103,7 @@ def create_view_type(df):
 
         if (financialDisclosureRiskAny != "NA") & (financialDisclosureRiskAny != "Missing"):
             financialDisclosureRiskAny = bool(financialDisclosureRiskAny)
-
+            
         if (controlPeriodocityMode != "NA") & (controlPeriodocityMode != "Missing"):
             controlPeriodocityMode = float(controlPeriodocityMode)
 
@@ -289,21 +289,23 @@ def create_network(data):
 
         linkData1 = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)][['actorID', 'activityID']].rename(columns={'actorID': 'source',
                                                                                                                                            'activityID': 'target'})
+
         linkData2 = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.riskID) == False)][['activityID', 'riskID']].rename(columns={'activityID': 'source',
                                                                                                                                         'riskID': 'target'})
+
         linkData3 = df[(pd.isnull(df.riskID) == False) & (pd.isnull(df.controlID) == False)][['riskID', 'controlID']].rename(columns={'riskID': 'source',
                                                                                                                                       'controlID': 'target'})
+
         linkData4 = df[(pd.isnull(df.actorID) == False) & (pd.isnull(df.controlID) == False) & (df.controlID.isin(df.controlID))][['actorID', 'controlID']].rename(columns={'actorID': 'source',
                                                                                                                                       'controlID': 'target'})
-        linkData = linkData1.append(linkData2)
-        linkData = linkData.append(linkData3)
-        linkData = linkData.append(linkData4).drop_duplicates()
+
+        linkData = pd.concat([linkData1, linkData2])
+        linkData = pd.concat([linkData, linkData3])
+        linkData = pd.concat([linkData, linkData4]).drop_duplicates()
 
         for j in range(0, linkData.shape[0]):
             row = {"source": int(linkData.source.iloc[j]),
-                #    "sourceType": str("Actor"),
                    "target": int(linkData.target.iloc[j]),
-                #    "targetType": str("Activity"),
                    "id": str(linkData.source.iloc[j]) + "-" + str(linkData.target.iloc[j])}
 
             links.append(row)
