@@ -56,6 +56,7 @@ export default class NetworkVisualization {
     this.height = this.rootDOM.clientHeight;
 
     this.initSimulation();
+    this.initTooltip(selector);
 
     // create canvas
     this.app = new PIXI.Application({
@@ -88,6 +89,24 @@ export default class NetworkVisualization {
       .wheel({ percent: 0.1 })
       .drag();
   }
+
+  initTooltip(selector) {
+    this.tooltip = d3.select(`#${selector}`)
+      .append("div")
+      .attr("class", "tooltip")
+      .style("position", "absolute")
+      .style("left", "0px")
+      .style("top", "0px")
+      .style("visibility", "hidden")
+      .style("padding", "10px")
+      .style("pointer-events", "none")
+      .style("border-radius", "5px")
+      .style("background-color", "rgba(0, 0, 0, 0.65)")
+      .style("font-family", '"IBM Plex", ""Helvetica Neue", Helvetica, Arial, sans-serif')
+      .style("font-weight", "normal")
+      .style("border", "1px solid rgba(78, 81, 85, 0.7)")
+      .style("font-size", "16px");
+}
 
   // Drawing functions ------------------------------------------------------
 
@@ -355,52 +374,30 @@ export default class NetworkVisualization {
   tooltipText(d) {
     if (d.viewId === "Actor") {
 
-        return `Type: ${d.type} \n ${d.group}: ${d.name} \n # activities: ${d.viewType.nActivity} \n # risks: ${d.viewType.nRisk} \n # controls: ${d.viewType.nControl}`;
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # activities: ${d.viewType.nActivity} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Other activity") {
 
-        return `Type: ${d.type} \n ${d.group}: ${d.name} \n # actors: ${d.viewType.nActor} \n # risks: ${d.viewType.nRisk} \n # controls: ${d.viewType.nControl}`;
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.viewType.nActor} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Risk") {
     
-        return `${d.group}: ${d.name} \n # actors: ${d.viewType.nActor} \n # activity: ${d.viewType.nActivity} \n # control: ${d.viewType.nControl}`;
+        return `${d.group}: ${d.name} <br> # actors: ${d.viewType.nActor} <br> # activity: ${d.viewType.nActivity} <br> # control: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Control activity") {
     
-        return `Type: ${d.type} \n ${d.group}: ${d.name} \n # actors: ${d.viewType.nActor} \n # risks: ${d.viewType.nRisk}`;
+        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.viewType.nActor} <br> # risks: ${d.viewType.nRisk}`;
     }
   }
 
   showTooltip(d) {
-    this.tooltip = new PIXI.Container();
+    let x = d.x;
+    let y = d.y;
 
-    const textMetrics = PIXI.TextMetrics.measureText(this.tooltipText(d), this.labelStyle);
-    const width = textMetrics.maxLineWidth + 15;
-    const height = textMetrics.lineHeight * textMetrics.lines.length + 15;
-
-    // label
-    const rect = new PIXI.Graphics();
-    rect.lineStyle(1, 0x4e5155);
-    rect.beginFill(0x000000)
-        .drawFilletRect(
-        d.x + 20,
-        d.y - 10,
-        width, 
-        height,
-        5);
-    rect.endFill();
-    rect.alpha = 0.8;
-    this.tooltip.addChild(rect);
-
-    // text
-    const text = new PIXI.Text(this.tooltipText(d), this.labelStyle);
-      text.zIndex = 100;
-      text.x = (d.x + width/2) + 20;
-      text.y = (d.y + height/2) -10;
-      text.anchor.set(.5, .5);
-
-    this.tooltip.addChild(text);
-    this.viewport.addChild(this.tooltip);
+    this.tooltip.style("visibility", "visible")
+      .style("top", `${y}px`)
+      .style("left", `${x}px`)
+      .html(this.tooltipText(d));
   }
 
   pointerOver(d, viewVariable) {
@@ -443,7 +440,7 @@ export default class NetworkVisualization {
 
     this.updateViewHoverValue(undefined);
     this.updateSymbolHoverValue(undefined);
-    this.viewport.removeChild(this.tooltip);
+    this.tooltip.style("visibility", "hidden");
   }
 
   // Main functions ------------------------------------------------------

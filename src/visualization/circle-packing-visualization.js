@@ -35,6 +35,7 @@ export class CirclePackingDiagram {
       this.rootDOM = document.getElementById(selector);
       this.width = this.rootDOM.clientWidth;
       this.height = this.rootDOM.clientHeight;
+      this.initTooltip(selector);
     
       // create canvas
       this.app = new PIXI.Application({
@@ -61,6 +62,24 @@ export class CirclePackingDiagram {
         });
 
       this.app.stage.addChild(this.viewport);
+    }
+
+    initTooltip(selector) {
+        this.tooltip = d3.select(`#${selector}`)
+          .append("div")
+          .attr("class", "tooltip")
+          .style("position", "absolute")
+          .style("left", "0px")
+          .style("top", "0px")
+          .style("visibility", "hidden")
+          .style("padding", "10px")
+          .style("pointer-events", "none")
+          .style("border-radius", "5px")
+          .style("background-color", "rgba(0, 0, 0, 0.65)")
+          .style("font-family", '"IBM Plex", ""Helvetica Neue", Helvetica, Arial, sans-serif')
+          .style("font-weight", "normal")
+          .style("border", "1px solid rgba(78, 81, 85, 0.7)")
+          .style("font-size", "16px");
     }
   
     // Drawing functions ------------------------------------------------------
@@ -97,7 +116,7 @@ export class CirclePackingDiagram {
 
           node.gfx.x = node.x;
           node.gfx.y = node.y;
-          node.gfx.alpha = opacityScale(node.data.treeLevel);
+          // node.gfx.alpha = opacityScale(node.data.treeLevel);
           node.gfx.interactive = true;
           node.gfx.buttonMode = true;
           node.gfx.on("pointerover", (e) => this.pointerOver(node, e, viewVariable));
@@ -118,46 +137,25 @@ export class CirclePackingDiagram {
     }
 
     showTooltip(d) {
-      this.tooltip = new PIXI.Container();
-  
-      const textMetrics = PIXI.TextMetrics.measureText(this.tooltipText(d), this.labelStyle);
-      const width = textMetrics.maxLineWidth + 15;
-      const height = textMetrics.lineHeight * textMetrics.lines.length + 15;
-  
-      // label
-      const rect = new PIXI.Graphics();
-      rect.lineStyle(1, 0x4e5155);
-      rect.beginFill(0x000000)
-          .drawFilletRect(
-          d.x + 20,
-          d.y - 10,
-          width, 
-          height,
-          5);
-      rect.endFill();
-      rect.alpha = 0.8;
-      this.tooltip.addChild(rect);
-  
-      // text
-      const text = new PIXI.Text(this.tooltipText(d), this.labelStyle);
-        text.zIndex = 100;
-        text.x = (d.x + width/2) + 20;
-        text.y = (d.y + height/2) -10;
-        text.anchor.set(.5, .5);
-  
-      this.tooltip.addChild(text);
-      this.viewport.addChild(this.tooltip);
+      let x = d.x;
+      let y = d.y;
+      console.log(x, y);
+
+      this.tooltip.style("visibility", "visible")
+        .style("top", `${y}px`)
+        .style("left", `${x}px`)
+        .html(this.tooltipText(d));
     }
 
     pointerOver(node, e, viewVariable) {
-        node.gfx.alpha = 0.7;
+        // node.gfx.alpha = 0.7;
         this.showTooltip(node);
         this.updateViewHoverValue(Global.applyColorScale(node.data, viewVariable));
     }
 
     pointerOut(node, e) {
-        node.gfx.alpha = opacityScale(node.data.treeLevel);
-        this.viewport.removeChild(this.tooltip);
+        // node.gfx.alpha = opacityScale(node.data.treeLevel);
+        this.tooltip.style("visibility", "hidden");
         this.updateViewHoverValue(undefined);
     }
 
