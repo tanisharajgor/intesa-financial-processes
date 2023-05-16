@@ -15,7 +15,6 @@ export class CirclePackingDiagram {
     data;
     height;
     inspect;
-    labelStyle;
     nodes;
     rootDOM;
     tooltip;
@@ -26,7 +25,6 @@ export class CirclePackingDiagram {
     constructor(data = graph, updateViewHoverValue) {
       this.data = data;
       this.zoomedNodeId = 0;
-      this.labelStyle = new PIXI.TextStyle(Global.labelStyle);
       this.updateViewHoverValue = updateViewHoverValue;
     }
   
@@ -106,17 +104,18 @@ export class CirclePackingDiagram {
       this.containerNodes = new PIXI.Container();
       this.nodes = [];
       console.log(this.data)
+      console.log(viewVariable)
       this.data.forEach((node) => {
           node.viewId = node.data.viewId;
           node.gfx = new PIXI.Graphics();
           node.gfx.lineStyle(1, 0xFFFFFF, 1);
           node.gfx.beginFill(Global.applyColorScale(node.data, viewVariable));
-          // node.gfx.lineWidth = 5;
-          Global.symbolScalePixi(node, node.r);
+          Global.symbolScalePixi(node);
+          node.gfx.endFill();
 
           node.gfx.x = node.x;
           node.gfx.y = node.y;
-          // node.gfx.alpha = opacityScale(node.data.treeLevel);
+          node.gfx.alpha = opacityScale(node.data.treeLevel);
           node.gfx.interactive = true;
           node.gfx.buttonMode = true;
           node.gfx.on("pointerover", (e) => this.pointerOver(node, e, viewVariable));
@@ -139,7 +138,7 @@ export class CirclePackingDiagram {
     showTooltip(d) {
       let x = d.x + 20;
       let y = d.y - 10;
-      console.log(x, y);
+      // console.log(x, y);
 
       this.tooltip.style("visibility", "visible")
         .style("top", `${y}px`)
@@ -148,13 +147,13 @@ export class CirclePackingDiagram {
     }
 
     pointerOver(node, e, viewVariable) {
-        // node.gfx.alpha = 0.7;
+        node.gfx.alpha = 0.7;
         this.showTooltip(node);
         this.updateViewHoverValue(Global.applyColorScale(node.data, viewVariable));
     }
 
     pointerOut(node, e) {
-        // node.gfx.alpha = opacityScale(node.data.treeLevel);
+        node.gfx.alpha = opacityScale(node.data.treeLevel);
         this.tooltip.style("visibility", "hidden");
         this.updateViewHoverValue(undefined);
     }

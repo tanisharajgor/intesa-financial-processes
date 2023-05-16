@@ -32,7 +32,6 @@ export default class NetworkVisualization {
     this.data = data;
     this.activeLink = [];
     this.activeNodes = [];
-    this.labelStyle = new PIXI.TextStyle(Global.labelStyle);
   }
 
   initSimulation() {

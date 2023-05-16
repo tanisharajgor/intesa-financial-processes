@@ -147,27 +147,27 @@ export function symbolScaleD3(node) {
 }
 
 // Symbol Scale for Pixi
-export function symbolScalePixi(node, rSize) {
+export function symbolScalePixi(node) {
 
     switch(node.viewId) {
         case "Actor":
-            node.gfx.drawRect(-rSize/2, -rSize/2, rSize, rSize);
+            node.gfx.drawRect(-node.r/2, -node.r/2, node.r, node.r);
             node.shape = "square";
             break;
         case "Control activity":
-            node.gfx.drawRegularPolygon(0, 0, rSize, 4, 1.7);
+            node.gfx.drawRegularPolygon(0, 0, node.r, 4, 1.7);
             node.shape = "diamond";
             break;
         case "Other activity":
-            node.gfx.drawRegularPolygon(0, 0, rSize, 3);
+            node.gfx.drawRegularPolygon(0, 0, node.r, 3);
             node.shape = "triangle";
             break;
         case "Risk":
-            node.gfx.drawStar(0, 0, 5, rSize);
+            node.gfx.drawStar(0, 0, 5, node.r);
             node.shape = "star";
             break;
         default:
-            node.gfx.drawCircle(0, 0, rSize);
+            node.gfx.drawCircle(0, 0, node.r);
             node.shape = "circle";
             break;
     }
