@@ -391,8 +391,8 @@ export default class NetworkVisualization {
   }
 
   showTooltip(d) {
-    let x = d.x;
-    let y = d.y;
+    let x = d.x + 20;
+    let y = d.y - 10;
 
     this.tooltip.style("visibility", "visible")
       .style("top", `${y}px`)

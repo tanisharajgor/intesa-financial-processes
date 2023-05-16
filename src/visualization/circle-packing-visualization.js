@@ -137,8 +137,8 @@ export class CirclePackingDiagram {
     }
 
     showTooltip(d) {
-      let x = d.x;
-      let y = d.y;
+      let x = d.x + 20;
+      let y = d.y - 10;
       console.log(x, y);
 
       this.tooltip.style("visibility", "visible")
