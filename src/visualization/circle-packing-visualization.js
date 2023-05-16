@@ -141,13 +141,15 @@ export class CirclePackingDiagram {
     }
 
     showTooltip(d) {
-      let x = d.x + 20;
-      let y = d.y - 10;
+      let x = d.x;
+      let y = d.y;
+      // console.log(d.r)
       // console.log(x, y);
+      // console.log(x + d.r, y - d.r);
 
       this.tooltip.style("visibility", "visible")
-        .style("top", `${y}px`)
-        .style("left", `${x}px`)
+        .style("top", `${y - d.r}px`)
+        .style("left", `${x + d.r}px`)
         .html(this.tooltipText(d));
     }
 
