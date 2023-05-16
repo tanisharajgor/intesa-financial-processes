@@ -147,27 +147,27 @@ export function symbolScaleD3(node) {
 }
 
 // Symbol Scale for Pixi
-export function symbolScalePixi(node) {
+export function symbolScalePixi(node, rSize) {
 
     switch(node.viewId) {
         case "Actor":
-            node.gfx.drawRect(-node.r/2, -node.r/2, node.r, node.r);
+            node.gfx.drawRect(-rSize/2, -rSize/2, rSize, rSize);
             node.shape = "square";
             break;
         case "Control activity":
-            node.gfx.drawRegularPolygon(0, 0, node.r, 4, 1.7);
+            node.gfx.drawRegularPolygon(0, 0, rSize, 4, 1.7);
             node.shape = "diamond";
             break;
         case "Other activity":
-            node.gfx.drawRegularPolygon(0, 0, node.r, 3);
+            node.gfx.drawRegularPolygon(0, 0, rSize, 3);
             node.shape = "triangle";
             break;
         case "Risk":
-            node.gfx.drawStar(0, 0, 5, node.r);
+            node.gfx.drawStar(0, 0, 5, rSize);
             node.shape = "star";
             break;
         default:
-            node.gfx.drawCircle(0, 0, node.r);
+            node.gfx.drawCircle(0, 0, rSize);
             node.shape = "circle";
             break;
     }
@@ -191,21 +191,4 @@ export function filterLinksTargetToSource(data, ids) {
     links = [...new Set(links)];
 
     return links;
-}
-
-export const labelStyle = {
-    align: "left",
-    fill: 0xffffff,
-    fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
-    fontSize: 11,
-    padding: 5,
-    // textBaseline: "middle",
-    wordWrap: false,
-    // wordWrapWidth: 65,
-    leading: 1.3,
-    dropShadow: true, // add text drop shadow to labels
-    dropShadowAngle: 90,
-    dropShadowBlur: 5,
-    dropShadowDistance: 2,
-    dropShadowColor: 0x21252b
 }

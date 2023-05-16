@@ -7,7 +7,7 @@ import '@pixi/graphics-extras';
 
 const opacityScale = d3.scaleOrdinal()
   .domain([0, 1, 2, 3, 4])
-  .range([.05, .3, .4, .5, .6]);
+  .range([.05, .3, .4, .5, 1]);
 
 export class CirclePackingDiagram {
     app;
@@ -110,7 +110,7 @@ export class CirclePackingDiagram {
           node.gfx = new PIXI.Graphics();
           node.gfx.lineStyle(1, 0xFFFFFF, 1);
           node.gfx.beginFill(Global.applyColorScale(node.data, viewVariable));
-          Global.symbolScalePixi(node);
+          Global.symbolScalePixi(node, node.r);
           node.gfx.endFill();
 
           node.gfx.x = node.x;
