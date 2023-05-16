@@ -142,7 +142,6 @@ export default class NetworkVisualization {
       node.gfx.beginFill(Global.applyColorScale(node, viewVariable));
       Global.symbolScalePixi(node, rSize);
 
-      node.size = rSize;
       node.gfx.x = this.width * 0.5;
       node.gfx.y = this.height * 0.5;
       node.gfx.interactive = true;
