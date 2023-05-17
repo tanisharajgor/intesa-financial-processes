@@ -205,7 +205,7 @@ function viewInfo(networkChart) {
     return(
         <div className="inner">
             <div className="layout_group inline">
-                {networkChart? shapeType(): <></>}
+                {shapeType()}
                 {riskType()}
             </div>
         </div>
