@@ -1,4 +1,5 @@
 import Status from "../components/Status";
+import Control from "../components/Status";
 import styled from "styled-components";
 
 const StyledMain = styled('div')`
@@ -12,12 +13,14 @@ const Visualization = styled('div')`
     height: 100%;
     background-color: black;
 `
-
 export default function Main({viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue, id}) {
+
     return(
         <StyledMain>
             <Visualization id={id} className="Visualization"></Visualization>
             <Status id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue}/>
+            {/* <Control /> */}
+            {/* <Control controls={diagram.diagram.getControls()} /> */}
         </StyledMain>
     )
 }

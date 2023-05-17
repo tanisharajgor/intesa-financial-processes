@@ -10,7 +10,11 @@ const StyledStatus = styled('div')`
 `
 
 export default function Status({id, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue}) {
-    
+
+    // if (viewVariable === undefined) {
+    //     viewVariable = "riskType";
+    // }
+
     return (
         <StyledStatus className="Status">
             <View id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue}/>
