@@ -4,7 +4,7 @@ import { Key } from '../component-styles/key'
 
 const id = "Filter-Activity-Type";
 
-export default function FilterType({typesChecks, updateTypeChecks, typeValues, label}) {
+export default function FilterType({typesChecks, updateSelection, typeValues, label}) {
 
     let newSelectedTypes = [];
 
@@ -15,7 +15,7 @@ export default function FilterType({typesChecks, updateTypeChecks, typeValues, l
             typesChecks.push(selected)
             newSelectedTypes = [...typesChecks];
         }
-        updateTypeChecks(newSelectedTypes);
+        updateSelection(newSelectedTypes);
     }
 
     return(
