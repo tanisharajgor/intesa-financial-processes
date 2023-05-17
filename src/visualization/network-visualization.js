@@ -95,8 +95,6 @@ export default class NetworkVisualization {
 
     this.app.stage.sortableChildren = true;
     this.rootDOM.appendChild(this.app.view);
-    this.app.renderer.events.cursorStyles.default = 'default, auto';
-    this.app.renderer.events.cursorStyles.hover = 'pointer, auto';
 
     this.viewport = new Viewport({
       screenWidth: this.width,
@@ -195,6 +193,7 @@ export default class NetworkVisualization {
       node.gfx.y = this.height * 0.5;
       node.gfx.interactive = true;
       node.gfx.buttonMode = true;
+      node.gfx.cursor = 'pointer';
       node.gfx.on("pointerover", () => this.pointerOver(node, viewVariable));
       node.gfx.on("pointerout", () => this.pointerOut(node));
       node.gfx.on('click', () => this.clickOn(node));
@@ -499,8 +498,6 @@ export default class NetworkVisualization {
     this.updateSymbolHoverValue(d.viewId);
     this.updateViewHoverValue(Global.applyColorScale(d, viewVariable));
     this.showTooltip(d);
-    d.gfx.cursor = 'pointer';
-    // this.app.renderer.events.cursorStyles.default = 'pointer';
   }
 
   pointerOut(d) {
