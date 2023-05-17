@@ -3,11 +3,9 @@ import os
 import yaml
 from python.data_management import actors_rename, activities_dm, actors_dm, risks_dm, \
     applications_dm, controls_dm, level1_dm, level2_dm, level3_dm, model_dm, \
-    level1_to_level2_dm, level2_to_level3_dm, level3_to_model_dm, model_to_activity_dm, \
-    activity_to_risk_dm, risk_to_control_dm, activity_to_actor_dm, activity_to_application_dm, main_dm, \
-    level3_to_activity_dm
+    activity_to_risk_dm, risk_to_control_dm, main_dm
 
-from python.nest_data import create_processes_to_activities, create_risk_control, \
+from python.nest_data import create_processes_to_activities, \
      create_network, create_processes
 
 from python.translate import translate_text, authenticate_implicit_with_adc
@@ -81,27 +79,15 @@ def main():
                                 'Object GUID': 'riskGUID'}).drop_duplicates()
 
     # Relational data
-    level1_to_level2 = level1_to_level2_dm(data, level1Clean, level2Clean, processed_pth)
-    level2_to_level3 = level2_to_level3_dm(data, level2Clean, level3Clean, processed_pth)
-    level3_to_model = level3_to_model_dm(data, level3Clean, modelClean, processed_pth)
-    model_to_activity = model_to_activity_dm(data, modelClean, activitiesClean, processed_pth)
-    level3_to_activity = level3_to_activity_dm(level3_to_model, model_to_activity, processed_pth)
     activity_to_risk = activity_to_risk_dm(risks, activitiesClean, risksClean, processed_pth)
-    activity_to_actor = activity_to_actor_dm(data, activitiesClean, actorsClean, processed_pth)
-    activity_to_application = activity_to_application_dm(applications, activitiesClean, applicationsClean, processed_pth)
     risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
     main = main_dm(data, level1Clean, level2Clean, level3Clean, activitiesClean, actorsClean, risksClean, controlsClean, activity_to_risk, risk_to_control)
 
     network = create_network(main)
     write_json(network, os.path.join(processed_pth, "nested"), "network2")
 
-    risksNested = create_risk_control(main)
-    write_json(risksNested, os.path.join(processed_pth, "nested"), "risks")
-
     processesNested = create_processes_to_activities(main)
     write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
-
-    processes = create_processes(main)
   
     lu = {
         "risk": create_lu(risksClean, "riskID", "risk"),
@@ -113,7 +99,7 @@ def main():
         "level2": create_lu(level2Clean, "level2ID", "level2"),
         "level3": create_lu(level3Clean, "level3ID", "level3"),
         "model": create_lu(modelClean, "modelID", "model"),
-        "processes": {"name": "root", "children": processes, "treeLevel": 0}
+        "processes": {"name": "root", "children": create_processes(main), "treeLevel": 0}
     }
 
     write_json(lu, os.path.join(processed_pth, "nested"), "lu")
