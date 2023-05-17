@@ -9,14 +9,14 @@ function myFunction() {
     console.log("hi there")
 }
 
-export default function Control({}) {
+export default function Control({controls}) {
 
     return (
         <StyledControls className="Controls">
             <div className="inner">
-                <button onclick={myFunction()}><img src={process.env.PUBLIC_URL + "/assets/crop_free.svg"}/></button>
-                <button onclick={myFunction()}><img src={process.env.PUBLIC_URL + "/assets/zoom_in.svg"}/></button>
-                <button onclick={myFunction()}><img src={process.env.PUBLIC_URL + "/assets/zoom_out.svg"}/></button>
+                <button onclick={() => controls.reset()}><img src={process.env.PUBLIC_URL + "/assets/crop_free.svg"}/></button>
+                <button onclick={() => controls.zoomIn()}><img src={process.env.PUBLIC_URL + "/assets/zoom_in.svg"}/></button>
+                <button onclick={() => controls.zoomOut()}><img src={process.env.PUBLIC_URL + "/assets/zoom_out.svg"}/></button>
             </div>
         </StyledControls>
     )

@@ -10,17 +10,12 @@ const StyledStatus = styled('div')`
     padding: ${props =>  props.theme.padding };
 `
 
-export default function Status({id, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue}) {
-
-    // if (viewVariable === undefined) {
-    //     viewVariable = "riskType";
-    // }
+export default function Status({id, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue, controls}) {
 
     return (
         <StyledStatus className="Status">
             <View id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue}/>
-            <Control />
-            {/* <Control controls={diagram.diagram.getControls()} /> */}
+            <Control controls={controls}/>
         </StyledStatus>
     )
 }
