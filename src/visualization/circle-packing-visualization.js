@@ -123,6 +123,7 @@ export class CirclePackingDiagram {
           node.gfx.alpha = opacityScale(node.data.treeLevel);
           node.gfx.interactive = true;
           node.gfx.buttonMode = true;
+          node.gfx.cursor = 'pointer';
           node.gfx.on("pointerover", (e) => this.pointerOver(node, e, viewVariable));
           node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
           node.gfx.on("click", (e) => this.onClick(node, e))
@@ -163,6 +164,7 @@ export class CirclePackingDiagram {
         node.gfx.alpha = opacityScale(node.data.treeLevel);
         this.tooltip.style("visibility", "hidden");
         this.updateViewHoverValue(undefined);
+        this.app.renderer.events.cursorStyles.default = 'default';
     }
 
     onClick(node) {
