@@ -2,6 +2,18 @@
 
 An interactive visualization to explore Banca Intesa processes structures.
 
+## Project Structure
+The project is split into several directories for easier readability and to group files based on similar functionality.
+
+### Components
+Inside the components directory are React components that are used by several different pages. One example is the navigation bar that is used by every page to navigate througout the project.
+
+### Pages
+Inside the pages directory are distinct files for each page that exists throughout the project. A single page may have its own nested directory if there are local components that are used by that page alone.
+
+### Services
+Inside the services directory are functions and process related to processing data and information that will be needed throughout the interface.
+
 ## Run Python Code to clean data
 
 ### Navigate to repo
