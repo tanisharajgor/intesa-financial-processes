@@ -44,22 +44,26 @@ export default function Network() {
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
 
+    // Possible set of activities/actors to choose from
     const possibleActivities = [...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))];
     const possibleActors = [...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))];
 
+    // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(possibleActivities);
     const [selectedActors, updateActors] = useState(possibleActors);
 
     const [activityTypes, updateActivityType] = useState(possibleActivities);
     const [actorTypes, updateActorType] = useState(possibleActors);
 
+    // Status to update the opacity in the legend
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
 
+    // Initiating the network diagram
     const networkDiagram = useRef(new NetworkVisualization(data, updateSymbolHoverValue, updateViewHoverValue));
 
-    console.log(activityTypes)
-    console.log(actorTypes)
+    // console.log(activityTypes)
+    // console.log(actorTypes)
 
     // Set-up scales
     colorScale = Global.createColorScale(viewVariable);
