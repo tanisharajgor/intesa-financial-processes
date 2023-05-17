@@ -14,9 +14,9 @@ export default function Control({controls}) {
     return (
         <StyledControls className="Controls">
             <div className="inner">
-                <button onclick={() => controls.reset()}><img src={process.env.PUBLIC_URL + "/assets/crop_free.svg"}/></button>
-                <button onclick={() => controls.zoomIn()}><img src={process.env.PUBLIC_URL + "/assets/zoom_in.svg"}/></button>
-                <button onclick={() => controls.zoomOut()}><img src={process.env.PUBLIC_URL + "/assets/zoom_out.svg"}/></button>
+                <button onClick={() => controls.reset()}><img src={process.env.PUBLIC_URL + "/assets/crop_free.svg"}/></button>
+                <button onClick={() => controls.zoomIn()}><img src={process.env.PUBLIC_URL + "/assets/zoom_in.svg"}/></button>
+                <button onClick={() => controls.zoomOut()}><img src={process.env.PUBLIC_URL + "/assets/zoom_out.svg"}/></button>
             </div>
         </StyledControls>
     )
