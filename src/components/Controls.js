@@ -5,26 +5,19 @@ const StyledControls = styled('div')`
     padding: ${props =>  props.theme.padding };
 `
 
+function myFunction() {
+    console.log("hi there")
+}
+
 export default function Control({}) {
 
     return (
         <StyledControls className="Controls">
             <div className="inner">
-
-            <img src={process.env.PUBLIC_URL + "/assets/crop_free.svg"} />
-            <img src={process.env.PUBLIC_URL + "/assets/zoom_in.svg"} />
-            <img src={process.env.PUBLIC_URL + "/assets/zoom_out.svg"} />
-
-                {/* <IconButton aria-label="delete" size="medium" color="secondary" onClick={() => controls.zoomIn()}>
-                    <ZoomIn />
-                </IconButton>
-                <IconButton aria-label="delete" size="medium" color="secondary" onClick={() => controls.zoomOut()}>
-                    <ZoomOut />
-                </IconButton>
-                <IconButton aria-label="delete" size="medium" color="secondary" onClick={() => controls.reset()}>
-                    <CropFree />
-                </IconButton> */}
-                </div>
+                <button onclick={myFunction()}><img src={process.env.PUBLIC_URL + "/assets/crop_free.svg"}/></button>
+                <button onclick={myFunction()}><img src={process.env.PUBLIC_URL + "/assets/zoom_in.svg"}/></button>
+                <button onclick={myFunction()}><img src={process.env.PUBLIC_URL + "/assets/zoom_out.svg"}/></button>
+            </div>
         </StyledControls>
     )
 }
