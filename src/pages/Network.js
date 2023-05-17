@@ -44,11 +44,14 @@ export default function Network() {
     const [selectedLevel3ID, updateLevel3ID] = useState(graph[0].id);
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
 
-    const [selectedActivities, updateActivities] = useState(Global.activityTypes);
-    const [selectedActors, updateActors] = useState(Global.actorTypes);
+    const possibleActivities = [...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))];
+    const possibleActors = [...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))];
 
-    const [activityTypes, updateActivityType] = useState([...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))]);
-    const [actorTypes, updateActorType] = useState([...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
+    const [selectedActivities, updateActivities] = useState(possibleActivities);
+    const [selectedActors, updateActors] = useState(possibleActors);
+
+    const [activityTypes, updateActivityType] = useState(possibleActivities);
+    const [actorTypes, updateActorType] = useState(possibleActors);
 
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
@@ -86,8 +89,8 @@ export default function Network() {
 
     // Update filter possibilities when level changes
     useEffect(() => {
-        updateActivityType([...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))]);
-        updateActorType([...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
+        updateActivityType(possibleActivities);
+        updateActorType(possibleActors);
     }, [selectedLevel3ID])
 
     useEffect(() => {
