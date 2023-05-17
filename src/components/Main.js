@@ -1,5 +1,4 @@
 import Status from "../components/Status";
-import Control from "../components/Status";
 import styled from "styled-components";
 
 const StyledMain = styled('div')`
@@ -19,8 +18,6 @@ export default function Main({viewVariable, updateViewVariable, viewHoverValue, 
         <StyledMain>
             <Visualization id={id} className="Visualization"></Visualization>
             <Status id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue}/>
-            {/* <Control /> */}
-            {/* <Control controls={diagram.diagram.getControls()} /> */}
         </StyledMain>
     )
 }

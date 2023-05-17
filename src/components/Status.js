@@ -1,4 +1,5 @@
 import View from "./View";
+import Control from "./Controls";
 import styled from "styled-components";
 
 const StyledStatus = styled('div')`
@@ -18,6 +19,8 @@ export default function Status({id, viewVariable, updateViewVariable, viewHoverV
     return (
         <StyledStatus className="Status">
             <View id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue}/>
+            <Control />
+            {/* <Control controls={diagram.diagram.getControls()} /> */}
         </StyledStatus>
     )
 }
