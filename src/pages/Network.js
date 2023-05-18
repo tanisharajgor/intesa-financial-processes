@@ -24,7 +24,7 @@ function filterData(selectedLevel3ID, selectedActivities, selectedActors) {
     let links = dataNew.links.filter(d => d.source.id === undefined ? actorIdsFiltered.includes(d.source) && activityIdsFiltered.includes(d.target): actorIdsFiltered.includes(d.source.id) && activityIdsFiltered.includes(d.target.id));
     let actorIds = [...new Set(links.map(d => d.source.id === undefined ? d.source: d.source.id))];
     let activityIds = [...new Set(links.map(d => d.target.id === undefined ? d.target: d.target.id))];
-
+  
     let riskIds = Global.filterLinksSourceToTarget(dataNew.links, activityIds);
     let controlIds = Global.filterLinksSourceToTarget(dataNew.links, riskIds);
 
@@ -45,15 +45,12 @@ export default function Network() {
     const [data, updateData] = useState(Object.assign({}, graph.find((d) => d.id === selectedLevel3ID)));
 
     // Possible set of activities/actors to choose from
-    const possibleActivities = [...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))];
-    const possibleActors = [...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))];
+    const [possibleActivities, updateActivityType] = useState([...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))]);
+    const [possibleActors, updateActorType] = useState( [...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
 
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(possibleActivities);
     const [selectedActors, updateActors] = useState(possibleActors);
-
-    const [activityTypes, updateActivityType] = useState(possibleActivities);
-    const [actorTypes, updateActorType] = useState(possibleActors);
 
     // Status to update the opacity in the legend
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
@@ -61,9 +58,6 @@ export default function Network() {
 
     // Initiating the network diagram
     const networkDiagram = useRef(new NetworkVisualization(data, updateSymbolHoverValue, updateViewHoverValue));
-
-    // console.log(activityTypes)
-    // console.log(actorTypes)
 
     // Set-up scales
     colorScale = Global.createColorScale(viewVariable);
@@ -107,8 +101,8 @@ export default function Network() {
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
-                    <FilterType typesChecks={selectedActivities} updateSelection={updateActivities} typeValues={activityTypes} label="Filter by Activity Type:"/>
-                    <FilterType typesChecks={selectedActors} updateSelection={updateActors} typeValues={actorTypes} label="Filter by Actor Type:"/>
+                    <FilterType typesChecks={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type:"/>
+                    <FilterType typesChecks={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type:"/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} id={id}/>        
             </div>        
