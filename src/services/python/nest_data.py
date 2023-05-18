@@ -298,14 +298,10 @@ def create_network(data):
 
         linkData4 = df[(pd.isnull(df.actorID) == False) & (pd.isnull(df.controlID) == False) & (df.controlID.isin(df.controlID))][['actorID', 'controlID']].rename(columns={'actorID': 'source',
                                                                                                                                       'controlID': 'target'})
-        
-        # linkData5 = df[(pd.isnull(df.riskID) == False) & (pd.isnull(df.controlID) == False) & (df.controlID.isin(df.controlID))][['riskID', 'controlID']].rename(columns={'controlID': 'source',
-        #                                                                                                                               'riskID': 'target'})
 
         linkData = pd.concat([linkData1, linkData2])
         linkData = pd.concat([linkData, linkData3])
         linkData = pd.concat([linkData, linkData4]).drop_duplicates()
-        # linkData = pd.concat([linkData, linkData5]).drop_duplicates()
 
         for j in range(0, linkData.shape[0]):
             row = {"source": int(linkData.source.iloc[j]),
