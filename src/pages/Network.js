@@ -22,8 +22,8 @@ function filterData(selectedLevel3ID, selectedActivities, selectedActors) {
     let activityIdsFiltered = dataNew.nodes.filter(d => d.group === "Activity" && selectedActivities.includes(d.type)).map(d => d.id);
 
     let links = dataNew.links.filter(d => d.source.id === undefined ? actorIdsFiltered.includes(d.source) && activityIdsFiltered.includes(d.target): actorIdsFiltered.includes(d.source.id) && activityIdsFiltered.includes(d.target.id));
-    let actorIds = links.map(d => d.source.id === undefined ? d.source: d.source.id);
-    let activityIds = links.map(d => d.target.id === undefined ? d.target: d.target.id);
+    let actorIds = [...new Set(links.map(d => d.source.id === undefined ? d.source: d.source.id))];
+    let activityIds = [...new Set(links.map(d => d.target.id === undefined ? d.target: d.target.id))];
 
     let riskIds = Global.filterLinksSourceToTarget(dataNew.links, activityIds);
     let controlIds = Global.filterLinksSourceToTarget(dataNew.links, riskIds);
