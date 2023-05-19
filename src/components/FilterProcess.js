@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import lu from '../data/processed/nested/lu.json';
 import { Key } from '../component-styles/key';
 import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
+import styled from 'styled-components';
 
 // constants
 const width = 345,
@@ -138,6 +139,13 @@ function updateFilter(root, selectedLevel3ID) {
             .attr("class", "Process-Node");
 }
 
+const StyledFilteredData = styled('p')`
+    font-style: italic;
+    text-color: ${props =>  props.theme.color.secondary };
+    opacity: 75%;
+    margin-bottom: 0.5rem;
+`
+
 export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
     const level3Descr = lu["level3"].find((d) => d.id === selectedLevel3ID).descr;
     const [selectedLevel1ID, updateLevel1] = useState(level1[0].id);
@@ -180,8 +188,10 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
             >
                 <h4>
                     <Key>Filter by Process:</Key>
-                    <span> {level3Descr}</span>
                 </h4>
+                <StyledFilteredData>
+                    {level3Descr}
+                </StyledFilteredData>
             </AccordionHeader>
             <AccordionDetails>
                 <LayoutGroup>

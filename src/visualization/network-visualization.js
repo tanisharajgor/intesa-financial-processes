@@ -12,6 +12,9 @@ export default class NetworkVisualization {
   activeLink;
   activeNodes;
   app;
+  clickNode;
+  clickViewport;
+  clickCount;
   containerLabels;
   containerNodes;
   containerLinks;
@@ -32,6 +35,9 @@ export default class NetworkVisualization {
     this.data = data;
     this.activeLink = [];
     this.activeNodes = [];
+    this.clickNode = false;
+    this.clickViewport = false;
+    this.clickCount = 0;
   }
 
   initSimulation() {
@@ -87,6 +93,45 @@ export default class NetworkVisualization {
       .pinch({ percent: 1 })
       .wheel({ percent: 0.1 })
       .drag();
+
+    this.viewport.on('click', () => this.clickOff());
+  }
+
+  clickOff() {
+
+    this.clickCount++;
+    if (this.clickCount > 2) {
+      this.clickNode = false;
+      this.clickCount = 0;
+      this.activeNodes
+        .forEach(node => {
+          let { gfx } = node;
+          gfx.filters.pop();
+          gfx.zIndex = 0;
+        });
+
+        this.activeLink = [];
+        this.activeNode = [];
+    }
+  }
+
+  clickOn(node) {
+
+    this.clickNode = true;
+    this.clickCount++;
+    if (this.clickCount > 3) {
+      this.clickNode = false;
+      this.clickCount = 0;
+    }
+    console.log(this.clickCount)
+
+    this.activeNodes
+      .forEach(node => {
+        let { gfx } = node;
+        gfx.filters.pop();
+        gfx.zIndex = 0;
+      });
+    this.highlightNetworkNodes(node);
   }
 
   initTooltip(selector) {
@@ -146,8 +191,10 @@ export default class NetworkVisualization {
       node.gfx.y = this.height * 0.5;
       node.gfx.interactive = true;
       node.gfx.buttonMode = true;
+      node.gfx.cursor = 'pointer';
       node.gfx.on("pointerover", () => this.pointerOver(node, viewVariable));
       node.gfx.on("pointerout", () => this.pointerOut(node));
+      node.gfx.on('click', () => this.clickOn(node));
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx);
@@ -328,9 +375,46 @@ export default class NetworkVisualization {
     e.subject.fy = null;
   }
 
+  // Controls ------------------------------------------------------
+
+  getControls() {
+    return {
+      zoomIn: () => {
+        this.viewport.zoomPercent(0.15, true);
+        // Object.keys(this).forEach((k) => {
+        //   if (k.includes("labelContainer")) {
+        //     let child = this[k];
+        //     let scale = 0.1
+        //       if (child.scale.x >= 0.2) child.scale.set(child.scale.x - scale, child.scale.y - scale)
+        //   }
+        // })
+      },
+      zoomOut: () => {
+        this.viewport.zoomPercent(-0.15, true);
+        // Object.keys(this).forEach((k) => {
+        //   if (k.includes("labelContainer")) {
+        //     let child = this[k];
+        //     let scale = 0.1
+        //     child.scale.set(child.scale.x + scale, child.scale.y + scale)
+        //   }
+        // })
+      },
+      reset: () => {
+        this.viewport.fit();
+        this.viewport.moveCenter(this.width / 2, this.height / 2)
+        // Object.keys(this).forEach((k) => {
+        //   if (k.includes("labelContainer")) {
+        //     let child = this[k];
+        //     child.scale.set(1, 1)
+        //   }
+        // })
+      }
+    }
+  }
+
   // Update aesthetic functions ------------------------------------------------------
 
-  highlightNetworkNodes(d) {
+  listHighlightNetworkNodes(d) {
     if (d.group === "Actor") {
 
         let activityIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
@@ -338,7 +422,7 @@ export default class NetworkVisualization {
         let controlIds = Global.filterLinksSourceToTarget(this.data.links, riskIds);
         let ids = controlIds.concat(riskIds.concat(activityIds.concat(d.id)));
 
-        return ids
+        return ids;
 
     } else if (d.group === "Activity") {
 
@@ -367,6 +451,26 @@ export default class NetworkVisualization {
 
         return ids;
     }
+  }
+
+  highlightNetworkNodes(d) {
+    this.activeLink = this.listHighlightNetworkNodes(d);
+    this.activeNodes = this.data.nodes.filter(z => this.activeLink.includes(z.id));
+    this.activeNodes
+      .forEach(node => {
+        let { gfx } = node;
+
+        gfx.filters = [
+          new GlowFilter({
+            distance: 1,
+            innerStrength: 0,
+            outerStrength: 2,
+            color: 0xffffff,
+            quality: 1,
+          }),
+        ];
+        gfx.zIndex = 1;
+      });
   }
 
   tooltipText(d) {
@@ -400,24 +504,9 @@ export default class NetworkVisualization {
 
   pointerOver(d, viewVariable) {
 
-    this.activeLink = this.highlightNetworkNodes(d);
-    this.activeNodes = this.data.nodes.filter(z => this.activeLink.includes(z.id));
-
-    this.activeNodes
-      .forEach(node => {
-        let { gfx } = node;
-
-        gfx.filters = [
-          new GlowFilter({
-            distance: 1,
-            innerStrength: 0,
-            outerStrength: 2,
-            color: 0xffffff,
-            quality: 1,
-          }),
-        ];
-        gfx.zIndex = 1;
-      });
+    if (!this.clickNode) {
+      this.highlightNetworkNodes(d);
+    }
 
     this.updateSymbolHoverValue(d.viewId);
     this.updateViewHoverValue(Global.applyColorScale(d, viewVariable));
@@ -426,19 +515,22 @@ export default class NetworkVisualization {
 
   pointerOut(d) {
 
-    this.activeNodes
+    if (!this.clickNode) {
+      this.activeNodes
       .forEach(node => {
         let { gfx } = node;
         gfx.filters.pop();
         gfx.zIndex = 0;
       });
 
-    this.activeLink = [];
-    this.activeNode = [];
+      this.activeLink = [];
+      this.activeNode = [];
+    }
 
     this.updateViewHoverValue(undefined);
     this.updateSymbolHoverValue(undefined);
     this.tooltip.style("visibility", "hidden");
+    this.app.renderer.events.cursorStyles.default = 'default';
   }
 
   // Main functions ------------------------------------------------------
