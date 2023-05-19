@@ -330,6 +330,43 @@ export default class NetworkVisualization {
     e.subject.fy = null;
   }
 
+  // Controls ------------------------------------------------------
+
+  getControls() {
+    return {
+      zoomIn: () => {
+        this.viewport.zoomPercent(0.15, true);
+        // Object.keys(this).forEach((k) => {
+        //   if (k.includes("labelContainer")) {
+        //     let child = this[k];
+        //     let scale = 0.1
+        //       if (child.scale.x >= 0.2) child.scale.set(child.scale.x - scale, child.scale.y - scale)
+        //   }
+        // })
+      },
+      zoomOut: () => {
+        this.viewport.zoomPercent(-0.15, true);
+        // Object.keys(this).forEach((k) => {
+        //   if (k.includes("labelContainer")) {
+        //     let child = this[k];
+        //     let scale = 0.1
+        //     child.scale.set(child.scale.x + scale, child.scale.y + scale)
+        //   }
+        // })
+      },
+      reset: () => {
+        this.viewport.fit();
+        this.viewport.moveCenter(this.width / 2, this.height / 2)
+        // Object.keys(this).forEach((k) => {
+        //   if (k.includes("labelContainer")) {
+        //     let child = this[k];
+        //     child.scale.set(1, 1)
+        //   }
+        // })
+      }
+    }
+  }
+
   // Update aesthetic functions ------------------------------------------------------
 
   highlightNetworkNodes(d) {
