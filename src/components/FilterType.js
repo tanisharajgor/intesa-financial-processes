@@ -44,7 +44,12 @@ export default function FilterType({typesChecks, updateTypeChecks, typeValues, l
                 id="activity-type-filter-header"
             >
                 <StyledHeader>
-                    <Key>{label}</Key>
+                    <Key>
+                        {
+                            filteredTypes.length <= 0 ? label :
+                            `${label}:`
+                        }
+                    </Key>
                 </StyledHeader>
                 <StyledFilteredData>
                     {
