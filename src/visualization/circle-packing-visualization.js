@@ -29,6 +29,7 @@ export class CirclePackingDiagram {
     constructor(data = graph, updateViewHoverValue) {
       this.data = data;
       this.zoomedNodeId = 0;
+      this.currentNodeId = 0;
       this.updateViewHoverValue = updateViewHoverValue;
     }
   
@@ -106,8 +107,7 @@ export class CirclePackingDiagram {
 
       this.containerNodes = new PIXI.Container();
       this.nodes = [];
-      console.log(this.data)
-      console.log(viewVariable)
+
       this.data.forEach((node) => {
           node.viewId = node.data.viewId;
           node.gfx = new PIXI.Graphics();
@@ -140,65 +140,71 @@ export class CirclePackingDiagram {
       return `${d.data.treeLevel === 4? "Activity": "Process"}: ${d.data.name}`;
     }
 
-    showTooltip(d) {
-      let x = d.x;
-      let y = d.y;
-      // console.log(d.r)
-      // console.log(x, y);
-      // console.log(x + d.r, y - d.r);
+    showTooltip(d, event) {
+      let x;
+      let y;
+
+      if (this.zoomedNodeId === 0) {
+        x = d.x + d.r;
+        y = d.y - d.r;
+      } else {
+        x = event.client.x;
+        y = event.client.y;
+      }
 
       this.tooltip.style("visibility", "visible")
-        .style("top", `${y - d.r}px`)
-        .style("left", `${x + d.r}px`)
+        .style("top", `${y}px`)
+        .style("left", `${x}px`)
         .html(this.tooltipText(d));
     }
 
-    pointerOver(node, e, viewVariable) {
-        node.gfx.alpha = 0.7;
-        this.showTooltip(node);
+    pointerOver(node, event, viewVariable) {
+      console.log(event)
+        node.gfx.alpha = .9;
+        this.showTooltip(node, event);
         this.updateViewHoverValue(Global.applyColorScale(node.data, viewVariable));
     }
 
-    pointerOut(node, e) {
+    pointerOut(node, event) {
         node.gfx.alpha = opacityScale(node.data.treeLevel);
         this.tooltip.style("visibility", "hidden");
         this.updateViewHoverValue(undefined);
         this.app.renderer.events.cursorStyles.default = 'default';
     }
 
+    getCenter = (node) => {
+
+      if (node.depth === 0) {
+          return new PIXI.Point(this.width / 2, this.height / 2);
+      } else if (this.currentNodeId === this.zoomedNodeId) {
+          return new PIXI.Point(node.parent.x, node.parent.y);
+      } else {
+          return new PIXI.Point(node.x, node.y);
+      }
+    }
+
+    getZoomWidth = (node) => {
+
+      const scale = d3.scaleLinear()
+        .range([1, 20])
+        .domain([0, 4]);
+
+      if (this.currentNodeId === this.zoomedNodeId && node.depth !== 0) {
+        return scale(node.depth - 1);
+      }
+
+      return scale(node.depth);
+    }
+
     onClick(node) {
-        const currentNodeId = node.depth !== 0 ? node.data.id : 0
-
-        // console.log(currentNodeId, this.zoomedNodeId)
-        const getCenter = () => {
-            if (node.depth === 0) {
-                return new PIXI.Point(this.width / 2, this.height / 2)
-            } else if (currentNodeId === this.zoomedNodeId) {
-                return new PIXI.Point(node.parent.x, node.parent.y)
-            } else {
-                return new PIXI.Point(node.x, node.y)
-            }
-        }
-
-        const getZoomWidth = (depth) => {
-          const scale = d3.scaleLinear()
-            .range([1, 20])
-            .domain([0, 4]);
-
-          // console.log(currentNodeId === this.zoomedNodeId && depth !== 0, depth)
-          if (currentNodeId === this.zoomedNodeId && depth !== 0) {
-            return scale(node.depth - 1)
-          }
-            
-          return scale(node.depth)
-        }
+        this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
 
         this.viewport.animate({
-            position: getCenter(),
-            scale: getZoomWidth(node.depth),
+            position: this.getCenter(node),
+            scale: this.getZoomWidth(node),
         })
 
-        this.zoomedNodeId = currentNodeId;
+        this.zoomedNodeId = this.currentNodeId;
     }
   
     // Destroys the nodes on data update
