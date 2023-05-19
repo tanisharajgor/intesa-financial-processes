@@ -26,9 +26,9 @@ function fillScale(d, selectedLevel3ID) {
     if (d.data.data.treeLevel === 3 && d.data.data.id === selectedLevel3ID) {
         return "#03afbf";
     } else if (d.data.data.treeLevel === 3) {
-        return "white"
+        return "white";
     } else {
-        return "#4e5155"
+        return "#4e5155";
     }
 }
 
@@ -122,7 +122,7 @@ function updateFilter(root, selectedLevel3ID) {
         .style("fill", 'none')
         .attr("stroke", "#4e5155")
         .attr("stroke-opacity", 1)
-        .attr("stroke-width", .5)
+        .attr("stroke-width", .5);
 
     // Add a circle for each node.
     svg.selectAll("g")
@@ -136,7 +136,8 @@ function updateFilter(root, selectedLevel3ID) {
             .attr("fill", d => fillScale(d, selectedLevel3ID))
             .attr("stroke", d => fillScale(d, selectedLevel3ID))
             .attr("stroke-width", .5)
-            .attr("class", "Process-Node");
+            .attr("class", "Process-Node")
+            .style('cursor', d => d.data.data.treeLevel ===3 ? 'pointer': 'not-allowed');
 }
 
 const StyledFilteredData = styled('p')`
