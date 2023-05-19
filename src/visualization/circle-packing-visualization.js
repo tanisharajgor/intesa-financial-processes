@@ -159,7 +159,7 @@ export class CirclePackingDiagram {
     }
 
     pointerOver(node, event, viewVariable) {
-      console.log(event)
+
         node.gfx.alpha = .9;
         this.showTooltip(node, event);
         this.updateViewHoverValue(Global.applyColorScale(node.data, viewVariable));
