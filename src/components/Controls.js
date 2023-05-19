@@ -16,7 +16,11 @@ const StyledControlButton = styled('button')`
     }
 `
 
-export default function Control({controls}) {
+export default function Control({hideControls, controls}) {
+
+    if (hideControls) {
+        return null
+    }
 
     return (
         <StyledControls className="Controls">
