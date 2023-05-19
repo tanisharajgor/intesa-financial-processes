@@ -65,25 +65,26 @@ export default function Network() {
     // Filter data
     useEffect(() => {
 
-        const filteredData = filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks)
+        const filteredData = filterData(selectedLevel3ID, activityTypesChecks, actorTypesChecks);
         updateData(filteredData);
+
         networkDiagram.current.data = filteredData;
         networkDiagram.current.initSimulation();
         networkDiagram.current.updateDraw(viewVariable);
 
         let inspect = d3.select(".Inspect");
         inspectNetworkSummary(inspect, filteredData);
-    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks])
+    }, [selectedLevel3ID, activityTypesChecks, actorTypesChecks]);
 
     // Update filter possibilities when level changes
     useEffect(() => {
         updateActivityType([...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))]);
         updateActorType([...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
-    }, [selectedLevel3ID])
+    }, [selectedLevel3ID]);
 
     useEffect(() => {
         networkDiagram.current.updateDraw(viewVariable);
-    }, [viewVariable])
+    }, [viewVariable]);
 
     return(
         <div className="Content">
