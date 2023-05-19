@@ -36,7 +36,9 @@ function initTooltip() {
     d3.select(`#${id}`)
         .append("div")
         .attr("class", "tooltip")
-        .attr("z-index", 500);
+        .attr("z-index", 500)
+        .style("width", "100%")
+        .style("height", "80px");
 }
 
 // Tooltip
@@ -147,6 +149,12 @@ const StyledFilteredData = styled('p')`
     margin-bottom: 0.5rem;
 `
 
+const StyledFilter = styled('div')`
+    display: flex;
+    flex-direction: column;
+`
+
+
 export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
     const level3Descr = lu["level3"].find((d) => d.id === selectedLevel3ID).descr;
     const [selectedLevel1ID, updateLevel1] = useState(level1[0].id);
@@ -216,7 +224,9 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
                             </LayoutItem>
                         </LayoutRow>
                         <LayoutRow>
-                            <div id={id}></div>
+                            <StyledFilter id={id}>
+                                {/* <div id={id}></div> */}
+                            </StyledFilter>
                         </LayoutRow>
                     </LayoutGroup>
             </AccordionDetails>
