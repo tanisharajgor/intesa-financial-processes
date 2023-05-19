@@ -38,7 +38,7 @@ function initTooltip() {
         .attr("class", "tooltip")
         .attr("z-index", 500)
         .style("width", "100%")
-        .style("height", "80px");
+        .style("height", "85px");
 }
 
 // Tooltip
@@ -144,9 +144,10 @@ function updateFilter(root, selectedLevel3ID) {
 
 const StyledFilteredData = styled('p')`
     font-style: italic;
-    text-color: ${props =>  props.theme.color.secondary };
+    text-color: ${props => props.theme.color.secondary };
     opacity: 75%;
     margin-bottom: 0.5rem;
+    // height: 50px;
 `
 
 const StyledFilter = styled('div')`
