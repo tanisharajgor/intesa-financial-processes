@@ -89,7 +89,6 @@ export class CirclePackingDiagram {
     draw(viewVariable) {
         this.drawBackground();
         this.drawNodes(viewVariable);
-        this.viewport.animate({position: new PIXI.Point(466, 566)});
     }
 
     drawBackground() {
