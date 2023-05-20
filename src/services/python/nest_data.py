@@ -236,9 +236,9 @@ def create_network(data):
                    "group": "Actor",
                    "viewId": "Actor",
                    "name": df[df.actorID == k].actor.iloc[0],
-                   "type": df[df.actorID == k].actorType.iloc[0],
-                   "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
-                   "levels": levelsObject(df[df.actorID == k]),
+                #    "type": df[df.actorID == k].actorType.iloc[0],
+                #    "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
+                #    "levels": levelsObject(df[df.actorID == k]),
                    "viewType": {
                         "nActivity": int(df[(df.actorID == k) & (pd.isnull(df.activityID) == False)][['activityID']].drop_duplicates().shape[0]),
                         "nRisk": int(df[(df.actorID == k) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0]),
@@ -252,10 +252,10 @@ def create_network(data):
             row = {"id": int(l),
                     "group": "Activity",
                     "viewId": "Other activity",
-                    "type": df[df.activityID == l].activityType.iloc[0],
+                    # "type": df[df.activityID == l].activityType.iloc[0],
                     "name": df[df.activityID == l].activity.iloc[0],
-                    "actorsID": df[df.activityID == l].actorID.unique().tolist(),
-                    "levels": levelsObject(df[df.activityID == l]),
+                    # "actorsID": df[df.activityID == l].actorID.unique().tolist(),
+                    # "levels": levelsObject(df[df.activityID == l]),
                     "viewType": {
                         "nActor": int(df[(df.activityID == l) & (pd.isnull(df.actorID) == False)][['actorID']].drop_duplicates().shape[0]),
                         "nRisk": int(df[(df.activityID == l) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0]),
@@ -285,7 +285,7 @@ def create_network(data):
         for k in controlID:
             row = {"id": int(k),
                    "group": "Activity",
-                   "type": "Control activity",
+                #    "type": "Control activity",
                    "viewId": "Control activity",
                    "name": df[df.controlID == k].control.iloc[0],
                    "viewType": {
