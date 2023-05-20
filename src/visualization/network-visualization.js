@@ -123,7 +123,6 @@ export default class NetworkVisualization {
       this.clickNode = false;
       this.clickCount = 0;
     }
-    console.log(this.clickCount)
 
     this.activeNodes
       .forEach(node => {
@@ -160,17 +159,18 @@ export default class NetworkVisualization {
 
     // Links
     this.links = new PIXI.Graphics();
-    this.links.alpha = 0.5;
+    this.links.alpha = .8;
     this.containerLinks.addChild(this.links);
 
     // Active Links
     this.activeLinks = new PIXI.Graphics();
-    this.activeLinks.alpha = 0.8;
+    this.activeLinks.alpha = .8;
     this.containerLinks.addChild(this.activeLinks);
     this.viewport.addChild(this.containerLinks);
 
     this.simulation.force("link")
       .links(this.data.links);
+    console.log(this.data.links)
   }
 
   // Initializes the nodes
@@ -210,7 +210,7 @@ export default class NetworkVisualization {
   }
 
   solidLine(source, target) {
-    this.links.lineStyle(.5, 0x888888);
+    this.links.lineStyle(1, 0x686868);
     this.links.moveTo(target.x, target.y);
     this.links.lineTo(source.x, source.y);
   }
@@ -229,7 +229,7 @@ export default class NetworkVisualization {
     const p2 = {x: source.x, y: source.y};
     const len = this.distance(p1, p2);
     const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
-    this.links.lineStyle(0.5, 0x888888);
+    this.links.lineStyle(1, 0x686868);
     this.links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
     let progress = dash+gap;
   
@@ -267,9 +267,12 @@ export default class NetworkVisualization {
     // Links
     this.links.clear();
     this.data.links.forEach(link => {
-      let { source, target } = link;
 
-      if (source.viewId === "Actor" && target.viewId === "Other activity") {
+      let { source, target, connect_actor_activity } = link;
+
+      // console.log(connect_actor_activity)
+
+      if (connect_actor_activity) {
         this.solidLine(source, target);
       } else {
         this.dashedLine(source, target);
@@ -282,9 +285,9 @@ export default class NetworkVisualization {
             .filter(d => this.activeLink.includes(d.source.id) && this.activeLink.includes(d.target.id));
 
     activeLinkData.forEach(link => {
-      let { source, target } = link;
+      let { source, target, connect_actor_activity } = link;
 
-      if (source.viewId === "Actor" && target.viewId === "Other activity") {
+      if (connect_actor_activity) {
         this.highlightSolidLine(source, target);
       } else {
         this.highlightDashedLine(source, target);
