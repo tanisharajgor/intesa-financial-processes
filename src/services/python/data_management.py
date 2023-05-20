@@ -102,7 +102,7 @@ return dataframe
 def actors_dm(actors, config, raw_pth, processed_pth):
 
     df = actors[actors["Obsolete Object"] != "Obsoleto"]
-    df = df[["actorGUID", "actorType", "actor"]].drop_duplicates() # drop duplicates
+    df = df[["actorGUID", "actorType", "actor", "Connection"]].drop_duplicates() # drop duplicates
     df = translate_config(df, config, 'actorType')
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "actors.csv")).rename(columns={'Italian': 'actor'})
     df = pd.merge(df, dfTranslated, on="actor", how="left").drop("actor", axis=1).rename(columns={'English': "actor"})
@@ -396,13 +396,14 @@ def activity_to_actor_dm(data, activities, actors, processed_pth):
 
     df = pd.merge(data, activities, on="activityGUID", how="left").drop("activityGUID", axis=1)
     df = pd.merge(df, actors, on="actorGUID", how="left").drop("actorGUID", axis=1)
-    df = df.drop_duplicates()[["activityID", "actorID"]]
+    df = df.drop_duplicates()[["activityID", "actorID", "Connection"]]
+    df["Actor_Activity_Connection"] = df.Connection == "deve"
 
     df = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)]
     df['activityID'] = pd.to_numeric(df['activityID'], errors='coerce').astype(int)
     df['actorID'] = pd.to_numeric(df['actorID'], errors='coerce').astype(int)
 
-    df.to_csv(os.path.join(processed_pth, 'relational', 'activities_actor' + ".csv"), index = False)
+    df.drop("Connection", axis=1).to_csv(os.path.join(processed_pth, 'relational', 'activities_actor' + ".csv"), index = False)
 
     return df
 
@@ -449,7 +450,7 @@ def risk_to_control_dm(controls, risks, control, processed_pth):
 """
 Main crosswalk
 """
-def main_dm(data, level1, level2, level3, activities, actors, risks, controls, activity_to_risk, risk_to_control):
+def main_dm(data, level1, level2, level3, activities, actors, risks, controls, activity_to_actor, activity_to_risk, risk_to_control):
 
     df = pd.merge(data, level1, how="left", on="level1GUID")
     df = pd.merge(df, level2, how="left", on="level2GUID")
