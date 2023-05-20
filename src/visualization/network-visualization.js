@@ -170,7 +170,7 @@ export default class NetworkVisualization {
 
     this.simulation.force("link")
       .links(this.data.links);
-    console.log(this.data.links)
+
   }
 
   // Initializes the nodes
@@ -269,8 +269,6 @@ export default class NetworkVisualization {
     this.data.links.forEach(link => {
 
       let { source, target, connect_actor_activity } = link;
-
-      // console.log(connect_actor_activity)
 
       if (connect_actor_activity) {
         this.solidLine(source, target);
