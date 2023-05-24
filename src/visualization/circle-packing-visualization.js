@@ -64,6 +64,11 @@ export class CirclePackingDiagram {
         events: this.app.renderer.events
         });
 
+      this.viewport
+        .pinch({ percent: 1 })
+        .wheel({ percent: 0.1 })
+        .drag();
+
       this.app.stage.addChild(this.viewport);
     }
 
