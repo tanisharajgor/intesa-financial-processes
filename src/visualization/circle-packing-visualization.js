@@ -116,7 +116,7 @@ export class CirclePackingDiagram {
           node.gfx.alpha = opacityScale(node.data.treeLevel);
           node.gfx.interactive = true;
           node.gfx.buttonMode = true;
-          node.gfx.cursor = 'pointer';
+          node.gfx.cursor = 'zoom-in';
           node.gfx.on("pointerover", (e) => this.pointerOver(node, e, viewVariable));
           node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
           node.gfx.on("click", (e) => this.onClick(node, e))
@@ -163,14 +163,13 @@ export class CirclePackingDiagram {
         node.gfx.alpha = opacityScale(node.data.treeLevel);
         this.tooltip.style("visibility", "hidden");
         this.updateViewHoverValue(undefined);
-        this.app.renderer.events.cursorStyles.default = 'default';
     }
 
     getCenter = (node) => {
-
       if (node.depth === 0) {
           return new PIXI.Point(0, 0);
       } else if (this.currentNodeId === this.zoomedNodeId) {
+          node.gfx.cursor = "zoom-in"
           return new PIXI.Point(node.parent.x, node.parent.y);
       } else {
           return new PIXI.Point(node.x, node.y);
@@ -192,6 +191,8 @@ export class CirclePackingDiagram {
 
     onClick(node) {
         this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
+
+        node.gfx.cursor = "zoom-out"
 
         this.viewport.animate({
             position: this.getCenter(node),
