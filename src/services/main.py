@@ -5,7 +5,7 @@ from python.data_management import actors_rename, activities_dm, actors_dm, risk
     applications_dm, controls_dm, level1_dm, level2_dm, level3_dm, model_dm, \
     activity_to_risk_dm, risk_to_control_dm, main_dm
 
-from python.nest_data import create_processes_to_activities, create_risk_control, \
+from python.nest_data import create_processes_to_activities, \
      create_network, create_processes
 
 from python.translate import translate_text, authenticate_implicit_with_adc
@@ -88,8 +88,6 @@ def main():
 
     processesNested = create_processes_to_activities(main)
     write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
-
-    processes = create_processes(main)
   
     lu = {
         "risk": create_lu(risksClean, "riskID", "risk"),
@@ -101,7 +99,7 @@ def main():
         "level2": create_lu(level2Clean, "level2ID", "level2"),
         "level3": create_lu(level3Clean, "level3ID", "level3"),
         "model": create_lu(modelClean, "modelID", "model"),
-        "processes": {"name": "root", "children": processes, "treeLevel": 0}
+        "processes": {"name": "root", "children": create_processes(main), "treeLevel": 0}
     }
 
     write_json(lu, os.path.join(processed_pth, "nested"), "lu")

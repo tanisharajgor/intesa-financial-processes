@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import lu from '../data/processed/nested/lu.json';
 import { Key } from '../component-styles/key';
 import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
+import styled from 'styled-components';
 
 // constants
 const width = 345,
@@ -25,9 +26,9 @@ function fillScale(d, selectedLevel3ID) {
     if (d.data.data.treeLevel === 3 && d.data.data.id === selectedLevel3ID) {
         return "#03afbf";
     } else if (d.data.data.treeLevel === 3) {
-        return "white"
+        return "white";
     } else {
-        return "#4e5155"
+        return "#4e5155";
     }
 }
 
@@ -35,7 +36,9 @@ function initTooltip() {
     d3.select(`#${id}`)
         .append("div")
         .attr("class", "tooltip")
-        .attr("z-index", 500);
+        .attr("z-index", 500)
+        .style("width", "100%")
+        .style("height", "85px");
 }
 
 // Tooltip
@@ -121,7 +124,7 @@ function updateFilter(root, selectedLevel3ID) {
         .style("fill", 'none')
         .attr("stroke", "#4e5155")
         .attr("stroke-opacity", 1)
-        .attr("stroke-width", .5)
+        .attr("stroke-width", .5);
 
     // Add a circle for each node.
     svg.selectAll("g")
@@ -135,8 +138,23 @@ function updateFilter(root, selectedLevel3ID) {
             .attr("fill", d => fillScale(d, selectedLevel3ID))
             .attr("stroke", d => fillScale(d, selectedLevel3ID))
             .attr("stroke-width", .5)
-            .attr("class", "Process-Node");
+            .attr("class", "Process-Node")
+            .style('cursor', d => d.data.data.treeLevel ===3 ? 'pointer': 'not-allowed');
 }
+
+const StyledFilteredData = styled('p')`
+    font-style: italic;
+    text-color: ${props => props.theme.color.secondary };
+    opacity: 75%;
+    margin-bottom: 0.5rem;
+    // height: 50px;
+`
+
+const StyledFilter = styled('div')`
+    display: flex;
+    flex-direction: column;
+`
+
 
 export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
     const level3Descr = lu["level3"].find((d) => d.id === selectedLevel3ID).descr;
@@ -180,8 +198,10 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
             >
                 <h4>
                     <Key>Filter by Process:</Key>
-                    <span> {level3Descr}</span>
                 </h4>
+                <StyledFilteredData>
+                    {level3Descr}
+                </StyledFilteredData>
             </AccordionHeader>
             <AccordionDetails>
                 <LayoutGroup>
@@ -205,7 +225,9 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
                             </LayoutItem>
                         </LayoutRow>
                         <LayoutRow>
-                            <div id={id}></div>
+                            <StyledFilter id={id}>
+                                {/* <div id={id}></div> */}
+                            </StyledFilter>
                         </LayoutRow>
                     </LayoutGroup>
             </AccordionDetails>

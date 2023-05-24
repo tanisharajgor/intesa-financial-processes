@@ -9,15 +9,15 @@ const StyledMain = styled('div')`
 `
 const Visualization = styled('div')`
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-color: black;
 `
+export default function Main({viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue, id, controls}) {
 
-export default function Main({viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue, id}) {
     return(
         <StyledMain>
             <Visualization id={id} className="Visualization"></Visualization>
-            <Status id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue}/>
+            <Status id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} controls={controls}/>
         </StyledMain>
     )
 }

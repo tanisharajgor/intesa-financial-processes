@@ -76,6 +76,7 @@ export default function Network() {
 
         const filteredData = filterData(selectedLevel3ID, selectedActivities, selectedActors)
         updateData(filteredData);
+
         networkDiagram.current.data = filteredData;
         networkDiagram.current.initSimulation();
         networkDiagram.current.updateDraw(viewVariable);
@@ -93,7 +94,7 @@ export default function Network() {
 
     useEffect(() => {
         networkDiagram.current.updateDraw(viewVariable);
-    }, [viewVariable])
+    }, [viewVariable]);
 
     return(
         <div className="Content">
@@ -104,7 +105,7 @@ export default function Network() {
                     <FilterType typesChecks={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type:"/>
                     <FilterType typesChecks={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type:"/>
                 </QueryMenu>
-                <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} id={id}/>        
+                <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} id={id} controls={networkDiagram.current.getControls()}/>        
             </div>        
         </div>
     )

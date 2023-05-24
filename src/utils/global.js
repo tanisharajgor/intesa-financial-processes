@@ -97,6 +97,7 @@ export function createColorScale(variable) {
 export function applyColorScale(d, viewVariable) {
 
     let colorScale = createColorScale(viewVariable);
+    // console.log(d.viewType[viewVariable])
     return d.viewType[viewVariable] === "NA" || d.viewType[viewVariable] === undefined? naColor : colorScale(d.viewType[viewVariable]);   
 }
 
@@ -107,15 +108,6 @@ export function applyStrokeScaleWeight(d, viewVariable) {
     } else {
         return 0;
     }
-}
-
-export function createOpacityScale() {
-
-    const scale = d3.scaleOrdinal()
-        .domain([0, 1, 2, 3, 4])
-        .range([.05, .2, .3, .3, 1.00]);
-
-    return scale;
 }
 
 export function createLabelScale(viewVariable) {
@@ -141,13 +133,13 @@ export function symbolScaleD3(node) {
     if (node.viewId === "Actor") {
         return d3.symbolSquare;
     } else if (node.viewId === "Control activity") {
-        return d3.symbolStar;
+        return d3.symbolDiamond2;
     } else if(node.viewId === "Other activity") {
-        return d3.symbolCircle;
-    } else if (node.viewId === "Risk") {
         return d3.symbolTriangle;
+    } else if (node.viewId === "Risk") {
+        return d3.symbolStar;
     } else {
-        return d3.symbolDiamond;
+        return d3.symbolCircle;
     }
 }
 
@@ -155,26 +147,26 @@ export function symbolScaleD3(node) {
 export function symbolScalePixi(node, rSize) {
 
     switch(node.viewId) {
-        case "Other activity":
-          node.gfx.drawCircle(0, 0, rSize*.8);
-          node.shape = "circle";
-          break;
         case "Actor":
-          node.gfx.drawRect(-rSize/2, -rSize/2, rSize, rSize);
-          node.shape = "square";
-          break;
+            node.gfx.drawRect(-rSize/2, -rSize/2, rSize, rSize);
+            node.shape = "square";
+            break;
         case "Control activity":
-          node.gfx.drawStar(0, 0, 5, rSize);
-          node.shape = "star";
-          break;
+            node.gfx.drawRegularPolygon(0, 0, rSize, 4, 1.7);
+            node.shape = "diamond";
+            break;
+        case "Other activity":
+            node.gfx.drawRegularPolygon(0, 0, rSize, 3);
+            node.shape = "triangle";
+            break;
         case "Risk":
-          node.gfx.drawRegularPolygon(0, 0, rSize, 3);
-          node.shape = "triangle";
-          break;
+            node.gfx.drawStar(0, 0, 5, rSize);
+            node.shape = "star";
+            break;
         default:
-          node.gfx.drawRegularPolygon(0, 0, rSize, 4, 1.7);
-          node.shape = "diamond";
-          break;
+            node.gfx.drawCircle(0, 0, rSize);
+            node.shape = "circle";
+            break;
     }
 }
 

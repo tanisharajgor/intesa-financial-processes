@@ -87,38 +87,45 @@ return nested list
 """
 def create_view_type(df):
 
-    df2 = df[(pd.isnull(df.riskID) == False) | (pd.isnull(df.activityID) == False)].copy()
+    row = {
+        "nActor": int(df[pd.isnull(df.actorID) == False].actorID.nunique()),
+        "actorID": df[pd.isnull(df.actorID) == False].actorID.unique().tolist()
+    }
 
-    df2.financialDisclosureRisk = df2.financialDisclosureRisk.fillna('Missing')
-    df2.riskType = df2.riskType.fillna('Missing')
-    df2.controlType = df2.controlType.fillna('Missing')
-    df2.controlPeriodocity = df2.controlPeriodocity.fillna('Missing')
+    riskType = df[pd.isnull(df.riskType) == False][["riskType", "financialDisclosureRisk", "riskID"]].drop_duplicates()
 
-    if df2.shape[0] > 0:
-
-        riskType = df2.riskType.mode().iloc[0]
-        financialDisclosureRiskAny = df2.financialDisclosureRisk.mode().iloc[0]
-        controlType = df2.controlType.mode().iloc[0]
-        controlPeriodocityMode = df2.controlPeriodocity.mode().iloc[0]
-
-        if (financialDisclosureRiskAny != "NA") & (financialDisclosureRiskAny != "Missing"):
-            financialDisclosureRiskAny = bool(financialDisclosureRiskAny)
-            
-        if (controlPeriodocityMode != "NA") & (controlPeriodocityMode != "Missing"):
-            controlPeriodocityMode = float(controlPeriodocityMode)
-
-        row = {"financialDisclosureRiskAny": financialDisclosureRiskAny,
-               "riskType": str(riskType),
-               "controlType": str(controlType),
-               "controlPeriodocity": controlPeriodocityMode}
-
+    if riskType.shape[0] == 0:
+        row["riskType"] = "NA"
+        row["financialDisclosureRisk"] = "NA"
+        row["riskID"] = []
+        row["nRisk"] = 0
     else:
-        row = {
-            "financialDisclosureRiskAny": "Missing",
-            "riskType": "Missing",
-            "controlType": "Missing",
-            "controlPeriodocity": "Missing"
-        }
+        row["riskType"] = riskType.riskType.mode().iloc[0]
+        row["financialDisclosureRisk"] = bool(riskType.financialDisclosureRisk.mode().iloc[0])
+        row["riskID"] =  riskType.riskID.unique().tolist()
+        row["nRisk"] = int(riskType.riskID.nunique())
+
+    controlType = df[pd.isnull(df.controlType) == False][["controlType", "controlPeriodocity", "controlID"]].drop_duplicates()
+
+    if controlType.shape[0] == 0:
+        row["controlType"] = "NA"
+        row["controlID"] = []
+        row["nControl"] = 0
+    else:
+        row["controlType"] = controlType.controlType.mode().iloc[0]
+        row["controlID"] =  controlType.controlID.unique().tolist()
+        row["nControl"] = int(controlType.controlID.nunique())
+
+    controlPeriodocity = df[pd.isnull(df.controlPeriodocity) == False][["controlPeriodocity"]].drop_duplicates()
+
+    if controlPeriodocity.shape[0] == 0:
+        row["controlPeriodocity"] = "NA"
+    else:
+        periodocity = controlPeriodocity.controlPeriodocity.mode().iloc[0]
+        if periodocity == "Missing":
+            row["controlPeriodocity"] = periodocity
+        else:
+            row["controlPeriodocity"] = float(periodocity)
 
     return row
 
@@ -149,6 +156,12 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
 
         if children is not None:
             d["children"] = subset_list(childrenIDs, children)
+            d["viewId"] = "Process"
+        else:
+            if df_sub[df_sub[root1ID] == id].activityType.iloc[0] == "Control activity":
+                d["viewId"] = "Control activity"
+            else:
+                d["viewId"] = "Other activity"
 
         array.append(d)
 
@@ -165,11 +178,10 @@ def create_processes_to_activities(main):
     nest2 = create_sub_processes(main, "level2", "level3", nest3, 2)
     nest1 = create_sub_processes(main, "level1", "level2", nest2, 1)
 
-    return {"name": "root", 
-            "children": nest1,  
+    return {"name": "root",
+            "children": nest1,
             "childrenIDs": main.level1ID.unique().tolist(),
-            "riskType": {},
-            "riskControl": {},
+            "viewType": create_view_type(main),
             "treeLevel": int(0)}
 
 """
