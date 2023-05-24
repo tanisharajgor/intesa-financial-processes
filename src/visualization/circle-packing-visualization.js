@@ -93,18 +93,7 @@ export class CirclePackingDiagram {
     // Drawing functions ------------------------------------------------------
     
     draw(viewVariable) {
-        this.drawBackground();
         this.drawNodes(viewVariable);
-    }
-
-    drawBackground() {
-        const bkgrd = new PIXI.Graphics();
-        bkgrd.beginFill(0xFFFFFF, 0.01)
-        bkgrd.drawRect(-466, -466, this.width * 2, this.height * 2)
-        bkgrd.interactive = true;
-        bkgrd.on("click", (e) => this.onClick({depth: 0, id: 0}, e))
-
-        this.viewport.addChild(bkgrd);
     }
 
     // Initializes the nodes
@@ -221,7 +210,6 @@ export class CirclePackingDiagram {
 
     updateDraw(viewVariable) {
       this.destroyNodes();
-      this.drawBackground();
       this.drawNodes(viewVariable);
     }
 }
