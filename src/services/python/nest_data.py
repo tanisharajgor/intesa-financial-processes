@@ -105,7 +105,7 @@ def create_view_type(df):
         row["riskID"] =  riskType.riskID.unique().tolist()
         row["nRisk"] = int(riskType.riskID.nunique())
 
-    controlType = df[pd.isnull(df.controlType) == False][["controlType", "controlPeriodocity", "controlID"]].drop_duplicates()
+    controlType = df[(pd.isnull(df.controlType) == False) & (df.activityType == "Control activity")][["controlType", "controlPeriodocity", "activityID"]].drop_duplicates()
 
     if controlType.shape[0] == 0:
         row["controlType"] = "NA"
@@ -113,8 +113,8 @@ def create_view_type(df):
         row["nControl"] = 0
     else:
         row["controlType"] = controlType.controlType.mode().iloc[0]
-        row["controlID"] =  controlType.controlID.unique().tolist()
-        row["nControl"] = int(controlType.controlID.nunique())
+        row["controlID"] =  controlType.activityID.unique().tolist()
+        row["nControl"] = int(controlType.activityID.nunique())
 
     controlPeriodocity = df[pd.isnull(df.controlPeriodocity) == False][["controlPeriodocity"]].drop_duplicates()
 
