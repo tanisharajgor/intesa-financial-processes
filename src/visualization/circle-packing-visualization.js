@@ -169,7 +169,7 @@ export class CirclePackingDiagram {
     getCenter = (node) => {
 
       if (node.depth === 0) {
-          return new PIXI.Point(this.width / 2, this.height / 2);
+          return new PIXI.Point(0, 0);
       } else if (this.currentNodeId === this.zoomedNodeId) {
           return new PIXI.Point(node.parent.x, node.parent.y);
       } else {
