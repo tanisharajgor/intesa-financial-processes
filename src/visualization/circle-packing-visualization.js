@@ -131,24 +131,14 @@ export class CirclePackingDiagram {
           this.containerNodes.addChild(node.gfx); 
       });
 
-      // this.containerNodes.rotation = 1;
-
-      // console.log(this.width/2)
-      // console.log(this.height/2)
-
       this.containerNodes.x = this.app.screen.width / 2;
       this.containerNodes.y = this.app.screen.height / 2;
-      
-      // Center bunny sprite in local container coordinates
+
       this.containerNodes.pivot.x = this.width / 2;
       this.containerNodes.pivot.y = this.height / 2;
-      this.containerNodes.rotation = 90;
+      this.containerNodes.rotation = Math.PI;
 
       this.viewport.addChild(this.containerNodes);
-
-      
-      // this.viewport.rotation = 1;
-      // this.containerNodes.pivot.set(384 / 2, 361 / 2);
     }
   
     // Updating the draw functions on mouse interaction ------------------------------------------------------
