@@ -62,7 +62,7 @@ export class CirclePackingDiagram {
         passiveWheel: false,
         interaction: this.app.renderer.plugins.interaction, // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
         events: this.app.renderer.events
-        });
+      });
 
       this.app.stage.addChild(this.viewport);
     }
@@ -131,7 +131,24 @@ export class CirclePackingDiagram {
           this.containerNodes.addChild(node.gfx); 
       });
 
+      // this.containerNodes.rotation = 1;
+
+      // console.log(this.width/2)
+      // console.log(this.height/2)
+
+      this.containerNodes.x = this.app.screen.width / 2;
+      this.containerNodes.y = this.app.screen.height / 2;
+      
+      // Center bunny sprite in local container coordinates
+      this.containerNodes.pivot.x = this.width / 2;
+      this.containerNodes.pivot.y = this.height / 2;
+      this.containerNodes.rotation = 90;
+
       this.viewport.addChild(this.containerNodes);
+
+      
+      // this.viewport.rotation = 1;
+      // this.containerNodes.pivot.set(384 / 2, 361 / 2);
     }
   
     // Updating the draw functions on mouse interaction ------------------------------------------------------
@@ -141,16 +158,8 @@ export class CirclePackingDiagram {
     }
 
     showTooltip(d, event) {
-      let x;
-      let y;
-
-      if (this.zoomedNodeId === 0) {
-        x = d.x + d.r;
-        y = d.y - d.r;
-      } else {
-        x = event.client.x;
-        y = event.client.y;
-      }
+      let x = event.client.x;
+      let y = event.client.y;
 
       this.tooltip.style("visibility", "visible")
         .style("top", `${y}px`)
@@ -159,7 +168,6 @@ export class CirclePackingDiagram {
     }
 
     pointerOver(node, event, viewVariable) {
-
         node.gfx.alpha = .9;
         this.showTooltip(node, event);
         this.updateViewHoverValue(Global.applyColorScale(node.data, viewVariable));
