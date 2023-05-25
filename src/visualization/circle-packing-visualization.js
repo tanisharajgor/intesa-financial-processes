@@ -125,7 +125,7 @@ export class CirclePackingDiagram {
           node.gfx.cursor = 'pointer';
           node.gfx.on("pointerover", (e) => this.pointerOver(node, e, viewVariable));
           node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
-          node.gfx.on("click", (e) => this.onClick(node, e))
+          node.gfx.on("click", (e) => this.onClick(node, e));
 
           this.nodes.push(node);
           this.containerNodes.addChild(node.gfx); 
@@ -173,11 +173,11 @@ export class CirclePackingDiagram {
     getCenter = (node) => {
 
       if (node.depth === 0) {
-          return new PIXI.Point(this.width / 2, this.height / 2);
+        return new PIXI.Point(this.width / 2, this.height / 2);
       } else if (this.currentNodeId === this.zoomedNodeId) {
-          return new PIXI.Point(node.parent.x, node.parent.y);
+        return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
       } else {
-          return new PIXI.Point(node.x, node.y);
+        return new PIXI.Point(this.width - node.x, this.height - node.y);
       }
     }
 
@@ -199,6 +199,7 @@ export class CirclePackingDiagram {
 
         this.viewport.animate({
             position: this.getCenter(node),
+            rotation: Math.PI/2,
             scale: this.getZoomWidth(node),
         })
 
