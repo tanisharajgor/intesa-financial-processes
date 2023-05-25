@@ -93,7 +93,7 @@ export class CirclePackingDiagram {
   // Drawing functions ------------------------------------------------------
   
   draw(viewVariable) {
-    console.log(this.viewport.position, this.viewport)
+    console.log(this.viewport.position, this.viewport, this.app)
     this.drawNodes(viewVariable);
   }
 
@@ -167,16 +167,17 @@ export class CirclePackingDiagram {
   }
 
   getCenter = (node) => {
-    if (node.depth === 1 && this.currentNodeId === this.zoomedNodeId) {
-      console.log('1')
-      return new PIXI.Point(0, 0);
-    } else if (this.currentNodeId === this.zoomedNodeId) {
-      console.log('2')
+    if (this.currentNodeId === this.zoomedNodeId) {
       node.gfx.cursor = "zoom-in"
-      return new PIXI.Point(node.parent.x, node.parent.y);
+      if (node.depth === 1 ) {
+        return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
+      } else {
+        node.parent.gfx.cursor = "zoom-out"
+        this.zoomedNodeId = node.parent.data.id
+        return new PIXI.Point(node.parent.x, node.parent.y);
+      }
     } else {
-      console.log('3')
-      return new PIXI.Point(node.x, node.y);
+        return new PIXI.Point(node.x, node.y);
     }
   }
 
