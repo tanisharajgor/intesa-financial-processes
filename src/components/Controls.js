@@ -17,11 +17,6 @@ const StyledControlButton = styled('button')`
 `
 
 export default function Control({hideControls, controls}) {
-
-    if (hideControls) {
-        return null
-    }
-
     return (
         <StyledControls className="Controls">
             <div className="inner">
