@@ -125,6 +125,13 @@ export class CirclePackingDiagram {
       this.containerNodes.addChild(node.gfx); 
     });
 
+    this.containerNodes.x = this.app.screen.width / 2;
+    this.containerNodes.y = this.app.screen.height / 2;
+
+    this.containerNodes.pivot.x = this.width / 2;
+    this.containerNodes.pivot.y = this.height / 2;
+    this.containerNodes.rotation = Math.PI;
+
     this.viewport.addChild(this.containerNodes);
   }
   
@@ -135,16 +142,8 @@ export class CirclePackingDiagram {
   }
 
   showTooltip(d, event) {
-    let x;
-    let y;
-
-    if (this.zoomedNodeId === 0) {
-      x = d.x + d.r;
-      y = d.y - d.r;
-    } else {
-      x = event.client.x;
-      y = event.client.y;
-    }
+    let x = event.client.x;
+    let y = event.client.y;
 
     this.tooltip.style("visibility", "visible")
       .style("top", `${y}px`)
@@ -153,7 +152,6 @@ export class CirclePackingDiagram {
     }
 
   pointerOver(node, event, viewVariable) {
-
     node.gfx.alpha = .9;
     this.showTooltip(node, event);
     this.updateViewHoverValue(Global.applyColorScale(node.data, viewVariable));
@@ -172,10 +170,10 @@ export class CirclePackingDiagram {
         return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
       } else {
         node.parent.gfx.cursor = "zoom-out"
-        return new PIXI.Point(node.parent.x, node.parent.y);
+        return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
       }
     } else {
-        return new PIXI.Point(node.x, node.y);
+        return new PIXI.Point(this.width - node.x, this.height - node.y)
     }
   }
 

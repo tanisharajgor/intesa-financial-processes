@@ -13,11 +13,12 @@ export default function CirclePacking() {
     const [viewVariable, updateViewVariable] = useState("riskType");
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
 
-    const height = 932, width = 932;
+    const height = window.innerHeight;
+    const width = window.innerWidth;
 
     const root = d3.pack()
         .size([width, height])
-        .padding(3)
+        .padding(1)
         (d3.hierarchy(data)
         .sum(d => 1)
         .sort((a, b) => b.value - a.value));
