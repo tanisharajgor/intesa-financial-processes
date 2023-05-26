@@ -93,7 +93,6 @@ export class CirclePackingDiagram {
   // Drawing functions ------------------------------------------------------
   
   draw(viewVariable) {
-    console.log(this.viewport.position, this.viewport, this.app)
     this.drawNodes(viewVariable);
   }
 
@@ -173,7 +172,6 @@ export class CirclePackingDiagram {
         return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
       } else {
         node.parent.gfx.cursor = "zoom-out"
-        this.zoomedNodeId = node.parent.data.id
         return new PIXI.Point(node.parent.x, node.parent.y);
       }
     } else {
@@ -183,7 +181,7 @@ export class CirclePackingDiagram {
 
   getZoomWidth = (node) => {
 
-    const scale = d3.scaleLinear()
+    const scale =  d3.scaleLinear()
       .range([1, 20])
       .domain([0, 4]);
 
@@ -199,9 +197,12 @@ export class CirclePackingDiagram {
 
     node.gfx.cursor = "zoom-out"
 
+    const zoomScale = this.getZoomWidth(node);
+    const centerPoint = this.getCenter(node);
+
     this.viewport.animate({
-      position: this.getCenter(node),
-      scale: this.getZoomWidth(node),
+      position: centerPoint,
+      scale: zoomScale,
     })
 
     this.zoomedNodeId = this.currentNodeId;
