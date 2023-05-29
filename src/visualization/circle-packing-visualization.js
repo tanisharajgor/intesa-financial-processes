@@ -25,21 +25,21 @@ export class CirclePackingDiagram {
     width;
     viewport;
     zoomedNodeId
-  
+
     constructor(data = graph, updateViewHoverValue) {
       this.data = data;
       this.zoomedNodeId = 0;
       this.currentNodeId = 0;
       this.updateViewHoverValue = updateViewHoverValue;
     }
-  
+
     // Initializes the application
     init(selector) {
       this.rootDOM = document.getElementById(selector);
       this.width = this.rootDOM.clientWidth;
       this.height = this.rootDOM.clientHeight;
       this.initTooltip(selector);
-    
+
       // create canvas
       this.app = new PIXI.Application({
         resizeTo: this.rootDOM,
@@ -50,10 +50,10 @@ export class CirclePackingDiagram {
         autoDensity: true,
         backgroundColor: 0x08090b
       });
-  
+
       this.app.stage.sortableChildren = true;
       this.rootDOM.appendChild(this.app.view);
-  
+
       this.viewport = new Viewport({
         screenWidth: this.width,
         screenHeight: this.height,
@@ -62,7 +62,7 @@ export class CirclePackingDiagram {
         passiveWheel: false,
         interaction: this.app.renderer.plugins.interaction, // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
         events: this.app.renderer.events
-        });
+      });
 
       this.app.stage.addChild(this.viewport);
     }
@@ -84,9 +84,9 @@ export class CirclePackingDiagram {
           .style("border", "1px solid rgba(78, 81, 85, 0.7)")
           .style("font-size", "16px");
     }
-  
-    // Drawing functions ------------------------------------------------------
-    
+
+    // // Drawing functions ------------------------------------------------------
+
     draw(viewVariable) {
         this.drawBackground();
         this.drawNodes(viewVariable);
@@ -102,7 +102,7 @@ export class CirclePackingDiagram {
         this.viewport.addChild(bkgrd);
     }
 
-    // Initializes the nodes
+    // // Initializes the nodes
     drawNodes(viewVariable) {
 
       this.containerNodes = new PIXI.Container();
@@ -116,24 +116,41 @@ export class CirclePackingDiagram {
           node.gfx.beginFill(Global.applyColorScale(node.data, viewVariable));
           Global.symbolScalePixi(node, node.r);
           node.gfx.endFill();
-
           node.gfx.x = node.x;
           node.gfx.y = node.y;
           node.gfx.alpha = opacityScale(node.data.treeLevel);
-          node.gfx.interactive = true;
-          node.gfx.buttonMode = true;
+
+          if (this.zoomedNodeId === 0) {
+            if(node.data.treeLevel < 4) {
+                node.gfx.interactive = true;
+                node.gfx.buttonMode = true;
+            } else {
+                node.gfx.interactive = false;
+                node.gfx.buttonMode = false;
+            }
+          } else {
+            node.gfx.interactive = true;
+            node.gfx.buttonMode = true;
+          }
           node.gfx.cursor = 'pointer';
           node.gfx.on("pointerover", (e) => this.pointerOver(node, e, viewVariable));
           node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
-          node.gfx.on("click", (e) => this.onClick(node, e))
+          node.gfx.on("click", (e) => this.onClick(node, e));
 
           this.nodes.push(node);
           this.containerNodes.addChild(node.gfx); 
       });
 
+      this.containerNodes.x = this.app.screen.width / 2;
+      this.containerNodes.y = this.app.screen.height / 2;
+
+      this.containerNodes.pivot.x = this.width / 2;
+      this.containerNodes.pivot.y = this.height / 2;
+      this.containerNodes.rotation = Math.PI;
+
       this.viewport.addChild(this.containerNodes);
     }
-  
+
     // Updating the draw functions on mouse interaction ------------------------------------------------------
 
     tooltipText(d) {
@@ -141,16 +158,8 @@ export class CirclePackingDiagram {
     }
 
     showTooltip(d, event) {
-      let x;
-      let y;
-
-      if (this.zoomedNodeId === 0) {
-        x = d.x + d.r;
-        y = d.y - d.r;
-      } else {
-        x = event.client.x;
-        y = event.client.y;
-      }
+      let x = event.client.x;
+      let y = event.client.y;
 
       this.tooltip.style("visibility", "visible")
         .style("top", `${y}px`)
@@ -159,7 +168,6 @@ export class CirclePackingDiagram {
     }
 
     pointerOver(node, event, viewVariable) {
-
         node.gfx.alpha = .9;
         this.showTooltip(node, event);
         this.updateViewHoverValue(Global.applyColorScale(node.data, viewVariable));
@@ -175,11 +183,11 @@ export class CirclePackingDiagram {
     getCenter = (node) => {
 
       if (node.depth === 0) {
-          return new PIXI.Point(this.width / 2, this.height / 2);
+        return new PIXI.Point(this.width / 2, this.height / 2);
       } else if (this.currentNodeId === this.zoomedNodeId) {
-          return new PIXI.Point(node.parent.x, node.parent.y);
+        return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
       } else {
-          return new PIXI.Point(node.x, node.y);
+        return new PIXI.Point(this.width - node.x, this.height - node.y);
       }
     }
 
@@ -201,12 +209,13 @@ export class CirclePackingDiagram {
 
         this.viewport.animate({
             position: this.getCenter(node),
+            rotation: Math.PI/2,
             scale: this.getZoomWidth(node),
         })
 
         this.zoomedNodeId = this.currentNodeId;
     }
-  
+
     // Destroys the nodes on data update
     destroyNodes() {
       if (this.containerNodes) {
