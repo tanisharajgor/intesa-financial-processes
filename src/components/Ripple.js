@@ -33,9 +33,7 @@ const Ripple = props => {
         : rippleContainer.height;
     const x = event.pageX - rippleContainer.x - size / 2;
     const y = event.pageY - rippleContainer.y - size / 2;
-    const x1 = rippleContainer.x;
-    const y1 = rippleContainer.y;
-    console.log(x, y, x1, y1);
+
     const newRipple = {
       x,
       y,

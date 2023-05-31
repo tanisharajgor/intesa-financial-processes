@@ -123,8 +123,7 @@ export default class NetworkVisualization {
       this.clickNode = false;
       this.clickCount = 0;
     }
-    console.log(this.clickCount)
-
+    
     this.activeNodes
       .forEach(node => {
         let { gfx } = node;
