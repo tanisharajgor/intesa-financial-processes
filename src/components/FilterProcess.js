@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { InnerHeader } from '../component-styles/inner-header';
 import Ripple from './Ripple';
 import { ChevronButton } from '../component-styles/chevron-button';
+import { StyledSelect } from '../component-styles/select';
 
 // constants
 const width = 345,
@@ -221,7 +222,7 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
                         <LayoutRow className="layout_row">
                             <LayoutItem className="push">
                                 <Form variant="outlined" size="small">
-                                    <Select
+                                    <StyledSelect
                                         labelId="process1-select-label"
                                         id="process1-select"
                                         displayEmpty
@@ -233,7 +234,7 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
                                                 <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
                                             )
                                         })}
-                                    </Select>
+                                    </StyledSelect>
                                 </Form>
                             </LayoutItem>
                         </LayoutRow>

@@ -1,11 +1,6 @@
 import styled from "styled-components";
 import Ripple from "./Ripple";
 
-const StyledControls = styled('div')`
-    width: ${props =>  props.theme.viewColWidth };
-    padding: ${props =>  props.theme.padding };
-`
-
 const StyledControlButton = styled('button')`
     background: transparent;
     border: 1px solid transparent;
@@ -25,7 +20,7 @@ export default function Control({hideControls, controls}) {
     }
 
     return (
-        <StyledControls className="Controls">
+        <div className="Controls">
             <div className="inner">
                 <StyledControlButton onClick={() => controls.reset()}>
                     <img alt="Button to reset the scale of the visualization" src={process.env.PUBLIC_URL + "/assets/crop_free.svg"}/>
@@ -40,6 +35,6 @@ export default function Control({hideControls, controls}) {
                     <Ripple color={"#FFFFFF"} duration={1000}/>
                 </StyledControlButton>
             </div>
-        </StyledControls>
+        </div>
     )
 }
