@@ -9,7 +9,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "cfd-react-components": "^1.1.8",
+    "cfd-react-components": "^1.1.9",
     "d3": "^7.8.1",
     "force-in-a-box": "github:john-guerra/forceInABox",
     "gh-pages": "^4.0.0",
