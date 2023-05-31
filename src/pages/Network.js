@@ -88,7 +88,7 @@ export default function Network() {
 
     return(
         <div className="Content">
-            <Navigation/>
+            <Navigation />
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>

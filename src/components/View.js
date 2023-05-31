@@ -257,7 +257,7 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
                         Object.keys(Global.viewVariables).map((viewBy) => {
                             let variable = Global.viewVariables[viewBy];
                             return (
-                                <MenuItem key={variable.id} value={variable.label}><em>{variable.label}</em></MenuItem>
+                                <MenuItem key={`view-key-${variable.id}`} value={variable.label}>{variable.label}</MenuItem>
                             )
                         })}
                     </Select>
