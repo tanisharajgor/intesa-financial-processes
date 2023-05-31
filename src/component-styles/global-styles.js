@@ -1,6 +1,18 @@
 import { createGlobalStyle } from "styled-components";
 
+const fontPath = `${process.env.PUBLIC_URL}/font/`
+
 export const GlobalStyles = createGlobalStyle`
+
+  // Imports for custom fonts
+  @font-face {
+    font-family: "Plex";
+    src: url(${fontPath}/ibmplexsans-regular-webfont.woff2) format("woff2"),
+      url(${fontPath}/ibmplexsans-regular-webfont.woff) format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+
   body {
     width: 100vw;
     height: 100vh;

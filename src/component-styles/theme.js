@@ -10,7 +10,7 @@ export const GlobalTheme = {
       main: '#21252b',
     },
     font: {
-      family: 'Geneva, Plex, Verdana, Tahoma, sans-serif',
+      family: 'Plex, Tahoma, Verdana, Geneva, sans-serif',
       heading: '',
       subHeading: '',
       baseSize: '14px',
