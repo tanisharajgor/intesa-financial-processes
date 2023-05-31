@@ -48,20 +48,25 @@ const Link = styled(`li`)`
 
     &:hover {
         background-color: ${props =>  props.theme.color.secondary };
+        cursor: pointer;
+    }
+
+    &:hover > a {
+        color: ${props =>  props.theme.color.main };
     }
 
     a {
-    color: ${props =>  props.theme.color.secondary };
-    text-decoration: none;
+        color: ${props =>  props.theme.color.secondary };
+        text-decoration: none;
     }
     
     a.active {
-    color: ${props =>  props.theme.color.main };
+        color: ${props =>  props.theme.color.main };
     }  
 
     a:hover {
-    color: ${props =>  props.theme.color.main };
-    background-color: ${props =>  props.theme.color.border };
+        color: ${props =>  props.theme.color.main };
+        background-color: ${props =>  props.theme.color.border };
     }
 `
 
