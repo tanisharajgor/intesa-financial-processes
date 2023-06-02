@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 export const StyledSelect = styled(Select)`
     // A reset of styles, including removing the default dropdown arrow
-    appearance: none;
     width: 100%;
     min-width: 15ch;
     max-width: 30ch;
@@ -15,13 +14,14 @@ export const StyledSelect = styled(Select)`
     background-color: transparent;
     color: ${props =>  props.theme.color.secondary };
     display: grid;
-    grid-template-areas: "select";
+    grid-template-areas: select;
 
-    &::before {
+    &:after {
         content: "";
+        display: block;
         width: 0.8em;
         height: 0.5em;
-        background-color: var(--select-arrow);
+        background-color: ${props =>  props.theme.color.secondary };
         clip-path: polygon(100% 0%, 0 0%, 50% 100%);
         grid-area: select;
       }

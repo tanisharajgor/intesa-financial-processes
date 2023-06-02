@@ -1,4 +1,4 @@
-import { Accordion, AccordionHeader, AccordionDetails, MenuItem, Form, Select } from 'cfd-react-components';
+import { Accordion, AccordionHeader, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import lu from '../data/processed/nested/lu.json';
