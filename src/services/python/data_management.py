@@ -457,13 +457,16 @@ def main_dm(data, level1, level2, level3, activities, actors, risks, controls, a
     df = pd.merge(df, level3, how="left", on="level3GUID")
     df = pd.merge(df, activities, how="left", on="activityGUID")
     df = pd.merge(df, actors, how="left", on="actorGUID")
-    df = pd.merge(df, activity_to_risk, how="left", on="activityID")
+
+    rtc = pd.concat([risk_to_control.rename(columns={'controlID': 'activityID'}), activity_to_risk], ignore_index=True, sort=False).drop_duplicates()
+    df = pd.merge(df, rtc, how="left", on="activityID")
+
+   # import pdb; pdb.set_trace()
 
     df = pd.merge(df, risks, how="left", on="riskID")
-    df = pd.merge(df, risk_to_control, how="left", on="riskID")
-    df = pd.merge(df, controls, how="left", on="controlID")
+    df = pd.merge(df, controls.rename(columns={'controlID': 'activityID'}), how="left", on="activityID")
 
-    df = df.drop(["level1GUID", "level2GUID", "level3GUID", "modelGUID", "activityGUID", "actorGUID"], axis = 1)
+    df = df.drop(["level1GUID", "level2GUID", "level3GUID", "modelGUID", "activityGUID", "actorGUID", "riskGUID", "controlGUID"], axis = 1)
 
     return df
 

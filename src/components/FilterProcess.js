@@ -1,10 +1,14 @@
-import { Accordion, AccordionHeader, AccordionDetails, MenuItem, Form, Select } from 'cfd-react-components';
+import { Accordion, AccordionHeader, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import lu from '../data/processed/nested/lu.json';
 import { Key } from '../component-styles/key';
 import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
 import styled from 'styled-components';
+import { InnerHeader } from '../component-styles/inner-header';
+import Ripple from './Ripple';
+import { ChevronButton } from '../component-styles/chevron-button';
+import { StyledSelect } from '../component-styles/select';
 
 // constants
 const width = 345,
@@ -160,6 +164,9 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
     const level3Descr = lu["level3"].find((d) => d.id === selectedLevel3ID).descr;
     const [selectedLevel1ID, updateLevel1] = useState(level1[0].id);
     const levelsFiltered = lu["processes"].children.find((d) => d.id === selectedLevel1ID);
+    const [shouldRotate, setRotate] = useState(false);
+
+    const handleRotate = () => setRotate(!shouldRotate);
 
     // Update data
     const hierarchyData = d3.hierarchy(levelsFiltered);
@@ -195,10 +202,17 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
             <AccordionHeader
                 aria-controls="process-filter-content"
                 id="process-filter-header"
+                onClick={handleRotate}
             >
-                <h4>
-                    <Key>Filter by Process:</Key>
-                </h4>
+                <InnerHeader>
+                    <Key>
+                        Filter by Process:
+                    </Key>
+                    <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
+                        <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
+                        <Ripple color={"#FFFFFF"} duration={1000}/>
+                    </ChevronButton>
+                </InnerHeader>
                 <StyledFilteredData>
                     {level3Descr}
                 </StyledFilteredData>
@@ -208,7 +222,7 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
                         <LayoutRow className="layout_row">
                             <LayoutItem className="push">
                                 <Form variant="outlined" size="small">
-                                    <Select
+                                    <StyledSelect
                                         labelId="process1-select-label"
                                         id="process1-select"
                                         displayEmpty
@@ -217,10 +231,10 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
                                     >
                                         {level1.map((level, index) => {
                                             return(
-                                                <MenuItem key={index} value={level.id}>{level.descr}</MenuItem>
+                                                <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
                                             )
                                         })}
-                                    </Select>
+                                    </StyledSelect>
                                 </Form>
                             </LayoutItem>
                         </LayoutRow>
