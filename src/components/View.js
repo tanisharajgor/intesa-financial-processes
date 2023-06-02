@@ -3,6 +3,7 @@ import * as Global from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
 import { InspectHTML } from "./Inspect";
+import { StyledSelect } from "../component-styles/select";
 
 const width = 216;
 const height = 15;
@@ -246,7 +247,7 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
                 <InspectHTML/>
                 {viewInfo(networkChart)}
                 <Form variant="outlined" size="small">
-                    <Select
+                    <StyledSelect
                         labelId="view-select-label"
                         id="view-select"
                         displayEmpty
@@ -257,10 +258,10 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
                         Object.keys(Global.viewVariables).map((viewBy) => {
                             let variable = Global.viewVariables[viewBy];
                             return (
-                                <MenuItem key={variable.id} value={variable.label}><em>{variable.label}</em></MenuItem>
+                                <MenuItem key={`view-key-${variable.id}`} value={variable.label}>{variable.label}</MenuItem>
                             )
                         })}
-                    </Select>
+                    </StyledSelect>
                     <div id={riskLegendId}></div>
                 </Form>
             </div>

@@ -98,12 +98,12 @@ export default function Network() {
 
     return(
         <div className="Content">
-            <Navigation/>
+            <Navigation />
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
-                    <FilterType typesChecks={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type:"/>
-                    <FilterType typesChecks={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type:"/>
+                    <FilterType typesChecks={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
+                    <FilterType typesChecks={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type"/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} id={id} controls={networkDiagram.current.getControls()}/>        
             </div>        

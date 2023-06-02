@@ -3,6 +3,8 @@ import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../component-sty
 import { Key } from '../component-styles/key'
 import { useState } from 'react';
 import styled from 'styled-components';
+import { ChevronButton } from '../component-styles/chevron-button';
+import Ripple from './Ripple';
 
 const ID = "Filter-Activity-Type";
 
@@ -14,15 +16,17 @@ const StyledFilteredData = styled('span')`
     display: block;
 `
 
-const StyledHeader = styled('h4')`
-    margin-top: 1.3rem;
-    margin-bottom: 0.5rem;
+const StyledHeader = styled('div')`
+    display: flex;
 `
 
 export default function FilterType({typesChecks, updateSelection, typeValues, label}) {
 
     let newSelectedTypes = [];
     const [filteredTypes, updateFilter] = useState([])
+    const [shouldRotate, setRotate] = useState(false);
+
+    const handleRotate = () => setRotate(!shouldRotate);
 
     const updateSelectedRange = (selected) => {
         if (typesChecks.includes(selected)) {
@@ -42,6 +46,7 @@ export default function FilterType({typesChecks, updateSelection, typeValues, la
             <AccordionHeader
                 aria-controls="activity-type-filter-content"
                 id="activity-type-filter-header"
+                onClick={handleRotate}
             >
                 <StyledHeader>
                     <Key>
@@ -50,10 +55,14 @@ export default function FilterType({typesChecks, updateSelection, typeValues, la
                             `${label}:`
                         }
                     </Key>
+                    <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
+                        <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
+                        <Ripple color={"#FFFFFF"} duration={1000}/>
+                    </ChevronButton>
                 </StyledHeader>
-                <StyledFilteredData>
-                    {
-                        filteredTypes.length > 0 && (
+                { filteredTypes.length <= 0 ? <></> : 
+                    <StyledFilteredData>
+                        {
                             filteredTypes.map((type, i, arr) => {
 
                                 let str = type;
@@ -65,10 +74,10 @@ export default function FilterType({typesChecks, updateSelection, typeValues, la
                                 return (
                                     <span>{str}</span>
                                 )
-                            })
-                        )  
-                    }
-                </StyledFilteredData>
+                            }) 
+                        }
+                    </StyledFilteredData>
+                }
             </AccordionHeader>
             <AccordionDetails>
                 <LayoutGroup>
@@ -92,9 +101,6 @@ export default function FilterType({typesChecks, updateSelection, typeValues, la
                                     }
                                 </FilterList>
                             </LayoutItem>
-                        </LayoutRow>
-                        <LayoutRow>
-                            <div id={ID}></div>
                         </LayoutRow>
                     </LayoutGroup>
             </AccordionDetails>
