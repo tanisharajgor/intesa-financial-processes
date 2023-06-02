@@ -47,14 +47,12 @@ export const GlobalStyles = createGlobalStyle`
   input[type="checkbox"] {
     appearance: none;
     cursor: pointer;
-    margin: 0;
     width: 1.15rem;
     height: 1.15rem;
     border: 0.15em solid ${props =>  props.theme.color.secondary };
     border-radius: 0.15rem;
     transform: translateY(-0.075rem);
     background-color: ${props =>  props.theme.backgroundColor.main };
-    margin-right: 0.5rem;
     vertical-align: middle;
     display: grid;
   }
