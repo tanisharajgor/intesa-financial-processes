@@ -15,7 +15,7 @@ export default function Status({id, viewVariable, updateViewVariable, viewHoverV
     return (
         <StyledStatus className="Status">
             <View id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue}/>
-            <Control hideControls={id === "circle-packing-chart"} controls={controls}/>
+            <Control controls={controls}/>
         </StyledStatus>
     )
 }

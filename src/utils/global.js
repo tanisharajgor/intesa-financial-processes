@@ -127,9 +127,6 @@ export const rScale = d3.scaleSqrt()
     .domain([1, 300])
     .range([5, 30]);
 
-export const actorTypeValues = ["Organizational unit", "Position", "Person", "Missing", "External Organizational unit"];
-export const activityTypeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
-
 // Symbol Scale for D3
 export function symbolScaleD3(node) {
 

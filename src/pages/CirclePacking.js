@@ -2,7 +2,7 @@ import Navigation from "../components/Navigation";
 import Main from "../components/Main";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { inspectHierarchySummary } from "../components/Inspect";
 import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
 
@@ -13,11 +13,12 @@ export default function CirclePacking() {
     const [viewVariable, updateViewVariable] = useState("riskType");
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
 
-    const height = 932, width = 932;
+    const height = window.innerHeight;
+    const width = window.innerWidth;
 
     const root = d3.pack()
         .size([width, height])
-        .padding(3)
+        .padding(1)
         (d3.hierarchy(data)
         .sum(d => 1)
         .sort((a, b) => b.value - a.value));
@@ -29,19 +30,19 @@ export default function CirclePacking() {
         circlePackingDiagram.current.draw(viewVariable);
     }, [])
 
-    // Update the visual aesthetics of the visualization that change with a user input
-    useEffect(() => {
-        circlePackingDiagram.current.updateDraw(viewVariable)
+    const onViewVariableChange = useCallback((updatedView) => {
+        circlePackingDiagram.current.updateDraw(updatedView)
 
         let inspect = d3.select(".Inspect");
         inspectHierarchySummary(inspect, data);
-    }, [viewVariable])
+        updateViewVariable(updatedView)
+    }, [])
 
     return(
         <div className="Content">
             <Navigation/>
             <div style={{display: 'flex'}}>
-                <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id}/>
+                <Main viewVariable={viewVariable} updateViewVariable={onViewVariableChange} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
             </div>
         </div>
     )
