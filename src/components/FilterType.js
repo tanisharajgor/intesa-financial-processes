@@ -19,7 +19,7 @@ const StyledHeader = styled('h4')`
     margin-bottom: 0.5rem;
 `
 
-export default function FilterType({typesChecks, updateTypeChecks, typeValues, label}) {
+export default function FilterType({typesChecks, updateSelection, typeValues, label}) {
 
     let newSelectedTypes = [];
     const [filteredTypes, updateFilter] = useState([])
@@ -34,7 +34,7 @@ export default function FilterType({typesChecks, updateTypeChecks, typeValues, l
             updateFilter(filteredTypes.filter((obj) => obj !== selected));
             newSelectedTypes = [...typesChecks];
         }
-        updateTypeChecks(newSelectedTypes);
+        updateSelection(newSelectedTypes);
     }
 
     return(
