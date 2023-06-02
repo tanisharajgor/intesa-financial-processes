@@ -2,7 +2,7 @@ import Navigation from "../components/Navigation";
 import Main from "../components/Main";
 import data from "../data/processed/nested/processes.json";
 import * as d3 from 'd3';
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { inspectHierarchySummary } from "../components/Inspect";
 import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
 
@@ -30,13 +30,13 @@ export default function CirclePacking() {
         circlePackingDiagram.current.draw(viewVariable);
     }, [])
 
-    // Update the visual aesthetics of the visualization that change with a user input
-    useEffect(() => {
-        circlePackingDiagram.current.updateDraw(viewVariable)
+    const onViewVariableChange = useCallback((updatedView) => {
+        circlePackingDiagram.current.updateDraw(updatedView)
 
         let inspect = d3.select(".Inspect");
         inspectHierarchySummary(inspect, data);
-    }, [viewVariable])
+        updateViewVariable(updatedView)
+    }, [])
 
     return(
         <div className="Content">
