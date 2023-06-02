@@ -1,8 +1,5 @@
 
 import pandas as pd
-import os
-import numpy as np
-import math
 
 from python.helper import unique_int
 
@@ -303,7 +300,7 @@ def create_network(data):
 
             nodes.append(row)
 
-        linkData1 = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)][['actorID', 'activityID']].rename(columns={'actorID': 'source',
+        linkData1 = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)][['actorID', 'activityID', 'Connection']].rename(columns={'actorID': 'source',
                                                                                                                                            'activityID': 'target'})
 
         linkData2 = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.riskID) == False)][['activityID', 'riskID']].rename(columns={'activityID': 'source',
@@ -312,8 +309,10 @@ def create_network(data):
         linkData = pd.concat([linkData1, linkData2]).drop_duplicates()
 
         for j in range(0, linkData.shape[0]):
+
             row = {"source": int(linkData.source.iloc[j]),
                    "target": int(linkData.target.iloc[j]),
+                   "connect_actor_activity": bool(linkData.iloc[j].Connection == "deve"),
                    "id": str(linkData.source.iloc[j]) + "-" + str(linkData.target.iloc[j])}
 
             links.append(row)
