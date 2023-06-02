@@ -42,7 +42,7 @@ export default function CirclePacking() {
         <div className="Content">
             <Navigation/>
             <div style={{display: 'flex'}}>
-                <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
+                <Main viewVariable={viewVariable} updateViewVariable={onViewVariableChange} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
             </div>
         </div>
     )
