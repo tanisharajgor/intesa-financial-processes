@@ -89,7 +89,7 @@ def main():
 
     processesNested = create_processes_to_activities(main)
     write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
-  
+
     lu = {
         "risk": create_lu(risksClean, "riskID", "risk"),
         "application": create_lu(applicationsClean, "applicationID", "application"),

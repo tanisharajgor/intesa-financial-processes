@@ -40,6 +40,7 @@ def levelsObject(df):
             "level1ID": df.level1ID.unique().tolist(),
             "level2ID": df.level2ID.unique().tolist(),
             "level3ID": df.level3ID.unique().tolist(),
+            "modelID": df.modelID.unique().tolist(),
         }
 
     return levels
@@ -159,6 +160,12 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
                 d["viewId"] = "Control activity"
             else:
                 d["viewId"] = "Other activity"
+            d["processes"] = {
+                "level1ID": int(df_sub[df_sub[root1ID] == id].level1ID.iloc[0]),
+                "level2ID": int(df_sub[df_sub[root1ID] == id].level2ID.iloc[0]),
+                "level3ID": int(df_sub[df_sub[root1ID] == id].level3ID.iloc[0]),
+                "modelID": int(df_sub[df_sub[root1ID] == id].modelID.iloc[0])
+            }
 
         array.append(d)
 
