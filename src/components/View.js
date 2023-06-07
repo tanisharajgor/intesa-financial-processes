@@ -43,7 +43,6 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
                     .attr('fill', d => d.color)
-                    // .attr("stroke",  d => d.label === "Missing"? Global.naColorHex: d.color)
                     .attr('stroke-width', 1),
                 update => update
                     .attr('opacity', (d => viewHoverValue === undefined || d.color == viewHoverValue? 1: .3)),

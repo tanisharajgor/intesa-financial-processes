@@ -119,7 +119,7 @@ def create_view_type(df):
         row["controlPeriodocity"] = "NA"
     else:
         periodocity = controlPeriodocity.controlPeriodocity.mode().iloc[0]
-        if periodocity == "Missing":
+        if periodocity == "NA":
             row["controlPeriodocity"] = periodocity
         else:
             row["controlPeriodocity"] = float(periodocity)
@@ -219,15 +219,13 @@ def create_network(data):
         riskID = df[pd.isnull(df.riskID) == False].riskID.unique()
         controlID = df[(pd.isnull(df.activityID) == False) & (df.activityType == "Control activity")].activityID.unique()
 
-      #  df = df.fillna('Missing')
-
-        df.riskType = df.riskType.fillna('Missing')
-        df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('Missing')
-        df.controlPeriodocity = df.controlPeriodocity.fillna('Missing')
-        df.controlType = df.controlType.fillna('Missing')
-        df.controlCategory = df.controlCategory.fillna('Missing')
-        df.risk = df.risk.fillna('Missing')
-        df.control = df.control.fillna('Missing')
+        df.riskType = df.riskType.fillna('NA')
+        df.financialDisclosureRisk = df.financialDisclosureRisk.fillna('NA')
+        df.controlPeriodocity = df.controlPeriodocity.fillna('NA')
+        df.controlType = df.controlType.fillna('NA')
+        df.controlCategory = df.controlCategory.fillna('NA')
+        df.risk = df.risk.fillna('NA')
+        df.control = df.control.fillna('NA')
 
         links = []
         nodes = []
