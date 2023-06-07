@@ -109,6 +109,7 @@ def actors_dm(actors, config, raw_pth, processed_pth):
     df = clean_strings(df, "actor")
     df = df[pd.isnull(df.actor) == False]
     df = num_id(df, "actorGUID", 1000000)
+    df.actorType = df.actorType.replace('Missing', 'NA')
 
     ## Write the cleaned data out
     df.drop('actorGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'actors' + ".csv"), index = False)
@@ -165,8 +166,7 @@ def controls_dm(controls, activities, config, raw_pth, processed_pth):
                     'Monthly':30, 
                     'Weekly':7, 
                     'Daily':1, 
-                    'Per event':.1,
-                    'Missing': 'Missing'
+                    'Per event':.1
                     }
 
     df = df.assign(controlPeriodocity = df.controlPeriodocity.map(period_mapping))
@@ -182,7 +182,9 @@ def controls_dm(controls, activities, config, raw_pth, processed_pth):
     df = df.rename(columns={'activityCategory': 'controlCategory'})
     df.controlCategory = df.controlCategory.fillna('NA')
     df['control'] = df['control'].replace(r"^ +", regex=True)
- 
+    df.controlType = df.controlType.replace('Missing', 'NA')
+    df.controlPeriodocity = df.controlPeriodocity.replace('Missing', 'NA')
+
     ## Write the cleaned data out
     df.drop('controlGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'controls' + ".csv"), index = False)
 
