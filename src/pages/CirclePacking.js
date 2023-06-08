@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { inspectHierarchySummary } from "../components/Inspect";
 import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
 import { QueryMenu } from "cfd-react-components";
-import FilterType from "../components/FilterType";
+import FilterActivityType from "../components/FilterActivityType";
 
 const id = "circle-packing-chart";
 
@@ -52,7 +52,7 @@ export default function CirclePacking() {
             <Navigation/>
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
-                    <FilterType typesChecks={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
+                    <FilterActivityType typesChecks={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={onViewVariableChange} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
             </div>

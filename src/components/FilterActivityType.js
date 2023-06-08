@@ -20,7 +20,7 @@ const StyledHeader = styled('div')`
     display: flex;
 `
 
-export default function FilterType({typesChecks, updateSelection, typeValues, label}) {
+export default function FilterActivityType({typesChecks, updateSelection, typeValues, label}) {
 
     let newSelectedTypes = [];
     const [filteredTypes, updateFilter] = useState([])
