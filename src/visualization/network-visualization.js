@@ -168,8 +168,6 @@ export default class NetworkVisualization {
 
     this.simulation.force("link")
       .links(this.data.links);
-
-    console.log(this.data.links)
   }
 
   // Initializes the nodes
