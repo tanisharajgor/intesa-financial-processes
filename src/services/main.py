@@ -85,11 +85,12 @@ def main():
     main = main_dm(data, level1Clean, level2Clean, level3Clean, activitiesClean, actorsClean, risksClean, controlsClean, activity_to_actor, activity_to_risk, risk_to_control)
 
     network = create_network(main)
-    write_json(network, os.path.join(processed_pth, "nested"), "network2")
+    write_json(network["nodes"], os.path.join(processed_pth, "nested"), "nodes")
+    write_json(network["links"], os.path.join(processed_pth, "nested"), "links")
 
     processesNested = create_processes_to_activities(main)
     write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")
-  
+
     lu = {
         "risk": create_lu(risksClean, "riskID", "risk"),
         "application": create_lu(applicationsClean, "applicationID", "application"),
