@@ -2,7 +2,6 @@ import * as d3 from "d3";
 import * as PIXI from "pixi.js";
 import { GlowFilter } from "@pixi/filter-glow";
 import * as Global from "../utils/global";
-import graph from "../data/processed/nested/network2.json";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
 
@@ -15,7 +14,6 @@ export default class NetworkVisualization {
   clickNode;
   clickViewport;
   clickCount;
-  containerLabels;
   containerNodes;
   containerLinks;
   data;
@@ -29,7 +27,7 @@ export default class NetworkVisualization {
   width;
   viewport;
 
-  constructor(data = graph, updateSymbolHoverValue, updateViewHoverValue) {
+  constructor(data, updateSymbolHoverValue, updateViewHoverValue) {
     this.updateSymbolHoverValue = updateSymbolHoverValue;
     this.updateViewHoverValue = updateViewHoverValue;
     this.data = data;
@@ -171,6 +169,7 @@ export default class NetworkVisualization {
     this.simulation.force("link")
       .links(this.data.links);
 
+    console.log(this.data.links)
   }
 
   // Initializes the nodes
@@ -381,33 +380,13 @@ export default class NetworkVisualization {
     return {
       zoomIn: () => {
         this.viewport.zoomPercent(0.15, true);
-        // Object.keys(this).forEach((k) => {
-        //   if (k.includes("labelContainer")) {
-        //     let child = this[k];
-        //     let scale = 0.1
-        //       if (child.scale.x >= 0.2) child.scale.set(child.scale.x - scale, child.scale.y - scale)
-        //   }
-        // })
       },
       zoomOut: () => {
         this.viewport.zoomPercent(-0.15, true);
-        // Object.keys(this).forEach((k) => {
-        //   if (k.includes("labelContainer")) {
-        //     let child = this[k];
-        //     let scale = 0.1
-        //     child.scale.set(child.scale.x + scale, child.scale.y + scale)
-        //   }
-        // })
       },
       reset: () => {
         this.viewport.fit();
-        this.viewport.moveCenter(this.width / 2, this.height / 2)
-        // Object.keys(this).forEach((k) => {
-        //   if (k.includes("labelContainer")) {
-        //     let child = this[k];
-        //     child.scale.set(1, 1)
-        //   }
-        // })
+        this.viewport.moveCenter(this.width / 2, this.height / 2);
       }
     }
   }
