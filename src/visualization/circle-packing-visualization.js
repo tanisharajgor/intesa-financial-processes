@@ -1,7 +1,6 @@
 import * as d3 from "d3";
 import * as PIXI from "pixi.js";
 import * as Global from "../utils/global";
-import graph from "../data/processed/nested/network2.json";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
 
@@ -26,7 +25,7 @@ export class CirclePackingDiagram {
   viewport;
   zoomedNodeId
 
-  constructor(data = graph, updateViewHoverValue) {
+  constructor(data, updateViewHoverValue) {
     this.data = data;
     this.zoomedNodeId = 0;
     this.currentNodeId = 0;
