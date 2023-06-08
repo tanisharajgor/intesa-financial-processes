@@ -259,15 +259,24 @@ return dataframe
 """
 def model_dm(data, raw_pth, processed_pth):
 
-    df = data.rename(columns={
-                                'MODEL NAME ITA': 'model',
+    df = data.rename(columns={'MODEL NAME ITA': 'model',
+                                'MODEL NAME ENG': 'english',
                                 'MODEL GUID': 'modelGUID'})
-    df = df[["model", "modelGUID"]].drop_duplicates() # drop duplicates
+    df = df[["english", "model", "modelGUID"]].drop_duplicates() # drop duplicates
+    df.model = df.model.replace(r'\n','', regex=True)
+    df.model = df.model.replace(r"'",'', regex=True)
+
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "model.csv")).rename(columns={'Italian': 'model'})
+    dfTranslated.model = dfTranslated.model.replace(r'\\n','', regex=True)
+    dfTranslated.model = dfTranslated.model.replace(r"'",'', regex=True)
+    dfTranslated.English = dfTranslated.English.replace(r'\\n','', regex=True)
+
     df = pd.merge(df, dfTranslated, on="model", how="left").drop("model", axis=1).rename(columns={'English': "model"})
     df = clean_strings(df, "model")
+    df.model = df.model.fillna(df.english) #several models are missing the italian translations, but have the english
     df = df[pd.isnull(df.model) == False]
-    df = num_id(df, "modelGUID")
+    df = num_id(df, "modelGUID", 10000000)
+    df = df.drop('english', axis = 1)
 
     ## Write the cleaned data out
     df.drop('modelGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'model' + ".csv"), index = False)
@@ -452,11 +461,12 @@ def risk_to_control_dm(controls, risks, control, processed_pth):
 """
 Main crosswalk
 """
-def main_dm(data, level1, level2, level3, activities, actors, risks, controls, activity_to_actor, activity_to_risk, risk_to_control):
+def main_dm(data, level1, level2, level3, model, activities, actors, risks, controls, activity_to_actor, activity_to_risk, risk_to_control):
 
     df = pd.merge(data, level1, how="left", on="level1GUID")
     df = pd.merge(df, level2, how="left", on="level2GUID")
     df = pd.merge(df, level3, how="left", on="level3GUID")
+    df = pd.merge(df, model, how="left", on="modelGUID")
     df = pd.merge(df, activities, how="left", on="activityGUID")
     df = pd.merge(df, actors, how="left", on="actorGUID")
 
