@@ -5,6 +5,8 @@ import * as d3 from 'd3';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { inspectHierarchySummary } from "../components/Inspect";
 import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
+import { QueryMenu } from "cfd-react-components";
+import FilterType from "../components/FilterType";
 
 const id = "circle-packing-chart";
 
@@ -12,6 +14,13 @@ export default function CirclePacking() {
 
     const [viewVariable, updateViewVariable] = useState("riskType");
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
+
+    // Possible set of activities/actors to choose from
+    const [possibleActivities, updateActivityType] = useState(['Control activity', 'Other activity']);
+
+    // User selected activities and actors
+    const [selectedActivities, updateActivities] = useState(possibleActivities);
+  
 
     const height = window.innerHeight;
     const width = window.innerWidth;
@@ -42,6 +51,9 @@ export default function CirclePacking() {
         <div className="Content">
             <Navigation/>
             <div style={{display: 'flex'}}>
+                <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
+                    <FilterType typesChecks={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
+                </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={onViewVariableChange} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
             </div>
         </div>
