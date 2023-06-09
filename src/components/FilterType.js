@@ -20,7 +20,7 @@ const StyledHeader = styled('div')`
     display: flex;
 `
 
-export default function FilterType({typesChecks, updateSelection, typeValues, filteredTypes, updateFilter, label}) {
+export default function FilterType({typesChecked, updateSelection, typeValues, filteredTypes, updateFilter, label}) {
 
     let newSelectedTypes = [];
     const [shouldRotate, setRotate] = useState(false);
@@ -29,15 +29,31 @@ export default function FilterType({typesChecks, updateSelection, typeValues, fi
 
     const updateSelectedRange = (selected) => {
 
-        if (typesChecks.includes(selected)) {
-            newSelectedTypes = typesChecks.filter((obj) => obj !== selected);
-            filteredTypes.push(selected);
-        } else {
-            typesChecks.push(selected)
-            newSelectedTypes = [...typesChecks];
-        }
-        updateFilter([...filteredTypes]);
-        updateSelection(newSelectedTypes);
+        newSelectedTypes.push(selected);
+
+        let typesUnchecked = typeValues.filter(x => !newSelectedTypes.includes(x));
+
+        // if (newSelectedTypes.includes(selected)) {
+        //     const index = newSelectedTypes.indexOf(selected);
+        //     if (index > -1) { // only splice array when item is found
+        //         newSelectedTypes.splice(index, 1); // 2nd parameter means remove one item only
+        //     }
+        // }
+
+
+        console.log(typesUnchecked)
+        // console.log(typesUnchecked)
+        console.log(newSelectedTypes)
+
+        // if (typesUnchecked.includes(selected)) {
+        //     newSelectedTypes = typesUnchecked.filter((obj) => obj !== selected);
+        //     filteredTypes.push(selected);
+        // } else {
+        //     typesUnchecked.push(selected)
+        //     newSelectedTypes = [...typesUnchecked];
+        // }
+        updateFilter([...newSelectedTypes]);
+        updateSelection(typesUnchecked);
     }
 
     return(
@@ -87,7 +103,7 @@ export default function FilterType({typesChecks, updateSelection, typeValues, fi
                                             <li key={index}>
                                                     <FormLabel
                                                     control={<Checkbox color="primary" 
-                                                    checked={typesChecks.includes(value)} 
+                                                    checked={typesChecked.includes(value)} 
                                                     name={value} 
                                                     onChange={() => updateSelectedRange(value)}
                                                     label={value}

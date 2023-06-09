@@ -64,7 +64,7 @@ export default function CirclePacking() {
             <Navigation/>
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
-                    <FilterType typesUnchecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} filteredTypes={filteredTypes} updateFilter={updateFilter} label="Filter by Activity Type"/>
+                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} filteredTypes={filteredTypes} updateFilter={updateFilter} label="Inspect by Activity Type"/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
             </div>
