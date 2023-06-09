@@ -4,10 +4,11 @@ import styled from "styled-components";
 
 const StyledStatus = styled('div')`
     position: fixed;
-    top: 10%;
+    top: 7rem;
     right: 2%;
-    width: ${props =>  props.theme.viewColWidth };
-    padding: ${props =>  props.theme.padding };
+    background-color: rgba(0,0,0,0.7);
+    width: ${ props =>  props.theme.viewColWidth };
+    padding: ${ props =>  props.theme.padding };
 `
 
 export default function Status({id, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue, controls}) {
