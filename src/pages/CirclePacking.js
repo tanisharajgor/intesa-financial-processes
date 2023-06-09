@@ -45,10 +45,10 @@ export default function CirclePacking() {
             <Navigation/>
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
-                    <Description text={`
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        `}/>
+                        <Description>
+                            <h4>Ecosystem</h4>
+                            <p>Click on the circles to zoom into the process visualization.</p>
+                        </Description>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={onViewVariableChange} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
             </div>

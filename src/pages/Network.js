@@ -102,12 +102,10 @@ export default function Network() {
             <Navigation />
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
-                    <Description 
-                        text={`
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        `}
-                    />
+                    <Description>
+                            <h4>Network</h4>
+                            <p>Filter data in the actor network graph to explore activities and risks.</p>
+                    </Description> 
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
                     <FilterType typesChecks={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
                     <FilterType typesChecks={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type"/>
