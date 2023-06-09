@@ -175,12 +175,19 @@ export default class NetworkVisualization {
 
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
+
     this.data.nodes.forEach((node) => {
 
       const rSize = node.viewId === "Actor" ? Global.rScale(node.viewType.nActivity): 5;
 
       node.gfx = new PIXI.Graphics();
-      node.gfx.beginFill(Global.applyColorScale(node, viewVariable));
+
+      if (node.viewId === "Actor") {
+        node.gfx.beginFill(0xcbcbcb);
+      } else {
+        node.gfx.beginFill(Global.applyColorScale(node, viewVariable));
+      }
+
       Global.symbolScalePixi(node, rSize);
 
       node.gfx.x = this.width * 0.5;
