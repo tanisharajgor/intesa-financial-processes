@@ -22,9 +22,6 @@ export default function CirclePacking() {
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(possibleActivities);
 
-    // 
-    const [filteredTypes, updateFilter] = useState([]);
-
     const height = window.innerHeight;
     const width = window.innerWidth;
 
@@ -39,7 +36,7 @@ export default function CirclePacking() {
 
     useEffect(() => {
         circlePackingDiagram.current.init(id);
-        circlePackingDiagram.current.draw(viewVariable, filteredTypes);
+        circlePackingDiagram.current.draw(viewVariable, selectedActivities);
     }, []);
 
     
@@ -53,18 +50,18 @@ export default function CirclePacking() {
 
 
     useEffect(() => {
-        circlePackingDiagram.current.updateDraw(viewVariable, filteredTypes);
+        circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities);
         let inspect = d3.select(".Inspect");
         inspectHierarchySummary(inspect, data);
         // updateViewVariable(updatedView);
-    }, [filteredTypes, viewVariable]);
+    }, [selectedActivities, viewVariable]);
 
     return(
         <div className="Content">
             <Navigation/>
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
-                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} filteredTypes={filteredTypes} updateFilter={updateFilter} label="Inspect by Activity Type"/>
+                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
             </div>

@@ -6,8 +6,6 @@ import styled from 'styled-components';
 import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
 
-// const ID = "Filter-Activity-Type";
-
 const StyledFilteredData = styled('span')`
     font-style: italic;
     text-color: ${props =>  props.theme.color.secondary };
@@ -20,40 +18,25 @@ const StyledHeader = styled('div')`
     display: flex;
 `
 
-export default function FilterType({typesChecked, updateSelection, typeValues, filteredTypes, updateFilter, label}) {
+export default function FilterType({typesChecked, updateSelection, typeValues, label}) {
 
     let newSelectedTypes = [];
+    const [filteredTypes, updateFilter] = useState([]);
     const [shouldRotate, setRotate] = useState(false);
 
     const handleRotate = () => setRotate(!shouldRotate);
 
     const updateSelectedRange = (selected) => {
-
-        newSelectedTypes.push(selected);
-
-        let typesUnchecked = typeValues.filter(x => !newSelectedTypes.includes(x));
-
-        // if (newSelectedTypes.includes(selected)) {
-        //     const index = newSelectedTypes.indexOf(selected);
-        //     if (index > -1) { // only splice array when item is found
-        //         newSelectedTypes.splice(index, 1); // 2nd parameter means remove one item only
-        //     }
-        // }
-
-
-        console.log(typesUnchecked)
-        // console.log(typesUnchecked)
-        console.log(newSelectedTypes)
-
-        // if (typesUnchecked.includes(selected)) {
-        //     newSelectedTypes = typesUnchecked.filter((obj) => obj !== selected);
-        //     filteredTypes.push(selected);
-        // } else {
-        //     typesUnchecked.push(selected)
-        //     newSelectedTypes = [...typesUnchecked];
-        // }
-        updateFilter([...newSelectedTypes]);
-        updateSelection(typesUnchecked);
+        if (typesChecked.includes(selected)) {
+            newSelectedTypes = typesChecked.filter((obj) => obj !== selected);
+            filteredTypes.push(selected)
+            updateFilter([...filteredTypes])
+        } else {
+            typesChecked.push(selected)
+            updateFilter(filteredTypes.filter((obj) => obj !== selected));
+            newSelectedTypes = [...typesChecked];
+        }
+        updateSelection(newSelectedTypes);
     }
 
     return(
@@ -66,7 +49,8 @@ export default function FilterType({typesChecked, updateSelection, typeValues, f
                 <StyledHeader>
                     <Key>
                         {
-                            filteredTypes.length <= 0 ? label : `${label}:`
+                            filteredTypes.length <= 0 ? label :
+                            `${label}:`
                         }
                     </Key>
                     <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
