@@ -213,7 +213,8 @@ def create_activities(main, applications):
 
 def create_network(data):
 
-    array = []
+    nodearray = []
+    linkarray = []
 
     data = data[pd.isnull(data.actorID) == False]
 
@@ -313,24 +314,45 @@ def create_network(data):
 
         linkData = pd.concat([linkData1, linkData2]).drop_duplicates()
 
+        deve = []
+        non_deve = []
+
         for j in range(0, linkData.shape[0]):
 
             row = {"source": int(linkData.source.iloc[j]),
-                   "target": int(linkData.target.iloc[j]),
-                   "connect_actor_activity": bool(linkData.iloc[j].Connection == "deve"),
-                   "id": str(linkData.source.iloc[j]) + "-" + str(linkData.target.iloc[j])}
+                   "target": int(linkData.target.iloc[j])
+                   #"id": str(linkData.source.iloc[j]) + "-" + str(linkData.target.iloc[j])
+                   }
+            
+            if linkData.iloc[j].Connection == "deve":
+                deve.append(row)
+            else:
+                non_deve.append(row)
 
-            links.append(row)
+        links = {
+            "deve": deve,
+            "non_deve": non_deve
+        }
 
-        network = {
+        node = {
             "id": int(i),
-            "nodes": nodes,
+            "nodes": nodes
+        }
+
+        link = {
+            "id": int(i),
             "links": links
         }
 
-        array.append(network)
+        nodearray.append(node)
+        linkarray.append(link)
 
-    return array
+    network = {
+        "nodes": nodearray,
+        "links": linkarray
+        }
+
+    return network
 
 def create_processes(main):
     l1Array = []
