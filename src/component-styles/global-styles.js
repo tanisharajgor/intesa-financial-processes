@@ -23,6 +23,7 @@ export const GlobalStyles = createGlobalStyle`
     font-size: ${props =>  props.theme.font.baseSize };
     line-height: ${props =>  props.theme.font.lineHeight };
     margin: 0px;
+    overflow: hidden;
   }
 
   .Card {
