@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { inspectHierarchySummary } from "../components/Inspect";
 import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
 import { QueryMenu } from "cfd-react-components";
-import FilterActivityType from "../components/FilterActivityType";
+import FilterType from "../components/FilterType";
 
 const id = "circle-packing-chart";
 
@@ -14,13 +14,17 @@ export default function CirclePacking() {
 
     const [viewVariable, updateViewVariable] = useState("riskType");
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
+    let typeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
 
     // Possible set of activities/actors to choose from
-    const [possibleActivities, updateActivityType] = useState(['Control activity', 'Other activity']);
+    const [possibleActivities, updateActivityType] = useState(typeValues);
 
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(possibleActivities);
-  
+
+    const [filteredTypes, updateFilter] = useState([]);
+
+    console.log(filteredTypes)
 
     const height = window.innerHeight;
     const width = window.innerWidth;
@@ -32,27 +36,26 @@ export default function CirclePacking() {
         .sum(d => 1)
         .sort((a, b) => b.value - a.value));
 
-    const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1), updateViewHoverValue))
+    const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1), updateViewHoverValue));
 
     useEffect(() => {
         circlePackingDiagram.current.init(id);
-        circlePackingDiagram.current.draw(viewVariable);
+        circlePackingDiagram.current.draw(viewVariable, selectedActivities);
     }, [])
 
-    const onViewVariableChange = useCallback((updatedView) => {
-        circlePackingDiagram.current.updateDraw(updatedView)
-
+    const onViewVariableChange = useCallback((updatedView, selectedActivities) => {
+        circlePackingDiagram.current.updateDraw(updatedView, selectedActivities)
         let inspect = d3.select(".Inspect");
         inspectHierarchySummary(inspect, data);
-        updateViewVariable(updatedView)
-    }, [])
+        updateViewVariable(updatedView);
+    }, [selectedActivities]);
 
     return(
         <div className="Content">
             <Navigation/>
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
-                    <FilterActivityType typesChecks={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
+                    <FilterType typesChecks={selectedActivities} updateSelection={updateActivities} typeValues={typeValues} filteredTypes={filteredTypes} updateFilter={updateFilter} label="Filter by Activity Type"/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={onViewVariableChange} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
             </div>

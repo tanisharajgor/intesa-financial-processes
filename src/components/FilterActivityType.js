@@ -5,8 +5,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
-
-// const ID = "Filter-Activity-Type";
+import lu from '../data/processed/nested/lu.json';
 
 const StyledFilteredData = styled('span')`
     font-style: italic;
@@ -20,7 +19,9 @@ const StyledHeader = styled('div')`
     display: flex;
 `
 
-export default function FilterActivityType({typesChecks, updateSelection, typeValues, label}) {
+export default function FilterActivityType({typesChecks, updateSelection, label}) {
+
+    let typeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
 
     let newSelectedTypes = [];
     const [filteredTypes, updateFilter] = useState([])

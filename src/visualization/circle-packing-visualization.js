@@ -91,13 +91,14 @@ export class CirclePackingDiagram {
   
   // Drawing functions ------------------------------------------------------
   
-  draw(viewVariable) {
-    this.drawNodes(viewVariable);
+  draw(viewVariable, selectedActivities) {
+    this.drawNodes(viewVariable, selectedActivities);
   }
 
   // Initializes the nodes
-  drawNodes(viewVariable) {
+  drawNodes(viewVariable, selectedActivities) {
 
+    console.log(selectedActivities)
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
 
@@ -177,7 +178,6 @@ export class CirclePackingDiagram {
   }
 
   getZoomWidth = (node) => {
-
     const scale =  d3.scaleLinear()
       .range([1, 20])
       .domain([0, 4]);
@@ -212,9 +212,9 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable) {
+  updateDraw(viewVariable, selectedActivities) {
     this.destroyNodes();
-    this.drawNodes(viewVariable);
+    this.drawNodes(viewVariable, selectedActivities);
   }
 
     // Controls ------------------------------------------------------

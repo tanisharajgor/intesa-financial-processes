@@ -20,24 +20,23 @@ const StyledHeader = styled('div')`
     display: flex;
 `
 
-export default function FilterType({typesChecks, updateSelection, typeValues, label}) {
+export default function FilterType({typesChecks, updateSelection, typeValues, filteredTypes, updateFilter, label}) {
 
     let newSelectedTypes = [];
-    const [filteredTypes, updateFilter] = useState([])
     const [shouldRotate, setRotate] = useState(false);
 
     const handleRotate = () => setRotate(!shouldRotate);
 
     const updateSelectedRange = (selected) => {
+
         if (typesChecks.includes(selected)) {
             newSelectedTypes = typesChecks.filter((obj) => obj !== selected);
-            filteredTypes.push(selected)
-            updateFilter([...filteredTypes])
+            filteredTypes.push(selected);
         } else {
             typesChecks.push(selected)
-            updateFilter(filteredTypes.filter((obj) => obj !== selected));
             newSelectedTypes = [...typesChecks];
         }
+        updateFilter([...filteredTypes]);
         updateSelection(newSelectedTypes);
     }
 
