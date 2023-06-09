@@ -175,3 +175,5 @@ export function filterLinksTargetToSource(data, ids) {
 
     return links;
 }
+
+export const activityTypeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];

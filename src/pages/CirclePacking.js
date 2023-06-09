@@ -7,6 +7,7 @@ import { inspectHierarchySummary } from "../components/Inspect";
 import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
 import { QueryMenu } from "cfd-react-components";
 import FilterType from "../components/FilterType";
+import { activityTypeValues } from "../utils/global";
 
 const id = "circle-packing-chart";
 
@@ -14,10 +15,9 @@ export default function CirclePacking() {
 
     const [viewVariable, updateViewVariable] = useState("riskType");
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
-    let typeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
 
     // Possible set of activities/actors to choose from
-    const [possibleActivities, updateActivityType] = useState(typeValues);
+    const [possibleActivities, updateActivityType] = useState(activityTypeValues);
 
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(possibleActivities);
@@ -40,10 +40,10 @@ export default function CirclePacking() {
     useEffect(() => {
         circlePackingDiagram.current.init(id);
         circlePackingDiagram.current.draw(viewVariable, filteredTypes);
-    }, [])
+    }, []);
 
     const onViewVariableChange = useCallback((updatedView, filteredTypes) => {
-        circlePackingDiagram.current.updateDraw(updatedView, filteredTypes)
+        circlePackingDiagram.current.updateDraw(updatedView, filteredTypes);
         let inspect = d3.select(".Inspect");
         inspectHierarchySummary(inspect, data);
         updateViewVariable(updatedView);
