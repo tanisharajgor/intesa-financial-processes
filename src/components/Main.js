@@ -11,6 +11,8 @@ const Visualization = styled('div')`
     width: 100%;
     height: 100vh;
     background-color: black;
+    overflow-x: hidden;
+    overflow-y: hidden;
 `
 export default function Main({viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue, id, controls}) {
 
