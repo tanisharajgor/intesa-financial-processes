@@ -6,8 +6,6 @@ import styled from 'styled-components';
 import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
 
-const ID = "Filter-Activity-Type";
-
 const StyledFilteredData = styled('span')`
     font-style: italic;
     text-color: ${props =>  props.theme.color.secondary };
@@ -20,23 +18,23 @@ const StyledHeader = styled('div')`
     display: flex;
 `
 
-export default function FilterType({typesChecks, updateSelection, typeValues, label}) {
+export default function FilterType({typesChecked, updateSelection, typeValues, label}) {
 
     let newSelectedTypes = [];
-    const [filteredTypes, updateFilter] = useState([])
+    const [filteredTypes, updateFilter] = useState([]);
     const [shouldRotate, setRotate] = useState(false);
 
     const handleRotate = () => setRotate(!shouldRotate);
 
     const updateSelectedRange = (selected) => {
-        if (typesChecks.includes(selected)) {
-            newSelectedTypes = typesChecks.filter((obj) => obj !== selected);
+        if (typesChecked.includes(selected)) {
+            newSelectedTypes = typesChecked.filter((obj) => obj !== selected);
             filteredTypes.push(selected)
             updateFilter([...filteredTypes])
         } else {
-            typesChecks.push(selected)
+            typesChecked.push(selected)
             updateFilter(filteredTypes.filter((obj) => obj !== selected));
-            newSelectedTypes = [...typesChecks];
+            newSelectedTypes = [...typesChecked];
         }
         updateSelection(newSelectedTypes);
     }
@@ -89,7 +87,7 @@ export default function FilterType({typesChecks, updateSelection, typeValues, la
                                             <li key={index}>
                                                     <FormLabel
                                                     control={<Checkbox color="primary" 
-                                                    checked={typesChecks.includes(value)} 
+                                                    checked={typesChecked.includes(value)} 
                                                     name={value} 
                                                     onChange={() => updateSelectedRange(value)}
                                                     label={value}
