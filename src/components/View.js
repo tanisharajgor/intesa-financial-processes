@@ -1,4 +1,4 @@
-import { Form, Select, MenuItem } from "cfd-react-components";
+import { Form, MenuItem } from "cfd-react-components";
 import * as Global from "../utils/global";
 import * as d3 from 'd3';
 import { useEffect } from "react";
@@ -11,6 +11,7 @@ let colorScale;
 
 let riskLegendId = "Risk-Legend";
 let shapeLegendId = "Shape-Legend";
+let lineLegendId = "Line-Legend";
 
 const shapeData = [{"viewId": "Actor"},
                    {"viewId": "Control activity"},
@@ -20,6 +21,9 @@ const shapeData = [{"viewId": "Actor"},
 const shapeData2 = [{"viewId": "Process"},
                     {"viewId": "Control activity"},
                     {"viewId": "Other activity"}];
+
+const lineData = [{"type": "Connection", "line": "solid"},
+                  {"type": "Non connection", "line": "dashed"}];
 
 function drawRiskLegend(t, viewHoverValue, networkChart) {
 
@@ -180,6 +184,51 @@ function updateShapeLegend(networkChart, symbolHoverValue) {
     drawShapeLegend(networkChart, symbolHoverValue);
 }
 
+// Initialized the Line Legend SVG
+function initLineLegend() {
+
+    let h = height + (lineData.length + 1)*20;
+
+    d3.select(`#${lineLegendId}`)
+        .append("svg")
+        .attr("width", width)
+        .attr("height", h);
+
+    drawLineLegend();
+}
+
+// Draws the Line Legend
+function drawLineLegend() {
+
+    let svg = d3.select(`#${lineLegendId} svg`);
+
+    svg.selectAll("line")
+    .data(lineData, d => d.viewId)
+    .join(
+        enter => enter
+        .append("line")
+        .style("stroke", "grey")
+        .attr("x1", 5)
+        .attr("y1", (d, i) => i*23 + 15)
+        .attr("x2", 20)
+        .attr("y2", (d, i) => i*23 + 15)
+        .attr("class", d => d.line)
+    );
+
+    svg
+        .selectAll("text")
+        .data(lineData, d => d.type)
+        .join(
+            enter  => enter
+                .append("text")
+                .attr("x", 25)
+                .attr("y", (d, i) => i*23 + 20)
+                .attr("fill", "#cbcbcb")
+                .attr("font-size", 12)
+                .text(d => d.type)
+        );
+}
+
 function shapeType() {
     return(
         <div className="layout_row">
@@ -188,6 +237,18 @@ function shapeType() {
             </span>
             <span className="layout_item"></span>
             <div id={shapeLegendId}></div>
+        </div>
+    )
+}
+
+function lineType() {
+    return(
+        <div className="layout_row">
+            <span className="layout_item key">
+                Line
+            </span>
+            <span className="layout_item"></span>
+            <div id={lineLegendId}></div>
         </div>
     )
 }
@@ -206,6 +267,7 @@ function viewInfo(networkChart) {
         <div className="inner">
             <div className="layout_group inline">
                 {shapeType()}
+                {networkChart? lineType(): <></>}
                 {riskType()}
             </div>
         </div>
@@ -226,8 +288,9 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
     // Initiate legends
     useEffect(() => {
         initShapeLegend(networkChart, symbolHoverValue);
+        initLineLegend();
         initRiskLegend(viewVariable, viewHoverValue, networkChart);
-    }, [])
+    }, []);
 
     // Update the shape legend
     useEffect(() => {
