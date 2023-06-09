@@ -9,6 +9,7 @@ import NetworkVisualization from "../visualization/network-visualization";
 import * as Global from "../utils/global";
 import { inspectNetworkSummary } from "../components/Inspect";
 import * as d3 from 'd3';
+import Description from "../components/Description";
 
 const id = "network-chart";
 let colorScale;
@@ -101,6 +102,12 @@ export default function Network() {
             <Navigation />
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
+                    <Description 
+                        text={`
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        `}
+                    />
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
                     <FilterType typesChecks={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
                     <FilterType typesChecks={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type"/>
