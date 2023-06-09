@@ -17,7 +17,7 @@ export default function CirclePacking() {
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
 
     // Possible set of activities/actors to choose from
-    const [possibleActivities, updateActivityType] = useState(activityTypeValues);
+    const possibleActivities = activityTypeValues;
 
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(possibleActivities);
@@ -36,7 +36,7 @@ export default function CirclePacking() {
 
     useEffect(() => {
         circlePackingDiagram.current.init(id);
-        circlePackingDiagram.current.draw(viewVariable, selectedActivities);
+        circlePackingDiagram.current.draw(viewVariable);
     }, []);
 
     

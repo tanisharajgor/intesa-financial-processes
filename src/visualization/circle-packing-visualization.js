@@ -111,9 +111,7 @@ export class CirclePackingDiagram {
     }
   }  
   
-  draw(viewVariable, selectedActivities) {
-
-    this.selectedActivities = selectedActivities;
+  draw(viewVariable) {
     this.drawNodes(viewVariable);
   }
 
@@ -236,7 +234,6 @@ export class CirclePackingDiagram {
   }
 
   updateDraw(viewVariable, selectedActivities) {
-
     this.selectedActivities = selectedActivities;
     this.destroyNodes();
     this.drawNodes(viewVariable);
