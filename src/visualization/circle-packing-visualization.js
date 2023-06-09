@@ -4,10 +4,6 @@ import * as Global from "../utils/global";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
 
-const opacityScale = d3.scaleOrdinal()
-  .domain([0, 1, 2, 3, 4])
-  .range([.05, .3, .4, .5, .9]);
-
 const lineWidth = d3.scaleOrdinal()
   .domain([0, 1, 2, 3, 4])
   .range([.5, .5, .5, .5, 0]);
@@ -30,6 +26,7 @@ export class CirclePackingDiagram {
     this.zoomedNodeId = 0;
     this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
+    this.selectedActivities = [];
   }
 
   // Initializes the application
@@ -90,13 +87,38 @@ export class CirclePackingDiagram {
   }
   
   // Drawing functions ------------------------------------------------------
+
+  opacityScale(node) {
+
+    const scale = d3.scaleOrdinal()
+      .domain([0, 1, 2, 3, 4])
+      .range([.05, .3, .4, .5, .9]);
   
-  draw(viewVariable, filteredTypes) {
-    this.drawNodes(viewVariable, filteredTypes);
+    if (this.selectedActivities.length === 0) {
+      node.gfx.alpha = scale(node.data.treeLevel);
+    } else {
+  
+      if (node.data.treeLevel < 4) {
+        node.gfx.alpha = .1;
+      } else {
+  
+        if (this.selectedActivities.includes(node.data.activityType)) {
+          node.gfx.alpha = 1;
+        } else {
+          node.gfx.alpha = .1;
+        }
+      }
+    }
+  }  
+  
+  draw(viewVariable, selectedActivities) {
+
+    this.selectedActivities = selectedActivities;
+    this.drawNodes(viewVariable);
   }
 
   // Initializes the nodes
-  drawNodes(viewVariable, filteredTypes) {
+  drawNodes(viewVariable) {
 
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
@@ -108,21 +130,8 @@ export class CirclePackingDiagram {
       node.gfx.lineWidth = 1;
       node.gfx.beginFill(Global.applyColorScale(node.data, viewVariable));
 
-      if (filteredTypes.length === 0) {
-        node.gfx.alpha = opacityScale(node.data.treeLevel);
-      } else {
+      this.opacityScale(node);
 
-        if (node.data.treeLevel < 4) {
-          node.gfx.alpha = .1;
-        } else {
-
-          if (filteredTypes.includes(node.data.activityType)) {
-            node.gfx.alpha = 1;
-          } else {
-            node.gfx.alpha = .1;
-          }
-        }
-      }
       Global.symbolScalePixi(node, node.r);
       node.gfx.endFill();
 
@@ -172,9 +181,9 @@ export class CirclePackingDiagram {
   }
 
   pointerOut(node, event) {
-      node.gfx.alpha = opacityScale(node.data.treeLevel);
-      this.tooltip.style("visibility", "hidden");
-      this.updateViewHoverValue(undefined);
+    this.opacityScale(node);
+    this.tooltip.style("visibility", "hidden");
+    this.updateViewHoverValue(undefined);
   }
 
   getCenter = (node) => {
@@ -226,9 +235,11 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable, filteredTypes) {
+  updateDraw(viewVariable, selectedActivities) {
+
+    this.selectedActivities = selectedActivities;
     this.destroyNodes();
-    this.drawNodes(viewVariable, filteredTypes);
+    this.drawNodes(viewVariable);
   }
 
     // Controls ------------------------------------------------------
