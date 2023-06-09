@@ -22,9 +22,8 @@ export default function CirclePacking() {
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(possibleActivities);
 
+    // 
     const [filteredTypes, updateFilter] = useState([]);
-
-    console.log(filteredTypes)
 
     const height = window.innerHeight;
     const width = window.innerWidth;
@@ -40,15 +39,15 @@ export default function CirclePacking() {
 
     useEffect(() => {
         circlePackingDiagram.current.init(id);
-        circlePackingDiagram.current.draw(viewVariable, selectedActivities);
+        circlePackingDiagram.current.draw(viewVariable, filteredTypes);
     }, [])
 
-    const onViewVariableChange = useCallback((updatedView, selectedActivities) => {
-        circlePackingDiagram.current.updateDraw(updatedView, selectedActivities)
+    const onViewVariableChange = useCallback((updatedView, filteredTypes) => {
+        circlePackingDiagram.current.updateDraw(updatedView, filteredTypes)
         let inspect = d3.select(".Inspect");
         inspectHierarchySummary(inspect, data);
         updateViewVariable(updatedView);
-    }, [selectedActivities]);
+    }, [filteredTypes]);
 
     return(
         <div className="Content">

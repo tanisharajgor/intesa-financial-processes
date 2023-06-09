@@ -91,14 +91,14 @@ export class CirclePackingDiagram {
   
   // Drawing functions ------------------------------------------------------
   
-  draw(viewVariable, selectedActivities) {
-    this.drawNodes(viewVariable, selectedActivities);
+  draw(viewVariable, filteredTypes) {
+    this.drawNodes(viewVariable, filteredTypes);
   }
 
   // Initializes the nodes
-  drawNodes(viewVariable, selectedActivities) {
+  drawNodes(viewVariable, filteredTypes) {
 
-    console.log(selectedActivities)
+    console.log(filteredTypes)
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
 
@@ -108,12 +108,28 @@ export class CirclePackingDiagram {
       node.gfx.lineStyle(lineWidth(node.data.treeLevel), 0xFFFFFF, 1);
       node.gfx.lineWidth = 1;
       node.gfx.beginFill(Global.applyColorScale(node.data, viewVariable));
+
+
+      if (filteredTypes.length === 0) {
+        node.gfx.alpha = opacityScale(node.data.treeLevel);
+      } else {
+
+        if (node.data.treeLevel < 4) {
+          node.gfx.alpha = .3;
+        } else {
+
+          if (filteredTypes.includes(node.data.activityType)) {
+            node.gfx.alpha = 1;
+          } else {
+            node.data.alpha = .3;
+          }
+        }
+      }
       Global.symbolScalePixi(node, node.r);
       node.gfx.endFill();
 
       node.gfx.x = node.x;
       node.gfx.y = node.y;
-      node.gfx.alpha = opacityScale(node.data.treeLevel);
       node.gfx.interactive = true;
       node.gfx.buttonMode = true;
       node.gfx.cursor = 'zoom-in';
@@ -212,9 +228,9 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable, selectedActivities) {
+  updateDraw(viewVariable, filteredTypes) {
     this.destroyNodes();
-    this.drawNodes(viewVariable, selectedActivities);
+    this.drawNodes(viewVariable, filteredTypes);
   }
 
     // Controls ------------------------------------------------------
