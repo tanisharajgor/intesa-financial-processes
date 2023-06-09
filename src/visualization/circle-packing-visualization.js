@@ -3,6 +3,7 @@ import * as PIXI from "pixi.js";
 import * as Global from "../utils/global";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
+import { activityTypeValues } from "../utils/global";
 
 const lineWidth = d3.scaleOrdinal()
   .domain([0, 1, 2, 3, 4])
@@ -234,7 +235,7 @@ export class CirclePackingDiagram {
   }
 
   updateDraw(viewVariable, selectedActivities) {
-    this.selectedActivities = selectedActivities;
+    this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
     this.destroyNodes();
     this.drawNodes(viewVariable);
   }
