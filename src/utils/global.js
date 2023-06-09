@@ -4,8 +4,8 @@ export const palette = [0x1f77b4, 0xff7f0e, 0x2ca02c, 0xd62728, 0x9467bd, 0x8c56
     0xe377c2, 0xbcbd22, 0x17becf, 0xaec7e8, 0xffbb78, 0x98df8a, 0xff9896, 
     0xc5b0d5, 0xc49c94, 0xf7b6d2, 0xc7c7c7, 0xdbdb8d, 0x9edae5];
 
-export const naColor = 0xD7D7D7;
-export const naColorHex = "#D7D7D7";
+export const naColor = 0x777777;
+export const naColorHex = "#777777";
 
 export const viewVariables = {
 
