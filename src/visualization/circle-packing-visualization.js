@@ -98,7 +98,6 @@ export class CirclePackingDiagram {
   // Initializes the nodes
   drawNodes(viewVariable, filteredTypes) {
 
-    console.log(filteredTypes)
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
 
@@ -109,19 +108,18 @@ export class CirclePackingDiagram {
       node.gfx.lineWidth = 1;
       node.gfx.beginFill(Global.applyColorScale(node.data, viewVariable));
 
-
       if (filteredTypes.length === 0) {
         node.gfx.alpha = opacityScale(node.data.treeLevel);
       } else {
 
         if (node.data.treeLevel < 4) {
-          node.gfx.alpha = .3;
+          node.gfx.alpha = .1;
         } else {
 
           if (filteredTypes.includes(node.data.activityType)) {
             node.gfx.alpha = 1;
           } else {
-            node.data.alpha = .3;
+            node.gfx.alpha = .1;
           }
         }
       }
