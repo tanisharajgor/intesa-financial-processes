@@ -206,13 +206,13 @@ function drawLineLegend() {
     .data(lineData, d => d.viewId)
     .join(
         enter => enter
-        .append("line")
-        .style("stroke", "grey")
-        .attr("x1", 5)
-        .attr("y1", (d, i) => i*23 + 15)
-        .attr("x2", 20)
-        .attr("y2", (d, i) => i*23 + 15)
-        .attr("class", d => d.line)
+            .append("line")
+            .style("stroke", "grey")
+            .attr("x1", 5)
+            .attr("y1", (d, i) => i*23 + 15)
+            .attr("x2", 20)
+            .attr("y2", (d, i) => i*23 + 15)
+            .style("stroke-dasharray", (d) => d.line === "dashed"? "5,5": "1,0")
     );
 
     svg
