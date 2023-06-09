@@ -10,6 +10,7 @@ import NetworkVisualization from "../visualization/network-visualization";
 import * as Global from "../utils/global";
 import { inspectNetworkSummary } from "../components/Inspect";
 import * as d3 from 'd3';
+import Description from "../components/Description";
 
 const id = "network-chart";
 
@@ -126,6 +127,10 @@ export default function Network() {
             <Navigation />
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
+                    <Description>
+                            <h4>Network</h4>
+                            <p>Filter data in the actor network graph to explore activities and risks.</p>
+                    </Description> 
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
                     <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type"/>

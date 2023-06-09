@@ -8,6 +8,7 @@ import { CirclePackingDiagram } from "../visualization/circle-packing-visualizat
 import { QueryMenu } from "cfd-react-components";
 import FilterType from "../components/FilterType";
 import { activityTypeValues } from "../utils/global";
+import Description from "../components/Description";
 
 const id = "circle-packing-chart";
 
@@ -39,7 +40,6 @@ export default function CirclePacking() {
         circlePackingDiagram.current.draw(viewVariable);
     }, []);
 
-    
     // const onViewVariableChange = useCallback((updatedView) => {
     //     circlePackingDiagram.current.updateDraw(updatedView)
 
@@ -47,7 +47,6 @@ export default function CirclePacking() {
     //     inspectHierarchySummary(inspect, data);
     //     updateViewVariable(updatedView)
     // }, [])
-
 
     useEffect(() => {
         circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities);
@@ -61,6 +60,10 @@ export default function CirclePacking() {
             <Navigation/>
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
+                    <Description>
+                            <h4>Ecosystem</h4>
+                            <p>Click on the circles to zoom into the process visualization.</p>
+                        </Description>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
