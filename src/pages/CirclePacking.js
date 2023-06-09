@@ -42,21 +42,31 @@ export default function CirclePacking() {
         circlePackingDiagram.current.draw(viewVariable, filteredTypes);
     }, []);
 
-    const onViewVariableChange = useCallback((updatedView, filteredTypes) => {
-        circlePackingDiagram.current.updateDraw(updatedView, filteredTypes);
+    
+    // const onViewVariableChange = useCallback((updatedView) => {
+    //     circlePackingDiagram.current.updateDraw(updatedView)
+
+    //     let inspect = d3.select(".Inspect");
+    //     inspectHierarchySummary(inspect, data);
+    //     updateViewVariable(updatedView)
+    // }, [])
+
+
+    useEffect(() => {
+        circlePackingDiagram.current.updateDraw(viewVariable, filteredTypes);
         let inspect = d3.select(".Inspect");
         inspectHierarchySummary(inspect, data);
-        updateViewVariable(updatedView);
-    }, [filteredTypes]);
+        // updateViewVariable(updatedView);
+    }, [filteredTypes, viewVariable]);
 
     return(
         <div className="Content">
             <Navigation/>
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
-                    <FilterType typesChecks={selectedActivities} updateSelection={updateActivities} typeValues={typeValues} filteredTypes={filteredTypes} updateFilter={updateFilter} label="Filter by Activity Type"/>
+                    <FilterType typesChecks={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} filteredTypes={filteredTypes} updateFilter={updateFilter} label="Filter by Activity Type"/>
                 </QueryMenu>
-                <Main viewVariable={viewVariable} updateViewVariable={onViewVariableChange} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
+                <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
             </div>
         </div>
     )
