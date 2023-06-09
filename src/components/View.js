@@ -22,8 +22,8 @@ const shapeData2 = [{"viewId": "Process"},
                     {"viewId": "Control activity"},
                     {"viewId": "Other activity"}];
 
-const lineData = [{"type": "Connection", "line": "solid"},
-                  {"type": "Non connection", "line": "dashed"}];
+const lineData = [{"type": "Responsible for", "line": "solid"},
+                  {"type": "Links to", "line": "dashed"}];
 
 function drawRiskLegend(t, viewHoverValue, networkChart) {
 
