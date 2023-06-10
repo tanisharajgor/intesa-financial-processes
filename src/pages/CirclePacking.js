@@ -61,9 +61,9 @@ export default function CirclePacking() {
             <div style={{display: 'flex'}}>
                 <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
                     <Description>
-                            <h4>Ecosystem</h4>
-                            <p>Click on the circles to zoom into the process visualization.</p>
-                        </Description>
+                      <h4>Ecosystem</h4>
+                      <p>Click on the circles to zoom into the process visualization.</p>
+                    </Description>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
