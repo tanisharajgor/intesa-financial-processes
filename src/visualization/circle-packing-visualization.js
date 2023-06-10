@@ -3,10 +3,7 @@ import * as PIXI from "pixi.js";
 import * as Global from "../utils/global";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
-
-const opacityScale = d3.scaleOrdinal()
-  .domain([0, 1, 2, 3, 4])
-  .range([.05, .3, .4, .5, .9]);
+import { activityTypeValues } from "../utils/global";
 
 const lineWidth = d3.scaleOrdinal()
   .domain([0, 1, 2, 3, 4])
@@ -30,6 +27,7 @@ export class CirclePackingDiagram {
     this.zoomedNodeId = 0;
     this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
+    this.selectedActivities = [];
   }
 
   // Initializes the application
@@ -90,6 +88,29 @@ export class CirclePackingDiagram {
   }
   
   // Drawing functions ------------------------------------------------------
+
+  opacityScale(node) {
+
+    const scale = d3.scaleOrdinal()
+      .domain([0, 1, 2, 3, 4])
+      .range([.05, .3, .4, .5, .9]);
+  
+    if (this.selectedActivities.length === 0) {
+      node.gfx.alpha = scale(node.data.treeLevel);
+    } else {
+  
+      if (node.data.treeLevel < 4) {
+        node.gfx.alpha = .1;
+      } else {
+  
+        if (this.selectedActivities.includes(node.data.activityType)) {
+          node.gfx.alpha = 1;
+        } else {
+          node.gfx.alpha = .1;
+        }
+      }
+    }
+  }  
   
   draw(viewVariable) {
     this.drawNodes(viewVariable);
@@ -107,12 +128,14 @@ export class CirclePackingDiagram {
       node.gfx.lineStyle(lineWidth(node.data.treeLevel), 0xFFFFFF, 1);
       node.gfx.lineWidth = 1;
       node.gfx.beginFill(Global.applyColorScale(node.data, viewVariable));
+
+      this.opacityScale(node);
+
       Global.symbolScalePixi(node, node.r);
       node.gfx.endFill();
 
       node.gfx.x = node.x;
       node.gfx.y = node.y;
-      node.gfx.alpha = opacityScale(node.data.treeLevel);
       node.gfx.interactive = true;
       node.gfx.buttonMode = true;
       node.gfx.cursor = 'zoom-in';
@@ -157,9 +180,9 @@ export class CirclePackingDiagram {
   }
 
   pointerOut(node, event) {
-      node.gfx.alpha = opacityScale(node.data.treeLevel);
-      this.tooltip.style("visibility", "hidden");
-      this.updateViewHoverValue(undefined);
+    this.opacityScale(node);
+    this.tooltip.style("visibility", "hidden");
+    this.updateViewHoverValue(undefined);
   }
 
   getCenter = (node) => {
@@ -177,7 +200,6 @@ export class CirclePackingDiagram {
   }
 
   getZoomWidth = (node) => {
-
     const scale =  d3.scaleLinear()
       .range([1, 20])
       .domain([0, 4]);
@@ -212,7 +234,8 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable) {
+  updateDraw(viewVariable, selectedActivities) {
+    this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
     this.destroyNodes();
     this.drawNodes(viewVariable);
   }

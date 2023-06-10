@@ -116,7 +116,7 @@ export default function Network() {
     useEffect(() => {
         updateActivityType(possibleActivities);
         updateActorType(possibleActors);
-    }, [selectedLevel3ID])
+    }, [selectedLevel3ID]);
 
     useEffect(() => {
         networkDiagram.current.updateDraw(viewVariable);
@@ -132,8 +132,8 @@ export default function Network() {
                             <p>Filter data in the actor network graph to explore activities and risks.</p>
                     </Description> 
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
-                    <FilterType typesChecks={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
-                    <FilterType typesChecks={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type"/>
+                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
+                    <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type"/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} id={id} controls={networkDiagram.current.getControls()}/>        
             </div>        

@@ -61,6 +61,6 @@ def create_lu(df, var_id, var_descr, sort = False):
         if descr != 'nan':
 
             array.append({"id": int(dr[var_id]), 
-                        "descr": descr})
+                          "descr": descr})
 
     return array
