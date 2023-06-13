@@ -15,12 +15,13 @@ export class CirclePackingDiagram {
   data;
   height;
   inspect;
+  label;
   nodes;
   rootDOM;
   tooltip;
   width;
   viewport;
-  zoomedNodeId
+  zoomedNodeId;
 
   constructor(data, updateViewHoverValue) {
     this.data = data;
@@ -59,7 +60,7 @@ export class CirclePackingDiagram {
       passiveWheel: false,
       interaction: this.app.renderer.plugins.interaction, // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
       events: this.app.renderer.events
-      });
+    });
 
     this.viewport
       .pinch({ percent: 1 })
@@ -88,7 +89,6 @@ export class CirclePackingDiagram {
   }
   
   // Drawing functions ------------------------------------------------------
-
   opacityScale(node) {
 
     const scale = d3.scaleOrdinal()
@@ -110,10 +110,11 @@ export class CirclePackingDiagram {
         }
       }
     }
-  }  
+  }
   
-  draw(viewVariable) {
+  draw(viewVariable, selector) {
     this.drawNodes(viewVariable);
+    this.drawLabels(selector);
   }
 
   // Initializes the nodes
@@ -157,6 +158,45 @@ export class CirclePackingDiagram {
     this.viewport.addChild(this.containerNodes);
   }
   
+  drawLabels(selector) {
+
+    // this.label = d3.select(`#${selector}`)
+    //   // .append("g")
+    //     .style("font", "10px sans-serif")
+    //     // .attr("pointer-events", "none")
+    //     // .attr("text-anchor", "middle")
+    //   .selectAll("text")
+    //   .data(this.data.filter(node => node.data.treeLevel < 4))
+    //   .join("text")
+    //     // .style("fill-opacity", d => d.data.treeLevel === 1 ? 1 : 0)
+    //     // .style("display", d => d.data.treeLevel === 1 ? "inline" : "none")
+    //     .attr("class", "label")
+    //     // .attr("transform", d => `translate(${d.gfx.x},${d.gfx.y})`)
+    //     .style("top", d => `${this.width - d.gfx.x}px`)
+    //     .style("left", d => `${this.height - d.gfx.y}px`)
+    //     .text(d => d.data.name)
+    //     .style("fill", "white");
+    
+
+      this.label = this.data.filter(node => node.data.treeLevel === 1)
+        .forEach(node => {
+
+          let x = this.width - node.gfx.x - node.r;
+          let y = this.height - node.gfx.y - node.r;
+
+          d3.select(`#${selector}`)
+            .append("div")
+            .attr("class", "label")
+            .style("position", "absolute")
+            .style("top", `${y}px`)
+            .style("left", `${x}px`)
+            .style("text-align", "center")
+            .style("vertical-align", "middle")
+            // .style("fill-opacity", node.data.treeLevel === 1 ? 1 : 0)
+            .html(node.data.name);
+        });
+  }
+
   // Updating the draw functions on mouse interaction ------------------------------------------------------
 
   tooltipText(d) {
@@ -187,17 +227,33 @@ export class CirclePackingDiagram {
 
   getCenter = (node) => {
     if (this.currentNodeId === this.zoomedNodeId) {
-      node.gfx.cursor = "zoom-in"
+      node.gfx.cursor = "zoom-in";
+
       if (node.depth === 1 ) {
+        
+        this.label.attr("transform", d => `translate(${this.viewport.worldWidth / 2},${  this.viewport.worldHeight / 2})`)
         return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
       } else {
-        node.parent.gfx.cursor = "zoom-out"
+        node.parent.gfx.cursor = "zoom-out";
+        this.label.attr("transform", d => `translate(${this.width - node.parent.x},${ this.height - node.parent.y})`)
         return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
       }
+
     } else {
-        return new PIXI.Point(this.width - node.x, this.height - node.y)
+        this.label.attr("transform", d => `translate(${this.width - node.x},${this.height - node.y})`)
+        return new PIXI.Point(this.width - node.x, this.height - node.y);
     }
   }
+
+  // label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
+  //   node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
+  //   node.attr("r", d => d.r * k);
+
+  // this.label
+  //     .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+  //       .style("fill-opacity", d => d.parent === focus ? 1 : 0)
+  //       .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+  //       .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
 
   getZoomWidth = (node) => {
     const scale =  d3.scaleLinear()
@@ -213,9 +269,7 @@ export class CirclePackingDiagram {
 
   onClick(node) {
     this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
-
-    node.gfx.cursor = "zoom-out"
-
+    node.gfx.cursor = "zoom-out";
     const zoomScale = this.getZoomWidth(node);
     const centerPoint = this.getCenter(node);
 

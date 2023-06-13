@@ -23,8 +23,10 @@ export default function CirclePacking() {
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(possibleActivities);
 
-    const height = window.innerHeight;
-    const width = window.innerWidth;
+    const margin = {left: 50, right: 50, top: 15, bottom: 25};
+
+    const height = window.innerHeight - margin.top - margin.bottom;
+    const width = window.innerWidth - margin.left - margin.right;
 
     const root = d3.pack()
         .size([width, height])
@@ -37,7 +39,7 @@ export default function CirclePacking() {
 
     useEffect(() => {
         circlePackingDiagram.current.init(id);
-        circlePackingDiagram.current.draw(viewVariable);
+        circlePackingDiagram.current.draw(viewVariable, id);
     }, []);
 
     // const onViewVariableChange = useCallback((updatedView) => {
