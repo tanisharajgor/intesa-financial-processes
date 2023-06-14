@@ -7,21 +7,22 @@ import { inspectHierarchySummary } from "../components/Inspect";
 import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
 import { QueryMenu } from "cfd-react-components";
 import FilterType from "../components/FilterType";
+import InspectProcesses from "../components/InspectProcesses";
+
 import { activityTypeValues } from "../utils/global";
 import Description from "../components/Description";
+import lu from "../data/processed/nested/lu.json"
 
 const id = "circle-packing-chart";
 
 export default function CirclePacking() {
 
     const [viewVariable, updateViewVariable] = useState("riskType");
-    const [viewHoverValue, updateViewHoverValue] = useState(undefined);
-
-    // Possible set of activities/actors to choose from
-    const possibleActivities = activityTypeValues;
+    const [viewHoverValue, updateViewHoverValue] = useState(undefined); 
 
     // User selected activities and actors
-    const [selectedActivities, updateActivities] = useState(possibleActivities);
+    const [selectedActivities, updateActivities] = useState(activityTypeValues);
+    // const [selectedChapters, updateChapters] = useState(lu.map(d => d.descr));
 
     const height = window.innerHeight;
     const width = window.innerWidth;
@@ -52,7 +53,6 @@ export default function CirclePacking() {
         circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities);
         let inspect = d3.select(".Inspect");
         inspectHierarchySummary(inspect, data);
-        // updateViewVariable(updatedView);
     }, [selectedActivities, viewVariable]);
 
     return(
@@ -64,7 +64,8 @@ export default function CirclePacking() {
                       <h4>Ecosystem</h4>
                       <p>Click on the circles to zoom into the process visualization.</p>
                     </Description>
-                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
+                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={activityTypeValues} label="Inspect by Activity Type"/>
+                    <InspectProcesses/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
             </div>

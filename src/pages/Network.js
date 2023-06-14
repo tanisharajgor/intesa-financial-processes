@@ -85,6 +85,8 @@ export default function Network() {
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
 
+    // const [selectedChapters, updateChapters] = useState(lu.map(d => d.descr));
+
     // Initiating the network diagram
     const networkDiagram = useRef(new NetworkVisualization(data, updateSymbolHoverValue, updateViewHoverValue));
 

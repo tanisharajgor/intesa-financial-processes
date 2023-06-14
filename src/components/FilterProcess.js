@@ -11,8 +11,7 @@ import { ChevronButton } from '../component-styles/chevron-button';
 import { StyledSelect } from '../component-styles/select';
 
 // constants
-const width = 345,
-    height = 600;
+const width = 345, height = 600;
 
 const id = "Filter-Process";
 
@@ -143,7 +142,7 @@ function updateFilter(root, selectedLevel3ID) {
             .attr("stroke", d => fillScale(d, selectedLevel3ID))
             .attr("stroke-width", .5)
             .attr("class", "Process-Node")
-            .style('cursor', d => d.data.data.treeLevel ===3 ? 'pointer': 'not-allowed');
+            .style('cursor', d => d.data.data.treeLevel === 3 ? 'pointer': 'not-allowed');
 }
 
 const StyledFilteredData = styled('p')`
@@ -158,7 +157,6 @@ const StyledFilter = styled('div')`
     display: flex;
     flex-direction: column;
 `
-
 
 export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
     const level3Descr = lu["level3"].find((d) => d.id === selectedLevel3ID).descr;
@@ -206,7 +204,7 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
             >
                 <InnerHeader>
                     <Key>
-                        Filter by Process:
+                        Filter by Process
                     </Key>
                     <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
                         <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
@@ -240,7 +238,6 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
                         </LayoutRow>
                         <LayoutRow>
                             <StyledFilter id={id}>
-                                {/* <div id={id}></div> */}
                             </StyledFilter>
                         </LayoutRow>
                     </LayoutGroup>

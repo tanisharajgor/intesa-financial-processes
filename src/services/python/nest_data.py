@@ -358,17 +358,30 @@ def create_network(data):
 def create_processes(main):
     l1Array = []
     for i in main.level1ID.unique():
+
         l2 = main[main.level1ID == i].level2ID.unique()
-
         l2Array = []
-        for j in l2:
-            l3 = main[main.level2ID == j].level3ID.unique()
 
+        for j in l2:
+
+            l3 = main[main.level2ID == j].level3ID.unique()
             l3Array = []
+
             for k in l3:
+                model = main[main.level3ID == k].modelID.unique()
+                modelArray = []
+
+                for l in model:
+
+                    m = {"id": int(l),
+                        "name": main[main.modelID == l].model.iloc[0],
+                        "treeLevel": int(4)}
+                    modelArray.append(m)
+
                 r3 = {"id": int(k),
-                     "name": main[main.level3ID == k].level3.iloc[0],
-                     "treeLevel": int(3)}
+                      "name": main[main.level3ID == k].level3.iloc[0],
+                      "treeLevel": int(3),
+                      "children": modelArray}
                 l3Array.append(r3)
 
             r2 = {"id": int(j),
