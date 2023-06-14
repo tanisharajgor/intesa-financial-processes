@@ -217,30 +217,29 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
             </AccordionHeader>
             <AccordionDetails>
                 <LayoutGroup>
-                        <LayoutRow className="layout_row">
-                            <LayoutItem className="push">
-                                <Form variant="outlined" size="small">
-                                    <StyledSelect
-                                        labelId="process1-select-label"
-                                        id="process1-select"
-                                        displayEmpty
-                                        value={selectedLevel1ID}
-                                        onChange={handleChange}
-                                    >
-                                        {level1.map((level, index) => {
-                                            return(
-                                                <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
-                                            )
-                                        })}
-                                    </StyledSelect>
-                                </Form>
-                            </LayoutItem>
-                        </LayoutRow>
-                        <LayoutRow>
-                            <StyledFilter id={id}>
-                            </StyledFilter>
-                        </LayoutRow>
-                    </LayoutGroup>
+                    <LayoutRow className="layout_row">
+                        <LayoutItem className="push">
+                            <Form variant="outlined" size="small">
+                                <StyledSelect
+                                    labelId="process1-select-label"
+                                    id="process1-select"
+                                    displayEmpty
+                                    value={selectedLevel1ID}
+                                    onChange={handleChange}
+                                >
+                                    {level1.map((level, index) => {
+                                        return(
+                                            <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
+                                        )
+                                    })}
+                                </StyledSelect>
+                            </Form>
+                        </LayoutItem>
+                    </LayoutRow>
+                    <LayoutRow>
+                        <StyledFilter id={id}></StyledFilter>
+                    </LayoutRow>
+                </LayoutGroup>
             </AccordionDetails>
         </Accordion>
     )
