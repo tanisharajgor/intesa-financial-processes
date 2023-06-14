@@ -1,15 +1,13 @@
 import { Accordion, AccordionHeader, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
-import lu from '../data/processed/nested/lu.json';
 import { Key } from '../component-styles/key';
 import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
 import styled from 'styled-components';
 import { InnerHeader } from '../component-styles/inner-header';
 import Ripple from './Ripple';
 import { ChevronButton } from '../component-styles/chevron-button';
-import { StyledSelect } from '../component-styles/select';
-
+import lu from '../data/processed/nested/lu.json';
 
 // constants
 const width = 345, height = 600;
@@ -27,7 +25,13 @@ const StyledFilteredData = styled('span')`
     display: block;
 `
 
+function treeMap() {
+    
+}
+
 export default function InspectProcesses() {
+
+    const processes = lu["processes"];
 
     const [shouldRotate, setRotate] = useState(false);
 
