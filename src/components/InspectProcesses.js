@@ -82,12 +82,18 @@ function renderTooltip() {
     });
 }
 
+function initTreeMap() {
+    d3.select(`#${id}`)
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+}
 
-function drawTreeMap(data) {
+function updateTreeMap(data) {
 
     const root = d3.hierarchy(data).sum(function(d) { return 1 }) // Here the size of each leave is given in the 'value' field in input data
     d3.partition()
-        .size([height, width])
+       .size([height, width])
         .padding(1)
         .round(false)
         (root);
@@ -95,18 +101,21 @@ function drawTreeMap(data) {
     const t = root.descendants();
     const descendants = root.descendants().slice(1);
 
-    const svg = d3.select(`#${id}`)
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+    let svg = d3.select(`#${id} svg`);
+
+    d3.select(`#${id} svg g`).remove();
+
+    svg = svg.append("g");
+
+    svg = svg
         .append("g")
-        .attr("transform", `translate(-${t[0].y1}, ${0})`)
-        .attr("font-family", "sans-serif")
-        .attr("font-size", 10);
+            .attr("transform", `translate(-${t[0].y1}, ${0})`)
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 10);
 
     const g = svg
         .selectAll("g")
-        .data(descendants)
+        .data(descendants, d => d.id)
         .join("g")
         .attr("transform", d => `translate(${d.y0},${d.x0})`);
 
@@ -130,17 +139,16 @@ export default function InspectProcesses() {
     const handleRotate = () => setRotate(!shouldRotate);
     const handleChange = (event) => {
         let level1 = parseInt(event.target.value);
-        updateLevel1(level1)
+        updateLevel1(level1);
     };
 
     useEffect(() =>{
         initTooltip();
-        drawTreeMap(processes.children.filter(d => d.id === selectedLevel1ID)[0]);
-        
+        initTreeMap();
     }, []);
 
     useEffect(() =>{
-        // drawTreeMap(processes)
+        updateTreeMap(processes.children.filter(d => d.id === selectedLevel1ID)[0]);
         renderTooltip();
     }, [selectedLevel1ID]);
 
