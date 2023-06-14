@@ -9,14 +9,16 @@ import lu from '../data/processed/nested/lu.json';
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import styled from 'styled-components';
+import * as Global from "../utils/global";
 
 // constants
-const width = 345, height = 600;
+const width = 300, height = 800;
 
 const id = "Inspect-Process-TreeMap";
 
 const StyledFilter = styled('div')`
     display: flex;
+    flex-direction: column;
 `
 
 const StyledFilteredData = styled('span')`
@@ -25,6 +27,61 @@ const StyledFilteredData = styled('span')`
     opacity: 75%;
     display: block;
 `
+
+function initTooltip() {
+    d3.select(`#${id}`)
+        .append("div")
+        .attr("class", "tooltip")
+        .attr("z-index", 500)
+        .style("width", "100%")
+        .style("height", "85px")
+        .style("font-family", Global.tooltipStyles.fontFamily)
+        .style("font-size", Global.tooltipStyles.fontSize)
+        .style("color", Global.tooltipStyles.fontColor)
+        .style("line-height", Global.tooltipStyles.lineHeight);
+}
+
+function renderTooltip() {
+
+    let tooltip = d3.select(`#${id} .tooltip`)
+
+    d3.selectAll('.Process-Node').on("mouseover", function(e, d) {
+
+        let thisRect = d3.select(this);
+
+        var x, y;
+
+        if (d.data.treeLevel === 3) {
+            x = e.layerX - 150;
+            y = e.layerY - 100;
+        } else {
+            x = e.layerX + 20;
+            y = e.layerY - 10;
+        }
+
+        let level = d.data.treeLevel < 4 ? `Level ${d.data.treeLevel}`: `Model`;
+
+        tooltip.style("visibility", "visible")
+            .style("top", `${y}px`)
+            .style("left", `${x}px`)
+            .html(`<b>${level}</b><br>${d.data.name}`);
+
+        thisRect
+            .attr("stroke", "white")
+            .attr("fill", Global.primaryColorHex)
+            .attr("r", 4);
+
+    }).on("mouseout", function() {
+
+        tooltip.style("visibility", "hidden");
+
+        d3.selectAll('.Process-Node')
+            .attr("fill", "#CBCBCB")
+            .attr("stroke-width", .5)
+            .attr("stroke", "#D7D7D7")
+    });
+}
+
 
 function drawTreeMap(data) {
 
@@ -56,11 +113,10 @@ function drawTreeMap(data) {
     g.append("rect")
         .attr("width", d => d.y1 - d.y0)
         .attr("height", d => d.x1 - d.x0)
-        // .attr("fill", d => d.data.riskStatus[riskVariable] === undefined ? "#fff" : colorScale(d.data.riskStatus[riskVariable]))
-        // .attr("fill-opacity", d => opacityScale(d.data.treeLevel))
-        // .attr("visibility", d => d.data.treeLevel === 0 ? "hidden": "visible")
+        .attr("fill", "#CBCBCB")
         .attr("stroke-width", .5)
-        .attr("stroke", "#D7D7D7");
+        .attr("stroke", "#D7D7D7")
+        .attr("class", "Process-Node");
 }
 
 export default function InspectProcesses() {
@@ -78,12 +134,15 @@ export default function InspectProcesses() {
     };
 
     useEffect(() =>{
+        initTooltip();
         drawTreeMap(processes.children.filter(d => d.id === selectedLevel1ID)[0]);
+        
     }, []);
 
-    // useEffect(() =>{
-    //     drawTreeMap(processes)
-    // }, [selectedLevel1ID]);
+    useEffect(() =>{
+        // drawTreeMap(processes)
+        renderTooltip();
+    }, [selectedLevel1ID]);
 
     return(
         <Accordion className={'Card'}>

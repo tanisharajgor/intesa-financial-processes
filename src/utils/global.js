@@ -7,6 +7,24 @@ export const palette = [0x1f77b4, 0xff7f0e, 0x2ca02c, 0xd62728, 0x9467bd, 0x8c56
 export const naColor = 0x777777;
 export const naColorHex = "#777777";
 
+export const lightGreyColor = 0xCBCBCB;
+export const lightGreyColorRGB = "rgb(203, 203, 203)";
+export const lightGreyColorHex = "#CBCBCB";
+
+export const darkGreyColor = 0x929295;
+export const darkGreyColorRGB = "rgb(145, 146, 149)";
+export const darkGreyColorHex = "#929295";
+
+export const primaryColor = 0x03afbf;
+export const primaryColorHex = "#03afbf";
+
+export const tooltipStyles = {
+    fontFamily: '"IBM Plex", "Helvetica Neue", Helvetica, Arial, sans-serif',
+    fontSize: "12px",
+    fontColor: lightGreyColorHex,
+    lineHeight: "130%"
+}
+
 export const viewVariables = {
 
     // "financialDisclosureRiskAny": {
