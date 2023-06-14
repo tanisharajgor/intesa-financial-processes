@@ -63,8 +63,8 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
                 .attr("x", 25)
                 .attr("y", ((d, i) => i*23 + 20))
                 .text((d => d.label))
-                .attr("font-size", 12)
-                .attr("fill", Global.fillColorHex),
+                .attr("font-size", Global.labelStyles.fontSize)
+                .attr("fill", Global.labelStyles.fontColor),
             update => update
                 .attr('opacity', (d => viewHoverValue === undefined || d.color === viewHoverValue ? 1: .3)),
             exit   => exit.remove()
@@ -127,7 +127,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
-                    .attr("fill", Global.fillColorHex),
+                    .attr("fill", Global.labelStyles.fontColor),
                 update => update
                     .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
@@ -140,8 +140,8 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .append("text")
                     .attr("x", 25)
                     .attr("y", ((d, i) => i*23 + 20))
-                    .attr("fill", Global.fillColorHex)
-                    .attr("font-size", 12)
+                    .attr("fill", Global.labelStyles.fontColor)
+                    .attr("font-size", Global.labelStyles.fontSize)
                     .text((d) => d.viewId),
                 update => update
                     .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
@@ -159,7 +159,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                 .attr("transform", function(d, i) {
                     return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                 })
-                .attr("fill", Global.fillColorHex),
+                .attr("fill", Global.labelStyles.fontColor),
             update => update
                 .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
         );
@@ -172,8 +172,8 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                 .append("text")
                 .attr("x", 25)
                 .attr("y", ((d, i) => i*23 + 20))
-                .attr("fill", Global.fillColorHex)
-                .attr("font-size", 12)
+                .attr("fill", Global.labelStyles.fontColor)
+                .attr("font-size", Global.labelStyles.fontSize)
                 .text((d) => d.viewId),
             update => update
                 .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
@@ -224,8 +224,8 @@ function drawLineLegend() {
                 .append("text")
                 .attr("x", 25)
                 .attr("y", (d, i) => i*23 + 20)
-                .attr("fill", Global.fillColorHex)
-                .attr("font-size", 12)
+                .attr("fill", Global.labelStyles.fontColor)
+                .attr("font-size", Global.labelStyles.fontSize)
                 .text(d => d.type)
         );
 }

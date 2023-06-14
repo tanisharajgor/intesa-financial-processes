@@ -132,21 +132,7 @@ export default class NetworkVisualization {
   }
 
   initTooltip(selector) {
-    this.tooltip = d3.select(`#${selector}`)
-      .append("div")
-      .attr("class", "tooltip")
-      .style("position", "absolute")
-      .style("left", "0px")
-      .style("top", "0px")
-      .style("visibility", "hidden")
-      .style("padding", "10px")
-      .style("pointer-events", "none")
-      .style("border-radius", "5px")
-      .style("background-color", "rgba(0, 0, 0, 0.65)")
-      .style("font-family", '"IBM Plex", ""Helvetica Neue", Helvetica, Arial, sans-serif')
-      .style("font-weight", "normal")
-      .style("border", "1px solid rgba(78, 81, 85, 0.7)")
-      .style("font-size", "16px");
+    this.tooltip = Global.initTooltip(selector);
 }
 
   // Drawing functions ------------------------------------------------------

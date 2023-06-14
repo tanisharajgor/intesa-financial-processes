@@ -7,9 +7,44 @@ export const palette = [0x1f77b4, 0xff7f0e, 0x2ca02c, 0xd62728, 0x9467bd, 0x8c56
 export const naColor = 0x777777;
 export const naColorHex = "#777777";
 
-export const fillColor = 0x929295;
-export const fillColorRGB = "rgb(145, 146, 149)";
-export const fillColorHex = "#929295";
+export const lightGreyColor = 0xCBCBCB;
+export const lightGreyColorRGB = "rgb(203, 203, 203)";
+export const lightGreyColorHex = "#CBCBCB";
+
+export const darkGreyColor = 0x929295;
+export const darkGreyColorRGB = "rgb(145, 146, 149)";
+export const darkGreyColorHex = "#929295";
+
+export const tooltipStyles = {
+    fontFamily: '"IBM Plex", "Helvetica Neue", Helvetica, Arial, sans-serif',
+    fontSize: "12px",
+    fontColor: lightGreyColorHex
+}
+
+export const labelStyles = {
+    fontFamily: '"IBM Plex", "Helvetica Neue", Helvetica, Arial, sans-serif',
+    fontSize: "12px",
+    fontColor: darkGreyColorHex
+}
+
+export function initTooltip(selector) {
+    return d3.select(`#${selector}`)
+      .append("div")
+      .attr("class", "tooltip")
+      .style("position", "absolute")
+      .style("left", "0px")
+      .style("top", "0px")
+      .style("visibility", "hidden")
+      .style("padding", "10px")
+      .style("pointer-events", "none")
+      .style("border-radius", "5px")
+      .style("background-color", "rgba(0, 0, 0, 0.65)")
+      .style("font-weight", "normal")
+      .style("border", "1px solid rgba(78, 81, 85, 0.7)")
+      .style("font-family", tooltipStyles.fontFamily)
+      .style("color", tooltipStyles.fontColor)
+      .style("font-size", tooltipStyles.fontSize);
+}
 
 export const viewVariables = {
 

@@ -71,21 +71,7 @@ export class CirclePackingDiagram {
   }
 
   initTooltip(selector) {
-    this.tooltip = d3.select(`#${selector}`)
-      .append("div")
-      .attr("class", "tooltip")
-      .style("position", "absolute")
-      .style("left", "0px")
-      .style("top", "0px")
-      .style("visibility", "hidden")
-      .style("padding", "10px")
-      .style("pointer-events", "none")
-      .style("border-radius", "5px")
-      .style("background-color", "rgba(0, 0, 0, 0.65)")
-      .style("font-family", '"IBM Plex", ""Helvetica Neue", Helvetica, Arial, sans-serif')
-      .style("font-weight", "normal")
-      .style("border", "1px solid rgba(78, 81, 85, 0.7)")
-      .style("font-size", "16px");
+    this.tooltip = Global.initTooltip(selector);
   }
   
   // Drawing functions ------------------------------------------------------
@@ -193,8 +179,9 @@ export class CirclePackingDiagram {
             .style("left", `${x}px`)
             // .style("text-align", "center")
             // .style("vertical-align", "middle")
-            .style("font", "10px sans-serif")
-            .style("fill", "rgb(145, 146, 149)")
+            .style("font-family", Global.labelStyles.fontFamily)
+            .style("color", Global.lightGreyColorHex)
+            .style("font-size", Global.labelStyles.fontSize)
             // .style("fill-opacity", node.data.treeLevel === 1 ? 1 : 0)
             .text(node.data.name);
         });
