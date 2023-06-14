@@ -63,7 +63,7 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
                 .attr("y", ((d, i) => i*23 + 20))
                 .text((d => d.label))
                 .attr("font-size", 12)
-                .attr("fill", "#cbcbcb"),
+                .attr("fill", Global.darkGreyColorHex),
             update => update
                 .attr('opacity', (d => viewHoverValue === undefined || d.color === viewHoverValue ? 1: .3)),
             exit   => exit.remove()
@@ -139,7 +139,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .append("text")
                     .attr("x", 25)
                     .attr("y", ((d, i) => i*23 + 20))
-                    .attr("fill", "#cbcbcb")
+                    .attr("fill", Global.darkGreyColorHex)
                     .attr("font-size", 12)
                     .text((d) => d.viewId),
                 update => update
@@ -158,7 +158,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                 .attr("transform", function(d, i) {
                     return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                 })
-                .attr("fill", "#cbcbcb"),
+                .attr("fill", Global.darkGreyColorHex),
             update => update
                 .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
         );
@@ -171,7 +171,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                 .append("text")
                 .attr("x", 25)
                 .attr("y", ((d, i) => i*23 + 20))
-                .attr("fill", "#cbcbcb")
+                .attr("fill", Global.darkGreyColorHex)
                 .attr("font-size", 12)
                 .text((d) => d.viewId),
             update => update
@@ -223,7 +223,7 @@ function drawLineLegend() {
                 .append("text")
                 .attr("x", 25)
                 .attr("y", (d, i) => i*23 + 20)
-                .attr("fill", "#cbcbcb")
+                .attr("fill", Global.darkGreyColorHex)
                 .attr("font-size", 12)
                 .text(d => d.type)
         );

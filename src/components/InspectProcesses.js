@@ -34,7 +34,7 @@ function initTooltip() {
         .attr("class", "tooltip")
         .attr("z-index", 500)
         .style("width", "100%")
-        .style("height", "85px")
+        .style("height", "50px")
         .style("font-family", Global.tooltipStyles.fontFamily)
         .style("font-size", Global.tooltipStyles.fontSize)
         .style("color", Global.tooltipStyles.fontColor)
@@ -76,9 +76,9 @@ function renderTooltip() {
         tooltip.style("visibility", "hidden");
 
         d3.selectAll('.Process-Node')
-            .attr("fill", "#CBCBCB")
+            .attr("fill", Global.darkGreyColorHex)
             .attr("stroke-width", .5)
-            .attr("stroke", "#D7D7D7")
+            .attr("stroke", Global.lightGreyColorHex)
     });
 }
 
@@ -113,9 +113,9 @@ function drawTreeMap(data) {
     g.append("rect")
         .attr("width", d => d.y1 - d.y0)
         .attr("height", d => d.x1 - d.x0)
-        .attr("fill", "#CBCBCB")
+        .attr("fill", Global.darkGreyColorHex)
         .attr("stroke-width", .5)
-        .attr("stroke", "#D7D7D7")
+        .attr("stroke", Global.lightGreyColorHex)
         .attr("class", "Process-Node");
 }
 
