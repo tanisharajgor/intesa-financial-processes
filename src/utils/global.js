@@ -25,6 +25,12 @@ export const tooltipStyles = {
     lineHeight: "130%"
 }
 
+export const labelStyles = {
+    fontFamily: '"IBM Plex", "Helvetica Neue", Helvetica, Arial, sans-serif',
+    fontSize: "12px",
+    fontColor: darkGreyColorHex
+}
+
 export const viewVariables = {
 
     // "financialDisclosureRiskAny": {
