@@ -165,17 +165,8 @@ export class CirclePackingDiagram {
 
   showTooltip(d, event) {
 
-  console.log(d, event)
-
-    let x, y;
-
-    if (this.zoomedNodeId === 0) {
-      x = this.width - d.x;
-      y = this.height - d.y - d.r - 50;
-    } else {
-      x = event.client.x;
-      y = event.client.y;
-    }
+    let x = event.screen.x + 20;
+    let y = event.screen.y - 10;
 
     this.tooltip.style("visibility", "visible")
       .style("top", `${y}px`)
