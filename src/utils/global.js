@@ -7,6 +7,10 @@ export const palette = [0x1f77b4, 0xff7f0e, 0x2ca02c, 0xd62728, 0x9467bd, 0x8c56
 export const naColor = 0x777777;
 export const naColorHex = "#777777";
 
+export const fillColor = 0x929295;
+export const fillColorRGB = "rgb(145, 146, 149)";
+export const fillColorHex = "#929295";
+
 export const viewVariables = {
 
     // "financialDisclosureRiskAny": {

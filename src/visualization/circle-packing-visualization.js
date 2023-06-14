@@ -176,24 +176,27 @@ export class CirclePackingDiagram {
     //     .style("left", d => `${this.height - d.gfx.y}px`)
     //     .text(d => d.data.name)
     //     .style("fill", "white");
-    
 
       this.label = this.data.filter(node => node.data.treeLevel === 1)
         .forEach(node => {
 
           let x = this.width - node.gfx.x - node.r;
-          let y = this.height - node.gfx.y - node.r;
+          let y = this.height - node.gfx.y;
 
           d3.select(`#${selector}`)
             .append("div")
             .attr("class", "label")
+            // .attr("text-anchor", "middle")
+            .attr("pointer-events", "none")
             .style("position", "absolute")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .style("text-align", "center")
-            .style("vertical-align", "middle")
+            // .style("text-align", "center")
+            // .style("vertical-align", "middle")
+            .style("font", "10px sans-serif")
+            .style("fill", "rgb(145, 146, 149)")
             // .style("fill-opacity", node.data.treeLevel === 1 ? 1 : 0)
-            .html(node.data.name);
+            .text(node.data.name);
         });
   }
 
