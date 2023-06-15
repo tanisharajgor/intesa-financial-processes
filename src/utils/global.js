@@ -175,3 +175,23 @@ export function filterLinksTargetToSource(data, ids) {
 }
 
 export const activityTypeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
+
+export function initTooltip(selector) {
+    return d3.select(`#${selector}`)
+      .append("div")
+      .attr("class", "tooltip")
+      .style("position", "absolute")
+      .style("left", "0px")
+      .style("top", "0px")
+      .style("visibility", "hidden")
+      .style("padding", "7px")
+      .style("pointer-events", "none")
+      .style("border-radius", "5px")
+      .style("background-color", "rgba(0, 0, 0, 0.65)")
+      .style("font-weight", "normal")
+      .style("border", "1px solid rgba(78, 81, 85, 0.7)")
+      .style("font-family", Theme.tooltipStyles.fontFamily)
+      .style("font-size", Theme.tooltipStyles.fontSize)
+      .style("color", Theme.tooltipStyles.fontColor)
+      .style("line-height", Theme.tooltipStyles.lineHeight);
+  }

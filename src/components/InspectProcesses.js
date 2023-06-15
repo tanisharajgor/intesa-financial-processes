@@ -10,6 +10,7 @@ import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import styled from 'styled-components';
 import * as Theme from "../component-styles/theme";
+import * as Global from "../utils/global";
 
 // constants
 const width = 300, height = 800;
@@ -28,23 +29,14 @@ const StyledFilteredData = styled('span')`
     display: block;
 `
 
-function initTooltip() {
-    d3.select(`#${id}`)
-        .append("div")
-        .attr("class", "tooltip")
-        .attr("z-index", 500)
-        .style("width", "100%")
-        .style("height", "50px")
-        .style("font-family", Theme.tooltipStyles.fontFamily)
-        .style("font-size", Theme.tooltipStyles.fontSize)
-        .style("color", Theme.tooltipStyles.fontColor)
-        .style("line-height", Theme.tooltipStyles.lineHeight);
-}
-
 function onClick(updateLevel) {
 
     d3.selectAll('.Process-Node').on("click", function(e, d) {
         let thisRect = d3.select(this);
+
+        thisRect
+            .attr("class", "Process-Node Selected")
+            .attr("fill", Theme.primaryColorHex);
 
         // thisRect
         //     // .attr("stroke", "white")
@@ -82,24 +74,26 @@ function renderTooltip(selectedLevel) {
 
         thisRect
             .attr("stroke", Theme.primaryColorHex)
-            .attr("stroke-width", 2)
+            .attr("stroke-width", 1.5)
             .attr("opacity", 1);
+
+        d3.selectAll('.Process-Node .Selected')
+            .attr("fill", Theme.primaryColorHex);
 
     }).on("mouseout", function() {
 
         d3.selectAll('.Process-Node')
             .attr("stroke", "none")
-            .attr("opacity", .7);
+            .attr("fill-opacity", .7);
 
-        if (selectedLevel !== undefined) {
+        tooltip.style("visibility", "hidden");
 
-            // thisRect
-            //     .attr("fill", Theme.primaryColorHex);
-
-        } else {
-            tooltip.style("visibility", "hidden");
-        }
+        d3.selectAll('.Process-Node .Selected')
+            .attr("fill", Theme.primaryColorHex);
     });
+
+    d3.selectAll('.Process-Node .Selected')
+        .attr("fill", Theme.primaryColorHex);
 }
 
 function initTreeMap() {
@@ -144,7 +138,7 @@ function updateTreeMap(data) {
         .attr("height", d => d.x1 - d.x0)
         .attr("fill", Theme.extraDarkGreyHex)
         .attr("class", "Process-Node")
-        .attr("opacity", .7);
+        .attr("fill-opacity", .7);
 }
 
 export default function InspectProcesses({selectedLevel, updateLevel}) {
@@ -155,6 +149,8 @@ export default function InspectProcesses({selectedLevel, updateLevel}) {
     const [shouldRotate, setRotate] = useState(false);
     const [selectedLevel1ID, updateLevel1] = useState(level1[0].id);
 
+    console.log(selectedLevel)
+
     const handleRotate = () => setRotate(!shouldRotate);
     const handleChange = (event) => {
         let level1 = parseInt(event.target.value);
@@ -162,7 +158,7 @@ export default function InspectProcesses({selectedLevel, updateLevel}) {
     };
 
     useEffect(() =>{
-        initTooltip();
+        Global.initTooltip(id);
         initTreeMap();
     }, []);
 
