@@ -46,10 +46,10 @@ function onClick(updateLevel) {
     d3.selectAll('.Process-Node').on("click", function(e, d) {
         let thisRect = d3.select(this);
 
-        thisRect
-            .attr("stroke", Theme.primaryColorHex)
-            .attr("fill", Theme.darkGreyColorHex);
-
+        // thisRect
+        //     // .attr("stroke", "white")
+        //     .attr("fill", Theme.primaryColorHex);
+ 
         updateLevel(d.data.id);
     });
 }
@@ -81,21 +81,20 @@ function renderTooltip(selectedLevel) {
             .html(`<b>${level}</b><br>${d.data.name}`);
 
         thisRect
-            .attr("stroke", "white")
-            .attr("fill", Theme.primaryColorHex);
+            .attr("stroke", Theme.primaryColorHex)
+            .attr("stroke-width", 2)
+            .attr("opacity", 1);
 
     }).on("mouseout", function() {
 
         d3.selectAll('.Process-Node')
-            .attr("fill", Theme.extraDarkGreyHex)
-            .attr("stroke-width", .5)
-            .attr("stroke", "none");
+            .attr("stroke", "none")
+            .attr("opacity", .7);
 
         if (selectedLevel !== undefined) {
 
-        thisRect
-            .attr("stroke", Theme.primaryColorHex)
-            .attr("fill", Theme.darkGreyColorHex);
+            // thisRect
+            //     .attr("fill", Theme.primaryColorHex);
 
         } else {
             tooltip.style("visibility", "hidden");
@@ -144,8 +143,8 @@ function updateTreeMap(data) {
         .attr("width", d => d.y1 - d.y0)
         .attr("height", d => d.x1 - d.x0)
         .attr("fill", Theme.extraDarkGreyHex)
-        .attr("stroke-width", .5)
-        .attr("class", "Process-Node");
+        .attr("class", "Process-Node")
+        .attr("opacity", .7);
 }
 
 export default function InspectProcesses({selectedLevel, updateLevel}) {
