@@ -29,7 +29,7 @@ const StyledFilteredData = styled('span')`
     display: block;
 `
 
-function onClick(updateLevel) {
+function onClick(selectedLevels, updateLevels) {
 
     d3.selectAll('.Process-Node').on("click", function(e, d) {
         let thisRect = d3.select(this);
@@ -41,12 +41,25 @@ function onClick(updateLevel) {
         // thisRect
         //     // .attr("stroke", "white")
         //     .attr("fill", Theme.primaryColorHex);
+
+        console.log(selectedLevels)
  
-        updateLevel(d.data.id);
+        if (selectedLevels.includes(d.data.id)) {
+
+            const index = selectedLevels.indexOf(d.data.id);
+                if (index > -1) {
+                    selectedLevels.splice(index, 1);
+            }
+
+        } else {
+            selectedLevels.push(d.data.id)
+        }
+
+        updateLevels(selectedLevels);
     });
 }
 
-function renderTooltip(selectedLevel) {
+function renderTooltip(selectedLevels) {
 
     let tooltip = d3.select(`#${id} .tooltip`);
     let thisRect;
@@ -139,7 +152,7 @@ function updateTreeMap(data) {
             )
 }
 
-export default function InspectProcesses({selectedLevel, updateLevel}) {
+export default function InspectProcesses({selectedLevels, updateLevels}) {
 
     const processes = lu["processes"];
     const level1 = lu["level1"];
@@ -147,7 +160,7 @@ export default function InspectProcesses({selectedLevel, updateLevel}) {
     const [shouldRotate, setRotate] = useState(false);
     const [selectedLevel1ID, updateLevel1] = useState(level1[0].id);
 
-    console.log(selectedLevel)
+    console.log(selectedLevels)
 
     const handleRotate = () => setRotate(!shouldRotate);
     const handleChange = (event) => {
@@ -162,9 +175,9 @@ export default function InspectProcesses({selectedLevel, updateLevel}) {
 
     useEffect(() =>{
         updateTreeMap(processes.children.filter(d => d.id === selectedLevel1ID)[0]);
-        onClick(updateLevel);
-        renderTooltip(selectedLevel);
-    }, [selectedLevel1ID, selectedLevel]);
+        onClick(selectedLevels, updateLevels);
+        renderTooltip(selectedLevels)
+    }, [selectedLevel1ID, selectedLevels]);
 
     return(
         <Accordion className={'Card'}>

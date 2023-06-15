@@ -243,11 +243,11 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable, selectedActivities, selectedLevel) {
+  updateDraw(viewVariable, selectedActivities, selectedLevels) {
     this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
 
-    if (this.selectedLevel !== undefined) {
-      this.selectedLevels = [selectedLevel];
+    if (selectedLevels !== undefined) {
+      this.selectedLevels = [selectedLevels];
     }
 
     console.log(this.selectedLevels)
