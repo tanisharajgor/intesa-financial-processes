@@ -168,7 +168,7 @@ export class CirclePackingDiagram {
   // Updating the draw functions on mouse interaction ------------------------------------------------------
 
   tooltipText(d) {
-    return `${d.data.treeLevel === 4? "Activity": "Process"}: ${d.data.name}`;
+    return `${d.data.treeLevel === 4? "Activity": "Process"} <br><b>${d.data.name}</b>`;
   }
 
   showTooltip(d, event) {

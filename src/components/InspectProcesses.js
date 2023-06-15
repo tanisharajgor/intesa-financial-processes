@@ -55,17 +55,17 @@ function renderTooltip(selectedLevel) {
 
         thisRect = d3.select(this);
 
-        var x, y;
+        let x;
 
-        if (d.data.treeLevel > 3) {
-            y = d.x0 + width;
+        let y = d.x0 + width;
+
+        if (d.data.treeLevel === 4) {
             x = d.y0 - 225;
+        } else if (d.data.treeLevel === 3) {
+            x = d.y0 - 150;
         } else {
-            y = d.x0 + width;
             x = d.y0;
         }
-
-        console.log(x, y)
 
         let level = d.data.treeLevel < 4 ? `Level ${d.data.treeLevel}`: `Model`;
 
