@@ -180,6 +180,7 @@ export function initTooltip(selector) {
     return d3.select(`#${selector}`)
       .append("div")
       .attr("class", "tooltip")
+      .attr("max-width", "125px")
       .style("position", "absolute")
       .style("left", "0px")
       .style("top", "0px")
@@ -194,4 +195,4 @@ export function initTooltip(selector) {
       .style("font-size", Theme.tooltipStyles.fontSize)
       .style("color", Theme.tooltipStyles.fontColor)
       .style("line-height", Theme.tooltipStyles.lineHeight);
-  }
+}

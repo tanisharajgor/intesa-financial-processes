@@ -13,7 +13,7 @@ import * as Theme from "../component-styles/theme";
 import * as Global from "../utils/global";
 
 // constants
-const width = 300, height = 800;
+const width = 300, height = 1000;
 
 const id = "Inspect-Process-TreeMap";
 
@@ -57,7 +57,7 @@ function renderTooltip(selectedLevel) {
 
         var x, y;
 
-        if (d.data.treeLevel === 3) {
+        if (d.data.treeLevel > 2) {
             x = e.layerX - 150;
             y = e.layerY - 100;
         } else {
