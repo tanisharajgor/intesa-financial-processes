@@ -41,13 +41,27 @@ function initTooltip() {
         .style("line-height", Global.tooltipStyles.lineHeight);
 }
 
-function renderTooltip() {
+function onClick(updateLevel) {
 
-    let tooltip = d3.select(`#${id} .tooltip`)
+    d3.selectAll('.Process-Node').on("click", function(e, d) {
+        let thisRect = d3.select(this);
+
+        thisRect
+            .attr("stroke", "white")
+            .attr("fill", Global.primaryColorHex);
+
+        updateLevel(d.data.id);
+    });
+}
+
+function renderTooltip(selectedLevel) {
+
+    let tooltip = d3.select(`#${id} .tooltip`);
+    let thisRect;
 
     d3.selectAll('.Process-Node').on("mouseover", function(e, d) {
 
-        let thisRect = d3.select(this);
+        thisRect = d3.select(this);
 
         var x, y;
 
@@ -68,17 +82,24 @@ function renderTooltip() {
 
         thisRect
             .attr("stroke", "white")
-            .attr("fill", Global.primaryColorHex)
-            .attr("r", 4);
+            .attr("fill", Global.primaryColorHex);
 
     }).on("mouseout", function() {
-
-        tooltip.style("visibility", "hidden");
 
         d3.selectAll('.Process-Node')
             .attr("fill", Global.darkGreyColorHex)
             .attr("stroke-width", .5)
-            .attr("stroke", Global.lightGreyColorHex)
+            .attr("stroke", Global.lightGreyColorHex);
+
+        if (selectedLevel !== undefined) {
+
+            thisRect
+            .attr("stroke", "white")
+            .attr("fill", Global.primaryColorHex);
+
+        } else {
+            tooltip.style("visibility", "hidden");
+        }
     });
 }
 
@@ -135,6 +156,9 @@ export default function InspectProcesses() {
 
     const [shouldRotate, setRotate] = useState(false);
     const [selectedLevel1ID, updateLevel1] = useState(level1[0].id);
+    const [selectedLevel, updateLevel] = useState(undefined);
+
+    console.log(selectedLevel)
 
     const handleRotate = () => setRotate(!shouldRotate);
     const handleChange = (event) => {
@@ -149,8 +173,9 @@ export default function InspectProcesses() {
 
     useEffect(() =>{
         updateTreeMap(processes.children.filter(d => d.id === selectedLevel1ID)[0]);
-        renderTooltip();
-    }, [selectedLevel1ID]);
+        onClick(updateLevel);
+        renderTooltip(selectedLevel);
+    }, [selectedLevel1ID, selectedLevel]);
 
     return(
         <Accordion className={'Card'}>
