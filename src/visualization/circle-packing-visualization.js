@@ -104,30 +104,19 @@ export class CirclePackingDiagram {
     }
   }
 
-  // opacityScale(node) {
-
-  //   if (this.selectedActivities.length !== 0 && this.selectedLevels.length !== 0) {
-
-  //   } else if (this.selectedActivities.length !== 0) {
-
-  //     this.selectedActivitiesOpacity(node);
-
-  //   } else if(this.selectedLevels.length !== 0) {
-
-  //   } else {
-  //     node.gfx.alpha = scale(node.data.treeLevel);
-  //   }
-  // }
-
   opacityScale(node) {
   
-    if (this.selectedActivities.length === 0) {
+    if (this.selectedActivities.length === 0 && this.selectedLevels.length === 0) {
 
       const scale = d3.scaleOrdinal()
         .domain([0, 1, 2, 3, 4])
         .range([.05, .3, .4, .5, .9]);
 
       node.gfx.alpha = scale(node.data.treeLevel);
+    } else if(this.selectedActivities.length === 0) {
+
+    } else if(this.selectedLevels.length === 0) { 
+
     } else {
       this.selectedActivitiesOpacity(node);
     }
@@ -257,7 +246,10 @@ export class CirclePackingDiagram {
 
   updateDraw(viewVariable, selectedActivities, selectedLevel) {
     this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
-    this.selectedLevels = [selectedLevel];
+
+    if (this.selectedLevel !== undefined) {
+      this.selectedLevels = [selectedLevel];
+    }
     this.destroyNodes();
     this.drawNodes(viewVariable);
   }
