@@ -55,6 +55,11 @@ function renderTooltip(selectedLevel) {
 
         thisRect = d3.select(this);
 
+        console.log(thisRect.property("x"))
+
+        console.log(+d3.select(this).attr("x") + 20);
+        console.log(+d3.select(this).attr("y") - 10);
+
         var x, y;
 
         if (d.data.treeLevel > 2) {
@@ -121,24 +126,21 @@ function updateTreeMap(data) {
 
     svg = svg.append("g");
 
-    svg = svg
+    svg
         .append("g")
-            .attr("transform", `translate(-${t[0].y1}, ${0})`)
-            .attr("font-family", "sans-serif")
-            .attr("font-size", 10);
-
-    const g = svg
-        .selectAll("g")
+        .attr("transform", `translate(-${t[0].y1}, ${0})`)
+        .selectAll("rect")
         .data(descendants, d => d.id)
-        .join("g")
-        .attr("transform", d => `translate(${d.y0},${d.x0})`);
-
-    g.append("rect")
-        .attr("width", d => d.y1 - d.y0)
-        .attr("height", d => d.x1 - d.x0)
-        .attr("fill", Theme.extraDarkGreyHex)
-        .attr("class", "Process-Node")
-        .attr("fill-opacity", .7);
+        .join(
+            enter => enter
+            .append("rect")
+            .attr("transform", d => `translate(${d.y0},${d.x0})`)
+            .attr("width", d => d.y1 - d.y0)
+            .attr("height", d => d.x1 - d.x0)
+            .attr("fill", Theme.extraDarkGreyHex)
+            .attr("class", "Process-Node")
+            .attr("fill-opacity", .7)
+            )
 }
 
 export default function InspectProcesses({selectedLevel, updateLevel}) {
