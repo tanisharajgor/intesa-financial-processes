@@ -32,7 +32,7 @@ function fillScale(d, selectedLevel3ID) {
     } else if (d.data.data.treeLevel === 3) {
         return "white";
     } else {
-        return "#4e5155";
+        return Theme.extraDarkGreyHex;
     }
 }
 
@@ -72,7 +72,7 @@ function renderTooltip(selectedLevel3ID) {
         thisCircle
             .attr("stroke", "white")
             .attr("stroke-width", d => d.data.data.treeLevel === 3 ? 1.5: 0)
-            .attr("fill", d => d.data.data.treeLevel === 3 ? Theme.primaryColorHex: "#4e5155")
+            .attr("fill", d => d.data.data.treeLevel === 3 ? Theme.primaryColorHex: Theme.extraDarkGreyHex)
             .attr("r", 4);
 
     }).on("mouseout", function() {
@@ -126,7 +126,7 @@ function updateFilter(root, selectedLevel3ID) {
                     + " " + d.parent.y + "," + d.parent.x;
                 })
         .style("fill", 'none')
-        .attr("stroke", "#4e5155")
+        .attr("stroke", Theme.extraDarkGreyHex)
         .attr("stroke-opacity", 1)
         .attr("stroke-width", .5);
 
