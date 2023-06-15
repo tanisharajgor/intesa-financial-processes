@@ -172,8 +172,9 @@ export class CirclePackingDiagram {
   }
 
   showTooltip(d, event) {
-    let x = event.client.x;
-    let y = event.client.y;
+
+    let x = event.screen.x + 20;
+    let y = event.screen.y - 10;
 
     this.tooltip.style("visibility", "visible")
       .style("top", `${y}px`)
