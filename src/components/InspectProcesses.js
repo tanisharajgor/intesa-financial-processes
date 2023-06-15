@@ -55,20 +55,17 @@ function renderTooltip(selectedLevel) {
 
         thisRect = d3.select(this);
 
-        console.log(thisRect.property("x"))
-
-        console.log(+d3.select(this).attr("x") + 20);
-        console.log(+d3.select(this).attr("y") - 10);
-
         var x, y;
 
-        if (d.data.treeLevel > 2) {
-            x = e.layerX - 100;
-            y = e.layerY - 60;
+        if (d.data.treeLevel > 3) {
+            y = d.x0 + width;
+            x = d.y0 - 225;
         } else {
-            x = e.layerX + 20;
-            y = e.layerY - 10;
+            y = d.x0 + width;
+            x = d.y0;
         }
+
+        console.log(x, y)
 
         let level = d.data.treeLevel < 4 ? `Level ${d.data.treeLevel}`: `Model`;
 
@@ -127,7 +124,6 @@ function updateTreeMap(data) {
     svg = svg.append("g");
 
     svg
-        .append("g")
         .attr("transform", `translate(-${t[0].y1}, ${0})`)
         .selectAll("rect")
         .data(descendants, d => d.id)
