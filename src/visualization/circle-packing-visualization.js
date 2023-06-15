@@ -17,10 +17,12 @@ export class CirclePackingDiagram {
   inspect;
   nodes;
   rootDOM;
+  selectedActivities;
+  selectedLevels;
   tooltip;
   width;
   viewport;
-  zoomedNodeId
+  zoomedNodeId;
 
   constructor(data, updateViewHoverValue) {
     this.data = data;
@@ -28,6 +30,7 @@ export class CirclePackingDiagram {
     this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
     this.selectedActivities = [];
+    this.selectedLevels = [];
   }
 
   // Initializes the application
@@ -89,29 +92,47 @@ export class CirclePackingDiagram {
   
   // Drawing functions ------------------------------------------------------
 
-  opacityScale(node) {
-
-    const scale = d3.scaleOrdinal()
-      .domain([0, 1, 2, 3, 4])
-      .range([.05, .3, .4, .5, .9]);
-  
-    if (this.selectedActivities.length === 0) {
-      node.gfx.alpha = scale(node.data.treeLevel);
+  selectedActivitiesOpacity(node) {
+    if (node.data.treeLevel < 4) {
+      node.gfx.alpha = .1;
     } else {
-  
-      if (node.data.treeLevel < 4) {
-        node.gfx.alpha = .1;
+      if (this.selectedActivities.includes(node.data.activityType)) {
+        node.gfx.alpha = 1;
       } else {
-  
-        if (this.selectedActivities.includes(node.data.activityType)) {
-          node.gfx.alpha = 1;
-        } else {
-          node.gfx.alpha = .1;
-        }
+        node.gfx.alpha = .1;
       }
     }
-  }  
+  }
+
+  // opacityScale(node) {
+
+  //   if (this.selectedActivities.length !== 0 && this.selectedLevels.length !== 0) {
+
+  //   } else if (this.selectedActivities.length !== 0) {
+
+  //     this.selectedActivitiesOpacity(node);
+
+  //   } else if(this.selectedLevels.length !== 0) {
+
+  //   } else {
+  //     node.gfx.alpha = scale(node.data.treeLevel);
+  //   }
+  // }
+
+  opacityScale(node) {
   
+    if (this.selectedActivities.length === 0) {
+
+      const scale = d3.scaleOrdinal()
+        .domain([0, 1, 2, 3, 4])
+        .range([.05, .3, .4, .5, .9]);
+
+      node.gfx.alpha = scale(node.data.treeLevel);
+    } else {
+      this.selectedActivitiesOpacity(node);
+    }
+  }
+
   draw(viewVariable) {
     this.drawNodes(viewVariable);
   }
@@ -174,7 +195,7 @@ export class CirclePackingDiagram {
     }
 
   pointerOver(node, event, viewVariable) {
-    node.gfx.alpha = .9;
+    node.gfx.alpha = 1;
     this.showTooltip(node, event);
     this.updateViewHoverValue(Global.applyColorScale(node.data, viewVariable));
   }
@@ -234,8 +255,9 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable, selectedActivities) {
+  updateDraw(viewVariable, selectedActivities, selectedLevel) {
     this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
+    this.selectedLevels = [selectedLevel];
     this.destroyNodes();
     this.drawNodes(viewVariable);
   }

@@ -149,16 +149,13 @@ function updateTreeMap(data) {
         .attr("class", "Process-Node");
 }
 
-export default function InspectProcesses() {
+export default function InspectProcesses({selectedLevel, updateLevel}) {
 
     const processes = lu["processes"];
     const level1 = lu["level1"];
 
     const [shouldRotate, setRotate] = useState(false);
     const [selectedLevel1ID, updateLevel1] = useState(level1[0].id);
-    const [selectedLevel, updateLevel] = useState(undefined);
-
-    console.log(selectedLevel)
 
     const handleRotate = () => setRotate(!shouldRotate);
     const handleChange = (event) => {

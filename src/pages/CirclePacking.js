@@ -22,6 +22,7 @@ export default function CirclePacking() {
 
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(activityTypeValues);
+    const [selectedLevel, updateLevel] = useState(undefined);
     // const [selectedChapters, updateChapters] = useState(lu.map(d => d.descr));
 
     const height = window.innerHeight;
@@ -50,10 +51,10 @@ export default function CirclePacking() {
     // }, [])
 
     useEffect(() => {
-        circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities);
+        circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities, selectedLevel);
         let inspect = d3.select(".Inspect");
         inspectHierarchySummary(inspect, data);
-    }, [selectedActivities, viewVariable]);
+    }, [selectedActivities, selectedLevel, viewVariable]);
 
     return(
         <div className="Content">
@@ -65,7 +66,7 @@ export default function CirclePacking() {
                       <p>Click on the circles to zoom into the process visualization.</p>
                     </Description>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={activityTypeValues} label="Inspect by Activity Type"/>
-                    <InspectProcesses/>
+                    <InspectProcesses selectedLevel={selectedLevel} updateLevel={updateLevel}/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
             </div>
