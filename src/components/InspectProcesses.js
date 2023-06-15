@@ -87,13 +87,13 @@ function renderTooltip(selectedLevel) {
     }).on("mouseout", function() {
 
         d3.selectAll('.Process-Node')
-            .attr("fill", Global.darkGreyColorHex)
+            .attr("fill", Global.extraDarkGreyHex)
             .attr("stroke-width", .5)
-            .attr("stroke", Global.lightGreyColorHex);
+            .attr("stroke", "none");
 
         if (selectedLevel !== undefined) {
 
-            thisRect
+        thisRect
             .attr("stroke", "white")
             .attr("fill", Global.primaryColorHex);
 
@@ -143,9 +143,8 @@ function updateTreeMap(data) {
     g.append("rect")
         .attr("width", d => d.y1 - d.y0)
         .attr("height", d => d.x1 - d.x0)
-        .attr("fill", Global.darkGreyColorHex)
+        .attr("fill", Global.extraDarkGreyHex)
         .attr("stroke-width", .5)
-        .attr("stroke", Global.lightGreyColorHex)
         .attr("class", "Process-Node");
 }
 

@@ -15,6 +15,10 @@ export const darkGreyColor = 0x929295;
 export const darkGreyColorRGB = "rgb(145, 146, 149)";
 export const darkGreyColorHex = "#929295";
 
+export const extraDarkGreyColor = 0x4e5155;
+export const extraDarkGreyHex = "#4e5155";
+export const extraDarkGreyRGB = "rgb(78, 81, 85)";
+
 export const primaryColor = 0x03afbf;
 export const primaryColorHex = "#03afbf";
 
