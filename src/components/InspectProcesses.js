@@ -9,7 +9,7 @@ import lu from '../data/processed/nested/lu.json';
 import * as d3 from 'd3';
 import { useEffect, useState } from "react";
 import styled from 'styled-components';
-import * as Global from "../utils/global";
+import * as Theme from "../component-styles/theme";
 
 // constants
 const width = 300, height = 800;
@@ -35,10 +35,10 @@ function initTooltip() {
         .attr("z-index", 500)
         .style("width", "100%")
         .style("height", "50px")
-        .style("font-family", Global.tooltipStyles.fontFamily)
-        .style("font-size", Global.tooltipStyles.fontSize)
-        .style("color", Global.tooltipStyles.fontColor)
-        .style("line-height", Global.tooltipStyles.lineHeight);
+        .style("font-family", Theme.tooltipStyles.fontFamily)
+        .style("font-size", Theme.tooltipStyles.fontSize)
+        .style("color", Theme.tooltipStyles.fontColor)
+        .style("line-height", Theme.tooltipStyles.lineHeight);
 }
 
 function onClick(updateLevel) {
@@ -47,8 +47,8 @@ function onClick(updateLevel) {
         let thisRect = d3.select(this);
 
         thisRect
-            .attr("stroke", "white")
-            .attr("fill", Global.primaryColorHex);
+            .attr("stroke", Theme.primaryColorHex)
+            .attr("fill", Theme.darkGreyColorHex);
 
         updateLevel(d.data.id);
     });
@@ -82,20 +82,20 @@ function renderTooltip(selectedLevel) {
 
         thisRect
             .attr("stroke", "white")
-            .attr("fill", Global.primaryColorHex);
+            .attr("fill", Theme.primaryColorHex);
 
     }).on("mouseout", function() {
 
         d3.selectAll('.Process-Node')
-            .attr("fill", Global.extraDarkGreyHex)
+            .attr("fill", Theme.extraDarkGreyHex)
             .attr("stroke-width", .5)
             .attr("stroke", "none");
 
         if (selectedLevel !== undefined) {
 
         thisRect
-            .attr("stroke", "white")
-            .attr("fill", Global.primaryColorHex);
+            .attr("stroke", Theme.primaryColorHex)
+            .attr("fill", Theme.darkGreyColorHex);
 
         } else {
             tooltip.style("visibility", "hidden");
@@ -143,7 +143,7 @@ function updateTreeMap(data) {
     g.append("rect")
         .attr("width", d => d.y1 - d.y0)
         .attr("height", d => d.x1 - d.x0)
-        .attr("fill", Global.extraDarkGreyHex)
+        .attr("fill", Theme.extraDarkGreyHex)
         .attr("stroke-width", .5)
         .attr("class", "Process-Node");
 }

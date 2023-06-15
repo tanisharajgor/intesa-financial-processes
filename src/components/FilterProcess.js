@@ -9,7 +9,7 @@ import { InnerHeader } from '../component-styles/inner-header';
 import Ripple from './Ripple';
 import { ChevronButton } from '../component-styles/chevron-button';
 import { StyledSelect } from '../component-styles/select';
-import * as Global from "../utils/global";
+import * as Theme from "../component-styles/theme";
 
 // constants
 const width = 345, height = 600;
@@ -28,7 +28,7 @@ const cluster = d3.cluster()
 
 function fillScale(d, selectedLevel3ID) {
     if (d.data.data.treeLevel === 3 && d.data.data.id === selectedLevel3ID) {
-        return Global.primaryColorHex;
+        return Theme.primaryColorHex;
     } else if (d.data.data.treeLevel === 3) {
         return "white";
     } else {
@@ -72,7 +72,7 @@ function renderTooltip(selectedLevel3ID) {
         thisCircle
             .attr("stroke", "white")
             .attr("stroke-width", d => d.data.data.treeLevel === 3 ? 1.5: 0)
-            .attr("fill", d => d.data.data.treeLevel === 3 ? Global.primaryColorHex: "#4e5155")
+            .attr("fill", d => d.data.data.treeLevel === 3 ? Theme.primaryColorHex: "#4e5155")
             .attr("r", 4);
 
     }).on("mouseout", function() {
