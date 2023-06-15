@@ -180,7 +180,7 @@ export function initTooltip(selector) {
     return d3.select(`#${selector}`)
       .append("div")
       .attr("class", "tooltip")
-      .attr("max-width", "125px")
+      .style("max-width", "175px")
       .style("position", "absolute")
       .style("left", "0px")
       .style("top", "0px")

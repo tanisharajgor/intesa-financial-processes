@@ -58,8 +58,8 @@ function renderTooltip(selectedLevel) {
         var x, y;
 
         if (d.data.treeLevel > 2) {
-            x = e.layerX - 150;
-            y = e.layerY - 100;
+            x = e.layerX - 100;
+            y = e.layerY - 60;
         } else {
             x = e.layerX + 20;
             y = e.layerY - 10;
