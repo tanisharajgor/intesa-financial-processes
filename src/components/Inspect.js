@@ -18,7 +18,9 @@ export function inspectNetworkSummary(inspect, data) {
     inspect.select(".value3 .value").text(" ");
 }
 
-export function inspectHierarchySummary(inspect, data) {
+export function inspectHierarchySummary(data) {
+
+    let inspect = d3.select(".Inspect");
 
     inspect.select(".value1 .key").text("Processes showing: ");
     inspect.select(".value1 .value").text(`1, 2, 3`);

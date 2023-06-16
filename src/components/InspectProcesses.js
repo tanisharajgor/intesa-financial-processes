@@ -160,8 +160,6 @@ export default function InspectProcesses({selectedLevels, updateLevels}) {
     const [shouldRotate, setRotate] = useState(false);
     const [selectedLevel1ID, updateLevel1] = useState(level1[0].id);
 
-    console.log(selectedLevels)
-
     const handleRotate = () => setRotate(!shouldRotate);
     const handleChange = (event) => {
         let level1 = parseInt(event.target.value);
