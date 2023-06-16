@@ -42,17 +42,17 @@ function onClick(selectedLevels, updateLevels) {
         //     // .attr("stroke", "white")
         //     .attr("fill", Theme.primaryColorHex);
 
-        console.log(selectedLevels)
+        // console.log(selectedLevels)
  
         if (selectedLevels.includes(d.data.id)) {
 
-            const index = selectedLevels.indexOf(d.data.id);
-                if (index > -1) {
-                    selectedLevels.splice(index, 1);
-            }
+            // const index = selectedLevels.indexOf(d.data.id);
+            //     if (index > -1) {
+            //         selectedLevels.splice(index, 1);
+            // }
 
         } else {
-            selectedLevels.push(d.data.id)
+            selectedLevels.push(d.data.id);
         }
 
         updateLevels(selectedLevels);

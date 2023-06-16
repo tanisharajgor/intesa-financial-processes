@@ -71,7 +71,7 @@ export class CirclePackingDiagram {
 
     this.app.stage.addChild(this.viewport);
   }
-  
+
   // Drawing functions ------------------------------------------------------
 
   selectedActivitiesOpacity(node) {
@@ -87,35 +87,28 @@ export class CirclePackingDiagram {
   }
 
   selectedLevelsOpacity(node) {
-
-    if (node.data.treeLevel < 4) {
-      node.gfx.alpha = .1;
+    if (this.selectedLevels.includes(node.id)) {
+      node.gfx.alpha = 1;
     } else {
-
-      if (this.selectedLevels.includes(node.data.id)) {
-        node.gfx.alpha = 1;
-      } else {
-        node.gfx.alpha = .1;
-      }
+      node.gfx.alpha = .1;
     }
   }
 
   opacityScale(node) {
-  
-    if (this.selectedActivities.length !== 0 && this.selectedLevels.length !== 0) {
 
-      // this.selectedActivitiesOpacity(node);
-
-    } else if(this.selectedActivities.length !== 0) {
-      this.selectedActivitiesOpacity(node);
-    } else if(this.selectedLevels.length !== 0) {
-      this.selectedLevelsOpacity(node);
-    } else {
-
-      const scale = d3.scaleOrdinal()
+    const scale = d3.scaleOrdinal()
       .domain([0, 1, 2, 3, 4])
       .range([.05, .3, .4, .5, .9]);
 
+    if (this.selectedActivities.length > 0 && this.selectedLevels.length > 0) {
+
+      // this.selectedActivitiesOpacity(node);
+
+    } else if(this.selectedActivities.length > 0) {
+      this.selectedActivitiesOpacity(node);
+    } else if(this.selectedLevels.length > 0) {
+      this.selectedLevelsOpacity(node);
+    } else {
       node.gfx.alpha = scale(node.data.treeLevel);
     }
   }
@@ -244,13 +237,11 @@ export class CirclePackingDiagram {
   }
 
   updateDraw(viewVariable, selectedActivities, selectedLevels) {
+
+    console.log(selectedLevels)
+    console.log(selectedActivities)
     this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
-
-    if (selectedLevels !== undefined) {
-      this.selectedLevels = [selectedLevels];
-    }
-
-    console.log(this.selectedLevels)
+    this.selectedLevels = selectedLevels;
     this.destroyNodes();
     this.drawNodes(viewVariable);
   }

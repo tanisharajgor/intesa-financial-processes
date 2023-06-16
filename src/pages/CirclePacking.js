@@ -50,11 +50,13 @@ export default function CirclePacking() {
     //     updateViewVariable(updatedView)
     // }, [])
 
+    console.log(selectedLevels)
+
     useEffect(() => {
         circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities, selectedLevels);
         let inspect = d3.select(".Inspect");
         inspectHierarchySummary(inspect, data);
-    }, [selectedActivities, selectedLevels, viewVariable]);
+    }, [viewVariable, selectedActivities, selectedLevels]);
 
     return(
         <div className="Content">
