@@ -22,6 +22,7 @@ export class CirclePackingDiagram {
   tooltip;
   width;
   viewport;
+  viewVariable;
   zoomedNodeId;
 
   constructor(data, updateViewHoverValue) {
@@ -114,11 +115,12 @@ export class CirclePackingDiagram {
   }
 
   draw(viewVariable) {
-    this.drawNodes(viewVariable);
+    this.viewVariable = viewVariable;
+    this.drawNodes();
   }
 
   // Initializes the nodes
-  drawNodes(viewVariable) {
+  drawNodes() {
 
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
@@ -128,7 +130,7 @@ export class CirclePackingDiagram {
       node.gfx = new PIXI.Graphics();
       node.gfx.lineStyle(lineWidth(node.data.treeLevel), 0xFFFFFF, 1);
       node.gfx.lineWidth = 1;
-      node.gfx.beginFill(Global.applyColorScale(node.data, viewVariable));
+      node.gfx.beginFill(Global.applyColorScale(node.data, this.viewVariable));
 
       this.opacityScale(node);
 
@@ -140,7 +142,7 @@ export class CirclePackingDiagram {
       node.gfx.interactive = true;
       node.gfx.buttonMode = true;
       node.gfx.cursor = 'zoom-in';
-      node.gfx.on("pointerover", (e) => this.pointerOver(node, e, viewVariable));
+      node.gfx.on("pointerover", (e) => this.pointerOver(node, e));
       node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
       node.gfx.on("click", (e) => this.onClick(node, e))
 
@@ -175,10 +177,10 @@ export class CirclePackingDiagram {
       .html(this.tooltipText(d));
     }
 
-  pointerOver(node, event, viewVariable) {
+  pointerOver(node, event) {
     node.gfx.alpha = 1;
     this.showTooltip(node, event);
-    this.updateViewHoverValue(Global.applyColorScale(node.data, viewVariable));
+    this.updateViewHoverValue(Global.applyColorScale(node.data, this.viewVariable));
   }
 
   pointerOut(node, event) {
@@ -242,8 +244,9 @@ export class CirclePackingDiagram {
     console.log(selectedActivities)
     this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
     this.selectedLevels = selectedLevels;
+    this.viewVariable = viewVariable;
     this.destroyNodes();
-    this.drawNodes(viewVariable);
+    this.drawNodes();
   }
 
     // Controls ------------------------------------------------------
