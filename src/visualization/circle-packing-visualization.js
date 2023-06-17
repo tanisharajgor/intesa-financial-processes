@@ -5,10 +5,6 @@ import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
 import { activityTypeValues } from "../utils/global";
 
-const lineWidth = d3.scaleOrdinal()
-  .domain([0, 1, 2, 3, 4])
-  .range([.5, .5, .5, .5, 0]);
-
 export class CirclePackingDiagram {
   app;
   containerNodes;
@@ -99,7 +95,7 @@ export class CirclePackingDiagram {
 
     const scale = d3.scaleOrdinal()
       .domain([0, 1, 2, 3, 4])
-      .range([.05, .3, .4, .5, .9]);
+      .range([.05, .3, .4, .5, .6]);
 
     if (this.selectedActivities.length > 0 && this.selectedLevels.length > 0) {
 
@@ -125,11 +121,14 @@ export class CirclePackingDiagram {
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
 
+    const lineWidth = d3.scaleOrdinal()
+      .domain([0, 1, 2, 3, 4])
+      .range([.4, .5, .5, .5, .1]);
+
     this.data.forEach((node) => {
       node.viewId = node.data.viewId;
       node.gfx = new PIXI.Graphics();
       node.gfx.lineStyle(lineWidth(node.data.treeLevel), 0xFFFFFF, 1);
-      node.gfx.lineWidth = 1;
       node.gfx.beginFill(Global.applyColorScale(node.data, this.viewVariable));
 
       this.opacityScale(node);
@@ -183,7 +182,7 @@ export class CirclePackingDiagram {
     this.updateViewHoverValue(Global.applyColorScale(node.data, this.viewVariable));
   }
 
-  pointerOut(node, event) {
+  pointerOut(node) {
     this.opacityScale(node);
     this.tooltip.style("visibility", "hidden");
     this.updateViewHoverValue(undefined);
