@@ -80,12 +80,6 @@ export default function CirclePacking() {
                     controls={circlePackingDiagram.current.getControls()}
                     handleFullscreen={handleFullscreen}
                 />
-                <button 
-                    style={{    left: "50vw", bottom: "50vh", position: "absolute"}}
-                    onClick={handleFullscreen}
-                >
-                    Fullscreen
-                </button>
             </Content>
         </>
     )
