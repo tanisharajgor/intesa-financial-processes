@@ -20,6 +20,12 @@ const NavigationBranding = styled('div')`
 
 const StyledLayoutHeader = styled(LayoutHeader)`
     border-bottom: 1px solid #4e5155;
+    height: 10vh;
+    position: absolute;
+    z-index: +10;
+    top: ${props => props.isFullscreen ? "-15vh;" : "0vh;"};
+    transition: top 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    background-color: ${props =>  props.theme.backgroundColor.main };
 `
 
 const NavigationLinks = styled('div')`
@@ -74,9 +80,9 @@ const Link = styled(`li`)`
  * Menu Navigation bar to navigate to different parts of the project
  * @returns 
  */
-export default function Navigation() {
+export default function Navigation({isFullscreen}) {
     return (
-        <StyledLayoutHeader>
+        <StyledLayoutHeader isFullscreen={isFullscreen}>
             <NavigationBranding className="Navigation_branding">
                 <h2>
                     <NavLink to="/">Banca Intesa Processes</NavLink>
