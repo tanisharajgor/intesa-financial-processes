@@ -4,6 +4,7 @@ import * as d3 from 'd3';
 import { useEffect } from "react";
 import { InspectHTML } from "./Inspect";
 import { StyledSelect } from "../component-styles/select";
+import { ViewStyles } from "../component-styles/view";
 
 const width = 216;
 const height = 15;
@@ -303,7 +304,7 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
     }, [viewVariable, viewHoverValue]);
 
     return(
-        <div className='View'>
+        <ViewStyles>
             <div>View</div>
             <div className="inner">
                 <InspectHTML/>
@@ -327,6 +328,6 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
                     <div id={riskLegendId}></div>
                 </Form>
             </div>
-        </div>
+        </ViewStyles>
     )
 }

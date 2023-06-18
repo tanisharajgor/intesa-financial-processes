@@ -5,10 +5,11 @@ import * as d3 from 'd3';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { inspectHierarchySummary } from "../components/Inspect";
 import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
-import { QueryMenu } from "cfd-react-components";
 import FilterType from "../components/FilterType";
 import { activityTypeValues } from "../utils/global";
 import Description from "../components/Description";
+import { Menu } from "../component-styles/query-menu";
+import { Content } from "../component-styles/content";
 
 const id = "circle-packing-chart";
 
@@ -16,6 +17,7 @@ export default function CirclePacking() {
 
     const [viewVariable, updateViewVariable] = useState("riskType");
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
+    const [isFullscreen, setFullscreen] = useState(false);
 
     // Possible set of activities/actors to choose from
     const possibleActivities = activityTypeValues;
@@ -34,6 +36,10 @@ export default function CirclePacking() {
         .sort((a, b) => b.value - a.value));
 
     const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1), updateViewHoverValue));
+
+    const handleFullscreen = (e) => {
+        setFullscreen(!isFullscreen);
+    }
 
     useEffect(() => {
         circlePackingDiagram.current.init(id);
@@ -56,18 +62,25 @@ export default function CirclePacking() {
     }, [selectedActivities, viewVariable]);
 
     return(
-        <div className="Content">
-            <Navigation/>
-            <div style={{display: 'flex'}}>
-                <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
+        <>
+            <Navigation isFullscreen={isFullscreen} />
+            <Content>
+                <Menu className="Query" id="FilterMenu" width={"22rem"} isFullscreen={isFullscreen}>
                     <Description>
                       <h4>Ecosystem</h4>
                       <p>Click on the circles to zoom into the process visualization.</p>
                     </Description>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
-                </QueryMenu>
-                <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
-            </div>
-        </div>
+                </Menu>
+                <Main
+                    viewVariable={viewVariable}
+                    updateViewVariable={updateViewVariable}
+                    viewHoverValue={viewHoverValue}
+                    id={id}
+                    controls={circlePackingDiagram.current.getControls()}
+                    handleFullscreen={handleFullscreen}
+                />
+            </Content>
+        </>
     )
 }
