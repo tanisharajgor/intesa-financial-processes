@@ -88,7 +88,7 @@ export class CirclePackingDiagram {
   selectedLevelsOpacity(node) {
 
     if (this.levelIDs.includes(node.data.id)) {
-      node.gfx.alpha = 1;
+      node.gfx.alpha = scale(node.data.treeLevel);
     } else {
       node.gfx.alpha = .2;
     }
@@ -96,7 +96,7 @@ export class CirclePackingDiagram {
 
   selectedLevelsAndActivitiesOpacity(node) {
     if (this.levelIDs.includes(node.data.id) && this.selectedActivities.includes(node.data.activityType)) {
-      node.gfx.alpha = 1;
+      node.gfx.alpha = scale(node.data.treeLevel);
     } else {
       node.gfx.alpha = .2;
     }
