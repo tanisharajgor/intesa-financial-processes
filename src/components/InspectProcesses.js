@@ -29,6 +29,14 @@ const StyledFilteredData = styled('span')`
     display: block;
 `
 
+const StyledLabel = styled('span')`
+    color: ${Theme.labelStyles.fontColor};
+    font-family: ${Theme.labelStyles.fontFamily};
+    font-size: ${Theme.labelStyles.fontSize};
+    margin-bottom: 5px;
+    margin-left: 3px;
+`
+
 function onClick(selectedLevels, updateLevels) {
 
     d3.selectAll('.Process-Node').on("click", function(e, d) {
@@ -73,11 +81,11 @@ function renderTooltip(selectedLevels) {
         let y = d.x0 + width;
 
         if (d.data.treeLevel === 4) {
-            x = d.y0 - 225;
+            x = d.y0 - 210;
         } else if (d.data.treeLevel === 3) {
-            x = d.y0 - 150;
+            x = d.y0 - 137;
         } else {
-            x = d.y0;
+            x = d.y0 - 64;
         }
 
         let level = d.data.treeLevel < 4 ? `Level ${d.data.treeLevel}`: `Chapter`;
@@ -169,14 +177,6 @@ function updateTreeMap(data) {
             .attr("fill-opacity", .7)
     )
 }
-
-const StyledLabel = styled('span')`
-    color: ${Theme.labelStyles.fontColor};
-    font-family: ${Theme.labelStyles.fontFamily};
-    font-size: ${Theme.labelStyles.fontSize};
-    margin-bottom: 5px;
-    margin-left: 3px;
-`
 
 export default function InspectProcesses({selectedLevels, updateLevels}) {
 
