@@ -204,7 +204,7 @@ def level1_dm(data, raw_pth, processed_pth):
     df = pd.merge(df, dfTranslated, on="level1", how="left").drop("level1", axis=1).rename(columns={'English': "level1"})
     df = clean_strings(df, "level1")
     df = df[pd.isnull(df.level1) == False]
-    df = num_id(df, "level1GUID")
+    df = num_id(df, "level1GUID", 10)
 
     ## Write the cleaned data out
     df.drop('level1GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'level1' + ".csv"), index = False)
@@ -225,7 +225,7 @@ def level2_dm(data, raw_pth, processed_pth):
     df = pd.merge(df, dfTranslated, on="level2", how="left").drop("level2", axis=1).rename(columns={'English': "level2"})
     df = clean_strings(df, "level2")
     df = df[pd.isnull(df.level2) == False]
-    df = num_id(df, "level2GUID")
+    df = num_id(df, "level2GUID", 100)
 
     ## Write the cleaned data out
     df.drop('level2GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'level2' + ".csv"), index = False)
@@ -246,7 +246,7 @@ def level3_dm(data, raw_pth, processed_pth):
     df = pd.merge(df, dfTranslated, on="level3", how="left").drop("level3", axis=1).rename(columns={'English': "level3"})
     df = clean_strings(df, "level3")
     df = df[pd.isnull(df.level3) == False]
-    df = num_id(df, "level3GUID")
+    df = num_id(df, "level3GUID", 1000)
 
     ## Write the cleaned data out
     df.drop('level3GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'level3' + ".csv"), index = False)
