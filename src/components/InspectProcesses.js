@@ -13,7 +13,7 @@ import * as Theme from "../component-styles/theme";
 import * as Global from "../utils/global";
 
 // constants
-const width = 300, height = 1000;
+const width = 290, height = 1000;
 
 const id = "Inspect-Process-TreeMap";
 
@@ -80,7 +80,7 @@ function renderTooltip(selectedLevels) {
             x = d.y0;
         }
 
-        let level = d.data.treeLevel < 4 ? `Level ${d.data.treeLevel}`: `Model`;
+        let level = d.data.treeLevel < 4 ? `Level ${d.data.treeLevel}`: `Chapter`;
 
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
@@ -120,9 +120,13 @@ function initTreeMap() {
 
 function updateTreeMap(data) {
 
-    const root = d3.hierarchy(data).sum(function(d) { return 1 }) // Here the size of each leave is given in the 'value' field in input data
+    const margin = {top: 25}
+
+    const root = d3.hierarchy(data)
+        .sum(function(d) { return 1 }) // Here the size of each leave is given in the 'value' field in input data
+
     d3.partition()
-       .size([height, width])
+       .size([height - margin.top, width])
         .padding(1)
         .round(false)
         (root);
@@ -136,8 +140,21 @@ function updateTreeMap(data) {
 
     svg = svg.append("g");
 
+    let labels = ["Level 2", "Level 3", "Chapter"];
+
+    for (let i in labels) {
+
+        svg
+            .append("text")
+            .attr("x", 3 + t[0].y1 + t[0].y1*i)
+            .attr("y", -5)
+            .attr("font-size", Theme.labelStyles.fontSize)
+            .attr("fill", Theme.labelStyles.fontColor)
+            .text(labels[i])
+    }
+
     svg
-        .attr("transform", `translate(-${t[0].y1}, ${0})`)
+        .attr("transform", `translate(-${t[0].y1}, ${margin.top})`)
         .selectAll("rect")
         .data(descendants, d => d.id)
         .join(
@@ -146,11 +163,20 @@ function updateTreeMap(data) {
             .attr("transform", d => `translate(${d.y0},${d.x0})`)
             .attr("width", d => d.y1 - d.y0)
             .attr("height", d => d.x1 - d.x0)
-            .attr("fill", Theme.extraDarkGreyHex)
+            .attr("fill", Theme.labelStyles.fontColor)
+            .attr("font-family", Theme.labelStyles.fontFamily)
             .attr("class", "Process-Node")
             .attr("fill-opacity", .7)
-            )
+    )
 }
+
+const StyledLabel = styled('span')`
+    color: ${Theme.labelStyles.fontColor};
+    font-family: ${Theme.labelStyles.fontFamily};
+    font-size: ${Theme.labelStyles.fontSize};
+    margin-bottom: 5px;
+    margin-left: 3px;
+`
 
 export default function InspectProcesses({selectedLevels, updateLevels}) {
 
@@ -186,7 +212,7 @@ export default function InspectProcesses({selectedLevels, updateLevels}) {
             >
                 <InnerHeader>
                     <Key>
-                        Inspect by Process
+                        Inspect by Taxonomy
                     </Key>
                     <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
                         <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
@@ -199,6 +225,7 @@ export default function InspectProcesses({selectedLevels, updateLevels}) {
             </AccordionHeader>
             <AccordionDetails>
                 <LayoutGroup>
+                    <StyledLabel>Level 1</StyledLabel>
                     <LayoutRow className="layout_row">
                         <LayoutItem className="push">
                             <Form variant="outlined" size="small">

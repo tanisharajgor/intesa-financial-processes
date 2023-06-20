@@ -19,14 +19,14 @@ export const primaryColorHex = "#03afbf";
 
 export const tooltipStyles = {
     fontFamily: '"IBM Plex", "Helvetica Neue", Helvetica, Arial, sans-serif',
-    fontSize: "12px",
+    fontSize: "13px",
     fontColor: lightGreyColorHex,
     lineHeight: "130%"
 }
 
 export const labelStyles = {
     fontFamily: '"IBM Plex", "Helvetica Neue", Helvetica, Arial, sans-serif',
-    fontSize: "12px",
+    fontSize: "13px",
     fontColor: darkGreyColorHex
 }
 
@@ -51,5 +51,4 @@ export const GlobalTheme = {
     headerWeight: "48px",
     padding: '0.625rem',
     viewColWidth: '16rem'
-  
   }

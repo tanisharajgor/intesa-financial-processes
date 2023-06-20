@@ -240,7 +240,6 @@ export class CirclePackingDiagram {
   updateDraw(viewVariable, selectedActivities, selectedLevels) {
 
     console.log(selectedLevels)
-    console.log(selectedActivities)
     this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
     this.selectedLevels = selectedLevels;
     this.viewVariable = viewVariable;

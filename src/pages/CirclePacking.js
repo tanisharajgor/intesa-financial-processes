@@ -52,7 +52,7 @@ export default function CirclePacking() {
 
 
     console.log(selectedLevels)
-    console.log(selectedActivities)
+    // console.log(selectedActivities)
     useEffect(() => {
         circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities, selectedLevels);
         inspectHierarchySummary(data);
