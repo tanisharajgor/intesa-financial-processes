@@ -4,6 +4,7 @@ import * as Global from "../utils/global";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
 import { activityTypeValues } from "../utils/global";
+import lu from "../data/processed/nested/lu";
 
 export class CirclePackingDiagram {
   app;
@@ -11,6 +12,7 @@ export class CirclePackingDiagram {
   data;
   height;
   inspect;
+  levelIDs;
   nodes;
   rootDOM;
   selectedActivities;
@@ -84,7 +86,16 @@ export class CirclePackingDiagram {
   }
 
   selectedLevelsOpacity(node) {
-    if (this.selectedLevels.includes(node.id)) {
+
+    if (this.levelIDs.includes(node.data.id)) {
+      node.gfx.alpha = 1;
+    } else {
+      node.gfx.alpha = .2;
+    }
+  }
+
+  selectedLevelsAndActivitiesOpacity(node) {
+    if (this.levelIDs.includes(node.data.id) && this.selectedActivities.includes(node.data.activityType)) {
       node.gfx.alpha = 1;
     } else {
       node.gfx.alpha = .2;
@@ -98,9 +109,7 @@ export class CirclePackingDiagram {
       .range([.05, .3, .4, .5, .6]);
 
     if (this.selectedActivities.length > 0 && this.selectedLevels.length > 0) {
-
-      // this.selectedActivitiesOpacity(node);
-
+      this.selectedLevelsAndActivitiesOpacity(node);
     } else if(this.selectedActivities.length > 0) {
       this.selectedActivitiesOpacity(node);
     } else if(this.selectedLevels.length > 0) {
@@ -239,10 +248,19 @@ export class CirclePackingDiagram {
 
   updateDraw(viewVariable, selectedActivities, selectedLevels) {
 
-    console.log(selectedLevels)
-    console.log(selectedActivities)
+    const levelValues = lu["level1"].map(d => d.id);
+
     this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
-    this.selectedLevels = selectedLevels;
+    this.selectedLevels = levelValues.filter(x => !selectedLevels.includes(x));
+
+    if( this.selectedLevels.length > 0 ) {
+
+      this.levelIDs = this.data.filter(d => this.selectedLevels.includes(d.data.id))
+                                .map(d => d.data.childrenIDs)
+                                .reduce((a, b) => a.concat(b));
+      this.levelIDs = this.levelIDs.concat(this.selectedLevels);
+    }
+
     this.viewVariable = viewVariable;
     this.destroyNodes();
     this.drawNodes();

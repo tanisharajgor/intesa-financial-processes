@@ -143,7 +143,18 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
 
         df_sub = df[df[root1ID] == id]
 
+        activityID = df_sub.activityID.unique().tolist()
+        childrenID3 = df_sub.level3ID.unique().tolist()
+        childrenID2 = df_sub.level2ID.unique().tolist()
+
         childrenIDs = df_sub[df_sub[root1ID] == id][root2ID].unique().tolist()
+
+        if tree_level == 3:
+            fullChildrenIDs = activityID
+        elif tree_level == 2:
+            fullChildrenIDs = activityID + childrenID3
+        elif tree_level == 1:
+            fullChildrenIDs = activityID + childrenID3 + childrenID2
 
         d = {"id": int(id),
             "name": df_sub[df_sub[root1ID] == id][root1].iloc[0],
@@ -154,7 +165,7 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
         if children is not None:
             d["children"] = subset_list(childrenIDs, children)
             d["viewId"] = "Process"
-            d["childrenIDs"] = childrenIDs
+            d["childrenIDs"] = fullChildrenIDs
         else:
             d["activityType"] = df_sub[df_sub[root1ID] == id].activityType.iloc[0]
             if df_sub[df_sub[root1ID] == id].activityType.iloc[0] == "Control activity":
