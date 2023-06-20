@@ -11,17 +11,21 @@ import InspectProcesses from "../components/InspectProcesses";
 
 import { activityTypeValues } from "../utils/global";
 import Description from "../components/Description";
+import lu from "../data/processed/nested/lu";
+
 
 const id = "circle-packing-chart";
 
 export default function CirclePacking() {
+
+    const levelValues = lu["level1"].map(d => d.id);
 
     const [viewVariable, updateViewVariable] = useState("riskType");
     const [viewHoverValue, updateViewHoverValue] = useState(undefined); 
 
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(activityTypeValues);
-    const [selectedLevels, updateLevels] = useState([]);
+    const [selectedLevels, updateLevels] = useState(levelValues);
 
     const root = d3.pack()
         .size([window.innerWidth, window.innerHeight])
@@ -60,7 +64,7 @@ export default function CirclePacking() {
                       <p>Click on the circles to zoom into the process visualization.</p>
                     </Description>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={activityTypeValues} label="Inspect by Activity Type"/>
-                    <InspectProcesses selectedLevels={selectedLevels} updateLevels={updateLevels}/>
+                    <InspectProcesses typesChecked={selectedLevels} updateSelection={updateLevels} typeValues={levelValues} label="Inspect by Taxonomy"/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
             </div>
