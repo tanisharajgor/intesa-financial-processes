@@ -11,7 +11,6 @@ import InspectProcesses from "../components/InspectProcesses";
 
 import { activityTypeValues } from "../utils/global";
 import Description from "../components/Description";
-import lu from "../data/processed/nested/lu.json"
 
 const id = "circle-packing-chart";
 
@@ -23,13 +22,9 @@ export default function CirclePacking() {
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(activityTypeValues);
     const [selectedLevels, updateLevels] = useState([]);
-    // const [selectedChapters, updateChapters] = useState(lu.map(d => d.descr));
-
-    const height = window.innerHeight;
-    const width = window.innerWidth;
 
     const root = d3.pack()
-        .size([width, height])
+        .size([window.innerWidth, window.innerHeight])
         .padding(1)
         (d3.hierarchy(data)
         .sum(d => 1)
@@ -50,9 +45,6 @@ export default function CirclePacking() {
     //     updateViewVariable(updatedView)
     // }, [])
 
-
-    console.log(selectedLevels)
-    // console.log(selectedActivities)
     useEffect(() => {
         circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities, selectedLevels);
         inspectHierarchySummary(data);

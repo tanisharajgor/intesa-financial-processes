@@ -73,12 +73,12 @@ export class CirclePackingDiagram {
 
   selectedActivitiesOpacity(node) {
     if (node.data.treeLevel < 4) {
-      node.gfx.alpha = .1;
+      node.gfx.alpha = .2;
     } else {
       if (this.selectedActivities.includes(node.data.activityType)) {
         node.gfx.alpha = 1;
       } else {
-        node.gfx.alpha = .1;
+        node.gfx.alpha = .2;
       }
     }
   }
@@ -87,7 +87,7 @@ export class CirclePackingDiagram {
     if (this.selectedLevels.includes(node.id)) {
       node.gfx.alpha = 1;
     } else {
-      node.gfx.alpha = .1;
+      node.gfx.alpha = .2;
     }
   }
 
@@ -240,6 +240,7 @@ export class CirclePackingDiagram {
   updateDraw(viewVariable, selectedActivities, selectedLevels) {
 
     console.log(selectedLevels)
+    console.log(selectedActivities)
     this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
     this.selectedLevels = selectedLevels;
     this.viewVariable = viewVariable;
