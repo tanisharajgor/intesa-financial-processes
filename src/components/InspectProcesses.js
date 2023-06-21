@@ -40,32 +40,29 @@ const StyledFilter = styled('div')`
 
 export default function InspectProcesses({typesChecked, updateSelection, typeValues, label}) {
 
-    let newSelectedTypes = [];
-
-    const level1 = [{"id": -1, "descr": "All"}].concat(lu["level1"])
-
-    const [filteredTypes, updateFilter] = useState([]);
-    const [selectedLevel1ID, updateLevel1] = useState(level1[0].id);
+    // let newSelectedTypes = [];
+    // const [filteredTypes, updateFilter] = useState([]);
+    // const [selectedLevel1ID, updateLevel1] = useState(typeValues[0].id);
     const [shouldRotate, setRotate] = useState(false);
 
     const handleRotate = () => setRotate(!shouldRotate);
 
-    const updateSelectedRange = (selected) => {
-        if (typesChecked.includes(selected)) {
-            newSelectedTypes = typesChecked.filter((obj) => obj !== selected);
-            filteredTypes.push(selected)
-            updateFilter([...filteredTypes])
-        } else {
-            typesChecked.push(selected)
-            updateFilter(filteredTypes.filter((obj) => obj !== selected));
-            newSelectedTypes = [...typesChecked];
-        }
-        updateSelection(newSelectedTypes);
-    }
+    // const updateSelectedRange = (selected) => {
+    //     if (typesChecked.includes(selected)) {
+    //         newSelectedTypes = typesChecked.filter((obj) => obj !== selected);
+    //         filteredTypes.push(selected)
+    //         updateFilter([...filteredTypes])
+    //     } else {
+    //         typesChecked.push(selected)
+    //         updateFilter(filteredTypes.filter((obj) => obj !== selected));
+    //         newSelectedTypes = [...typesChecked];
+    //     }
+    //     updateSelection(newSelectedTypes);
+    // }
 
     const handleChange = (event) => {
-        let level1 = parseInt(event.target.value);
-        updateLevel1(level1);
+        let l1 = parseInt(event.target.value);
+        updateSelection(l1);
     };
 
     return(
@@ -75,36 +72,15 @@ export default function InspectProcesses({typesChecked, updateSelection, typeVal
                 id="activity-type-filter-header"
                 onClick={handleRotate}
             >
-                <StyledHeader>
-                    <Key>
-                        {
-                            filteredTypes.length <= 0 ? label :
-                            `${label}:`
-                        }
-                    </Key>
-                    <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
-                        <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
-                        <Ripple color={"#FFFFFF"} duration={1000}/>
-                    </ChevronButton>
-                </StyledHeader>
-                { filteredTypes.length <= 0 ? <></> : 
-                    <StyledFilteredData>
-                        {
-                            filteredTypes.map((type, i, arr) => {
-
-                                let str = type;
-
-                                if (i < arr.length - 1) {
-                                    str += ', '
-                                }
-
-                                return (
-                                    <span>{str}</span>
-                                )
-                            }) 
-                        }
-                    </StyledFilteredData>
-                }
+            <StyledHeader>
+                <Key>
+                    {label}
+                </Key>
+                <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
+                    <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
+                    <Ripple color={"#FFFFFF"} duration={1000}/>
+                </ChevronButton>
+            </StyledHeader>
             </AccordionHeader>
             <AccordionDetails>
                 <LayoutGroup>
@@ -116,10 +92,10 @@ export default function InspectProcesses({typesChecked, updateSelection, typeVal
                                      labelId="process1-select-label"
                                      id="process1-select"
                                      displayEmpty
-                                     value={selectedLevel1ID}
+                                     value={typesChecked}
                                      onChange={handleChange}
                                  >
-                                     {level1.map((level, index) => {
+                                     {typeValues.map((level, index) => {
                                          return(
                                              <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
                                          )

@@ -6,6 +6,8 @@ import '@pixi/graphics-extras';
 import { activityTypeValues } from "../utils/global";
 import lu from "../data/processed/nested/lu";
 
+const nonHighlightOpacity = .15;
+
 export class CirclePackingDiagram {
   app;
   containerNodes;
@@ -25,11 +27,12 @@ export class CirclePackingDiagram {
 
   constructor(data, updateViewHoverValue) {
     this.data = data;
+    this.levelIDs = this.data.map(d => d.data.id);
     this.zoomedNodeId = 0;
     this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
     this.selectedActivities = [];
-    this.selectedLevels = [];
+    this.selectedLevel = [];
   }
 
   // Initializes the application
@@ -75,47 +78,47 @@ export class CirclePackingDiagram {
 
   selectedActivitiesOpacity(node) {
     if (node.data.treeLevel < 4) {
-      node.gfx.alpha = .2;
+      node.gfx.alpha = nonHighlightOpacity;
     } else {
       if (this.selectedActivities.includes(node.data.activityType)) {
         node.gfx.alpha = 1;
       } else {
-        node.gfx.alpha = .2;
+        node.gfx.alpha = nonHighlightOpacity;
       }
     }
   }
 
-  selectedLevelsOpacity(node) {
+  selectedLevelOpacity(node) {
 
     if (this.levelIDs.includes(node.data.id)) {
-      node.gfx.alpha = scale(node.data.treeLevel);
+      node.gfx.alpha = this.alphaScale(node.data.treeLevel);
     } else {
-      node.gfx.alpha = .2;
+      node.gfx.alpha = nonHighlightOpacity;
     }
   }
 
-  selectedLevelsAndActivitiesOpacity(node) {
+  selectedLevelAndActivitiesOpacity(node) {
     if (this.levelIDs.includes(node.data.id) && this.selectedActivities.includes(node.data.activityType)) {
-      node.gfx.alpha = scale(node.data.treeLevel);
+      node.gfx.alpha = this.alphaScale(node.data.treeLevel);
     } else {
-      node.gfx.alpha = .2;
+      node.gfx.alpha = nonHighlightOpacity;
     }
   }
 
   opacityScale(node) {
 
-    const scale = d3.scaleOrdinal()
+    this.alphaScale = d3.scaleOrdinal()
       .domain([0, 1, 2, 3, 4])
       .range([.05, .3, .4, .5, .6]);
 
-    if (this.selectedActivities.length > 0 && this.selectedLevels.length > 0) {
-      this.selectedLevelsAndActivitiesOpacity(node);
+    if (this.selectedActivities.length > 0 && this.selectedLevel !== -1) {
+      this.selectedLevelAndActivitiesOpacity(node);
     } else if(this.selectedActivities.length > 0) {
       this.selectedActivitiesOpacity(node);
-    } else if(this.selectedLevels.length > 0) {
-      this.selectedLevelsOpacity(node);
+    } else if(this.selectedLevel !== -1) {
+      this.selectedLevelOpacity(node);
     } else {
-      node.gfx.alpha = scale(node.data.treeLevel);
+      node.gfx.alpha = this.alphaScale(node.data.treeLevel);
     }
   }
 
@@ -246,19 +249,17 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable, selectedActivities, selectedLevels) {
-
-    const levelValues = lu["level1"].map(d => d.id);
+  updateDraw(viewVariable, selectedActivities, selectedLevel) {
 
     this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
-    this.selectedLevels = levelValues.filter(x => !selectedLevels.includes(x));
+    this.selectedLevel = selectedLevel;
 
-    if( this.selectedLevels.length > 0 ) {
-
-      this.levelIDs = this.data.filter(d => this.selectedLevels.includes(d.data.id))
+    if (this.selectedLevel !== -1) {
+      this.levelIDs = this.data.map(d => d.data.id);
+      this.levelIDs = this.data.filter(d => [this.selectedLevel].includes(d.data.id))
                                 .map(d => d.data.childrenIDs)
                                 .reduce((a, b) => a.concat(b));
-      this.levelIDs = this.levelIDs.concat(this.selectedLevels);
+      this.levelIDs = this.levelIDs.concat([this.selectedLevel]);
     }
 
     this.viewVariable = viewVariable;
