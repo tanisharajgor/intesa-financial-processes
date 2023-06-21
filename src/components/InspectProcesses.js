@@ -1,7 +1,7 @@
 import { Accordion, AccordionHeader, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
 import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../component-styles/query-layout';
 import { Key } from '../component-styles/key'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
@@ -9,17 +9,10 @@ import * as d3 from 'd3';
 import * as Theme from "../component-styles/theme";
 import { StyledSelect } from '../component-styles/select';
 import lu from '../data/processed/nested/lu.json';
+import * as Global from "../utils/global";
 
 const id = "Inspect-Process-TreeMap";
 const width = 290, height = 1000;
-
-const StyledFilteredData = styled('span')`
-    font-style: italic;
-    text-color: ${props =>  props.theme.color.secondary };
-    opacity: 75%;
-    height: 1.5rem;
-    display: block;
-`
 
 const StyledHeader = styled('div')`
     display: flex;
@@ -38,32 +31,93 @@ const StyledFilter = styled('div')`
     flex-direction: column;
 `
 
-export default function InspectProcesses({typesChecked, updateSelection, typeValues, label}) {
+function initTreeMap() {
+    d3.select(`#${id}`)
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+}
 
-    // let newSelectedTypes = [];
-    // const [filteredTypes, updateFilter] = useState([]);
-    // const [selectedLevel1ID, updateLevel1] = useState(typeValues[0].id);
+function updateTreeMap(data) {
+
+    const margin = {top: 25}
+
+    const root = d3.hierarchy(data)
+        .sum(function(d) { return 1 }) // Here the size of each leave is given in the 'value' field in input data
+
+    d3.partition()
+       .size([height - margin.top, width])
+        .padding(1)
+        .round(false)
+        (root);
+
+    const t = root.descendants();
+    const descendants = root.descendants().slice(1);
+
+    let svg = d3.select(`#${id} svg`);
+
+    d3.select(`#${id} svg g`).remove();
+
+    svg = svg.append("g");
+
+    let labels = ["Level 2", "Level 3", "Chapter"];
+
+    for (let i in labels) {
+
+        svg
+            .append("text")
+            .attr("x", 3 + t[0].y1 + t[0].y1*i)
+            .attr("y", -5)
+            .attr("font-size", Theme.labelStyles.fontSize)
+            .attr("fill", Theme.labelStyles.fontColor)
+            .text(labels[i])
+    }
+
+    svg
+        .attr("transform", `translate(-${t[0].y1}, ${margin.top})`)
+        .selectAll("rect")
+        .data(descendants, d => d.id)
+        .join(
+            enter => enter
+            .append("rect")
+            .attr("transform", d => `translate(${d.y0},${d.x0})`)
+            .attr("width", d => d.y1 - d.y0)
+            .attr("height", d => d.x1 - d.x0)
+            .attr("fill", Theme.labelStyles.fontColor)
+            .attr("font-family", Theme.labelStyles.fontFamily)
+            .attr("class", "Process-Node")
+            .attr("fill-opacity", .7)
+    )
+}
+
+export default function InspectProcesses({selectedLevel1, updateLevel1, typeValues, label}) {
+
+    const processes = lu["processes"];
+
+    console.log(processes)
+
     const [shouldRotate, setRotate] = useState(false);
 
     const handleRotate = () => setRotate(!shouldRotate);
 
-    // const updateSelectedRange = (selected) => {
-    //     if (typesChecked.includes(selected)) {
-    //         newSelectedTypes = typesChecked.filter((obj) => obj !== selected);
-    //         filteredTypes.push(selected)
-    //         updateFilter([...filteredTypes])
-    //     } else {
-    //         typesChecked.push(selected)
-    //         updateFilter(filteredTypes.filter((obj) => obj !== selected));
-    //         newSelectedTypes = [...typesChecked];
-    //     }
-    //     updateSelection(newSelectedTypes);
-    // }
-
     const handleChange = (event) => {
         let l1 = parseInt(event.target.value);
-        updateSelection(l1);
+        updateLevel1(l1);
     };
+
+    useEffect(() =>{
+        Global.initTooltip(id);
+        initTreeMap();
+    }, []);
+
+    useEffect(() => {
+        if (selectedLevel1 !== -1) {
+            updateTreeMap(processes.children.find(d => d.id === selectedLevel1));
+        }
+    //     updateTreeMap(processes.children.find(d => d.id === selectedLevel1));
+    //     // onClick(selectedLevels, updateLevels);
+    //     // renderTooltip(selectedLevels)
+    }, [selectedLevel1]);
 
     return(
         <Accordion className={'Card'}>
@@ -92,7 +146,7 @@ export default function InspectProcesses({typesChecked, updateSelection, typeVal
                                      labelId="process1-select-label"
                                      id="process1-select"
                                      displayEmpty
-                                     value={typesChecked}
+                                     value={selectedLevel1}
                                      onChange={handleChange}
                                  >
                                      {typeValues.map((level, index) => {
@@ -103,25 +157,6 @@ export default function InspectProcesses({typesChecked, updateSelection, typeVal
                                  </StyledSelect>
                              </Form>
                          </LayoutItem>
-                            {/* <LayoutItem className="push">
-                                <FilterList>
-                                    {typeValues.map((value, index) => {
-                                        return (
-                                            <li key={index}>
-                                                    <FormLabel
-                                                    control={<Checkbox color="primary" 
-                                                    checked={typesChecked.includes(value)} 
-                                                    name={value} 
-                                                    onChange={() => updateSelectedRange(value)}
-                                                    label={value}
-                                                    />}                                     
-                                                />
-                                            </li>
-                                            )
-                                        })
-                                    }
-                                </FilterList>
-                            </LayoutItem> */}
                         </LayoutRow>
                         <LayoutRow>
                             <StyledFilter id={id}></StyledFilter>
@@ -238,65 +273,6 @@ export default function InspectProcesses({typesChecked, updateSelection, typeVal
 
 //     d3.selectAll('.Process-Node .Selected')
 //         .attr("fill", Theme.primaryColorHex);
-// }
-
-// function initTreeMap() {
-//     d3.select(`#${id}`)
-//         .append("svg")
-//         .attr("width", width)
-//         .attr("height", height);
-// }
-
-// function updateTreeMap(data) {
-
-//     const margin = {top: 25}
-
-//     const root = d3.hierarchy(data)
-//         .sum(function(d) { return 1 }) // Here the size of each leave is given in the 'value' field in input data
-
-//     d3.partition()
-//        .size([height - margin.top, width])
-//         .padding(1)
-//         .round(false)
-//         (root);
-
-//     const t = root.descendants();
-//     const descendants = root.descendants().slice(1);
-
-//     let svg = d3.select(`#${id} svg`);
-
-//     d3.select(`#${id} svg g`).remove();
-
-//     svg = svg.append("g");
-
-//     let labels = ["Level 2", "Level 3", "Chapter"];
-
-//     for (let i in labels) {
-
-//         svg
-//             .append("text")
-//             .attr("x", 3 + t[0].y1 + t[0].y1*i)
-//             .attr("y", -5)
-//             .attr("font-size", Theme.labelStyles.fontSize)
-//             .attr("fill", Theme.labelStyles.fontColor)
-//             .text(labels[i])
-//     }
-
-//     svg
-//         .attr("transform", `translate(-${t[0].y1}, ${margin.top})`)
-//         .selectAll("rect")
-//         .data(descendants, d => d.id)
-//         .join(
-//             enter => enter
-//             .append("rect")
-//             .attr("transform", d => `translate(${d.y0},${d.x0})`)
-//             .attr("width", d => d.y1 - d.y0)
-//             .attr("height", d => d.x1 - d.x0)
-//             .attr("fill", Theme.labelStyles.fontColor)
-//             .attr("font-family", Theme.labelStyles.fontFamily)
-//             .attr("class", "Process-Node")
-//             .attr("fill-opacity", .7)
-//     )
 // }
 
 // export default function InspectProcesses({selectedLevels, updateLevels}) {
