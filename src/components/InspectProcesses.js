@@ -208,19 +208,15 @@ export default function InspectProcesses({selectedLevel1, updateSelectedLevel1, 
     const valuesLevel1 = [{"id": -1, "descr": "All"}].concat(processes.children);
     const [valuesLevel2, updateValuesLevel2] = useState([]);
 
-    console.log(valuesLevel2)
-
-    console.log(processes)
-
     const [shouldRotate, setRotate] = useState(false);
 
     const handleRotate = () => setRotate(!shouldRotate);
 
     const handleChangeLevel1 = (event) => {
         let l1 = parseInt(event.target.value);
-        let l2 = processes.children.filter(d => d.id === event.target.value);
+        let l2 = processes.children.find(d => d.id === l1);
         updateSelectedLevel1(l1);
-        updateValuesLevel2([{"id": -1, "descr": "All"}].concat(l2));
+        updateValuesLevel2([{"id": -1, "descr": "All"}].concat(l2.children));
     };
 
     const handleChangeLevel2 = (event) => {
