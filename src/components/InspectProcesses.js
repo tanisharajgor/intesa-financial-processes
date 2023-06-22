@@ -90,110 +90,6 @@ const StyledFilter = styled('div')`
 //     )
 // }
 
-export default function InspectProcesses({selectedLevel1, updateLevel1, typeValues, label}) {
-
-    const processes = lu["processes"];
-
-    console.log(processes)
-
-    const [shouldRotate, setRotate] = useState(false);
-
-    const handleRotate = () => setRotate(!shouldRotate);
-
-    const handleChange = (event) => {
-        let l1 = parseInt(event.target.value);
-        updateLevel1(l1);
-    };
-
-    useEffect(() =>{
-        Global.initTooltip(id);
-        // initTreeMap();
-    }, []);
-
-    useEffect(() => {
-        if (selectedLevel1 !== -1) {
-            // updateTreeMap(processes.children.find(d => d.id === selectedLevel1));
-            // onClick(selectedLevels, updateLevels);
-            // renderTooltip(selectedLevels)
-        } else {
-            // removeTree(); //write this function
-        }
-    }, [selectedLevel1]);
-
-    return(
-        <Accordion className={'Card'}>
-            <AccordionHeader
-                aria-controls="activity-type-filter-content"
-                id="activity-type-filter-header"
-                onClick={handleRotate}
-            >
-            <StyledHeader>
-                <Key>
-                    {label}
-                </Key>
-                <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
-                    <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
-                    <Ripple color={"#FFFFFF"} duration={1000}/>
-                </ChevronButton>
-            </StyledHeader>
-            </AccordionHeader>
-            <AccordionDetails>
-                <LayoutGroup>
-                    <StyledLabel>Level 1</StyledLabel>
-                        <LayoutRow>
-                        <LayoutItem className="push">
-                            <Form variant="outlined" size="small">
-                                 <StyledSelect
-                                     labelId="process1-select-label"
-                                     id="process1-select"
-                                     displayEmpty
-                                     value={selectedLevel1}
-                                     onChange={handleChange}
-                                 >
-                                     {typeValues.map((level, index) => {
-                                         return(
-                                             <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
-                                         )
-                                     })}
-                                 </StyledSelect>
-                             </Form>
-                         </LayoutItem>
-                        </LayoutRow>
-                        <LayoutRow>
-                            <StyledFilter id={id}></StyledFilter>
-                        </LayoutRow>
-                </LayoutGroup>
-            </AccordionDetails>
-        </Accordion>
-    )
-}
-
-// import { Accordion, AccordionHeader, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
-// import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
-// import { InnerHeader } from '../component-styles/inner-header';
-// import { ChevronButton } from '../component-styles/chevron-button';
-// import { Key } from '../component-styles/key';
-// import { StyledSelect } from '../component-styles/select';
-// import Ripple from './Ripple';
-// import lu from '../data/processed/nested/lu.json';
-// import * as d3 from 'd3';
-// import { useEffect, useState } from "react";
-// import styled from 'styled-components';
-// import * as Theme from "../component-styles/theme";
-// import * as Global from "../utils/global";
-
-// const StyledFilter = styled('div')`
-//     display: flex;
-//     flex-direction: column;
-// `
-
-// const StyledFilteredData = styled('span')`
-//     font-style: italic;
-//     text-color: ${props =>  props.theme.color.secondary };
-//     opacity: 75%;
-//     display: block;
-// `
-
 // function onClick(selectedLevels, updateLevels) {
 
 //     d3.selectAll('.Process-Node').on("click", function(e, d) {
@@ -276,78 +172,80 @@ export default function InspectProcesses({selectedLevel1, updateLevel1, typeValu
 //         .attr("fill", Theme.primaryColorHex);
 // }
 
-// export default function InspectProcesses({selectedLevels, updateLevels}) {
+export default function InspectProcesses({selectedLevel1, updateLevel1, typeValues, label}) {
 
-//     const processes = lu["processes"];
-//     const level1 = lu["level1"];
+    const processes = lu["processes"];
 
-//     const [shouldRotate, setRotate] = useState(false);
-//     const [selectedLevel1ID, updateLevel1] = useState(level1[0].id);
+    console.log(processes)
 
-//     const handleRotate = () => setRotate(!shouldRotate);
-//     const handleChange = (event) => {
-//         let level1 = parseInt(event.target.value);
-//         updateLevel1(level1);
-//     };
+    const [shouldRotate, setRotate] = useState(false);
 
-//     useEffect(() =>{
-//         Global.initTooltip(id);
-//         initTreeMap();
-//     }, []);
+    const handleRotate = () => setRotate(!shouldRotate);
 
-//     useEffect(() =>{
-//         updateTreeMap(processes.children.filter(d => d.id === selectedLevel1ID)[0]);
-//         onClick(selectedLevels, updateLevels);
-//         renderTooltip(selectedLevels)
-//     }, [selectedLevel1ID, selectedLevels]);
+    const handleChange = (event) => {
+        let l1 = parseInt(event.target.value);
+        updateLevel1(l1);
+    };
 
-//     return(
-//         <Accordion className={'Card'}>
-//             <AccordionHeader
-//                 aria-controls="process-filter-content"
-//                 id="process-filter-header"
-//                 onClick={handleRotate}
-//             >
-//                 <InnerHeader>
-//                     <Key>
-//                         Inspect by Taxonomy
-//                     </Key>
-//                     <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
-//                         <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
-//                         <Ripple color={"#FFFFFF"} duration={1000}/>
-//                     </ChevronButton>
-//                 </InnerHeader>
-//                 <StyledFilteredData>
-//                     {/* {level3Descr} */}
-//                 </StyledFilteredData>
-//             </AccordionHeader>
-//             <AccordionDetails>
-//                 <LayoutGroup>
-//                     <StyledLabel>Level 1</StyledLabel>
-//                     <LayoutRow className="layout_row">
-//                         <LayoutItem className="push">
-//                             <Form variant="outlined" size="small">
-//                                 <StyledSelect
-//                                     labelId="process1-select-label"
-//                                     id="process1-select"
-//                                     displayEmpty
-//                                     value={selectedLevel1ID}
-//                                     onChange={handleChange}
-//                                 >
-//                                     {level1.map((level, index) => {
-//                                         return(
-//                                             <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
-//                                         )
-//                                     })}
-//                                 </StyledSelect>
-//                             </Form>
-//                         </LayoutItem>
-//                     </LayoutRow>
-//                     <LayoutRow>
-//                         <StyledFilter id={id}></StyledFilter>
-//                     </LayoutRow>
-//                 </LayoutGroup>
-//             </AccordionDetails>
-//         </Accordion>
-//     )
-// }
+    useEffect(() =>{
+        Global.initTooltip(id);
+        // initTreeMap();
+    }, []);
+
+    useEffect(() => {
+        if (selectedLevel1 !== -1) {
+            // updateTreeMap(processes.children.find(d => d.id === selectedLevel1));
+            // onClick(selectedLevels, updateLevels);
+            // renderTooltip(selectedLevels)
+        } else {
+            // removeTree(); //write this function
+        }
+    }, [selectedLevel1]);
+
+    return(
+        <Accordion className={'Card'}>
+            <AccordionHeader
+                aria-controls="activity-type-filter-content"
+                id="activity-type-filter-header"
+                onClick={handleRotate}
+            >
+            <StyledHeader>
+                <Key>
+                    {label}
+                </Key>
+                <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
+                    <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
+                    <Ripple color={"#FFFFFF"} duration={1000}/>
+                </ChevronButton>
+            </StyledHeader>
+            </AccordionHeader>
+            <AccordionDetails>
+                <LayoutGroup>
+                    <StyledLabel>Level 1</StyledLabel>
+                        <LayoutRow>
+                        <LayoutItem className="push">
+                            <Form variant="outlined" size="small">
+                                 <StyledSelect
+                                     labelId="process1-select-label"
+                                     id="process1-select"
+                                     displayEmpty
+                                     value={selectedLevel1}
+                                     onChange={handleChange}
+                                 >
+                                     {typeValues.map((level, index) => {
+                                         return(
+                                             <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
+                                         )
+                                     })}
+                                 </StyledSelect>
+                             </Form>
+                         </LayoutItem>
+                        </LayoutRow>
+                        <LayoutRow>
+                            <StyledFilter id={id}></StyledFilter>
+                        </LayoutRow>
+                </LayoutGroup>
+            </AccordionDetails>
+        </Accordion>
+    )
+}
