@@ -93,9 +93,12 @@ export default class NetworkVisualization {
       .drag();
 
     this.viewport.on('click', () => this.clickOff());
+  }
 
-    // Set diagram to fill the vizualization frame
-    this.viewport.zoomPercent(-0.10, true)
+  // Set diagram to fill the vizualization frame
+  centerVisualization(newX, newY, zoom) {
+    this.viewport.zoomPercent(zoom, true)
+    this.viewport.moveCenter(newX, newY);
   }
 
   clickOff() {

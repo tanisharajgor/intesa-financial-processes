@@ -65,6 +65,11 @@ export class CirclePackingDiagram {
     this.app.stage.addChild(this.viewport);
   }
 
+    // Set diagram to fill the vizualization frame
+    centerVisualization(zoom) {
+      this.viewport.zoomPercent(zoom, true)
+    }
+
   initTooltip(selector) {
     this.tooltip = d3.select(`#${selector}`)
       .append("div")
