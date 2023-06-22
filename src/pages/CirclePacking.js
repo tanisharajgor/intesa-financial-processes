@@ -46,20 +46,21 @@ export default function CirclePacking() {
         circlePackingDiagram.current.draw(viewVariable);
     }, []);
 
-    // const onViewVariableChange = useCallback((updatedView) => {
-    //     circlePackingDiagram.current.updateDraw(updatedView)
+    const onViewVariableChange = useCallback((updatedView) => {
+        circlePackingDiagram.current.updateDraw(updatedView, selectedActivities)
 
-    //     let inspect = d3.select(".Inspect");
-    //     inspectHierarchySummary(inspect, data);
-    //     updateViewVariable(updatedView)
-    // }, [])
-
-    useEffect(() => {
-        circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities);
         let inspect = d3.select(".Inspect");
         inspectHierarchySummary(inspect, data);
-        // updateViewVariable(updatedView);
-    }, [selectedActivities, viewVariable]);
+        updateViewVariable(updatedView)
+    }, [viewVariable])
+
+    const onFilterActivitiesChange = useCallback((updatedActivities) => {
+        circlePackingDiagram.current.updateDraw(viewVariable, updatedActivities)
+
+        let inspect = d3.select(".Inspect");
+        inspectHierarchySummary(inspect, data);
+        updateActivities(updatedActivities)
+    }, [selectedActivities])
 
     return(
         <>
@@ -70,11 +71,11 @@ export default function CirclePacking() {
                       <h4>Ecosystem</h4>
                       <p>Click on the circles to zoom into the process visualization.</p>
                     </Description>
-                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
+                    <FilterType typesChecked={selectedActivities} updateSelection={onFilterActivitiesChange} typeValues={possibleActivities} label="Inspect by Activity Type"/>
                 </Menu>
                 <Main
                     viewVariable={viewVariable}
-                    updateViewVariable={updateViewVariable}
+                    updateViewVariable={onViewVariableChange}
                     viewHoverValue={viewHoverValue}
                     id={id}
                     controls={circlePackingDiagram.current.getControls()}
