@@ -15,6 +15,7 @@ import { Content } from "../component-styles/content";
 import { Menu } from "../component-styles/query-menu";
 
 const id = "network-chart";
+const visualizationXPadding = 200;
 
 // Combines the nodes and links into a single object
 function combineNodeLink(selectedLevel3ID, nodes, links) {
@@ -103,6 +104,10 @@ export default function Network() {
         networkDiagram.current.draw(viewVariable);
         networkDiagram.current.animate();
 
+        const width =  (document.getElementById(id).clientWidth / 2) - document.getElementsByClassName("Query")[0].clientWidth;
+        const height = (document.getElementById(id).clientHeight / 2) - document.getElementsByClassName("Navigation")[0].clientHeight;
+
+        networkDiagram.current.centerVisualization(width - visualizationXPadding, height, -0.40);
     }, []);
 
     // Filter data

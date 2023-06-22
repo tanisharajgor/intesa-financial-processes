@@ -44,6 +44,8 @@ export default function CirclePacking() {
     useEffect(() => {
         circlePackingDiagram.current.init(id);
         circlePackingDiagram.current.draw(viewVariable);
+
+        circlePackingDiagram.current.centerVisualization(-0.30);
     }, []);
 
     // const onViewVariableChange = useCallback((updatedView) => {
