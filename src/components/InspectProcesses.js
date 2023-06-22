@@ -22,6 +22,7 @@ const StyledLabel = styled('span')`
     color: ${Theme.labelStyles.fontColor};
     font-family: ${Theme.labelStyles.fontFamily};
     font-size: ${Theme.labelStyles.fontSize};
+    margin-top: 5px;
     margin-bottom: 5px;
     margin-left: 3px;
 `
@@ -172,6 +173,34 @@ const StyledFilter = styled('div')`
 //         .attr("fill", Theme.primaryColorHex);
 // }
 
+function taxonomyLevel(valuesLevel, selectedLevel, handleChange, label, id) {
+
+    return(
+        <LayoutGroup>
+            <StyledLabel>{label}</StyledLabel>
+            <LayoutRow>
+                <LayoutItem className="push">
+                    <Form variant="outlined" size="small">
+                        <StyledSelect
+                            labelId={"process-" + id + "-select-label"}
+                            id={"process-" + id + "-select"}
+                            displayEmpty
+                            value={selectedLevel}
+                            onChange={handleChange}
+                        >
+                            {valuesLevel.map((level, index) => {
+                                return(
+                                    <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
+                                )
+                            })}
+                        </StyledSelect>
+                    </Form>
+                </LayoutItem>
+            </LayoutRow>
+        </LayoutGroup>
+    )
+}
+
 export default function InspectProcesses({selectedLevel1, updateSelectedLevel1, selectedLevel2, updateSelectedLevel2}) {
 
     const processes = lu["processes"];
@@ -230,51 +259,8 @@ export default function InspectProcesses({selectedLevel1, updateSelectedLevel1, 
             </StyledHeader>
             </AccordionHeader>
             <AccordionDetails>
-                <LayoutGroup>
-                    <StyledLabel>Level 1</StyledLabel>
-                    <LayoutRow>
-                        <LayoutItem className="push">
-                            <Form variant="outlined" size="small">
-                                <StyledSelect
-                                    labelId="process1-select-label"
-                                    id="process1-select"
-                                    displayEmpty
-                                    value={selectedLevel1}
-                                    onChange={handleChangeLevel1}
-                                >
-                                    {valuesLevel1.map((level, index) => {
-                                        return(
-                                            <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
-                                        )
-                                    })}
-                                </StyledSelect>
-                            </Form>
-                        </LayoutItem>
-                    </LayoutRow>
-                    </LayoutGroup>
-                    {selectedLevel1 !== -1? 
-                    <LayoutGroup>
-                        <StyledLabel>Level 2</StyledLabel>
-                        <LayoutRow>
-                            <LayoutItem className="push">
-                                <Form variant="outlined" size="small">
-                                    <StyledSelect
-                                        labelId="process2-select-label"
-                                        id="process2-select"
-                                        displayEmpty
-                                        value={selectedLevel2}
-                                        onChange={handleChangeLevel2}
-                                    >
-                                        {valuesLevel2.map((level, index) => {
-                                            return(
-                                                <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
-                                            )
-                                        })}
-                                    </StyledSelect>
-                                </Form>
-                            </LayoutItem>
-                        </LayoutRow>
-                    </LayoutGroup>: <></> }
+                {taxonomyLevel(valuesLevel1, selectedLevel1, handleChangeLevel1, "Level 1", 1)}
+                {selectedLevel1 !== -1? taxonomyLevel(valuesLevel2, selectedLevel2, handleChangeLevel2, "Level 2", 2): <></>}
                 <LayoutGroup>
                     {/* <LayoutRow>
                         <StyledFilter id={id}></StyledFilter>
