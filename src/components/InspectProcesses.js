@@ -64,26 +64,35 @@ export default function InspectProcesses({selectedLevel1, updateSelectedLevel1, 
 
     const handleChangeLevel1 = (event) => {
         let l1 = parseInt(event.target.value);
-        let l2 = processes.children.find(d => d.id === l1);
+        if (l1 !== -1) {
+            let l2 = processes.children.find(d => d.id === l1);
+            updateValuesLevel2([{"id": -1, "descr": "All"}].concat(l2.children));
+        } else {
+            updateSelectedLevel2(-1);
+            updateSelectedLevel3(-1);
+        }
         updateSelectedLevel1(l1);
-        updateValuesLevel2([{"id": -1, "descr": "All"}].concat(l2.children));
     };
 
     const handleChangeLevel2 = (event) => {
         let l2 = parseInt(event.target.value);
-        let l3 = valuesLevel2.find(d => d.id === l2);
+        if (l2 !== -1) {
+            let l3 = valuesLevel2.find(d => d.id === l2);
+            updateValuesLevel3([{"id": -1, "descr": "All"}].concat(l3.children));
+        } else {
+            updateSelectedLevel3(-1);   
+        }
         updateSelectedLevel2(l2);
-        updateValuesLevel3([{"id": -1, "descr": "All"}].concat(l3.children));
     };
 
     const handleChangeLevel3 = (event) => {
         let l3 = parseInt(event.target.value);
-        let chapter = valuesLevel3.find(d => d.id === l3);
+        if (l3 !== -1) {
+            let chapter = valuesLevel3.find(d => d.id === l3);
+            updateValuesChapter([{"id": -1, "descr": "All"}].concat(chapter.children));
+        }
         updateSelectedLevel3(l3);
-        updateValuesChapter([{"id": -1, "descr": "All"}].concat(chapter.children));
     };
-
-    console.log(valuesChapter)
 
     const handleChangeChapter = (event) => {
         let chapter = parseInt(event.target.value);
@@ -108,8 +117,8 @@ export default function InspectProcesses({selectedLevel1, updateSelectedLevel1, 
             <AccordionDetails>
                 {taxonomyLevel(valuesLevel1, selectedLevel1, handleChangeLevel1, "Level 1", "1")}
                 {selectedLevel1 !== -1? taxonomyLevel(valuesLevel2, selectedLevel2, handleChangeLevel2, "Level 2", "2"): <></>}
-                {selectedLevel2 !== -1? taxonomyLevel(valuesLevel3, selectedLevel3, handleChangeLevel3, "Level 3", "3"): <></>}
-                {selectedLevel3 !== -1? taxonomyLevel(valuesChapter, selectedChapter, handleChangeChapter, "Chapter", "chapter"): <></>}
+                {selectedLevel2 !== -1 && selectedLevel1 !== -1? taxonomyLevel(valuesLevel3, selectedLevel3, handleChangeLevel3, "Level 3", "3"): <></>}
+                {selectedLevel3 !== -1 && selectedLevel2 !== -1 && selectedLevel1 !== -1? taxonomyLevel(valuesChapter, selectedChapter, handleChangeChapter, "Chapter", "chapter"): <></>}
             </AccordionDetails>
         </Accordion>
     )

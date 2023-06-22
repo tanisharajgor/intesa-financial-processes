@@ -29,8 +29,6 @@ export default function CirclePacking() {
 
     const [valuesChapter, updateValuesChapter] = useState([]);
 
-    console.log(valuesChapter)
-
     const root = d3.pack()
         .size([window.innerWidth, window.innerHeight])
         .padding(1)

@@ -296,7 +296,7 @@ export class CirclePackingDiagram {
     this.drawNodes();
   }
 
-    // Controls ------------------------------------------------------
+  // Controls ------------------------------------------------------
   getControls() {
     return {
       zoomIn: () => {
