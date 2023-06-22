@@ -261,31 +261,31 @@ export class CirclePackingDiagram {
     this.selectedChapter = selectedChapter;
 
     if (this.selectedLevel1 !== -1) {
-
-      this.levelIDs = this.data.filter(d => [this.selectedLevel1].includes(d.data.id))
-                                .map(d => d.data.childrenIDs)
-                                .reduce((a, b) => a.concat(b));
-      this.levelIDs = this.levelIDs.concat([this.selectedLevel1]);
-
-    } else if (this.selectedLevel2 !== -1) {
-
-      this.levelIDs = this.data.filter(d => [this.selectedLevel2].includes(d.data.id))
-                                .map(d => d.data.childrenIDs)
-                                .reduce((a, b) => a.concat(b));
-      this.levelIDs = this.levelIDs.concat([this.selectedLevel2]);
-
-    } else if (this.selectedLevel3 !== -1) {
-
-      this.levelIDs = this.data.filter(d => [this.selectedLevel3].includes(d.data.id))
-                                .map(d => d.data.childrenIDs)
-                                .reduce((a, b) => a.concat(b));
-      this.levelIDs = this.levelIDs.concat([this.selectedLevel3]);
-
-    } else if (this.selectedChapter !== -1) {
-      this.levelIDs = this.data.filter(d => [this.selectedChapter].includes(d.data.id))
-                                .map(d => d.data.childrenIDs)
-                                .reduce((a, b) => a.concat(b));
-      this.levelIDs = this.levelIDs.concat([this.selectedChapter]);
+      if (this.selectedLevel2 !== -1) {
+        if (this.selectedLevel3 != -1) {
+          if (this.selectedChapter !== -1) {
+            this.levelIDs = this.data.filter(d => [this.selectedChapter].includes(d.data.id))
+                            .map(d => d.data.childrenIDs)
+                            .reduce((a, b) => a.concat(b));
+            this.levelIDs = this.levelIDs.concat([this.selectedChapter]);
+          } else {
+            this.levelIDs = this.data.filter(d => [this.selectedLevel3].includes(d.data.id))
+                            .map(d => d.data.childrenIDs)
+                            .reduce((a, b) => a.concat(b));
+            this.levelIDs = this.levelIDs.concat([this.selectedLevel3]);
+          }
+        } else {
+          this.levelIDs = this.data.filter(d => [this.selectedLevel2].includes(d.data.id))
+                .map(d => d.data.childrenIDs)
+                .reduce((a, b) => a.concat(b));
+          this.levelIDs = this.levelIDs.concat([this.selectedLevel2]);
+        }
+      } else {
+        this.levelIDs = this.data.filter(d => [this.selectedLevel1].includes(d.data.id))
+                .map(d => d.data.childrenIDs)
+                .reduce((a, b) => a.concat(b));
+        this.levelIDs = this.levelIDs.concat([this.selectedLevel1]);
+      }
     }
 
     console.log(this.levelIDs)
