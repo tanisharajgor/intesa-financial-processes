@@ -195,7 +195,8 @@ export default function InspectProcesses({selectedLevel1, updateSelectedLevel1, 
     };
 
     const handleChangeLevel2 = (event) => {
-       
+        let l2 = parseInt(event.target.value);
+        updateSelectedLevel2(l2);
     };
 
     // useEffect(() =>{
@@ -250,27 +251,31 @@ export default function InspectProcesses({selectedLevel1, updateSelectedLevel1, 
                             </Form>
                         </LayoutItem>
                     </LayoutRow>
-                                        
+                    </LayoutGroup>
                     {selectedLevel1 !== -1? 
-                    <LayoutRow>
-                        <LayoutItem className="push">
-                            <Form variant="outlined" size="small">
-                                <StyledSelect
-                                    labelId="process2-select-label"
-                                    id="process2-select"
-                                    displayEmpty
-                                    value={selectedLevel2}
-                                    onChange={handleChangeLevel2}
-                                >
-                                    {valuesLevel2.map((level, index) => {
-                                        return(
-                                            <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
-                                        )
-                                    })}
-                                </StyledSelect>
-                            </Form>
-                        </LayoutItem>
-                    </LayoutRow>: <></> }
+                    <LayoutGroup>
+                        <StyledLabel>Level 2</StyledLabel>
+                        <LayoutRow>
+                            <LayoutItem className="push">
+                                <Form variant="outlined" size="small">
+                                    <StyledSelect
+                                        labelId="process2-select-label"
+                                        id="process2-select"
+                                        displayEmpty
+                                        value={selectedLevel2}
+                                        onChange={handleChangeLevel2}
+                                    >
+                                        {valuesLevel2.map((level, index) => {
+                                            return(
+                                                <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
+                                            )
+                                        })}
+                                    </StyledSelect>
+                                </Form>
+                            </LayoutItem>
+                        </LayoutRow>
+                    </LayoutGroup>: <></> }
+                <LayoutGroup>
                     {/* <LayoutRow>
                         <StyledFilter id={id}></StyledFilter>
                     </LayoutRow> */}
