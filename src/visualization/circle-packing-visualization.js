@@ -33,6 +33,9 @@ export class CirclePackingDiagram {
     this.updateViewHoverValue = updateViewHoverValue;
     this.selectedActivities = [];
     this.selectedLevel1 = [];
+    this.selectedLevel2 = [];
+    this.selectedLevel3 = [];
+    this.selectedChapter = [];
   }
 
   // Initializes the application
@@ -253,14 +256,39 @@ export class CirclePackingDiagram {
 
     this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
     this.selectedLevel1 = selectedLevel1;
+    this.selectedLevel2 = selectedLevel2;
+    this.selectedLevel3 = selectedLevel3;
+    this.selectedChapter = selectedChapter;
 
     if (this.selectedLevel1 !== -1) {
-      this.levelIDs = this.data.map(d => d.data.id);
+
       this.levelIDs = this.data.filter(d => [this.selectedLevel1].includes(d.data.id))
                                 .map(d => d.data.childrenIDs)
                                 .reduce((a, b) => a.concat(b));
       this.levelIDs = this.levelIDs.concat([this.selectedLevel1]);
+
+    } else if (this.selectedLevel2 !== -1) {
+
+      this.levelIDs = this.data.filter(d => [this.selectedLevel2].includes(d.data.id))
+                                .map(d => d.data.childrenIDs)
+                                .reduce((a, b) => a.concat(b));
+      this.levelIDs = this.levelIDs.concat([this.selectedLevel2]);
+
+    } else if (this.selectedLevel3 !== -1) {
+
+      this.levelIDs = this.data.filter(d => [this.selectedLevel3].includes(d.data.id))
+                                .map(d => d.data.childrenIDs)
+                                .reduce((a, b) => a.concat(b));
+      this.levelIDs = this.levelIDs.concat([this.selectedLevel3]);
+
+    } else if (this.selectedChapter !== -1) {
+      this.levelIDs = this.data.filter(d => [this.selectedChapter].includes(d.data.id))
+                                .map(d => d.data.childrenIDs)
+                                .reduce((a, b) => a.concat(b));
+      this.levelIDs = this.levelIDs.concat([this.selectedChapter]);
     }
+
+    console.log(this.levelIDs)
 
     this.viewVariable = viewVariable;
     this.destroyNodes();
