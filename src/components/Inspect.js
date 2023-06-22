@@ -38,7 +38,7 @@ export function inspectHierarchyDetail(inspect, d, viewVariable) {
     inspect.style("display", "inline-block");
     inspect.style("visibility", "visible")
     inspect.select(".value1 .key").text(`${treeLevelScale(d.data.treeLevel)}: `);
-    inspect.select(".value1 .value").text(" " + d.data.name);
+    inspect.select(".value1 .value").text(" " + d.data.descr);
     inspect.select(".value2 .key").text("Number of activities: ");
     inspect.select(".value2 .value").text(`${d.sum(d => d.children ? 0: 1).value}`);
     inspect.select(".value3 .key").text(`${viewVariables[viewVariable].label}: `);

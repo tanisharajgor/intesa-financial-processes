@@ -146,7 +146,7 @@ const StyledFilter = styled('div')`
 //         tooltip.style("visibility", "visible")
 //             .style("top", `${y}px`)
 //             .style("left", `${x}px`)
-//             .html(`<b>${level}</b><br>${d.data.name}`);
+//             .html(`<b>${level}</b><br>${d.data.descr}`);
 
 //         thisRect
 //             .attr("stroke", Theme.primaryColorHex)
@@ -172,7 +172,7 @@ const StyledFilter = styled('div')`
 //         .attr("fill", Theme.primaryColorHex);
 // }
 
-export default function InspectProcesses({selectedLevel1, updateLevel1, typeValues, label}) {
+export default function InspectProcesses({selectedLevel1, updateLevel1, valuesLevel1, label}) {
 
     const processes = lu["processes"];
 
@@ -232,7 +232,7 @@ export default function InspectProcesses({selectedLevel1, updateLevel1, typeValu
                                      value={selectedLevel1}
                                      onChange={handleChange}
                                  >
-                                     {typeValues.map((level, index) => {
+                                     {valuesLevel1.map((level, index) => {
                                          return(
                                              <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
                                          )

@@ -67,7 +67,7 @@ function renderTooltip(selectedLevel3ID) {
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`Level ${d.data.data.treeLevel}<br><b>${d.data.data.name}</b>`);
+            .html(`Level ${d.data.data.treeLevel}<br><b>${d.data.data.descr}</b>`);
 
         thisCircle
             .attr("stroke", "white")

@@ -21,7 +21,7 @@ def create_attributes(df, root):
         row = {}
         for i in unique_int(df, rootID):
             row = {"id": int(i),
-                   "name": df[df[rootID] == i][root].iloc[0]}
+                   "descr": df[df[rootID] == i][root].iloc[0]}
 
             if root+"Type" in df.columns:
                 row["typeMode"] = df[df[rootID] == i][root+"Type"].iloc[0]
@@ -71,7 +71,7 @@ def create_risk_control(main):
 
         df = main[main.riskID == id]
         dict = {"id": int(id),
-                "name": df.risk.iloc[0],
+                "descr": df.risk.iloc[0],
                 "viewType": create_view_type(df)
         }
 
@@ -157,7 +157,7 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
             fullChildrenIDs = activityID + childrenID3 + childrenID2
 
         d = {"id": int(id),
-            "name": df_sub[df_sub[root1ID] == id][root1].iloc[0],
+            "descr": df_sub[df_sub[root1ID] == id][root1].iloc[0],
             "viewType": create_view_type(df_sub),
             "treeLevel": int(tree_level)
             }
@@ -194,7 +194,7 @@ def create_processes_to_activities(main):
     nest2 = create_sub_processes(main, "level2", "level3", nest3, 2)
     nest1 = create_sub_processes(main, "level1", "level2", nest2, 1)
 
-    return {"name": "root",
+    return {"descr": "root",
             "children": nest1,
             "childrenIDs": main.level1ID.unique().tolist(),
             "viewType": create_view_type(main),
@@ -255,7 +255,7 @@ def create_network(data):
             row = {"id": int(k),
                    "group": "Actor",
                    "viewId": "Actor",
-                   "name": df[df.actorID == k].actor.iloc[0],
+                   "descr": df[df.actorID == k].actor.iloc[0],
                    "type": df[df.actorID == k].actorType.iloc[0],
                    "activitiesID": df[df.actorID == k].activityID.unique().tolist(),
                    "levels": levelsObject(df[df.actorID == k]),
@@ -273,7 +273,7 @@ def create_network(data):
                     "group": "Activity",
                     "viewId": "Other activity",
                     "type": df[df.activityID == l].activityType.iloc[0],
-                    "name": df[df.activityID == l].activity.iloc[0],
+                    "descr": df[df.activityID == l].activity.iloc[0],
                     "actorsID": df[df.activityID == l].actorID.unique().tolist(),
                     "levels": levelsObject(df[df.activityID == l]),
                     "viewType": {
@@ -290,7 +290,7 @@ def create_network(data):
             row = {"id": int(m),
                     "group": "Risk",
                     "viewId": "Risk",
-                    "name": df[df.riskID == m].risk.iloc[0],
+                    "descr": df[df.riskID == m].risk.iloc[0],
                     "viewType": {
                         "financialDisclosureRisk": bool(df[df.riskID == m].financialDisclosureRisk.iloc[0]),
                         "riskType": df[df.riskID == m].riskType.iloc[0],
@@ -306,7 +306,7 @@ def create_network(data):
                    "group": "Activity",
                    "type": "Control activity",
                    "viewId": "Control activity",
-                   "name": df[df.activityID == k].control.iloc[0],
+                   "descr": df[df.activityID == k].control.iloc[0],
                    "viewType": {
                         "controlPeriodocity": df[df.activityID == k].controlPeriodocity.iloc[0],
                         "controlCategory": df[df.activityID == k].controlCategory.iloc[0],
@@ -385,24 +385,24 @@ def create_processes(main):
                 for l in model:
 
                     m = {"id": int(l),
-                        "name": main[main.modelID == l].model.iloc[0],
+                        "descr": main[main.modelID == l].model.iloc[0],
                         "treeLevel": int(4)}
                     modelArray.append(m)
 
                 r3 = {"id": int(k),
-                      "name": main[main.level3ID == k].level3.iloc[0],
+                      "descr": main[main.level3ID == k].level3.iloc[0],
                       "treeLevel": int(3),
                       "children": modelArray}
                 l3Array.append(r3)
 
             r2 = {"id": int(j),
-                 "name": main[main.level2ID == j].level2.iloc[0],
+                 "descr": main[main.level2ID == j].level2.iloc[0],
                  "children": l3Array,
                  "treeLevel": int(2)}
             l2Array.append(r2)
 
         r1 = {"id": int(i),
-              "name": main[main.level1ID == i].level1.iloc[0],
+              "descr": main[main.level1ID == i].level1.iloc[0],
               "children": l2Array,
               "treeLevel": int(1)}
         l1Array.append(r1)
