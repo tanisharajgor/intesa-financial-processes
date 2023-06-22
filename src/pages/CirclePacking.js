@@ -50,9 +50,9 @@ export default function CirclePacking() {
     // }, [])
 
     useEffect(() => {
-        circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities, selectedLevel1);
+        circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter);
         inspectHierarchySummary(data);
-    }, [viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3]);
+    }, [viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter]);
 
     return(
         <div className="Content">

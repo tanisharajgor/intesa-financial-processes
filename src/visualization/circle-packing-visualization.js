@@ -32,7 +32,7 @@ export class CirclePackingDiagram {
     this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
     this.selectedActivities = [];
-    this.selectedLevel = [];
+    this.selectedLevel1 = [];
   }
 
   // Initializes the application
@@ -111,11 +111,11 @@ export class CirclePackingDiagram {
       .domain([0, 1, 2, 3, 4])
       .range([.05, .3, .4, .5, .6]);
 
-    if (this.selectedActivities.length > 0 && this.selectedLevel !== -1) {
+    if (this.selectedActivities.length > 0 && this.selectedLevel1 !== -1) {
       this.selectedLevelAndActivitiesOpacity(node);
     } else if(this.selectedActivities.length > 0) {
       this.selectedActivitiesOpacity(node);
-    } else if(this.selectedLevel !== -1) {
+    } else if(this.selectedLevel1 !== -1) {
       this.selectedLevelOpacity(node);
     } else {
       node.gfx.alpha = this.alphaScale(node.data.treeLevel);
@@ -249,17 +249,17 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable, selectedActivities, selectedLevel) {
+  updateDraw(viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter) {
 
     this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
-    this.selectedLevel = selectedLevel;
+    this.selectedLevel1 = selectedLevel1;
 
-    if (this.selectedLevel !== -1) {
+    if (this.selectedLevel1 !== -1) {
       this.levelIDs = this.data.map(d => d.data.id);
-      this.levelIDs = this.data.filter(d => [this.selectedLevel].includes(d.data.id))
+      this.levelIDs = this.data.filter(d => [this.selectedLevel1].includes(d.data.id))
                                 .map(d => d.data.childrenIDs)
                                 .reduce((a, b) => a.concat(b));
-      this.levelIDs = this.levelIDs.concat([this.selectedLevel]);
+      this.levelIDs = this.levelIDs.concat([this.selectedLevel1]);
     }
 
     this.viewVariable = viewVariable;
