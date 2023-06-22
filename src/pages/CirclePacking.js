@@ -24,6 +24,8 @@ export default function CirclePacking() {
     const [selectedActivities, updateActivities] = useState(activityTypeValues);
     const [selectedLevel1, updateSelectedLevel1] = useState(-1);
     const [selectedLevel2, updateSelectedLevel2] = useState(-1);
+    const [selectedLevel3, updateSelectedLevel3] = useState(-1);
+    const [selectedChapter, updateSelectedChapter] = useState(-1);
 
     const root = d3.pack()
         .size([window.innerWidth, window.innerHeight])
@@ -50,7 +52,7 @@ export default function CirclePacking() {
     useEffect(() => {
         circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities, selectedLevel1);
         inspectHierarchySummary(data);
-    }, [viewVariable, selectedActivities, selectedLevel1, selectedLevel2]);
+    }, [viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3]);
 
     return(
         <div className="Content">
@@ -62,7 +64,7 @@ export default function CirclePacking() {
                       <p>Click on the circles to zoom into the process visualization.</p>
                     </Description>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={activityTypeValues} label="Inspect by Activity Type" />
-                    <InspectProcesses selectedLevel1={selectedLevel1} updateSelectedLevel1={updateSelectedLevel1} selectedLevel2={selectedLevel2} updateSelectedLevel2={updateSelectedLevel2}/>
+                    <InspectProcesses selectedLevel1={selectedLevel1} updateSelectedLevel1={updateSelectedLevel1} selectedLevel2={selectedLevel2} updateSelectedLevel2={updateSelectedLevel2} selectedLevel3={selectedLevel3} updateSelectedLevel3={updateSelectedLevel3} selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter}/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
             </div>
