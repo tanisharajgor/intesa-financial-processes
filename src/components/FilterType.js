@@ -70,7 +70,7 @@ export default function FilterType({typesChecked, updateSelection, typeValues, l
                                 }
 
                                 return (
-                                    <span>{str}</span>
+                                    <span key={str}>{str}</span>
                                 )
                             }) 
                         }
