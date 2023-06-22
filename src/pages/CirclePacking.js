@@ -11,7 +11,6 @@ import InspectProcesses from "../components/InspectProcesses";
 
 import { activityTypeValues } from "../utils/global";
 import Description from "../components/Description";
-import lu from "../data/processed/nested/lu";
 
 const id = "circle-packing-chart";
 
@@ -23,7 +22,8 @@ export default function CirclePacking() {
 
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(activityTypeValues);
-    const [selectedLevel1, updateLevel1] = useState(-1);
+    const [selectedLevel1, updateSelectedLevel1] = useState(-1);
+    const [selectedLevel2, updateSelectedLevel2] = useState(-1);
 
     const root = d3.pack()
         .size([window.innerWidth, window.innerHeight])
@@ -50,7 +50,7 @@ export default function CirclePacking() {
     useEffect(() => {
         circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities, selectedLevel1);
         inspectHierarchySummary(data);
-    }, [viewVariable, selectedActivities, selectedLevel1]);
+    }, [viewVariable, selectedActivities, selectedLevel1, selectedLevel2]);
 
     return(
         <div className="Content">
@@ -61,8 +61,8 @@ export default function CirclePacking() {
                       <h4>Ecosystem</h4>
                       <p>Click on the circles to zoom into the process visualization.</p>
                     </Description>
-                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={activityTypeValues} label="Inspect by Activity Type"/>
-                    <InspectProcesses selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} label="Inspect by Taxonomy"/>
+                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={activityTypeValues} label="Inspect by Activity Type" />
+                    <InspectProcesses selectedLevel1={selectedLevel1} updateSelectedLevel1={updateSelectedLevel1} selectedLevel2={selectedLevel2} updateSelectedLevel2={updateSelectedLevel2}/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
             </div>

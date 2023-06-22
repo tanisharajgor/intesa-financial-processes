@@ -11,8 +11,8 @@ import { StyledSelect } from '../component-styles/select';
 import lu from '../data/processed/nested/lu.json';
 import * as Global from "../utils/global";
 
-const id = "Inspect-Process-TreeMap";
-const width = 290, height = 1000;
+// const id = "Inspect-Process-TreeMap";
+// const width = 290, height = 1000;
 
 const StyledHeader = styled('div')`
     display: flex;
@@ -172,11 +172,14 @@ const StyledFilter = styled('div')`
 //         .attr("fill", Theme.primaryColorHex);
 // }
 
-export default function InspectProcesses({selectedLevel1, updateLevel1, label}) {
-
-    const valuesLevel1 = [{"id": -1, "descr": "All"}].concat(lu["processes"].children);
+export default function InspectProcesses({selectedLevel1, updateSelectedLevel1, selectedLevel2, updateSelectedLevel2}) {
 
     const processes = lu["processes"];
+
+    const valuesLevel1 = [{"id": -1, "descr": "All"}].concat(processes.children);
+    const [valuesLevel2, updateValuesLevel2] = useState([]);
+
+    console.log(valuesLevel2)
 
     console.log(processes)
 
@@ -184,25 +187,31 @@ export default function InspectProcesses({selectedLevel1, updateLevel1, label}) 
 
     const handleRotate = () => setRotate(!shouldRotate);
 
-    const handleChange = (event) => {
+    const handleChangeLevel1 = (event) => {
         let l1 = parseInt(event.target.value);
-        updateLevel1(l1);
+        let l2 = processes.children.filter(d => d.id === event.target.value);
+        updateSelectedLevel1(l1);
+        updateValuesLevel2([{"id": -1, "descr": "All"}].concat(l2));
     };
 
-    useEffect(() =>{
-        Global.initTooltip(id);
-        // initTreeMap();
-    }, []);
+    const handleChangeLevel2 = (event) => {
+       
+    };
 
-    useEffect(() => {
-        if (selectedLevel1 !== -1) {
-            // updateTreeMap(processes.children.find(d => d.id === selectedLevel1));
-            // onClick(selectedLevels, updateLevels);
-            // renderTooltip(selectedLevels)
-        } else {
-            // removeTree(); //write this function
-        }
-    }, [selectedLevel1]);
+    // useEffect(() =>{
+    //     Global.initTooltip(id);
+    //     initTreeMap();
+    // }, []);
+
+    // useEffect(() => {
+    //     if (selectedLevel1 !== -1) {
+    //         updateTreeMap(processes.children.find(d => d.id === selectedLevel1));
+    //         // onClick(selectedLevels, updateLevels);
+    //         // renderTooltip(selectedLevels)
+    //     } else {
+    //         // removeTree(); //write this function
+    //     }
+    // }, [selectedLevel1]);
 
     return(
         <Accordion className={'Card'}>
@@ -212,9 +221,7 @@ export default function InspectProcesses({selectedLevel1, updateLevel1, label}) 
                 onClick={handleRotate}
             >
             <StyledHeader>
-                <Key>
-                    {label}
-                </Key>
+                <Key>Inspect by Taxonomy</Key>
                 <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
                     <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
                     <Ripple color={"#FFFFFF"} duration={1000}/>
@@ -224,28 +231,49 @@ export default function InspectProcesses({selectedLevel1, updateLevel1, label}) 
             <AccordionDetails>
                 <LayoutGroup>
                     <StyledLabel>Level 1</StyledLabel>
-                        <LayoutRow>
+                    <LayoutRow>
                         <LayoutItem className="push">
                             <Form variant="outlined" size="small">
-                                 <StyledSelect
-                                     labelId="process1-select-label"
-                                     id="process1-select"
-                                     displayEmpty
-                                     value={selectedLevel1}
-                                     onChange={handleChange}
-                                 >
-                                     {valuesLevel1.map((level, index) => {
-                                         return(
-                                             <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
-                                         )
-                                     })}
-                                 </StyledSelect>
-                             </Form>
-                         </LayoutItem>
-                        </LayoutRow>
-                        <LayoutRow>
-                            <StyledFilter id={id}></StyledFilter>
-                        </LayoutRow>
+                                <StyledSelect
+                                    labelId="process1-select-label"
+                                    id="process1-select"
+                                    displayEmpty
+                                    value={selectedLevel1}
+                                    onChange={handleChangeLevel1}
+                                >
+                                    {valuesLevel1.map((level, index) => {
+                                        return(
+                                            <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
+                                        )
+                                    })}
+                                </StyledSelect>
+                            </Form>
+                        </LayoutItem>
+                    </LayoutRow>
+                                        
+                    {selectedLevel1 !== -1? 
+                    <LayoutRow>
+                        <LayoutItem className="push">
+                            <Form variant="outlined" size="small">
+                                <StyledSelect
+                                    labelId="process2-select-label"
+                                    id="process2-select"
+                                    displayEmpty
+                                    value={selectedLevel2}
+                                    onChange={handleChangeLevel2}
+                                >
+                                    {valuesLevel2.map((level, index) => {
+                                        return(
+                                            <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
+                                        )
+                                    })}
+                                </StyledSelect>
+                            </Form>
+                        </LayoutItem>
+                    </LayoutRow>: <></> }
+                    {/* <LayoutRow>
+                        <StyledFilter id={id}></StyledFilter>
+                    </LayoutRow> */}
                 </LayoutGroup>
             </AccordionDetails>
         </Accordion>
