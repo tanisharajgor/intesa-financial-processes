@@ -384,9 +384,21 @@ def create_processes(main):
 
                 for l in model:
 
+                    activities = main[main.modelID == l].activityID.unique()
+                    activitiesArray = []
+
+                    for n in activities:
+
+                        a = {"id": int(n),
+                            "descr": main[main.activityID == n].activity.iloc[0],
+                            "treeLevel": int(5)}
+                        activitiesArray.append(a)
+
                     m = {"id": int(l),
                         "descr": main[main.modelID == l].model.iloc[0],
-                        "treeLevel": int(4)}
+                        "treeLevel": int(4),
+                        "children": activitiesArray}
+
                     modelArray.append(m)
 
                 r3 = {"id": int(k),

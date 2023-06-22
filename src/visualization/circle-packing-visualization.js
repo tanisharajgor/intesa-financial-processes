@@ -252,7 +252,7 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter) {
+  updateDraw(viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
 
     this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
     this.selectedLevel1 = selectedLevel1;
@@ -264,10 +264,13 @@ export class CirclePackingDiagram {
       if (this.selectedLevel2 !== -1) {
         if (this.selectedLevel3 != -1) {
           if (this.selectedChapter !== -1) {
-            this.levelIDs = this.data.filter(d => [this.selectedChapter].includes(d.data.id))
-                            .map(d => d.data.childrenIDs)
-                            .reduce((a, b) => a.concat(b));
-            this.levelIDs = this.levelIDs.concat([this.selectedChapter]);
+
+            if (valuesChapter.find(d => d.id === selectedChapter) !== undefined) {
+              this.levelIDs = valuesChapter.find(d => d.id === selectedChapter).children.map(d=> d.id);
+            } else {
+              this.levelIDs = []
+            }
+
           } else {
             this.levelIDs = this.data.filter(d => [this.selectedLevel3].includes(d.data.id))
                             .map(d => d.data.childrenIDs)
@@ -287,8 +290,6 @@ export class CirclePackingDiagram {
         this.levelIDs = this.levelIDs.concat([this.selectedLevel1]);
       }
     }
-
-    console.log(this.levelIDs)
 
     this.viewVariable = viewVariable;
     this.destroyNodes();

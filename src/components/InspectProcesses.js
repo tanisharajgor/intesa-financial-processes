@@ -51,14 +51,13 @@ function taxonomyLevel(valuesLevel, selectedLevel, handleChange, label, id) {
     )
 }
 
-export default function InspectProcesses({selectedLevel1, updateSelectedLevel1, selectedLevel2, updateSelectedLevel2, selectedLevel3, updateSelectedLevel3, selectedChapter, updateSelectedChapter}) {
+export default function InspectProcesses({selectedLevel1, updateSelectedLevel1, selectedLevel2, updateSelectedLevel2, selectedLevel3, updateSelectedLevel3, selectedChapter, updateSelectedChapter, valuesChapter, updateValuesChapter}) {
 
     const processes = lu["processes"];
 
     const valuesLevel1 = [{"id": -1, "descr": "All"}].concat(processes.children);
     const [valuesLevel2, updateValuesLevel2] = useState([]);
     const [valuesLevel3, updateValuesLevel3] = useState([]);
-    const [valuesChapter, updateValuesChapter] = useState([]);
     const [shouldRotate, setRotate] = useState(false);
 
     const handleRotate = () => setRotate(!shouldRotate);
@@ -83,6 +82,8 @@ export default function InspectProcesses({selectedLevel1, updateSelectedLevel1, 
         updateSelectedLevel3(l3);
         updateValuesChapter([{"id": -1, "descr": "All"}].concat(chapter.children));
     };
+
+    console.log(valuesChapter)
 
     const handleChangeChapter = (event) => {
         let chapter = parseInt(event.target.value);
