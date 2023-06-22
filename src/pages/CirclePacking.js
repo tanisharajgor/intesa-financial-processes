@@ -17,16 +17,13 @@ const id = "circle-packing-chart";
 
 export default function CirclePacking() {
 
-    const valuesLevel1 = [{"id": -1, "descr": "All"}].concat(lu["processes"].children);
-
-    console.log(lu["processes"].children.map(d => d.id));
-
+    // View highlight states
     const [viewVariable, updateViewVariable] = useState("riskType");
     const [viewHoverValue, updateViewHoverValue] = useState(undefined); 
 
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(activityTypeValues);
-    const [selectedLevel1, updateLevel1] = useState(valuesLevel1.map(d => d.id)[0]);
+    const [selectedLevel1, updateLevel1] = useState(-1);
 
     const root = d3.pack()
         .size([window.innerWidth, window.innerHeight])
@@ -65,7 +62,7 @@ export default function CirclePacking() {
                       <p>Click on the circles to zoom into the process visualization.</p>
                     </Description>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={activityTypeValues} label="Inspect by Activity Type"/>
-                    <InspectProcesses selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} valuesLevel1={valuesLevel1} label="Inspect by Taxonomy"/>
+                    <InspectProcesses selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} label="Inspect by Taxonomy"/>
                 </QueryMenu>
                 <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} id={id} controls={circlePackingDiagram.current.getControls()}/>
             </div>

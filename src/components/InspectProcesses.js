@@ -172,7 +172,9 @@ const StyledFilter = styled('div')`
 //         .attr("fill", Theme.primaryColorHex);
 // }
 
-export default function InspectProcesses({selectedLevel1, updateLevel1, valuesLevel1, label}) {
+export default function InspectProcesses({selectedLevel1, updateLevel1, label}) {
+
+    const valuesLevel1 = [{"id": -1, "descr": "All"}].concat(lu["processes"].children);
 
     const processes = lu["processes"];
 
