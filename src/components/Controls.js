@@ -13,7 +13,17 @@ const StyledControlButton = styled('button')`
     }
 `
 
-export default function Control({hideControls, controls}) {
+const FullscreenIcon = styled('img')`
+    padding: 5px;
+`
+
+const FullscreenButton = styled(StyledControlButton)`
+    width: 13%;
+`
+
+
+
+export default function Control({handleFullscreen, controls}) {
     return (
         <div className="Controls">
             <div className="inner">
@@ -29,6 +39,12 @@ export default function Control({hideControls, controls}) {
                     <img alt="Button to zoom out of the visualization" src={process.env.PUBLIC_URL + "/assets/zoom_out.svg"}/>
                     <Ripple color={"#FFFFFF"} duration={1000}/>
                 </StyledControlButton>
+                <FullscreenButton onClick={handleFullscreen}>
+                    <FullscreenIcon alt="Button to make the visualization take up the screen"
+                        src={process.env.PUBLIC_URL + "/assets/fullscreen.svg"}
+                    />
+                    <Ripple color={"#FFFFFF"} duration={1000}/>
+                </FullscreenButton>
             </div>
         </div>
     )

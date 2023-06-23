@@ -11,6 +11,8 @@ import * as Global from "../utils/global";
 import { inspectNetworkSummary } from "../components/Inspect";
 import * as d3 from 'd3';
 import Description from "../components/Description";
+import { Content } from "../component-styles/content";
+import { Menu } from "../component-styles/query-menu";
 
 const id = "network-chart";
 
@@ -84,11 +86,17 @@ export default function Network() {
     // Status to update the opacity in the legend
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
+    
+    const [isFullscreen, setFullscreen] = useState(false);
 
     // const [selectedChapters, updateChapters] = useState(lu.map(d => d.descr));
 
     // Initiating the network diagram
     const networkDiagram = useRef(new NetworkVisualization(data, updateSymbolHoverValue, updateViewHoverValue));
+
+    const handleFullscreen = (e) => {
+        setFullscreen(!isFullscreen);
+    }
 
     // React Hooks
     useEffect(() => {
@@ -125,10 +133,10 @@ export default function Network() {
     }, [viewVariable]);
 
     return(
-        <div className="Content">
-            <Navigation />
-            <div style={{display: 'flex'}}>
-                <QueryMenu className="Query" id="FilterMenu" width={"22rem"}>
+        <>
+            <Navigation isFullscreen={isFullscreen} />
+            <Content>
+                <Menu className="Query" id="FilterMenu" width={"22rem"} isFullscreen={isFullscreen}>
                     <Description>
                             <h4>Network</h4>
                             <p>Filter data in the actor network graph to explore activities and risks.</p>
@@ -136,9 +144,17 @@ export default function Network() {
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
                     <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type"/>
-                </QueryMenu>
-                <Main viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} id={id} controls={networkDiagram.current.getControls()}/>        
-            </div>        
-        </div>
+                </Menu>
+                <Main
+                    viewVariable={viewVariable}
+                    updateViewVariable={updateViewVariable}
+                    viewHoverValue={viewHoverValue}
+                    symbolHoverValue={symbolHoverValue}
+                    id={id}
+                    controls={networkDiagram.current.getControls()}
+                    handleFullscreen={handleFullscreen}
+                />        
+            </Content>        
+        </>
     )
 }

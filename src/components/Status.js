@@ -11,12 +11,20 @@ const StyledStatus = styled('div')`
     padding: ${ props =>  props.theme.padding };
 `
 
-export default function Status({id, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue, controls}) {
+export default function Status({
+    id,
+    viewVariable,
+    updateViewVariable,
+    viewHoverValue,
+    symbolHoverValue,
+    controls,
+    handleFullscreen
+}) {
 
     return (
         <StyledStatus className="Status">
             <View id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue}/>
-            <Control controls={controls}/>
+            <Control controls={controls} handleFullscreen={handleFullscreen}/>
         </StyledStatus>
     )
 }
