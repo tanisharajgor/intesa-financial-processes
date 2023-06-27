@@ -231,7 +231,7 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
                                     >
                                         {level1.map((level, index) => {
                                             return(
-                                                <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
+                                                <MenuItem itemKey={`menu-item-${level.descr}`} key={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
                                             )
                                         })}
                                     </StyledSelect>
