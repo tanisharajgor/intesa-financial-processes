@@ -157,7 +157,8 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                 .type(((d) => Global.symbolScaleD3(d)))
                     .size(60))
                 .attr("transform", function(d, i) {
-                    return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
+                    const rotation = d.viewId === "Other activity" ? 180 : 0
+                    return 'translate(' + 10 + ', ' + (i*23 + 15) + ') rotate(' + rotation + ')';
                 })
                 .attr("fill", "#cbcbcb"),
             update => update
