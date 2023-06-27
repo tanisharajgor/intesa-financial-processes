@@ -10,6 +10,7 @@ import { activityTypeValues } from "../utils/global";
 import Description from "../components/Description";
 import { Menu } from "../component-styles/query-menu";
 import { Content } from "../component-styles/content";
+import Draggable from 'react-draggable';
 
 const id = "circle-packing-chart";
 
@@ -32,8 +33,8 @@ export default function CirclePacking() {
         .size([width, height])
         .padding(1)
         (d3.hierarchy(data)
-        .sum(d => 1)
-        .sort((a, b) => b.value - a.value));
+            .sum(d => 1)
+            .sort((a, b) => b.value - a.value));
 
     const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1), updateViewHoverValue));
 
@@ -61,17 +62,54 @@ export default function CirclePacking() {
         // updateViewVariable(updatedView);
     }, [selectedActivities, viewVariable]);
 
-    return(
+
+    useEffect(() => {
+        // Make the DIV element draggable:
+        const dragElement = (elmnt) => {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+            const dragMouseDown = (e) => {
+                e = e || window.event;
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            };
+
+            const elementDrag = (e) => {
+                e = e || window.event;
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            };
+
+            const closeDragElement = () => {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            };
+        };
+
+        dragElement(document.getElementById("queryMenu"));
+    }, []);
+
+    return (
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <Menu className="Query" id="FilterMenu" width={"22rem"} isFullscreen={isFullscreen}>
-                    <Description>
-                      <h4>Ecosystem</h4>
-                      <p>Click on the circles to zoom into the process visualization.</p>
-                    </Description>
-                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
-                </Menu>
+                <Draggable>
+                    <Menu className="Query" id="FilterMenu" width={"22rem"}>
+                        <Description>
+                            <h4>Ecosystem</h4>
+                            <p>Click on the circles to zoom into the process visualization.</p>
+                        </Description>
+                        <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type" />
+                    </Menu>
+                </Draggable>
                 <Main
                     viewVariable={viewVariable}
                     updateViewVariable={updateViewVariable}
