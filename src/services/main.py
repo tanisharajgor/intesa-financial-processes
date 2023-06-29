@@ -50,6 +50,8 @@ def main():
     # translate_text(data["L2 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level2', project_id)
     # translate_text(data["L3 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level3', project_id)
     # translate_text(data["MODEL NAME ITA"].unique(), os.path.join(raw_pth, "translated"), 'model', project_id)
+    # translate_text(data.organizational_structure1.unique(), os.path.join(raw_pth, "translated"), 'organizational_structure1', project_id)
+    # translate_text(data.organizational_structure2.unique(), os.path.join(raw_pth, "translated"), 'organizational_structure2', project_id)
 
     # ## Clean data
     controlsClean = controls_dm(controls, data, config, raw_pth, processed_pth)

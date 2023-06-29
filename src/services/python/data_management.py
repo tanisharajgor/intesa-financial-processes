@@ -62,7 +62,9 @@ def actors_rename(actors):
                                     'Activity Category': 'activityCategory',
                                     'Object Name': 'actor',
                                     'Object Type': 'actorType',
-                                    'Object GUID': 'actorGUID'})
+                                    'Object GUID': 'actorGUID',
+                                    '3rd path': 'organizational_structure1',
+                                    '4th path': 'organizational_structure2'})
 
     return actors
 
