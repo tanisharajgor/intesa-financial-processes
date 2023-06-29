@@ -3,10 +3,11 @@ import os
 import yaml
 from python.data_management import actors_rename, activities_dm, actors_dm, risks_dm, \
     applications_dm, controls_dm, level1_dm, level2_dm, level3_dm, model_dm, \
-    activity_to_risk_dm, risk_to_control_dm, main_dm, activity_to_actor_dm, org_str1_dm, org_str2_dm
+    activity_to_risk_dm, risk_to_control_dm, main_dm, activity_to_actor_dm, org_str1_dm, \
+    org_str2_dm
 
 from python.nest_data import create_processes_to_activities, \
-     create_network, create_processes
+     create_network, create_processes, create_org_structure
 
 from python.translate import translate_text, authenticate_implicit_with_adc
 from python.helper import write_json, create_lu
@@ -107,7 +108,8 @@ def main():
         "level2": create_lu(level2Clean, "level2ID", "level2"),
         "level3": create_lu(level3Clean, "level3ID", "level3"),
         "model": create_lu(modelClean, "modelID", "model"),
-        "processes": {"name": "root", "children": create_processes(main), "treeLevel": 0}
+        "processes": {"name": "root", "children": create_processes(main), "treeLevel": 0},
+        "org_structure": create_org_structure(data)
     }
 
     write_json(lu, os.path.join(processed_pth, "nested"), "lu")

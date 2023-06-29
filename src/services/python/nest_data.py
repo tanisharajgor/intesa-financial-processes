@@ -241,6 +241,7 @@ def create_network(data):
 
         for k in actorsID:
 
+            import pdb; pdb.set_trace()
             row = {"id": int(k),
                    "group": "Actor",
                    "viewId": "Actor",
@@ -252,6 +253,10 @@ def create_network(data):
                         "nActivity": int(df[(df.actorID == k) & (pd.isnull(df.activityID) == False)][['activityID']].drop_duplicates().shape[0]),
                         "nRisk": int(df[(df.actorID == k) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0]),
                         "nControl": int(df[(df.actorID == k) & (pd.isnull(df.activityID) == False) & (df.activityType == "Control activity")][['activityID']].drop_duplicates().shape[0])
+                        },
+                    "organizationalStructure": {
+                        "level1": df[df.actorID == k].organizational_structure1ID.unique().tolist(),
+                        "level2": df[df.actorID == k].organizational_structure2ID.unique().tolist()
                         }
                    }
 
@@ -381,6 +386,28 @@ def create_processes(main):
               "name": main[main.level1ID == i].level1.iloc[0],
               "children": l2Array,
               "treeLevel": int(1)}
+        l1Array.append(r1)
+
+    return l1Array
+
+def create_org_structure(main):
+    l1Array = []
+
+    for i in main.organizational_structure1ID.unique():
+        l2 = main[main.organizational_structure1ID == i].organizational_structure2ID.unique()
+
+        l2Array = []
+        for j in l2:
+
+            r2 = {"id": int(j),
+                  "name": main[main.level3ID == j].level3.iloc[0],
+                  "level": int(2)}
+            l2Array.append(r2)
+
+        r1 = {"id": int(i),
+              "name": main[main.level1ID == i].level1.iloc[0],
+              "children": l2Array,
+              "level": int(1)}
         l1Array.append(r1)
 
     return l1Array
