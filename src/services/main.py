@@ -39,8 +39,11 @@ def main():
     applications = pd.read_excel(raw, sheet_name = "Applicativi")
 
     ## Translate Italian to English
+    ## Uncomment line 43 and 44 to authenticate with google translate and uncomment the data structure you wish to translate
+    ## The google translate API costs $$ so only translate when needed
     # project_id = config["translate"]["projectId"]
     # authenticate_implicit_with_adc(project_id)
+
     # translate_text(data.actor.unique(), os.path.join(raw_pth, "translated"), 'actors', project_id)
     # translate_text(data.activity.unique(), os.path.join(raw_pth, "translated"), 'activities', project_id)
     # translate_text(risks["Object Name"].unique(), os.path.join(raw_pth, "translated"), 'risks', project_id)
@@ -66,7 +69,7 @@ def main():
     org1Clean = org_str1_dm(data, raw_pth, processed_pth)
     org2Clean = org_str2_dm(data, raw_pth, processed_pth)
 
-    data = data[["L1 GUID", "L2 GUID", "L3 GUID", "MODEL GUID", "activityGUID", "actorGUID"]].rename(
+    data = data[["L1 GUID", "L2 GUID", "L3 GUID", "MODEL GUID", "activityGUID", "actorGUID", "organizational_structure1", "organizational_structure2"]].rename(
                                 columns={
                                 'L1 GUID': 'level1GUID',
                                 'L2 GUID': 'level2GUID',
@@ -83,10 +86,9 @@ def main():
                                 'Object GUID': 'riskGUID'}).drop_duplicates()
 
     # Relational data
-    activity_to_actor = activity_to_actor_dm(data, activitiesClean, actorsClean, processed_pth)
     activity_to_risk = activity_to_risk_dm(risks, activitiesClean, risksClean, processed_pth)
     risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
-    main = main_dm(data, level1Clean, level2Clean, level3Clean, modelClean, activitiesClean, actorsClean, risksClean, controlsClean, activity_to_actor, activity_to_risk, risk_to_control)
+    main = main_dm(data, level1Clean, level2Clean, level3Clean, modelClean, activitiesClean, actorsClean, risksClean, controlsClean, org1Clean, org2Clean, activity_to_risk, risk_to_control)
 
     network = create_network(main)
     write_json(network["nodes"], os.path.join(processed_pth, "nested"), "nodes")
