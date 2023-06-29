@@ -72,7 +72,7 @@ export default function FilterActivityType({typesChecks, updateSelection, label}
                                 }
 
                                 return (
-                                    <span>{str}</span>
+                                    <span key={`descr-${str}`}>{str}</span>
                                 )
                             }) 
                         }
