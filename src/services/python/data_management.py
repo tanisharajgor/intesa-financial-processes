@@ -307,6 +307,35 @@ def applications_dm(applications, raw_pth, processed_pth):
 
     return df
 
+
+"""
+Organizational structure data management
+"""
+def org_str1_dm(data, raw_pth, processed_pth):
+
+    df = data[["organizational_structure1"]].drop_duplicates() # drop duplicates
+    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "organizational_structure1.csv")).rename(columns={'Italian': 'organizational_structure1'})
+    df = pd.merge(df, dfTranslated, on="organizational_structure1", how="left").drop("organizational_structure1", axis=1).rename(columns={'English': "organizational_structure1"})
+    df = num_id(df, "organizational_structure1", 1000000)
+
+    df.to_csv(os.path.join(processed_pth, 'relational', 'organizational_structure1' + ".csv"), index = False)
+
+    return df
+
+"""
+Organizational structure data management
+"""
+def org_str2_dm(data, raw_pth, processed_pth):
+
+    df = data[["organizational_structure2"]].drop_duplicates() # drop duplicates
+    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "organizational_structure2.csv")).rename(columns={'Italian': 'organizational_structure2'})
+    df = pd.merge(df, dfTranslated, on="organizational_structure2", how="left").drop("organizational_structure2", axis=1).rename(columns={'English': "organizational_structure2"})
+    df = num_id(df, "organizational_structure2", 10000000)
+
+    df.to_csv(os.path.join(processed_pth, 'relational', 'organizational_structure2' + ".csv"), index = False)
+
+    return df
+
 """
 Crosswalk between level1 and level2
 """
