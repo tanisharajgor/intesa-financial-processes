@@ -159,7 +159,7 @@ const StyledFilter = styled('div')`
     flex-direction: column;
 `
 
-export default function FilterTaxonomy({selectedLevel3, updateLevel3}) {
+export default function FilterProcess({selectedLevel3, updateLevel3}) {
     const level3Descr = lu["level3"].find((d) => d.id === selectedLevel3).descr;
     const [selectedLevel1, updateLevel1] = useState(level1[0].id);
     const levelsFiltered = lu["processes"].children.find((d) => d.id === selectedLevel1);

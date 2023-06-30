@@ -1,7 +1,7 @@
 import Main from "../components/Main";
 import Navigation from "../components/Navigation";
 import InspectChapter from "../components/InspectChapter";
-import FilterProcess from "../components/FilterProcess";
+import FilterTaxonomy from "../components/FilterTaxonomy";
 import FilterType from "../components/FilterType";
 import { useEffect, useRef, useState } from "react";
 import links from "../data/processed/nested/links.json";
@@ -143,7 +143,7 @@ export default function Network() {
                             <p>Filter data in the actor network graph to explore activities and risks.</p>
                     </Description>
                     <InspectChapter/>
-                    <FilterProcess selectedLevel3={selectedLevel3} updateLevel3={updateLevel3}/>
+                    <FilterTaxonomy selectedLevel3={selectedLevel3} updateLevel3={updateLevel3}/>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
                     <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type"/>
                 </Menu>
