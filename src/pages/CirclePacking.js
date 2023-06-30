@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { inspectHierarchySummary } from "../components/Inspect";
 import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
 import FilterType from "../components/FilterType";
-import InspectProcesses from "../components/InspectProcesses";
+import InspectTaxonomy from "../components/InspectTaxonomy";
 
 import { activityTypeValues } from "../utils/global";
 import Description from "../components/Description";
@@ -75,7 +75,7 @@ export default function CirclePacking() {
                       <p>Click on the circles to zoom into the process visualization.</p>
                     </Description>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
-                    <InspectProcesses selectedLevel1={selectedLevel1} updateSelectedLevel1={updateSelectedLevel1} selectedLevel2={selectedLevel2} updateSelectedLevel2={updateSelectedLevel2} selectedLevel3={selectedLevel3} updateSelectedLevel3={updateSelectedLevel3} selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter} updateValuesChapter={updateValuesChapter}/>
+                    <InspectTaxonomy selectedLevel1={selectedLevel1} updateSelectedLevel1={updateSelectedLevel1} selectedLevel2={selectedLevel2} updateSelectedLevel2={updateSelectedLevel2} selectedLevel3={selectedLevel3} updateSelectedLevel3={updateSelectedLevel3} selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter} updateValuesChapter={updateValuesChapter}/>
                 </Menu>
                 <Main
                     viewVariable={viewVariable}

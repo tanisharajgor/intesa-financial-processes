@@ -1,5 +1,6 @@
 import Main from "../components/Main";
 import Navigation from "../components/Navigation";
+import InspectChapter from "../components/InspectChapter";
 import FilterProcess from "../components/FilterProcess";
 import FilterType from "../components/FilterType";
 import { useEffect, useRef, useState } from "react";
@@ -140,7 +141,8 @@ export default function Network() {
                     <Description>
                             <h4>Network</h4>
                             <p>Filter data in the actor network graph to explore activities and risks.</p>
-                    </Description> 
+                    </Description>
+                    <InspectChapter></InspectChapter>
                     <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
                     <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type"/>

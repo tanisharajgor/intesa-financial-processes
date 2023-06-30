@@ -1,15 +1,13 @@
 import { Accordion, AccordionHeader, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
 import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../component-styles/query-layout';
 import { Key } from '../component-styles/key'
-import { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
-import * as d3 from 'd3';
 import * as Theme from "../component-styles/theme";
+import styled from 'styled-components';
 import { StyledSelect } from '../component-styles/select';
+import { useState } from 'react';
 import lu from '../data/processed/nested/lu.json';
-import * as Global from "../utils/global";
 
 const StyledHeader = styled('div')`
     display: flex;
@@ -51,7 +49,7 @@ function taxonomyLevel(valuesLevel, selectedLevel, handleChange, label, id) {
     )
 }
 
-export default function InspectProcesses({selectedLevel1, updateSelectedLevel1, selectedLevel2, updateSelectedLevel2, selectedLevel3, updateSelectedLevel3, selectedChapter, updateSelectedChapter, valuesChapter, updateValuesChapter}) {
+export default function InspectTaxonomy({selectedLevel1, updateSelectedLevel1, selectedLevel2, updateSelectedLevel2, selectedLevel3, updateSelectedLevel3, selectedChapter, updateSelectedChapter, valuesChapter, updateValuesChapter}) {
 
     const processes = lu["processes"];
 
