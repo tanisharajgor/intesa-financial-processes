@@ -6,6 +6,7 @@ import Ripple from './Ripple';
 import * as Theme from "../component-styles/theme";
 import styled from 'styled-components';
 import { useState } from 'react';
+import { taxonomyLevel } from "./InspectTaxonomy";
 
 const StyledHeader = styled('div')`
     display: flex;
@@ -24,6 +25,11 @@ export default function InspectChapter({selectedChapter, updateSelectedChapter, 
     const [shouldRotate, setRotate] = useState(false);
     const handleRotate = () => setRotate(!shouldRotate);
 
+    const handleChangeChapter = (event) => {
+        let chapter = parseInt(event.target.value);
+        updateSelectedChapter(chapter);
+    }
+
     return(
         <Accordion className={'Card'}>
             <AccordionHeader
@@ -40,7 +46,7 @@ export default function InspectChapter({selectedChapter, updateSelectedChapter, 
             </StyledHeader>
             </AccordionHeader>
             <AccordionDetails>
-                {/* {taxonomyLevel(valuesChapter, selectedChapter, handleChangeChapter, "Chapter", "chapter"): <></>} */}
+                {taxonomyLevel(valuesChapter, selectedChapter, handleChangeChapter, "Chapter", "chapter")}
             </AccordionDetails>
         </Accordion>
     )

@@ -21,7 +21,7 @@ const StyledLabel = styled('span')`
     margin-left: 3px;
 `
 
-function taxonomyLevel(valuesLevel, selectedLevel, handleChange, label, id) {
+export function taxonomyLevel(valuesLevel, selectedLevel, handleChange, label, id) {
 
     return(
         <LayoutGroup>

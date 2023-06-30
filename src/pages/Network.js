@@ -72,6 +72,9 @@ export default function Network() {
     // User Input selection
     const [selectedLevel1, updateLevel1] = useState(level1[0].id);
     const [selectedLevel3, updateLevel3] = useState(links[0].id);
+    const [selectedChapter, updateSelectedChapter] = useState(-1);
+
+    const [valuesChapter, updateValuesChapter] = useState([]);
 
     let dataNew = combineNodeLink(selectedLevel3, nodes, links);
 
@@ -142,7 +145,7 @@ export default function Network() {
                             <h4>Network</h4>
                             <p>Filter data in the actor network graph to explore activities and risks.</p>
                     </Description>
-                    <InspectChapter/>
+                    <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter} updateValuesChapter={updateValuesChapter}/>
                     <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3}/>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
                     <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type"/>
