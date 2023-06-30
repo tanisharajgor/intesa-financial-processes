@@ -315,7 +315,7 @@ def org_str1_dm(data, raw_pth, processed_pth):
 
     df = data[["organizational_structure1"]].drop_duplicates() # drop duplicates
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "organizational_structure1.csv")).rename(columns={'Italian': 'organizational_structure1'})
-    df = pd.merge(df, dfTranslated, on="organizational_structure1", how="left").drop("organizational_structure1", axis=1).rename(columns={'English': "organizational_structure1"})
+    df = pd.merge(df, dfTranslated, on="organizational_structure1", how="left")
     df = num_id(df, "organizational_structure1", 1000000)
 
     df.to_csv(os.path.join(processed_pth, 'relational', 'organizational_structure1' + ".csv"), index = False)
@@ -330,7 +330,7 @@ def org_str2_dm(data, raw_pth, processed_pth):
 
     df = data[["organizational_structure2"]].drop_duplicates() # drop duplicates
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "organizational_structure2.csv")).rename(columns={'Italian': 'organizational_structure2'})
-    df = pd.merge(df, dfTranslated, on="organizational_structure2", how="left").drop("organizational_structure2", axis=1).rename(columns={'English': "organizational_structure2"})
+    df = pd.merge(df, dfTranslated, on="organizational_structure2", how="left")
     df = num_id(df, "organizational_structure2", 10000000)
 
     df.to_csv(os.path.join(processed_pth, 'relational', 'organizational_structure2' + ".csv"), index = False)
@@ -502,8 +502,8 @@ def main_dm(data, level1, level2, level3, model, activities, actors, risks, cont
     df = pd.merge(df, activities, how="left", on="activityGUID")
     df = pd.merge(df, actors, how="left", on="actorGUID")
 
-    df = pd.merge(df, org1, how="left", on="organizational_structure1")
-    df = pd.merge(df, org2, how="left", on="organizational_structure2")
+    df = pd.merge(df, org1, how="left", on="organizational_structure1").drop("organizational_structure1", axis=1).rename(columns={'English': "organizational_structure1"})
+    df = pd.merge(df, org2, how="left", on="organizational_structure2").drop("organizational_structure2", axis=1).rename(columns={'English': "organizational_structure2"})
 
     rtc = pd.concat([risk_to_control.rename(columns={'controlID': 'activityID'}), activity_to_risk], ignore_index=True, sort=False).drop_duplicates()
     df = pd.merge(df, rtc, how="left", on="activityID")

@@ -109,7 +109,7 @@ def main():
         "level3": create_lu(level3Clean, "level3ID", "level3"),
         "model": create_lu(modelClean, "modelID", "model"),
         "processes": {"name": "root", "children": create_processes(main), "treeLevel": 0},
-        "org_structure": create_org_structure(data)
+        "org_structure": create_org_structure(main)
     }
 
     write_json(lu, os.path.join(processed_pth, "nested"), "lu")

@@ -219,6 +219,8 @@ def create_network(data):
 
     data = data[pd.isnull(data.actorID) == False]
 
+    org_structure = create_org_structure(data)
+
     for i in data.level3ID.unique():
 
         df = data[data.level3ID == i].drop_duplicates()
@@ -241,7 +243,8 @@ def create_network(data):
 
         for k in actorsID:
 
-            import pdb; pdb.set_trace()
+            org = create_org_structure(df[df.actorID == k])
+
             row = {"id": int(k),
                    "group": "Actor",
                    "viewId": "Actor",
@@ -254,10 +257,7 @@ def create_network(data):
                         "nRisk": int(df[(df.actorID == k) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0]),
                         "nControl": int(df[(df.actorID == k) & (pd.isnull(df.activityID) == False) & (df.activityType == "Control activity")][['activityID']].drop_duplicates().shape[0])
                         },
-                    "organizationalStructure": {
-                        "level1": df[df.actorID == k].organizational_structure1ID.unique().tolist(),
-                        "level2": df[df.actorID == k].organizational_structure2ID.unique().tolist()
-                        }
+                    "organizationalStructure": org
                    }
 
             nodes.append(row)
@@ -390,6 +390,10 @@ def create_processes(main):
 
     return l1Array
 
+"""
+Create a nested structure for organizational structure
+Return object
+"""
 def create_org_structure(main):
     l1Array = []
 
@@ -400,12 +404,12 @@ def create_org_structure(main):
         for j in l2:
 
             r2 = {"id": int(j),
-                  "name": main[main.level3ID == j].level3.iloc[0],
+                  "name": main[main.organizational_structure2ID == j].organizational_structure2.iloc[0],
                   "level": int(2)}
             l2Array.append(r2)
 
         r1 = {"id": int(i),
-              "name": main[main.level1ID == i].level1.iloc[0],
+              "name": main[main.organizational_structure1ID == i].organizational_structure1.iloc[0],
               "children": l2Array,
               "level": int(1)}
         l1Array.append(r1)

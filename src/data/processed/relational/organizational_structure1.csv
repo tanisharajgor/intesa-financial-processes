@@ -1,66 +1,66 @@
-organizational_structure1,organizational_structure1ID
-organizational structures,1000063
-Professional roles,1000047
-Group company,1000023
-Compliance Management,1000008
-Leasing,1000028
-Life branch,1000029
-Physical Security,1000043
-Credit assignment,1000011
-Human resources,1000024
-Valuations for Financial Statements purposes,1000060
-Reports,1000052
-Own account finance,1000041
-Management of non-performing credit,1000034
-taxation,1000064
-Planning and Management Control,1000044
-Credit Risk Mitigation,1000010
-Financial Products and Services,1000020
-Strategies,1000058
-Institutional Relations and External Communication,1000025
-Branch services,1000006
-Other ancillary products and services,1000039
-Service transition,1000057
-Cybersecurity and Business Continuity Services,1000016
-Property and Artistic Heritage,1000048
-Registry office,1000051
-Payment cards,1000042
-corporate finance,1000062
-Liquidity Risk,1000030
-Integrated System of Internal Controls,1000026
-Grant,1000022
-Mandatory Fulfillments,1000035
-Litigation and Legal Advice,1000031
-Funding,1000021
-Pricing and Market Models,1000045
-Receipts and payments,1000050
-Abroad,1000000
-Credit risk,1000012
-Corporate governance and corporate compliance,1000009
-Cybersecurity and Business Continuity Projects,1000015
-Purchases and Sale of Goods,1000049
-Risk Strategy and Internal Capital & Liquidity Adequacy Assessment,1000053
-Cybersecurity and Business Continuity Governance,1000014
-Accounting',1000001
-Operational risk,1000037
-Third Party Finance,1000059
-Data Governance,1000018
-"Product Development, Services and Commercial Agreements",1000046
-Administrative processes,1000004
-Budget and Pillar III,1000007
-Intesa Sanpaolo,1000027
-Banking Book Financial Risk,1000005
-Wallet,1000061
-Service Design,1000054
-Market risk,1000036
-Outsourcing,1000040
-Service Strategy,1000056
-Damage branch,1000017
-Service Operation,1000055
-Managed savings,1000032
-Organization,1000038
-Accounts and Deposits,1000002
-Customer Relationship Management,1000013
-Management of Performing Credit under Monitoring,1000033
-Digital Channel Access Services,1000019
-Actors outside the Group,1000003
+organizational_structure1,English,organizational_structure1ID
+Strutture organizzative,organizational structures,1000062
+Figure Professionali,Professional roles,1000020
+Società del Gruppo,Group company,1000060
+Gestione della Conformita',Compliance Management,1000027
+Leasing,Leasing,1000032
+Ramo Vita,Life branch,1000041
+Sicurezza Fisica,Physical Security,1000058
+Cessione Crediti,Credit assignment,1000007
+Risorse Umane,Human resources,1000049
+Valutazioni ai fini di Bilancio,Valuations for Financial Statements purposes,1000064
+Segnalazioni,Reports,1000051
+Finanza in Conto Proprio,Own account finance,1000021
+Gestione del Credito Deteriorato,Management of non-performing credit,1000025
+Fiscalita',taxation,1000024
+Pianificazione e Controllo di Gestione,Planning and Management Control,1000035
+Credit Risk Mitigation,Credit Risk Mitigation,1000013
+Prodotti e Servizi Finanziari,Financial Products and Services,1000039
+Strategie,Strategies,1000061
+Relazioni istituzionali e Comunicazione esterna,Institutional Relations and External Communication,1000042
+Servizi di Sportello,Branch services,1000057
+Altri prodotti e servizi accessori,Other ancillary products and services,1000002
+Service Transition,Service transition,1000055
+Cybersecurity and Business Continuity Services,Cybersecurity and Business Continuity Services,1000017
+Immobili e Patrimonio Artistico,Property and Artistic Heritage,1000029
+Anagrafe,Registry office,1000003
+Carte di pagamento,Payment cards,1000006
+Corporate Finance,corporate finance,1000012
+Rischio di Liquidita',Liquidity Risk,1000047
+Sistema Integrato dei Controlli Interni,Integrated System of Internal Controls,1000059
+Concessione,Grant,1000008
+Adempimenti Obbligatori,Mandatory Fulfillments,1000001
+Contenzioso e Consulenza Legale,Litigation and Legal Advice,1000010
+Finanziamenti,Funding,1000023
+Pricing e Modelli di Mercato,Pricing and Market Models,1000037
+Incassi e Pagamenti,Receipts and payments,1000030
+Estero,Abroad,1000019
+Rischio di Credito,Credit risk,1000046
+Governo societario e adempimenti societari,Corporate governance and corporate compliance,1000028
+Cybersecurity and Business Continuity Projects,Cybersecurity and Business Continuity Projects,1000016
+Acquisti e Cessione Beni,Purchases and Sale of Goods,1000000
+Risk Strategy e Internal Capital & Liquidity Adequacy Assessment,Risk Strategy and Internal Capital & Liquidity Adequacy Assessment,1000048
+Cybersecurity and Business Continuity Governance,Cybersecurity and Business Continuity Governance,1000015
+Contabilita',Accounting',1000009
+Rischio Operativo,Operational risk,1000045
+Finanza in Conto Terzi,Third Party Finance,1000022
+Data Governance,Data Governance,1000018
+"Sviluppo Prodotti, Servizi e Accordi Commerciali","Product Development, Services and Commercial Agreements",1000063
+Processi Amministrativi,Administrative processes,1000038
+Bilancio e Pillar III,Budget and Pillar III,1000005
+Intesa Sanpaolo,Intesa Sanpaolo,1000031
+Rischio Finanziario di Banking Book,Banking Book Financial Risk,1000043
+Portafoglio,Wallet,1000036
+Service Design,Service Design,1000052
+Rischio Mercato,Market risk,1000044
+Outsourcing,Outsourcing,1000034
+Service Strategy,Service Strategy,1000054
+Ramo Danni,Damage branch,1000040
+Service Operation,Service Operation,1000053
+Risparmio Gestito,Managed savings,1000050
+Organizzazione,Organization,1000033
+Conti e Depositi,Accounts and Deposits,1000011
+Customer Relationship Management,Customer Relationship Management,1000014
+Gestione del Credito in Bonis in Monitoraggio,Management of Performing Credit under Monitoring,1000026
+Servizi di Accesso ai Canali Digitali,Digital Channel Access Services,1000056
+Attori Esterni al Gruppo,Actors outside the Group,1000004
