@@ -59,7 +59,7 @@ export default class NetworkVisualization {
     this.height = this.rootDOM.clientHeight;
 
     this.initSimulation();
-    this.initTooltip(selector);
+    this.tooltip = Global.initTooltip(selector);
 
     // create canvas
     this.app = new PIXI.Application({
@@ -130,24 +130,6 @@ export default class NetworkVisualization {
       });
     this.highlightNetworkNodes(node);
   }
-
-  initTooltip(selector) {
-    this.tooltip = d3.select(`#${selector}`)
-      .append("div")
-      .attr("class", "tooltip")
-      .style("position", "absolute")
-      .style("left", "0px")
-      .style("top", "0px")
-      .style("visibility", "hidden")
-      .style("padding", "10px")
-      .style("pointer-events", "none")
-      .style("border-radius", "5px")
-      .style("background-color", "rgba(0, 0, 0, 0.65)")
-      .style("font-family", '"IBM Plex", ""Helvetica Neue", Helvetica, Arial, sans-serif')
-      .style("font-weight", "normal")
-      .style("border", "1px solid rgba(78, 81, 85, 0.7)")
-      .style("font-size", "16px");
-}
 
   // Drawing functions ------------------------------------------------------
 
@@ -460,19 +442,19 @@ export default class NetworkVisualization {
   tooltipText(d) {
     if (d.viewId === "Actor") {
 
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # activities: ${d.viewType.nActivity} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
+        return `Type: ${d.type} <br> ${d.group}: ${d.descr} <br> # activities: ${d.viewType.nActivity} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Other activity") {
 
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.viewType.nActor} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
+        return `Type: ${d.type} <br> ${d.group}: ${d.descr} <br> # actors: ${d.viewType.nActor} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Risk") {
     
-        return `${d.group}: ${d.name} <br> # actors: ${d.viewType.nActor} <br> # activity: ${d.viewType.nActivity} <br> # control: ${d.viewType.nControl}`;
+        return `${d.group}: ${d.descr} <br> # actors: ${d.viewType.nActor} <br> # activity: ${d.viewType.nActivity} <br> # control: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Control activity") {
     
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.viewType.nActor} <br> # risks: ${d.viewType.nRisk}`;
+        return `Type: ${d.type} <br> ${d.group}: ${d.descr} <br> # actors: ${d.viewType.nActor} <br> # risks: ${d.viewType.nRisk}`;
     }
   }
 

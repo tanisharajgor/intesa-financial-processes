@@ -110,7 +110,7 @@ def actors_dm(actors, config, raw_pth, processed_pth):
     df = pd.merge(df, dfTranslated, on="actor", how="left").drop("actor", axis=1).rename(columns={'English': "actor"})
     df = clean_strings(df, "actor")
     df = df[pd.isnull(df.actor) == False]
-    df = num_id(df, "actorGUID", 1000000)
+    df = num_id(df, "actorGUID", 10000)
     df.actorType = df.actorType.replace('Missing', 'NA')
 
     ## Write the cleaned data out
@@ -134,7 +134,7 @@ def risks_dm(risks, config, raw_pth, processed_pth):
     df = pd.merge(df, dfTranslated, on="risk", how="left").drop("risk", axis=1).rename(columns={'English': "risk"})
     df = clean_strings(df, "risk")
     df = df[pd.isnull(df.risk) == False]
-    df = num_id(df, "riskGUID", 10000)
+    df = num_id(df, "riskGUID", 100000)
     df = translate_config(df, config, 'riskType')
     df["financialDisclosureRisk"] = df.riskType == "Financial Information Risk (ex 262/2005)"
 
@@ -206,7 +206,7 @@ def level1_dm(data, raw_pth, processed_pth):
     df = pd.merge(df, dfTranslated, on="level1", how="left").drop("level1", axis=1).rename(columns={'English': "level1"})
     df = clean_strings(df, "level1")
     df = df[pd.isnull(df.level1) == False]
-    df = num_id(df, "level1GUID")
+    df = num_id(df, "level1GUID", 10)
 
     ## Write the cleaned data out
     df.drop('level1GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'level1' + ".csv"), index = False)
@@ -227,7 +227,7 @@ def level2_dm(data, raw_pth, processed_pth):
     df = pd.merge(df, dfTranslated, on="level2", how="left").drop("level2", axis=1).rename(columns={'English': "level2"})
     df = clean_strings(df, "level2")
     df = df[pd.isnull(df.level2) == False]
-    df = num_id(df, "level2GUID")
+    df = num_id(df, "level2GUID", 100)
 
     ## Write the cleaned data out
     df.drop('level2GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'level2' + ".csv"), index = False)
@@ -248,7 +248,7 @@ def level3_dm(data, raw_pth, processed_pth):
     df = pd.merge(df, dfTranslated, on="level3", how="left").drop("level3", axis=1).rename(columns={'English': "level3"})
     df = clean_strings(df, "level3")
     df = df[pd.isnull(df.level3) == False]
-    df = num_id(df, "level3GUID")
+    df = num_id(df, "level3GUID", 1000)
 
     ## Write the cleaned data out
     df.drop('level3GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'level3' + ".csv"), index = False)
@@ -277,7 +277,7 @@ def model_dm(data, raw_pth, processed_pth):
     df = clean_strings(df, "model")
     df.model = df.model.fillna(df.english) #several models are missing the italian translations, but have the english
     df = df[pd.isnull(df.model) == False]
-    df = num_id(df, "modelGUID", 10000000)
+    df = num_id(df, "modelGUID", 1000)
     df = df.drop('english', axis = 1)
 
     ## Write the cleaned data out
