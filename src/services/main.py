@@ -101,7 +101,7 @@ def main():
         "level2": create_lu(level2Clean, "level2ID", "level2"),
         "level3": create_lu(level3Clean, "level3ID", "level3"),
         "model": create_lu(modelClean, "modelID", "model"),
-        "processes": {"name": "root", "children": create_processes(main), "treeLevel": 0}
+        "processes": {"name": "root", "children": create_processes(main), "level": 0}
     }
 
     write_json(lu, os.path.join(processed_pth, "nested"), "lu")

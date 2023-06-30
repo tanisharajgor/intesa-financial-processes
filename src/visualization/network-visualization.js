@@ -449,11 +449,11 @@ export default class NetworkVisualization {
         return `Type: ${d.type} <br> ${d.group}: ${d.descr} <br> # actors: ${d.viewType.nActor} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Risk") {
-    
+
         return `${d.group}: ${d.descr} <br> # actors: ${d.viewType.nActor} <br> # activity: ${d.viewType.nActivity} <br> # control: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Control activity") {
-    
+
         return `Type: ${d.type} <br> ${d.group}: ${d.descr} <br> # actors: ${d.viewType.nActor} <br> # risks: ${d.viewType.nRisk}`;
     }
   }

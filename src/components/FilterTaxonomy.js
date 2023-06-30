@@ -27,9 +27,9 @@ const cluster = d3.cluster()
     .size([height, width - 100]);  // 100 is the margin I will have on the right side
 
 function fillScale(d, selectedLevel3) {
-    if (d.data.data.treeLevel === 3 && d.data.data.id === selectedLevel3) {
+    if (d.data.data.level === 3 && d.data.data.id === selectedLevel3) {
         return Theme.primaryColorHex;
-    } else if (d.data.data.treeLevel === 3) {
+    } else if (d.data.data.level === 3) {
         return "white";
     } else {
         return Theme.extraDarkGreyHex;
@@ -56,7 +56,7 @@ function renderTooltip(selectedLevel3) {
 
         var x, y;
 
-        if (d.data.data.treeLevel === 3) {
+        if (d.data.data.level === 3) {
             x = e.layerX - 150;
             y = e.layerY - 100;
         } else {
@@ -67,12 +67,12 @@ function renderTooltip(selectedLevel3) {
         tooltip.style("visibility", "visible")
             .style("top", `${y}px`)
             .style("left", `${x}px`)
-            .html(`Level ${d.data.data.treeLevel}<br><b>${d.data.data.descr}</b>`);
+            .html(`Level ${d.data.data.level}<br><b>${d.data.data.descr}</b>`);
 
         thisCircle
             .attr("stroke", "white")
-            .attr("stroke-width", d => d.data.data.treeLevel === 3 ? 1.5: 0)
-            .attr("fill", d => d.data.data.treeLevel === 3 ? Theme.primaryColorHex: Theme.extraDarkGreyHex)
+            .attr("stroke-width", d => d.data.data.level === 3 ? 1.5: 0)
+            .attr("fill", d => d.data.data.level === 3 ? Theme.primaryColorHex: Theme.extraDarkGreyHex)
             .attr("r", 4);
 
     }).on("mouseout", function() {
@@ -83,7 +83,7 @@ function renderTooltip(selectedLevel3) {
             .attr("stroke", d => fillScale(d, selectedLevel3))
             .attr("fill", d => fillScale(d, selectedLevel3))
             .attr("stroke-width", .5)
-            .attr("r", d => rScale(d.data.data.treeLevel))
+            .attr("r", d => rScale(d.data.data.level))
     });
 }
 
@@ -92,7 +92,7 @@ function clickProcess(updateLevel3) {
     d3.selectAll('.Process-Node').each(function (d, i) {
         d3.select(this)
             .on('click', (e, datum) => {
-                if(datum.data.data.treeLevel === 3) {
+                if(datum.data.data.level === 3) {
                     updateLevel3(datum.data.data.id);
                 }
             })
@@ -138,12 +138,12 @@ function updateFilter(root, selectedLevel3) {
             return `translate(${d.y},${d.x})`
         })
         .append("circle")
-            .attr("r", d => rScale(d.data.data.treeLevel))
+            .attr("r", d => rScale(d.data.data.level))
             .attr("fill", d => fillScale(d, selectedLevel3))
             .attr("stroke", d => fillScale(d, selectedLevel3))
             .attr("stroke-width", .5)
             .attr("class", "Process-Node")
-            .style('cursor', d => d.data.data.treeLevel === 3 ? 'pointer': 'not-allowed');
+            .style('cursor', d => d.data.data.level === 3 ? 'pointer': 'not-allowed');
 }
 
 const StyledFilteredData = styled('p')`

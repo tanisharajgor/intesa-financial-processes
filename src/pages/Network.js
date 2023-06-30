@@ -124,7 +124,7 @@ export default function Network() {
         let inspect = d3.select(".Inspect");
         inspectNetworkSummary(inspect, filteredData);
 
-    }, [selectedLevel3, selectedActivities, selectedActors])
+    }, [selectedLevel1, selectedLevel3, selectedActivities, selectedActors])
 
     // Update filter possibilities when level changes
     useEffect(() => {
