@@ -14,8 +14,10 @@ import * as d3 from 'd3';
 import Description from "../components/Description";
 import { Content } from "../component-styles/content";
 import { Menu } from "../component-styles/query-menu";
+import lu from '../data/processed/nested/lu.json';
 
 const id = "network-chart";
+const level1 = lu["level1"];
 
 // Combines the nodes and links into a single object
 function combineNodeLink(selectedLevel3ID, nodes, links) {
@@ -68,6 +70,7 @@ export default function Network() {
     const [viewVariable, updateViewVariable] = useState("riskType");
 
     // User Input selection
+    const [selectedLevel1, updateLevel1] = useState(level1[0].id);
     const [selectedLevel3, updateLevel3] = useState(links[0].id);
 
     let dataNew = combineNodeLink(selectedLevel3, nodes, links);
@@ -143,7 +146,7 @@ export default function Network() {
                             <p>Filter data in the actor network graph to explore activities and risks.</p>
                     </Description>
                     <InspectChapter/>
-                    <FilterTaxonomy selectedLevel3={selectedLevel3} updateLevel3={updateLevel3}/>
+                    <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3}/>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
                     <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type"/>
                 </Menu>
