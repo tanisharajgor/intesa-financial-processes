@@ -4,6 +4,9 @@ import * as Global from "../utils/global";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
 import { activityTypeValues } from "../utils/global";
+import lu from "../data/processed/nested/lu";
+
+const nonHighlightOpacity = .15;
 
 export class CirclePackingDiagram {
   app;
@@ -11,19 +14,28 @@ export class CirclePackingDiagram {
   data;
   height;
   inspect;
+  levelIDs;
   nodes;
   rootDOM;
+  selectedActivities;
+  selectedLevels;
   tooltip;
   width;
   viewport;
-  zoomedNodeId
+  viewVariable;
+  zoomedNodeId;
 
   constructor(data, updateViewHoverValue) {
     this.data = data;
+    this.levelIDs = this.data.map(d => d.data.id);
     this.zoomedNodeId = 0;
     this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
     this.selectedActivities = [];
+    this.selectedLevel1 = [];
+    this.selectedLevel2 = [];
+    this.selectedLevel3 = [];
+    this.selectedChapter = [];
   }
 
   // Initializes the application
@@ -31,7 +43,7 @@ export class CirclePackingDiagram {
     this.rootDOM = document.getElementById(selector);
     this.width = this.rootDOM.clientWidth;
     this.height = this.rootDOM.clientHeight;
-    this.initTooltip(selector);
+    this.tooltip = Global.initTooltip(selector);
   
     // create canvas
     this.app = new PIXI.Application({
@@ -65,10 +77,10 @@ export class CirclePackingDiagram {
     this.app.stage.addChild(this.viewport);
   }
 
-    // Set diagram to fill the vizualization frame
-    centerVisualization(zoom) {
-      this.viewport.zoomPercent(zoom, true)
-    }
+  // Set diagram to fill the vizualization frame
+  centerVisualization(zoom) {
+    this.viewport.zoomPercent(zoom, true)
+  }
 
   initTooltip(selector) {
     this.tooltip = d3.select(`#${selector}`)
@@ -87,38 +99,62 @@ export class CirclePackingDiagram {
       .style("border", "1px solid rgba(78, 81, 85, 0.7)")
       .style("font-size", "16px");
   }
-  
+
   // Drawing functions ------------------------------------------------------
+
+  selectedActivitiesOpacity(node) {
+    if (node.data.treeLevel < 4) {
+      node.gfx.alpha = nonHighlightOpacity;
+    } else {
+      if (this.selectedActivities.includes(node.data.activityType)) {
+        node.gfx.alpha = 1;
+      } else {
+        node.gfx.alpha = nonHighlightOpacity;
+      }
+    }
+  }
+
+  selectedLevelOpacity(node) {
+
+    if (this.levelIDs.includes(node.data.id)) {
+      node.gfx.alpha = this.alphaScale(node.data.treeLevel);
+    } else {
+      node.gfx.alpha = nonHighlightOpacity;
+    }
+  }
+
+  selectedLevelAndActivitiesOpacity(node) {
+    if (this.levelIDs.includes(node.data.id) && this.selectedActivities.includes(node.data.activityType)) {
+      node.gfx.alpha = this.alphaScale(node.data.treeLevel);
+    } else {
+      node.gfx.alpha = nonHighlightOpacity;
+    }
+  }
 
   opacityScale(node) {
 
-    const scale = d3.scaleOrdinal()
+    this.alphaScale = d3.scaleOrdinal()
       .domain([0, 1, 2, 3, 4])
       .range([.05, .3, .4, .5, .6]);
-  
-    if (this.selectedActivities.length === 0) {
-      node.gfx.alpha = scale(node.data.treeLevel);
+
+    if (this.selectedActivities.length > 0 && this.selectedLevel1 !== -1) {
+      this.selectedLevelAndActivitiesOpacity(node);
+    } else if(this.selectedActivities.length > 0) {
+      this.selectedActivitiesOpacity(node);
+    } else if(this.selectedLevel1 !== -1) {
+      this.selectedLevelOpacity(node);
     } else {
-  
-      if (node.data.treeLevel < 4) {
-        node.gfx.alpha = .1;
-      } else {
-  
-        if (this.selectedActivities.includes(node.data.activityType)) {
-          node.gfx.alpha = 1;
-        } else {
-          node.gfx.alpha = .1;
-        }
-      }
+      node.gfx.alpha = this.alphaScale(node.data.treeLevel);
     }
-  }  
-  
+  }
+
   draw(viewVariable) {
-    this.drawNodes(viewVariable);
+    this.viewVariable = viewVariable;
+    this.drawNodes();
   }
 
   // Initializes the nodes
-  drawNodes(viewVariable) {
+  drawNodes() {
 
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
@@ -131,7 +167,7 @@ export class CirclePackingDiagram {
       node.viewId = node.data.viewId;
       node.gfx = new PIXI.Graphics();
       node.gfx.lineStyle(lineWidth(node.data.treeLevel), 0xFFFFFF, 1);
-      node.gfx.beginFill(Global.applyColorScale(node.data, viewVariable));
+      node.gfx.beginFill(Global.applyColorScale(node.data, this.viewVariable));
 
       this.opacityScale(node);
 
@@ -143,8 +179,8 @@ export class CirclePackingDiagram {
       node.gfx.interactive = true;
       node.gfx.buttonMode = true;
       node.gfx.cursor = 'zoom-in';
-      node.gfx.on("pointerover", (e) => this.pointerOver(node, e, viewVariable));
-      node.gfx.on("pointerout", (e) => this.pointerOut(node));
+      node.gfx.on("pointerover", (e) => this.pointerOver(node, e));
+      node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
       node.gfx.on("click", (e) => this.onClick(node, e))
 
       this.nodes.push(node);
@@ -164,7 +200,7 @@ export class CirclePackingDiagram {
   // Updating the draw functions on mouse interaction ------------------------------------------------------
 
   tooltipText(d) {
-    return `${d.data.treeLevel === 4? "Activity": "Process"}: ${d.data.name}`;
+    return `${d.data.treeLevel === 4? "Activity": "Process"} <br><b>${d.data.descr}</b>`;
   }
 
   showTooltip(d, event) {
@@ -178,10 +214,10 @@ export class CirclePackingDiagram {
       .html(this.tooltipText(d));
     }
 
-  pointerOver(node, event, viewVariable) {
-    node.gfx.alpha = .9;
+  pointerOver(node, event) {
+    node.gfx.alpha = 1;
     this.showTooltip(node, event);
-    this.updateViewHoverValue(Global.applyColorScale(node.data, viewVariable));
+    this.updateViewHoverValue(Global.applyColorScale(node.data, this.viewVariable));
   }
 
   pointerOut(node) {
@@ -239,13 +275,51 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable, selectedActivities) {
+  updateDraw(viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
+
     this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
+    this.selectedLevel1 = selectedLevel1;
+    this.selectedLevel2 = selectedLevel2;
+    this.selectedLevel3 = selectedLevel3;
+    this.selectedChapter = selectedChapter;
+
+    if (this.selectedLevel1 !== -1) {
+      if (this.selectedLevel2 !== -1) {
+        if (this.selectedLevel3 != -1) {
+          if (this.selectedChapter !== -1) {
+
+            if (valuesChapter.find(d => d.id === selectedChapter) !== undefined) {
+              this.levelIDs = valuesChapter.find(d => d.id === selectedChapter).children.map(d=> d.id);
+            } else {
+              this.levelIDs = []
+            }
+
+          } else {
+            this.levelIDs = this.data.filter(d => [this.selectedLevel3].includes(d.data.id))
+                            .map(d => d.data.childrenIDs)
+                            .reduce((a, b) => a.concat(b));
+            this.levelIDs = this.levelIDs.concat([this.selectedLevel3]);
+          }
+        } else {
+          this.levelIDs = this.data.filter(d => [this.selectedLevel2].includes(d.data.id))
+                .map(d => d.data.childrenIDs)
+                .reduce((a, b) => a.concat(b));
+          this.levelIDs = this.levelIDs.concat([this.selectedLevel2]);
+        }
+      } else {
+        this.levelIDs = this.data.filter(d => [this.selectedLevel1].includes(d.data.id))
+                .map(d => d.data.childrenIDs)
+                .reduce((a, b) => a.concat(b));
+        this.levelIDs = this.levelIDs.concat([this.selectedLevel1]);
+      }
+    }
+
+    this.viewVariable = viewVariable;
     this.destroyNodes();
-    this.drawNodes(viewVariable);
+    this.drawNodes();
   }
 
-    // Controls ------------------------------------------------------
+  // Controls ------------------------------------------------------
   getControls() {
     return {
       zoomIn: () => {

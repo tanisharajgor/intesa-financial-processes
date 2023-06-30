@@ -90,6 +90,8 @@ export default function Network() {
     
     const [isFullscreen, setFullscreen] = useState(false);
 
+    // const [selectedChapters, updateChapters] = useState(lu.map(d => d.descr));
+
     // Initiating the network diagram
     const networkDiagram = useRef(new NetworkVisualization(data, updateSymbolHoverValue, updateViewHoverValue));
 
