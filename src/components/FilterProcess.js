@@ -26,8 +26,8 @@ const rScale = d3.scaleOrdinal()
 const cluster = d3.cluster()
     .size([height, width - 100]);  // 100 is the margin I will have on the right side
 
-function fillScale(d, selectedLevel3ID) {
-    if (d.data.data.treeLevel === 3 && d.data.data.id === selectedLevel3ID) {
+function fillScale(d, selectedLevel3) {
+    if (d.data.data.treeLevel === 3 && d.data.data.id === selectedLevel3) {
         return Theme.primaryColorHex;
     } else if (d.data.data.treeLevel === 3) {
         return "white";
@@ -46,7 +46,7 @@ function initTooltip() {
 }
 
 // Tooltip
-function renderTooltip(selectedLevel3ID) {
+function renderTooltip(selectedLevel3) {
 
     let tooltip = d3.select(`#${id} .tooltip`)
 
@@ -80,20 +80,20 @@ function renderTooltip(selectedLevel3ID) {
         tooltip.style("visibility", "hidden");
 
         d3.selectAll('.Process-Node')
-            .attr("stroke", d => fillScale(d, selectedLevel3ID))
-            .attr("fill", d => fillScale(d, selectedLevel3ID))
+            .attr("stroke", d => fillScale(d, selectedLevel3))
+            .attr("fill", d => fillScale(d, selectedLevel3))
             .attr("stroke-width", .5)
             .attr("r", d => rScale(d.data.data.treeLevel))
     });
 }
 
-function clickProcess(updateLevel3ID) {
+function clickProcess(updateLevel3) {
 
     d3.selectAll('.Process-Node').each(function (d, i) {
         d3.select(this)
             .on('click', (e, datum) => {
                 if(datum.data.data.treeLevel === 3) {
-                    updateLevel3ID(datum.data.data.id);
+                    updateLevel3(datum.data.data.id);
                 }
             })
     })
@@ -106,7 +106,7 @@ function initFilter() {
         .attr("height", height);
 }
 
-function updateFilter(root, selectedLevel3ID) {
+function updateFilter(root, selectedLevel3) {
 
     let svg = d3.select(`#${id} svg`);
 
@@ -139,8 +139,8 @@ function updateFilter(root, selectedLevel3ID) {
         })
         .append("circle")
             .attr("r", d => rScale(d.data.data.treeLevel))
-            .attr("fill", d => fillScale(d, selectedLevel3ID))
-            .attr("stroke", d => fillScale(d, selectedLevel3ID))
+            .attr("fill", d => fillScale(d, selectedLevel3))
+            .attr("stroke", d => fillScale(d, selectedLevel3))
             .attr("stroke-width", .5)
             .attr("class", "Process-Node")
             .style('cursor', d => d.data.data.treeLevel === 3 ? 'pointer': 'not-allowed');
@@ -148,7 +148,7 @@ function updateFilter(root, selectedLevel3ID) {
 
 const StyledFilteredData = styled('p')`
     font-style: italic;
-    text-color: ${props => props.theme.color.secondary };
+    text-color: ${props => props.theme.color.secondary};
     opacity: 75%;
     margin-bottom: 0.5rem;
     // height: 50px;
@@ -159,10 +159,10 @@ const StyledFilter = styled('div')`
     flex-direction: column;
 `
 
-export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
-    const level3Descr = lu["level3"].find((d) => d.id === selectedLevel3ID).descr;
-    const [selectedLevel1ID, updateLevel1] = useState(level1[0].id);
-    const levelsFiltered = lu["processes"].children.find((d) => d.id === selectedLevel1ID);
+export default function FilterProcess({selectedLevel3, updateLevel3}) {
+    const level3Descr = lu["level3"].find((d) => d.id === selectedLevel3).descr;
+    const [selectedLevel1, updateLevel1] = useState(level1[0].id);
+    const levelsFiltered = lu["processes"].children.find((d) => d.id === selectedLevel1);
     const [shouldRotate, setRotate] = useState(false);
 
     const handleRotate = () => setRotate(!shouldRotate);
@@ -187,14 +187,14 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
 
     // Initialize SVG Visualization
     useEffect(() => {
-        updateFilter(root, selectedLevel3ID);
-    }, [selectedLevel1ID]);
+        updateFilter(root, selectedLevel3);
+    }, [selectedLevel1]);
 
     // Update SVG Visualization
     useEffect(() => {
-        clickProcess(updateLevel3ID);
-        renderTooltip(selectedLevel3ID);
-    }, [selectedLevel1ID, selectedLevel3ID]);
+        clickProcess(updateLevel3);
+        renderTooltip(selectedLevel3);
+    }, [selectedLevel1, selectedLevel3]);
 
     return(
         <Accordion className={'Card'}>
@@ -225,7 +225,7 @@ export default function FilterProcess({selectedLevel3ID, updateLevel3ID}) {
                                     labelId="process1-select-label"
                                     id="process1-select"
                                     displayEmpty
-                                    value={selectedLevel1ID}
+                                    value={selectedLevel1}
                                     onChange={handleChange}
                                 >
                                     {level1.map((level, index) => {

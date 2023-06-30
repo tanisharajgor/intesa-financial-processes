@@ -68,9 +68,9 @@ export default function Network() {
     const [viewVariable, updateViewVariable] = useState("riskType");
 
     // User Input selection
-    const [selectedLevel3ID, updateLevel3ID] = useState(links[0].id);
+    const [selectedLevel3, updateLevel3] = useState(links[0].id);
 
-    let dataNew = combineNodeLink(selectedLevel3ID, nodes, links);
+    let dataNew = combineNodeLink(selectedLevel3, nodes, links);
 
     const [data, updateData] = useState(dataNew);
 
@@ -111,7 +111,7 @@ export default function Network() {
     // Filter data
     useEffect(() => {
 
-        const filteredData = filterData(selectedLevel3ID, selectedActivities, selectedActors)
+        const filteredData = filterData(selectedLevel3, selectedActivities, selectedActors)
         updateData(filteredData);
 
         networkDiagram.current.data = filteredData;
@@ -121,13 +121,13 @@ export default function Network() {
         let inspect = d3.select(".Inspect");
         inspectNetworkSummary(inspect, filteredData);
 
-    }, [selectedLevel3ID, selectedActivities, selectedActors])
+    }, [selectedLevel3, selectedActivities, selectedActors])
 
     // Update filter possibilities when level changes
     useEffect(() => {
         updateActivityType(possibleActivities);
         updateActorType(possibleActors);
-    }, [selectedLevel3ID]);
+    }, [selectedLevel3]);
 
     useEffect(() => {
         networkDiagram.current.updateDraw(viewVariable);
@@ -142,8 +142,8 @@ export default function Network() {
                             <h4>Network</h4>
                             <p>Filter data in the actor network graph to explore activities and risks.</p>
                     </Description>
-                    <InspectChapter></InspectChapter>
-                    <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
+                    <InspectChapter/>
+                    <FilterProcess selectedLevel3={selectedLevel3} updateLevel3={updateLevel3}/>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
                     <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type"/>
                 </Menu>
