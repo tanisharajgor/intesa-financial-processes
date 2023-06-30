@@ -143,29 +143,32 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
 
         df_sub = df[df[root1ID] == id]
 
-        childrenIDs = df_sub[df_sub[root1ID] == id][root2ID].unique().tolist()
+        org = create_org_structure(df_sub)
+
+        childrenIDs = df_sub[root2ID].unique().tolist()
 
         d = {"id": int(id),
-            "name": df_sub[df_sub[root1ID] == id][root1].iloc[0],
+            "name": df_sub[root1].iloc[0],
             # "childrenIDs": childrenIDs,
             "viewType": create_view_type(df_sub),
-            "treeLevel": int(tree_level)
+            "treeLevel": int(tree_level),
+            "organizationalStructure": org
             }
 
         if children is not None:
             d["children"] = subset_list(childrenIDs, children)
             d["viewId"] = "Process"
         else:
-            d["activityType"] = df_sub[df_sub[root1ID] == id].activityType.iloc[0]
-            if df_sub[df_sub[root1ID] == id].activityType.iloc[0] == "Control activity":
+            d["activityType"] = df_sub.activityType.iloc[0]
+            if df_sub.activityType.iloc[0] == "Control activity":
                 d["viewId"] = "Control activity"
             else:
                 d["viewId"] = "Other activity"
             d["processes"] = {
-                "level1ID": int(df_sub[df_sub[root1ID] == id].level1ID.iloc[0]),
-                "level2ID": int(df_sub[df_sub[root1ID] == id].level2ID.iloc[0]),
-                "level3ID": int(df_sub[df_sub[root1ID] == id].level3ID.iloc[0]),
-                "modelID": int(df_sub[df_sub[root1ID] == id].modelID.iloc[0])
+                "level1ID": int(df_sub.level1ID.iloc[0]),
+                "level2ID": int(df_sub.level2ID.iloc[0]),
+                "level3ID": int(df_sub.level3ID.iloc[0]),
+                "modelID": int(df_sub.modelID.iloc[0])
             }
 
         array.append(d)
@@ -218,8 +221,6 @@ def create_network(data):
     linkarray = []
 
     data = data[pd.isnull(data.actorID) == False]
-
-    org_structure = create_org_structure(data)
 
     for i in data.level3ID.unique():
 
