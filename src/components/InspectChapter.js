@@ -19,7 +19,7 @@ const StyledLabel = styled('span')`
     margin-left: 3px;
 `
 
-export default function InspectTaxonomy({selectedChapter, updateSelectedChapter, valuesChapter, updateValuesChapter}) {
+export default function InspectChapter({selectedChapter, updateSelectedChapter, valuesChapter, updateValuesChapter}) {
 
     const [shouldRotate, setRotate] = useState(false);
     const handleRotate = () => setRotate(!shouldRotate);

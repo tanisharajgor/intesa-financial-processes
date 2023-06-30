@@ -92,15 +92,12 @@ export default function Network() {
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
     
     const [isFullscreen, setFullscreen] = useState(false);
-
-    // const [selectedChapters, updateChapters] = useState(lu.map(d => d.descr));
-
-    // Initiating the network diagram
-    const networkDiagram = useRef(new NetworkVisualization(data, updateSymbolHoverValue, updateViewHoverValue));
-
     const handleFullscreen = (e) => {
         setFullscreen(!isFullscreen);
     }
+
+    // Initiating the network diagram
+    const networkDiagram = useRef(new NetworkVisualization(data, updateSymbolHoverValue, updateViewHoverValue));
 
     // React Hooks
     useEffect(() => {
@@ -124,7 +121,7 @@ export default function Network() {
         let inspect = d3.select(".Inspect");
         inspectNetworkSummary(inspect, filteredData);
 
-    }, [selectedLevel1, selectedLevel3, selectedActivities, selectedActors])
+    }, [selectedLevel1, selectedLevel3, selectedActivities, selectedActors]);
 
     // Update filter possibilities when level changes
     useEffect(() => {

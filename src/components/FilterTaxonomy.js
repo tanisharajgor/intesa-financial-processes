@@ -16,8 +16,6 @@ const width = 345, height = 600;
 
 const id = "Filter-Process";
 
-const level1 = lu["level1"];
-
 const rScale = d3.scaleOrdinal()
     .domain([0, 1, 2, 3])
     .range([6, 5, 4, 3]);
@@ -160,10 +158,13 @@ const StyledFilter = styled('div')`
 `
 
 export default function FilterTaxonomy({selectedLevel1, updateLevel1, selectedLevel3, updateLevel3}) {
+
+    const processes = lu["processes"];
+    const valuesLevel1 = processes.children;
     const level3Descr = lu["level3"].find((d) => d.id === selectedLevel3).descr;
     const levelsFiltered = lu["processes"].children.find((d) => d.id === selectedLevel1);
-    const [shouldRotate, setRotate] = useState(false);
 
+    const [shouldRotate, setRotate] = useState(false);
     const handleRotate = () => setRotate(!shouldRotate);
 
     // Update data
@@ -174,9 +175,9 @@ export default function FilterTaxonomy({selectedLevel1, updateLevel1, selectedLe
 
     cluster(root);
 
-    const handleChange = (event) => {
+    const handleChangeLevel1 = (event) => {
         let level1 = parseInt(event.target.value);
-        updateLevel1(level1)
+        updateLevel1(level1);
     };
 
     useEffect(() => {
@@ -225,9 +226,9 @@ export default function FilterTaxonomy({selectedLevel1, updateLevel1, selectedLe
                                     id="process1-select"
                                     displayEmpty
                                     value={selectedLevel1}
-                                    onChange={handleChange}
+                                    onChange={handleChangeLevel1}
                                 >
-                                    {level1.map((level, index) => {
+                                    {valuesLevel1.map((level, index) => {
                                         return(
                                             <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
                                         )
