@@ -5,18 +5,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
-
-const StyledFilteredData = styled('span')`
-    font-style: italic;
-    text-color: ${props =>  props.theme.color.secondary };
-    opacity: 75%;
-    height: 1.5rem;
-    display: block;
-`
-
-const StyledHeader = styled('div')`
-    display: flex;
-`
+import {StyledFilteredData, StyledHeader} from "../component-styles/global-styles";
 
 export default function FilterType({typesChecked, updateSelection, typeValues, label}) {
 
