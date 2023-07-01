@@ -5,7 +5,7 @@ import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
 import { useState } from 'react';
 import { taxonomyLevel } from "./InspectTaxonomy";
-import {StyledFilteredData, StyledHeader} from "../component-styles/global-styles";
+import {StyledFilteredData, StyledFilter} from "../component-styles/global-styles";
 
 export default function InspectChapter({selectedChapter, updateSelectedChapter, valuesChapter, updateValuesChapter}) {
 
@@ -17,7 +17,7 @@ export default function InspectChapter({selectedChapter, updateSelectedChapter, 
         updateSelectedChapter(chapter);
     }
 
-    const chapterDescr = valuesChapter.find((d) => d.id === selectedLevel3).descr;
+    const chapterDescr = valuesChapter.find((d) => d.id === selectedChapter).descr;
 
     return(
         <Accordion className={'Card'}>
@@ -26,7 +26,7 @@ export default function InspectChapter({selectedChapter, updateSelectedChapter, 
                 id="activity-type-filter-header"
                 onClick={handleRotate}
             >
-            <StyledHeader>
+            <StyledFilter>
                 <InnerHeader>
                     <Key>Inspect by Chapter</Key>
                     <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
@@ -37,7 +37,7 @@ export default function InspectChapter({selectedChapter, updateSelectedChapter, 
                 <StyledFilteredData>
                     {chapterDescr}
                 </StyledFilteredData>
-            </StyledHeader>
+            </StyledFilter>
             </AccordionHeader>
             <AccordionDetails>
                 {taxonomyLevel(valuesChapter, selectedChapter, handleChangeChapter, "Chapter", "chapter")}

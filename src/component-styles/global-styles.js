@@ -76,7 +76,7 @@ export const StyledFilteredData = styled('p')`
     text-color: ${props => props.theme.color.secondary};
     opacity: 75%;
     margin-bottom: 0.5rem;
-    font-size: 12px;
+    font-size: 14px;
 `
 
 export const StyledFilter = styled('div')`

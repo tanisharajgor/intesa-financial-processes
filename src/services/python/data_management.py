@@ -278,6 +278,8 @@ def model_dm(data, raw_pth, processed_pth):
     df = num_id(df, "modelGUID", 1000)
     df = df.drop('english', axis = 1)
 
+    import pdb; pdb.set_trace()
+
     ## Write the cleaned data out
     df.drop('modelGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'model' + ".csv"), index = False)
 
