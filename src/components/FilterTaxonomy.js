@@ -145,11 +145,9 @@ function updateFilter(root, selectedLevel3) {
 }
 
 const StyledFilteredData = styled('p')`
-    font-style: italic;
     text-color: ${props => props.theme.color.secondary};
     opacity: 75%;
     margin-bottom: 0.5rem;
-    // height: 50px;
 `
 
 const StyledFilter = styled('div')`

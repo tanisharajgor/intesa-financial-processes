@@ -17,7 +17,7 @@ import { Menu } from "../component-styles/query-menu";
 import lu from '../data/processed/nested/lu.json';
 
 const id = "network-chart";
-const level1 = lu["level1"];
+const processes = lu["processes"];
 
 // Combines the nodes and links into a single object
 function combineNodeLink(selectedLevel3ID, nodes, links) {
@@ -70,7 +70,7 @@ export default function Network() {
     const [viewVariable, updateViewVariable] = useState("riskType");
 
     // User Input selection
-    const [selectedLevel1, updateLevel1] = useState(level1[0].id);
+    const [selectedLevel1, updateLevel1] = useState(processes.children[0].id);
     const [selectedLevel3, updateLevel3] = useState(links[0].id);
     const [selectedChapter, updateSelectedChapter] = useState(-1);
 
@@ -79,6 +79,9 @@ export default function Network() {
     let dataNew = combineNodeLink(selectedLevel3, nodes, links);
 
     const [data, updateData] = useState(dataNew);
+
+    console.log(data)
+    console.log(processes)
 
     combineLink(data);
 

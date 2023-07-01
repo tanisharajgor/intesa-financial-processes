@@ -146,8 +146,7 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
         activityID = df_sub.activityID.unique().tolist()
         childrenID3 = df_sub.level3ID.unique().tolist()
         childrenID2 = df_sub.level2ID.unique().tolist()
-
-        childrenIDs = df_sub[df_sub[root1ID] == id][root2ID].unique().tolist()
+        childrenIDs = df_sub[root2ID].unique().tolist()
 
         if tree_level == 3:
             fullChildrenIDs = activityID
@@ -366,7 +365,11 @@ def create_network(data):
 
     return network
 
+"""
+Creates a taxonomy of processes, chapters, and activities for easy filtering
+"""
 def create_processes(main):
+
     l1Array = []
     for i in main.level1ID.unique():
 
@@ -384,7 +387,7 @@ def create_processes(main):
 
                 for l in model:
 
-                    activities = main[main.modelID == l].activityID.unique()
+                    activities = main[main.activityID == l].activityID.unique()
                     activitiesArray = []
 
                     for n in activities:
@@ -397,24 +400,28 @@ def create_processes(main):
                     m = {"id": int(l),
                         "descr": main[main.modelID == l].model.iloc[0],
                         "level": int(4),
+                        "childrenIDs": activities.tolist(),
                         "children": activitiesArray}
                     modelArray.append(m)
 
                 r3 = {"id": int(k),
                       "descr": main[main.level3ID == k].level3.iloc[0],
                       "level": int(3),
+                      "childrenIDs": main[main.level3ID == k].modelID.unique().tolist() + main[main.level3ID == k].activityID.unique().tolist(),
                       "children": modelArray}
                 l3Array.append(r3)
 
             r2 = {"id": int(j),
                  "descr": main[main.level2ID == j].level2.iloc[0],
                  "children": l3Array,
+                 "childrenIDs": main[main.level2ID == j].level3ID.unique().tolist() + main[main.level2ID == j].modelID.unique().tolist() + main[main.level2ID == j].activityID.unique().tolist(),
                  "level": int(2)}
             l2Array.append(r2)
 
         r1 = {"id": int(i),
               "descr": main[main.level1ID == i].level1.iloc[0],
               "children": l2Array,
+             "childrenIDs": main[main.level1ID == i].level2ID.unique().tolist() + main[main.level1ID == i].level3ID.unique().tolist() + main[main.level1ID == i].modelID.unique().tolist() + main[main.level1ID == i].activityID.unique().tolist(),
               "level": int(1)}
         l1Array.append(r1)
 
