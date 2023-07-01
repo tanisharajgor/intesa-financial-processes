@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import lu from '../data/processed/nested/lu.json';
 import { Key } from '../component-styles/key';
 import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
-import styled from 'styled-components';
 import { InnerHeader } from '../component-styles/inner-header';
 import Ripple from './Ripple';
 import { ChevronButton } from '../component-styles/chevron-button';
 import { StyledSelect } from '../component-styles/select';
 import * as Theme from "../component-styles/theme";
+import {StyledFilteredData, StyledFilter} from "../component-styles/global-styles"; 
 
 // constants
 const width = 345, height = 600;
@@ -143,17 +143,6 @@ function updateFilter(root, selectedLevel3) {
             .attr("class", "Process-Node")
             .style('cursor', d => d.data.data.level === 3 ? 'pointer': 'not-allowed');
 }
-
-const StyledFilteredData = styled('p')`
-    text-color: ${props => props.theme.color.secondary};
-    opacity: 75%;
-    margin-bottom: 0.5rem;
-`
-
-const StyledFilter = styled('div')`
-    display: flex;
-    flex-direction: column;
-`
 
 export default function FilterTaxonomy({selectedLevel1, updateLevel1, selectedLevel3, updateLevel3}) {
 

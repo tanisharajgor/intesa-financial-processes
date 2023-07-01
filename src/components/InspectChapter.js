@@ -1,24 +1,11 @@
-import { Accordion, AccordionHeader, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
-import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../component-styles/query-layout';
+import { Accordion, AccordionHeader, AccordionDetails } from 'cfd-react-components';
+import { InnerHeader } from '../component-styles/inner-header';
 import { Key } from '../component-styles/key'
 import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
-import * as Theme from "../component-styles/theme";
-import styled from 'styled-components';
 import { useState } from 'react';
 import { taxonomyLevel } from "./InspectTaxonomy";
-
-const StyledHeader = styled('div')`
-    display: flex;
-`
-
-const StyledLabel = styled('span')`
-    color: ${Theme.labelStyles.fontColor};
-    font-family: ${Theme.labelStyles.fontFamily};
-    font-size: ${Theme.labelStyles.fontSize};
-    margin-bottom: 5px;
-    margin-left: 3px;
-`
+import {StyledFilteredData, StyledHeader} from "../component-styles/global-styles";
 
 export default function InspectChapter({selectedChapter, updateSelectedChapter, valuesChapter, updateValuesChapter}) {
 
@@ -30,6 +17,8 @@ export default function InspectChapter({selectedChapter, updateSelectedChapter, 
         updateSelectedChapter(chapter);
     }
 
+    const chapterDescr = valuesChapter.find((d) => d.id === selectedLevel3).descr;
+
     return(
         <Accordion className={'Card'}>
             <AccordionHeader
@@ -38,11 +27,16 @@ export default function InspectChapter({selectedChapter, updateSelectedChapter, 
                 onClick={handleRotate}
             >
             <StyledHeader>
-                <Key>Inspect by Chapter</Key>
-                <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
-                    <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
-                    <Ripple color={"#FFFFFF"} duration={1000}/>
-                </ChevronButton>
+                <InnerHeader>
+                    <Key>Inspect by Chapter</Key>
+                    <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
+                        <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
+                        <Ripple color={"#FFFFFF"} duration={1000}/>
+                    </ChevronButton>
+                </InnerHeader>
+                <StyledFilteredData>
+                    {chapterDescr}
+                </StyledFilteredData>
             </StyledHeader>
             </AccordionHeader>
             <AccordionDetails>
@@ -50,5 +44,4 @@ export default function InspectChapter({selectedChapter, updateSelectedChapter, 
             </AccordionDetails>
         </Accordion>
     )
-
 }
