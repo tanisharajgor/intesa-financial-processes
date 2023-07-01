@@ -2,7 +2,6 @@ import { Accordion, AccordionHeader, AccordionDetails, FormLabel, Checkbox } fro
 import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../component-styles/query-layout';
 import { Key } from '../component-styles/key'
 import { useState } from 'react';
-import styled from 'styled-components';
 import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
 import {StyledFilteredData, StyledHeader} from "../component-styles/global-styles";
