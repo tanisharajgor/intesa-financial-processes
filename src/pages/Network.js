@@ -74,14 +74,23 @@ export default function Network() {
     const [selectedLevel3, updateLevel3] = useState(links[0].id);
     const [selectedChapter, updateSelectedChapter] = useState(-1);
 
-    const [valuesChapter, updateValuesChapter] = useState([]);
+    const [valuesChapter, updateValuesChapter] = useState(
+        [{"id": -1, "descr": "All"}]
+        .concat(
+            processes
+            .children.find(d => d.id === selectedLevel1)
+            .children.find(d => d.childrenIDs.includes(selectedLevel3))
+            .children.find(d => d.id === selectedLevel3).children)
+    );
 
     let dataNew = combineNodeLink(selectedLevel3, nodes, links);
 
     const [data, updateData] = useState(dataNew);
 
-    console.log(data)
-    console.log(processes)
+    // valuesChapter = processes
+    //     .children.find(d => d.id === selectedLevel1)
+    //     .children.find(d => d.childrenIDs.includes(selectedLevel3))
+    //     .children.find(d => d.id === selectedLevel3).children;
 
     combineLink(data);
 
@@ -126,6 +135,13 @@ export default function Network() {
 
         let inspect = d3.select(".Inspect");
         inspectNetworkSummary(inspect, filteredData);
+
+        updateValuesChapter(
+            [{"id": -1, "descr": "All"}].concat(processes
+                .children.find(d => d.id === selectedLevel1)
+                .children.find(d => d.childrenIDs.includes(selectedLevel3))
+                .children.find(d => d.id === selectedLevel3).children)
+        )
 
     }, [selectedLevel1, selectedLevel3, selectedActivities, selectedActors]);
 

@@ -4,7 +4,7 @@ import * as Global from "../utils/global";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
 import { activityTypeValues } from "../utils/global";
-import lu from "../data/processed/nested/lu";
+// import lu from "../data/processed/nested/lu";
 
 const nonHighlightOpacity = .15;
 
@@ -262,7 +262,7 @@ export class CirclePackingDiagram {
 
     if (this.selectedLevel1 !== -1) {
       if (this.selectedLevel2 !== -1) {
-        if (this.selectedLevel3 != -1) {
+        if (this.selectedLevel3 !== -1) {
           if (this.selectedChapter !== -1) {
 
             if (valuesChapter.find(d => d.id === selectedChapter) !== undefined) {
