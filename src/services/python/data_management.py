@@ -278,8 +278,6 @@ def model_dm(data, raw_pth, processed_pth):
     df = num_id(df, "modelGUID", 1000)
     df = df.drop('english', axis = 1)
 
-    import pdb; pdb.set_trace()
-
     ## Write the cleaned data out
     df.drop('modelGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'model' + ".csv"), index = False)
 
@@ -468,7 +466,12 @@ def main_dm(data, level1, level2, level3, model, activities, actors, risks, cont
     df = pd.merge(data, level1, how="left", on="level1GUID")
     df = pd.merge(df, level2, how="left", on="level2GUID")
     df = pd.merge(df, level3, how="left", on="level3GUID")
+
+    df.level3 = df.level3.str.lower().replace(df.level2.str.lower(), "")
     df = pd.merge(df, model, how="left", on="modelGUID")
+
+    import pdb; pdb.set_trace()
+
     df = pd.merge(df, activities, how="left", on="activityGUID")
     df = pd.merge(df, actors, how="left", on="actorGUID")
 

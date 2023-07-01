@@ -87,11 +87,6 @@ export default function Network() {
 
     const [data, updateData] = useState(dataNew);
 
-    // valuesChapter = processes
-    //     .children.find(d => d.id === selectedLevel1)
-    //     .children.find(d => d.childrenIDs.includes(selectedLevel3))
-    //     .children.find(d => d.id === selectedLevel3).children;
-
     combineLink(data);
 
     // Possible set of activities/actors to choose from
@@ -131,7 +126,7 @@ export default function Network() {
 
         networkDiagram.current.data = filteredData;
         networkDiagram.current.initSimulation();
-        networkDiagram.current.updateDraw(viewVariable);
+        // networkDiagram.current.updateDraw(viewVariable);
 
         let inspect = d3.select(".Inspect");
         inspectNetworkSummary(inspect, filteredData);
@@ -152,8 +147,8 @@ export default function Network() {
     }, [selectedLevel3]);
 
     useEffect(() => {
-        networkDiagram.current.updateDraw(viewVariable);
-    }, [viewVariable]);
+        networkDiagram.current.updateDraw(viewVariable, selectedChapter);
+    }, [viewVariable, selectedChapter]);
 
     return(
         <>
@@ -161,8 +156,8 @@ export default function Network() {
             <Content>
                 <Menu className="Query" id="FilterMenu" width={"22rem"} isFullscreen={isFullscreen}>
                     <Description>
-                            <h4>Network</h4>
-                            <p>Filter data in the actor network graph to explore activities and risks.</p>
+                        <h4>Network</h4>
+                        <p>Filter data in the actor network graph to explore activities and risks.</p>
                     </Description>
                     <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter} updateValuesChapter={updateValuesChapter}/>
                     <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3}/>

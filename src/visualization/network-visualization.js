@@ -22,10 +22,12 @@ export default class NetworkVisualization {
   links;
   nodes;
   rootDOM;
+  selectedChapter;
   simulation;
   tooltip;
   width;
   viewport;
+  viewVariable;
 
   constructor(data, updateSymbolHoverValue, updateViewHoverValue) {
     this.updateSymbolHoverValue = updateSymbolHoverValue;
@@ -153,7 +155,7 @@ export default class NetworkVisualization {
   }
 
   // Initializes the nodes
-  drawNodes(viewVariable) {
+  drawNodes() {
 
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
@@ -167,7 +169,7 @@ export default class NetworkVisualization {
       if (node.viewId === "Actor") {
         node.gfx.beginFill(0xcbcbcb);
       } else {
-        node.gfx.beginFill(Global.applyColorScale(node, viewVariable));
+        node.gfx.beginFill(Global.applyColorScale(node, this.viewVariable));
       }
 
       Global.symbolScalePixi(node, rSize);
@@ -177,7 +179,7 @@ export default class NetworkVisualization {
       node.gfx.interactive = true;
       node.gfx.buttonMode = true;
       node.gfx.cursor = 'pointer';
-      node.gfx.on("pointerover", () => this.pointerOver(node, viewVariable));
+      node.gfx.on("pointerover", () => this.pointerOver(node));
       node.gfx.on("pointerout", () => this.pointerOut(node));
       node.gfx.on('click', () => this.clickOn(node));
 
@@ -468,14 +470,14 @@ export default class NetworkVisualization {
       .html(this.tooltipText(d));
   }
 
-  pointerOver(d, viewVariable) {
+  pointerOver(d) {
 
     if (!this.clickNode) {
       this.highlightNetworkNodes(d);
     }
 
     this.updateSymbolHoverValue(d.viewId);
-    this.updateViewHoverValue(Global.applyColorScale(d, viewVariable));
+    this.updateViewHoverValue(Global.applyColorScale(d, this.viewVariable));
     this.showTooltip(d);
   }
 
@@ -506,12 +508,14 @@ export default class NetworkVisualization {
   }
 
   draw(viewVariable) {
+    this.viewVariable = viewVariable;
     this.drawLinks();
-    this.drawNodes(viewVariable);
+    this.drawNodes();
     this.simulation.alpha(1).restart();
   }
 
-  updateDraw(viewVariable) {
+  updateDraw(viewVariable, selectedChapter) {
+    this.selectedChapter = selectedChapter;
     this.destroyLinks();
     this.destroyNodes();
     this.draw(viewVariable);
