@@ -5,6 +5,8 @@ import * as Global from "../utils/global";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
 
+const nonHighlightOpacity = .3;
+
 export default class NetworkVisualization {
 
   activeLinks;
@@ -19,6 +21,8 @@ export default class NetworkVisualization {
   data;
   height;
   inspect;
+  inspectNodes;
+  inspectLinks;
   links;
   nodes;
   rootDOM;
@@ -38,6 +42,8 @@ export default class NetworkVisualization {
     this.clickNode = false;
     this.clickViewport = false;
     this.clickCount = 0;
+    this.inspectNodes = [];
+    this.inspectLinks = [];
   }
 
   initSimulation() {
@@ -135,6 +141,14 @@ export default class NetworkVisualization {
 
   // Drawing functions ------------------------------------------------------
 
+  lineAlpha(source, target) {
+    if (this.inspectLinks.includes(source.id) && this.inspectLinks.includes(target.id)) {
+      this.links.alpha = 1;
+    } else {
+      this.links.alpha = nonHighlightOpacity;
+    }
+  }
+
   // Initializes the links
   drawLinks() {
     this.containerLinks = new PIXI.Container();
@@ -142,6 +156,7 @@ export default class NetworkVisualization {
     // Links
     this.links = new PIXI.Graphics();
     this.links.alpha = .8;
+    this.links.lineStyle(1, 0x686868);
     this.containerLinks.addChild(this.links);
 
     // Active Links
@@ -152,6 +167,37 @@ export default class NetworkVisualization {
 
     this.simulation.force("link")
       .links(this.data.links);
+  }
+
+  reduceNestedList(emptyList, list) {
+    emptyList.push(list);
+    emptyList = emptyList.flat(1);
+    let unique = [...new Set(emptyList)];
+    return unique;
+  }
+
+  // Change the opacity of the actor nodes and their linked attributes when inspected
+  nodeAlpha(node) {
+
+    if (this.selectedChapter !== -1) {
+      if (node.viewId === "Actor") {
+        if (node.levels.modelID.includes(this.selectedChapter)) {
+          let links = this.listHighlightNetworkNodes(node);
+          let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
+          this.inspectLinks = this.reduceNestedList(this.inspectLinks, links);
+          this.inspectNodes = this.reduceNestedList(this.inspectNodes, nodes);
+          node.gfx.alpha = 1;
+        } else {
+          node.gfx.alpha = nonHighlightOpacity;
+        }
+      } else {
+        if (this.inspectNodes.includes(node.id)) {
+          node.gfx.alpha = 1;
+        } else {
+          node.gfx.alpha = nonHighlightOpacity;
+        }
+      }
+    }
   }
 
   // Initializes the nodes
@@ -173,6 +219,7 @@ export default class NetworkVisualization {
       }
 
       Global.symbolScalePixi(node, rSize);
+      this.nodeAlpha(node);
 
       node.gfx.x = this.width * 0.5;
       node.gfx.y = this.height * 0.5;
@@ -197,9 +244,9 @@ export default class NetworkVisualization {
   }
 
   solidLine(source, target) {
-    this.links.lineStyle(1, 0x686868);
     this.links.moveTo(target.x, target.y);
     this.links.lineTo(source.x, source.y);
+    this.lineAlpha(source, target);
   }
 
   highlightSolidLine(source, target) {
@@ -226,6 +273,7 @@ export default class NetworkVisualization {
       this.links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
       progress += gap;
     }
+    this.lineAlpha(source, target);
   }
 
   highlightDashedLine(source, target) {
