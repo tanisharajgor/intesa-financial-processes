@@ -24,28 +24,30 @@ function combineNodeLink(selectedLevel3ID, nodes, links) {
 
     let nodesData = Object.assign({}, nodes.find((d) => d.id === selectedLevel3ID)).nodes;
     let linksData = Object.assign({}, links.find((d) => d.id === selectedLevel3ID)).links;
+    linksData = combineLink(linksData);
     let dataNew = {id: selectedLevel3ID, nodes: nodesData, links: linksData};
 
     return dataNew;
 }
 
 // Combines the two types of links into a single array
-function combineLink(data) {
+function combineLink(links) {
 
-    if (data.links.deve) {
-        data.links.deve.map(d => d.connect_actor_activity = true);
-        data.links.non_deve.map(d => d.connect_actor_activity = false);
-        data.links = data.links.deve.concat(data.links.non_deve);
+    if (links.deve) {
+        links.deve.map(d => d.connect_actor_activity = true);
+        links.non_deve.map(d => d.connect_actor_activity = false);
+        links = links.deve.concat(links.non_deve);
     }
 
-    return data;
+    return links;
 }
 
 // Filters the data by level3ID and activity Type
 function filterData(selectedLevel3ID, selectedActivities, selectedActors) {
 
+    console.log(links)
+
     let dataNew = combineNodeLink(selectedLevel3ID, nodes, links);
-    combineLink(dataNew);
 
     let actorIdsFiltered = dataNew.nodes.filter(d => d.group === "Actor" && selectedActors.includes(d.type)).map(d => d.id);
     let activityIdsFiltered = dataNew.nodes.filter(d => d.group === "Activity" && selectedActivities.includes(d.type)).map(d => d.id);
@@ -84,10 +86,9 @@ export default function Network() {
     );
 
     let dataNew = combineNodeLink(selectedLevel3, nodes, links);
+    console.log(dataNew)
 
     const [data, updateData] = useState(dataNew);
-
-    combineLink(data);
 
     // Possible set of activities/actors to choose from
     const [possibleActivities, updateActivityType] = useState([...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))]);
