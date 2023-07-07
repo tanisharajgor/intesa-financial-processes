@@ -44,6 +44,10 @@ export default class NetworkVisualization {
     this.clickCount = 0;
     this.inspectNodes = [];
     this.inspectLinks = [];
+
+    //11814
+    // console.log(this.data.nodes.find(d => d.id === 11814))
+
   }
 
   initSimulation() {
@@ -142,11 +146,12 @@ export default class NetworkVisualization {
   // Drawing functions ------------------------------------------------------
 
   lineAlpha(source, target) {
-    if (this.inspectLinks.includes(source.id) && this.inspectLinks.includes(target.id)) {
-      this.links.alpha = 1;
-    } else {
-      this.links.alpha = nonHighlightOpacity;
-    }
+    // console.log(this.inspectLinks)
+    // if (this.inspectLinks.includes(source.id)) {
+    //   this.links.alpha = 1;
+    // } else {
+    //   this.links.alpha = nonHighlightOpacity;
+    // }
   }
 
   // Initializes the links
@@ -155,13 +160,15 @@ export default class NetworkVisualization {
 
     // Links
     this.links = new PIXI.Graphics();
-    this.links.alpha = .8;
-    this.links.lineStyle(1, 0x686868);
     this.containerLinks.addChild(this.links);
+
+    let sourcelinks = this.data.links.map(d => d.source);
+    let targetlinks = this.data.links.map(d => d.source);
+    let links = [...new Set(sourcelinks.concat(targetlinks))];
+    console.log(links)
 
     // Active Links
     this.activeLinks = new PIXI.Graphics();
-    this.activeLinks.alpha = .8;
     this.containerLinks.addChild(this.activeLinks);
     this.viewport.addChild(this.containerLinks);
 
@@ -184,8 +191,12 @@ export default class NetworkVisualization {
         if (node.levels.modelID.includes(this.selectedChapter)) {
           let links = this.listHighlightNetworkNodes(node);
           let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
-          this.inspectLinks = this.reduceNestedList(this.inspectLinks, links);
+          // // this.inspectLinks = links;
+          // this.inspectLinks = this.reduceNestedList(this.inspectLinks, links);
+          // // this.inspectNodes = nodes;
           this.inspectNodes = this.reduceNestedList(this.inspectNodes, nodes);
+          // console.log(this.inspectNodes);
+          // console.log(this.inspectLinks);
           node.gfx.alpha = 1;
         } else {
           node.gfx.alpha = nonHighlightOpacity;
@@ -239,13 +250,10 @@ export default class NetworkVisualization {
 
   // Updating the draw functions during the animation ------------------------------------------------------
 
-  distance(p1, p2) {
-    return Math.hypot(p2.x-p1.x, p2.y-p1.y)
-  }
-
   solidLine(source, target) {
-    this.links.moveTo(target.x, target.y);
-    this.links.lineTo(source.x, source.y);
+    this.links.lineStyle(1, 0x686868);
+    this.links.moveTo(source.x, source.y);
+    this.links.lineTo(target.x, target.y);
     this.lineAlpha(source, target);
   }
 
@@ -253,6 +261,10 @@ export default class NetworkVisualization {
     this.activeLinks.lineStyle(1, 0xffffff);
     this.activeLinks.moveTo(source.x, source.y);
     this.activeLinks.lineTo(target.x, target.y);
+  }
+
+  distance(p1, p2) {
+    return Math.hypot(p2.x-p1.x, p2.y-p1.y)
   }
 
   // Adapated from https://codepen.io/shepelevstas/pen/WKbYyw
@@ -273,11 +285,10 @@ export default class NetworkVisualization {
       this.links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
       progress += gap;
     }
-    this.lineAlpha(source, target);
+    // this.lineAlpha(source, target);
   }
 
   highlightDashedLine(source, target) {
-
     const dash = 5;
     const gap = 5;
     const p1 = {x: target.x, y: target.y};
@@ -298,18 +309,19 @@ export default class NetworkVisualization {
 
   // Update the links position
   updateLinkPosition() {
-
     // Links
     this.links.clear();
     this.data.links.forEach(link => {
 
       let { source, target, connect_actor_activity } = link;
 
-      if (connect_actor_activity) {
+      // console.log(connect_actor_activity)
+
+      // if (connect_actor_activity) {
         this.solidLine(source, target);
-      } else {
-        this.dashedLine(source, target);
-      }
+      // } else {
+      //   this.dashedLine(source, target);
+      // }
     });
 
     // Hover on links
@@ -320,11 +332,11 @@ export default class NetworkVisualization {
     activeLinkData.forEach(link => {
       let { source, target, connect_actor_activity } = link;
 
-      if (connect_actor_activity) {
+      // if (connect_actor_activity) {
         this.highlightSolidLine(source, target);
-      } else {
-        this.highlightDashedLine(source, target);
-      }
+      // } else {
+      //   this.highlightDashedLine(source, target);
+      // }
     });
   }
 
@@ -492,7 +504,7 @@ export default class NetworkVisualization {
   tooltipText(d) {
     if (d.viewId === "Actor") {
 
-        return `Type: ${d.type} <br> ${d.group}: ${d.descr} <br> # activities: ${d.viewType.nActivity} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
+        return `${d.id} Type: ${d.type} <br> ${d.group}: ${d.descr} <br> # activities: ${d.viewType.nActivity} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Other activity") {
 
