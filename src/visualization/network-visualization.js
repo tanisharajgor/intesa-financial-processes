@@ -148,11 +148,16 @@ export default class NetworkVisualization {
   // Drawing functions ------------------------------------------------------
 
   lineAlpha(source, target) {
-    if (this.inspectLinks.includes(source.id)) {
-      this.links.alpha = 1;
-    } else {
-      this.links.alpha = nonHighlightOpacity;
-    }
+
+    if (this.selectedChapter !== -1) {
+      if (this.inspectLinks.includes(source.id) && this.inspectLinks.includes(target.id)) {
+        this.links.alpha = 1;
+      } else {
+        this.links.alpha = nonHighlightOpacity;
+      }
+  } else {
+    this.links.alpha = 1;
+  }
   }
 
   // Initializes the links
@@ -201,6 +206,8 @@ export default class NetworkVisualization {
           node.gfx.alpha = nonHighlightOpacity;
         }
       }
+    } else {
+      node.gfx.alpha = 1;
     }
   }
 
