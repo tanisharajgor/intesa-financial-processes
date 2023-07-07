@@ -75,7 +75,18 @@ export default function CirclePacking() {
                       <p>Click on the circles to zoom into the process visualization.</p>
                     </Description>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
-                    <InspectProcesses selectedLevel1={selectedLevel1} updateSelectedLevel1={updateSelectedLevel1} selectedLevel2={selectedLevel2} updateSelectedLevel2={updateSelectedLevel2} selectedLevel3={selectedLevel3} updateSelectedLevel3={updateSelectedLevel3} selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter} updateValuesChapter={updateValuesChapter}/>
+                    <InspectProcesses
+                        selectedLevel1={selectedLevel1}
+                        updateSelectedLevel1={updateSelectedLevel1}
+                        selectedLevel2={selectedLevel2}
+                        updateSelectedLevel2={updateSelectedLevel2}
+                        selectedLevel3={selectedLevel3}
+                        updateSelectedLevel3={updateSelectedLevel3}
+                        selectedChapter={selectedChapter}
+                        updateSelectedChapter={updateSelectedChapter}
+                        valuesChapter={valuesChapter}
+                        updateValuesChapter={updateValuesChapter}
+                    />
                 </Menu>
                 <Main
                     viewVariable={viewVariable}
