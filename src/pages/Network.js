@@ -19,17 +19,6 @@ import lu from '../data/processed/nested/lu.json';
 const id = "network-chart";
 const processes = lu["processes"];
 
-// Combines the nodes and links into a single object
-function combineNodeLink(selectedLevel3ID, nodes, links) {
-
-    let nodesData = Object.assign({}, nodes.find((d) => d.id === selectedLevel3ID)).nodes;
-    let linksData = Object.assign({}, links.find((d) => d.id === selectedLevel3ID)).links;
-    linksData = combineLink(linksData);
-    let dataNew = {id: selectedLevel3ID, nodes: nodesData, links: linksData};
-
-    return dataNew;
-}
-
 // Combines the two types of links into a single array
 function combineLink(links) {
 
@@ -42,10 +31,22 @@ function combineLink(links) {
     return links;
 }
 
+// Combines the nodes and links into a single object
+function combineNodeLink(selectedLevel3ID, nodes, links) {
+
+    let nodesData = Object.assign({}, nodes.find((d) => d.id === selectedLevel3ID)).nodes;
+    let linksData = Object.assign({}, links.find((d) => d.id === selectedLevel3ID)).links;
+    console.log(linksData)
+    linksData = combineLink(linksData);
+    console.log(linksData)
+    let dataNew = {id: selectedLevel3ID, nodes: nodesData, links: linksData};
+
+    return dataNew;
+}
+
+
 // Filters the data by level3ID and activity Type
 function filterData(selectedLevel3ID, selectedActivities, selectedActors) {
-
-    console.log(links)
 
     let dataNew = combineNodeLink(selectedLevel3ID, nodes, links);
 
@@ -86,7 +87,6 @@ export default function Network() {
     );
 
     let dataNew = combineNodeLink(selectedLevel3, nodes, links);
-    console.log(dataNew)
 
     const [data, updateData] = useState(dataNew);
 
@@ -112,11 +112,9 @@ export default function Network() {
 
     // React Hooks
     useEffect(() => {
-
         networkDiagram.current.init(id);
         networkDiagram.current.draw(viewVariable);
         networkDiagram.current.animate();
-
     }, []);
 
     // Filter data
@@ -127,7 +125,7 @@ export default function Network() {
 
         networkDiagram.current.data = filteredData;
         networkDiagram.current.initSimulation();
-        // networkDiagram.current.updateDraw(viewVariable);
+        networkDiagram.current.updateDraw(viewVariable);
 
         let inspect = d3.select(".Inspect");
         inspectNetworkSummary(inspect, filteredData);

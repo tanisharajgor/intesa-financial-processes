@@ -44,10 +44,6 @@ export default class NetworkVisualization {
     this.clickCount = 0;
     this.inspectNodes = [];
     this.inspectLinks = [];
-
-    //11814
-    // console.log(this.data.nodes.find(d => d.id === 11814))
-
   }
 
   initSimulation() {
@@ -146,12 +142,11 @@ export default class NetworkVisualization {
   // Drawing functions ------------------------------------------------------
 
   lineAlpha(source, target) {
-    // console.log(this.inspectLinks)
-    // if (this.inspectLinks.includes(source.id)) {
-    //   this.links.alpha = 1;
-    // } else {
-    //   this.links.alpha = nonHighlightOpacity;
-    // }
+    if (this.inspectLinks.includes(source.id)) {
+      this.links.alpha = 1;
+    } else {
+      this.links.alpha = nonHighlightOpacity;
+    }
   }
 
   // Initializes the links
@@ -161,11 +156,6 @@ export default class NetworkVisualization {
     // Links
     this.links = new PIXI.Graphics();
     this.containerLinks.addChild(this.links);
-
-    let sourcelinks = this.data.links.map(d => d.source);
-    let targetlinks = this.data.links.map(d => d.source);
-    let links = [...new Set(sourcelinks.concat(targetlinks))];
-    console.log(links)
 
     // Active Links
     this.activeLinks = new PIXI.Graphics();
@@ -191,12 +181,9 @@ export default class NetworkVisualization {
         if (node.levels.modelID.includes(this.selectedChapter)) {
           let links = this.listHighlightNetworkNodes(node);
           let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
-          // // this.inspectLinks = links;
-          // this.inspectLinks = this.reduceNestedList(this.inspectLinks, links);
-          // // this.inspectNodes = nodes;
+          this.inspectLinks = this.reduceNestedList(this.inspectLinks, links);
           this.inspectNodes = this.reduceNestedList(this.inspectNodes, nodes);
-          // console.log(this.inspectNodes);
-          // console.log(this.inspectLinks);
+        
           node.gfx.alpha = 1;
         } else {
           node.gfx.alpha = nonHighlightOpacity;
@@ -504,7 +491,7 @@ export default class NetworkVisualization {
   tooltipText(d) {
     if (d.viewId === "Actor") {
 
-        return `${d.id} Type: ${d.type} <br> ${d.group}: ${d.descr} <br> # activities: ${d.viewType.nActivity} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
+        return `Type: ${d.type} <br> ${d.group}: ${d.descr} <br> # activities: ${d.viewType.nActivity} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Other activity") {
 
