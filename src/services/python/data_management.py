@@ -62,7 +62,9 @@ def actors_rename(actors):
                                     'Activity Category': 'activityCategory',
                                     'Object Name': 'actor',
                                     'Object Type': 'actorType',
-                                    'Object GUID': 'actorGUID'})
+                                    'Object GUID': 'actorGUID',
+                                    '3rd path': 'organizational_structure1',
+                                    '4th path': 'organizational_structure2'})
 
     return actors
 
@@ -73,7 +75,7 @@ def translate_config(df, config, colName):
 
 """
 Data management steps for activities
-return dataframe
+Return a dataframe unique on activity
 """
 def activities_dm(actors, controls, config, raw_pth, processed_pth):
 
@@ -97,7 +99,7 @@ def activities_dm(actors, controls, config, raw_pth, processed_pth):
 
 """
 Data management steps for actors
-return dataframe
+Return a dataframe unique on actor
 """
 def actors_dm(actors, config, raw_pth, processed_pth):
 
@@ -118,7 +120,7 @@ def actors_dm(actors, config, raw_pth, processed_pth):
 
 """
 Data management steps for risks
-return dataframe
+Return a dataframe unique on risk
 """
 def risks_dm(risks, config, raw_pth, processed_pth):
 
@@ -143,7 +145,7 @@ def risks_dm(risks, config, raw_pth, processed_pth):
 
 """
 Data management steps for controls
-return dataframe
+Return a dataframe unique on control activities
 """
 def controls_dm(controls, activities, config, raw_pth, processed_pth):
 
@@ -192,7 +194,7 @@ def controls_dm(controls, activities, config, raw_pth, processed_pth):
 
 """
 Data management steps for level1
-return dataframe
+Return a dataframe unique on level 1 (process 1)
 """
 def level1_dm(data, raw_pth, processed_pth):
     df = data.rename(columns={
@@ -213,7 +215,7 @@ def level1_dm(data, raw_pth, processed_pth):
 
 """
 Data management steps for level2
-return dataframe
+Return a dataframe unique on level2 (process 2)
 """
 def level2_dm(data, raw_pth, processed_pth):
 
@@ -234,7 +236,7 @@ def level2_dm(data, raw_pth, processed_pth):
 
 """
 Data management steps for level3
-return dataframe
+Return a dataframe unique on level3 (process 3)
 """
 def level3_dm(data, raw_pth, processed_pth):
 
@@ -255,7 +257,7 @@ def level3_dm(data, raw_pth, processed_pth):
 
 """
 Data management steps for level3
-return dataframe
+Return a dataframe unique on chapter (model)
 """
 def model_dm(data, raw_pth, processed_pth):
 
@@ -284,8 +286,8 @@ def model_dm(data, raw_pth, processed_pth):
     return df
 
 """
-Data management steps for applications
-return dataframe
+Data management steps for applications data
+Return a dataframe unique on application
 """
 def applications_dm(applications, raw_pth, processed_pth):
 
@@ -302,6 +304,36 @@ def applications_dm(applications, raw_pth, processed_pth):
 
     ## Write the cleaned data out
     df.drop('applicationGUID', axis = 1).to_csv(os.path.join(processed_pth, 'relational', 'applications' + ".csv"), index = False)
+
+    return df
+
+"""
+Organizational structure data management
+Return dataframe unique on organizational structure 1
+"""
+def org_str1_dm(data, raw_pth, processed_pth):
+
+    df = data[["organizational_structure1"]].drop_duplicates() # drop duplicates
+    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "organizational_structure1.csv")).rename(columns={'Italian': 'organizational_structure1'})
+    df = pd.merge(df, dfTranslated, on="organizational_structure1", how="left")
+    df = num_id(df, "organizational_structure1", 1000000)
+
+    df.to_csv(os.path.join(processed_pth, 'relational', 'organizational_structure1' + ".csv"), index = False)
+
+    return df
+
+"""
+Organizational structure data management
+Return dataframe unique on organizational structure 2
+"""
+def org_str2_dm(data, raw_pth, processed_pth):
+
+    df = data[["organizational_structure2"]].drop_duplicates() # drop duplicates
+    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "organizational_structure2.csv")).rename(columns={'Italian': 'organizational_structure2'})
+    df = pd.merge(df, dfTranslated, on="organizational_structure2", how="left")
+    df = num_id(df, "organizational_structure2", 10000000)
+
+    df.to_csv(os.path.join(processed_pth, 'relational', 'organizational_structure2' + ".csv"), index = False)
 
     return df
 
@@ -460,7 +492,7 @@ def risk_to_control_dm(controls, risks, control, processed_pth):
 """
 Main crosswalk
 """
-def main_dm(data, level1, level2, level3, model, activities, actors, risks, controls, activity_to_actor, activity_to_risk, risk_to_control):
+def main_dm(data, level1, level2, level3, model, activities, actors, risks, controls, org1, org2, activity_to_risk, risk_to_control):
 
     df = pd.merge(data, level1, how="left", on="level1GUID")
     df = pd.merge(df, level2, how="left", on="level2GUID")
@@ -470,6 +502,9 @@ def main_dm(data, level1, level2, level3, model, activities, actors, risks, cont
 
     df = pd.merge(df, activities, how="left", on="activityGUID")
     df = pd.merge(df, actors, how="left", on="actorGUID")
+
+    df = pd.merge(df, org1, how="left", on="organizational_structure1").drop("organizational_structure1", axis=1).rename(columns={'English': "organizational_structure1"})
+    df = pd.merge(df, org2, how="left", on="organizational_structure2").drop("organizational_structure2", axis=1).rename(columns={'English': "organizational_structure2"})
 
     rtc = pd.concat([risk_to_control.rename(columns={'controlID': 'activityID'}), activity_to_risk], ignore_index=True, sort=False).drop_duplicates()
     df = pd.merge(df, rtc, how="left", on="activityID")

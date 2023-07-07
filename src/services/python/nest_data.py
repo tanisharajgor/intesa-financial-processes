@@ -143,10 +143,12 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
 
         df_sub = df[df[root1ID] == id]
 
+        org = create_org_structure(df_sub)
+
+        childrenIDs = df_sub[root2ID].unique().tolist()
         activityID = df_sub.activityID.unique().tolist()
         childrenID3 = df_sub.level3ID.unique().tolist()
         childrenID2 = df_sub.level2ID.unique().tolist()
-        childrenIDs = df_sub[root2ID].unique().tolist()
 
         if tree_level == 3:
             fullChildrenIDs = activityID
@@ -158,7 +160,8 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
         d = {"id": int(id),
             "descr": df_sub[df_sub[root1ID] == id][root1].iloc[0],
             "viewType": create_view_type(df_sub),
-            "level": int(tree_level)
+            "level": int(tree_level),
+            "organizationalStructure": org
             }
 
         if children is not None:
@@ -166,16 +169,16 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
             d["viewId"] = "Process"
             d["childrenIDs"] = fullChildrenIDs
         else:
-            d["activityType"] = df_sub[df_sub[root1ID] == id].activityType.iloc[0]
-            if df_sub[df_sub[root1ID] == id].activityType.iloc[0] == "Control activity":
+            d["activityType"] = df_sub.activityType.iloc[0]
+            if df_sub.activityType.iloc[0] == "Control activity":
                 d["viewId"] = "Control activity"
             else:
                 d["viewId"] = "Other activity"
             d["processes"] = {
-                "level1ID": int(df_sub[df_sub[root1ID] == id].level1ID.iloc[0]),
-                "level2ID": int(df_sub[df_sub[root1ID] == id].level2ID.iloc[0]),
-                "level3ID": int(df_sub[df_sub[root1ID] == id].level3ID.iloc[0]),
-                "modelID": int(df_sub[df_sub[root1ID] == id].modelID.iloc[0])
+                "level1ID": int(df_sub.level1ID.iloc[0]),
+                "level2ID": int(df_sub.level2ID.iloc[0]),
+                "level3ID": int(df_sub.level3ID.iloc[0]),
+                "modelID": int(df_sub.modelID.iloc[0])
             }
 
         array.append(d)
@@ -251,6 +254,8 @@ def create_network(data):
 
         for k in actorsID:
 
+            org = create_org_structure(df[df.actorID == k])
+
             row = {"id": int(k),
                    "group": "Actor",
                    "viewId": "Actor",
@@ -262,7 +267,8 @@ def create_network(data):
                         "nActivity": int(df[(df.actorID == k) & (pd.isnull(df.activityID) == False)][['activityID']].drop_duplicates().shape[0]),
                         "nRisk": int(df[(df.actorID == k) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0]),
                         "nControl": int(df[(df.actorID == k) & (pd.isnull(df.activityID) == False) & (df.activityType == "Control activity")][['activityID']].drop_duplicates().shape[0])
-                        }
+                        },
+                    "organizationalStructure": org
                    }
 
             nodes.append(row)
@@ -423,6 +429,32 @@ def create_processes(main):
               "descr": main[main.level1ID == i].level1.iloc[0],
               "children": l2Array,
              "childrenIDs": main[main.level1ID == i].level2ID.unique().tolist() + main[main.level1ID == i].level3ID.unique().tolist() + main[main.level1ID == i].modelID.unique().tolist() + main[main.level1ID == i].activityID.unique().tolist(),
+              "level": int(1)}
+        l1Array.append(r1)
+
+    return l1Array
+
+"""
+Create a nested structure for organizational structure
+Return object
+"""
+def create_org_structure(main):
+    l1Array = []
+
+    for i in main.organizational_structure1ID.unique():
+        l2 = main[main.organizational_structure1ID == i].organizational_structure2ID.unique()
+
+        l2Array = []
+        for j in l2:
+
+            r2 = {"id": int(j),
+                  "name": main[main.organizational_structure2ID == j].organizational_structure2.iloc[0],
+                  "level": int(2)}
+            l2Array.append(r2)
+
+        r1 = {"id": int(i),
+              "name": main[main.organizational_structure1ID == i].organizational_structure1.iloc[0],
+              "children": l2Array,
               "level": int(1)}
         l1Array.append(r1)
 
