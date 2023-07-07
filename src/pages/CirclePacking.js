@@ -34,10 +34,10 @@ export default function CirclePacking() {
 
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(activityTypeValues);
-    const [selectedLevel1, updateSelectedLevel1] = useState(-1);
-    const [selectedLevel2, updateSelectedLevel2] = useState(-1);
-    const [selectedLevel3, updateSelectedLevel3] = useState(-1);
-    const [selectedChapter, updateSelectedChapter] = useState(-1);
+    const [selectedLevel1, updateSelectedLevel1] = useState({"id": -1, "descr": "All"});
+    const [selectedLevel2, updateSelectedLevel2] = useState({"id": -1, "descr": "All"});
+    const [selectedLevel3, updateSelectedLevel3] = useState({"id": -1, "descr": "All"});
+    const [selectedChapter, updateSelectedChapter] = useState({"id": -1, "descr": "All"});
 
     const [valuesChapter, updateValuesChapter] = useState([]);
 
