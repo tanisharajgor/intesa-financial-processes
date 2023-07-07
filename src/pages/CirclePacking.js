@@ -63,7 +63,12 @@ export default function CirclePacking() {
     useEffect(() => {
         circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter);
         inspectHierarchySummary(data);
-    }, [viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter]);
+    }, [viewVariable, selectedActivities]);
+
+    useEffect(() => {
+        circlePackingDiagram.current.updateOpacity(selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter)
+    }, [selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter]);
+
 
     return(
         <>
