@@ -17,7 +17,6 @@ import { Menu } from "../component-styles/query-menu";
 import lu from '../data/processed/nested/lu.json';
 
 const id = "network-chart";
-<<<<<<< HEAD
 const processes = lu["processes"];
 
 // Combines the two types of links into a single array
@@ -31,18 +30,14 @@ function combineLink(links) {
 
     return links;
 }
-=======
 const visualizationXPadding = 200;
->>>>>>> main
 
 // Combines the nodes and links into a single object
 function combineNodeLink(selectedLevel3ID, nodes, links) {
 
     let nodesData = Object.assign({}, nodes.find((d) => d.id === selectedLevel3ID)).nodes;
     let linksData = Object.assign({}, links.find((d) => d.id === selectedLevel3ID)).links;
-    console.log(linksData)
     linksData = combineLink(linksData);
-    console.log(linksData)
     let dataNew = {id: selectedLevel3ID, nodes: nodesData, links: linksData};
 
     return dataNew;
@@ -119,14 +114,11 @@ export default function Network() {
         networkDiagram.current.init(id);
         networkDiagram.current.draw(viewVariable);
         networkDiagram.current.animate();
-<<<<<<< HEAD
-=======
 
         const width =  (document.getElementById(id).clientWidth / 2) - document.getElementsByClassName("Query")[0].clientWidth;
         const height = (document.getElementById(id).clientHeight / 2) - document.getElementsByClassName("Navigation")[0].clientHeight;
 
         networkDiagram.current.centerVisualization(width - visualizationXPadding, height, -0.40);
->>>>>>> main
     }, []);
 
     // Filter data
