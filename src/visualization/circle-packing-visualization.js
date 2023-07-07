@@ -24,10 +24,16 @@ export class CirclePackingDiagram {
   viewport;
   viewVariable;
   zoomedNodeId;
+  dataMap
 
   constructor(data, updateViewHoverValue) {
     this.data = data;
-    this.levelIDs = this.data.map(d => d.data.id);
+    this.levelIDs = [];
+    this.dataMap = {};
+    this.data.forEach(d => {
+      this.levelIDs.push(d.data.id);
+      this.dataMap[`${d.data.id}`] = d;
+    })
     this.zoomedNodeId = 0;
     this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
@@ -92,7 +98,6 @@ export class CirclePackingDiagram {
   }
 
   selectedLevelOpacity(node) {
-
     if (this.levelIDs.includes(node.data.id)) {
       node.gfx.alpha = this.alphaScale(node.data.treeLevel);
     } else {
@@ -123,6 +128,46 @@ export class CirclePackingDiagram {
     } else {
       node.gfx.alpha = this.alphaScale(node.data.treeLevel);
     }
+  }
+
+  updateOpacity(selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
+    this.selectedLevel1 = selectedLevel1;
+    this.selectedLevel2 = selectedLevel2;
+    this.selectedLevel3 = selectedLevel3;
+    this.selectedChapter = selectedChapter;
+
+    if (this.selectedLevel1.id !== -1) {
+      if (this.selectedLevel2.id !== -1) {
+        if (this.selectedLevel3.id !== -1) {
+          if (this.selectedChapter.id !== -1) {
+            let foundChapter = valuesChapter.find(d => d.id === selectedChapter.id);
+            if (foundChapter !== undefined) {
+              this.levelIDs = foundChapter.children.map(d=> d.id);
+            } else {
+              this.levelIDs = []
+            }
+
+          } else {
+            this.levelIDs = this.data.filter(d => [this.selectedLevel3.id].includes(d.data.id))
+                            .map(d => d.data.childrenIDs)
+                            .reduce((a, b) => a.concat(b));
+            this.levelIDs = this.levelIDs.concat([this.selectedLevel3.id]);
+          }
+        } else {
+          this.levelIDs = this.data.filter(d => [this.selectedLevel2.id].includes(d.data.id))
+                .map(d => d.data.childrenIDs)
+                .reduce((a, b) => a.concat(b));
+          this.levelIDs = this.levelIDs.concat([this.selectedLevel2.id]);
+        }
+      } else {
+        this.levelIDs = this.selectedLevel1.children.map(child => [child.id])
+                .reduce((a, b) => a.concat(b));
+        console.log(this.levelIDs, this.selectedLevel1)
+        this.levelIDs = this.levelIDs.concat([this.selectedLevel1.id]);
+      }
+    }
+
+    this.data.forEach(n => this.opacityScale(n));
   }
 
   draw(viewVariable) {
@@ -255,41 +300,6 @@ export class CirclePackingDiagram {
   updateDraw(viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
 
     this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
-    this.selectedLevel1 = selectedLevel1;
-    this.selectedLevel2 = selectedLevel2;
-    this.selectedLevel3 = selectedLevel3;
-    this.selectedChapter = selectedChapter;
-
-    if (this.selectedLevel1 !== -1) {
-      if (this.selectedLevel2 !== -1) {
-        if (this.selectedLevel3 != -1) {
-          if (this.selectedChapter !== -1) {
-
-            if (valuesChapter.find(d => d.id === selectedChapter) !== undefined) {
-              this.levelIDs = valuesChapter.find(d => d.id === selectedChapter).children.map(d=> d.id);
-            } else {
-              this.levelIDs = []
-            }
-
-          } else {
-            this.levelIDs = this.data.filter(d => [this.selectedLevel3].includes(d.data.id))
-                            .map(d => d.data.childrenIDs)
-                            .reduce((a, b) => a.concat(b));
-            this.levelIDs = this.levelIDs.concat([this.selectedLevel3]);
-          }
-        } else {
-          this.levelIDs = this.data.filter(d => [this.selectedLevel2].includes(d.data.id))
-                .map(d => d.data.childrenIDs)
-                .reduce((a, b) => a.concat(b));
-          this.levelIDs = this.levelIDs.concat([this.selectedLevel2]);
-        }
-      } else {
-        this.levelIDs = this.data.filter(d => [this.selectedLevel1].includes(d.data.id))
-                .map(d => d.data.childrenIDs)
-                .reduce((a, b) => a.concat(b));
-        this.levelIDs = this.levelIDs.concat([this.selectedLevel1]);
-      }
-    }
 
     this.viewVariable = viewVariable;
     this.destroyNodes();
