@@ -278,7 +278,7 @@ export default class NetworkVisualization {
       this.links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
       progress += gap;
     }
-    // this.lineAlpha(source, target);
+    this.lineAlpha(source, target);
   }
 
   highlightDashedLine(source, target) {
@@ -308,13 +308,11 @@ export default class NetworkVisualization {
 
       let { source, target, connect_actor_activity } = link;
 
-      // console.log(connect_actor_activity)
-
-      // if (connect_actor_activity) {
+      if (connect_actor_activity) {
         this.solidLine(source, target);
-      // } else {
-      //   this.dashedLine(source, target);
-      // }
+      } else {
+        this.dashedLine(source, target);
+      }
     });
 
     // Hover on links
@@ -325,11 +323,11 @@ export default class NetworkVisualization {
     activeLinkData.forEach(link => {
       let { source, target, connect_actor_activity } = link;
 
-      // if (connect_actor_activity) {
+      if (connect_actor_activity) {
         this.highlightSolidLine(source, target);
-      // } else {
-      //   this.highlightDashedLine(source, target);
-      // }
+      } else {
+        this.highlightDashedLine(source, target);
+      }
     });
   }
 
