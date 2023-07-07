@@ -62,7 +62,7 @@ def main():
     level3Clean = level3_dm(data, raw_pth, processed_pth)
     modelClean = model_dm(data, raw_pth, processed_pth)
 
-    data = data[["L1 GUID", "L2 GUID", "L3 GUID", "MODEL GUID", "activityGUID", "actorGUID"]].rename(
+    data = data[["L1 GUID", "L2 GUID", "L3 GUID", "MODEL GUID", "activityGUID", "actorGUID", "Connection"]].rename(
                                 columns={
                                 'L1 GUID': 'level1GUID',
                                 'L2 GUID': 'level2GUID',

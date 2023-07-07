@@ -318,12 +318,13 @@ def create_network(data):
             nodes.append(row)
 
         linkData1 = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)][['actorID', 'activityID', 'Connection']].rename(columns={'actorID': 'source',
-                                                                                                                                           'activityID': 'target'})
+                                                                                                                                                        'activityID': 'target'})
 
-        linkData2 = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.riskID) == False)][['activityID', 'riskID']].rename(columns={'activityID': 'source',
+        linkData2 = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.riskID) == False)][['activityID', 'riskID', 'Connection']].rename(columns={'activityID': 'source',
                                                                                                                                         'riskID': 'target'})
 
         linkData = pd.concat([linkData1, linkData2]).drop_duplicates()
+
 
         deve = []
         non_deve = []
