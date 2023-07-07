@@ -14,6 +14,13 @@ import { Menu } from "../component-styles/query-menu";
 import { Content } from "../component-styles/content";
 
 const id = "circle-packing-chart";
+const root = d3.pack()
+.size([window.innerWidth, window.innerHeight])
+.padding(1)
+(d3.hierarchy(data)
+    .sum(d => 1)
+    .sort((a, b) => b.value - a.value)
+);
 
 export default function CirclePacking() {
 
@@ -33,13 +40,6 @@ export default function CirclePacking() {
     const [selectedChapter, updateSelectedChapter] = useState(-1);
 
     const [valuesChapter, updateValuesChapter] = useState([]);
-
-    const root = d3.pack()
-        .size([window.innerWidth, window.innerHeight])
-        .padding(1)
-        (d3.hierarchy(data)
-        .sum(d => 1)
-        .sort((a, b) => b.value - a.value));
 
     const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1), updateViewHoverValue));
 
