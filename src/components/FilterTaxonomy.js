@@ -217,7 +217,7 @@ export default function FilterTaxonomy({selectedLevel1, updateLevel1, selectedLe
                                 >
                                     {valuesLevel1.map((level, index) => {
                                         return(
-                                            <MenuItem itemKey={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
+                                            <MenuItem key={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
                                         )
                                     })}
                                 </StyledSelect>
