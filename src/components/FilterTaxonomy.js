@@ -12,7 +12,7 @@ import * as Theme from "../component-styles/theme";
 import {StyledFilteredData, StyledFilter} from "../component-styles/global-styles"; 
 
 // constants
-const width = 345, height = 600;
+const width = 500, height = 600;
 
 const id = "Filter-Process";
 
@@ -115,7 +115,7 @@ function updateFilter(root, selectedLevel3) {
 
     // Add the links between nodes:
     svg.selectAll('path')
-        .data(root.descendants().slice(1))
+        .data(root.descendants().slice(1).filter(d => d.data.data.level < 4))
         .join('path')
         .attr("d", function(d) {
             return "M" + d.y + "," + d.x
@@ -130,7 +130,7 @@ function updateFilter(root, selectedLevel3) {
 
     // Add a circle for each node.
     svg.selectAll("g")
-        .data(root.descendants())
+        .data(root.descendants().filter(d => d.data.data.level < 4))
         .join("g")
         .attr("transform", function(d) {
             return `translate(${d.y},${d.x})`
