@@ -84,7 +84,10 @@ export class CirclePackingDiagram {
   }
 
   // Set diagram to fill the vizualization frame
-  centerVisualization(zoom) {
+  centerVisualization(zoom, xPos, yPos) {
+    if (xPos && yPos) {
+      this.viewport.moveCenter(xPos, yPos)
+    }
     this.viewport.zoomPercent(zoom, true)
   }
 
