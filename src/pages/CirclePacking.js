@@ -47,6 +47,30 @@ export default function CirclePacking() {
         setFullscreen(!isFullscreen);
     }
 
+    const handleTaxonomyChange = (node, updateSelected, level) => {
+        const nodeFromMap = circlePackingDiagram.current.dataMap[node.id]
+        console.log(node, nodeFromMap)
+        if (nodeFromMap !== undefined) {
+            circlePackingDiagram.current.centerOnNode(nodeFromMap);
+        } else if (node.id === -1) {
+            let parentNode;
+            switch(level) {
+                case 2:
+                    parentNode = selectedLevel1;
+                    break;
+                case 3:
+                    parentNode = selectedLevel2;
+                    break;
+                case 4:
+                    parentNode = selectedLevel3;
+                    break;
+                default:
+                    break;
+            }
+        }
+        updateSelected(node);
+    }
+
     useEffect(() => {
         circlePackingDiagram.current.init(id);
         circlePackingDiagram.current.draw(viewVariable);
@@ -81,6 +105,7 @@ export default function CirclePacking() {
                     </Description>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
                     <InspectProcesses
+                        handleTaxonomyChange={handleTaxonomyChange}
                         selectedLevel1={selectedLevel1}
                         updateSelectedLevel1={updateSelectedLevel1}
                         selectedLevel2={selectedLevel2}
