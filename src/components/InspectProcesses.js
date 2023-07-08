@@ -53,6 +53,7 @@ function taxonomyLevel(valuesLevel, selectedLevel, handleChange, label, id) {
 }
 
 export default function InspectProcesses({
+    handleTaxonomyChange,
     selectedLevel1,
     updateSelectedLevel1,
     selectedLevel2,
@@ -76,7 +77,7 @@ export default function InspectProcesses({
         if (selectedLevelId !== -1) {
             let l2 = processes.children.find(d => d.id === selectedLevelId);
             updateValuesLevel2([{"id": -1, "descr": "All"}].concat(l2.children));
-            updateSelectedLevel1(l2);
+            handleTaxonomyChange(l2, updateSelectedLevel1, 1);
         } else {
             updateSelectedLevel2({"id": -1, "descr": "All"});
             updateSelectedLevel3({"id": -1, "descr": "All"});
@@ -86,12 +87,13 @@ export default function InspectProcesses({
 
     const handleChangeLevel2 = (event) => {
         let selectedLevelId = parseInt(event.target.value);
+        console.log(selectedLevelId)
         if (selectedLevelId !== -1) {
             let l3 = valuesLevel2.find(d => d.id === selectedLevelId);
             updateValuesLevel3([{"id": -1, "descr": "All"}].concat(l3.children));
-            updateSelectedLevel2(l3);
+            handleTaxonomyChange(l3, updateSelectedLevel2, 2);
         } else {
-            updateSelectedLevel3({"id": -1, "descr": "All"});   
+            updateSelectedLevel2({"id": -1, "descr": "All"});   
         }
     };
 
@@ -100,7 +102,7 @@ export default function InspectProcesses({
         if (selectedLevelId !== -1) {
             let chapter = valuesLevel3.find(d => d.id === selectedLevelId);
             updateValuesChapter([{"id": -1, "descr": "All"}].concat(chapter.children));
-            updateSelectedLevel3(chapter);
+            handleTaxonomyChange(chapter, updateSelectedLevel3, 3);
         } else {
             updateSelectedLevel3({"id": -1, "descr": "All"});
         }
@@ -109,7 +111,7 @@ export default function InspectProcesses({
     const handleChangeChapter = (event) => {
         let chapterId = parseInt(event.target.value);
         let updatedChapter = valuesChapter.find(ch => ch.id === chapterId)
-        updateSelectedChapter(updatedChapter);
+        handleTaxonomyChange(updatedChapter, updateSelectedChapter, 4);
     }
 
     return(
