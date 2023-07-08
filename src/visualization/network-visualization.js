@@ -147,19 +147,6 @@ export default class NetworkVisualization {
 
   // Drawing functions ------------------------------------------------------
 
-  lineAlpha(source, target) {
-
-    if (this.selectedChapter !== -1) {
-      if (this.inspectLinks.includes(source.id) && this.inspectLinks.includes(target.id)) {
-        this.links.alpha = 1;
-      } else {
-        this.links.alpha = nonHighlightOpacity;
-      }
-  } else {
-    this.links.alpha = 1;
-  }
-  }
-
   // Initializes the links
   drawLinks() {
     this.containerLinks = new PIXI.Container();
@@ -194,7 +181,7 @@ export default class NetworkVisualization {
           let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
           this.inspectLinks = this.reduceNestedList(this.inspectLinks, links);
           this.inspectNodes = this.reduceNestedList(this.inspectNodes, nodes);
-        
+          console.log(this.inspectLinks)
           node.gfx.alpha = 1;
         } else {
           node.gfx.alpha = nonHighlightOpacity;
@@ -254,7 +241,6 @@ export default class NetworkVisualization {
     this.links.lineStyle(1, 0x686868);
     this.links.moveTo(source.x, source.y);
     this.links.lineTo(target.x, target.y);
-    this.lineAlpha(source, target);
   }
 
   highlightSolidLine(source, target) {
@@ -285,7 +271,6 @@ export default class NetworkVisualization {
       this.links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
       progress += gap;
     }
-    this.lineAlpha(source, target);
   }
 
   highlightDashedLine(source, target) {
@@ -307,19 +292,40 @@ export default class NetworkVisualization {
     }
   }
 
+  // link opacity
+  linkAlpha(source, target) {
+    if (this.selectedChapter !== -1) {
+      if (this.inspectLinks.includes(source.id) && this.inspectLinks.includes(target.id)) {
+        this.links.alpha = 1;
+      } else {
+        this.links.alpha = nonHighlightOpacity;
+      }
+    } else {
+      this.links.alpha = 1;
+    }
+  }
+
+  // Link Aesthetics
+  linkAesethics(link) {
+    let { source, target, connect_actor_activity } = link;
+
+    //logic for line type
+    if (connect_actor_activity) {
+      this.solidLine(source, target);
+    } else {
+      this.dashedLine(source, target);
+    }
+
+    //logic for line opacity
+    this.linkAlpha(source, target);
+  }
+
   // Update the links position
   updateLinkPosition() {
     // Links
     this.links.clear();
     this.data.links.forEach(link => {
-
-      let { source, target, connect_actor_activity } = link;
-
-      if (connect_actor_activity) {
-        this.solidLine(source, target);
-      } else {
-        this.dashedLine(source, target);
-      }
+      this.linkAesethics(link);
     });
 
     // Hover on links
