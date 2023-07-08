@@ -203,7 +203,7 @@ export class CirclePackingDiagram {
       node.gfx.cursor = 'zoom-in';
       node.gfx.on("pointerover", (e) => this.pointerOver(node, e));
       node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
-      node.gfx.on("click", (e) => this.onClick(node, e))
+      node.gfx.on("click", (e) => this.centerOnNode(node, e))
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx); 
@@ -274,7 +274,7 @@ export class CirclePackingDiagram {
     return scale(node.depth);
   }
 
-  onClick(node) {
+  centerOnNode(node) {
     this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
 
     node.gfx.cursor = "zoom-out"
