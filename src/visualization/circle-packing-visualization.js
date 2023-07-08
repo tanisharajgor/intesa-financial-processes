@@ -188,7 +188,6 @@ export class CirclePackingDiagram {
       } else {
         this.levelIDs = this.selectedLevel1.children.map(child => [child.id])
                 .reduce((a, b) => a.concat(b));
-        console.log(this.levelIDs, this.selectedLevel1)
         this.levelIDs = this.levelIDs.concat([this.selectedLevel1.id]);
       }
     }

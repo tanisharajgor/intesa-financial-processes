@@ -87,7 +87,6 @@ export default function InspectProcesses({
 
     const handleChangeLevel2 = (event) => {
         let selectedLevelId = parseInt(event.target.value);
-        console.log(selectedLevelId)
         if (selectedLevelId !== -1) {
             let l3 = valuesLevel2.find(d => d.id === selectedLevelId);
             updateValuesLevel3([{"id": -1, "descr": "All"}].concat(l3.children));

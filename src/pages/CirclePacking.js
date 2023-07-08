@@ -56,16 +56,20 @@ export default function CirclePacking() {
             let parentNode;
             switch(level) {
                 case 2:
-                    parentNode = selectedLevel1;
+                    parentNode = circlePackingDiagram.current.dataMap[selectedLevel1.id].parent;
                     break;
                 case 3:
-                    parentNode = selectedLevel2;
+                    parentNode = circlePackingDiagram.current.dataMap[selectedLevel2.id].parent;
                     break;
                 case 4:
-                    parentNode = selectedLevel3;
+                    parentNode = circlePackingDiagram.current.dataMap[selectedLevel3.id].parent;
                     break;
                 default:
+                    circlePackingDiagram.current.centerVisualization(-0.85, window.innerWidth / 2, window.innerHeight / 2)
                     break;
+            }
+            if (parentNode) {
+                circlePackingDiagram.current.centerOnNode(parentNode);
             }
         }
         updateSelected(node);
