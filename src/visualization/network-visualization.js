@@ -241,25 +241,22 @@ export default class NetworkVisualization {
 
   // Updating the draw functions during the animation ------------------------------------------------------
 
-  solidLine(links, source, target) {
+  defaultLine(links) {
     links.lineStyle(1, 0x686868);
-    links.moveTo(source.x, source.y);
-    links.lineTo(target.x, target.y);
   }
 
-  highlightSolidLine(links, source, target) {
+  highlightLine(links) {
     links.lineStyle(1, 0xffffff);
-    links.moveTo(source.x, source.y);
-    links.lineTo(target.x, target.y);
   }
 
-  alphaSolidLine(links, source, target) {
-    links.lineStyle(1, 0x686868);
-    links.moveTo(source.x, source.y);
-    links.lineTo(target.x, target.y);
+  alphaLine(links) {
     links.alpha = 1;
   }
 
+  solidLine(links, source, target) {
+    links.moveTo(source.x, source.y);
+    links.lineTo(target.x, target.y);
+  }
 
   distance(p1, p2) {
     return Math.hypot(p2.x-p1.x, p2.y-p1.y)
@@ -273,7 +270,6 @@ export default class NetworkVisualization {
     const p2 = {x: source.x, y: source.y};
     const len = this.distance(p1, p2);
     const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
-    links.lineStyle(1, 0x686868);
     links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
     let progress = dash+gap;
   
@@ -285,42 +281,11 @@ export default class NetworkVisualization {
     }
   }
 
-  highlightDashedLine(links, source, target) {
-    const dash = 5;
-    const gap = 5;
-    const p1 = {x: target.x, y: target.y};
-    const p2 = {x: source.x, y: source.y};
-    const len = this.distance(p1, p2);
-    const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
-    links.lineStyle(1, 0xffffff);
-    links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
-    let progress = dash+gap;
-
-    while (progress < len) {
-      links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
-      progress += dash;
-      links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
-      progress += gap;
-    }
-  }
-
-  alphaDashedLine(links, source, target) {
-    const dash = 5;
-    const gap = 5;
-    const p1 = {x: target.x, y: target.y};
-    const p2 = {x: source.x, y: source.y};
-    const len = this.distance(p1, p2);
-    const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
-    links.lineStyle(1, 0x686868);
-    links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
-    links.alpha = 1;
-    let progress = dash+gap;
-
-    while (progress < len) {
-      links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
-      progress += dash;
-      links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
-      progress += gap;
+  lineType(links, source, target, connect_actor_activity) {
+    if (connect_actor_activity) {
+      this.solidLine(links, source, target);
+    } else {
+      this.dashedLine(links, source, target);
     }
   }
 
@@ -332,11 +297,8 @@ export default class NetworkVisualization {
       let { source, target, connect_actor_activity } = link;
 
       //logic for line type
-      if (connect_actor_activity) {
-        this.solidLine(this.links, source, target);
-      } else {
-        this.dashedLine(this.links, source, target);
-      }
+      this.lineType(this.links, source, target, connect_actor_activity);
+      this.defaultLine(this.links);
 
       if (this.selectedChapter === -1) {
         this.links.alpha = 1;
@@ -353,11 +315,8 @@ export default class NetworkVisualization {
     activeLinkData.forEach(link => {
       let { source, target, connect_actor_activity } = link;
 
-      if (connect_actor_activity) {
-        this.highlightSolidLine(this.activeLinks, source, target);
-      } else {
-        this.highlightDashedLine(this.activeLinks, source, target);
-      }
+      this.lineType(this.activeLinks, source, target, connect_actor_activity);
+      this.highlightLine(this.activeLinks);
     });
 
     // Inspect on links
@@ -368,11 +327,10 @@ export default class NetworkVisualization {
     inspectLinkData.forEach(link => {
       let { source, target, connect_actor_activity } = link;
 
-      if (connect_actor_activity) {
-        this.alphaSolidLine(this.alphaLinks, source, target);
-      } else {
-        this.alphaDashedLine(this.alphaLinks, source, target);
-      }
+      this.lineType(this.activeLinks, source, target, connect_actor_activity);
+      this.defaultLine(this.activeLinks);
+      this.alphaLine(this.activeLinks)
+
     });
 
   }
