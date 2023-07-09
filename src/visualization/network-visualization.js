@@ -9,9 +9,9 @@ const nonHighlightOpacity = .3;
 
 export default class NetworkVisualization {
 
-  activeLinks;
-  activeLink;
-  activeNodes;
+  hoverLinks;
+  hoverLink;
+  hoverNodes;
   app;
   clickNode;
   clickViewport;
@@ -37,8 +37,8 @@ export default class NetworkVisualization {
     this.updateSymbolHoverValue = updateSymbolHoverValue;
     this.updateViewHoverValue = updateViewHoverValue;
     this.data = data;
-    this.activeLink = [];
-    this.activeNodes = [];
+    this.hoverLink = [];
+    this.hoverNodes = [];
     this.clickNode = false;
     this.clickViewport = false;
     this.clickCount = 0;
@@ -115,15 +115,15 @@ export default class NetworkVisualization {
     if (this.clickCount > 2) {
       this.clickNode = false;
       this.clickCount = 0;
-      this.activeNodes
+      this.hoverNodes
         .forEach(node => {
           let { gfx } = node;
           gfx.filters.pop();
           gfx.zIndex = 0;
         });
 
-        this.activeLink = [];
-        this.activeNode = [];
+        this.hoverLink = [];
+        this.hoverNode = [];
     }
   }
 
@@ -136,7 +136,7 @@ export default class NetworkVisualization {
       this.clickCount = 0;
     }
 
-    this.activeNodes
+    this.hoverNodes
       .forEach(node => {
         let { gfx } = node;
         gfx.filters.pop();
@@ -155,9 +155,9 @@ export default class NetworkVisualization {
     this.links = new PIXI.Graphics();
     this.containerLinks.addChild(this.links);
 
-    // Active Links
-    this.activeLinks = new PIXI.Graphics();
-    this.containerLinks.addChild(this.activeLinks);
+    // On Mouseover highlight Links
+    this.hoverLinks = new PIXI.Graphics();
+    this.containerLinks.addChild(this.hoverLinks);
 
     // Inspect Links
     this.inspectLinks = new PIXI.Graphics();
@@ -307,27 +307,25 @@ export default class NetworkVisualization {
     });
 
     // Hover on links
-    this.activeLinks.clear();
-    const activeLinkData = this.data.links
-            .filter(d => this.activeLink.includes(d.source.id) && this.activeLink.includes(d.target.id));
-
-    activeLinkData.forEach(link => {
-      let { source, target, connect_actor_activity } = link;
-      this.lineType(this.activeLinks, source, target, connect_actor_activity);
-      this.highlightLine(this.activeLinks);
+    this.hoverLinks.clear();
+    this.data.links
+      .filter(d => this.hoverLink.includes(d.source.id) && this.hoverLink.includes(d.target.id))
+      .forEach(link => {
+        let { source, target, connect_actor_activity } = link;
+        this.lineType(this.hoverLinks, source, target, connect_actor_activity);
+        this.highlightLine(this.hoverLinks);
     });
 
     // Inspect on links
     this.inspectLinks.clear();
-    const inspectLinkData = this.data.links
-      .filter(d => this.inspectLink.includes(d.source.id) && this.inspectLink.includes(d.target.id));
+    this.data.links
+      .filter(d => this.inspectLink.includes(d.source.id) && this.inspectLink.includes(d.target.id))
+      .forEach(link => {
+        let { source, target, connect_actor_activity } = link;
 
-    inspectLinkData.forEach(link => {
-      let { source, target, connect_actor_activity } = link;
-
-      this.lineType(this.inspectLinks, source, target, connect_actor_activity);
-      this.defaultLine(this.inspectLinks);
-      this.alphaLine(this.inspectLinks)
+        this.lineType(this.inspectLinks, source, target, connect_actor_activity);
+        this.defaultLine(this.inspectLinks);
+        this.alphaLine(this.inspectLinks);
     });
 
   }
@@ -360,11 +358,11 @@ export default class NetworkVisualization {
     if (this.links !== undefined) {
       this.links.destroy();
     }
-    if (this.activeLinks !== undefined) {
-      this.activeLinks.destroy();
+    if (this.hoverLinks !== undefined) {
+      this.hoverLinks.destroy();
     }
-    if (this.alphaLinks !== undefined) {
-      this.alphaLinks.destroy();
+    if (this.inspectLinks !== undefined) {
+      this.inspectLinks.destroy();
     }
   }
 
@@ -477,9 +475,9 @@ export default class NetworkVisualization {
   }
 
   highlightNetworkNodes(d) {
-    this.activeLink = this.listHighlightNetworkNodes(d);
-    this.activeNodes = this.data.nodes.filter(z => this.activeLink.includes(z.id));
-    this.activeNodes
+    this.hoverLink = this.listHighlightNetworkNodes(d);
+    this.hoverNodes = this.data.nodes.filter(z => this.hoverLink.includes(z.id));
+    this.hoverNodes
       .forEach(node => {
         let { gfx } = node;
 
@@ -539,15 +537,15 @@ export default class NetworkVisualization {
   pointerOut(d) {
 
     if (!this.clickNode) {
-      this.activeNodes
+      this.hoverNodes
       .forEach(node => {
         let { gfx } = node;
         gfx.filters.pop();
         gfx.zIndex = 0;
       });
 
-      this.activeLink = [];
-      this.activeNode = [];
+      this.hoverLink = [];
+      this.hoverNode = [];
     }
 
     this.updateViewHoverValue(undefined);
