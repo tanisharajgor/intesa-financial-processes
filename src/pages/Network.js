@@ -141,6 +141,8 @@ export default function Network() {
                 .children.find(d => d.id === selectedLevel3).children)
         )
 
+        networkDiagram.current.updateDraw(viewVariable, selectedChapter);
+
     }, [selectedLevel1, selectedLevel3, selectedActivities, selectedActors]);
 
     // Update filter possibilities when level changes
