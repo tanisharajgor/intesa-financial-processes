@@ -179,7 +179,7 @@ export default class NetworkVisualization {
   // Change the opacity of the actor nodes and their linked attributes when inspected
   nodeAlpha(node) {
 
-    if (this.selectedChapter !== -1) {
+    if (this.selectedChapter !== -1 && this.selectedChapter !== undefined) {
       if (node.viewId === "Actor") {
         if (node.levels.modelID.includes(this.selectedChapter)) {
           let links = this.listHighlightNetworkNodes(node);
@@ -299,7 +299,7 @@ export default class NetworkVisualization {
       this.lineType(this.links, source, target, connect_actor_activity);
       this.defaultLine(this.links);
 
-      if (this.selectedChapter === -1) {
+      if (this.selectedChapter === -1 || this.selectedChapter === undefined) {
         this.links.alpha = 1;
       } else {
         this.links.alpha = nonHighlightOpacity;
