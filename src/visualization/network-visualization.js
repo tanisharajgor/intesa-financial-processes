@@ -42,8 +42,8 @@ export default class NetworkVisualization {
     this.clickNode = false;
     this.clickViewport = false;
     this.clickCount = 0;
-    this.inspectNodes = [];
-    this.inspectLinks = [];
+    this.inspectNode = [];
+    this.inspectLink = [];
   }
 
   initSimulation() {
@@ -160,8 +160,8 @@ export default class NetworkVisualization {
     this.containerLinks.addChild(this.activeLinks);
 
     // Inspect Links
-    this.alphaLinks = new PIXI.Graphics();
-    this.containerLinks.addChild(this.alphaLinks);
+    this.inspectLinks = new PIXI.Graphics();
+    this.containerLinks.addChild(this.inspectLinks);
 
     this.viewport.addChild(this.containerLinks);
 
@@ -184,14 +184,14 @@ export default class NetworkVisualization {
         if (node.levels.modelID.includes(this.selectedChapter)) {
           let links = this.listHighlightNetworkNodes(node);
           let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
-          this.inspectLinks = this.reduceNestedList(this.inspectLinks, links);
-          this.inspectNodes = this.reduceNestedList(this.inspectNodes, nodes);
+          this.inspectLink = this.reduceNestedList(this.inspectLink, links);
+          this.inspectNode = this.reduceNestedList(this.inspectNode, nodes);
           node.gfx.alpha = 1;
         } else {
           node.gfx.alpha = nonHighlightOpacity;
         }
       } else {
-        if (this.inspectNodes.includes(node.id)) {
+        if (this.inspectNode.includes(node.id)) {
           node.gfx.alpha = 1;
         } else {
           node.gfx.alpha = nonHighlightOpacity;
@@ -296,7 +296,6 @@ export default class NetworkVisualization {
     this.data.links.forEach(link => {
       let { source, target, connect_actor_activity } = link;
 
-      //logic for line type
       this.lineType(this.links, source, target, connect_actor_activity);
       this.defaultLine(this.links);
 
@@ -314,23 +313,21 @@ export default class NetworkVisualization {
 
     activeLinkData.forEach(link => {
       let { source, target, connect_actor_activity } = link;
-
       this.lineType(this.activeLinks, source, target, connect_actor_activity);
       this.highlightLine(this.activeLinks);
     });
 
     // Inspect on links
-    this.alphaLinks.clear();
+    this.inspectLinks.clear();
     const inspectLinkData = this.data.links
-      .filter(d => this.inspectLinks.includes(d.source.id) && this.inspectLinks.includes(d.target.id));
+      .filter(d => this.inspectLink.includes(d.source.id) && this.inspectLink.includes(d.target.id));
 
     inspectLinkData.forEach(link => {
       let { source, target, connect_actor_activity } = link;
 
-      this.lineType(this.activeLinks, source, target, connect_actor_activity);
-      this.defaultLine(this.activeLinks);
-      this.alphaLine(this.activeLinks)
-
+      this.lineType(this.inspectLinks, source, target, connect_actor_activity);
+      this.defaultLine(this.inspectLinks);
+      this.alphaLine(this.inspectLinks)
     });
 
   }
