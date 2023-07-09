@@ -241,84 +241,85 @@ export default class NetworkVisualization {
 
   // Updating the draw functions during the animation ------------------------------------------------------
 
-  solidLine(source, target) {
-    this.links.lineStyle(1, 0x686868);
-    this.links.moveTo(source.x, source.y);
-    this.links.lineTo(target.x, target.y);
+  solidLine(links, source, target) {
+    links.lineStyle(1, 0x686868);
+    links.moveTo(source.x, source.y);
+    links.lineTo(target.x, target.y);
   }
 
-  highlightSolidLine(source, target) {
-    this.activeLinks.lineStyle(1, 0xffffff);
-    this.activeLinks.moveTo(source.x, source.y);
-    this.activeLinks.lineTo(target.x, target.y);
+  highlightSolidLine(links, source, target) {
+    links.lineStyle(1, 0xffffff);
+    links.moveTo(source.x, source.y);
+    links.lineTo(target.x, target.y);
   }
 
-  alphaSolidLine(source, target) {
-    this.alphaLinks.lineStyle(1, 0x686868);
-    this.alphaLinks.moveTo(source.x, source.y);
-    this.alphaLinks.lineTo(target.x, target.y);
-    this.alphaLinks.alpha = 1;
+  alphaSolidLine(links, source, target) {
+    links.lineStyle(1, 0x686868);
+    links.moveTo(source.x, source.y);
+    links.lineTo(target.x, target.y);
+    links.alpha = 1;
   }
 
-  alphaDashedLine(source, target) {
-    const dash = 5;
-    const gap = 5;
-    const p1 = {x: target.x, y: target.y};
-    const p2 = {x: source.x, y: source.y};
-    const len = this.distance(p1, p2);
-    const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
-    this.alphaLinks.lineStyle(1, 0x686868);
-    this.alphaLinks.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
-    this.alphaLinks.alpha = 1;
-    let progress = dash+gap;
-
-    while (progress < len) {
-      this.alphaLinks.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
-      progress += dash;
-      this.alphaLinks.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
-      progress += gap;
-    }
-  }
 
   distance(p1, p2) {
     return Math.hypot(p2.x-p1.x, p2.y-p1.y)
   }
 
   // Adapated from https://codepen.io/shepelevstas/pen/WKbYyw
-  dashedLine(source, target) {
+  dashedLine(links, source, target) {
     const dash = 5;
     const gap = 5;
     const p1 = {x: target.x, y: target.y};
     const p2 = {x: source.x, y: source.y};
     const len = this.distance(p1, p2);
     const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
-    this.links.lineStyle(1, 0x686868);
-    this.links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
+    links.lineStyle(1, 0x686868);
+    links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
     let progress = dash+gap;
   
     while (progress < len) {
-      this.links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
       progress += dash;
-      this.links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
       progress += gap;
     }
   }
 
-  highlightDashedLine(source, target) {
+  highlightDashedLine(links, source, target) {
     const dash = 5;
     const gap = 5;
     const p1 = {x: target.x, y: target.y};
     const p2 = {x: source.x, y: source.y};
     const len = this.distance(p1, p2);
     const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
-    this.activeLinks.lineStyle(1, 0xffffff);
-    this.activeLinks.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
+    links.lineStyle(1, 0xffffff);
+    links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
     let progress = dash+gap;
 
     while (progress < len) {
-      this.activeLinks.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
       progress += dash;
-      this.activeLinks.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      progress += gap;
+    }
+  }
+
+  alphaDashedLine(links, source, target) {
+    const dash = 5;
+    const gap = 5;
+    const p1 = {x: target.x, y: target.y};
+    const p2 = {x: source.x, y: source.y};
+    const len = this.distance(p1, p2);
+    const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
+    links.lineStyle(1, 0x686868);
+    links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
+    links.alpha = 1;
+    let progress = dash+gap;
+
+    while (progress < len) {
+      links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      progress += dash;
+      links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
       progress += gap;
     }
   }
@@ -332,9 +333,9 @@ export default class NetworkVisualization {
 
       //logic for line type
       if (connect_actor_activity) {
-        this.solidLine(source, target);
+        this.solidLine(this.links, source, target);
       } else {
-        this.dashedLine(source, target);
+        this.dashedLine(this.links, source, target);
       }
 
       if (this.selectedChapter === -1) {
@@ -353,9 +354,9 @@ export default class NetworkVisualization {
       let { source, target, connect_actor_activity } = link;
 
       if (connect_actor_activity) {
-        this.highlightSolidLine(source, target);
+        this.highlightSolidLine(this.activeLinks, source, target);
       } else {
-        this.highlightDashedLine(source, target);
+        this.highlightDashedLine(this.activeLinks, source, target);
       }
     });
 
@@ -368,9 +369,9 @@ export default class NetworkVisualization {
       let { source, target, connect_actor_activity } = link;
 
       if (connect_actor_activity) {
-        this.alphaSolidLine(source, target);
+        this.alphaSolidLine(this.alphaLinks, source, target);
       } else {
-        this.alphaDashedLine(source, target);
+        this.alphaDashedLine(this.alphaLinks, source, target);
       }
     });
 
