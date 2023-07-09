@@ -158,6 +158,11 @@ export default class NetworkVisualization {
     // Active Links
     this.activeLinks = new PIXI.Graphics();
     this.containerLinks.addChild(this.activeLinks);
+
+    // Inspect Links
+    this.alphaLinks = new PIXI.Graphics();
+    this.containerLinks.addChild(this.alphaLinks);
+
     this.viewport.addChild(this.containerLinks);
 
     this.simulation.force("link")
@@ -181,7 +186,6 @@ export default class NetworkVisualization {
           let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
           this.inspectLinks = this.reduceNestedList(this.inspectLinks, links);
           this.inspectNodes = this.reduceNestedList(this.inspectNodes, nodes);
-          console.log(this.inspectLinks)
           node.gfx.alpha = 1;
         } else {
           node.gfx.alpha = nonHighlightOpacity;
@@ -249,6 +253,33 @@ export default class NetworkVisualization {
     this.activeLinks.lineTo(target.x, target.y);
   }
 
+  alphaSolidLine(source, target) {
+    this.alphaLinks.lineStyle(1, 0x686868);
+    this.alphaLinks.moveTo(source.x, source.y);
+    this.alphaLinks.lineTo(target.x, target.y);
+    this.alphaLinks.alpha = 1;
+  }
+
+  alphaDashedLine(source, target) {
+    const dash = 5;
+    const gap = 5;
+    const p1 = {x: target.x, y: target.y};
+    const p2 = {x: source.x, y: source.y};
+    const len = this.distance(p1, p2);
+    const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
+    this.alphaLinks.lineStyle(1, 0x686868);
+    this.alphaLinks.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
+    this.alphaLinks.alpha = 1;
+    let progress = dash+gap;
+
+    while (progress < len) {
+      this.alphaLinks.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      progress += dash;
+      this.alphaLinks.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      progress += gap;
+    }
+  }
+
   distance(p1, p2) {
     return Math.hypot(p2.x-p1.x, p2.y-p1.y)
   }
@@ -292,40 +323,25 @@ export default class NetworkVisualization {
     }
   }
 
-  // link opacity
-  linkAlpha(source, target) {
-    if (this.selectedChapter !== -1) {
-      if (this.inspectLinks.includes(source.id) && this.inspectLinks.includes(target.id)) {
-        this.links.alpha = 1;
-      } else {
-        this.links.alpha = nonHighlightOpacity;
-      }
-    } else {
-      this.links.alpha = 1;
-    }
-  }
-
-  // Link Aesthetics
-  linkAesethics(link) {
-    let { source, target, connect_actor_activity } = link;
-
-    //logic for line type
-    if (connect_actor_activity) {
-      this.solidLine(source, target);
-    } else {
-      this.dashedLine(source, target);
-    }
-
-    //logic for line opacity
-    this.linkAlpha(source, target);
-  }
-
   // Update the links position
   updateLinkPosition() {
     // Links
     this.links.clear();
     this.data.links.forEach(link => {
-      this.linkAesethics(link);
+      let { source, target, connect_actor_activity } = link;
+
+      //logic for line type
+      if (connect_actor_activity) {
+        this.solidLine(source, target);
+      } else {
+        this.dashedLine(source, target);
+      }
+
+      if (this.selectedChapter === -1) {
+        this.links.alpha = 1;
+      } else {
+        this.links.alpha = nonHighlightOpacity;
+      }
     });
 
     // Hover on links
@@ -342,6 +358,22 @@ export default class NetworkVisualization {
         this.highlightDashedLine(source, target);
       }
     });
+
+    // Inspect on links
+    this.alphaLinks.clear();
+    const inspectLinkData = this.data.links
+      .filter(d => this.inspectLinks.includes(d.source.id) && this.inspectLinks.includes(d.target.id));
+
+    inspectLinkData.forEach(link => {
+      let { source, target, connect_actor_activity } = link;
+
+      if (connect_actor_activity) {
+        this.alphaSolidLine(source, target);
+      } else {
+        this.alphaDashedLine(source, target);
+      }
+    });
+
   }
 
   // Update the nodes position
@@ -374,6 +406,9 @@ export default class NetworkVisualization {
     }
     if (this.activeLinks !== undefined) {
       this.activeLinks.destroy();
+    }
+    if (this.alphaLinks !== undefined) {
+      this.alphaLinks.destroy();
     }
   }
 
@@ -583,7 +618,7 @@ export default class NetworkVisualization {
     this.destroyLinks();
     this.destroyNodes();
     this.draw(viewVariable);
-    this.animate()
+    this.animate();
   }
 
   animate() {
