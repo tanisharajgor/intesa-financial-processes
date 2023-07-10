@@ -141,8 +141,7 @@ export default function Network() {
         );
     
         updateLevel3(l3.id);
-
-    }, [selectedLevel1])
+    }, [selectedLevel1, selectedLevel3]);
 
     // Filter data
     useEffect(() => {
@@ -156,13 +155,6 @@ export default function Network() {
 
         let inspect = d3.select(".Inspect");
         inspectNetworkSummary(inspect, filteredData);
-
-        // updateValuesChapter(
-        //     [{"id": -1, "descr": "All"}].concat(processes
-        //         .children.find(d => d.id === selectedLevel1)
-        //         .children.find(d => d.childrenIDs.includes(selectedLevel3))
-        //         .children.find(d => d.id === selectedLevel3).children)
-        // )
 
         networkDiagram.current.updateDraw(viewVariable, selectedChapter);
 
