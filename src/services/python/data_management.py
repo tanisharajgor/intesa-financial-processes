@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import numpy as np
 import math
+import re
 
 """
 Create a dataframe from a dictionary
@@ -491,6 +492,25 @@ def risk_to_control_dm(controls, risks, control, processed_pth):
     return df
 
 """
+Clean up labels
+"""
+def shorten_labels(df):
+    def shorten_label_level3(row):
+        return re.sub(row['level2'] + ' - ', '', row['level3'], flags=re.I)
+
+    def shorten_label_model1(row):
+        return re.sub(row['level2'] + ' - ', '', row['model'], flags=re.I)
+    
+    def shorten_label_model2(row):
+        return re.sub(row['level3'] + ' - ', '', row['model'], flags=re.I)
+    
+    df['level3'] = df.apply(shorten_label_level3, axis=1)
+    df['model'] = df.apply(shorten_label_model1, axis=1)
+    df['model'] = df.apply(shorten_label_model2, axis=1)
+
+    return df
+
+"""
 Main crosswalk
 """
 def main_dm(data, level1, level2, level3, model, activities, actors, risks, controls, org1, org2, activity_to_risk, risk_to_control):
@@ -501,6 +521,8 @@ def main_dm(data, level1, level2, level3, model, activities, actors, risks, cont
     df = pd.merge(df, model, how="left", on="modelGUID")
     df = pd.merge(df, activities, how="left", on="activityGUID")
     df = pd.merge(df, actors, how="left", on="actorGUID")
+
+    df = shorten_labels(df)
 
     df = pd.merge(df, org1, how="left", on="organizational_structure1").drop("organizational_structure1", axis=1).rename(columns={'English': "organizational_structure1"})
     df = pd.merge(df, org2, how="left", on="organizational_structure2").drop("organizational_structure2", axis=1).rename(columns={'English': "organizational_structure2"})
