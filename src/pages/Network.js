@@ -69,22 +69,18 @@ function filterData(selectedLevel3ID, selectedActivities, selectedActors) {
 
 export default function Network() {
 
-    const [viewVariable, updateViewVariable] = useState("riskType");
-
     // User Input selection
+    const [viewVariable, updateViewVariable] = useState("riskType");
     const [selectedLevel1, updateLevel1] = useState(processes.children[0].id);
     const [selectedLevel3, updateLevel3] = useState(links[0].id);
     const [selectedChapter, updateSelectedChapter] = useState(-1);
+    const [valuesChapter, updateValuesChapter] = useState([{"id": -1, "descr": "All"}]);
 
-    const [valuesChapter, updateValuesChapter] = useState(
-        [{"id": -1, "descr": "All"}]
-        .concat(
-            processes
-            .children.find(d => d.id === selectedLevel1)
-            .children.find(d => d.childrenIDs.includes(selectedLevel3))
-            .children.find(d => d.id === selectedLevel3).children)
-    );
+    // Status to update the opacity in the legend
+    const [viewHoverValue, updateViewHoverValue] = useState(undefined);
+    const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
 
+    // Data management steps
     let dataNew = combineNodeLink(selectedLevel3, nodes, links);
 
     const [data, updateData] = useState(dataNew);
@@ -97,10 +93,6 @@ export default function Network() {
     const [selectedActivities, updateActivities] = useState(possibleActivities);
     const [selectedActors, updateActors] = useState(possibleActors);
 
-    // Status to update the opacity in the legend
-    const [viewHoverValue, updateViewHoverValue] = useState(undefined);
-    const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
-    
     const [isFullscreen, setFullscreen] = useState(false);
     const handleFullscreen = (e) => {
         setFullscreen(!isFullscreen);
@@ -119,7 +111,38 @@ export default function Network() {
         const height = (document.getElementById(id).clientHeight / 2) - document.getElementsByClassName("Navigation")[0].clientHeight;
 
         networkDiagram.current.centerVisualization(width - visualizationXPadding, height, -0.40);
+
+        const l1 = processes.children
+            .find(d => d.id === selectedLevel1);
+        const l2 = l1.children[0];
+        const l3 = l2.children[0];
+
+        updateValuesChapter(
+            [{"id": -1, "descr": "All"}].concat(processes
+                .children.find(d => d.id === selectedLevel1)
+                .children.find(d => d.id === l2.id)
+                .children.find(d => d.id === l3.id).children)
+        );
     }, []);
+
+     // React Hooks
+     useEffect(() => {
+
+        const l1 = processes.children
+            .find(d => d.id === selectedLevel1);
+        const l2 = l1.children[0];
+        const l3 = l2.children[0];
+
+        updateValuesChapter(
+            [{"id": -1, "descr": "All"}].concat(processes
+                .children.find(d => d.id === selectedLevel1)
+                .children.find(d => d.id === l2.id)
+                .children.find(d => d.id === l3.id).children)
+        );
+    
+        updateLevel3(l3.id);
+
+    }, [selectedLevel1])
 
     // Filter data
     useEffect(() => {
@@ -134,12 +157,12 @@ export default function Network() {
         let inspect = d3.select(".Inspect");
         inspectNetworkSummary(inspect, filteredData);
 
-        updateValuesChapter(
-            [{"id": -1, "descr": "All"}].concat(processes
-                .children.find(d => d.id === selectedLevel1)
-                .children.find(d => d.childrenIDs.includes(selectedLevel3))
-                .children.find(d => d.id === selectedLevel3).children)
-        )
+        // updateValuesChapter(
+        //     [{"id": -1, "descr": "All"}].concat(processes
+        //         .children.find(d => d.id === selectedLevel1)
+        //         .children.find(d => d.childrenIDs.includes(selectedLevel3))
+        //         .children.find(d => d.id === selectedLevel3).children)
+        // )
 
         networkDiagram.current.updateDraw(viewVariable, selectedChapter);
 
