@@ -9,7 +9,7 @@ import Ripple from './Ripple';
 import { ChevronButton } from '../component-styles/chevron-button';
 import { StyledSelect } from '../component-styles/select';
 import * as Theme from "../component-styles/theme";
-import {StyledFilteredData, StyledFilter} from "../component-styles/global-styles"; 
+import {StyledFilteredData, StyledFilter} from "../component-styles/accordion"; 
 
 // constants
 const width = 500, height = 600;

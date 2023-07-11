@@ -4,7 +4,7 @@ import { Key } from '../component-styles/key'
 import { useState } from 'react';
 import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
-import {StyledFilteredData, StyledHeader} from "../component-styles/global-styles";
+import {StyledFilteredData, StyledHeader} from "../component-styles/accordion";
 
 export default function FilterType({typesChecked, updateSelection, typeValues, label}) {
 
