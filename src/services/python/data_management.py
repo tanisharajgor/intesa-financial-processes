@@ -41,7 +41,7 @@ def num_id(df, var_name, n = 0):
 Clean up strings
 """
 def clean_strings(df, var):
-    df[var] = df[var].str.title()
+    # df[var] = df[var].str.title()
     df[var] = df[var].str.replace('"', '')
     df[var] = df[var].str.replace("'", '')
 
