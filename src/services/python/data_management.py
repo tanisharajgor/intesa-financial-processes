@@ -515,6 +515,13 @@ def main_dm(data, level1, level2, level3, model, activities, actors, risks, cont
 
     df = pd.merge(df, org1, how="left", on="organizational_structure1").drop("organizational_structure1", axis=1).rename(columns={'English': "organizational_structure1"})
     df = pd.merge(df, org2, how="left", on="organizational_structure2").drop("organizational_structure2", axis=1).rename(columns={'English': "organizational_structure2"})
+    df = clean_strings(df, "organizational_structure1")
+    df = clean_strings(df, "organizational_structure2")
+
+    def shorten_label(row):
+        return row['organizational_structure2'].split(" - ")[-1]
+
+    df['organizational_structure2'] = df.apply(shorten_label, axis=1)
 
     rtc = pd.concat([risk_to_control.rename(columns={'controlID': 'activityID'}), activity_to_risk], ignore_index=True, sort=False).drop_duplicates()
     df = pd.merge(df, rtc, how="left", on="activityID")
