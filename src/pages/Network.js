@@ -72,7 +72,7 @@ export default function Network() {
     // User Input selection
     const [viewVariable, updateViewVariable] = useState("riskType");
     const [selectedLevel1, updateLevel1] = useState(processes.children[0].id);
-    const [selectedLevel3, updateLevel3] = useState(links[0].id);
+    const [selectedLevel3, updateLevel3] = useState(processes.children[0].children[0].children[0].id);
     const [selectedChapter, updateSelectedChapter] = useState(-1);
     const [valuesChapter, updateValuesChapter] = useState([{"id": -1, "descr": "All"}]);
 
@@ -141,7 +141,7 @@ export default function Network() {
         );
     
         updateLevel3(l3.id);
-    }, [selectedLevel1, selectedLevel3]);
+    }, [selectedLevel1]);
 
     // Filter data
     useEffect(() => {
@@ -151,14 +151,12 @@ export default function Network() {
 
         networkDiagram.current.data = filteredData;
         networkDiagram.current.initSimulation();
-        networkDiagram.current.updateDraw(viewVariable);
+        networkDiagram.current.updateDraw(viewVariable, selectedChapter);
 
         let inspect = d3.select(".Inspect");
         inspectNetworkSummary(inspect, filteredData);
 
-        networkDiagram.current.updateDraw(viewVariable, selectedChapter);
-
-    }, [selectedLevel1, selectedLevel3, selectedActivities, selectedActors]);
+    }, [selectedLevel3, selectedActivities, selectedActors]);
 
     // Update filter possibilities when level changes
     useEffect(() => {
