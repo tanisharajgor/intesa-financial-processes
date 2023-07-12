@@ -82,7 +82,7 @@ const Link = styled(`li`)`
  */
 export default function Navigation({isFullscreen}) {
     return (
-        <StyledLayoutHeader isFullscreen={isFullscreen}>
+        <StyledLayoutHeader className="Navigation" isFullscreen={isFullscreen}>
             <NavigationBranding className="Navigation_branding">
                 <h2>
                     <NavLink to="/">Banca Intesa Processes</NavLink>

@@ -6,6 +6,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { inspectHierarchySummary } from "../components/Inspect";
 import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
 import FilterType from "../components/FilterType";
+import InspectTaxonomy from "../components/InspectTaxonomy";
+
 import { activityTypeValues } from "../utils/global";
 import Description from "../components/Description";
 import { Menu } from "../component-styles/query-menu";
@@ -16,6 +18,7 @@ const id = "circle-packing-chart";
 
 export default function CirclePacking() {
 
+    // View highlight states
     const [viewVariable, updateViewVariable] = useState("riskType");
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
     const [isFullscreen, setFullscreen] = useState(false);
@@ -24,13 +27,16 @@ export default function CirclePacking() {
     const possibleActivities = activityTypeValues;
 
     // User selected activities and actors
-    const [selectedActivities, updateActivities] = useState(possibleActivities);
+    const [selectedActivities, updateActivities] = useState(activityTypeValues);
+    const [selectedLevel1, updateSelectedLevel1] = useState(-1);
+    const [selectedLevel2, updateSelectedLevel2] = useState(-1);
+    const [selectedLevel3, updateSelectedLevel3] = useState(-1);
+    const [selectedChapter, updateSelectedChapter] = useState(-1);
 
-    const height = window.innerHeight;
-    const width = window.innerWidth;
+    const [valuesChapter, updateValuesChapter] = useState([]);
 
     const root = d3.pack()
-        .size([width, height])
+        .size([window.innerWidth, window.innerHeight])
         .padding(1)
         (d3.hierarchy(data)
             .sum(d => 1)
@@ -45,6 +51,8 @@ export default function CirclePacking() {
     useEffect(() => {
         circlePackingDiagram.current.init(id);
         circlePackingDiagram.current.draw(viewVariable);
+
+        circlePackingDiagram.current.centerVisualization(-0.30);
     }, []);
 
     // const onViewVariableChange = useCallback((updatedView) => {
@@ -56,11 +64,9 @@ export default function CirclePacking() {
     // }, [])
 
     useEffect(() => {
-        circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities);
-        let inspect = d3.select(".Inspect");
-        inspectHierarchySummary(inspect, data);
-        // updateViewVariable(updatedView);
-    }, [selectedActivities, viewVariable]);
+        circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter);
+        inspectHierarchySummary(data);
+    }, [viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter]);
 
 
     useEffect(() => {
@@ -101,15 +107,16 @@ export default function CirclePacking() {
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <Draggable>
-                    <Menu className="Query" id="FilterMenu" width={"22rem"}>
-                        <Description>
-                            <h4>Ecosystem</h4>
-                            <p>Click on the circles to zoom into the process visualization.</p>
-                        </Description>
-                        <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type" />
-                    </Menu>
-                </Draggable>
+             <Draggable>
+                <Menu className="Query" id="FilterMenu" width={"22rem"} isFullscreen={isFullscreen}>
+                    <Description>
+                      <h4>Ecosystem</h4>
+                      <p>Click on the circles to zoom into the process visualization.</p>
+                    </Description>
+                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
+                    <InspectTaxonomy selectedLevel1={selectedLevel1} updateSelectedLevel1={updateSelectedLevel1} selectedLevel2={selectedLevel2} updateSelectedLevel2={updateSelectedLevel2} selectedLevel3={selectedLevel3} updateSelectedLevel3={updateSelectedLevel3} selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter} updateValuesChapter={updateValuesChapter}/>
+                </Menu>
+            </Draggable>
                 <Main
                     viewVariable={viewVariable}
                     updateViewVariable={updateViewVariable}
