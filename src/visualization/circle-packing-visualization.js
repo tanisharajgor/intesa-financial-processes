@@ -4,7 +4,7 @@ import * as Global from "../utils/global";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
 import { activityTypeValues } from "../utils/global";
-import lu from "../data/processed/nested/lu";
+// import lu from "../data/processed/nested/lu";
 
 const nonHighlightOpacity = .15;
 
@@ -109,7 +109,7 @@ export class CirclePackingDiagram {
   // Drawing functions ------------------------------------------------------
 
   selectedActivitiesOpacity(node) {
-    if (node.data.treeLevel < 4) {
+    if (node.data.level < 4) {
       node.gfx.alpha = nonHighlightOpacity;
     } else {
       if (this.selectedActivities.includes(node.data.activityType)) {
@@ -122,7 +122,7 @@ export class CirclePackingDiagram {
 
   selectedLevelOpacity(node) {
     if (this.levelIDs.includes(node.data.id)) {
-      node.gfx.alpha = this.alphaScale(node.data.treeLevel);
+      node.gfx.alpha = this.alphaScale(node.data.level);
     } else {
       node.gfx.alpha = nonHighlightOpacity;
     }
@@ -130,7 +130,7 @@ export class CirclePackingDiagram {
 
   selectedLevelAndActivitiesOpacity(node) {
     if (this.levelIDs.includes(node.data.id) && this.selectedActivities.includes(node.data.activityType)) {
-      node.gfx.alpha = this.alphaScale(node.data.treeLevel);
+      node.gfx.alpha = this.alphaScale(node.data.level);
     } else {
       node.gfx.alpha = nonHighlightOpacity;
     }
@@ -149,7 +149,7 @@ export class CirclePackingDiagram {
     } else if(this.selectedLevel1 !== -1) {
       this.selectedLevelOpacity(node);
     } else {
-      node.gfx.alpha = this.alphaScale(node.data.treeLevel);
+      node.gfx.alpha = this.alphaScale(node.data.level);
     }
   }
 
@@ -211,7 +211,7 @@ export class CirclePackingDiagram {
     this.data.forEach((node) => {
       node.viewId = node.data.viewId;
       node.gfx = new PIXI.Graphics();
-      node.gfx.lineStyle(lineWidth(node.data.treeLevel), 0xFFFFFF, 1);
+      node.gfx.lineStyle(lineWidth(node.data.level), 0xFFFFFF, 1);
       node.gfx.beginFill(Global.applyColorScale(node.data, this.viewVariable));
 
       this.opacityScale(node);
@@ -245,7 +245,7 @@ export class CirclePackingDiagram {
   // Updating the draw functions on mouse interaction ------------------------------------------------------
 
   tooltipText(d) {
-    return `${d.data.treeLevel === 4? "Activity": "Process"} <br><b>${d.data.descr}</b>`;
+    return `${d.data.level === 4? "Activity": "Process"} <br><b>${d.data.descr}</b>`;
   }
 
   showTooltip(d, event) {
@@ -323,7 +323,6 @@ export class CirclePackingDiagram {
   updateDraw(viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
 
     this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
-
     this.viewVariable = viewVariable;
     this.destroyNodes();
     this.drawNodes();

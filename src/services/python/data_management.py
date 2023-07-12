@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import numpy as np
 import math
+import re
 
 """
 Create a dataframe from a dictionary
@@ -40,7 +41,7 @@ def num_id(df, var_name, n = 0):
 Clean up strings
 """
 def clean_strings(df, var):
-    # df[var] = df[var].str.capitalize()
+    # df[var] = df[var].str.title()
     df[var] = df[var].str.replace('"', '')
     df[var] = df[var].str.replace("'", '')
 
@@ -104,7 +105,7 @@ Return a dataframe unique on actor
 def actors_dm(actors, config, raw_pth, processed_pth):
 
     df = actors[actors["Obsolete Object"] != "Obsoleto"]
-    df = df[["actorGUID", "actorType", "actor", "Connection"]].drop_duplicates() # drop duplicates
+    df = df[["actorGUID", "actorType", "actor"]].drop_duplicates() # drop duplicates
     df = translate_config(df, config, 'actorType')
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "actors.csv")).rename(columns={'Italian': 'actor'})
     df = pd.merge(df, dfTranslated, on="actor", how="left").drop("actor", axis=1).rename(columns={'English': "actor"})
@@ -250,6 +251,11 @@ def level3_dm(data, raw_pth, processed_pth):
     df = df[pd.isnull(df.level3) == False]
     df = num_id(df, "level3GUID", 1000)
 
+    def shorten_label(row):
+        return row['level3'].split(" - ")[-1]
+    
+    df['level3'] = df.apply(shorten_label, axis=1)
+
     ## Write the cleaned data out
     df.drop('level3GUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'level3' + ".csv"), index = False)
 
@@ -279,6 +285,11 @@ def model_dm(data, raw_pth, processed_pth):
     df = df[pd.isnull(df.model) == False]
     df = num_id(df, "modelGUID", 1000)
     df = df.drop('english', axis = 1)
+
+    def shorten_label(row):
+        return row['model'].split(" - ")[-1]
+    
+    df['model'] = df.apply(shorten_label, axis=1)
 
     ## Write the cleaned data out
     df.drop('modelGUID', axis = 1).drop_duplicates().to_csv(os.path.join(processed_pth, 'relational', 'model' + ".csv"), index = False)
@@ -440,13 +451,12 @@ def activity_to_actor_dm(data, activities, actors, processed_pth):
     df = pd.merge(data, activities, on="activityGUID", how="left").drop("activityGUID", axis=1)
     df = pd.merge(df, actors, on="actorGUID", how="left").drop("actorGUID", axis=1)
     df = df.drop_duplicates()[["activityID", "actorID", "Connection"]]
-    df["Actor_Activity_Connection"] = df.Connection == "deve"
 
     df = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)]
     df['activityID'] = pd.to_numeric(df['activityID'], errors='coerce').astype(int)
     df['actorID'] = pd.to_numeric(df['actorID'], errors='coerce').astype(int)
 
-    df.drop("Connection", axis=1).to_csv(os.path.join(processed_pth, 'relational', 'activities_actor' + ".csv"), index = False)
+    df.to_csv(os.path.join(processed_pth, 'relational', 'activities_actor' + ".csv"), index = False)
 
     return df
 
@@ -498,12 +508,21 @@ def main_dm(data, level1, level2, level3, model, activities, actors, risks, cont
     df = pd.merge(data, level1, how="left", on="level1GUID")
     df = pd.merge(df, level2, how="left", on="level2GUID")
     df = pd.merge(df, level3, how="left", on="level3GUID")
+
     df = pd.merge(df, model, how="left", on="modelGUID")
+
     df = pd.merge(df, activities, how="left", on="activityGUID")
     df = pd.merge(df, actors, how="left", on="actorGUID")
 
     df = pd.merge(df, org1, how="left", on="organizational_structure1").drop("organizational_structure1", axis=1).rename(columns={'English': "organizational_structure1"})
     df = pd.merge(df, org2, how="left", on="organizational_structure2").drop("organizational_structure2", axis=1).rename(columns={'English': "organizational_structure2"})
+    df = clean_strings(df, "organizational_structure1")
+    df = clean_strings(df, "organizational_structure2")
+
+    def shorten_label(row):
+        return row['organizational_structure2'].split(" - ")[-1]
+
+    df['organizational_structure2'] = df.apply(shorten_label, axis=1)
 
     rtc = pd.concat([risk_to_control.rename(columns={'controlID': 'activityID'}), activity_to_risk], ignore_index=True, sort=False).drop_duplicates()
     df = pd.merge(df, rtc, how="left", on="activityID")

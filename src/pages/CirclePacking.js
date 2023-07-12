@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { inspectHierarchySummary } from "../components/Inspect";
 import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
 import FilterType from "../components/FilterType";
-import InspectProcesses from "../components/InspectProcesses";
+import InspectTaxonomy from "../components/InspectTaxonomy";
 
 import { activityTypeValues } from "../utils/global";
 import Description from "../components/Description";
@@ -82,7 +82,7 @@ export default function CirclePacking() {
                       <p>Click on the circles to zoom into the process visualization.</p>
                     </Description>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
-                    <InspectProcesses
+                    <InspectTaxonomy
                         selectedLevel1={selectedLevel1}
                         updateSelectedLevel1={updateSelectedLevel1}
                         selectedLevel2={selectedLevel2}
