@@ -131,12 +131,15 @@ export default function Network() {
         updateLevel3(l3.id);
     }, [selectedLevel1]);
 
-      //     const l1 = processes.children
-    //         .find(d => d.id === selectedLevel1);
+    useEffect(() => {
+    
+         const l1 = processes.children
+            .find(d => d.id === selectedLevel1);
 
-    //     updateValuesChapter(
-    //         [{"id": -1, "descr": "All"}].concat(l1.children.find(d => d.childrenIDs.includes(selectedLevel3)))
-    //     );
+        updateValuesChapter(
+            [{"id": -1, "descr": "All"}].concat(l1.children.find(d => d.childrenIDs.includes(selectedLevel3)).children)
+        );
+    }, [selectedLevel3])
 
     // Filter data
     useEffect(() => {
