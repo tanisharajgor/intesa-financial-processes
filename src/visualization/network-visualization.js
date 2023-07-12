@@ -38,7 +38,7 @@ export default class NetworkVisualization {
     this.updateViewHoverValue = updateViewHoverValue;
     this.data = data;
     this.hoverLink = [];
-    this.hoverNodes = [];
+    this.hoverNode = [];
     this.clickNode = false;
     this.clickViewport = false;
     this.clickCount = 0;
@@ -570,6 +570,10 @@ export default class NetworkVisualization {
 
   updateDraw(viewVariable, selectedChapter) {
     this.selectedChapter = selectedChapter;
+    this.hoverLink = [];
+    this.hoverNode = [];
+    this.inspectLink = [];
+    this.inspectNode = [];
     this.destroyLinks();
     this.destroyNodes();
     this.draw(viewVariable);
