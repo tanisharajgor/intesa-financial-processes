@@ -73,7 +73,8 @@ export default function Network() {
     const [selectedLevel1, updateLevel1] = useState(processes.children[0].id);
     const [selectedLevel3, updateLevel3] = useState(processes.children[0].children[0].children[0].id);
     const [selectedChapter, updateSelectedChapter] = useState(-1);
-    const [valuesChapter, updateValuesChapter] = useState([{"id": -1, "descr": "All"}]);
+    const [valuesChapter, updateValuesChapter] = useState([{"id": -1, "descr": "All"}].concat(processes
+        .children.find(d => d.id === selectedLevel1).children[0].children[0].children));
 
     // Status to update the opacity in the legend
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
@@ -110,18 +111,6 @@ export default function Network() {
         const height = (document.getElementById(id).clientHeight / 2) - document.getElementsByClassName("Navigation")[0].clientHeight;
 
         networkDiagram.current.centerVisualization(width - visualizationXPadding, height, -0.40);
-
-        const l1 = processes.children
-            .find(d => d.id === selectedLevel1);
-        const l2 = l1.children[0];
-        const l3 = l2.children[0];
-
-        updateValuesChapter(
-            [{"id": -1, "descr": "All"}].concat(processes
-                .children.find(d => d.id === selectedLevel1)
-                .children.find(d => d.id === l2.id)
-                .children.find(d => d.id === l3.id).children)
-        );
     }, []);
 
      // React Hooks
@@ -141,6 +130,13 @@ export default function Network() {
     
         updateLevel3(l3.id);
     }, [selectedLevel1]);
+
+      //     const l1 = processes.children
+    //         .find(d => d.id === selectedLevel1);
+
+    //     updateValuesChapter(
+    //         [{"id": -1, "descr": "All"}].concat(l1.children.find(d => d.childrenIDs.includes(selectedLevel3)))
+    //     );
 
     // Filter data
     useEffect(() => {
