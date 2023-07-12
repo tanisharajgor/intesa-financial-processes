@@ -70,7 +70,7 @@ def main():
     org1Clean = org_str1_dm(data, raw_pth, processed_pth)
     org2Clean = org_str2_dm(data, raw_pth, processed_pth)
 
-    data = data[["L1 GUID", "L2 GUID", "L3 GUID", "MODEL GUID", "activityGUID", "actorGUID", "organizational_structure1", "organizational_structure2"]].rename(
+    data = data[["L1 GUID", "L2 GUID", "L3 GUID", "MODEL GUID", "activityGUID", "actorGUID", "organizational_structure1", "organizational_structure2", "Connection"]].rename(
                                 columns={
                                 'L1 GUID': 'level1GUID',
                                 'L2 GUID': 'level2GUID',
@@ -108,7 +108,7 @@ def main():
         "level2": create_lu(level2Clean, "level2ID", "level2"),
         "level3": create_lu(level3Clean, "level3ID", "level3"),
         "model": create_lu(modelClean, "modelID", "model"),
-        "processes": {"name": "root", "children": create_processes(main), "treeLevel": 0},
+        "processes": {"name": "root", "children": create_processes(main), "level": 0},
         "org_structure": create_org_structure(main)
     }
 
