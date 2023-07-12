@@ -38,7 +38,7 @@ export function taxonomyLevel(valuesLevel, selectedLevel, handleChange, label, i
                         >
                             {valuesLevel.map((level, index) => {
                                 return(
-                                    <MenuItem key={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
+                                    <MenuItem key={`menu-item-${level.id}`} value={level.id}>{level.descr}</MenuItem>
                                 )
                             })}
                         </StyledSelect>
