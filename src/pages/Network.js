@@ -6,7 +6,6 @@ import FilterType from "../components/FilterType";
 import { useEffect, useRef, useState } from "react";
 import links from "../data/processed/nested/links.json";
 import nodes from "../data/processed/nested/nodes.json";
-import { QueryMenu } from "cfd-react-components";
 import NetworkVisualization from "../visualization/network-visualization";
 import * as Global from "../utils/global";
 import { inspectNetworkSummary } from "../components/Inspect";
@@ -177,7 +176,7 @@ export default function Network() {
                         <h4>Network</h4>
                         <p>Filter data in the actor network graph to explore activities and risks.</p>
                     </Description>
-                    <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter} updateValuesChapter={updateValuesChapter}/>
+                    <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
                     <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3}/>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
                     <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type"/>

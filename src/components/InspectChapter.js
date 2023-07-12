@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { taxonomyLevel } from "./InspectTaxonomy";
 import {StyledFilteredData, StyledFilter} from "../component-styles/accordion";
 
-export default function InspectChapter({selectedChapter, updateSelectedChapter, valuesChapter, updateValuesChapter}) {
+export default function InspectChapter({selectedChapter, updateSelectedChapter, valuesChapter}) {
 
     const [shouldRotate, setRotate] = useState(false);
     const handleRotate = () => setRotate(!shouldRotate);

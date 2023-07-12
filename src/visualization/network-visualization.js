@@ -572,6 +572,7 @@ export default class NetworkVisualization {
     this.selectedChapter = selectedChapter;
     this.hoverLink = [];
     this.hoverNode = [];
+    this.hoverNodes = [];
     this.inspectLink = [];
     this.inspectNode = [];
     this.destroyLinks();
