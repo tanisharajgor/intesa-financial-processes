@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { inspectHierarchySummary } from "../components/Inspect";
 import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
 import FilterType from "../components/FilterType";
-import InspectProcesses from "../components/InspectProcesses";
+import InspectTaxonomy from "../components/InspectTaxonomy";
 
 import { activityTypeValues } from "../utils/global";
 import Description from "../components/Description";
@@ -91,13 +91,13 @@ export default function CirclePacking() {
     // }, [])
 
     useEffect(() => {
-        circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter);
+        circlePackingDiagram.current.updateDraw(viewVariable, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter);
         inspectHierarchySummary(data);
-    }, [viewVariable, selectedActivities]);
+    }, [viewVariable]);
 
     useEffect(() => {
-        circlePackingDiagram.current.updateOpacity(selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter)
-    }, [selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter]);
+        circlePackingDiagram.current.updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter)
+    }, [selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, selectedActivities]);
 
 
     return(
@@ -110,7 +110,7 @@ export default function CirclePacking() {
                       <p>Click on the circles to zoom into the process visualization.</p>
                     </Description>
                     <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
-                    <InspectProcesses
+                    <InspectTaxonomy
                         handleTaxonomyChange={handleTaxonomyChange}
                         selectedLevel1={selectedLevel1}
                         updateSelectedLevel1={updateSelectedLevel1}

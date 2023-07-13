@@ -160,7 +160,7 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
         d = {"id": int(id),
             "descr": df_sub[df_sub[root1ID] == id][root1].iloc[0],
             "viewType": create_view_type(df_sub),
-            "treeLevel": int(tree_level),
+            "level": int(tree_level),
             "organizationalStructure": org
             }
 
@@ -191,7 +191,7 @@ Return object
 """
 def create_processes_to_activities(main):
 
-    nest4 = create_sub_processes(main, "activity", "risk", None, 4)
+    nest4 = create_sub_processes(main, "activity", "risk", None, 5)
     nest3 = create_sub_processes(main, "level3", "activity", nest4, 3)
     nest2 = create_sub_processes(main, "level2", "level3", nest3, 2)
     nest1 = create_sub_processes(main, "level1", "level2", nest2, 1)
@@ -200,7 +200,7 @@ def create_processes_to_activities(main):
             "children": nest1,
             "childrenIDs": main.level1ID.unique().tolist(),
             "viewType": create_view_type(main),
-            "treeLevel": int(0)}
+            "level": int(0)}
 
 """
 Nest activities attributes
@@ -324,12 +324,13 @@ def create_network(data):
             nodes.append(row)
 
         linkData1 = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.actorID) == False)][['actorID', 'activityID', 'Connection']].rename(columns={'actorID': 'source',
-                                                                                                                                           'activityID': 'target'})
+                                                                                                                                                        'activityID': 'target'})
 
-        linkData2 = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.riskID) == False)][['activityID', 'riskID']].rename(columns={'activityID': 'source',
+        linkData2 = df[(pd.isnull(df.activityID) == False) & (pd.isnull(df.riskID) == False)][['activityID', 'riskID', 'Connection']].rename(columns={'activityID': 'source',
                                                                                                                                         'riskID': 'target'})
 
         linkData = pd.concat([linkData1, linkData2]).drop_duplicates()
+
 
         deve = []
         non_deve = []
@@ -371,7 +372,11 @@ def create_network(data):
 
     return network
 
+"""
+Creates a taxonomy of processes, chapters, and activities for easy filtering
+"""
 def create_processes(main):
+
     l1Array = []
     for i in main.level1ID.unique():
 
@@ -389,39 +394,42 @@ def create_processes(main):
 
                 for l in model:
 
-                    activities = main[main.modelID == l].activityID.unique()
+                    activities = main[main.activityID == l].activityID.unique()
                     activitiesArray = []
 
                     for n in activities:
 
                         a = {"id": int(n),
                             "descr": main[main.activityID == n].activity.iloc[0],
-                            "treeLevel": int(5)}
+                            "level": int(5)}
                         activitiesArray.append(a)
 
                     m = {"id": int(l),
                         "descr": main[main.modelID == l].model.iloc[0],
-                        "treeLevel": int(4),
+                        "level": int(4),
+                        "childrenIDs": activities.tolist(),
                         "children": activitiesArray}
-
                     modelArray.append(m)
 
                 r3 = {"id": int(k),
                       "descr": main[main.level3ID == k].level3.iloc[0],
-                      "treeLevel": int(3),
+                      "level": int(3),
+                      "childrenIDs": main[main.level3ID == k].modelID.unique().tolist() + main[main.level3ID == k].activityID.unique().tolist(),
                       "children": modelArray}
                 l3Array.append(r3)
 
             r2 = {"id": int(j),
                  "descr": main[main.level2ID == j].level2.iloc[0],
                  "children": l3Array,
-                 "treeLevel": int(2)}
+                 "childrenIDs": main[main.level2ID == j].level3ID.unique().tolist() + main[main.level2ID == j].modelID.unique().tolist() + main[main.level2ID == j].activityID.unique().tolist(),
+                 "level": int(2)}
             l2Array.append(r2)
 
         r1 = {"id": int(i),
               "descr": main[main.level1ID == i].level1.iloc[0],
               "children": l2Array,
-              "treeLevel": int(1)}
+             "childrenIDs": main[main.level1ID == i].level2ID.unique().tolist() + main[main.level1ID == i].level3ID.unique().tolist() + main[main.level1ID == i].modelID.unique().tolist() + main[main.level1ID == i].activityID.unique().tolist(),
+              "level": int(1)}
         l1Array.append(r1)
 
     return l1Array

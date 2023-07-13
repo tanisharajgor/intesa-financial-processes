@@ -4,7 +4,7 @@ import * as Global from "../utils/global";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
 import { activityTypeValues } from "../utils/global";
-import lu from "../data/processed/nested/lu";
+// import lu from "../data/processed/nested/lu";
 
 const nonHighlightOpacity = .15;
 
@@ -112,7 +112,7 @@ export class CirclePackingDiagram {
   // Drawing functions ------------------------------------------------------
 
   selectedActivitiesOpacity(node) {
-    if (node.data.treeLevel < 4) {
+    if (node.data.level < 4) {
       node.gfx.alpha = nonHighlightOpacity;
     } else {
       if (this.selectedActivities.includes(node.data.activityType)) {
@@ -125,7 +125,7 @@ export class CirclePackingDiagram {
 
   selectedLevelOpacity(node) {
     if (this.levelIDs.includes(node.data.id)) {
-      node.gfx.alpha = this.alphaScale(node.data.treeLevel);
+      node.gfx.alpha = this.alphaScale(node.data.level);
     } else {
       node.gfx.alpha = nonHighlightOpacity;
     }
@@ -133,30 +133,31 @@ export class CirclePackingDiagram {
 
   selectedLevelAndActivitiesOpacity(node) {
     if (this.levelIDs.includes(node.data.id) && this.selectedActivities.includes(node.data.activityType)) {
-      node.gfx.alpha = this.alphaScale(node.data.treeLevel);
+      node.gfx.alpha = this.alphaScale(node.data.level);
     } else {
       node.gfx.alpha = nonHighlightOpacity;
     }
   }
 
   opacityScale(node) {
-
     this.alphaScale = d3.scaleOrdinal()
       .domain([0, 1, 2, 3, 4])
       .range([.05, .3, .4, .5, .6]);
 
-    if (this.selectedActivities.length > 0 && this.selectedLevel1 !== -1) {
+    if (this.selectedActivities.length > 0 && this.selectedLevel1.id !== -1) {
       this.selectedLevelAndActivitiesOpacity(node);
     } else if(this.selectedActivities.length > 0) {
       this.selectedActivitiesOpacity(node);
-    } else if(this.selectedLevel1 !== -1) {
+    } else if(this.selectedLevel1.id !== -1) {
       this.selectedLevelOpacity(node);
     } else {
-      node.gfx.alpha = this.alphaScale(node.data.treeLevel);
+      node.gfx.alpha = this.alphaScale(node.data.level);
     }
   }
 
-  updateOpacity(selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
+  updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
+    this.selectedActivities = activityTypeValues.filter(activity => !selectedActivities.includes(activity));
+    
     this.selectedLevel1 = selectedLevel1;
     this.selectedLevel2 = selectedLevel2;
     this.selectedLevel3 = selectedLevel3;
@@ -167,31 +168,30 @@ export class CirclePackingDiagram {
         if (this.selectedLevel3.id !== -1) {
           if (this.selectedChapter.id !== -1) {
             let foundChapter = valuesChapter.find(d => d.id === selectedChapter.id);
+            let foundChapter2 = this.dataMap[`${valuesChapter.find(d => d.id === selectedChapter.id).id}`]
+            console.log(foundChapter, foundChapter2, valuesChapter)
             if (foundChapter !== undefined) {
-              this.levelIDs = foundChapter.children.map(d=> d.id);
+              this.levelIDs = [foundChapter2.data.id]
             } else {
               this.levelIDs = []
             }
-
           } else {
-            this.levelIDs = this.data.filter(d => [this.selectedLevel3.id].includes(d.data.id))
-                            .map(d => d.data.childrenIDs)
-                            .reduce((a, b) => a.concat(b));
-            this.levelIDs = this.levelIDs.concat([this.selectedLevel3.id]);
-          }
+            this.levelIDs = [this.dataMap[`${this.selectedLevel3.id}`]].map(d => d.data.childrenIDs)
+            .reduce((a, b) => a.concat(b))
+            .concat([this.selectedLevel3]);          }
         } else {
-          this.levelIDs = this.data.filter(d => [this.selectedLevel2.id].includes(d.data.id))
-                .map(d => d.data.childrenIDs)
-                .reduce((a, b) => a.concat(b));
-          this.levelIDs = this.levelIDs.concat([this.selectedLevel2.id]);
+          this.levelIDs = [this.dataMap[`${this.selectedLevel2.id}`]].map(d => d.data.childrenIDs)
+          .reduce((a, b) => a.concat(b))
+          .concat([this.selectedLevel2]);
         }
       } else {
-        this.levelIDs = this.selectedLevel1.children.map(child => [child.id])
-                .reduce((a, b) => a.concat(b));
-        this.levelIDs = this.levelIDs.concat([this.selectedLevel1.id]);
+        this.levelIDs = [this.dataMap[`${this.selectedLevel1.id}`]].map(d => d.data.childrenIDs)
+          .reduce((a, b) => a.concat(b))
+          .concat([this.selectedLevel1]);
       }
     }
 
+    console.log(this.levelIDs)
     this.data.forEach(n => this.opacityScale(n));
   }
 
@@ -213,7 +213,7 @@ export class CirclePackingDiagram {
     this.data.forEach((node) => {
       node.viewId = node.data.viewId;
       node.gfx = new PIXI.Graphics();
-      node.gfx.lineStyle(lineWidth(node.data.treeLevel), 0xFFFFFF, 1);
+      node.gfx.lineStyle(lineWidth(node.data.level), 0xFFFFFF, 1);
       node.gfx.beginFill(Global.applyColorScale(node.data, this.viewVariable));
 
       this.opacityScale(node);
@@ -247,7 +247,7 @@ export class CirclePackingDiagram {
   // Updating the draw functions on mouse interaction ------------------------------------------------------
 
   tooltipText(d) {
-    return `${d.data.treeLevel === 4? "Activity": "Process"} <br><b>${d.data.descr}</b>`;
+    return `${d.data.level === 4? "Activity": "Process"} <br><b>${d.data.descr}</b>`;
   }
 
   showTooltip(d, event) {
@@ -322,9 +322,7 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
-
-    this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
+  updateDraw(viewVariable, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
 
     this.viewVariable = viewVariable;
     this.destroyNodes();
