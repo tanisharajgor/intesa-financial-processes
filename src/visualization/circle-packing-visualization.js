@@ -167,11 +167,9 @@ export class CirclePackingDiagram {
       if (this.selectedLevel2.id !== -1) {
         if (this.selectedLevel3.id !== -1) {
           if (this.selectedChapter.id !== -1) {
-            let foundChapter = valuesChapter.find(d => d.id === selectedChapter.id);
-            let foundChapter2 = this.dataMap[`${valuesChapter.find(d => d.id === selectedChapter.id).id}`]
-            console.log(foundChapter, foundChapter2, valuesChapter)
+            let foundChapter = this.dataMap[`${valuesChapter.find(d => d.id === selectedChapter.id).id}`]
             if (foundChapter !== undefined) {
-              this.levelIDs = [foundChapter2.data.id]
+              this.levelIDs = [foundChapter.data.id]
             } else {
               this.levelIDs = []
             }
