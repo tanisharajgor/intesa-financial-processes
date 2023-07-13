@@ -1,6 +1,16 @@
 import styled from "styled-components";
 import Ripple from "./Ripple";
 
+export const StyledControlsPanel = styled.div`
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem; 
+    .inner {
+        display: flex;
+    }
+`
+
+
 const StyledControlButton = styled('button')`
     background: transparent;
     border: 1px solid transparent;
@@ -14,18 +24,18 @@ const StyledControlButton = styled('button')`
 `
 
 const FullscreenIcon = styled('img')`
-    padding: 5px;
+    padding: 4px;
 `
 
 const FullscreenButton = styled(StyledControlButton)`
-    width: 13%;
+    width: 22px;
 `
 
 
 
 export default function Control({handleFullscreen, controls}) {
     return (
-        <div className="Controls">
+        <StyledControlsPanel>
             <div className="inner">
                 <StyledControlButton onClick={() => controls.reset()}>
                     <img alt="Button to reset the scale of the visualization" src={process.env.PUBLIC_URL + "/assets/crop_free.svg"}/>
@@ -46,6 +56,6 @@ export default function Control({handleFullscreen, controls}) {
                     <Ripple color={"#FFFFFF"} duration={1000}/>
                 </FullscreenButton>
             </div>
-        </div>
+        </StyledControlsPanel>
     )
 }

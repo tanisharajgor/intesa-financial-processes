@@ -9,7 +9,7 @@ import Ripple from './Ripple';
 import { ChevronButton } from '../component-styles/chevron-button';
 import { StyledSelect } from '../component-styles/select';
 import * as Theme from "../component-styles/theme";
-import {StyledFilteredData, StyledFilter} from "../component-styles/accordion"; 
+import {StyledFilteredData, StyledHeader, StyledFilter} from "../component-styles/accordion"; 
 
 // constants
 const width = 500, height = 600;
@@ -190,7 +190,7 @@ export default function FilterTaxonomy({selectedLevel1, updateLevel1, selectedLe
                 id="process-filter-header"
                 onClick={handleRotate}
             >
-                <InnerHeader>
+                <StyledHeader>
                     <Key>
                         Filter by Process
                     </Key>
@@ -198,7 +198,7 @@ export default function FilterTaxonomy({selectedLevel1, updateLevel1, selectedLe
                         <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
                         <Ripple color={"#FFFFFF"} duration={1000}/>
                     </ChevronButton>
-                </InnerHeader>
+                </StyledHeader>
                 <StyledFilteredData>
                     {level3Descr}
                 </StyledFilteredData>

@@ -5,7 +5,7 @@ import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
 import { useState } from 'react';
 import { taxonomyLevel } from "./InspectTaxonomy";
-import {StyledFilteredData, StyledFilter} from "../component-styles/accordion";
+import {StyledFilteredData, StyledHeader, StyledFilter} from "../component-styles/accordion";
 
 export default function InspectChapter({selectedChapter, updateSelectedChapter, valuesChapter}) {
 
@@ -27,13 +27,13 @@ export default function InspectChapter({selectedChapter, updateSelectedChapter, 
                 onClick={handleRotate}
             >
             <StyledFilter>
-                <InnerHeader>
+                <StyledHeader>
                     <Key>Inspect by Chapter</Key>
                     <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
                         <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
                         <Ripple color={"#FFFFFF"} duration={1000}/>
                     </ChevronButton>
-                </InnerHeader>
+                </StyledHeader>
                 <StyledFilteredData>
                     {chapterDescr}
                 </StyledFilteredData>

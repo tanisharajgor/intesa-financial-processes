@@ -1,4 +1,5 @@
 import Status from "../components/Status";
+import Control from "./Controls";
 import styled from "styled-components";
 
 const StyledMain = styled('div')`
@@ -33,6 +34,7 @@ export default function Main({
                 controls={controls}
                 handleFullscreen={handleFullscreen}
             />
+            <Control controls={controls} handleFullscreen={handleFullscreen}/>
         </StyledMain>
     )
 }
