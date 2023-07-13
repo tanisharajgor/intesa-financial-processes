@@ -8,10 +8,11 @@ import { CirclePackingDiagram } from "../visualization/circle-packing-visualizat
 import FilterType from "../components/FilterType";
 import { activityTypeValues } from "../utils/global";
 import Description from "../components/Description";
-import { CollapseButton, DragBar, Menu } from "../component-styles/query-menu";
+import { DragBar, Menu, MenuControls } from "../component-styles/query-menu";
 import { Content } from "../component-styles/content";
 import Draggable from 'react-draggable';
 import { ChevronButton } from '../component-styles/chevron-button';
+import Ripple from '../components/Ripple.js';
 
 const id = "circle-packing-chart";
 
@@ -66,53 +67,26 @@ export default function CirclePacking() {
         // updateViewVariable(updatedView);
     }, [selectedActivities, viewVariable]);
 
-    // useEffect(() => {
-    //     // Make the DIV element draggable:
-    //     const dragElement = (elmnt) => {
-    //         let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-
-    //         const dragMouseDown = (e) => {
-    //             e = e || window.event;
-    //             e.preventDefault();
-    //             pos3 = e.clientX;
-    //             pos4 = e.clientY;
-    //             document.onmouseup = closeDragElement;
-    //             document.onmousemove = elementDrag;
-    //         };
-
-    //         const elementDrag = (e) => {
-    //             e = e || window.event;
-    //             e.preventDefault();
-    //             pos1 = pos3 - e.clientX;
-    //             pos2 = pos4 - e.clientY;
-    //             pos3 = e.clientX;
-    //             pos4 = e.clientY;
-    //             elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    //             elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-    //         };
-
-    //         const closeDragElement = () => {
-    //             document.onmouseup = null;
-    //             document.onmousemove = null;
-    //         };
-    //     };
-
-    //     dragElement(document.getElementById("queryMenu"));
-    // }, []);
-
     return (
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <Draggable bounds={{top: '80vh'}} handle="strong">
-                    <Menu className="Query" id="FilterMenu" width={"22rem"}
-                    style={{position: 'absolute', bottom: '50px', left: '20px'}}>
-                        <div className="box no-cursor">
+                <Draggable bounds={{ top: '80vh' }} handle="strong">
+                    <Menu className="Query" id="FilterMenu" style={{
+                        position: 'absolute', left: '20px', 
+                        padding: !shouldRotate ? "1%" : "1%",
+                        height: !shouldRotate ? "10vh" : "65vh", width: "22vw"
+                    }}>
+                        <MenuControls>
                             <strong className="cursor">
-                                <DragBar>Drag Me</DragBar>
+                                <DragBar>Inspect Pane</DragBar>
                             </strong>
-                            <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
+                            <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate} style={{ border: "2px solid #1d8693", paddingLeft: "2%", paddingRight: "2%" }}>
+                                <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
+                                <Ripple color={"#FFFFFF"} duration={1000} />
                             </ChevronButton>
+                        </MenuControls>
+                        <div className="Description" style={{ visibility: !shouldRotate ? 'hidden' : 'visible' }} >
                             <Description>
                                 <h4>Ecosystem</h4>
                                 <p>Click on the circles to zoom into the process visualization.</p>

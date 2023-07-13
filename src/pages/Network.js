@@ -12,8 +12,10 @@ import { inspectNetworkSummary } from "../components/Inspect";
 import * as d3 from 'd3';
 import Description from "../components/Description";
 import { Content } from "../component-styles/content";
-import { Menu } from "../component-styles/query-menu";
+import { DragBar, Menu, MenuControls } from "../component-styles/query-menu";
 import Draggable from 'react-draggable';
+import { ChevronButton } from '../component-styles/chevron-button';
+import Ripple from '../components/Ripple.js';
 
 const id = "network-chart";
 
@@ -97,6 +99,10 @@ export default function Network() {
         setFullscreen(!isFullscreen);
     }
 
+    const [shouldRotate, setRotate] = useState(false);
+
+    const handleRotate = () => setRotate(!shouldRotate);
+
     // React Hooks
     useEffect(() => {
 
@@ -135,15 +141,30 @@ export default function Network() {
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <Draggable>
-                    <Menu className="Query" id="FilterMenu" width={"22rem"} isFullscreen={isFullscreen}>
-                        <Description>
-                            <h4>Network</h4>
-                            <p>Filter data in the actor network graph to explore activities and risks.</p>
-                        </Description>
-                        <FilterProcess selectedLevel3ID={selectedLevel3ID} updateLevel3ID={updateLevel3ID} />
-                        <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type" />
-                        <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type" />
+                <Draggable bounds={{ top: '80vh' }} handle="strong">
+                    <Menu className="Query" id="FilterMenu" style={{
+                        position: 'absolute', left: '20px',
+                        padding: !shouldRotate ? "1%" : "2%",
+                        height: !shouldRotate ? "10vh" : "65vh", width: "22vw"
+                    }}>
+                        <MenuControls>
+                            <strong className="cursor">
+                                <DragBar>Inspect Pane</DragBar>
+                            </strong>
+                            <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate} style={{ border: "2px solid #1d8693", paddingLeft: "2%", paddingRight: "2%" }}>
+                                <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"} />
+                                <Ripple color={"#FFFFFF"} duration={1000} />
+                            </ChevronButton>
+                        </MenuControls>
+                        <div className="Description" style={{ visibility: !shouldRotate ? 'hidden' : 'visible' }} >
+                            <Description>
+                                <h4>Network</h4>
+                                <p>Filter data in the actor network graph to explore activities and risks.</p>
+                            </Description>
+                            <FilterProcess selectedLevel3ID={selectedLevel3ID} updateLevel3ID={updateLevel3ID} />
+                            <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type" />
+                            <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type" />
+                        </div>
                     </Menu>
                 </Draggable>
                 <Main

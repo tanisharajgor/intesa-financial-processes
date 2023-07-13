@@ -3,11 +3,8 @@ import styled from "styled-components";
 
 export const Menu = styled.div`
     resize: vertical;
-    overflow-y: scroll;
-    height: 65vh;
-    width: 22vw;
+    overflow-y: auto;
     z-index: +9;
-    padding: 2%;
     position: absolute;
     top: 15vh;
     left: ${props => props.isFullscreen ? "-30vw;" : "0vw;"};
@@ -20,11 +17,11 @@ export const DragBar = styled.div`
     background-color: #21252a;
     text-align: center; 
     cursor: grab;
-    margin-bottom: 2vh;
+    width: 18vw;
+    margin: 2%;
 `;
 
-export const CollapseButton = styled.div`
-    border: 2px solid #1d8693;
-    background-color: #21252a;
+export const MenuControls = styled.div`
+    display: flex;
+    align-items: center;
 `;
-
