@@ -137,23 +137,24 @@ export class CirclePackingDiagram {
   }
 
   opacityScale(node) {
-
     this.alphaScale = d3.scaleOrdinal()
       .domain([0, 1, 2, 3, 4])
       .range([.05, .3, .4, .5, .6]);
 
-    if (this.selectedActivities.length > 0 && this.selectedLevel1 !== -1) {
+    if (this.selectedActivities.length > 0 && this.selectedLevel1.id !== -1) {
       this.selectedLevelAndActivitiesOpacity(node);
     } else if(this.selectedActivities.length > 0) {
       this.selectedActivitiesOpacity(node);
-    } else if(this.selectedLevel1 !== -1) {
+    } else if(this.selectedLevel1.id !== -1) {
       this.selectedLevelOpacity(node);
     } else {
       node.gfx.alpha = this.alphaScale(node.data.level);
     }
   }
 
-  updateOpacity(selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
+  updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
+    this.selectedActivities = activityTypeValues.filter(activity => !selectedActivities.includes(activity));
+    
     this.selectedLevel1 = selectedLevel1;
     this.selectedLevel2 = selectedLevel2;
     this.selectedLevel3 = selectedLevel3;
@@ -164,32 +165,30 @@ export class CirclePackingDiagram {
         if (this.selectedLevel3.id !== -1) {
           if (this.selectedChapter.id !== -1) {
             let foundChapter = valuesChapter.find(d => d.id === selectedChapter.id);
+            let foundChapter2 = this.dataMap[`${valuesChapter.find(d => d.id === selectedChapter.id).id}`]
+            console.log(foundChapter, foundChapter2, valuesChapter)
             if (foundChapter !== undefined) {
-              this.levelIDs = foundChapter.children.map(d=> d.id);
+              this.levelIDs = [foundChapter2.data.id]
             } else {
               this.levelIDs = []
             }
-
           } else {
-            this.levelIDs = this.data.filter(d => [this.selectedLevel3.id].includes(d.data.id))
-                            .map(d => d.data.childrenIDs)
-                            .reduce((a, b) => a.concat(b));
-            this.levelIDs = this.levelIDs.concat([this.selectedLevel3.id]);
-          }
+            this.levelIDs = [this.dataMap[`${this.selectedLevel3.id}`]].map(d => d.data.childrenIDs)
+            .reduce((a, b) => a.concat(b))
+            .concat([this.selectedLevel3]);          }
         } else {
-          this.levelIDs = this.data.filter(d => [this.selectedLevel2.id].includes(d.data.id))
-                .map(d => d.data.childrenIDs)
-                .reduce((a, b) => a.concat(b));
-          this.levelIDs = this.levelIDs.concat([this.selectedLevel2.id]);
+          this.levelIDs = [this.dataMap[`${this.selectedLevel2.id}`]].map(d => d.data.childrenIDs)
+          .reduce((a, b) => a.concat(b))
+          .concat([this.selectedLevel2]);
         }
       } else {
-        this.levelIDs = this.selectedLevel1.children.map(child => [child.id])
-                .reduce((a, b) => a.concat(b));
-        console.log(this.levelIDs, this.selectedLevel1)
-        this.levelIDs = this.levelIDs.concat([this.selectedLevel1.id]);
+        this.levelIDs = [this.dataMap[`${this.selectedLevel1.id}`]].map(d => d.data.childrenIDs)
+          .reduce((a, b) => a.concat(b))
+          .concat([this.selectedLevel1]);
       }
     }
 
+    console.log(this.levelIDs)
     this.data.forEach(n => this.opacityScale(n));
   }
 
@@ -320,9 +319,8 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
+  updateDraw(viewVariable, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
 
-    this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
     this.viewVariable = viewVariable;
     this.destroyNodes();
     this.drawNodes();
