@@ -62,8 +62,11 @@ export default function InspectProcesses({
     updateValuesChapter,
 }) {
 
-    const [valuesLevel2, updateValuesLevel2] = useState([]);
-    const [valuesLevel3, updateValuesLevel3] = useState([]);
+    const processes = lu["processes"];
+
+    const valuesLevel1 = [{"id": -1, "descr": "All"}].concat(processes.children);
+    const [valuesLevel2, updateValuesLevel2] = useState({"id": -1, "descr": "All"});
+    const [valuesLevel3, updateValuesLevel3] = useState({"id": -1, "descr": "All"});
     const [shouldRotate, setRotate] = useState(false);
 
     const handleRotate = () => setRotate(!shouldRotate);
@@ -88,7 +91,7 @@ export default function InspectProcesses({
             updateValuesLevel3([{"id": -1, "descr": "All"}].concat(l3.children));
             updateSelectedLevel2(l3);
         } else {
-            updateSelectedLevel3({"id": -1, "descr": "All"});   
+            updateSelectedLevel2({"id": -1, "descr": "All"});   
         }
     };
 
