@@ -189,7 +189,6 @@ export class CirclePackingDiagram {
       }
     }
 
-    console.log(this.levelIDs)
     this.data.forEach(n => this.opacityScale(n));
   }
 
@@ -320,7 +319,7 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
+  updateDraw(viewVariable) {
 
     this.viewVariable = viewVariable;
     this.destroyNodes();

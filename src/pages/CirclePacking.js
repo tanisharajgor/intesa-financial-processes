@@ -49,20 +49,19 @@ export default function CirclePacking() {
 
     const handleTaxonomyChange = (node, updateSelected, level) => {
         const nodeFromMap = circlePackingDiagram.current.dataMap[node.id]
-        console.log(node, nodeFromMap)
         if (nodeFromMap !== undefined) {
             circlePackingDiagram.current.centerOnNode(nodeFromMap);
         } else if (node.id === -1) {
             let parentNode;
             switch(level) {
                 case 2:
-                    parentNode = circlePackingDiagram.current.dataMap[selectedLevel1.id].parent;
+                    parentNode = circlePackingDiagram.current.dataMap[selectedLevel1.id];
                     break;
                 case 3:
-                    parentNode = circlePackingDiagram.current.dataMap[selectedLevel2.id].parent;
+                    parentNode = circlePackingDiagram.current.dataMap[selectedLevel2.id];
                     break;
                 case 4:
-                    parentNode = circlePackingDiagram.current.dataMap[selectedLevel3.id].parent;
+                    parentNode = circlePackingDiagram.current.dataMap[selectedLevel3.id];
                     break;
                 default:
                     circlePackingDiagram.current.centerVisualization(-0.85, window.innerWidth / 2, window.innerHeight / 2)
