@@ -570,7 +570,6 @@ export default class NetworkVisualization {
 
   updateDraw(viewVariable, selectedChapter) {
     this.selectedChapter = selectedChapter;
-    console.log(selectedChapter)
     this.hoverLink = [];
     this.hoverNode = [];
     this.hoverNodes = [];
