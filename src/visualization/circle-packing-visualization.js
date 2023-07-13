@@ -84,7 +84,10 @@ export class CirclePackingDiagram {
   }
 
   // Set diagram to fill the vizualization frame
-  centerVisualization(zoom) {
+  centerVisualization(zoom, xPos, yPos) {
+    if (xPos && yPos) {
+      this.viewport.moveCenter(xPos, yPos)
+    }
     this.viewport.zoomPercent(zoom, true)
   }
 
@@ -222,7 +225,7 @@ export class CirclePackingDiagram {
       node.gfx.cursor = 'zoom-in';
       node.gfx.on("pointerover", (e) => this.pointerOver(node, e));
       node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
-      node.gfx.on("click", (e) => this.onClick(node, e))
+      node.gfx.on("click", (e) => this.centerOnNode(node, e))
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx); 
@@ -293,7 +296,7 @@ export class CirclePackingDiagram {
     return scale(node.depth);
   }
 
-  onClick(node) {
+  centerOnNode(node) {
     this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
 
     node.gfx.cursor = "zoom-out"
@@ -316,7 +319,7 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
+  updateDraw(viewVariable) {
 
     this.viewVariable = viewVariable;
     this.destroyNodes();
