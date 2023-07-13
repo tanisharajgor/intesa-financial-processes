@@ -20,7 +20,7 @@ const NavigationBranding = styled('div')`
 
 const StyledLayoutHeader = styled(LayoutHeader)`
     border-bottom: 1px solid #4e5155;
-    height: 10vh;
+    height: 4rem;
     position: absolute;
     z-index: +10;
     top: ${props => props.isFullscreen ? "-15vh;" : "0vh;"};
@@ -69,11 +69,6 @@ const Link = styled(`li`)`
     a.active {
         color: ${props =>  props.theme.color.main };
     }  
-
-    a:hover {
-        color: ${props =>  props.theme.color.main };
-        background-color: ${props =>  props.theme.color.border };
-    }
 `
 
 /**

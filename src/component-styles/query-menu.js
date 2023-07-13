@@ -6,7 +6,7 @@ export const Menu = styled(QueryMenu)`
     z-index: +9;
     position: absolute;
     left: ${props => props.isFullscreen ? "-30vw;" : "0vw;"};
-    top: 10vh;
+    top: 4rem;
     transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     background-color: ${props =>  props.theme.backgroundColor.main };
 `;

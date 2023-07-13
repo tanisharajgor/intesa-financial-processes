@@ -38,7 +38,7 @@ export default function FilterType({typesChecked, updateSelection, typeValues, l
                     <Key>
                         {
                             filteredTypes.length <= 0 ? label :
-                            `${label}:`
+                            `${label}`
                         }
                     </Key>
                     <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>

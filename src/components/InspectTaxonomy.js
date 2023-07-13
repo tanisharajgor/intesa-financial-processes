@@ -8,10 +8,8 @@ import styled from 'styled-components';
 import { StyledSelect } from '../component-styles/select';
 import { useState } from 'react';
 import lu from '../data/processed/nested/lu.json';
+import {StyledFilteredData, StyledHeader, StyledFilter} from "../component-styles/accordion";
 
-const StyledHeader = styled('div')`
-    display: flex;
-`
 
 const StyledLabel = styled('span')`
     color: ${Theme.labelStyles.fontColor};
@@ -104,13 +102,15 @@ export default function InspectTaxonomy({selectedLevel1, updateSelectedLevel1, s
                 id="activity-type-filter-header"
                 onClick={handleRotate}
             >
-            <StyledHeader>
-                <Key>Inspect by Taxonomy</Key>
-                <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
-                    <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
-                    <Ripple color={"#FFFFFF"} duration={1000}/>
-                </ChevronButton>
-            </StyledHeader>
+            <StyledFilter>
+                <StyledHeader>
+                    <Key>Inspect by Taxonomy</Key>
+                    <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
+                        <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
+                        <Ripple color={"#FFFFFF"} duration={1000}/>
+                    </ChevronButton>
+                </StyledHeader>
+            </StyledFilter>
             </AccordionHeader>
             <AccordionDetails>
                 {taxonomyLevel(valuesLevel1, selectedLevel1, handleChangeLevel1, "Level 1", "1")}
