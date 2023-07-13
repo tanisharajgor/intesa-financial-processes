@@ -2,21 +2,9 @@ import { Accordion, AccordionHeader, AccordionDetails, FormLabel, Checkbox } fro
 import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../component-styles/query-layout';
 import { Key } from '../component-styles/key'
 import { useState } from 'react';
-import styled from 'styled-components';
 import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
-
-const StyledFilteredData = styled('span')`
-    font-style: italic;
-    text-color: ${props =>  props.theme.color.secondary };
-    opacity: 75%;
-    height: 1.5rem;
-    display: block;
-`
-
-const StyledHeader = styled('div')`
-    display: flex;
-`
+import {StyledFilteredData, StyledHeader} from "../component-styles/accordion";
 
 export default function FilterType({typesChecked, updateSelection, typeValues, label}) {
 
@@ -70,7 +58,7 @@ export default function FilterType({typesChecked, updateSelection, typeValues, l
                                 }
 
                                 return (
-                                    <span>{str}</span>
+                                    <span key={`desc-${str}`}>{str}</span>
                                 )
                             }) 
                         }
