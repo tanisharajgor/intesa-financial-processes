@@ -130,7 +130,7 @@ export class CirclePackingDiagram {
 
   selectedLevelAndActivitiesOpacity(node) {
     if (this.levelIDs.includes(node.data.id) && this.selectedActivities.includes(node.data.activityType)) {
-      node.gfx.alpha = this.alphaScale(node.data.level);
+      node.gfx.alpha = 1;
     } else {
       node.gfx.alpha = nonHighlightOpacity;
     }
@@ -186,7 +186,6 @@ export class CirclePackingDiagram {
       }
     }
 
-    console.log(this.levelIDs)
     this.data.forEach(n => this.opacityScale(n));
   }
 
