@@ -92,6 +92,7 @@ export default function InspectProcesses({
             updateValuesLevel3([{"id": -1, "descr": "All"}].concat(l3.children));
             handleTaxonomyChange(l3, updateSelectedLevel2, 2);
         } else {
+            updateSelectedLevel3({"id": -1, "descr": "All"});
             handleTaxonomyChange({"id": -1, "descr": "All"}, updateSelectedLevel2, 2);
         }
     };
@@ -103,6 +104,7 @@ export default function InspectProcesses({
             updateValuesChapter([{"id": -1, "descr": "All"}].concat(chapter.children));
             handleTaxonomyChange(chapter, updateSelectedLevel3, 3);
         } else {
+            updateSelectedChapter({"id": -1, "descr": "All"});
             handleTaxonomyChange({"id": -1, "descr": "All"}, updateSelectedLevel3, 3);
         }
     };
