@@ -113,33 +113,36 @@ export default function Network() {
         networkDiagram.current.centerVisualization(width - visualizationXPadding, height, -0.40);
     }, []);
 
-     // React Hooks
-     useEffect(() => {
-
+    // React Hooks
+    useEffect(() => {
         const l1 = processes.children
             .find(d => d.id === selectedLevel1);
         const l2 = l1.children[0];
         const l3 = l2.children[0];
 
         updateValuesChapter(
-            [{"id": -1, "descr": "All"}].concat(processes
-                .children.find(d => d.id === selectedLevel1)
+            [{"id": -1, "descr": "All"}].concat(l1
                 .children.find(d => d.id === l2.id)
                 .children.find(d => d.id === l3.id).children)
         );
-    
+
         updateLevel3(l3.id);
+        updateSelectedChapter(-1);
     }, [selectedLevel1]);
 
     useEffect(() => {
-    
-         const l1 = processes.children
+        const l1 = processes.children
             .find(d => d.id === selectedLevel1);
 
         updateValuesChapter(
-            [{"id": -1, "descr": "All"}].concat(l1.children.find(d => d.childrenIDs.includes(selectedLevel3)).children)
+            [{"id": -1, "descr": "All"}].concat(l1
+                .children.find(d => d.childrenIDs.includes(selectedLevel3))
+                .children.find(d => d.id === selectedLevel3).children)
         );
-    }, [selectedLevel3])
+
+        updateSelectedChapter(-1);
+    }, [selectedLevel3]);
+
 
     // Filter data
     useEffect(() => {
