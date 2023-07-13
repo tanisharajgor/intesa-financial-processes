@@ -4,6 +4,7 @@
   "homepage": "https://nu-center-for-design.github.io/banca-process/",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@pixi/filter-glow": "^5.2.1",
     "@pixi/graphics-extras": "^7.2.4",
     "@testing-library/jest-dom": "^5.16.5",
