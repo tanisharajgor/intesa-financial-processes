@@ -77,7 +77,7 @@ export default function CirclePacking() {
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <Draggable bounds="parent" handle="strong">
+                <Draggable bounds="body" handle="strong">
                     <Menu className="Query" id="FilterMenu" style={{
                         position: 'absolute', left: '20px',
                         padding: '1%',

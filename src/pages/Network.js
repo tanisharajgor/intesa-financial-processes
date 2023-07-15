@@ -181,7 +181,7 @@ export default function Network() {
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <Draggable bounds={{ top: '80vh' }} handle="strong">
+                <Draggable bounds="parent" handle="strong">
                     <Menu className="Query" id="FilterMenu" style={{
                         position: 'absolute', left: '20px',
                         padding: '1%',
