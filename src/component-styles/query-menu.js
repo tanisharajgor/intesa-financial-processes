@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 export const Menu = styled.div`
     resize: vertical;
-    overflow-y: auto;
     z-index: +9;
     position: absolute;
     top: 15vh;
@@ -24,4 +23,5 @@ export const DragBar = styled.div`
 export const MenuControls = styled.div`
     display: flex;
     align-items: center;
+    margin: auto;
 `;

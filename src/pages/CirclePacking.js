@@ -77,40 +77,32 @@ export default function CirclePacking() {
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <Draggable bounds={{ top: '80vh' }} handle="strong">
+                <Draggable bounds="parent" handle="strong">
                     <Menu className="Query" id="FilterMenu" style={{
-                        position: 'absolute', left: '20px', 
-                        padding: !shouldRotate ? "1%" : "1%",
-                        height: !shouldRotate ? "10vh" : "65vh", width: "22vw"
+                        position: 'absolute', left: '20px',
+                        padding: '1%',
+                        height: !shouldRotate ? "10vh" : "65vh", width: "22vw",
+                        overflowY: !shouldRotate ? "hidden" : "scroll"
                     }}>
                         <MenuControls>
                             <strong className="cursor">
                                 <DragBar>Inspect Pane</DragBar>
                             </strong>
                             <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate} style={{ border: "2px solid #1d8693", paddingLeft: "2%", paddingRight: "2%" }}>
-                                <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
+                                <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"} />
                                 <Ripple color={"#FFFFFF"} duration={1000} />
                             </ChevronButton>
                         </MenuControls>
-                        <div className="Description" style={{ visibility: !shouldRotate ? 'hidden' : 'visible' }} >
+                        <div className="Description" style={{ visibility: !shouldRotate ? 'hidden' : 'visible' }}>
                             <Description>
                                 <h4>Ecosystem</h4>
                                 <p>Click on the circles to zoom into the process visualization.</p>
                             </Description>
                             <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type" />
+                            <InspectTaxonomy selectedLevel1={selectedLevel1} updateSelectedLevel1={updateSelectedLevel1} selectedLevel2={selectedLevel2} updateSelectedLevel2={updateSelectedLevel2} selectedLevel3={selectedLevel3} updateSelectedLevel3={updateSelectedLevel3} selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter} updateValuesChapter={updateValuesChapter} />
                         </div>
                     </Menu>
                 </Draggable>
-             <Draggable>
-                <Menu className="Query" id="FilterMenu" width={"22rem"} isFullscreen={isFullscreen}>
-                    <Description>
-                      <h4>Ecosystem</h4>
-                      <p>Click on the circles to zoom into the process visualization.</p>
-                    </Description>
-                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
-                    <InspectTaxonomy selectedLevel1={selectedLevel1} updateSelectedLevel1={updateSelectedLevel1} selectedLevel2={selectedLevel2} updateSelectedLevel2={updateSelectedLevel2} selectedLevel3={selectedLevel3} updateSelectedLevel3={updateSelectedLevel3} selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter} updateValuesChapter={updateValuesChapter}/>
-                </Menu>
-            </Draggable>
                 <Main
                     viewVariable={viewVariable}
                     updateViewVariable={updateViewVariable}

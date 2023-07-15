@@ -42,7 +42,7 @@ function combineNodeLink(selectedLevel3ID, nodes, links) {
     let nodesData = Object.assign({}, nodes.find((d) => d.id === selectedLevel3ID)).nodes;
     let linksData = Object.assign({}, links.find((d) => d.id === selectedLevel3ID)).links;
     linksData = combineLink(linksData);
-    let dataNew = {id: selectedLevel3ID, nodes: nodesData, links: linksData};
+    let dataNew = { id: selectedLevel3ID, nodes: nodesData, links: linksData };
 
     return dataNew;
 }
@@ -78,7 +78,7 @@ export default function Network() {
     const [selectedLevel1, updateLevel1] = useState(processes.children[0].id);
     const [selectedLevel3, updateLevel3] = useState(links[0].id);
     const [selectedChapter, updateSelectedChapter] = useState(-1);
-    const [valuesChapter, updateValuesChapter] = useState([{"id": -1, "descr": "All"}]);
+    const [valuesChapter, updateValuesChapter] = useState([{ "id": -1, "descr": "All" }]);
 
     // Status to update the opacity in the legend
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
@@ -114,7 +114,7 @@ export default function Network() {
         networkDiagram.current.draw(viewVariable);
         networkDiagram.current.animate();
 
-        const width =  (document.getElementById(id).clientWidth / 2) - document.getElementsByClassName("Query")[0].clientWidth;
+        const width = (document.getElementById(id).clientWidth / 2) - document.getElementsByClassName("Query")[0].clientWidth;
         const height = (document.getElementById(id).clientHeight / 2) - document.getElementsByClassName("Navigation")[0].clientHeight;
 
         networkDiagram.current.centerVisualization(width - visualizationXPadding, height, -0.40);
@@ -125,15 +125,15 @@ export default function Network() {
         const l3 = l2.children[0];
 
         updateValuesChapter(
-            [{"id": -1, "descr": "All"}].concat(processes
+            [{ "id": -1, "descr": "All" }].concat(processes
                 .children.find(d => d.id === selectedLevel1)
                 .children.find(d => d.id === l2.id)
                 .children.find(d => d.id === l3.id).children)
         );
     }, []);
 
-     // React Hooks
-     useEffect(() => {
+    // React Hooks
+    useEffect(() => {
 
         const l1 = processes.children
             .find(d => d.id === selectedLevel1);
@@ -141,12 +141,12 @@ export default function Network() {
         const l3 = l2.children[0];
 
         updateValuesChapter(
-            [{"id": -1, "descr": "All"}].concat(processes
+            [{ "id": -1, "descr": "All" }].concat(processes
                 .children.find(d => d.id === selectedLevel1)
                 .children.find(d => d.id === l2.id)
                 .children.find(d => d.id === l3.id).children)
         );
-    
+
         updateLevel3(l3.id);
     }, [selectedLevel1, selectedLevel3]);
 
@@ -184,8 +184,9 @@ export default function Network() {
                 <Draggable bounds={{ top: '80vh' }} handle="strong">
                     <Menu className="Query" id="FilterMenu" style={{
                         position: 'absolute', left: '20px',
-                        padding: !shouldRotate ? "1%" : "2%",
-                        height: !shouldRotate ? "10vh" : "65vh", width: "22vw"
+                        padding: '1%',
+                        height: !shouldRotate ? "10vh" : "65vh", width: "22vw", 
+                        overflowY: !shouldRotate ? "hidden" : "scroll"
                     }}>
                         <MenuControls>
                             <strong className="cursor">
@@ -196,29 +197,18 @@ export default function Network() {
                                 <Ripple color={"#FFFFFF"} duration={1000} />
                             </ChevronButton>
                         </MenuControls>
-                        <div className="Description" style={{ visibility: !shouldRotate ? 'hidden' : 'visible' }} >
+                        <div className="Description" style={{ visibility: !shouldRotate ? 'hidden' : 'visible' }}>
                             <Description>
                                 <h4>Network</h4>
                                 <p>Filter data in the actor network graph to explore activities and risks.</p>
                             </Description>
-                            <FilterProcess selectedLevel3ID={selectedLevel3ID} updateLevel3ID={updateLevel3ID} />
+                            <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter} updateValuesChapter={updateValuesChapter} />
+                            <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3} />
                             <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type" />
                             <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type" />
                         </div>
                     </Menu>
                 </Draggable>
-             <Draggable>
-                <Menu className="Query" id="FilterMenu" width={"22rem"} isFullscreen={isFullscreen}>
-                    <Description>
-                        <h4>Network</h4>
-                        <p>Filter data in the actor network graph to explore activities and risks.</p>
-                    </Description>
-                    <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter} updateValuesChapter={updateValuesChapter}/>
-                    <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3}/>
-                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
-                    <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type"/>
-                </Menu>
-              </Draggable>
                 <Main
                     viewVariable={viewVariable}
                     updateViewVariable={updateViewVariable}
