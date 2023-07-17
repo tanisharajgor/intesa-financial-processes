@@ -24,10 +24,16 @@ export class CirclePackingDiagram {
   viewport;
   viewVariable;
   zoomedNodeId;
+  dataMap
 
   constructor(data, updateViewHoverValue) {
     this.data = data;
-    this.levelIDs = this.data.map(d => d.data.id);
+    this.levelIDs = [];
+    this.dataMap = {};
+    this.data.forEach(d => {
+      this.levelIDs.push(d.data.id);
+      this.dataMap[`${d.data.id}`] = d;
+    })
     this.zoomedNodeId = 0;
     this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
@@ -78,7 +84,10 @@ export class CirclePackingDiagram {
   }
 
   // Set diagram to fill the vizualization frame
-  centerVisualization(zoom) {
+  centerVisualization(zoom, xPos, yPos) {
+    if (xPos && yPos) {
+      this.viewport.moveCenter(xPos, yPos)
+    }
     this.viewport.zoomPercent(zoom, true)
   }
 
@@ -115,7 +124,6 @@ export class CirclePackingDiagram {
   }
 
   selectedLevelOpacity(node) {
-
     if (this.levelIDs.includes(node.data.id)) {
       node.gfx.alpha = this.alphaScale(node.data.level);
     } else {
@@ -125,27 +133,63 @@ export class CirclePackingDiagram {
 
   selectedLevelAndActivitiesOpacity(node) {
     if (this.levelIDs.includes(node.data.id) && this.selectedActivities.includes(node.data.activityType)) {
-      node.gfx.alpha = this.alphaScale(node.data.level);
+      node.gfx.alpha = 1;
     } else {
       node.gfx.alpha = nonHighlightOpacity;
     }
   }
 
   opacityScale(node) {
-
     this.alphaScale = d3.scaleOrdinal()
       .domain([0, 1, 2, 3, 4])
       .range([.05, .3, .4, .5, .6]);
 
-    if (this.selectedActivities.length > 0 && this.selectedLevel1 !== -1) {
+    if (this.selectedActivities.length > 0 && this.selectedLevel1.id !== -1) {
       this.selectedLevelAndActivitiesOpacity(node);
     } else if(this.selectedActivities.length > 0) {
       this.selectedActivitiesOpacity(node);
-    } else if(this.selectedLevel1 !== -1) {
+    } else if(this.selectedLevel1.id !== -1) {
       this.selectedLevelOpacity(node);
     } else {
       node.gfx.alpha = this.alphaScale(node.data.level);
     }
+  }
+
+  updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
+    this.selectedActivities = activityTypeValues.filter(activity => !selectedActivities.includes(activity));
+    
+    this.selectedLevel1 = selectedLevel1;
+    this.selectedLevel2 = selectedLevel2;
+    this.selectedLevel3 = selectedLevel3;
+    this.selectedChapter = selectedChapter;
+
+    if (this.selectedLevel1.id !== -1) {
+      if (this.selectedLevel2.id !== -1) {
+        if (this.selectedLevel3.id !== -1) {
+          if (this.selectedChapter.id !== -1) {
+            let foundChapter = this.dataMap[`${valuesChapter.find(d => d.id === selectedChapter.id).id}`]
+            if (foundChapter !== undefined) {
+              this.levelIDs = [foundChapter.data.id]
+            } else {
+              this.levelIDs = []
+            }
+          } else {
+            this.levelIDs = [this.dataMap[`${this.selectedLevel3.id}`]].map(d => d.data.childrenIDs)
+            .reduce((a, b) => a.concat(b))
+            .concat([this.selectedLevel3]);          }
+        } else {
+          this.levelIDs = [this.dataMap[`${this.selectedLevel2.id}`]].map(d => d.data.childrenIDs)
+          .reduce((a, b) => a.concat(b))
+          .concat([this.selectedLevel2]);
+        }
+      } else {
+        this.levelIDs = [this.dataMap[`${this.selectedLevel1.id}`]].map(d => d.data.childrenIDs)
+          .reduce((a, b) => a.concat(b))
+          .concat([this.selectedLevel1]);
+      }
+    }
+
+    this.data.forEach(n => this.opacityScale(n));
   }
 
   draw(viewVariable) {
@@ -181,7 +225,7 @@ export class CirclePackingDiagram {
       node.gfx.cursor = 'zoom-in';
       node.gfx.on("pointerover", (e) => this.pointerOver(node, e));
       node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
-      node.gfx.on("click", (e) => this.onClick(node, e))
+      node.gfx.on("click", (e) => this.centerOnNode(node, e))
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx); 
@@ -252,7 +296,7 @@ export class CirclePackingDiagram {
     return scale(node.depth);
   }
 
-  onClick(node) {
+  centerOnNode(node) {
     this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
 
     node.gfx.cursor = "zoom-out"
@@ -275,44 +319,7 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable, selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
-
-    this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
-    this.selectedLevel1 = selectedLevel1;
-    this.selectedLevel2 = selectedLevel2;
-    this.selectedLevel3 = selectedLevel3;
-    this.selectedChapter = selectedChapter;
-
-    if (this.selectedLevel1 !== -1) {
-      if (this.selectedLevel2 !== -1) {
-        if (this.selectedLevel3 !== -1) {
-          if (this.selectedChapter !== -1) {
-
-            if (valuesChapter.find(d => d.id === selectedChapter) !== undefined) {
-              this.levelIDs = valuesChapter.find(d => d.id === selectedChapter).children.map(d=> d.id);
-            } else {
-              this.levelIDs = []
-            }
-
-          } else {
-            this.levelIDs = this.data.filter(d => [this.selectedLevel3].includes(d.data.id))
-                            .map(d => d.data.childrenIDs)
-                            .reduce((a, b) => a.concat(b));
-            this.levelIDs = this.levelIDs.concat([this.selectedLevel3]);
-          }
-        } else {
-          this.levelIDs = this.data.filter(d => [this.selectedLevel2].includes(d.data.id))
-                .map(d => d.data.childrenIDs)
-                .reduce((a, b) => a.concat(b));
-          this.levelIDs = this.levelIDs.concat([this.selectedLevel2]);
-        }
-      } else {
-        this.levelIDs = this.data.filter(d => [this.selectedLevel1].includes(d.data.id))
-                .map(d => d.data.childrenIDs)
-                .reduce((a, b) => a.concat(b));
-        this.levelIDs = this.levelIDs.concat([this.selectedLevel1]);
-      }
-    }
+  updateDraw(viewVariable) {
 
     this.viewVariable = viewVariable;
     this.destroyNodes();

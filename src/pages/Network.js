@@ -6,7 +6,6 @@ import FilterType from "../components/FilterType";
 import { useEffect, useRef, useState } from "react";
 import links from "../data/processed/nested/links.json";
 import nodes from "../data/processed/nested/nodes.json";
-import { QueryMenu } from "cfd-react-components";
 import NetworkVisualization from "../visualization/network-visualization";
 import * as Global from "../utils/global";
 import { inspectNetworkSummary } from "../components/Inspect";
@@ -19,13 +18,11 @@ import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from '../components/Ripple.js';
 import lu from '../data/processed/nested/lu.json';
 
-
 const id = "network-chart";
 const processes = lu["processes"];
 
 // Combines the two types of links into a single array
 function combineLink(links) {
-
     if (links.deve) {
         links.deve.map(d => d.connect_actor_activity = true);
         links.non_deve.map(d => d.connect_actor_activity = false);
@@ -46,7 +43,6 @@ function combineNodeLink(selectedLevel3ID, nodes, links) {
 
     return dataNew;
 }
-
 
 // Filters the data by level3ID and activity Type
 function filterData(selectedLevel3ID, selectedActivities, selectedActors) {
@@ -76,9 +72,10 @@ export default function Network() {
     // User Input selection
     const [viewVariable, updateViewVariable] = useState("riskType");
     const [selectedLevel1, updateLevel1] = useState(processes.children[0].id);
-    const [selectedLevel3, updateLevel3] = useState(links[0].id);
+    const [selectedLevel3, updateLevel3] = useState(processes.children[0].children[0].children[0].id);
     const [selectedChapter, updateSelectedChapter] = useState(-1);
-    const [valuesChapter, updateValuesChapter] = useState([{ "id": -1, "descr": "All" }]);
+    const [valuesChapter, updateValuesChapter] = useState([{ "id": -1, "descr": "All" }].concat(processes
+        .children.find(d => d.id === selectedLevel1).children[0].children[0].children));
 
     // Status to update the opacity in the legend
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
@@ -103,8 +100,8 @@ export default function Network() {
     }
 
     const [shouldRotate, setRotate] = useState(false);
-
     const handleRotate = () => setRotate(!shouldRotate);
+
     // Initiating the network diagram
     const networkDiagram = useRef(new NetworkVisualization(data, updateSymbolHoverValue, updateViewHoverValue));
 
@@ -118,37 +115,37 @@ export default function Network() {
         const height = (document.getElementById(id).clientHeight / 2) - document.getElementsByClassName("Navigation")[0].clientHeight;
 
         networkDiagram.current.centerVisualization(width - visualizationXPadding, height, -0.40);
-
-        const l1 = processes.children
-            .find(d => d.id === selectedLevel1);
-        const l2 = l1.children[0];
-        const l3 = l2.children[0];
-
-        updateValuesChapter(
-            [{ "id": -1, "descr": "All" }].concat(processes
-                .children.find(d => d.id === selectedLevel1)
-                .children.find(d => d.id === l2.id)
-                .children.find(d => d.id === l3.id).children)
-        );
     }, []);
 
     // React Hooks
     useEffect(() => {
-
         const l1 = processes.children
             .find(d => d.id === selectedLevel1);
         const l2 = l1.children[0];
         const l3 = l2.children[0];
 
         updateValuesChapter(
-            [{ "id": -1, "descr": "All" }].concat(processes
-                .children.find(d => d.id === selectedLevel1)
+            [{ "id": -1, "descr": "All" }].concat(l1
                 .children.find(d => d.id === l2.id)
                 .children.find(d => d.id === l3.id).children)
         );
 
         updateLevel3(l3.id);
-    }, [selectedLevel1, selectedLevel3]);
+        updateSelectedChapter(-1);
+    }, [selectedLevel1]);
+
+    useEffect(() => {
+        const l1 = processes.children
+            .find(d => d.id === selectedLevel1);
+
+        updateValuesChapter(
+            [{ "id": -1, "descr": "All" }].concat(l1
+                .children.find(d => d.childrenIDs.includes(selectedLevel3))
+                .children.find(d => d.id === selectedLevel3).children)
+        );
+
+        updateSelectedChapter(-1);
+    }, [selectedLevel3]);
 
     // Filter data
     useEffect(() => {
@@ -158,14 +155,12 @@ export default function Network() {
 
         networkDiagram.current.data = filteredData;
         networkDiagram.current.initSimulation();
-        networkDiagram.current.updateDraw(viewVariable);
+        networkDiagram.current.updateDraw(viewVariable, selectedChapter);
 
         let inspect = d3.select(".Inspect");
         inspectNetworkSummary(inspect, filteredData);
 
-        networkDiagram.current.updateDraw(viewVariable, selectedChapter);
-
-    }, [selectedLevel1, selectedLevel3, selectedActivities, selectedActors]);
+    }, [selectedLevel3, selectedActivities, selectedActors]);
 
     // Update filter possibilities when level changes
     useEffect(() => {
@@ -181,11 +176,11 @@ export default function Network() {
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <Draggable bounds="parent" handle="strong">
+                <Draggable bounds="body" handle="strong">
                     <Menu className="Query" id="FilterMenu" style={{
                         position: 'absolute', left: '20px',
                         padding: '1%',
-                        height: !shouldRotate ? "10vh" : "65vh", width: "22vw", 
+                        height: !shouldRotate ? "10vh" : "65vh", width: "22vw",
                         overflowY: !shouldRotate ? "hidden" : "scroll"
                     }}>
                         <MenuControls>
@@ -202,7 +197,7 @@ export default function Network() {
                                 <h4>Network</h4>
                                 <p>Filter data in the actor network graph to explore activities and risks.</p>
                             </Description>
-                            <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter} updateValuesChapter={updateValuesChapter} />
+                            <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
                             <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3} />
                             <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type" />
                             <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type" />
