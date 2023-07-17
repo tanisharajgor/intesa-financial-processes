@@ -7,18 +7,6 @@ import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
 import lu from '../data/processed/nested/lu.json';
 
-const StyledFilteredData = styled('span')`
-    font-style: italic;
-    text-color: ${props =>  props.theme.color.secondary };
-    opacity: 75%;
-    height: 1.5rem;
-    display: block;
-`
-
-const StyledHeader = styled('div')`
-    display: flex;
-`
-
 export default function FilterActivityType({typesChecks, updateSelection, label}) {
 
     let typeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
