@@ -3,7 +3,7 @@ import { Key } from '../component-styles/key';
 import { useState } from 'react';
 import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
-import { StyledHeader, StyledFilteredData } from '../component-styles/accordion';
+import { StyledHeader, StyledFilteredData } from '../component-styles/query-menu';
 
 
 export function ChevronButtonStyled({shouldRotate, handleRotate}) {
