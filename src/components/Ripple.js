@@ -1,4 +1,7 @@
+// Libraries
 import React, { useState, useLayoutEffect } from "react";
+
+//Styles
 import { RippleContainer } from "../component-styles/ripple-style";
 
 const useDebouncedRippleCleanUp = (rippleCount, duration, cleanUpFunction) => {

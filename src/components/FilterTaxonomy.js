@@ -1,12 +1,20 @@
-import { Accordion, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
-import * as d3 from 'd3';
+// Libraries
 import { useEffect } from "react";
+import * as d3 from 'd3';
+
+// Components
+import { AccordionHeaderStyled } from './Menu';
+
+// Data
 import lu from '../data/processed/nested/lu.json';
+
+// Styles
+import { Accordion, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
 import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
 import { StyledSelect } from '../component-styles/select';
 import * as Theme from "../component-styles/theme";
 import { StyledFilter } from "../component-styles/menu"; 
-import { AccordionHeaderStyled } from './Menu';
+
 
 // constants
 const width = 500, height = 600;

@@ -1,5 +1,8 @@
-import styled from "styled-components";
+//Components
 import Ripple from "./Ripple";
+
+//Styles
+import styled from "styled-components";
 
 export const StyledControlsPanel = styled.div`
     position: absolute;
@@ -9,7 +12,6 @@ export const StyledControlsPanel = styled.div`
         display: flex;
     }
 `
-
 
 const StyledControlButton = styled('button')`
     background: transparent;
@@ -30,8 +32,6 @@ const FullscreenIcon = styled('img')`
 const FullscreenButton = styled(StyledControlButton)`
     width: 22px;
 `
-
-
 
 export default function Control({handleFullscreen, controls}) {
     return (

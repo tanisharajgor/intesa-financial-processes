@@ -1,10 +1,19 @@
+// Libraries
+import { useState } from 'react';
+
+//Components
+import { AccordionHeaderStyled } from './Menu';
+
+//Data
+import lu from '../data/processed/nested/lu.json';
+
+//Styles
+
 import { Accordion, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
 import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
 import { StyledSelect } from '../component-styles/select';
-import { useState } from 'react';
-import lu from '../data/processed/nested/lu.json';
-import {  StyledLabel } from "../component-styles/menu";
-import { AccordionHeaderStyled } from './Menu';
+import { StyledLabel } from "../component-styles/menu";
+
 
 export function taxonomyLevel(valuesLevel, selectedLevel, handleChange, label, id) {
 

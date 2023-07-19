@@ -1,5 +1,8 @@
+// Components
 import Status from "../components/Status";
 import Control from "./Controls";
+
+// Styles
 import styled from "styled-components";
 
 const StyledMain = styled('div')`

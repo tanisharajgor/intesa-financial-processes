@@ -1,15 +1,18 @@
+// Libraries
+import { useState } from 'react';
+
+// Components
+import { AccordionHeaderStyled } from './Menu';
+
+// Styles
 import { Accordion, AccordionDetails, FormLabel, Checkbox } from 'cfd-react-components';
 import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../component-styles/query-layout';
-import { useState } from 'react';
-import { AccordionHeaderStyled } from './Menu';
+
 
 export default function FilterType({typesChecked, updateSelection, typeValues, label}) {
 
     let newSelectedTypes = [];
     const [filteredTypes, updateFilter] = useState([]);
-    const [shouldRotate, setRotate] = useState(false);
-
-    const handleRotate = () => setRotate(!shouldRotate);
 
     const updateSelectedRange = (selected) => {
         if (typesChecked.includes(selected)) {

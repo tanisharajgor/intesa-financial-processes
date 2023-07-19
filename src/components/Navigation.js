@@ -1,5 +1,8 @@
-import { LayoutHeader } from "cfd-react-components";
+// Libraries
 import { NavLink } from "react-router-dom";
+
+// Styles
+import { LayoutHeader } from "cfd-react-components";
 import styled from 'styled-components'
 import * as Theme from "../component-styles/theme";
 

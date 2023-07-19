@@ -1,6 +1,12 @@
+// Libraries
 import { useState } from "react";
-import { ChevronButton } from "../component-styles/chevron-button";
+
+// Components
 import Ripple from "./Ripple";
+
+// Styles
+import { ChevronButton } from "../component-styles/chevron-button";
+
 
 export default function Chevron() {
     const [shouldRotate, setRotate] = useState(false);
