@@ -212,8 +212,10 @@ export default function Network() {
                     id={id}
                     controls={networkDiagram.current.getControls()}
                     handleFullscreen={handleFullscreen}
-                />
-            </Content>
+                    isFullscreen={isFullscreen}
+                />        
+            </Content>        
+
         </>
     )
 }

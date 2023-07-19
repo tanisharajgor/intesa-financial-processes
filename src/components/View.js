@@ -307,7 +307,6 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
 
     return(
         <ViewStyles>
-            <div>View</div>
             <div className="inner">
                 <InspectHTML/>
                 {viewInfo(networkChart)}

@@ -153,6 +153,7 @@ export default function CirclePacking() {
                     id={id}
                     controls={circlePackingDiagram.current.getControls()}
                     handleFullscreen={handleFullscreen}
+                    isFullscreen={isFullscreen}
                 />
             </Content>
         </>
