@@ -3,21 +3,10 @@ import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../component-sty
 import { Key } from '../component-styles/key'
 import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
-import * as Theme from "../component-styles/theme";
-import styled from 'styled-components';
 import { StyledSelect } from '../component-styles/select';
 import { useState } from 'react';
 import lu from '../data/processed/nested/lu.json';
-import {StyledFilteredData, StyledHeader, StyledFilter} from "../component-styles/accordion";
-
-
-const StyledLabel = styled('span')`
-    color: ${Theme.labelStyles.fontColor};
-    font-family: ${Theme.labelStyles.fontFamily};
-    font-size: ${Theme.labelStyles.fontSize};
-    margin-bottom: 5px;
-    margin-left: 3px;
-`
+import { StyledHeader, StyledFilter, StyledLabel } from "../component-styles/accordion";
 
 export function taxonomyLevel(valuesLevel, selectedLevel, handleChange, label, id) {
 

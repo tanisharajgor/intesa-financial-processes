@@ -18,3 +18,11 @@ export const StyledHeader = styled('div')`
     display: flex;
     padding: ${props =>  props.theme.padding };
 `
+
+export const StyledLabel = styled('span')`
+    color: ${Theme.labelStyles.fontColor};
+    font-family: ${Theme.labelStyles.fontFamily};
+    font-size: ${Theme.labelStyles.fontSize};
+    margin-bottom: 5px;
+    margin-left: 3px;
+`
