@@ -1,7 +1,6 @@
 // Libraries
 import { useEffect, useRef, useState } from "react";
 import * as d3 from 'd3';
-import Draggable from 'react-draggable';
 
 // Components
 import Main from "../components/Main";
@@ -104,7 +103,7 @@ export default function Network() {
         setFullscreen(!isFullscreen);
     }
 
-    const [shouldRotate, setRotate] = useState(false);
+    const [shouldRotate, setRotate] = useState(true);
     const handleRotate = () => setRotate(!shouldRotate);
 
     // Initiating the network diagram
@@ -181,20 +180,18 @@ export default function Network() {
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <Draggable bounds="body" handle="strong">
-                    <QueryMenu className="Query" id="FilterMenu" style={{
-                        height: !shouldRotate ? "10vh" : "65vh", width: "22vw",
-                        overflowY: !shouldRotate ? "hidden" : "scroll"
-                    }}>
-                        <MenuHeader label="Network" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
-                        <MenuBody shouldRotate={shouldRotate} pageDescription="Filter data in the actor network graph to explore activities and risks.">
-                            <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
-                            <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3} />
-                            <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type" />
-                            <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type" />
-                        </MenuBody>
-                    </QueryMenu>
-                </Draggable>
+                <QueryMenu className="Query" id="FilterMenu" style={{
+                    height: !shouldRotate ? "10vh" : "100vh",
+                    overflowY: !shouldRotate ? "hidden" : "scroll"
+                }}>
+                    <MenuHeader label="Network" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+                    <MenuBody shouldRotate={shouldRotate} pageDescription="Filter data in the actor network graph to explore activities and risks.">
+                        <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
+                        <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3} />
+                        <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type" />
+                        <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type" />
+                    </MenuBody>
+                </QueryMenu>
                 <Main
                     viewVariable={viewVariable}
                     updateViewVariable={updateViewVariable}

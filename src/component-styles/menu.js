@@ -5,16 +5,17 @@ export const QueryMenu = styled.div`
     resize: vertical;
     z-index: +9;
     position: absolute;
-    top: 5rem;
+    top: 4rem;
     left: ${props => props.isFullscreen ? "-30vw;" : "0vw;"};
-    transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    background-color: ${props => props.theme.backgroundColor.main};
+    width: 20rem;
     padding: ${props => props.theme.padding};
+    background-color: ${props => props.theme.backgroundColor.main};
+    transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `;
 
 export const StatusMenu = styled('div')`
     position: fixed;
-    top: 5rem;
+    top: 4rem;
     right: 0%;
     visibility: ${props => props.isFullscreen ? "hidden" : "visible"};
     width: ${props => props.theme.viewColWidth};
@@ -22,12 +23,6 @@ export const StatusMenu = styled('div')`
     background-color: ${props => props.theme.backgroundColor.main};
     transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `
-
-export const MenuControls = styled.div`
-    display: flex;
-    align-items: center;
-    margin: auto;
-`;
 
 export const StyledFilteredData = styled('p')`
     padding-top: 0; 

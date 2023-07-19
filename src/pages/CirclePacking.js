@@ -1,7 +1,6 @@
 // Libraries
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as d3 from 'd3';
-import Draggable from 'react-draggable';
 
 // Components
 import Navigation from "../components/Navigation";
@@ -113,30 +112,28 @@ export default function CirclePacking() {
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <Draggable bounds="body" handle="strong">
-                    <QueryMenu className="Query" id="FilterMenu" style={{
-                        height: !shouldRotate ? "10vh" : "65vh", width: "22vw",
-                        overflowY: !shouldRotate ? "hidden" : "scroll"
-                    }}>
-                        <MenuHeader label="Ecosystem" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
-                        <MenuBody shouldRotate={shouldRotate} pageDescription=">Click on the circles to zoom into the process visualization.">
-                            <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
-                            <InspectTaxonomy
-                                handleTaxonomyChange={handleTaxonomyChange}
-                                selectedLevel1={selectedLevel1}
-                                updateSelectedLevel1={updateSelectedLevel1}
-                                selectedLevel2={selectedLevel2}
-                                updateSelectedLevel2={updateSelectedLevel2}
-                                selectedLevel3={selectedLevel3}
-                                updateSelectedLevel3={updateSelectedLevel3}
-                                selectedChapter={selectedChapter}
-                                updateSelectedChapter={updateSelectedChapter}
-                                valuesChapter={valuesChapter}
-                                updateValuesChapter={updateValuesChapter}
-                            />
-                            </MenuBody>
-                    </QueryMenu>
-                </Draggable>
+                <QueryMenu className="Query" id="FilterMenu" style={{
+                    height: !shouldRotate ? "10vh" : "100vh",
+                    overflowY: !shouldRotate ? "hidden" : "scroll"
+                }}>
+                    <MenuHeader label="Ecosystem" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+                    <MenuBody shouldRotate={shouldRotate} pageDescription=">Click on the circles to zoom into the process visualization.">
+                        <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
+                        <InspectTaxonomy
+                            handleTaxonomyChange={handleTaxonomyChange}
+                            selectedLevel1={selectedLevel1}
+                            updateSelectedLevel1={updateSelectedLevel1}
+                            selectedLevel2={selectedLevel2}
+                            updateSelectedLevel2={updateSelectedLevel2}
+                            selectedLevel3={selectedLevel3}
+                            updateSelectedLevel3={updateSelectedLevel3}
+                            selectedChapter={selectedChapter}
+                            updateSelectedChapter={updateSelectedChapter}
+                            valuesChapter={valuesChapter}
+                            updateValuesChapter={updateValuesChapter}
+                        />
+                        </MenuBody>
+                </QueryMenu>
                 <Main
                     viewVariable={viewVariable}
                     updateViewVariable={updateViewVariable}
