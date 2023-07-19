@@ -14,10 +14,8 @@ import Description from "../components/Description";
 import { Content } from "../component-styles/content";
 import { DragBar, Menu, MenuControls } from "../component-styles/query-menu";
 import Draggable from 'react-draggable';
-import { ChevronButton } from '../component-styles/chevron-button';
-import Ripple from '../components/Ripple.js';
 import lu from '../data/processed/nested/lu.json';
-import { ChevronButtonStyled } from "./Accordion";
+import { ChevronButtonStyled } from "../components/Accordion";
 
 const id = "network-chart";
 const processes = lu["processes"];

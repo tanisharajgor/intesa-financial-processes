@@ -13,7 +13,7 @@ import Description from "../components/Description";
 import { DragBar, Menu, MenuControls } from "../component-styles/query-menu";
 import { Content } from "../component-styles/content";
 import Draggable from 'react-draggable';
-import { ChevronButtonStyled } from "./Accordion";
+import { ChevronButtonStyled } from "../components/Accordion";
 
 const id = "circle-packing-chart";
 const root = d3.pack()

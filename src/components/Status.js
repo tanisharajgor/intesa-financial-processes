@@ -3,6 +3,7 @@ import Draggable from 'react-draggable';
 import View from "./View";
 import { StyledStatus, DragBar, StatusControls } from "../component-styles/status";
 import { ChevronButtonStyled } from "./Accordion";
+import { Key } from '../component-styles/key';
 
 export default function Status({
     id,
@@ -19,8 +20,10 @@ export default function Status({
         <Draggable bounds="body" handle="strong" isFullscreen={isFullscreen}>
             <StyledStatus className="Status" isFullscreen={isFullscreen}>
                 <StatusControls>
-                    <DragBar>Legend</DragBar>
-                    <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+                    <DragBar>
+                        <Key>Legend</Key>
+                        <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+                    </DragBar>
                 </StatusControls>
                 <div className="View" style={{ visibility: !shouldRotate || isFullscreen ? 'hidden' : 'visible' }}>
                     <View id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} isFullscreen={isFullscreen} />

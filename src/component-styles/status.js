@@ -12,10 +12,11 @@ export const StyledStatus = styled('div')`
 `
 
 export const DragBar = styled.div`
-    background-color: #868688;
+    background-color: ${props =>  props.theme.backgroundColor.main };
     cursor: grab;
     width: 15vw;
     padding: ${props => props.theme.padding};
+    display: flex;
 `;
 
 export const StatusControls = styled.div`

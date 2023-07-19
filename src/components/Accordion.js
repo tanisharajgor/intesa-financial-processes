@@ -1,5 +1,5 @@
 import { AccordionHeader } from 'cfd-react-components';
-import { Key } from '../component-styles/key'
+import { Key } from '../component-styles/key';
 import { useState } from 'react';
 import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';

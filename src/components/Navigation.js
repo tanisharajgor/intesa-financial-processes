@@ -1,6 +1,7 @@
 import { LayoutHeader } from "cfd-react-components";
 import { NavLink } from "react-router-dom";
 import styled from 'styled-components'
+import * as Theme from "../component-styles/theme";
 
 const NavigationBranding = styled('div')`
     flex: 1;
@@ -19,7 +20,7 @@ const NavigationBranding = styled('div')`
 `
 
 const StyledLayoutHeader = styled(LayoutHeader)`
-    border-bottom: 1px solid #4e5155;
+    border-bottom: 1px solid ${Theme.extraDarkGreyHex};
     height: 4rem;
     position: absolute;
     z-index: +10;
