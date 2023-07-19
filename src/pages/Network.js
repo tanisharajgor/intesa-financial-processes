@@ -21,7 +21,7 @@ import lu from '../data/processed/nested/lu.json';
 
 // Styles
 import { Content } from "../component-styles/content";
-import { Menu } from "../component-styles/query-menu";
+import { QueryMenu } from "../component-styles/query-menu";
 
 const id = "network-chart";
 const processes = lu["processes"];
@@ -182,7 +182,7 @@ export default function Network() {
             <Navigation isFullscreen={isFullscreen} />
             <Content>
                 <Draggable bounds="body" handle="strong">
-                    <Menu className="Query" id="FilterMenu" style={{
+                    <QueryMenu className="Query" id="FilterMenu" style={{
                         position: 'absolute',
                         padding: '1%',
                         height: !shouldRotate ? "10vh" : "65vh", width: "22vw",
@@ -195,7 +195,7 @@ export default function Network() {
                             <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type" />
                             <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type" />
                         </MenuBody>
-                    </Menu>
+                    </QueryMenu>
                 </Draggable>
                 <Main
                     viewVariable={viewVariable}

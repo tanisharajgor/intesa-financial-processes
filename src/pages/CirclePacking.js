@@ -18,7 +18,7 @@ import { CirclePackingDiagram } from "../visualization/circle-packing-visualizat
 import data from "../data/processed/nested/processes.json";
 
 // Styles
-import { Menu } from "../component-styles/query-menu";
+import { QueryMenu } from "../component-styles/query-menu";
 import { Content } from "../component-styles/content";
 
 const id = "circle-packing-chart";
@@ -114,7 +114,7 @@ export default function CirclePacking() {
             <Navigation isFullscreen={isFullscreen} />
             <Content>
                 <Draggable bounds="body" handle="strong">
-                    <Menu className="Query" id="FilterMenu" style={{
+                    <QueryMenu className="Query" id="FilterMenu" style={{
                         position: 'absolute',
                         padding: '1%',
                         height: !shouldRotate ? "10vh" : "65vh", width: "22vw",
@@ -137,7 +137,7 @@ export default function CirclePacking() {
                                 updateValuesChapter={updateValuesChapter}
                             />
                             </MenuBody>
-                    </Menu>
+                    </QueryMenu>
                 </Draggable>
                 <Main
                     viewVariable={viewVariable}

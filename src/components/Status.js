@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Draggable from 'react-draggable';
 import View from "./View";
-import { StyledStatus, DragBar, StatusControls } from "../component-styles/status";
-import { ChevronButtonStyled } from "./Menu";
-import { Key } from '../component-styles/key';
+import { StatusMenu } from "../component-styles/status";
+import { MenuHeader } from "./Menu";
+import { Menu } from "../component-styles/query-menu";
 
 export default function Status({
     id,
@@ -18,17 +18,17 @@ export default function Status({
 
     return (
         <Draggable bounds="body" handle="strong" isFullscreen={isFullscreen}>
-            <StyledStatus className="Status" isFullscreen={isFullscreen}>
-                <StatusControls>
-                    <DragBar>
-                        <Key>Legend</Key>
-                        <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
-                    </DragBar>
-                </StatusControls>
+            <StatusMenu className="Query" id="FilterMenu" style={{
+                        position: 'absolute',
+                        padding: '1%',
+                        height: !shouldRotate ? "10vh" : "65vh", width: "22vw",
+                        overflowY: !shouldRotate ? "hidden" : "scroll"
+                    }}>
+                <MenuHeader label="Legend" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
                 <div className="View" style={{ visibility: !shouldRotate || isFullscreen ? 'hidden' : 'visible' }}>
                     <View id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} isFullscreen={isFullscreen} />
                 </div>
-            </StyledStatus>
+            </StatusMenu>
         </Draggable>
     )
 }
