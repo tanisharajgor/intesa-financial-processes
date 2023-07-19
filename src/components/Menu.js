@@ -1,8 +1,14 @@
+// Libraries
+import { useState } from 'react';
+
+// Components
+import Description from "./Description";
+import Ripple from './Ripple';
+
+// Styles
 import { AccordionHeader } from 'cfd-react-components';
 import { Key } from '../component-styles/key';
-import { useState } from 'react';
 import { ChevronButton } from '../component-styles/chevron-button';
-import Ripple from './Ripple';
 import { StyledHeader, StyledFilteredData } from '../component-styles/query-menu';
 
 // Component to style the Chevron Button
@@ -23,6 +29,19 @@ export function MenuHeader({label, shouldRotate, handleRotate, filteredTypes=[]}
             <Key>{filteredTypes.length <= 0 ? label : `${label}:`}</Key>
             <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
         </StyledHeader>
+    )
+}
+
+// Component to style Menu Body
+export function MenuBody({shouldRotate, pageDescription, children}) {
+
+    return(
+        <div className="Description" style={{ visibility: !shouldRotate ? 'hidden' : 'visible' }}>
+            <Description>
+                <p>{pageDescription}</p>
+            </Description>
+           {children}
+        </div>
     )
 }
 

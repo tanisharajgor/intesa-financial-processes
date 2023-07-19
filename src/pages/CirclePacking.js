@@ -9,11 +9,10 @@ import FilterType from "../components/FilterType";
 import InspectTaxonomy from "../components/InspectTaxonomy";
 
 import { activityTypeValues } from "../utils/global";
-import Description from "../components/Description";
 import { Menu } from "../component-styles/query-menu";
 import { Content } from "../component-styles/content";
 import Draggable from 'react-draggable';
-import { MenuHeader } from "../components/Menu";
+import { MenuHeader, MenuBody } from "../components/Menu";
 
 const id = "circle-packing-chart";
 const root = d3.pack()
@@ -115,10 +114,7 @@ export default function CirclePacking() {
                         overflowY: !shouldRotate ? "hidden" : "scroll"
                     }}>
                         <MenuHeader label="Ecosystem" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
-                        <div className="Description" style={{ visibility: !shouldRotate ? 'hidden' : 'visible' }}>
-                            <Description>
-                                <p>Click on the circles to zoom into the process visualization.</p>
-                            </Description>
+                        <MenuBody shouldRotate={shouldRotate} pageDescription=">Click on the circles to zoom into the process visualization.">
                             <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
                             <InspectTaxonomy
                                 handleTaxonomyChange={handleTaxonomyChange}
@@ -133,7 +129,7 @@ export default function CirclePacking() {
                                 valuesChapter={valuesChapter}
                                 updateValuesChapter={updateValuesChapter}
                             />
-                        </div>
+                            </MenuBody>
                     </Menu>
                 </Draggable>
                 <Main

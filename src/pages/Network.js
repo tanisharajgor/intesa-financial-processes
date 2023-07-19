@@ -10,12 +10,11 @@ import NetworkVisualization from "../visualization/network-visualization";
 import * as Global from "../utils/global";
 import { inspectNetworkSummary } from "../components/Inspect";
 import * as d3 from 'd3';
-import Description from "../components/Description";
 import { Content } from "../component-styles/content";
 import { Menu} from "../component-styles/query-menu";
 import Draggable from 'react-draggable';
 import lu from '../data/processed/nested/lu.json';
-import { MenuHeader } from "../components/Menu";
+import { MenuBody, MenuHeader } from "../components/Menu";
 
 const id = "network-chart";
 const processes = lu["processes"];
@@ -183,15 +182,12 @@ export default function Network() {
                         overflowY: !shouldRotate ? "hidden" : "scroll"
                     }}>
                         <MenuHeader label="Network" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
-                        <div className="Description" style={{ visibility: !shouldRotate ? 'hidden' : 'visible' }}>
-                            <Description>
-                                <p>Filter data in the actor network graph to explore activities and risks.</p>
-                            </Description>
+                        <MenuBody shouldRotate={shouldRotate} pageDescription="Filter data in the actor network graph to explore activities and risks.">
                             <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
                             <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3} />
                             <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type" />
                             <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type" />
-                        </div>
+                        </MenuBody>
                     </Menu>
                 </Draggable>
                 <Main
