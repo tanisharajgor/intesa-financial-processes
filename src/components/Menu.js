@@ -5,7 +5,7 @@ import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
 import { StyledHeader, StyledFilteredData } from '../component-styles/query-menu';
 
-
+// Component to style the Chevron Button
 export function ChevronButtonStyled({shouldRotate, handleRotate}) {
 
     return(
@@ -16,16 +16,38 @@ export function ChevronButtonStyled({shouldRotate, handleRotate}) {
     )
 }
 
-export function MenuHeader({label, shouldRotate, handleRotate}) {
+// Component to style the Menu Header
+export function MenuHeader({label, shouldRotate, handleRotate, filteredTypes=[]}) {
     return(
         <StyledHeader>
-            <Key>{label}</Key>
+            <Key>{filteredTypes.length <= 0 ? label : `${label}:`}</Key>
             <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
         </StyledHeader>
     )
 }
 
-export function AccordionHeaderStyled({label, filteredTypes}) {
+// Returns a status for each selected type
+function TypesStatus({filteredTypes}) {
+    return(
+        filteredTypes.length <= 0 ? <></> : 
+        <StyledFilteredData>
+            {
+                filteredTypes.map((type, i, arr) => {
+                    let str = type;
+                    if (i < arr.length - 1) {
+                        str += ', '
+                    }
+                    return (
+                        <span key={`descr-${str}`}>{str}</span>
+                    )
+                }) 
+            }
+        </StyledFilteredData>
+    )
+}
+
+// Component to style the Accordian Header
+export function AccordionHeaderStyled({label, filteredTypes=[]}) {
 
     const [shouldRotate, setRotate] = useState(false);
     const handleRotate = () => setRotate(!shouldRotate);
@@ -36,25 +58,8 @@ export function AccordionHeaderStyled({label, filteredTypes}) {
         id="activity-type-filter-header"
         onClick={handleRotate}
     >
-        <StyledHeader>
-            <Key>{filteredTypes.length <= 0 ? label : `${label}:`}</Key>
-            <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
-        </StyledHeader>
-        { filteredTypes.length <= 0 ? <></> : 
-            <StyledFilteredData>
-                {
-                    filteredTypes.map((type, i, arr) => {
-                        let str = type;
-                        if (i < arr.length - 1) {
-                            str += ', '
-                        }
-                        return (
-                            <span key={`descr-${str}`}>{str}</span>
-                        )
-                    }) 
-                }
-            </StyledFilteredData>
-        }
+        <MenuHeader label={label} shouldRotate={shouldRotate} handleRotate={handleRotate} filteredTypes={filteredTypes}/>
+        <TypesStatus filteredTypes={filteredTypes}/>
     </AccordionHeader>
     )
 }
