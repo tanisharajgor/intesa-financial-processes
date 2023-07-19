@@ -16,6 +16,7 @@ import { DragBar, Menu, MenuControls } from "../component-styles/query-menu";
 import Draggable from 'react-draggable';
 import lu from '../data/processed/nested/lu.json';
 import { ChevronButtonStyled } from "../components/Accordion";
+import { MenuHeader } from "../components/Accordion";
 
 const id = "network-chart";
 const processes = lu["processes"];
@@ -177,18 +178,14 @@ export default function Network() {
             <Content>
                 <Draggable bounds="body" handle="strong">
                     <Menu className="Query" id="FilterMenu" style={{
-                        position: 'absolute', left: '20px',
+                        position: 'absolute',
                         padding: '1%',
                         height: !shouldRotate ? "10vh" : "65vh", width: "22vw",
                         overflowY: !shouldRotate ? "hidden" : "scroll"
                     }}>
-                        <MenuControls>
-                            <DragBar>Inspect Pane</DragBar>
-                            <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
-                        </MenuControls>
+                        <MenuHeader label="Network" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
                         <div className="Description" style={{ visibility: !shouldRotate ? 'hidden' : 'visible' }}>
                             <Description>
-                                <h4>Network</h4>
                                 <p>Filter data in the actor network graph to explore activities and risks.</p>
                             </Description>
                             <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>

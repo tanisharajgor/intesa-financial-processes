@@ -5,6 +5,7 @@ import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
 import { StyledHeader, StyledFilteredData } from '../component-styles/accordion';
 
+
 export function ChevronButtonStyled({shouldRotate, handleRotate}) {
 
     return(
@@ -12,6 +13,15 @@ export function ChevronButtonStyled({shouldRotate, handleRotate}) {
             <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"} />
             <Ripple color={"#FFFFFF"} duration={1000} />
         </ChevronButton>
+    )
+}
+
+export function MenuHeader({label, shouldRotate, handleRotate}) {
+    return(
+        <StyledHeader>
+            <Key>{label}</Key>
+            <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+        </StyledHeader>
     )
 }
 

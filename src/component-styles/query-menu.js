@@ -12,9 +12,7 @@ export const Menu = styled.div`
 `;
 
 export const DragBar = styled.div`
-    border: 2px solid #1d8693;
     background-color: #21252a;
-    text-align: center; 
     cursor: grab;
     width: 18vw;
     margin: 2%;

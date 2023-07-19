@@ -10,10 +10,10 @@ import InspectTaxonomy from "../components/InspectTaxonomy";
 
 import { activityTypeValues } from "../utils/global";
 import Description from "../components/Description";
-import { DragBar, Menu, MenuControls } from "../component-styles/query-menu";
+import { Menu } from "../component-styles/query-menu";
 import { Content } from "../component-styles/content";
 import Draggable from 'react-draggable';
-import { ChevronButtonStyled } from "../components/Accordion";
+import { MenuHeader } from "../components/Accordion";
 
 const id = "circle-packing-chart";
 const root = d3.pack()
@@ -109,18 +109,14 @@ export default function CirclePacking() {
             <Content>
                 <Draggable bounds="body" handle="strong">
                     <Menu className="Query" id="FilterMenu" style={{
-                        position: 'absolute', left: '20px',
+                        position: 'absolute',
                         padding: '1%',
                         height: !shouldRotate ? "10vh" : "65vh", width: "22vw",
                         overflowY: !shouldRotate ? "hidden" : "scroll"
                     }}>
-                        <MenuControls>
-                            <DragBar>Inspect Pane</DragBar>
-                            <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
-                        </MenuControls>
+                        <MenuHeader label="Ecosystem" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
                         <div className="Description" style={{ visibility: !shouldRotate ? 'hidden' : 'visible' }}>
                             <Description>
-                                <h4>Ecosystem</h4>
                                 <p>Click on the circles to zoom into the process visualization.</p>
                             </Description>
                             <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
