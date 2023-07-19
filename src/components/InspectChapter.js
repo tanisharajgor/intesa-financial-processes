@@ -1,6 +1,6 @@
 import { Accordion, AccordionDetails } from 'cfd-react-components';
 import { taxonomyLevel } from "./InspectTaxonomy";
-import { AccordionHeaderStyled } from './Accordion';
+import { AccordionHeaderStyled } from './Menu';
 
 export default function InspectChapter({selectedChapter, updateSelectedChapter, valuesChapter}) {
 

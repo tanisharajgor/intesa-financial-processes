@@ -1,7 +1,7 @@
 import { Accordion, AccordionDetails, FormLabel, Checkbox } from 'cfd-react-components';
 import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../component-styles/query-layout';
 import { useState } from 'react';
-import { AccordionHeaderStyled } from './Accordion';
+import { AccordionHeaderStyled } from './Menu';
 
 export default function FilterType({typesChecked, updateSelection, typeValues, label}) {
 

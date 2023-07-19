@@ -12,11 +12,10 @@ import { inspectNetworkSummary } from "../components/Inspect";
 import * as d3 from 'd3';
 import Description from "../components/Description";
 import { Content } from "../component-styles/content";
-import { DragBar, Menu, MenuControls } from "../component-styles/query-menu";
+import { Menu} from "../component-styles/query-menu";
 import Draggable from 'react-draggable';
 import lu from '../data/processed/nested/lu.json';
-import { ChevronButtonStyled } from "../components/Accordion";
-import { MenuHeader } from "../components/Accordion";
+import { MenuHeader } from "../components/Menu";
 
 const id = "network-chart";
 const processes = lu["processes"];

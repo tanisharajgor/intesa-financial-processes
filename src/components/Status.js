@@ -2,7 +2,7 @@ import { useState } from "react";
 import Draggable from 'react-draggable';
 import View from "./View";
 import { StyledStatus, DragBar, StatusControls } from "../component-styles/status";
-import { ChevronButtonStyled } from "./Accordion";
+import { ChevronButtonStyled } from "./Menu";
 import { Key } from '../component-styles/key';
 
 export default function Status({

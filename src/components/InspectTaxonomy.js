@@ -4,7 +4,7 @@ import { StyledSelect } from '../component-styles/select';
 import { useState } from 'react';
 import lu from '../data/processed/nested/lu.json';
 import {  StyledLabel } from "../component-styles/accordion";
-import { AccordionHeaderStyled } from './Accordion';
+import { AccordionHeaderStyled } from './Menu';
 
 export function taxonomyLevel(valuesLevel, selectedLevel, handleChange, label, id) {
 

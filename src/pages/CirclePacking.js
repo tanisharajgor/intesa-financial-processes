@@ -13,7 +13,7 @@ import Description from "../components/Description";
 import { Menu } from "../component-styles/query-menu";
 import { Content } from "../component-styles/content";
 import Draggable from 'react-draggable';
-import { MenuHeader } from "../components/Accordion";
+import { MenuHeader } from "../components/Menu";
 
 const id = "circle-packing-chart";
 const root = d3.pack()

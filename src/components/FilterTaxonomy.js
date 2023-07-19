@@ -6,7 +6,7 @@ import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-la
 import { StyledSelect } from '../component-styles/select';
 import * as Theme from "../component-styles/theme";
 import { StyledFilter } from "../component-styles/accordion"; 
-import { AccordionHeaderStyled } from './Accordion';
+import { AccordionHeaderStyled } from './Menu';
 
 // constants
 const width = 500, height = 600;
