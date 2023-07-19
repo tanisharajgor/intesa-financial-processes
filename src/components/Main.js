@@ -1,17 +1,10 @@
+// Components
 import Status from "../components/Status";
 import Control from "./Controls";
-import styled from "styled-components";
 
-const StyledMain = styled('div')`
-    position: absolute;
-    grid-column-start: 2;
-    width: 100vw;
-`
-const Visualization = styled('div')`
-    width: 100vw;
-    height: 100vh;
-    background-color: black;
-`
+// Styles
+import { StyledMain, Visualization} from "../component-styles/main";
+
 export default function Main({
     viewVariable,
     updateViewVariable,
@@ -19,7 +12,8 @@ export default function Main({
     symbolHoverValue,
     id,
     controls,
-    handleFullscreen
+    handleFullscreen,
+    isFullscreen
 }) {
 
     return(
@@ -33,6 +27,7 @@ export default function Main({
                 symbolHoverValue={symbolHoverValue}
                 controls={controls}
                 handleFullscreen={handleFullscreen}
+                isFullscreen={isFullscreen}
             />
             <Control controls={controls} handleFullscreen={handleFullscreen}/>
         </StyledMain>

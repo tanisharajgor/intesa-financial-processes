@@ -1,11 +1,16 @@
-import { Form, MenuItem } from "cfd-react-components";
-import * as Global from "../utils/global";
-import * as Theme from "../component-styles/theme";
-import * as d3 from 'd3';
+// Libraries
 import { useEffect } from "react";
+import * as d3 from 'd3';
+
+// Components
 import { InspectHTML } from "./Inspect";
+import * as Global from "../utils/global";
+
+//Styles
+import { Form, MenuItem } from "cfd-react-components";
 import { StyledSelect } from "../component-styles/select";
 import { ViewStyles } from "../component-styles/view";
+import * as Theme from "../component-styles/theme";
 
 const width = 216;
 const height = 15;
@@ -307,7 +312,6 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
 
     return(
         <ViewStyles>
-            <div>View</div>
             <div className="inner">
                 <InspectHTML/>
                 {viewInfo(networkChart)}

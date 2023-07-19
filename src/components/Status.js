@@ -1,14 +1,14 @@
-import View from "./View";
-import styled from "styled-components";
+// Libraries
+import { useState } from "react";
+import Draggable from 'react-draggable';
 
-const StyledStatus = styled('div')`
-    position: fixed;
-    top: 7rem;
-    right: 2%;
-    background-color: rgba(0,0,0,0.7);
-    width: ${ props =>  props.theme.viewColWidth };
-    padding: ${ props =>  props.theme.padding };
-`
+// Components
+import View from "./View";
+import { MenuBody, MenuHeader } from "./Menu";
+
+// Styles
+import { StatusMenu } from "../component-styles/menu";
+import { LayoutGroup } from "../component-styles/query-layout";
 
 export default function Status({
     id,
@@ -16,13 +16,24 @@ export default function Status({
     updateViewVariable,
     viewHoverValue,
     symbolHoverValue,
-    controls,
-    handleFullscreen
+    isFullscreen
 }) {
+    const [shouldRotate, setRotate] = useState(true);
+    const handleRotate = () => setRotate(!shouldRotate);
 
     return (
-        <StyledStatus className="Status">
-            <View id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue}/>
-        </StyledStatus>
+        <Draggable bounds="body" isFullscreen={isFullscreen}>
+            <StatusMenu style={{
+                    height: !shouldRotate ? "10vh" : "65vh",
+                    overflowY: !shouldRotate ? "hidden" : "scroll"
+                }}>
+                <MenuHeader label="Legend" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+                <MenuBody>
+                    <LayoutGroup style={{ visibility: !shouldRotate || isFullscreen ? 'hidden' : 'visible' }}>
+                        <View id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} isFullscreen={isFullscreen} />
+                    </LayoutGroup>
+                </MenuBody> 
+            </StatusMenu>
+        </Draggable>
     )
 }

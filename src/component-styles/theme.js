@@ -50,5 +50,5 @@ export const GlobalTheme = {
     },
     headerWeight: "48px",
     padding: '0.625rem',
-    viewColWidth: '16rem'
+    viewColWidth: '17rem'
   }

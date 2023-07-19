@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import * as Theme from "../component-styles/theme";
 
 const fontPath = `${process.env.PUBLIC_URL}/font/`
 
@@ -36,8 +37,8 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   .Card {
-    border-bottom: 1px solid #4e5155;
-    Cursor: pointer;
+    border-bottom: 1px solid ${Theme.extraDarkGreyHex};
+    cursor: pointer;
   }
 
   .Card > div:last-child {
@@ -45,7 +46,11 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   .Query {
-    border-right: 1px solid #4e5155;
+    border-right: 1px solid ${Theme.extraDarkGreyHex};
+  }
+
+  .value {
+    color: ${Theme.darkGreyColorHex}
   }
 
   #process1-select {

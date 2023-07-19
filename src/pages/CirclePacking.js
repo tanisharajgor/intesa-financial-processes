@@ -1,26 +1,33 @@
+// Libraries
+import { useCallback, useEffect, useRef, useState } from "react";
+import * as d3 from 'd3';
+
+// Components
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import data from "../data/processed/nested/processes.json";
-import * as d3 from 'd3';
-import { useCallback, useEffect, useRef, useState } from "react";
 import { inspectHierarchySummary } from "../components/Inspect";
-import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
 import FilterType from "../components/FilterType";
 import InspectTaxonomy from "../components/InspectTaxonomy";
+import { MenuHeader, MenuBody } from "../components/Menu";
 
 import { activityTypeValues } from "../utils/global";
-import Description from "../components/Description";
-import { Menu } from "../component-styles/query-menu";
+import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
+
+// Data
+import data from "../data/processed/nested/processes.json";
+
+// Styles
+import { QueryMenu } from "../component-styles/menu";
 import { Content } from "../component-styles/content";
 
 const id = "circle-packing-chart";
 const root = d3.pack()
-.size([window.innerWidth, window.innerHeight])
-.padding(1)
-(d3.hierarchy(data)
-    .sum(d => 1)
-    .sort((a, b) => b.value - a.value)
-);
+    .size([window.innerWidth, window.innerHeight])
+    .padding(1)
+    (d3.hierarchy(data)
+        .sum(d => 1)
+        .sort((a, b) => b.value - a.value)
+    );
 
 export default function CirclePacking() {
 
@@ -28,16 +35,19 @@ export default function CirclePacking() {
     const [viewVariable, updateViewVariable] = useState("riskType");
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
     const [isFullscreen, setFullscreen] = useState(false);
+    const [shouldRotate, setRotate] = useState(true);
+
+    const handleRotate = () => setRotate(!shouldRotate);
 
     // Possible set of activities/actors to choose from
     const possibleActivities = activityTypeValues;
 
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(activityTypeValues);
-    const [selectedLevel1, updateSelectedLevel1] = useState({"id": -1, "descr": "All"});
-    const [selectedLevel2, updateSelectedLevel2] = useState({"id": -1, "descr": "All"});
-    const [selectedLevel3, updateSelectedLevel3] = useState({"id": -1, "descr": "All"});
-    const [selectedChapter, updateSelectedChapter] = useState({"id": -1, "descr": "All"});
+    const [selectedLevel1, updateSelectedLevel1] = useState({ "id": -1, "descr": "All" });
+    const [selectedLevel2, updateSelectedLevel2] = useState({ "id": -1, "descr": "All" });
+    const [selectedLevel3, updateSelectedLevel3] = useState({ "id": -1, "descr": "All" });
+    const [selectedChapter, updateSelectedChapter] = useState({ "id": -1, "descr": "All" });
 
     const [valuesChapter, updateValuesChapter] = useState([]);
 
@@ -53,7 +63,7 @@ export default function CirclePacking() {
             circlePackingDiagram.current.centerOnNode(nodeFromMap);
         } else if (node.id === -1) {
             let parentNode;
-            switch(level) {
+            switch (level) {
                 case 2:
                     parentNode = circlePackingDiagram.current.dataMap[selectedLevel1.id];
                     break;
@@ -98,31 +108,32 @@ export default function CirclePacking() {
         circlePackingDiagram.current.updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter)
     }, [selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, selectedActivities]);
 
-
-    return(
+    return (
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <Menu className="Query" id="FilterMenu" width={"22rem"} isFullscreen={isFullscreen}>
-                    <Description>
-                      <h4>Ecosystem</h4>
-                      <p>Click on the circles to zoom into the process visualization.</p>
-                    </Description>
-                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
-                    <InspectTaxonomy
-                        handleTaxonomyChange={handleTaxonomyChange}
-                        selectedLevel1={selectedLevel1}
-                        updateSelectedLevel1={updateSelectedLevel1}
-                        selectedLevel2={selectedLevel2}
-                        updateSelectedLevel2={updateSelectedLevel2}
-                        selectedLevel3={selectedLevel3}
-                        updateSelectedLevel3={updateSelectedLevel3}
-                        selectedChapter={selectedChapter}
-                        updateSelectedChapter={updateSelectedChapter}
-                        valuesChapter={valuesChapter}
-                        updateValuesChapter={updateValuesChapter}
-                    />
-                </Menu>
+                <QueryMenu className="Query" style={{
+                    height: !shouldRotate ? "10vh" : "100vh",
+                    overflowY: !shouldRotate ? "hidden" : "scroll"
+                }}>
+                    <MenuHeader label="Ecosystem" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+                    <MenuBody shouldRotate={shouldRotate} pageDescription=">Click on the circles to zoom into the process visualization.">
+                        <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
+                        <InspectTaxonomy
+                            handleTaxonomyChange={handleTaxonomyChange}
+                            selectedLevel1={selectedLevel1}
+                            updateSelectedLevel1={updateSelectedLevel1}
+                            selectedLevel2={selectedLevel2}
+                            updateSelectedLevel2={updateSelectedLevel2}
+                            selectedLevel3={selectedLevel3}
+                            updateSelectedLevel3={updateSelectedLevel3}
+                            selectedChapter={selectedChapter}
+                            updateSelectedChapter={updateSelectedChapter}
+                            valuesChapter={valuesChapter}
+                            updateValuesChapter={updateValuesChapter}
+                        />
+                        </MenuBody>
+                </QueryMenu>
                 <Main
                     viewVariable={viewVariable}
                     updateViewVariable={updateViewVariable}
@@ -130,6 +141,7 @@ export default function CirclePacking() {
                     id={id}
                     controls={circlePackingDiagram.current.getControls()}
                     handleFullscreen={handleFullscreen}
+                    isFullscreen={isFullscreen}
                 />
             </Content>
         </>

@@ -9,6 +9,7 @@ export const ChevronButton = styled.div`
     height: 24px;
     transform:  ${props => props.shouldRotate ? "rotate(180deg)" : "rotate(0)"};
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    cursor: pointer;
 
     & > img {
         display: block;
