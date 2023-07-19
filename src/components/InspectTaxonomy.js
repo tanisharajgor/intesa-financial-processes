@@ -1,12 +1,10 @@
-import { Accordion, AccordionHeader, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
-import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../component-styles/query-layout';
-import { Key } from '../component-styles/key'
-import { ChevronButton } from '../component-styles/chevron-button';
-import Ripple from './Ripple';
+import { Accordion, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
+import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
 import { StyledSelect } from '../component-styles/select';
 import { useState } from 'react';
 import lu from '../data/processed/nested/lu.json';
-import { StyledHeader, StyledFilter, StyledLabel } from "../component-styles/accordion";
+import {  StyledLabel } from "../component-styles/accordion";
+import { AccordionHeaderStyled } from './Accordion';
 
 export function taxonomyLevel(valuesLevel, selectedLevel, handleChange, label, id) {
 
@@ -55,9 +53,6 @@ export default function InspectProcesses({
     const valuesLevel1 = [{"id": -1, "descr": "All"}].concat(processes.children);
     const [valuesLevel2, updateValuesLevel2] = useState({"id": -1, "descr": "All"});
     const [valuesLevel3, updateValuesLevel3] = useState({"id": -1, "descr": "All"});
-    const [shouldRotate, setRotate] = useState(false);
-
-    const handleRotate = () => setRotate(!shouldRotate);
 
     const handleChangeLevel1 = (event) => {
         let selectedLevelId = parseInt(event.target.value);
@@ -104,21 +99,7 @@ export default function InspectProcesses({
 
     return(
         <Accordion className={'Card'}>
-            <AccordionHeader
-                aria-controls="activity-type-filter-content"
-                id="activity-type-filter-header"
-                onClick={handleRotate}
-            >
-            <StyledFilter>
-                <StyledHeader>
-                    <Key>Inspect by Taxonomy</Key>
-                    <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
-                        <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
-                        <Ripple color={"#FFFFFF"} duration={1000}/>
-                    </ChevronButton>
-                </StyledHeader>
-            </StyledFilter>
-            </AccordionHeader>
+            <AccordionHeaderStyled label="Inspect by Taxonomy" filteredTypes={[]}/>
             <AccordionDetails>
                 {taxonomyLevel(valuesLevel1, selectedLevel1, handleChangeLevel1, "Level 1", "1")}
                 {selectedLevel1.id !== -1 ? taxonomyLevel(valuesLevel2, selectedLevel2, handleChangeLevel2, "Level 2", "2"): <></>}

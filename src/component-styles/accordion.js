@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as Theme from "../component-styles/theme";
 
 export const StyledFilteredData = styled('p')`
     padding-top: 0; 

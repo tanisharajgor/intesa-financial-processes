@@ -1,15 +1,12 @@
-import { Accordion, AccordionHeader, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
+import { Accordion, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
 import * as d3 from 'd3';
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import lu from '../data/processed/nested/lu.json';
-import { Key } from '../component-styles/key';
 import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
-import { InnerHeader } from '../component-styles/inner-header';
-import Ripple from './Ripple';
-import { ChevronButton } from '../component-styles/chevron-button';
 import { StyledSelect } from '../component-styles/select';
 import * as Theme from "../component-styles/theme";
-import {StyledFilteredData, StyledHeader, StyledFilter} from "../component-styles/accordion"; 
+import { StyledFilter } from "../component-styles/accordion"; 
+import { AccordionHeaderStyled } from './Accordion';
 
 // constants
 const width = 500, height = 600;
@@ -151,9 +148,6 @@ export default function FilterTaxonomy({selectedLevel1, updateLevel1, selectedLe
     const level3Descr = lu["level3"].find((d) => d.id === selectedLevel3).descr;
     const levelsFiltered = lu["processes"].children.find((d) => d.id === selectedLevel1);
 
-    const [shouldRotate, setRotate] = useState(false);
-    const handleRotate = () => setRotate(!shouldRotate);
-
     // Update data
     const hierarchyData = d3.hierarchy(levelsFiltered);
     const root = d3.hierarchy(hierarchyData, function(d) {
@@ -185,24 +179,7 @@ export default function FilterTaxonomy({selectedLevel1, updateLevel1, selectedLe
 
     return(
         <Accordion className={'Card'}>
-            <AccordionHeader
-                aria-controls="process-filter-content"
-                id="process-filter-header"
-                onClick={handleRotate}
-            >
-                <StyledHeader>
-                    <Key>
-                        Filter by Process
-                    </Key>
-                    <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
-                        <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
-                        <Ripple color={"#FFFFFF"} duration={1000}/>
-                    </ChevronButton>
-                </StyledHeader>
-                <StyledFilteredData>
-                    {level3Descr}
-                </StyledFilteredData>
-            </AccordionHeader>
+            <AccordionHeaderStyled label="Filter by Process" filteredTypes={[level3Descr]}/>
             <AccordionDetails>
                 <LayoutGroup>
                     <LayoutRow className="layout_row">
