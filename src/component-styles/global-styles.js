@@ -49,6 +49,10 @@ export const GlobalStyles = createGlobalStyle`
     border-right: 1px solid ${Theme.extraDarkGreyHex};
   }
 
+  .value {
+    color: ${Theme.darkGreyColorHex}
+  }
+
   #process1-select {
     width: 100%;
   }
