@@ -112,7 +112,7 @@ export default function CirclePacking() {
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <QueryMenu className="Query" id="FilterMenu" style={{
+                <QueryMenu className="Query" style={{
                     height: !shouldRotate ? "10vh" : "100vh",
                     overflowY: !shouldRotate ? "hidden" : "scroll"
                 }}>

@@ -24,7 +24,7 @@ export default function Status({
 
     return (
         <Draggable bounds="body" handle="strong" isFullscreen={isFullscreen}>
-            <StatusMenu className="Query" id="FilterMenu" style={{
+            <StatusMenu className="cursor" style={{
                         height: !shouldRotate ? "10vh" : "65vh",
                         overflowY: !shouldRotate ? "hidden" : "scroll"
                     }}>

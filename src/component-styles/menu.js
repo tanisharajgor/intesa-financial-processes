@@ -14,7 +14,7 @@ export const QueryMenu = styled.div`
 `;
 
 export const StatusMenu = styled('div')`
-    position: fixed;
+    position: absolute;
     top: 4rem;
     right: 0%;
     cursor: grab;
