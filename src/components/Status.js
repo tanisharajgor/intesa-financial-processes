@@ -7,7 +7,6 @@ import View from "./View";
 import { MenuBody, MenuHeader } from "./Menu";
 
 // Styles
-import styled from "styled-components";
 import { StatusMenu } from "../component-styles/menu";
 import { LayoutGroup } from "../component-styles/query-layout";
 
@@ -24,7 +23,10 @@ export default function Status({
 
     return (
         <Draggable bounds="body" handle="strong" isFullscreen={isFullscreen}>
-            <StatusMenu>
+            <StatusMenu style={{
+                    height: !shouldRotate ? "10vh" : "65vh",
+                    overflowY: !shouldRotate ? "hidden" : "scroll"
+                }}>
                 <MenuHeader label="Legend" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
                 <MenuBody>
                     <LayoutGroup style={{ visibility: !shouldRotate || isFullscreen ? 'hidden' : 'visible' }}>

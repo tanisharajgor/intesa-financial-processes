@@ -13,30 +13,17 @@ export const QueryMenu = styled.div`
     transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `;
 
-// export const StatusMenu = styled('div')`
-//     position: absolute;
-//     top: 4rem;
-//     right: 0%;
-//     cursor: grab;
-//     visibility: ${props => props.isFullscreen ? "hidden" : "visible"};
-//     width: ${props => props.theme.viewColWidth};
-//     padding: ${props => props.theme.padding};
-//     background-color: ${props => props.theme.backgroundColor.main};
-//     transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-// `
-
 export const StatusMenu = styled('div')`
     position: fixed;
     top: 4rem;
     right: 0%;
     cursor: grab;
     visibility: ${props => props.isFullscreen ? "hidden" : "visible"};
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.6);
     width: ${props => props.theme.viewColWidth};
     padding: ${props => props.theme.padding};
     transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `
-
 
 export const StyledMenuHeader = styled('div')`
     display: flex;
