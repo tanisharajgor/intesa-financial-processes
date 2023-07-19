@@ -9,7 +9,7 @@ import Ripple from './Ripple';
 import { AccordionHeader } from 'cfd-react-components';
 import { Key } from '../component-styles/key';
 import { ChevronButton } from '../component-styles/chevron-button';
-import { StyledHeader, StyledFilteredData } from '../component-styles/menu';
+import { StyledMenuHeader, StyledMenuBody, StyledFilteredData } from '../component-styles/menu';
 
 // Component to style the Chevron Button
 export function ChevronButtonStyled({shouldRotate, handleRotate}) {
@@ -25,10 +25,10 @@ export function ChevronButtonStyled({shouldRotate, handleRotate}) {
 // Component to style the Menu Header
 export function MenuHeader({label, shouldRotate, handleRotate, filteredTypes=[]}) {
     return(
-        <StyledHeader>
+        <StyledMenuHeader>
             <Key>{filteredTypes.length <= 0 ? label : `${label}:`}</Key>
             <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
-        </StyledHeader>
+        </StyledMenuHeader>
     )
 }
 
@@ -36,12 +36,12 @@ export function MenuHeader({label, shouldRotate, handleRotate, filteredTypes=[]}
 export function MenuBody({shouldRotate, pageDescription, children}) {
 
     return(
-        <div className="Description" style={{ visibility: !shouldRotate ? 'hidden' : 'visible' }}>
+        <StyledMenuBody style={{ visibility: !shouldRotate ? 'hidden' : 'visible' }}>
             <Description>
                 <p>{pageDescription}</p>
             </Description>
            {children}
-        </div>
+        </StyledMenuBody>
     )
 }
 

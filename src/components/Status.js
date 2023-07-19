@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Draggable from 'react-draggable';
 import View from "./View";
-import { MenuHeader } from "./Menu";
+import { MenuBody, MenuHeader } from "./Menu";
 import { StatusMenu } from "../component-styles/menu";
+import { LayoutGroup } from "../component-styles/query-layout";
 
 export default function Status({
     id,
@@ -22,9 +23,11 @@ export default function Status({
                         overflowY: !shouldRotate ? "hidden" : "scroll"
                     }}>
                 <MenuHeader label="Legend" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
-                <div className="View" style={{ visibility: !shouldRotate || isFullscreen ? 'hidden' : 'visible' }}>
-                    <View id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} isFullscreen={isFullscreen} />
-                </div>
+                <MenuBody>
+                    <LayoutGroup style={{ visibility: !shouldRotate || isFullscreen ? 'hidden' : 'visible' }}>
+                        <View id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} isFullscreen={isFullscreen} />
+                    </LayoutGroup>
+                </MenuBody>
             </StatusMenu>
         </Draggable>
     )

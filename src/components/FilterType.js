@@ -29,28 +29,28 @@ export default function FilterType({typesChecked, updateSelection, typeValues, l
             <AccordionHeaderStyled label={label} filteredTypes={filteredTypes}/>
             <AccordionDetails>
                 <LayoutGroup>
-                        <LayoutRow>
-                            <LayoutItem className="push">
-                                <FilterList>
-                                    {typeValues.map((value, index) => {
-                                        return (
-                                            <li key={index}>
-                                                    <FormLabel
-                                                    control={<Checkbox color="primary" 
-                                                    checked={typesChecked.includes(value)} 
-                                                    name={value} 
-                                                    onChange={() => updateSelectedRange(value)}
-                                                    label={value}
-                                                    />}                                     
-                                                />
-                                            </li>
-                                            )
-                                        })
-                                    }
-                                </FilterList>
-                            </LayoutItem>
-                        </LayoutRow>
-                    </LayoutGroup>
+                    <LayoutRow>
+                        <LayoutItem className="push">
+                            <FilterList>
+                                {typeValues.map((value, index) => {
+                                    return (
+                                        <li key={index}>
+                                                <FormLabel
+                                                control={<Checkbox color="primary" 
+                                                checked={typesChecked.includes(value)} 
+                                                name={value} 
+                                                onChange={() => updateSelectedRange(value)}
+                                                label={value}
+                                                />}                                     
+                                            />
+                                        </li>
+                                        )
+                                    })
+                                }
+                            </FilterList>
+                        </LayoutItem>
+                    </LayoutRow>
+                </LayoutGroup>
             </AccordionDetails>
         </Accordion>
     )

@@ -17,11 +17,21 @@ export const StatusMenu = styled('div')`
     position: fixed;
     top: 4rem;
     right: 0%;
+    cursor: grab;
     visibility: ${props => props.isFullscreen ? "hidden" : "visible"};
     width: ${props => props.theme.viewColWidth};
     padding: ${props => props.theme.padding};
     background-color: ${props => props.theme.backgroundColor.main};
     transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+`
+
+export const StyledMenuHeader = styled('div')`
+    display: flex;
+    padding: ${props => props.theme.padding };
+`
+
+export const StyledMenuBody = styled('div')`
+
 `
 
 export const StyledFilteredData = styled('p')`
@@ -36,11 +46,6 @@ export const StyledFilteredData = styled('p')`
 export const StyledFilter = styled('div')`
     display: flex;
     flex-direction: column;
-`
-
-export const StyledHeader = styled('div')`
-    display: flex;
-    padding: ${props => props.theme.padding };
 `
 
 export const StyledLabel = styled('span')`
