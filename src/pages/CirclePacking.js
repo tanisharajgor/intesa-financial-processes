@@ -1,18 +1,25 @@
+// Libraries
+import { useCallback, useEffect, useRef, useState } from "react";
+import * as d3 from 'd3';
+import Draggable from 'react-draggable';
+
+// Components
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import data from "../data/processed/nested/processes.json";
-import * as d3 from 'd3';
-import { useCallback, useEffect, useRef, useState } from "react";
 import { inspectHierarchySummary } from "../components/Inspect";
-import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
 import FilterType from "../components/FilterType";
 import InspectTaxonomy from "../components/InspectTaxonomy";
+import { MenuHeader, MenuBody } from "../components/Menu";
 
 import { activityTypeValues } from "../utils/global";
+import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
+
+// Data
+import data from "../data/processed/nested/processes.json";
+
+// Styles
 import { Menu } from "../component-styles/query-menu";
 import { Content } from "../component-styles/content";
-import Draggable from 'react-draggable';
-import { MenuHeader, MenuBody } from "../components/Menu";
 
 const id = "circle-packing-chart";
 const root = d3.pack()

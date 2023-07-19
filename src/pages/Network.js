@@ -1,20 +1,27 @@
+// Libraries
+import { useEffect, useRef, useState } from "react";
+import * as d3 from 'd3';
+import Draggable from 'react-draggable';
+
+// Components
 import Main from "../components/Main";
 import Navigation from "../components/Navigation";
 import InspectChapter from "../components/InspectChapter";
 import FilterTaxonomy from "../components/FilterTaxonomy";
 import FilterType from "../components/FilterType";
-import { useEffect, useRef, useState } from "react";
-import links from "../data/processed/nested/links.json";
-import nodes from "../data/processed/nested/nodes.json";
+import { MenuBody, MenuHeader } from "../components/Menu";
+import { inspectNetworkSummary } from "../components/Inspect";
 import NetworkVisualization from "../visualization/network-visualization";
 import * as Global from "../utils/global";
-import { inspectNetworkSummary } from "../components/Inspect";
-import * as d3 from 'd3';
-import { Content } from "../component-styles/content";
-import { Menu} from "../component-styles/query-menu";
-import Draggable from 'react-draggable';
+
+// Data
+import links from "../data/processed/nested/links.json";
+import nodes from "../data/processed/nested/nodes.json";
 import lu from '../data/processed/nested/lu.json';
-import { MenuBody, MenuHeader } from "../components/Menu";
+
+// Styles
+import { Content } from "../component-styles/content";
+import { Menu } from "../component-styles/query-menu";
 
 const id = "network-chart";
 const processes = lu["processes"];
