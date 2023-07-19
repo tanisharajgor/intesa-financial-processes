@@ -7,9 +7,9 @@ import View from "./View";
 import { MenuBody, MenuHeader } from "./Menu";
 
 // Styles
+import styled from "styled-components";
 import { StatusMenu } from "../component-styles/menu";
 import { LayoutGroup } from "../component-styles/query-layout";
-
 
 export default function Status({
     id,
@@ -24,16 +24,13 @@ export default function Status({
 
     return (
         <Draggable bounds="body" handle="strong" isFullscreen={isFullscreen}>
-            <StatusMenu className="cursor" style={{
-                        height: !shouldRotate ? "10vh" : "65vh",
-                        overflowY: !shouldRotate ? "hidden" : "scroll"
-                    }}>
+            <StatusMenu>
                 <MenuHeader label="Legend" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
                 <MenuBody>
                     <LayoutGroup style={{ visibility: !shouldRotate || isFullscreen ? 'hidden' : 'visible' }}>
                         <View id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} isFullscreen={isFullscreen} />
                     </LayoutGroup>
-                </MenuBody>
+                </MenuBody> 
             </StatusMenu>
         </Draggable>
     )

@@ -35,7 +35,7 @@ export default function CirclePacking() {
     const [viewVariable, updateViewVariable] = useState("riskType");
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
     const [isFullscreen, setFullscreen] = useState(false);
-    const [shouldRotate, setRotate] = useState(false);
+    const [shouldRotate, setRotate] = useState(true);
 
     const handleRotate = () => setRotate(!shouldRotate);
 
