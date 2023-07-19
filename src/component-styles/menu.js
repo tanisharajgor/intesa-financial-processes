@@ -23,6 +23,8 @@ export const StatusMenu = styled('div')`
     width: ${props => props.theme.viewColWidth};
     padding: ${props => props.theme.padding};
     transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    border: 1px solid ${Theme.extraDarkGreyHex};
+    border-radius: 5px;
 `
 
 export const StyledMenuHeader = styled('div')`
