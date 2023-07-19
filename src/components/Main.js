@@ -19,7 +19,8 @@ export default function Main({
     symbolHoverValue,
     id,
     controls,
-    handleFullscreen
+    handleFullscreen,
+    isFullscreen
 }) {
 
     return(
@@ -33,6 +34,7 @@ export default function Main({
                 symbolHoverValue={symbolHoverValue}
                 controls={controls}
                 handleFullscreen={handleFullscreen}
+                isFullscreen={isFullscreen}
             />
             <Control controls={controls} handleFullscreen={handleFullscreen}/>
         </StyledMain>
