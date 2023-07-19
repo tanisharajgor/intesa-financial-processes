@@ -21,7 +21,7 @@ import lu from '../data/processed/nested/lu.json';
 
 // Styles
 import { Content } from "../component-styles/content";
-import { QueryMenu } from "../component-styles/query-menu";
+import { QueryMenu } from "../component-styles/menu";
 
 const id = "network-chart";
 const processes = lu["processes"];

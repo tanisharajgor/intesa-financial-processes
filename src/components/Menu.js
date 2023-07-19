@@ -9,7 +9,7 @@ import Ripple from './Ripple';
 import { AccordionHeader } from 'cfd-react-components';
 import { Key } from '../component-styles/key';
 import { ChevronButton } from '../component-styles/chevron-button';
-import { StyledHeader, StyledFilteredData } from '../component-styles/query-menu';
+import { StyledHeader, StyledFilteredData } from '../component-styles/menu';
 
 // Component to style the Chevron Button
 export function ChevronButtonStyled({shouldRotate, handleRotate}) {

@@ -18,7 +18,7 @@ import { CirclePackingDiagram } from "../visualization/circle-packing-visualizat
 import data from "../data/processed/nested/processes.json";
 
 // Styles
-import { QueryMenu } from "../component-styles/query-menu";
+import { QueryMenu } from "../component-styles/menu";
 import { Content } from "../component-styles/content";
 
 const id = "circle-packing-chart";

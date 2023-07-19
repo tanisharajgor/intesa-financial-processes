@@ -1,9 +1,8 @@
 import { useState } from "react";
 import Draggable from 'react-draggable';
 import View from "./View";
-import { StatusMenu } from "../component-styles/status";
 import { MenuHeader } from "./Menu";
-import { Menu } from "../component-styles/query-menu";
+import { StatusMenu } from "../component-styles/menu";
 
 export default function Status({
     id,

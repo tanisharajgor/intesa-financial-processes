@@ -5,7 +5,7 @@ import lu from '../data/processed/nested/lu.json';
 import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
 import { StyledSelect } from '../component-styles/select';
 import * as Theme from "../component-styles/theme";
-import { StyledFilter } from "../component-styles/query-menu"; 
+import { StyledFilter } from "../component-styles/menu"; 
 import { AccordionHeaderStyled } from './Menu';
 
 // constants
