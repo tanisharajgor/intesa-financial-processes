@@ -22,7 +22,7 @@ export default function Status({
     const handleRotate = () => setRotate(!shouldRotate);
 
     return (
-        <Draggable bounds="body" handle="strong" isFullscreen={isFullscreen}>
+        <Draggable bounds="body" isFullscreen={isFullscreen}>
             <StatusMenu style={{
                     height: !shouldRotate ? "10vh" : "65vh",
                     overflowY: !shouldRotate ? "hidden" : "scroll"

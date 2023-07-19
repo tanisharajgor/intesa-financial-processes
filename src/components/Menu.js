@@ -14,9 +14,7 @@ import { StyledMenuHeader, StyledMenuBody, StyledFilteredData } from '../compone
 export function MenuHeader({label, shouldRotate, handleRotate, filteredTypes=[]}) {
     return(
         <StyledMenuHeader>
-            <strong className="cursor">
-                <Key>{filteredTypes.length <= 0 ? label : `${label}:`}</Key>
-            </strong>
+            <Key>{filteredTypes.length <= 0 ? label : `${label}:`}</Key>
             <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
         </StyledMenuHeader>
     )
