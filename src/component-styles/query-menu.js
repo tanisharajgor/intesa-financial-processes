@@ -9,6 +9,7 @@ export const QueryMenu = styled.div`
     left: ${props => props.isFullscreen ? "-30vw;" : "0vw;"};
     transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     background-color: ${props => props.theme.backgroundColor.main};
+    padding: ${props => props.theme.padding};
 `;
 
 export const MenuControls = styled.div`

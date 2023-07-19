@@ -115,8 +115,6 @@ export default function CirclePacking() {
             <Content>
                 <Draggable bounds="body" handle="strong">
                     <QueryMenu className="Query" id="FilterMenu" style={{
-                        position: 'absolute',
-                        padding: '1%',
                         height: !shouldRotate ? "10vh" : "65vh", width: "22vw",
                         overflowY: !shouldRotate ? "hidden" : "scroll"
                     }}>

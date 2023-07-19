@@ -19,8 +19,6 @@ export default function Status({
     return (
         <Draggable bounds="body" handle="strong" isFullscreen={isFullscreen}>
             <StatusMenu className="Query" id="FilterMenu" style={{
-                        position: 'absolute',
-                        padding: '1%',
                         height: !shouldRotate ? "10vh" : "65vh", width: "22vw",
                         overflowY: !shouldRotate ? "hidden" : "scroll"
                     }}>
