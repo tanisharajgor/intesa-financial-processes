@@ -5,6 +5,16 @@ import { ChevronButton } from '../component-styles/chevron-button';
 import Ripple from './Ripple';
 import { StyledHeader, StyledFilteredData } from '../component-styles/accordion';
 
+export function ChevronButtonStyled({shouldRotate, handleRotate}) {
+
+    return(
+        <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate} style={{ paddingLeft: "2%", paddingRight: "2%" }}>
+            <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"} />
+            <Ripple color={"#FFFFFF"} duration={1000} />
+        </ChevronButton>
+    )
+}
+
 export function AccordionHeaderStyled({label, filteredTypes}) {
 
     const [shouldRotate, setRotate] = useState(false);
@@ -18,10 +28,7 @@ export function AccordionHeaderStyled({label, filteredTypes}) {
     >
         <StyledHeader>
             <Key>{filteredTypes.length <= 0 ? label : `${label}:`}</Key>
-            <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
-                <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
-                <Ripple color={"#FFFFFF"} duration={1000}/>
-            </ChevronButton>
+            <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
         </StyledHeader>
         { filteredTypes.length <= 0 ? <></> : 
             <StyledFilteredData>

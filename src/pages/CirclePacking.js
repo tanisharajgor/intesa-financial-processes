@@ -13,8 +13,7 @@ import Description from "../components/Description";
 import { DragBar, Menu, MenuControls } from "../component-styles/query-menu";
 import { Content } from "../component-styles/content";
 import Draggable from 'react-draggable';
-import { ChevronButton } from '../component-styles/chevron-button';
-import Ripple from '../components/Ripple.js';
+import { ChevronButtonStyled } from "./Accordion";
 
 const id = "circle-packing-chart";
 const root = d3.pack()
@@ -116,13 +115,8 @@ export default function CirclePacking() {
                         overflowY: !shouldRotate ? "hidden" : "scroll"
                     }}>
                         <MenuControls>
-                            <strong className="cursor">
-                                <DragBar>Inspect Pane</DragBar>
-                            </strong>
-                            <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate} style={{ border: "2px solid #1d8693", paddingLeft: "2%", paddingRight: "2%" }}>
-                                <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"} />
-                                <Ripple color={"#FFFFFF"} duration={1000} />
-                            </ChevronButton>
+                            <DragBar>Inspect Pane</DragBar>
+                            <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
                         </MenuControls>
                         <div className="Description" style={{ visibility: !shouldRotate ? 'hidden' : 'visible' }}>
                             <Description>

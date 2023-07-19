@@ -37,7 +37,7 @@ export const GlobalStyles = createGlobalStyle`
 
   .Card {
     border-bottom: 1px solid #4e5155;
-    Cursor: pointer;
+    cursor: pointer;
   }
 
   .Card > div:last-child {
