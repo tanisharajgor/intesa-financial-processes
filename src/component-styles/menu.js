@@ -6,11 +6,12 @@ export const QueryMenu = styled.div`
     z-index: +9;
     position: absolute;
     top: 4rem;
-    left: ${props => props.isFullscreen ? "-30vw;" : "0vw;"};
+    left: ${props => props.isFullscreen ? "-100vw;" : "0vw;"};
     width: 20rem;
     padding: ${props => props.theme.padding};
     background-color: ${props => props.theme.backgroundColor.main};
     transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    overflow-y: auto;
 `;
 
 export const StatusMenu = styled('div')`

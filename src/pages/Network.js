@@ -180,7 +180,7 @@ export default function Network() {
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <QueryMenu className="Query" style={{
+                <QueryMenu className="Query" isFullscreen={isFullscreen} style={{
                     height: !shouldRotate ? "10vh" : "100vh",
                     overflowY: !shouldRotate ? "hidden" : "scroll"
                 }}>
