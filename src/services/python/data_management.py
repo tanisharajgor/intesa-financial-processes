@@ -288,7 +288,12 @@ def model_dm(data, raw_pth, processed_pth):
 
     def shorten_label(row):
         split_parts = row['model'].split(" - ")
-        result = " - ".join(split_parts[2:])
+        if (len(split_parts) == 1):
+            result = split_parts[0]
+        if (len(split_parts) == 2):
+            result = split_parts[-1]
+        else: 
+            result = " - ".join(split_parts[2:])
         return result
             
     df['model'] = df.apply(shorten_label, axis=1)
