@@ -184,7 +184,7 @@ export default function Network() {
                     height: !shouldRotate ? "10vh" : "100vh",
                     overflowY: !shouldRotate ? "hidden" : "scroll"
                 }}>
-                    <MenuHeader label="Network" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+                    <MenuHeader label="Network" />
                     <MenuBody shouldRotate={shouldRotate} pageDescription="Filter data in the actor network graph to explore activities and risks.">
                         <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
                         <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3} />

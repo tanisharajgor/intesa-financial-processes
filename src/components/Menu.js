@@ -11,11 +11,19 @@ import { Key } from '../component-styles/key';
 import { StyledMenuHeader, StyledMenuBody, StyledFilteredData } from '../component-styles/menu';
 
 // Component to style the Menu Header
-export function MenuHeader({label, shouldRotate, handleRotate, filteredTypes=[]}) {
+export function MenuCollapsableHeader({label, shouldRotate, handleRotate, filteredTypes=[]}) {
     return(
         <StyledMenuHeader>
             <Key>{filteredTypes.length <= 0 ? label : `${label}:`}</Key>
             <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+        </StyledMenuHeader>
+    )
+}
+
+export function MenuHeader({label, filteredTypes=[]}) {
+    return(
+        <StyledMenuHeader>
+            <Key>{filteredTypes.length <= 0 ? label : `${label}:`}</Key>
         </StyledMenuHeader>
     )
 }
