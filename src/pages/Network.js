@@ -180,9 +180,10 @@ export default function Network() {
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <QueryMenu className="Query" style={{
+                <QueryMenu className="Query" isFullscreen={isFullscreen} style={{
                     height: !shouldRotate ? "10vh" : "100vh",
-                    overflowY: !shouldRotate ? "hidden" : "scroll"
+                    overflowY: !shouldRotate ? "hidden" : "scroll",
+                    visibility: isFullscreen ? 'hidden' : 'visible'
                 }}>
                     <MenuHeader label="Network" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
                     <MenuBody shouldRotate={shouldRotate} pageDescription="Filter data in the actor network graph to explore activities and risks.">
