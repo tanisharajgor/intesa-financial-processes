@@ -117,7 +117,7 @@ export default function CirclePacking() {
                     overflowY: !shouldRotate ? "hidden" : "scroll"
                 }}>
                     <MenuHeader label="Ecosystem" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
-                    <MenuBody shouldRotate={shouldRotate} pageDescription=">Click on the circles to zoom into the process visualization.">
+                    <MenuBody shouldRotate={shouldRotate} pageDescription="Click on the circles to zoom into the process visualization.">
                         <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
                         <InspectTaxonomy
                             handleTaxonomyChange={handleTaxonomyChange}
