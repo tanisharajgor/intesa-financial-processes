@@ -18,6 +18,7 @@ export default function Status({
     symbolHoverValue,
     isFullscreen
 }) {
+
     const [shouldRotate, setRotate] = useState(true);
     const handleRotate = () => setRotate(!shouldRotate);
 
@@ -25,7 +26,8 @@ export default function Status({
         <Draggable bounds="body">
             <StatusMenu isFullscreen={isFullscreen} style={{
                     height: !shouldRotate ? "10vh" : "65vh",
-                    overflowY: !shouldRotate ? "hidden" : "scroll"
+                    overflowY: !shouldRotate ? "hidden" : "scroll",
+                    visibility: isFullscreen ? 'hidden' : 'visible'
                 }}>
                 <MenuCollapsableHeader label="Legend" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
                 <MenuBody>
