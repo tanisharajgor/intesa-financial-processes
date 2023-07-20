@@ -286,20 +286,11 @@ def model_dm(data, raw_pth, processed_pth):
     df = num_id(df, "modelGUID", 1000)
     df = df.drop('english', axis = 1)
 
-    numDuplicates = 0
-
     def shorten_label(row):
-        nonlocal numDuplicates
-        shortened = row['model'].split(" - ")[-1]
-        if shortened == 'IMI CIB Division':
-            numDuplicates += 1
-            shortened = shortened + " - " + str(numDuplicates)
-            print(shortened)
-            return shortened
-        else:
-            return shortened
-        
-    
+        split_parts = row['model'].split(" - ")
+        result = " - ".join(split_parts[2:])
+        return result
+            
     df['model'] = df.apply(shorten_label, axis=1)
 
     ## Write the cleaned data out
