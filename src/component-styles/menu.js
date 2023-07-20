@@ -15,7 +15,7 @@ export const QueryMenu = styled.div`
 
 export const StatusMenu = styled('div')`
     position: fixed;
-    top: 4rem;
+    top: 10rem;
     right: 0%;
     cursor: grab;
     visibility: ${props => props.isFullscreen ? "hidden" : "visible"};
