@@ -73,7 +73,7 @@ export function AccordionHeaderStyled({label, filteredTypes=[]}) {
         id="activity-type-filter-header"
         onClick={handleRotate}
     >
-        <MenuHeader label={label} shouldRotate={shouldRotate} handleRotate={handleRotate} filteredTypes={filteredTypes}/>
+        <MenuCollapsableHeader label={label} shouldRotate={shouldRotate} handleRotate={handleRotate} filteredTypes={filteredTypes}/>
         <TypesStatus filteredTypes={filteredTypes}/>
     </AccordionHeader>
     )

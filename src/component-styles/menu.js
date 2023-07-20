@@ -17,13 +17,12 @@ export const QueryMenu = styled.div`
 export const StatusMenu = styled('div')`
     position: fixed;
     top: 4rem;
-    right: 0%;
+    right: ${props => props.isFullscreen ? "-100vw;" : "0vw;"};
     cursor: grab;
-    visibility: ${props => props.isFullscreen ? "hidden" : "visible"};
     background-color: rgba(0,0,0,0.6);
     width: ${props => props.theme.viewColWidth};
     padding: ${props => props.theme.padding};
-    transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    transition: right 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     border: 1px solid ${Theme.extraDarkGreyHex};
     border-radius: 5px;
 `
