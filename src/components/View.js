@@ -1,10 +1,16 @@
-import { Form, MenuItem } from "cfd-react-components";
-import * as Global from "../utils/global";
-import * as d3 from 'd3';
+// Libraries
 import { useEffect } from "react";
+import * as d3 from 'd3';
+
+// Components
 import { InspectHTML } from "./Inspect";
+import * as Global from "../utils/global";
+
+//Styles
+import { Form, MenuItem } from "cfd-react-components";
 import { StyledSelect } from "../component-styles/select";
 import { ViewStyles } from "../component-styles/view";
+import * as Theme from "../component-styles/theme";
 
 const width = 216;
 const height = 15;
@@ -63,8 +69,8 @@ function drawRiskLegend(t, viewHoverValue, networkChart) {
                 .attr("x", 25)
                 .attr("y", ((d, i) => i*23 + 20))
                 .text((d => d.label))
-                .attr("font-size", 12)
-                .attr("fill", "#cbcbcb"),
+                .attr("font-size", Theme.labelStyles.fontSize)
+                .attr("fill", Theme.labelStyles.fontColor),
             update => update
                 .attr('opacity', (d => viewHoverValue === undefined || d.color === viewHoverValue ? 1: .3)),
             exit   => exit.remove()
@@ -122,12 +128,12 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                 enter  => enter
                     .append("path")
                     .attr("d", d3.symbol()
-                    .type(((d) => Global.symbolScaleD3(d)))
+                    .type((d => Global.symbolScaleD3(d)))
                         .size(60))
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
-                    .attr("fill", Global.naColorHex),
+                    .attr("fill", Theme.labelStyles.fontColor),
                 update => update
                     .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
@@ -140,8 +146,8 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .append("text")
                     .attr("x", 25)
                     .attr("y", ((d, i) => i*23 + 20))
-                    .attr("fill", "#cbcbcb")
-                    .attr("font-size", 12)
+                    .attr("fill", Theme.labelStyles.fontColor)
+                    .attr("font-size", Theme.labelStyles.fontSize)
                     .text((d) => d.viewId),
                 update => update
                     .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
@@ -160,7 +166,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     const rotation = d.viewId === "Other activity" ? 180 : 0
                     return 'translate(' + 10 + ', ' + (i*23 + 15) + ') rotate(' + rotation + ')';
                 })
-                .attr("fill", "#cbcbcb"),
+                .attr("fill", Theme.labelStyles.fontColor),
             update => update
                 .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
         );
@@ -173,8 +179,8 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                 .append("text")
                 .attr("x", 25)
                 .attr("y", ((d, i) => i*23 + 20))
-                .attr("fill", "#cbcbcb")
-                .attr("font-size", 12)
+                .attr("fill", Theme.labelStyles.fontColor)
+                .attr("font-size", Theme.labelStyles.fontSize)
                 .text((d) => d.viewId),
             update => update
                 .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
@@ -225,8 +231,8 @@ function drawLineLegend() {
                 .append("text")
                 .attr("x", 25)
                 .attr("y", (d, i) => i*23 + 20)
-                .attr("fill", "#cbcbcb")
-                .attr("font-size", 12)
+                .attr("fill", Theme.labelStyles.fontColor)
+                .attr("font-size", Theme.labelStyles.fontSize)
                 .text(d => d.type)
         );
 }
@@ -306,7 +312,6 @@ export default function View({id, viewVariable, updateViewVariable, viewHoverVal
 
     return(
         <ViewStyles>
-            <div>View</div>
             <div className="inner">
                 <InspectHTML/>
                 {viewInfo(networkChart)}

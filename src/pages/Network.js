@@ -1,148 +1,197 @@
+// Libraries
+import { useEffect, useRef, useState } from "react";
+import * as d3 from 'd3';
+
+// Components
 import Main from "../components/Main";
 import Navigation from "../components/Navigation";
-import FilterProcess from "../components/FilterProcess";
+import InspectChapter from "../components/InspectChapter";
+import FilterTaxonomy from "../components/FilterTaxonomy";
 import FilterType from "../components/FilterType";
-import { useEffect, useRef, useState } from "react";
-import links from "../data/processed/nested/links.json";
-import nodes from "../data/processed/nested/nodes.json";
-import { QueryMenu } from "cfd-react-components";
+import { MenuBody, MenuHeader } from "../components/Menu";
+import { inspectNetworkSummary } from "../components/Inspect";
 import NetworkVisualization from "../visualization/network-visualization";
 import * as Global from "../utils/global";
-import { inspectNetworkSummary } from "../components/Inspect";
-import * as d3 from 'd3';
-import Description from "../components/Description";
+
+// Data
+import links from "../data/processed/nested/links.json";
+import nodes from "../data/processed/nested/nodes.json";
+import lu from '../data/processed/nested/lu.json';
+
+// Styles
 import { Content } from "../component-styles/content";
-import { Menu } from "../component-styles/query-menu";
+import { QueryMenu } from "../component-styles/menu";
 
 const id = "network-chart";
+const processes = lu["processes"];
+
+// Combines the two types of links into a single array
+function combineLink(links) {
+    if (links.deve) {
+        links.deve.map(d => d.connect_actor_activity = true);
+        links.non_deve.map(d => d.connect_actor_activity = false);
+        links = links.deve.concat(links.non_deve);
+    }
+
+    return links;
+}
+const visualizationXPadding = 200;
 
 // Combines the nodes and links into a single object
 function combineNodeLink(selectedLevel3ID, nodes, links) {
 
     let nodesData = Object.assign({}, nodes.find((d) => d.id === selectedLevel3ID)).nodes;
     let linksData = Object.assign({}, links.find((d) => d.id === selectedLevel3ID)).links;
-    let dataNew = {id: selectedLevel3ID, nodes: nodesData, links: linksData};
+    linksData = combineLink(linksData);
+    let dataNew = { id: selectedLevel3ID, nodes: nodesData, links: linksData };
 
     return dataNew;
-}
-
-// Combines the two types of links into a single array
-function combineLink(data) {
-
-    if (data.links.deve) {
-        data.links.deve.map(d => d.connect_actor_activity = true);
-        data.links.non_deve.map(d => d.connect_actor_activity = false);
-        data.links = data.links.deve.concat(data.links.non_deve);
-    }
-
-    return data;
 }
 
 // Filters the data by level3ID and activity Type
 function filterData(selectedLevel3ID, selectedActivities, selectedActors) {
 
     let dataNew = combineNodeLink(selectedLevel3ID, nodes, links);
-    combineLink(dataNew);
 
     let actorIdsFiltered = dataNew.nodes.filter(d => d.group === "Actor" && selectedActors.includes(d.type)).map(d => d.id);
     let activityIdsFiltered = dataNew.nodes.filter(d => d.group === "Activity" && selectedActivities.includes(d.type)).map(d => d.id);
 
-    let linksNew = dataNew.links.filter(d => d.source.id === undefined ? actorIdsFiltered.includes(d.source) && activityIdsFiltered.includes(d.target): actorIdsFiltered.includes(d.source.id) && activityIdsFiltered.includes(d.target.id));
-    let actorIds = [...new Set(linksNew.map(d => d.source.id === undefined ? d.source: d.source.id))];
-    let activityIds = [...new Set(linksNew.map(d => d.target.id === undefined ? d.target: d.target.id))];
-  
+    let linksNew = dataNew.links.filter(d => d.source.id === undefined ? actorIdsFiltered.includes(d.source) && activityIdsFiltered.includes(d.target) : actorIdsFiltered.includes(d.source.id) && activityIdsFiltered.includes(d.target.id));
+    let actorIds = [...new Set(linksNew.map(d => d.source.id === undefined ? d.source : d.source.id))];
+    let activityIds = [...new Set(linksNew.map(d => d.target.id === undefined ? d.target : d.target.id))];
+
     let riskIds = Global.filterLinksSourceToTarget(dataNew.links, activityIds);
     let controlIds = Global.filterLinksSourceToTarget(dataNew.links, riskIds);
 
     let ids = controlIds.concat(riskIds.concat(actorIds.concat(activityIds)));
 
     dataNew.nodes = dataNew.nodes.filter(d => ids.includes(d.id));
-    dataNew.links = dataNew.links.filter(d => d.source.id === undefined ? ids.includes(d.source) && ids.includes(d.target): ids.includes(d.source.id) && ids.includes(d.target.id));
+    dataNew.links = dataNew.links.filter(d => d.source.id === undefined ? ids.includes(d.source) && ids.includes(d.target) : ids.includes(d.source.id) && ids.includes(d.target.id));
 
     return dataNew;
 }
 
 export default function Network() {
 
-    const [viewVariable, updateViewVariable] = useState("riskType");
-
     // User Input selection
-    const [selectedLevel3ID, updateLevel3ID] = useState(links[0].id);
+    const [viewVariable, updateViewVariable] = useState("riskType");
+    const [selectedLevel1, updateLevel1] = useState(processes.children[0].id);
+    const [selectedLevel3, updateLevel3] = useState(processes.children[0].children[0].children[0].id);
+    const [selectedChapter, updateSelectedChapter] = useState(-1);
+    const [valuesChapter, updateValuesChapter] = useState([{ "id": -1, "descr": "All" }].concat(processes
+        .children.find(d => d.id === selectedLevel1).children[0].children[0].children));
 
-    let dataNew = combineNodeLink(selectedLevel3ID, nodes, links);
+    // Status to update the opacity in the legend
+    const [viewHoverValue, updateViewHoverValue] = useState(undefined);
+    const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
+
+    // Data management steps
+    let dataNew = combineNodeLink(selectedLevel3, nodes, links);
 
     const [data, updateData] = useState(dataNew);
 
-    combineLink(data);
-
     // Possible set of activities/actors to choose from
     const [possibleActivities, updateActivityType] = useState([...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))]);
-    const [possibleActors, updateActorType] = useState( [...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
+    const [possibleActors, updateActorType] = useState([...new Set(data.nodes.filter(d => d.group === "Actor").map(d => d.type))]);
 
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(possibleActivities);
     const [selectedActors, updateActors] = useState(possibleActors);
 
-    // Status to update the opacity in the legend
-    const [viewHoverValue, updateViewHoverValue] = useState(undefined);
-    const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
-    
     const [isFullscreen, setFullscreen] = useState(false);
-
-    // Initiating the network diagram
-    const networkDiagram = useRef(new NetworkVisualization(data, updateSymbolHoverValue, updateViewHoverValue));
-
     const handleFullscreen = (e) => {
         setFullscreen(!isFullscreen);
     }
 
+    const [shouldRotate, setRotate] = useState(true);
+    const handleRotate = () => setRotate(!shouldRotate);
+
+    // Initiating the network diagram
+    const networkDiagram = useRef(new NetworkVisualization(data, updateSymbolHoverValue, updateViewHoverValue));
+
     // React Hooks
     useEffect(() => {
-
         networkDiagram.current.init(id);
         networkDiagram.current.draw(viewVariable);
         networkDiagram.current.animate();
 
+        const width = (document.getElementById(id).clientWidth / 2) - document.getElementsByClassName("Query")[0].clientWidth;
+        const height = (document.getElementById(id).clientHeight / 2) - document.getElementsByClassName("Navigation")[0].clientHeight;
+
+        networkDiagram.current.centerVisualization(width - visualizationXPadding, height, -0.40);
     }, []);
+
+    // React Hooks
+    useEffect(() => {
+        const l1 = processes.children
+            .find(d => d.id === selectedLevel1);
+        const l2 = l1.children[0];
+        const l3 = l2.children[0];
+
+        updateValuesChapter(
+            [{ "id": -1, "descr": "All" }].concat(l1
+                .children.find(d => d.id === l2.id)
+                .children.find(d => d.id === l3.id).children)
+        );
+
+        updateLevel3(l3.id);
+        updateSelectedChapter(-1);
+    }, [selectedLevel1]);
+
+    useEffect(() => {
+        const l1 = processes.children
+            .find(d => d.id === selectedLevel1);
+
+        updateValuesChapter(
+            [{ "id": -1, "descr": "All" }].concat(l1
+                .children.find(d => d.childrenIDs.includes(selectedLevel3))
+                .children.find(d => d.id === selectedLevel3).children)
+        );
+
+        updateSelectedChapter(-1);
+    }, [selectedLevel3]);
 
     // Filter data
     useEffect(() => {
 
-        const filteredData = filterData(selectedLevel3ID, selectedActivities, selectedActors)
+        const filteredData = filterData(selectedLevel3, selectedActivities, selectedActors)
         updateData(filteredData);
 
         networkDiagram.current.data = filteredData;
         networkDiagram.current.initSimulation();
-        networkDiagram.current.updateDraw(viewVariable);
+        networkDiagram.current.updateDraw(viewVariable, selectedChapter);
 
         let inspect = d3.select(".Inspect");
         inspectNetworkSummary(inspect, filteredData);
 
-    }, [selectedLevel3ID, selectedActivities, selectedActors])
+    }, [selectedLevel3, selectedActivities, selectedActors]);
 
     // Update filter possibilities when level changes
     useEffect(() => {
         updateActivityType(possibleActivities);
         updateActorType(possibleActors);
-    }, [selectedLevel3ID]);
+    }, [selectedLevel3]);
 
     useEffect(() => {
-        networkDiagram.current.updateDraw(viewVariable);
-    }, [viewVariable]);
+        networkDiagram.current.updateDraw(viewVariable, selectedChapter);
+    }, [viewVariable, selectedChapter]);
 
-    return(
+    return (
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <Menu className="Query" id="FilterMenu" width={"22rem"} isFullscreen={isFullscreen}>
-                    <Description>
-                            <h4>Network</h4>
-                            <p>Filter data in the actor network graph to explore activities and risks.</p>
-                    </Description> 
-                    <FilterProcess selectedLevel3ID = {selectedLevel3ID} updateLevel3ID={updateLevel3ID}/>
-                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type"/>
-                    <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type"/>
-                </Menu>
+                <QueryMenu className="Query" style={{
+                    height: !shouldRotate ? "10vh" : "100vh",
+                    overflowY: !shouldRotate ? "hidden" : "scroll"
+                }}>
+                    <MenuHeader label="Network" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+                    <MenuBody shouldRotate={shouldRotate} pageDescription="Filter data in the actor network graph to explore activities and risks.">
+                        <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
+                        <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3} />
+                        <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type" />
+                        <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type" />
+                    </MenuBody>
+                </QueryMenu>
                 <Main
                     viewVariable={viewVariable}
                     updateViewVariable={updateViewVariable}
@@ -151,8 +200,10 @@ export default function Network() {
                     id={id}
                     controls={networkDiagram.current.getControls()}
                     handleFullscreen={handleFullscreen}
+                    isFullscreen={isFullscreen}
                 />        
             </Content>        
+
         </>
     )
 }

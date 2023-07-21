@@ -1,39 +1,60 @@
+// Libraries
+import { useCallback, useEffect, useRef, useState } from "react";
+import * as d3 from 'd3';
+
+// Components
 import Navigation from "../components/Navigation";
 import Main from "../components/Main";
-import data from "../data/processed/nested/processes.json";
-import * as d3 from 'd3';
-import { useCallback, useEffect, useRef, useState } from "react";
 import { inspectHierarchySummary } from "../components/Inspect";
-import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
 import FilterType from "../components/FilterType";
+import InspectTaxonomy from "../components/InspectTaxonomy";
+import InspectOrgStructure from "../components/InspectOrgStructure";
+import { MenuHeader, MenuBody } from "../components/Menu";
+
 import { activityTypeValues } from "../utils/global";
-import Description from "../components/Description";
-import { Menu } from "../component-styles/query-menu";
+import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
+
+// Data
+import data from "../data/processed/nested/processes.json";
+
+// Styles
+import { QueryMenu } from "../component-styles/menu";
 import { Content } from "../component-styles/content";
 
 const id = "circle-packing-chart";
+const root = d3.pack()
+    .size([window.innerWidth, window.innerHeight])
+    .padding(1)
+    (d3.hierarchy(data)
+        .sum(d => 1)
+        .sort((a, b) => b.value - a.value)
+    );
 
 export default function CirclePacking() {
 
+    // View highlight states
     const [viewVariable, updateViewVariable] = useState("riskType");
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
     const [isFullscreen, setFullscreen] = useState(false);
+    const [shouldRotate, setRotate] = useState(true);
+
+    const handleRotate = () => setRotate(!shouldRotate);
 
     // Possible set of activities/actors to choose from
     const possibleActivities = activityTypeValues;
 
     // User selected activities and actors
-    const [selectedActivities, updateActivities] = useState(possibleActivities);
+    const [selectedActivities, updateActivities] = useState(activityTypeValues);
 
-    const height = window.innerHeight;
-    const width = window.innerWidth;
+    const [selectedLevel1, updateSelectedLevel1] = useState({ "id": -1, "descr": "All" });
+    const [selectedLevel2, updateSelectedLevel2] = useState({ "id": -1, "descr": "All" });
+    const [selectedLevel3, updateSelectedLevel3] = useState({ "id": -1, "descr": "All" });
+    const [selectedChapter, updateSelectedChapter] = useState({ "id": -1, "descr": "All" });
 
-    const root = d3.pack()
-        .size([width, height])
-        .padding(1)
-        (d3.hierarchy(data)
-        .sum(d => 1)
-        .sort((a, b) => b.value - a.value));
+    const [selectedOrg1, updateSelectedOrg1] = useState({ "id": -1, "descr": "All" });
+    const [selectedOrg2, updateSelectedOrg2] = useState({ "id": -1, "descr": "All" });
+
+    const [valuesChapter, updateValuesChapter] = useState([]);
 
     const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1), updateViewHoverValue));
 
@@ -41,9 +62,37 @@ export default function CirclePacking() {
         setFullscreen(!isFullscreen);
     }
 
+    const handleTaxonomyChange = (node, updateSelected, level) => {
+        const nodeFromMap = circlePackingDiagram.current.dataMap[node.id]
+        if (nodeFromMap !== undefined) {
+            circlePackingDiagram.current.centerOnNode(nodeFromMap);
+        } else if (node.id === -1) {
+            let parentNode;
+            switch (level) {
+                case 2:
+                    parentNode = circlePackingDiagram.current.dataMap[selectedLevel1.id];
+                    break;
+                case 3:
+                    parentNode = circlePackingDiagram.current.dataMap[selectedLevel2.id];
+                    break;
+                case 4:
+                    parentNode = circlePackingDiagram.current.dataMap[selectedLevel3.id];
+                    break;
+                default:
+                    circlePackingDiagram.current.centerVisualization(-0.85, window.innerWidth / 2, window.innerHeight / 2)
+                    break;
+            }
+            if (parentNode) {
+                circlePackingDiagram.current.centerOnNode(parentNode);
+            }
+        }
+        updateSelected(node);
+    }
+
     useEffect(() => {
         circlePackingDiagram.current.init(id);
         circlePackingDiagram.current.draw(viewVariable);
+        circlePackingDiagram.current.centerVisualization(-0.30);
     }, []);
 
     // const onViewVariableChange = useCallback((updatedView) => {
@@ -54,24 +103,44 @@ export default function CirclePacking() {
     //     updateViewVariable(updatedView)
     // }, [])
 
+    // Redraws the visualization when the Legend Changes
     useEffect(() => {
-        circlePackingDiagram.current.updateDraw(viewVariable, selectedActivities);
-        let inspect = d3.select(".Inspect");
-        inspectHierarchySummary(inspect, data);
-        // updateViewVariable(updatedView);
-    }, [selectedActivities, viewVariable]);
+        circlePackingDiagram.current.updateDraw(viewVariable);
+        inspectHierarchySummary(data);
+    }, [viewVariable]);
 
-    return(
+    // Updates the Opacity on Inspect
+    useEffect(() => {
+        circlePackingDiagram.current.updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter, selectedOrg1, selectedOrg2)
+    }, [selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, selectedActivities, selectedOrg1, selectedOrg2]);
+
+    return (
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <Menu className="Query" id="FilterMenu" width={"22rem"} isFullscreen={isFullscreen}>
-                    <Description>
-                      <h4>Ecosystem</h4>
-                      <p>Click on the circles to zoom into the process visualization.</p>
-                    </Description>
-                    <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
-                </Menu>
+                <QueryMenu className="Query" style={{
+                    height: !shouldRotate ? "10vh" : "100vh",
+                    overflowY: !shouldRotate ? "hidden" : "scroll"
+                }}>
+                    <MenuHeader label="Ecosystem" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+                    <MenuBody shouldRotate={shouldRotate} pageDescription="Click on the circles to zoom into the process visualization.">
+                        <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
+                        <InspectOrgStructure selectedOrg1={selectedOrg1} updateSelectedOrg1={updateSelectedOrg1} selectedOrg2={selectedOrg2} updateSelectedOrg2={updateSelectedOrg2}/>
+                        <InspectTaxonomy
+                            handleTaxonomyChange={handleTaxonomyChange}
+                            selectedLevel1={selectedLevel1}
+                            updateSelectedLevel1={updateSelectedLevel1}
+                            selectedLevel2={selectedLevel2}
+                            updateSelectedLevel2={updateSelectedLevel2}
+                            selectedLevel3={selectedLevel3}
+                            updateSelectedLevel3={updateSelectedLevel3}
+                            selectedChapter={selectedChapter}
+                            updateSelectedChapter={updateSelectedChapter}
+                            valuesChapter={valuesChapter}
+                            updateValuesChapter={updateValuesChapter}
+                        />
+                        </MenuBody>
+                </QueryMenu>
                 <Main
                     viewVariable={viewVariable}
                     updateViewVariable={updateViewVariable}
@@ -79,6 +148,7 @@ export default function CirclePacking() {
                     id={id}
                     controls={circlePackingDiagram.current.getControls()}
                     handleFullscreen={handleFullscreen}
+                    isFullscreen={isFullscreen}
                 />
             </Content>
         </>
