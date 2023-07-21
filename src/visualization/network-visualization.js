@@ -57,6 +57,9 @@ export default class NetworkVisualization {
       .force("collide", d3.forceCollide().strength(2).radius(8))
       .force("x", d3.forceX().strength(0.1))
       .force("y", d3.forceY().strength((adjustmentFactor * this.width) / this.height));
+
+    this.simulation.force("link")
+      .links(this.data.links);
   }
 
   // Initializes the application
@@ -159,9 +162,6 @@ export default class NetworkVisualization {
     this.containerLinks.addChild(this.inspectLinks);
 
     this.viewport.addChild(this.containerLinks);
-
-    this.simulation.force("link")
-      .links(this.data.links);
   }
 
   reduceNestedList(emptyList, list) {
