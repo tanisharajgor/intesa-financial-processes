@@ -1,6 +1,6 @@
 model,modelID
 Management of auctions and syndicated issues of the Italian Treasury,2738
-Offer of acceptance service from Builder,2604
+Acceptance and release Mortgage debtor - Offer of acceptance service from Builder,2604
 Particularities for Securities Portfolio Management,1581
 Management of the attachment deed or request from the Supervisory Authority,2867
 Fulfillments on waste produced by contracted activities,1170
@@ -32,7 +32,7 @@ Monthly reporting Central Risks,2950
 After sales certificates,3208
 Irrevocable Reimbursement Undertaking,3139
 Initial Margin,2852
-Finalization,1643
+Personal Loans Finalized Loan and Installment Credit Line - Finalization,1643
 Provis,1137
 "Analysis of counterparty characteristics for reconfirmation, extension or assignment of rating or certification of benchmark or unrated rating",3171
 Agricultural to SAL,1426
@@ -46,7 +46,7 @@ SEDA Activation of mandates,1004
 Feeding of management systems and data control,3316
 On-Site Offer and Off-Site Offer,2188
 Request for advances and loans,2033
-reporting,2167
+consolidation - reporting,2167
 Contribution Management In Installment Account,1590
 Release of approval for operations of subsidiaries with related parties Intesa Sanpaolo S.p.A. and Associated Persons of the Group,1575
 96,1945
@@ -56,9 +56,9 @@ Revocation of the Bank,2895
 Administrative Event Management,2495
 Acquisition of the prior opinion of the Anti-Financial Crime Head Office Department for significant transactions relating to Embargoes,2382
 Identification of specific relevant and privileged information and feeding of the Lists,3130
-BdT,2327
+Default Management and related service account - BdT,2327
 Resolution Templates,3165
-Intesa Sanpaolo Agents4You,1026
+Issuance of Policies - Distance Offering - Intesa Sanpaolo Agents4You,1026
 Group Regulatory Agenda,3299
 Alarm management,1501
 Valuation of financial instruments for Administered Deposit securities statement,2432
@@ -90,7 +90,7 @@ Interbank operations with Third Party Counterparties not of the Group,1617
 Management and publication of Newsflash,1273
 Periodic survey of collateralized loans,2190
 Planning of IT Security and Business Continuity controls,2023
-Remote offer,2809
+On-premise offer - Off-premise offer - Remote offer,2809
 Allocation of ceilings for country risk,1683
 Malware analysis,1473
 Encumbered Guarantees Modification of the guaranteed pledge,1494
@@ -100,7 +100,7 @@ US market underwriting,2271
 Calculation and monitoring of daily indicators Liquidity Risk,1818
 Whistleblowing reports,1739
 Visits to counting rooms,2506
-Preliminary investigation,2469
+Poste Italiane SpA - Preliminary investigation,2469
 Employee Management,2094
 Negotiation of Travelers Checks,1640
 Collection management,2181
@@ -130,7 +130,7 @@ Accounting checks and invoicing,1712
 Management of Block Dealing,2063
 Organizational Participatory Structures (APE),2115
 Monitoring of positions and prevention of the Buy In procedure,2844
-BdT,1913
+Transaction definition and conclusion - BdT,1913
 Valuation of OTC derivatives at accounting deadlines,3049
 Data consolidation and Decadale sending,2534
 Management of incoming and outgoing Cash Letters,1520
@@ -143,7 +143,7 @@ Transactions regulated by German law,2476
 Administrative expenses,2130
 96,2468
 Management of operational blocks,2085
-Portfolio,2762
+Freezing Folder - Portfolio,2762
 Management of Drafts payable by ISP issued by Foreign Correspondent Banks,1908
 POUNLight management,2339
 Validation of the Deal,1058
@@ -163,7 +163,7 @@ PIN recovery request for loss or forgetfulness,1805
 Recovery of suspected counterfeit banknotes from MTA,1282
 International Bank Coordination for methodological changes and system adjustments,2180
 "Checks on interlocking pursuant to art. 36 Legislative Decree Save Italy December 6, 2011 n. 201 (so-called Prohibition of interlocking) in the subsidiaries of the Intesa Sanpaolo Group",2751
-IMI CIB Division,1252
+Tobin Tax Management Italy and France - IMI CIB Division,1252
 Subsidized loans following natural disasters,2717
 On-Site Offer,1907
 Project Finance methodology,1053
@@ -193,7 +193,7 @@ Single Customer view,1427
 Management of notified deeds and payments,1317
 Periodic communications to Competent Authorities,1791
 Finalization and implementation of the Assignor relationship,2778
-Cycles on Credit Derivatives on Index and Rate Derivatives,1506
+Trioptima - Cycles on Credit Derivatives on Index and Rate Derivatives,1506
 Revocation of the delegation of securities deposit,1812
 Decommissioning and Scrapping Physical Assets,2334
 Management of the right to withdraw,2457
@@ -231,7 +231,7 @@ Loading data into DSH and making data available,2526
 Structuring and completion of the transaction,2405
 "Updating of the Organisation, Management and Control Model pursuant to Legislative Decree 231 2001 Subsidiaries",1372
 Data consolidation and Base 7 sending (wear),2055
-Preliminary Investigation and Resolution,1164
+Personal Loans Finalized Loan and Installment Credit Line - Preliminary Investigation and Resolution,1164
 Different variations on the ratio,2291
 Structuring,2156
 Management of the Service exposed on Public IP,1867
@@ -242,7 +242,7 @@ Check Covenant and activate Waiver_Amendment proposal,1326
 Check Covenant and activate Waiver_Amendment proposal,1327
 Structuring and Approval,1030
 Monitoring of intercepted positions,2716
-Dealer and Supply Chain Activation,2313
+Definition of the Supply Chain Perimeter - Supplier Assessment - Dealer and Supply Chain Activation,2313
 Return to normal operations,1442
 Press release management,3254
 Analysis of the characteristics of the counterparty for the reconfirmation of the assignment of the rating or the certification of the rating benchmark,1000
@@ -271,7 +271,7 @@ Delivery and activation of the Card and PIN,2487
 Delivery and activation of the Card and PIN,2488
 Recruitment and Management of Other Roles,1960
 Transfer of reports,2216
-IMI CIB and BdT,1637
+MTM Reporting - IMI CIB and BdT,1637
 Management Resolutions,1356
 Stress Testing Book,1732
 Issuance of bank check books and issuance of cashiers checks,2935
@@ -302,7 +302,7 @@ Infrastructure products life cycle in Server Farm,2285
 Buyer Management,1399
 Intervention Management,1696
 Inbiz service activation for Financial Institutions or Foreign Branch or Foreign Bank Customers,1299
-BdT,1983
+Negotiation of spot exchange rates - BdT,1983
 Admission to the secondary market,2773
 I level monitoring and investor reporting,1411
 Secondary market,3178
@@ -327,11 +327,11 @@ Borrower Census,3232
 Global Banking & Sovereign Institutions Dir,1566
 Provis,1445
 Monitoring and Reporting,2383
-BdT,1541
+Contract document regularization - BdT,1541
 Extinction of the Corporate Welfare Service,1103
 Suspension of payment of mortgage installments and medium-long term loans,1068
 Activation of the Counter-guarantee upon first request by the lender,1364
-sending of reports,2837
+consolidation - sending of reports,2837
 Management,1869
 Fraud monitoring and management,2276
 Affixing a certain date on financial instruments as collateral,2707
@@ -371,7 +371,7 @@ Certificate reactivation,2996
 Management of active criminal proceedings,1734
 Stipulation of contracts with Suppliers,1815
 Mandatory obligations towards central counterparties,1358
-Right of withdrawal,2230
+Personal Loans - Right of withdrawal,2230
 Automatic rating assignment,1926
 report of theft-loss-destruction,2096
 Management of Medium-Long Term Transactions from Financing Institutions,3098
@@ -379,13 +379,13 @@ Application architecture supply,2735
 Critical event classification,1318
 Loading and Modification,1886
 report of theft-loss-destruction presented by the customer,1386
-Social networks,3209
+Mobile - Social networks,3209
 Post activation management of the service,2801
 "Execution, placement and underwriting of ABS and ABCP",2703
 Enrollment in the Single Register of Financial Advisors,1985
 Change Service or Company Welfare Plan,3302
 Management of application enabling codes,2113
-Waiver,2810
+Poste Italiane SpA - Waiver,2810
 Title staging calculation,1192
 «Bring Your Own Device (BYOD) management on Windows To Go» (WTG),2797
 Disclosure to the public Pillar III: preparation of contributions,3285
@@ -395,11 +395,11 @@ Management of daily liquidity on behalf of third parties,1172
 Variation Margin,2238
 Our Employees,2249
 Monitoring RAF limits and Business Plan,1688
-agricultural,3177
+construction for income generation purposes and industrial credit - agricultural,3177
 Decision Management,2005
 Monitoring of supply flows from External Legal Entities,2265
 Management of Exceptions to IT Security Rules,1517
-IMI CIB Division,1999
+Verification of listing activities - IMI CIB Division,1999
 Accounts Payable Billing Management,1545
 Check pending deal in FO systems,2782
 Extinguishment,2648
@@ -407,18 +407,18 @@ Variation Margin Regulation,1654
 Management and finalization of the Framework Agreement for the issue of Signature Commitments,1995
 Management of requests for certification of passive and active interests,2939
 Disaster Recovery test management (online and batch),1953
-IMI CIB TOP customers,3166
+Transaction definition and conclusion - IMI CIB TOP customers,3166
 Self-assessment process relating to the area of algorithmic trading,2061
 Management of functional activities for accounting closures and assessments,1608
 Remodulations,2116
 Shift change entry,2351
 Review of the stressed VaR scenario,3040
 Management of the pool treasury service,1630
-to be allocated to foreign branches,2191
+Credit lines for Italian-Related customers - Business customers - to be allocated to foreign branches,2191
 Outsourcing monitoring and control,2442
 Request Management,2806
 Definition and disbursement of annual Incentive System bonuses,1776
-Remote offer,2730
+On-site offer - Off-site offer - Remote offer,2730
 Management of advance payment,1110
 Message management,1312
 OTC market and Gray Market bond operations,3088
@@ -452,9 +452,9 @@ Definition and disclosure of the scope of consolidation,2919
 Issue Internal Notes,2639
 After-sales,1534
 Improvement,1616
-Application,3107
+Credit lines and other loans - Application,3107
 Activation,1329
-operations in spot exchange rates,1088
+Verification of currencies - operations in spot exchange rates,1088
 Quarterly reporting resulting from the acquisition of FHC status,2032
 Promotion and sale of non-financial products and services by external partners within the Banks premises,2395
 Management of Domain Tables,2475
@@ -462,7 +462,7 @@ Change or Termination of Service,2223
 Own Account Backloading,1223
 Proxy and Risk Not In Model,2826
 Management of Infrastructural Systemic Change,2006
-IMI CIB Division,1296
+Bond Trading - Proprietary Trading - IMI CIB Division,1296
 Catalog consolidation,2635
 Bank checks concerning the Suppliers,2776
 Management of dividends regulated by Italy,1176
@@ -479,7 +479,7 @@ Classification of customers for the purpose of applying stamp duty,1480
 Request for a leave of absence,1166
 Assessment of health and safety levels,2933
 Analysis and promotion and investment in real estate auctions,1662
-IMI CIB,2941
+Marketing Material - IMI CIB,2941
 Intesa Sanpaolo Agents4You,2663
 Calculation of joint management fees,2099
 Management and publication of mandatory and optional pre-placement documentation,3051
@@ -489,7 +489,7 @@ Management of events following the release of a Domestic Signature Commitment,22
 Loans to Intesa Sanpaolo Group Employees,1615
 Mortgage restriction,3290
 Delivery,2371
-Transactions in Equity Derivatives,2620
+Confirmations - Transactions in Equity Derivatives,2620
 Review positions,2712
 Approval of operational continuity information flows for corporate bodies,1782
 Calculation of subsidized employee salaries,2155
@@ -536,7 +536,7 @@ Distribution plans Central Financial Statements,1139
 Declaration fulfillment and tax settlement,1604
 Starting practice,1532
 Withdrawal at the counter on report,2398
-Preliminary investigation and proposal,2964
+Credit lines and other loans - Preliminary investigation and proposal,2964
 Direct transfer of securities between the parties,1396
 Closure of the financial year or termination of service,2640
 Accounting adjustments on Corporate customer relationships,2714
@@ -562,7 +562,7 @@ Contract addenda management,3243
 Opening,2697
 Resolution,3090
 AnaCredit individual reporting to the Bank of Italy,1493
-IMI CIB and BdT,1144
+Reconciliations - IMI CIB and BdT,1144
 information and communication on occupational health and safety,1465
 Single Certification,2829
 Renewals,1181
@@ -578,7 +578,7 @@ Bonds and certificates offer,3160
 Finpiemonte,2920
 Improved,2551
 Management of accounting records,1624
-Intesa Sanpaolo Agents4You,2943
+Out-of-office offer - Intesa Sanpaolo Agents4You,2943
 Cybersecurity and Business Continuity Culture,2681
 Transactions on financial instruments carried out by CIB and CLB customers,3154
 Transactions on financial instruments carried out by CIB and CLB customers,3155
@@ -613,7 +613,7 @@ Issue,1414
 SHSG Consolidated Reporting,1971
 Checking and reconciling accounts on Payment Systems,1233
 Management of administrative privileges,2141
-Intesa Sanpaolo Agents4You,2153
+Issuing Policies - Distance Offering - Intesa Sanpaolo Agents4You,2153
 Distance Offer,2597
 RWA determination of positions subject to securitization,2571
 Production Model 770,1241
@@ -635,7 +635,7 @@ Local Root and Administrator password management,3028
 Posting,2787
 Proposal,2445
 Management of the mandate in the phase following the opening,2908
-BdT,2364
+Filing and regularization management - BdT,2364
 contracting and monitoring of external partners,1229
 Census or update of the group of connected customers,2525
 Assignment of salary to employees and TFS advance,2467
@@ -668,7 +668,7 @@ Bank Position Closing Step 1,2423
 Activation and after-sales management,2136
 Suspicious transaction reporting and management of requests from the Authorities,1174
 Sending Reports Registry Reports,2226
-basket,1568
+indices - basket,1568
 Taxation of capital gains in an administered regime,2017
 Taxation of capital gains in an administered regime,2018
 Branch Management,2974
@@ -682,7 +682,7 @@ Approval by the Board of Directors and submission to the Supervisory Authority,3
 Write-off of irrecoverable credit and balance and write-off,2270
 SOGEI reports,3133
 Facilitated financing following natural disasters,2209
-Preliminary Application Proposal and Resolution on the obligee or co-obligee,1536
+Acceptance and Release of Mortgage Co-obligee - Preliminary Application Proposal and Resolution on the obligee or co-obligee,1536
 Movement of artistic assets,2114
 Outsourcing of ATMs located at Third Parties and at unmanned self-service areas,2800
 Management of critical positions,1522
@@ -711,7 +711,7 @@ Loans to Intesa Sanpaolo Group Employees,3223
 BdT contracts,2892
 Management of F24 refund requests,2705
 Preparation of negotiating solutions,2531
-sending report,1279
+consolidation - sending report,1279
 Operations carried out at the Original Bank,1682
 Subjective assessment of ICT suppliers for activities carried out on behalf of third parties,1708
 Proposed investigation and Assignor resolution,1582
@@ -751,8 +751,8 @@ Management of contractual indemnities and potential repurchases,2580
 Fund data collection,1330
 Prevention and management of emergencies,2088
 Provision of the Value Together Service,1154
-Contact with the customer,2307
-Pension advance,2942
+Credit lines and other loans - Contact with the customer,2307
+Credit lines and other loans - Pension advance,2942
 Own account,2127
 Sale of flexibility options on Personal Loans,2260
 Collection and processing of pricing data,1710
@@ -771,11 +771,11 @@ Monitoring of corrective and improvement actions,1387
 Hot Money,2839
 Mortgages sold by the Poste Italiane SpA network,2659
 Renegotiation of public finance assets,1980
-IMI CIB Professional Corporate and Retail Clients,2092
+Transaction Definition and Conclusion - IMI CIB Professional Corporate and Retail Clients,2092
 Management of Institutions Postal Current Accounts,3321
 Accounting movements between banks,1499
 Withdrawal of cash and/or securities and possible termination of the mandate,1446
-Improvement,2417
+Credit lines and other loans - Improvement,2417
 System Environment Management,2480
 Activation and daily execution of morning tests,3115
 CIB,2522
@@ -825,20 +825,20 @@ Closing Operation,2553
 Signing and Closing,2558
 ADUE (SDD Core) and ADUE B2B (SDD B2B) mandate management,1680
 Takeover of the POS contract,2460
-Distance Offer,2235
+On-Site Offer - Off-Site Offer - Distance Offer,2235
 Asset Finance methodology,2368
 Investigation and resolution of equity investment operations,1741
 Holder Registration,1262
-Formalization of Credits & Obligations and Opinions,2348
+Proposal - Formalization of Credits & Obligations and Opinions,2348
 Signing of the agency contract,1686
-IMI CIB and BdT,1316
+Settlement and payments - IMI CIB and BdT,1316
 Activation of modification of closure of a UOG (SAP HR and SOA) or of an operational entity (SOA),2677
 Direct sale to the State Printing Office and Mint,1152
 Periodic analysis of suppliers,1518
 Management of the Payment System in EURO,1524
-IMI CIB and BdT,3297
+Management of confirmations - IMI CIB and BdT,3297
 Management of civil and insolvency cases,2883
-Proposal and Resolution,1367
+Poste Italiane SpA - Proposal and Resolution,1367
 Access to reserved areas of the Central Buildings requested by visitors,2583
 Open Pension Funds and Individual Pension Plans,1849
 Preparation of Disaster Recovery and High Availability infrastructure for an application,3131
@@ -892,7 +892,7 @@ CPPI-type guarantees,1294
 Customers,1353
 Attribution of SIA Code Variation,1833
 Definition of the evaluation perimeters,2536
-Intesa Sanpaolo Agents4You,1891
+Off-Site Offer - Intesa Sanpaolo Agents4You,1891
 Loans to Intesa Sanpaolo Group Employees,3086
 Activation and management of the wallet service,3312
 Global Banking & Sovereign Institutions Dir. and International Dir.,1822
@@ -911,7 +911,7 @@ Component design,1146
 Smart Enterprise Current Loan,2901
 fair value adjustment of structured equity instruments,1779
 Manual assignment of the rating,1276
-IMI CIB,2758
+Block Management - IMI CIB,2758
 Quarterly reporting to CFTC and NFA on derivatives and balance sheet data,2367
 electronic flows,3205
 Management of Security Patches on IT Systems,2589
@@ -920,7 +920,7 @@ Definition of membership fee and TIT discount,3266
 Transfer of securities deposit between branches of the same network,1254
 Calculation and application of penalties and bonus-malus,2493
 Forborne Credit Identification,3211
-Transfer of the tax credit,2624
+Condominiums - IACP - Third Sector and Religious Bodies - Transfer of the tax credit,2624
 Surveys on bank accounts and analysis of Swift messages received,3132
 Subscription and issue,2634
 Start of package preparation,1671
@@ -967,7 +967,7 @@ Management of feedback to reports produced by the CRO Area,3082
 Production of annual report on execution venues and execution quality under MiFID II,3135
 Activities to be carried out as Banca New for the transfer of payment services,1934
 Activation of a new Company (SAP HR and SOA),2858
-BdT,1447
+Governance of the offer - BdT,1447
 Money Market,2003
 Joint exposures,2859
 Joint exposures,2860
@@ -1019,17 +1019,17 @@ Direct Guarantee Fdo PMI 662 96 on Commercial Monitoring Portfolio,1676
 Inventory management,2952
 Inventory management,2953
 Inventory management,2954
-Distance Offer,1933
+On-Site Offer - Off-Site Offer - Distance Offer,1933
 Compulsory realization of pledge,2631
 Regulatory Alignment,2991
 Update and regularisation,1954
 Regulatory Multi-risk Stress Test,1044
 Monthly income statement feed,2514
-IMI CIB Division,2691
+Interest Claim Management - IMI CIB Division,2691
 Repurchase and cancellation of Certificates,1027
-14,3253
+07 - 14,3253
 Update activity,1120
-Commercial Offer and Application for Remote Branch and Off-Site Branch Credit,3231
+Personal Loans and Installment Credit Line - Commercial Offer and Application for Remote Branch and Off-Site Branch Credit,3231
 Tax models detection,2918
 Single Risk Stress Test,1444
 Discount with recourse bills,1543
@@ -1043,7 +1043,7 @@ Data Workflow Management,2147
 Definition of fiduciary management,1448
 Temporary overdrafts in current accounts,2833
 Centralized management of corporate meetings,2911
-Improvement,2090
+Poste Italiane SpA - Improvement,2090
 Sector trend indicator update,2698
 Document dematerialization management,2473
 Monitoring of guarantees and management of assets at auction,2036
@@ -1060,8 +1060,8 @@ Acquisition of internal rating for equity investment operations,3156
 Processing monthly fees,1449
 Disbursement of Contributions Reg. Auton. Sardinia Cto Capit-Interests-Leasing Fees,2261
 Manual monthly data collection,1929
-Credit derivative transactions,1665
-Transactions in Exchange and Forex Derivatives,1196
+Confirmations - Credit derivative transactions,1665
+Confirmations - Transactions in Exchange and Forex Derivatives,1196
 REPO trading and Bond Lending with direct customers or market counterparties,2997
 Management of signing Cash Letter agreements,3193
 Proposal and confirmation,3002
@@ -1075,11 +1075,11 @@ Notification pursuant to Article 48 of Law 196 2009,1194
 Funding Plan Approval and reporting,1355
 Evaluation and validation of participations,1874
 Correction for incorrect-missing Forborne flag registrations,3144
-Resolution,2672
+Credit lines and other loans - Resolution,2672
 Central Structure,1228
 Monitoring and Reporting,1935
 Supplier Management (Full-offsite),2664
-Corporate Convertible Loan,2219
+Product specificity - Corporate Convertible Loan,2219
 Sale and Activation,2721
 Monitoring Service provided by suppliers,2356
 Leasing,2026
@@ -1091,7 +1091,7 @@ Certified e-mail (PEC),1607
 Periodic and cumulative transfer of the tax credit,2037
 Tuning and Performance Management,2019
 Payment of taxes using the F24 form,2439
-Right of withdrawal,1151
+Finalized Loan - Right of withdrawal,1151
 Check amount adjustment,2757
 Customers waiver,2419
 Customers waiver,2420
@@ -1100,7 +1100,7 @@ Correction and restoration of stocks,1661
 Management of unpaid checks,2645
 Shortfall Management,1711
 Extinction,1167
-Structured Credit Derivative Transactions,1928
+Confirmations - Structured Credit Derivative Transactions,1928
 Fee and interest management,2424
 Economic and regulatory classification,1840
 Remote offer of financial instruments and insurance investment products,1573
@@ -1108,7 +1108,7 @@ Remote offer of financial instruments and insurance investment products,1574
 sending of reports,1297
 Certification of pricing and product testing,2257
 CLS Payment Release,2070
-Resolution,1564
+Assessments supporting the resolution - Resolution,1564
 Start Capital Budget,2369
 Disclaimer of Payment Card operations,1781
 Relations with central banks and institutions,2083
@@ -1129,14 +1129,14 @@ Periodic verification of guarantee documents for the Banca dei Territori Divisio
 Transfers with credit in current account,1193
 Management of out-of-court disputes,2725
 Issue of the Policy,3221
-conversion,1397
+curtailment - extinction - conversion,1397
 Management of the risk from taking on financial consultancy assignments,3252
 report of theft-loss-destruction presented by the customer,3142
 Buyer contracting,1863
 Unlikely to pay,3096
 On-Site Offer,1719
 Extinction,1216
-Analysis & Controls and Signatures,1244
+Proposal - Analysis & Controls and Signatures,1244
 Locks and constraints,3021
 Management of improvement areas,1900
 Survey and modification of Related Parties of Intesa Sanpaolo S.p.A. Associated Persons of the Group and Relevant Persons pursuant to art.136 TUB,1706
@@ -1152,7 +1152,7 @@ Placement activity or switch,2724
 Management of relevant Disputes on Initial Margin,2312
 Request to open relationships in the name of Fiduciaries,1136
 External staff management,2682
-Mortgage annuity loan,1251
+Credit lines and other loans - Product specifics - Mortgage annuity loan,1251
 Activities to be carried out after a theft of goods in the Branch,1771
 Management of external legal registers,2427
 Management of external legal registers,2428
@@ -1166,7 +1166,7 @@ Major Incident and Problem Management,3018
 Management of differences found on totally outsourced equipment,3251
 Preliminary fulfilments,1938
 Central Structure,2628
-Resolution,3281
+Subsidized mortgages and Mortgages granted to minors and owners of sole proprietorships - Resolution,3281
 Improvement,1631
 Acquisition,2921
 Transfer Pricing,3149
@@ -1245,7 +1245,7 @@ Direct Guarantee Fdo PMI 662 96 on the Excussion Portfolio,1148
 Customer pricing reporting and invoicing services (Billing),1240
 Deliveries to Work Progress Status (SAL),1409
 Update of MIFID profiling on Group Fiduciary relationships,2770
-IMI CIB,3134
+Preliminary contractual obligations - IMI CIB,3134
 Project publishing and management,1888
 Management of losses,3076
 Master data fraud prevention,1744
@@ -1255,7 +1255,7 @@ Determination of Risk Weighted Assets (RWA),2299
 Daily checks with a view to prevention,2310
 Information document for the public and communication to Consob for transactions with related parties of Intesa Sanpaolo SpA,2732
 Reporting management,2301
-Intesa Sanpaolo Agents4You,1692
+Issuance of Policies - Off-Site Offering - Intesa Sanpaolo Agents4You,1692
 Management and monitoring,1851
 Unit and Integration Test execution,2319
 Consulting assistance and clearing in the field of IT Security and Business Continuity,1756
@@ -1291,7 +1291,7 @@ Salesforce user management,2736
 Reactivation of depreciation before the deadline,2386
 Managing positions in Proactive Management (PM),1260
 Early repayment of medium-long term mortgages and loans,1384
-IMI CIB,2541
+Post-Sales Monitoring - IMI CIB,2541
 Management of operations requested by the customer,2564
 Switching on via Online Channels,2448
 Prescribed redemptions of securities and coupons,2971
@@ -1304,7 +1304,7 @@ Check exchange,2524
 Purchase ABCP issued by Romulus,2192
 "Event management, parameter calculation and reporting to the markets",2146
 Payment,2567
-Loans from the Fund for the prevention of the phenomenon of usury,2608
+Credit facilities and other loans - Product specifics - Loans from the Fund for the prevention of the phenomenon of usury,2608
 Loss-theft of artistic assets,1798
 Forborne credit monitoring,1901
 Management of the re-rating process,1423
@@ -1351,13 +1351,13 @@ Credit activity,2089
 Placement,2283
 Centralized administrative and accounting operations,1140
 Payment management,1829
-BdT,2213
+Preliminary contractual obligations - BdT,2213
 determination of credit adjustments for accounting purposes (CVA-DVA),2874
 Issue or update FI and summary documents (TRB@N),2104
 Management and settlement of transactions,1839
 Penal seizures and confiscations,1920
 "Drafting, publication and updating of Control Cards",1472
-Rate of spot transactions,2269
+Reconciliation of the position at risk Exchange - Rate of spot transactions,2269
 Chief Compliance Officer Annual Report,1765
 Covenant Verification,2539
 Investigation,2862
@@ -1395,7 +1395,7 @@ Subcontracting management,3056
 Customer withdrawal,1975
 Customer withdrawal,1976
 Customer withdrawal,1977
-Transactions in Rate Derivatives,2455
+Confirmations - Transactions in Rate Derivatives,2455
 Calculation and monitoring of risk measures for regulatory purposes,3262
 Expenditure assignment and activation,1677
 Variation Margin reconciliation,1721
@@ -1403,7 +1403,7 @@ Regulatory reporting for liquidity risk,2637
 Quality Assurance on the anomalous operations management process,2925
 Revocation and reversal of transactions,1016
 Activities and preparatory controls for the monthly certification of accounting flows,2112
-Financial Institutions,2221
+SEDA Activation of mandates - Financial Institutions,2221
 Survey and modification Sensitive situation,2494
 Asset Encumbrance,1010
 Update of the attachments Security Rules and Business Continuity Rules,1987
@@ -1494,7 +1494,7 @@ Operational details for Securities and Financial Instruments,2905
 Hedging Strategies,2333
 Collections,2713
 Revocation,1984
-IMI CIB Division,1709
+Equity trading - IMI CIB Division,1709
 Company credit cards issued to employees,2592
 Cybersecurity Postures,1664
 Acquisition of biometric data for access to Reserved Areas,2947
@@ -1541,7 +1541,7 @@ Particularity for Pledge of Limited Liability Company Shares,1390
 Production and publication of recommendations,2729
 Structured Finance,2742
 Proxies,2992
-OTC derivatives,2043
+certification - revision of pricing models - OTC derivatives,2043
 Emergency Application Change Management,2461
 accounting,1742
 Coupon and dividend management,2686
@@ -1570,7 +1570,7 @@ Balancing cash and securities transactions,1675
 Inbiz service activation for BdT Customer or Global Corporate Customer of the IMI-CIB Division,2897
 Preparatory activities and collection of information,1366
 Management of Accounting Rules for PNA (automatic journal entry),3034
-CIB,1792
+Contractualisation and authorization of customers for foreign exchange operations on Inbiz Forex - CIB,1792
 Preparation of contributions,3008
 Activities to be carried out following other risk situations in the Branch,1456
 Non-Standard Medium-Long Term TIT Curves and attribution of Standard TIT,3190
@@ -1583,12 +1583,12 @@ Marketing Materials,2754
 opening closing and rates management,2827
 Full-Services and custody and settlement operational onboarding,3058
 Strategic Risk Management,3222
-Agribusiness Branch,1335
+Enterprise - Third Sector - Agribusiness Branch,1335
 BdT,2470
 Mifid UK,2389
 Modification,1716
-Public Offering for Subscription and Sale,1214
-Public Offering for Subscription and Sale,1215
+OPVS - Public Offering for Subscription and Sale,1214
+OPVS - Public Offering for Subscription and Sale,1215
 Alarm escalation management,3308
 Commercial Phase Management,2057
 Sourcing,1049
@@ -1619,7 +1619,7 @@ ITGC Governance Model Management,2400
 Retail rating assignment,2643
 Management of the right to withdraw,1827
 Management of the right to withdraw,1828
-IMI CIB Division,2211
+ETF creation and redemption - IMI CIB Division,2211
 Certificate revocation,1332
 Professional Requirements Certification,1001
 Funding Plan Data Collection,3055
@@ -1627,7 +1627,7 @@ Veneto Sviluppo,1591
 Government concession tax on corporate books,2198
 Preliminary investigation,1408
 Variation of the employees personal data,1105
-Own account,1800
+Spot exchange trading - Own account,1800
 Annual reporting process of the PCI Officer to Top Management,3240
 Execution of the transaction and placement,2225
 Monitoring and settlement of CLS discarded contracts,2293
@@ -1638,12 +1638,12 @@ Anomaly remediation and escalation,2662
 Impairment of intangible assets with a finite life,1081
 Adjustment of taxes,3313
 Management of criminal actions brought by third parties,1956
-IMI CIB and BdT,1937
+Deal modification (cancel and reissue) - IMI CIB and BdT,1937
 clearing,2456
 Disclosure of relevant employee interests in relation to Sensitive Situations,2262
 "Theft, damage, tampering and loss",2784
 Deal settlement,1510
-Cancel and Reissue,2804
+Modification of the deal - Cancel - Cancel and Reissue,2804
 Limit Monitoring for Clearing Clients,2646
 Non-bank treasuries,1796
 Basic personal data,1371
@@ -1660,7 +1660,7 @@ Prematching and Confirmation Management,2177
 Enforcement of international guarantees received,2212
 On-Site Offer and Off-Site Offer,1957
 Repossession and asset management,1979
-IMI CIB and BdT,3213
+Management of market operations (MOP validation and MOP removal) - IMI CIB and BdT,3213
 Services on behalf of the issuer,2693
 Management of precious metals. Check of stock in Sala Conta,2119
 Loss Verification Agent,2530
@@ -1669,7 +1669,7 @@ Global Corporate and International Departments,1806
 Anomalous operations evaluations,3067
 Management of Delivery Desks and supervision of supply flows,1697
 Fulfillments relating to events and the assignment of works in the context of Legislative Decree 81-08 art. 26,2532
-IMI CIB and BdT,2135
+Deal Validation - IMI CIB and BdT,2135
 Cash Management,2268
 Acquisition Finalization Direct Guarantee Fdo PMI 662 96 on Portfolio,1824
 Eximbills,2401
@@ -1739,15 +1739,15 @@ Term redemption of the asset,2431
 Credit Analysis & Resolution,1668
 Payment and booking,2024
 Management of payments in litigation matters,2615
-Entrepreneurial Microcredit Financing,1620
+Product Specifics - Entrepreneurial Microcredit Financing,1620
 Management of requests to take advantage of permits law 104 and maternity and paternity leave,2959
 Skills invoicing for Corporate Welfare Service,1122
 Monitoring and correction of MiFID profiling,2102
-Preliminary investigation and Proposal,2599
+Subsidized mortgages and Mortgages granted to minors and owners of sole proprietorships - Preliminary investigation and Proposal,2599
 Definition of risk propensity and group exposure ceilings towards Associated Persons,2899
 Procedure alignment activities,2607
 Paper and electronic Novation management,2641
-Bridging and repayment periods,3280
+Credit facilities and other loans - Bridging and repayment periods,3280
 Verification of Gold materiality stock,1855
 Oversight of subrogation practices,1398
 Management and payment of supplier documents,1121
@@ -1761,7 +1761,7 @@ Management of the Committees for the control of the activities provided in servi
 Specialist Management of SME Retail Remediation DR,1876
 Routine Disposal of Non-Performing Loans Portfolio Factoring,1726
 Activation and extinction upon expiry,1369
-Open Pension Funds and Individual Pension Plans,2877
+redemptions - RITA - transfers and declaration of non-deducted contributions - Open Pension Funds and Individual Pension Plans,2877
 Document archiving of non-financial companies,1727
 Assignment of customers to the financial advisor,2053
 Branch,1633
@@ -1805,14 +1805,14 @@ Derivatives,1087
 Reclassification of financial statements,1015
 Opening of ordinary administered deposit or BdT and CIB_Global Corporate customer guarantee,1441
 Clearing Custody and Settlement services - CSDR reporting management,2214
-Right to be forgotten,1600
+anonymization of personal data - Right to be forgotten,1600
 "Updating of the Organisation, Management and Control Model pursuant to Legislative Decree 231 2001 ISP",2654
 Trade Reconstruction,1231
 Medium/long-term placement with foreign customers,2868
-reporting,3214
+consolidation - reporting,3214
 Approval and reporting,2379
 Coordination of operations from Supranational Entities to Banks of the ISB Division,2928
-Intesa Sanpaolo Agents4You,2228
+Distance Offering - Intesa Sanpaolo Agents4You,2228
 Change of circumstances,2499
 Monitoring of TLTRO loans and economic impact reporting,1560
 Structuring preliminary transfer activities,2958
@@ -1824,9 +1824,9 @@ Acquisition,2030
 Financial Institutions,2166
 Closure of the annual audit plan,2021
 Issuance of mandates,1165
-Systematic internaliser,2279
+Bond negotiation - Systematic internaliser,2279
 Management of cash advances and related details,1074
-IMI CIB Division,2690
+ETF Trading - IMI CIB Division,2690
 Margin call to client,2311
 Brand Management,1306
 Linking and unlinking Convention or Group,1687
@@ -1850,25 +1850,25 @@ Public Offerings IPO,2984
 Centralized management of paid capital increase,1627
 Management of FIU findings,3203
 Publication of recommendations from Specialists and Sponsors,1912
-Loan to SAL with transfer of tax credit,2752
+Condominiums - IACP - Third Sector - Loan to SAL with transfer of tax credit,2752
 DCO,2593
 Intesa Sanpaolo Agents4You,2105
 Activation and management of Greentrade exchange platform customers,1333
 Valuation of owned properties and valuable works of art at fair value,1403
 Sterilization and declassification of positions due to technical default,1002
 Sterilization and declassification of positions due to technical default,1003
-Application,2665
+Subsidized mortgages and Mortgages granted to minors and owners of sole proprietorships - Application,2665
 Credit Extinction,3170
 Release,2215
 PCI Officer quarterly monitoring process,3036
 Institutional maintenance of the Business Continuity Plan,3226
-Social advance,1331
+Credit lines and other loans - Product specificity - Social advance,1331
 Suspension of installments on personal loans,1147
 Transfer or repurchase of assets,2387
 Reporting of anomaly indicators to the Supervisory Body and keeping of the single register of OCF Financial Advisors,1277
 Definition of the annual program and launch of individual model change projects,1866
 Identification of specific positions to be excluded from external management,2170
-Condominium financing,1308
+Product specificity - Condominium financing,1308
 Withdrawal from the agency contract,2598
 Issue of senior domestic bonds placed by BdT,3201
 Authorization (punctual or plafond) TIT MLT in derogation and specific TIT MLT,1861
@@ -1883,14 +1883,14 @@ Management of confirmations of foreign exchange operations,2574
 Subsequent events Extinction of the Loan of Hope Guarantee,2314
 IT management of WePOG,2332
 Proprietary Trading activity,2328
-operations in spot foreign exchange,2110
+Settlement of the settlement deal - operations in spot foreign exchange,2110
 Management of tasks for public employees,2900
 Declaration fulfillment,1751
 Check found,1593
 Paper and electronic Novation management,2917
-Improvement,2047
+Subsidized mortgages and Mortgages granted to minors and owners of sole proprietorships - Improvement,2047
 Intesa Sanpaolo Agents4You,2613
-BdT Division,2232
+Accreditation of primary customers spot foreign exchange transactions - BdT Division,2232
 Takeover of an operator on the cash desk,2540
 Identification of the risk level of the positions,2478
 Question,1343
@@ -1900,7 +1900,7 @@ Termination of Service,1247
 Domiciliation agreements with banks and guarantee management with EU validity to cover the various customs procedures including that of Community transit,2051
 Selection and rejection maximum and Central Structures classification holder,2887
 Data Dictionary Management,2397
-Post-assignment centralized activities,2404
+OPVS - OPA - Post-assignment centralized activities,2404
 Tax Monitoring Investigations Legal Persons and Tax Assessments,1013
 Health tickets,1580
 Monitoring of contribution arrears from the facilitating institution,2968
@@ -1910,18 +1910,18 @@ Internal Model Investigation Final Decision and Remediation Plan,1133
 Checks on covered bond issuance programmes,2946
 Use,1925
 Periodic and cumulative transfer of the tax credit,1539
-reporting sending,1430
+consolidation - reporting sending,1430
 Cash flow forecast,2557
 Triparty REPO,2700
 Charge calculation and tax balancing,1699
 Internet Banking,3228
 Attivita Of periodic reportistica-Finanziamenti Facilitated following of Calamita Naturali,1186
-IMI CIB and BdT,2876
+Fixing Management - IMI CIB and BdT,2876
 Creation and management of Mazzetta Civetta in ATM-MTA,1526
 Monitoring of the Capital Plan,3019
 "Drafting, publication and updating of Governance Documents and Rules",3074
 Deterioration-damage-destruction-improper use of artistic assets,1023
-Conditional transfer of the tax credit to be accrued,2329
+Condominiums - IACP - Third Sector and Religious Entities - Conditional transfer of the tax credit to be accrued,2329
 After Sales,1225
 Intesa Sanpaolo,1904
 Enforcement of the ISMEA surety,2315
@@ -1988,7 +1988,7 @@ Payment,1461
 Performance test execution,1040
 Termination of access authorization to Restricted Areas with biometric data detection,2502
 Cancellation of own securities,2466
-IMI CIB Division,2128
+Monitoring operating restrictions on trading - IMI CIB Division,2128
 Collection of bank transfers and manual active invoicing,1415
 Perfecting Small Business,2818
 Distribution of insurance financial products,2966
@@ -1996,7 +1996,7 @@ After Sales,2272
 Advances and expense accounting,1039
 PagoPA System,2656
 Existing customer management,3215
-MOP Validation and Remove MOP,2625
+Market Operations Management - MOP Validation and Remove MOP,2625
 Activation of the payment service,2667
 Fee and interest management,1679
 Personal data and tax treatment of relationships,2655
@@ -2020,7 +2020,7 @@ Calculation of regulatory exchange risk measures,2945
 Protest bills management,1512
 Entry and modification,1636
 Identification of the Configuration Items,2523
-Proprietary Trading DCTFG,1059
+Bond Trading - Proprietary Trading DCTFG,1059
 Trading via the Market Hub platform,1125
 Payment of foreign checks,1452
 Law 488-92,3230
@@ -2045,7 +2045,7 @@ Definition of the investment plan and project authorization,1733
 Mortgage renewals,1054
 Evolutionary maintenance,3054
 Payment of checks drawn and negotiated,1381
-accounting of stamp duty paid virtually,2566
+payment - accounting of stamp duty paid virtually,2566
 Issuance and Withdrawal of the temporary badge for Branches,2535
 Internet Banking and Mobile App,1963
 Website creation and updating,1895
@@ -2071,15 +2071,15 @@ Management of agreements for the exchange of MT101 with Third Party Banks,2972
 Management of lost foreign checks,1184
 CIB,3288
 Management of Administrative Activities F23 and F24,1021
-BdT,2627
+Activation and Management of the Investment Research Service - BdT,2627
 Proactive Problem Planning Monitoring,2507
 Management of disputes of factored debtors,1018
 Management of 498 Notices and other communications,2912
 Key Management,1601
 Placement exchange transactions,1902
-Transactions in Derivatives on Commodities,3122
+Confirmations - Transactions in Derivatives on Commodities,3122
 Installment management,1958
-Improvement,1666
+Acceptance and release Mortgage co-obligee - Improvement,1666
 Restructuring Agreements-Recovery Plans,3256
 Issuance of the proxy on securities deposit,2151
 Checks on Cash Handling Suppliers,3012
@@ -2088,7 +2088,7 @@ Plafond definition for Territorial Donations,2347
 Disclosure of information to customers,1993
 Use of funds for currency adjustment,1835
 Counts pursuant to art. 2855 of the Civil Code and account statements on mortgages,3189
-Reporting and Monitoring,1407
+Post Closing Activities - Reporting and Monitoring,1407
 Renewal,3229
 Sending draft studies to the issuer,3283
 Transaction Reporting (TR) and Post-Trade Transparency (PTT),3278
@@ -2098,18 +2098,18 @@ Sale of additional options,3105
 Presentation management,3064
 Regularization of Documentary Anomalies,2549
 BdT Division,2573
-IMI CIB,1213
+Spot exchange trading - IMI CIB,1213
 Effectiveness test of interest rate risk hedging,1131
 Management of operations with Cassa Depositi e Prestiti,1483
 Monitoring the trend of real estate initiatives,3045
-IMI CIB Financial Institutions customers,1511
+Transaction definition and conclusion - IMI CIB Financial Institutions customers,1511
 Detection of monthly curves and daily quotations for the Commercial Divisions,1098
-Suspension of guarantee activation terms Direct Guarantee Fund 662-96,2995
+Extension of guarantee duration - Suspension of guarantee activation terms Direct Guarantee Fund 662-96,2995
 Production management of Data Quality contributions for reporting,1743
 Issue of Advised Checks-Circulars-Drawing,2308
 Verification Plan,3091
 Hermione database generation and verification,3244
-Right of withdrawal,2915
+Installment credit line - Right of withdrawal,2915
 Training of Personnel who perform Relevant Activities in the context of Investment Services,2075
 Validation of documentation and authorization of the Counterparty,1307
 Reallocation and Rebalancing Algorithmic Indices,3300
@@ -2123,7 +2123,7 @@ Building for sale,2199
 Launch of marketing new products,3194
 Top up or withdrawal on Card,2435
 Governance of the life cycle of the control,2898
-Other information details (Base W2),2184
+Section III - Other information details (Base W2),2184
 Request for intragroup exemption,2542
 Customer identification and call management,2186
 self-certification,2811
@@ -2153,7 +2153,7 @@ Excerpts,1655
 Printing and translation of the booklets,1875
 IP Management in Server Farms,2320
 Issuance of anti-money laundering due diligence and management of documentary and certification requests,1298
-Global Corporate Management,2668
+Preliminary contractual fulfillment - Spot foreign exchange trading - Global Corporate Management,2668
 Activation of the Service,3227
 Clearing Clients,1115
 Loans to Intesa Sanpaolo Group Employees,1612
@@ -2173,11 +2173,11 @@ Invoicing of leasing supplies,1005
 Management of Change Requests,2058
 Sale of eligible assets and Cover Pool integration,1932
 Performance evaluation system of ICT Suppliers,1521
-Phone and Home collection,2722
+outsourcer - Phone and Home collection,2722
 Renegotiation of operations being disbursed at the Progress of Work Status,2777
 Internalization of operations in REPO,1967
 Transfer Management,3081
-Contact with the customer,1344
+Subsidized mortgages and Mortgages granted to minors and owners of sole proprietorships - Contact with the customer,1344
 Public Purchase Offer,1283
 Public Purchase Offer,1284
 Start up of the contract,1475
@@ -2186,7 +2186,7 @@ Control of currency coverage,1264
 Identity and Access Management for Customer Users,2335
 Placement and renewal of Italian government bonds,1450
 Proposal Preliminary Application and Resolution,2196
-Loan extinction or partial refund,2374
+Partial repayment - Loan extinction or partial refund,2374
 Closing,2596
 Opening current accounts at branches of foreign banks not belonging to the Intesa Sanpaolo Group belonging to the IBOS circuit,2122
 Issuance of the mandate of OFS enabled Financial Advisor,2133
@@ -2201,7 +2201,7 @@ Utilities,3162
 Production and publication of the Data Quality report of the CRO Area,1916
 Folder-Portfolio disposal,2857
 CDS,2756
-IMI CIB and BdT,2588
+Potential Loss Reporting - IMI CIB and BdT,2588
 Improvement,1357
 Calculation of Performing Expected Management Loss,2969
 Portfolio reconciliation for non centrally cleared OTC derivatives,1303
@@ -2221,7 +2221,7 @@ Test design,2744
 Various matches,3104
 Individual contract assignment,2344
 Data consolidation and submission of lending rates,1319
-Right of withdrawal,2217
+Credit lines and other loans - Right of withdrawal,2217
 "Centralized filing, research of blocks and pulping paper operational documentation Branches and Central Structures Operations",2154
 Management of third party access detection to Branch premises,1996
 Backtesting and Stress Testing,2796
@@ -2251,7 +2251,7 @@ Enabling and after-sales management,1391
 Customer Contact,3092
 Portfolio compression for non centrally cleared OTC derivatives,1487
 Branch,3029
-Intesa Sanpaolo Agents4You,1911
+Issuance of Policies - Off-Site Offering - Intesa Sanpaolo Agents4You,1911
 Issue,3039
 Customer payments,1498
 Application,2065
@@ -2302,7 +2302,7 @@ Criticality,3059
 Management of Business Continuity Measures for Operations,1205
 Package drafting,2612
 ICT Supplier ceiling assignment and monitoring,1195
-BdT,2649
+Post-sales monitoring - BdT,2649
 Macroeconomic scenario analysis,2210
 Transport and counting of valuables on behalf of third parties,3184
 Management of penalties in the guaranteed market pursuant to CSDR,1670

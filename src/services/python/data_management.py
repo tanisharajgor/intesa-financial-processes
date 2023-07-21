@@ -287,8 +287,15 @@ def model_dm(data, raw_pth, processed_pth):
     df = df.drop('english', axis = 1)
 
     def shorten_label(row):
-        return row['model'].split(" - ")[-1]
-    
+        split_parts = row['model'].split(" - ")
+        if (len(split_parts) <= 2):
+            # Take the only split or the last split
+            result = split_parts[len(split_parts) - 1]
+        if (len(split_parts) > 2): 
+            # Take everything after the first two splits.
+            result = " - ".join(split_parts[2:])
+        return result
+            
     df['model'] = df.apply(shorten_label, axis=1)
 
     ## Write the cleaned data out
