@@ -4,7 +4,7 @@ import Draggable from 'react-draggable';
 
 // Components
 import View from "./View";
-import { MenuBody, MenuHeader } from "./Menu";
+import { MenuBody, MenuCollapsableHeader } from "./Menu";
 
 // Styles
 import { StatusMenu } from "../component-styles/menu";
@@ -23,13 +23,13 @@ export default function Status({
     const handleRotate = () => setRotate(!shouldRotate);
 
     return (
-        <Draggable bounds="body" isFullscreen={isFullscreen}>
-            <StatusMenu style={{
-                    height: !shouldRotate ? "10vh" : "65vh",
+        <Draggable bounds="body">
+            <StatusMenu isFullscreen={isFullscreen} style={{
+                    maxHeight: !shouldRotate ? "10vh" : "calc(100vh - 8rem)",
                     overflowY: !shouldRotate ? "hidden" : "scroll",
                     visibility: isFullscreen ? 'hidden' : 'visible'
                 }}>
-                <MenuHeader label="Legend" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+                <MenuCollapsableHeader label="Legend" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
                 <MenuBody>
                     <LayoutGroup style={{ visibility: !shouldRotate || isFullscreen ? 'hidden' : 'visible' }}>
                         <View id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} isFullscreen={isFullscreen} />

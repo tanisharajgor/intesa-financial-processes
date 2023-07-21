@@ -112,13 +112,13 @@ export default function CirclePacking() {
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <QueryMenu className="Query" style={{
+                <QueryMenu className="Query" isFullscreen={isFullscreen} style={{
                     height: !shouldRotate ? "10vh" : "100vh",
                     overflowY: !shouldRotate ? "hidden" : "scroll"
                 }}>
-                    <MenuHeader label="Ecosystem" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+                    <MenuHeader label="Ecosystem" />
                     <MenuBody shouldRotate={shouldRotate} pageDescription="Click on the circles to zoom into the process visualization.">
-                        <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
+                        <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type" />
                         <InspectTaxonomy
                             handleTaxonomyChange={handleTaxonomyChange}
                             selectedLevel1={selectedLevel1}
@@ -132,7 +132,7 @@ export default function CirclePacking() {
                             valuesChapter={valuesChapter}
                             updateValuesChapter={updateValuesChapter}
                         />
-                        </MenuBody>
+                    </MenuBody>
                 </QueryMenu>
                 <Main
                     viewVariable={viewVariable}

@@ -6,23 +6,23 @@ export const QueryMenu = styled.div`
     z-index: +9;
     position: absolute;
     top: 4rem;
-    left: ${props => props.isFullscreen ? "-30vw;" : "0vw;"};
+    left: ${props => props.isFullscreen ? "-100vw;" : "0vw;"};
     width: 20rem;
     padding: ${props => props.theme.padding};
     background-color: ${props => props.theme.backgroundColor.main};
     transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    overflow-y: auto;
 `;
 
 export const StatusMenu = styled('div')`
     position: fixed;
     top: 5rem;
-    right: 1rem;
+    right: ${props => props.isFullscreen ? "-100vw;" : "1rem;"};
     cursor: grab;
-    visibility: ${props => props.isFullscreen ? "hidden" : "visible"};
     background-color: rgba(0,0,0,0.6);
     width: ${props => props.theme.viewColWidth};
     padding: ${props => props.theme.padding};
-    transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    transition: right 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     border: 1px solid ${Theme.extraDarkGreyHex};
     border-radius: 5px;
 `
