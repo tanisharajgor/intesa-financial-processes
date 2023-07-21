@@ -195,7 +195,6 @@ export default class NetworkVisualization {
       }
 
       Global.symbolScalePixi(node, rSize);
-      this.nodeAlpha(node);
 
       node.gfx.x = this.width * 0.5;
       node.gfx.y = this.height * 0.5;

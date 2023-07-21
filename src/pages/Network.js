@@ -178,8 +178,8 @@ export default function Network() {
     }, [selectedLevel3]);
 
     useEffect(() => {
-        networkDiagram.current.updateDraw(viewVariable, selectedChapter);
-    }, [viewVariable, selectedChapter]);
+        networkDiagram.current.updateDraw(viewVariable);
+    }, [viewVariable]);
 
     useEffect(() => {
         networkDiagram.current.updateNodeAlpha(selectedChapter);
