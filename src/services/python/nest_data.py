@@ -41,6 +41,8 @@ def levelsObject(df):
             "level2ID": df.level2ID.unique().tolist(),
             "level3ID": df.level3ID.unique().tolist(),
             "modelID": df.modelID.unique().tolist(),
+            "orgStructure1ID": df.organizational_structure1.unique().tolist(),
+            "orgStructure2ID": df.organizational_structure2.unique().tolist()
         }
 
     return levels
