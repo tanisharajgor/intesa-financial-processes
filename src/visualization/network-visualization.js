@@ -44,8 +44,6 @@ export default class NetworkVisualization {
     this.clickCount = 0;
     this.inspectNode = [];
     this.inspectLink = [];
-
-    console.log(data)
   }
 
   initSimulation() {
