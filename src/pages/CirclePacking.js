@@ -8,7 +8,6 @@ import Main from "../components/Main";
 import { inspectHierarchySummary } from "../components/Inspect";
 import FilterType from "../components/FilterType";
 import InspectTaxonomy from "../components/InspectTaxonomy";
-import InspectOrgStructure from "../components/InspectOrgStructure";
 import { MenuHeader, MenuBody } from "../components/Menu";
 
 import { activityTypeValues } from "../utils/global";
@@ -45,14 +44,10 @@ export default function CirclePacking() {
 
     // User selected activities and actors
     const [selectedActivities, updateActivities] = useState(activityTypeValues);
-
     const [selectedLevel1, updateSelectedLevel1] = useState({ "id": -1, "descr": "All" });
     const [selectedLevel2, updateSelectedLevel2] = useState({ "id": -1, "descr": "All" });
     const [selectedLevel3, updateSelectedLevel3] = useState({ "id": -1, "descr": "All" });
     const [selectedChapter, updateSelectedChapter] = useState({ "id": -1, "descr": "All" });
-
-    const [selectedOrg1, updateSelectedOrg1] = useState({ "id": -1, "descr": "All" });
-    const [selectedOrg2, updateSelectedOrg2] = useState({ "id": -1, "descr": "All" });
 
     const [valuesChapter, updateValuesChapter] = useState([]);
 
@@ -111,8 +106,8 @@ export default function CirclePacking() {
 
     // Updates the Opacity on Inspect
     useEffect(() => {
-        circlePackingDiagram.current.updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter, selectedOrg1, selectedOrg2)
-    }, [selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, selectedActivities, selectedOrg1, selectedOrg2]);
+        circlePackingDiagram.current.updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter)
+    }, [selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, selectedActivities]);
 
     return (
         <>
@@ -125,7 +120,6 @@ export default function CirclePacking() {
                     <MenuHeader label="Ecosystem" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
                     <MenuBody shouldRotate={shouldRotate} pageDescription="Click on the circles to zoom into the process visualization.">
                         <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type"/>
-                        <InspectOrgStructure selectedOrg1={selectedOrg1} updateSelectedOrg1={updateSelectedOrg1} selectedOrg2={selectedOrg2} updateSelectedOrg2={updateSelectedOrg2}/>
                         <InspectTaxonomy
                             handleTaxonomyChange={handleTaxonomyChange}
                             selectedLevel1={selectedLevel1}

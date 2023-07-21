@@ -176,32 +176,6 @@ export default class NetworkVisualization {
     return unique;
   }
 
-  // Change the opacity of the actor nodes and their linked attributes when inspected
-  nodeAlpha(node) {
-
-    if (this.selectedChapter !== -1 && this.selectedChapter !== undefined) {
-      if (node.viewId === "Actor") {
-        if (node.levels.modelID.includes(this.selectedChapter)) {
-          let links = this.listHighlightNetworkNodes(node);
-          let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
-          this.inspectLink = this.reduceNestedList(this.inspectLink, links);
-          this.inspectNode = this.reduceNestedList(this.inspectNode, nodes);
-          node.gfx.alpha = 1;
-        } else {
-          node.gfx.alpha = nonHighlightOpacity;
-        }
-      } else {
-        if (this.inspectNode.includes(node.id)) {
-          node.gfx.alpha = 1;
-        } else {
-          node.gfx.alpha = nonHighlightOpacity;
-        }
-      }
-    } else {
-      node.gfx.alpha = 1;
-    }
-  }
-
   // Initializes the nodes
   drawNodes() {
 
@@ -334,17 +308,9 @@ export default class NetworkVisualization {
   // Update the nodes position
   updateNodePosition() {
     this.nodes.forEach((node) => {
-      let { x, y, focus, gfx } = node;
+      let { x, y, gfx } = node;
       gfx.x = x;
       gfx.y = y;
-      if (focus) {
-        gfx.tint = 0xffffff;
-        gfx.zIndex = 1;
-      } else {
-        gfx.tint = 0xffffff;
-        // 0x444444;
-        gfx.zIndex = 0;
-      }
     });
   }
 
@@ -568,18 +534,47 @@ export default class NetworkVisualization {
     this.simulation.alpha(1).restart();
   }
 
-  updateDraw(viewVariable, selectedChapter) {
-    this.selectedChapter = selectedChapter;
+  updateDraw(viewVariable) {
     this.hoverLink = [];
     this.hoverNode = [];
     this.hoverNodes = [];
-    this.inspectLink = [];
-    this.inspectNode = [];
     this.destroyLinks();
     this.destroyNodes();
     this.draw(viewVariable);
     this.animate();
   }
+
+  // Change the opacity of the actor nodes and their linked attributes when inspected
+  updateNodeAlpha(selectedChapter) {
+    this.selectedChapter = selectedChapter;
+    this.inspectLink = [];
+    this.inspectNode = [];
+
+    this.nodes.forEach((node) => {
+      if (this.selectedChapter !== -1 && this.selectedChapter !== undefined) {
+        if (node.viewId === "Actor") {
+          if (node.levels.modelID.includes(this.selectedChapter)) {
+            let links = this.listHighlightNetworkNodes(node);
+            let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
+            this.inspectLink = this.reduceNestedList(this.inspectLink, links);
+            this.inspectNode = this.reduceNestedList(this.inspectNode, nodes);
+            node.gfx.alpha = 1;
+          } else {
+            node.gfx.alpha = nonHighlightOpacity;
+          }
+        } else {
+          if (this.inspectNode.includes(node.id)) {
+            node.gfx.alpha = 1;
+          } else {
+            node.gfx.alpha = nonHighlightOpacity;
+          }
+        }
+      } else {
+        node.gfx.alpha = 1;
+      }
+    });
+  }
+
 
   animate() {
     this.app.ticker.add(() => {

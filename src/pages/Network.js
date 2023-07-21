@@ -6,12 +6,14 @@ import * as d3 from 'd3';
 import Main from "../components/Main";
 import Navigation from "../components/Navigation";
 import InspectChapter from "../components/InspectChapter";
+import InspectOrgStructure from "../components/InspectOrgStructure";
 import FilterTaxonomy from "../components/FilterTaxonomy";
 import FilterType from "../components/FilterType";
 import { MenuBody, MenuHeader } from "../components/Menu";
 import { inspectNetworkSummary } from "../components/Inspect";
 import NetworkVisualization from "../visualization/network-visualization";
 import * as Global from "../utils/global";
+
 
 // Data
 import links from "../data/processed/nested/links.json";
@@ -80,6 +82,9 @@ export default function Network() {
     const [selectedChapter, updateSelectedChapter] = useState(-1);
     const [valuesChapter, updateValuesChapter] = useState([{ "id": -1, "descr": "All" }].concat(processes
         .children.find(d => d.id === selectedLevel1).children[0].children[0].children));
+
+    const [selectedOrg1, updateSelectedOrg1] = useState({ "id": -1, "descr": "All" });
+    const [selectedOrg2, updateSelectedOrg2] = useState({ "id": -1, "descr": "All" });
 
     // Status to update the opacity in the legend
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
@@ -176,17 +181,23 @@ export default function Network() {
         networkDiagram.current.updateDraw(viewVariable, selectedChapter);
     }, [viewVariable, selectedChapter]);
 
+    useEffect(() => {
+        networkDiagram.current.updateNodeAlpha(selectedChapter);
+    }, [selectedChapter]);
+
     return (
         <>
             <Navigation isFullscreen={isFullscreen} />
             <Content>
-                <QueryMenu className="Query" style={{
+                <QueryMenu className="Query" isFullscreen={isFullscreen} style={{
                     height: !shouldRotate ? "10vh" : "100vh",
-                    overflowY: !shouldRotate ? "hidden" : "scroll"
+                    overflowY: !shouldRotate ? "hidden" : "scroll",
+                    visibility: isFullscreen ? 'hidden' : 'visible'
                 }}>
                     <MenuHeader label="Network" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
                     <MenuBody shouldRotate={shouldRotate} pageDescription="Filter data in the actor network graph to explore activities and risks.">
                         <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
+                        <InspectOrgStructure selectedOrg1={selectedOrg1} updateSelectedOrg1={updateSelectedOrg1} selectedOrg2={selectedOrg2} updateSelectedOrg2={updateSelectedOrg2}/>
                         <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3} />
                         <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type" />
                         <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type" />

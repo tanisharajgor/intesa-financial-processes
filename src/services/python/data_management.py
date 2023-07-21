@@ -508,7 +508,9 @@ def main_dm(data, level1, level2, level3, model, activities, actors, risks, cont
     df = pd.merge(data, level1, how="left", on="level1GUID")
     df = pd.merge(df, level2, how="left", on="level2GUID")
     df = pd.merge(df, level3, how="left", on="level3GUID")
+
     df = pd.merge(df, model, how="left", on="modelGUID")
+
     df = pd.merge(df, activities, how="left", on="activityGUID")
     df = pd.merge(df, actors, how="left", on="actorGUID")
 

@@ -26,13 +26,16 @@ export class CirclePackingDiagram {
   viewport;
   viewVariable;
   zoomedNodeId;
-  taxonomyDataMap;
+  dataMap
 
   constructor(data, updateViewHoverValue) {
     this.data = data;
     this.levelIDs = [];
-    this.orgStructureIDs = [];
-
+    this.dataMap = {};
+    this.data.forEach(d => {
+      this.levelIDs.push(d.data.id);
+      this.dataMap[`${d.data.id}`] = d;
+    })
     this.zoomedNodeId = 0;
     this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
@@ -41,12 +44,6 @@ export class CirclePackingDiagram {
     this.selectedLevel2 = [];
     this.selectedLevel3 = [];
     this.selectedChapter = [];
-  
-    this.taxonomyDataMap = {};
-    this.data.forEach(d => {
-      this.levelIDs.push(d.data.id);
-      this.taxonomyDataMap[`${d.data.id}`] = d;
-    });
   }
 
   // Initializes the application
@@ -160,35 +157,6 @@ export class CirclePackingDiagram {
     }
   }
 
-  taxonomyDataMapping(valuesChapter, selectedChapter) {
-    if (this.selectedLevel1.id !== -1) {
-      if (this.selectedLevel2.id !== -1) {
-        if (this.selectedLevel3.id !== -1) {
-          if (this.selectedChapter.id !== -1) {
-            let foundChapter = this.taxonomyDataMap[`${valuesChapter.find(d => d.id === selectedChapter.id).id}`]
-            if (foundChapter !== undefined) {
-              this.levelIDs = [foundChapter.data.id];
-            } else {
-              this.levelIDs = [];
-            }
-          } else {
-            this.levelIDs = [this.taxonomyDataMap[`${this.selectedLevel3.id}`]].map(d => d.data.childrenIDs)
-            .reduce((a, b) => a.concat(b))
-            .concat([this.selectedLevel3]);
-          }
-        } else {
-          this.levelIDs = [this.taxonomyDataMap[`${this.selectedLevel2.id}`]].map(d => d.data.childrenIDs)
-          .reduce((a, b) => a.concat(b))
-          .concat([this.selectedLevel2]);
-        }
-      } else {
-        this.levelIDs = [this.taxonomyDataMap[`${this.selectedLevel1.id}`]].map(d => d.data.childrenIDs)
-          .reduce((a, b) => a.concat(b))
-          .concat([this.selectedLevel1]);
-      }
-    }
-  }
-
   updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
     this.selectedActivities = activityTypeValues.filter(activity => !selectedActivities.includes(activity));
     
@@ -197,7 +165,32 @@ export class CirclePackingDiagram {
     this.selectedLevel3 = selectedLevel3;
     this.selectedChapter = selectedChapter;
 
-    this.taxonomyDataMapping(valuesChapter, selectedChapter);
+    if (this.selectedLevel1.id !== -1) {
+      if (this.selectedLevel2.id !== -1) {
+        if (this.selectedLevel3.id !== -1) {
+          if (this.selectedChapter.id !== -1) {
+            let foundChapter = this.dataMap[`${valuesChapter.find(d => d.id === selectedChapter.id).id}`]
+            if (foundChapter !== undefined) {
+              this.levelIDs = [foundChapter.data.id]
+            } else {
+              this.levelIDs = []
+            }
+          } else {
+            this.levelIDs = [this.dataMap[`${this.selectedLevel3.id}`]].map(d => d.data.childrenIDs)
+            .reduce((a, b) => a.concat(b))
+            .concat([this.selectedLevel3]);          }
+        } else {
+          this.levelIDs = [this.dataMap[`${this.selectedLevel2.id}`]].map(d => d.data.childrenIDs)
+          .reduce((a, b) => a.concat(b))
+          .concat([this.selectedLevel2]);
+        }
+      } else {
+        this.levelIDs = [this.dataMap[`${this.selectedLevel1.id}`]].map(d => d.data.childrenIDs)
+          .reduce((a, b) => a.concat(b))
+          .concat([this.selectedLevel1]);
+      }
+    }
+
     this.data.forEach(n => this.opacityScale(n));
   }
 

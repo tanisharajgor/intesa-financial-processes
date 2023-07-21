@@ -25,7 +25,8 @@ export default function Status({
         <Draggable bounds="body" isFullscreen={isFullscreen}>
             <StatusMenu style={{
                     height: !shouldRotate ? "10vh" : "65vh",
-                    overflowY: !shouldRotate ? "hidden" : "scroll"
+                    overflowY: !shouldRotate ? "hidden" : "scroll",
+                    visibility: isFullscreen ? 'hidden' : 'visible'
                 }}>
                 <MenuHeader label="Legend" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
                 <MenuBody>
