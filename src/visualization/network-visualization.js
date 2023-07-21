@@ -209,17 +209,17 @@ export default class NetworkVisualization {
 
   // Updating the draw functions during the animation ------------------------------------------------------
 
-  defaultLine() {
-    this.links.lineStyle(1, 0x686868);
+  defaultLine(links) {
+    links.lineStyle(1, 0x686868);
   }
 
-  highlightLine() {
-    this.links.lineStyle(1, 0xffffff);
+  highlightLine(links) {
+    links.lineStyle(1, 0xffffff);
   }
 
-  solidLine(source, target) {
-    this.links.moveTo(source.x, source.y);
-    this.links.lineTo(target.x, target.y);
+  solidLine(links, source, target) {
+    links.moveTo(source.x, source.y);
+    links.lineTo(target.x, target.y);
   }
 
   distance(p1, p2) {
@@ -227,38 +227,38 @@ export default class NetworkVisualization {
   }
 
   // Adapated from https://codepen.io/shepelevstas/pen/WKbYyw
-  dashedLine(source, target) {
+  dashedLine(links, source, target) {
     const dash = 5;
     const gap = 5;
     const p1 = {x: target.x, y: target.y};
     const p2 = {x: source.x, y: source.y};
     const len = this.distance(p1, p2);
     const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
-    this.links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
+    links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
     let progress = dash+gap;
   
     while (progress < len) {
-      this.links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
       progress += dash;
-      this.links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
       progress += gap;
     }
   }
 
-  lineType(source, target, connect_actor_activity) {
+  lineType(links, source, target, connect_actor_activity) {
     if (connect_actor_activity) {
-      this.solidLine(source, target);
+      this.solidLine(links, source, target);
     } else {
-      this.dashedLine(source, target);
+      this.dashedLine(links, source, target);
     }
   }
 
   // Hover on links
-  highlightNetworkLinks(source, target) {
+  highlightNetworkLinks(links, source, target) {
     if (this.hoverLink.includes(source.id) && this.hoverLink.includes(target.id)) {
-      this.highlightLine();
+      this.highlightLine(links);
     } else {
-      this.defaultLine();
+      this.defaultLine(links);
     }
   }
 
@@ -286,15 +286,32 @@ export default class NetworkVisualization {
     this.data.links.forEach(link => {
       let { source, target, connect_actor_activity } = link;
 
-      // Link Opacity
-      this.inspectNetworkLinks(source, target);
-
       // Hover on links
-      this.highlightNetworkLinks(source, target);
+      this.highlightNetworkLinks(this.links, source, target);
 
       // Line type
-      this.lineType(source, target, connect_actor_activity);
+      this.lineType(this.links, source, target, connect_actor_activity);
 
+      if (this.inspectLink.length === 0) {
+        this.links.alpha = 1;
+      } else {
+        this.links.alpha = nonHighlightOpacity;
+      }
+    });
+
+    this.inspectLinks.clear();
+    this.data.links
+    .filter(d => (this.inspectLink.includes(d.source.id) && this.inspectLink.includes(d.target.id))
+    && !(this.hoverLink.includes(d.source.id) && this.hoverLink.includes(d.target.id)))
+    .forEach(link => {
+      let { source, target, connect_actor_activity } = link;
+      this.inspectLinks.alpha = 1;
+
+      // Hover on links
+      this.highlightNetworkLinks(this.inspectLinks, source, target);
+
+      // Line type
+      this.lineType(this.inspectLinks, source, target, connect_actor_activity);
     });
   }
 
