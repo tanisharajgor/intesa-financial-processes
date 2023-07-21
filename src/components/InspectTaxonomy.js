@@ -8,42 +8,10 @@ import { AccordionHeaderStyled } from './Menu';
 import lu from '../data/processed/nested/lu.json';
 
 //Styles
+import { Accordion, AccordionDetails } from 'cfd-react-components';
+import { DrillDown } from './DrillDown';
 
-import { Accordion, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
-import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
-import { StyledSelect } from '../component-styles/select';
-import { StyledLabel } from "../component-styles/menu";
-
-
-export function taxonomyLevel(valuesLevel, selectedLevel, handleChange, label, id) {
-
-    return(
-        <LayoutGroup>
-            <StyledLabel>{label}</StyledLabel>
-            <LayoutRow>
-                <LayoutItem className="push">
-                    <Form variant="outlined" size="small">
-                        <StyledSelect
-                            labelId={"process-" + id + "-select-label"}
-                            id={"process-" + id + "-select"}
-                            displayEmpty
-                            value={selectedLevel.id}
-                            onChange={handleChange}
-                        >
-                            {valuesLevel.map((level) => {
-                                return(
-                                    <MenuItem key={`menu-item-${level.id}`} value={level.id}>{level.descr}</MenuItem>
-                                )
-                            })}
-                        </StyledSelect>
-                    </Form>
-                </LayoutItem>
-            </LayoutRow>
-        </LayoutGroup>
-    )
-}
-
-export default function InspectProcesses({
+export default function InspectTaxonomy({
     handleTaxonomyChange,
     selectedLevel1,
     updateSelectedLevel1,
@@ -102,7 +70,7 @@ export default function InspectProcesses({
 
     const handleChangeChapter = (event) => {
         let chapterId = parseInt(event.target.value);
-        let updatedChapter = valuesChapter.find(ch => ch.id === chapterId)
+        let updatedChapter = valuesChapter.find(ch => ch.id === chapterId);
         handleTaxonomyChange(updatedChapter, updateSelectedChapter, 4);
     }
 
@@ -110,10 +78,10 @@ export default function InspectProcesses({
         <Accordion className={'Card'}>
             <AccordionHeaderStyled label="Inspect by Taxonomy" filteredTypes={[]}/>
             <AccordionDetails>
-                {taxonomyLevel(valuesLevel1, selectedLevel1, handleChangeLevel1, "Level 1", "1")}
-                {selectedLevel1.id !== -1 ? taxonomyLevel(valuesLevel2, selectedLevel2, handleChangeLevel2, "Level 2", "2"): <></>}
-                {selectedLevel2.id !== -1 && selectedLevel1.id !== -1 ? taxonomyLevel(valuesLevel3, selectedLevel3, handleChangeLevel3, "Level 3", "3"): <></>}
-                {selectedLevel3.id !== -1 && selectedLevel2.id !== -1 && selectedLevel1.id !== -1 ? taxonomyLevel(valuesChapter, selectedChapter, handleChangeChapter, "Chapter", "chapter"): <></>}
+                <DrillDown values={valuesLevel1} selected={selectedLevel1} handleChange={handleChangeLevel1} label="Level 1" id="1" />
+                {selectedLevel1.id !== -1 ? <DrillDown values={valuesLevel2} selected={selectedLevel2} handleChange={handleChangeLevel2} label="Level 2" id="2" />: <></>}
+                {selectedLevel2.id !== -1 && selectedLevel1.id !== -1 ? <DrillDown values={valuesLevel3} selected={selectedLevel3} handleChange={handleChangeLevel3} label="Level 3" id="3" />: <></>}
+                {selectedLevel3.id !== -1 && selectedLevel2.id !== -1 && selectedLevel1.id !== -1 ? <DrillDown values={valuesChapter} selected={selectedChapter} handleChange={handleChangeChapter} label="Chapter" id="chapter" />: <></>}
             </AccordionDetails>
         </Accordion>
     )

@@ -1,10 +1,12 @@
+// Libraries
 import * as d3 from "d3";
 import * as PIXI from "pixi.js";
 import * as Global from "../utils/global";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
+
+// Components
 import { activityTypeValues } from "../utils/global";
-// import lu from "../data/processed/nested/lu";
 
 const nonHighlightOpacity = .15;
 
@@ -299,7 +301,7 @@ export class CirclePackingDiagram {
   centerOnNode(node) {
     this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
 
-    node.gfx.cursor = "zoom-out"
+    node.gfx.cursor = "zoom-out";
 
     const zoomScale = this.getZoomWidth(node);
     const centerPoint = this.getCenter(node);

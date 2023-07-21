@@ -94,6 +94,7 @@ def main():
     network = create_network(main)
     write_json(network["nodes"], os.path.join(processed_pth, "nested"), "nodes")
     write_json(network["links"], os.path.join(processed_pth, "nested"), "links")
+    write_json(network["orgStructure"], os.path.join(processed_pth, "nested"), "org_structure")
 
     processesNested = create_processes_to_activities(main)
     write_json(processesNested, os.path.join(processed_pth, "nested"), "processes")

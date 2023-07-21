@@ -87,7 +87,6 @@ export default function CirclePacking() {
     useEffect(() => {
         circlePackingDiagram.current.init(id);
         circlePackingDiagram.current.draw(viewVariable);
-
         circlePackingDiagram.current.centerVisualization(-0.30);
     }, []);
 
@@ -99,11 +98,13 @@ export default function CirclePacking() {
     //     updateViewVariable(updatedView)
     // }, [])
 
+    // Redraws the visualization when the Legend Changes
     useEffect(() => {
-        circlePackingDiagram.current.updateDraw(viewVariable, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter);
+        circlePackingDiagram.current.updateDraw(viewVariable);
         inspectHierarchySummary(data);
     }, [viewVariable]);
 
+    // Updates the Opacity on Inspect
     useEffect(() => {
         circlePackingDiagram.current.updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter)
     }, [selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, selectedActivities]);

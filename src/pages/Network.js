@@ -6,6 +6,7 @@ import * as d3 from 'd3';
 import Main from "../components/Main";
 import Navigation from "../components/Navigation";
 import InspectChapter from "../components/InspectChapter";
+import InspectOrgStructure from "../components/InspectOrgStructure";
 import FilterTaxonomy from "../components/FilterTaxonomy";
 import FilterType from "../components/FilterType";
 import { MenuBody, MenuHeader } from "../components/Menu";
@@ -13,9 +14,11 @@ import { inspectNetworkSummary } from "../components/Inspect";
 import NetworkVisualization from "../visualization/network-visualization";
 import * as Global from "../utils/global";
 
+
 // Data
 import links from "../data/processed/nested/links.json";
 import nodes from "../data/processed/nested/nodes.json";
+import orgStructure from "../data/processed/nested/org_structure.json";
 import lu from '../data/processed/nested/lu.json';
 
 // Styles
@@ -38,20 +41,21 @@ function combineLink(links) {
 const visualizationXPadding = 200;
 
 // Combines the nodes and links into a single object
-function combineNodeLink(selectedLevel3ID, nodes, links) {
+function combineNodeLink(selectedLevel3, nodes, links, orgStructure) {
 
-    let nodesData = Object.assign({}, nodes.find((d) => d.id === selectedLevel3ID)).nodes;
-    let linksData = Object.assign({}, links.find((d) => d.id === selectedLevel3ID)).links;
+    let nodesData = Object.assign({}, nodes.find((d) => d.id === selectedLevel3)).nodes;
+    let linksData = Object.assign({}, links.find((d) => d.id === selectedLevel3)).links;
+    let orgData = Object.assign({}, orgStructure.find((d) => d.id === selectedLevel3)).orgStructure;
     linksData = combineLink(linksData);
-    let dataNew = { id: selectedLevel3ID, nodes: nodesData, links: linksData };
+    let dataNew = { id: selectedLevel3, nodes: nodesData, links: linksData, orgStructure: orgData };
 
     return dataNew;
 }
 
 // Filters the data by level3ID and activity Type
-function filterData(selectedLevel3ID, selectedActivities, selectedActors) {
+function filterData(selectedLevel3, selectedActivities, selectedActors) {
 
-    let dataNew = combineNodeLink(selectedLevel3ID, nodes, links);
+    let dataNew = combineNodeLink(selectedLevel3, nodes, links, orgStructure);
 
     let actorIdsFiltered = dataNew.nodes.filter(d => d.group === "Actor" && selectedActors.includes(d.type)).map(d => d.id);
     let activityIdsFiltered = dataNew.nodes.filter(d => d.group === "Activity" && selectedActivities.includes(d.type)).map(d => d.id);
@@ -81,14 +85,18 @@ export default function Network() {
     const [valuesChapter, updateValuesChapter] = useState([{ "id": -1, "descr": "All" }].concat(processes
         .children.find(d => d.id === selectedLevel1).children[0].children[0].children));
 
+    const [selectedOrg1, updateSelectedOrg1] = useState({ "id": -1, "descr": "All" });
+    const [selectedOrg2, updateSelectedOrg2] = useState({ "id": -1, "descr": "All" });
+
     // Status to update the opacity in the legend
     const [viewHoverValue, updateViewHoverValue] = useState(undefined);
     const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
 
     // Data management steps
-    let dataNew = combineNodeLink(selectedLevel3, nodes, links);
+    let dataNew = combineNodeLink(selectedLevel3, nodes, links, orgStructure);
 
     const [data, updateData] = useState(dataNew);
+    const [orgStructureValues, updateOrgStructure] = useState(data.orgStructure);
 
     // Possible set of activities/actors to choose from
     const [possibleActivities, updateActivityType] = useState([...new Set(data.nodes.filter(d => d.group === "Activity").map(d => d.type))]);
@@ -148,6 +156,10 @@ export default function Network() {
                 .children.find(d => d.id === selectedLevel3).children)
         );
 
+        updateOrgStructure(
+            orgStructure.find(d => d.id === selectedLevel3).orgStructure
+        );
+
         updateSelectedChapter(-1);
     }, [selectedLevel3]);
 
@@ -159,7 +171,7 @@ export default function Network() {
 
         networkDiagram.current.data = filteredData;
         networkDiagram.current.initSimulation();
-        networkDiagram.current.updateDraw(viewVariable, selectedChapter);
+        networkDiagram.current.updateDraw(viewVariable);
 
         let inspect = d3.select(".Inspect");
         inspectNetworkSummary(inspect, filteredData);
@@ -177,8 +189,8 @@ export default function Network() {
     }, [viewVariable]);
 
     useEffect(() => {
-        networkDiagram.current.updateNodeAlpha(selectedChapter);
-    }, [selectedChapter]);
+        networkDiagram.current.updateNodeAlpha(selectedChapter, selectedOrg1, selectedOrg2);
+    }, [selectedChapter, selectedOrg1, selectedOrg2]);
 
     return (
         <>
@@ -192,6 +204,7 @@ export default function Network() {
                     <MenuHeader label="Network" />
                     <MenuBody shouldRotate={shouldRotate} pageDescription="Filter data in the actor network graph to explore activities and risks.">
                         <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
+                        <InspectOrgStructure selectedOrg1={selectedOrg1} updateSelectedOrg1={updateSelectedOrg1} selectedOrg2={selectedOrg2} updateSelectedOrg2={updateSelectedOrg2} orgStructure={orgStructureValues}/>
                         <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3} />
                         <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type" />
                         <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type" />

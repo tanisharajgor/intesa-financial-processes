@@ -524,6 +524,7 @@ def main_dm(data, level1, level2, level3, model, activities, actors, risks, cont
     df = pd.merge(df, org1, how="left", on="organizational_structure1").drop("organizational_structure1", axis=1).rename(columns={'English': "organizational_structure1"})
     df = pd.merge(df, org2, how="left", on="organizational_structure2").drop("organizational_structure2", axis=1).rename(columns={'English': "organizational_structure2"})
     df = clean_strings(df, "organizational_structure1")
+    df.organizational_structure1 = df.organizational_structure1.str.capitalize()
     df = clean_strings(df, "organizational_structure2")
 
     def shorten_label(row):

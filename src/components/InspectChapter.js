@@ -1,5 +1,5 @@
 // Components
-import { taxonomyLevel } from "./InspectTaxonomy";
+import { DrillDown } from './DrillDown';
 import { AccordionHeaderStyled } from './Menu';
 
 // Styles
@@ -19,7 +19,7 @@ export default function InspectChapter({selectedChapter, updateSelectedChapter, 
         <Accordion className={'Card'}>
             <AccordionHeaderStyled label="Inspect by Chapter" filteredTypes={[chapterDescr]}/>
             <AccordionDetails>
-                {taxonomyLevel(valuesChapter, selectedChapter, handleChangeChapter, "Chapter", "chapter")}
+                <DrillDown values={valuesChapter} selected={selectedChapter} handleChange={handleChangeChapter} label="Chapter" id="chapter" />
             </AccordionDetails>
         </Accordion>
     )

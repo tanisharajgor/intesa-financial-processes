@@ -41,6 +41,8 @@ def levelsObject(df):
             "level2ID": df.level2ID.unique().tolist(),
             "level3ID": df.level3ID.unique().tolist(),
             "modelID": df.modelID.unique().tolist(),
+            "orgStructure1ID": df.organizational_structure1ID.unique().tolist(),
+            "orgStructure2ID": df.organizational_structure2ID.unique().tolist()
         }
 
     return levels
@@ -229,6 +231,7 @@ def create_network(data):
 
     nodearray = []
     linkarray = []
+    orgarray = []
 
     data = data[pd.isnull(data.actorID) == False]
 
@@ -251,6 +254,7 @@ def create_network(data):
 
         links = []
         nodes = []
+        orgStructure = create_org_structure(df)
 
         for k in actorsID:
 
@@ -339,7 +343,6 @@ def create_network(data):
 
             row = {"source": int(linkData.source.iloc[j]),
                    "target": int(linkData.target.iloc[j])
-                   #"id": str(linkData.source.iloc[j]) + "-" + str(linkData.target.iloc[j])
                    }
             
             if linkData.iloc[j].Connection == "deve":
@@ -362,12 +365,19 @@ def create_network(data):
             "links": links
         }
 
+        org = {
+            "id": int(i),
+            "orgStructure": orgStructure
+        }
+
         nodearray.append(node)
         linkarray.append(link)
+        orgarray.append(org)
 
     network = {
         "nodes": nodearray,
-        "links": linkarray
+        "links": linkarray,
+        "orgStructure": orgarray
         }
 
     return network
@@ -448,12 +458,12 @@ def create_org_structure(main):
         for j in l2:
 
             r2 = {"id": int(j),
-                  "name": main[main.organizational_structure2ID == j].organizational_structure2.iloc[0],
+                  "descr": main[main.organizational_structure2ID == j].organizational_structure2.iloc[0],
                   "level": int(2)}
             l2Array.append(r2)
 
         r1 = {"id": int(i),
-              "name": main[main.organizational_structure1ID == i].organizational_structure1.iloc[0],
+              "descr": main[main.organizational_structure1ID == i].organizational_structure1.iloc[0],
               "children": l2Array,
               "level": int(1)}
         l1Array.append(r1)
