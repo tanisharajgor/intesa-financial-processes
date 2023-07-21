@@ -254,6 +254,8 @@ def create_network(data):
         links = []
         nodes = []
 
+        org = create_org_structure(df)
+
         for k in actorsID:
 
             org = create_org_structure(df[df.actorID == k])
@@ -369,7 +371,8 @@ def create_network(data):
 
     network = {
         "nodes": nodearray,
-        "links": linkarray
+        "links": linkarray,
+        "orgStructure": org
         }
 
     return network
