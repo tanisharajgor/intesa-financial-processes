@@ -301,8 +301,7 @@ export default class NetworkVisualization {
 
     this.inspectLinks.clear();
     this.data.links
-    .filter(d => (this.inspectLink.includes(d.source.id) && this.inspectLink.includes(d.target.id))
-    && !(this.hoverLink.includes(d.source.id) && this.hoverLink.includes(d.target.id)))
+    .filter(d => (this.inspectLink.includes(d.source.id) && this.inspectLink.includes(d.target.id)))
     .forEach(link => {
       let { source, target, connect_actor_activity } = link;
       this.inspectLinks.alpha = 1;
