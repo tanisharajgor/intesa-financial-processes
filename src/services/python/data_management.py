@@ -288,11 +288,13 @@ def model_dm(data, raw_pth, processed_pth):
 
     def shorten_label(row):
         split_parts = row['model'].split(" - ")
-        if (len(split_parts) == 1):
-            result = split_parts[0]
-        if (len(split_parts) == 2):
-            result = split_parts[-1]
-        else: 
+        print(split_parts)
+        print(" - List Size:" + str(len(split_parts)))
+        if (len(split_parts) <= 2):
+            # Take the only split or the last split
+            result = split_parts[len(split_parts) - 1]
+        if (len(split_parts) > 2): 
+            # Take everything after the first two splits.
             result = " - ".join(split_parts[2:])
         return result
             
