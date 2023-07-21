@@ -231,6 +231,7 @@ def create_network(data):
 
     nodearray = []
     linkarray = []
+    orgarray = []
 
     data = data[pd.isnull(data.actorID) == False]
 
@@ -253,8 +254,7 @@ def create_network(data):
 
         links = []
         nodes = []
-
-        org = create_org_structure(df)
+        orgStructure = create_org_structure(df)
 
         for k in actorsID:
 
@@ -343,7 +343,6 @@ def create_network(data):
 
             row = {"source": int(linkData.source.iloc[j]),
                    "target": int(linkData.target.iloc[j])
-                   #"id": str(linkData.source.iloc[j]) + "-" + str(linkData.target.iloc[j])
                    }
             
             if linkData.iloc[j].Connection == "deve":
@@ -366,13 +365,19 @@ def create_network(data):
             "links": links
         }
 
+        org = {
+            "id": int(i),
+            "orgStructure": orgStructure
+        }
+
         nodearray.append(node)
         linkarray.append(link)
+        orgarray.append(org)
 
     network = {
         "nodes": nodearray,
         "links": linkarray,
-        "orgStructure": org
+        "orgStructure": orgarray
         }
 
     return network
