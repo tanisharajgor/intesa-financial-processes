@@ -35,9 +35,11 @@ export default function InspectOrgStructure({selectedOrg1, updateSelectedOrg1, s
         updateSelectedOrg2(selected);
     };
 
+    const types = selectedOrg2.id !== -1? `${selectedOrg1.descr} - ${selectedOrg2.descr}` : selectedOrg1.descr
+
     return(
         <Accordion className={'Card'}>
-            <AccordionHeaderStyled label="Inspect by Organizational Structure" filteredTypes={[]}/>
+            <AccordionHeaderStyled label="Inspect by Organizational Structure" filteredTypes={[types]}/>
             <AccordionDetails>
                 <DrillDown values={orgsLevel1} selected={selectedOrg1} handleChange={handleChangeOrg1} label="Organizational Structure 1" id="1" />
                 {selectedOrg1.id !== -1 ? <DrillDown values={orgsLevel2} selected={selectedOrg2} handleChange={handleChangeOrg2} label="Organizational Structure 2" id="2" />: <></>}
