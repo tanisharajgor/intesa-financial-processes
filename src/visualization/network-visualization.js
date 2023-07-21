@@ -9,7 +9,6 @@ const nonHighlightOpacity = .3;
 
 export default class NetworkVisualization {
 
-  hoverLinks;
   hoverLink;
   hoverNodes;
   app;
@@ -155,10 +154,6 @@ export default class NetworkVisualization {
     this.links = new PIXI.Graphics();
     this.containerLinks.addChild(this.links);
 
-    // On Mouseover highlight Links
-    this.hoverLinks = new PIXI.Graphics();
-    this.containerLinks.addChild(this.hoverLinks);
-
     // Inspect Links
     this.inspectLinks = new PIXI.Graphics();
     this.containerLinks.addChild(this.inspectLinks);
@@ -214,21 +209,21 @@ export default class NetworkVisualization {
 
   // Updating the draw functions during the animation ------------------------------------------------------
 
-  defaultLine(links) {
-    links.lineStyle(1, 0x686868);
+  defaultLine() {
+    this.links.lineStyle(1, 0x686868);
   }
 
-  highlightLine(links) {
-    links.lineStyle(1, 0xffffff);
+  highlightLine() {
+    this.links.lineStyle(1, 0xffffff);
   }
 
-  alphaLine(links) {
-    links.alpha = 1;
+  alphaLine() {
+    this.links.alpha = 1;
   }
 
-  solidLine(links, source, target) {
-    links.moveTo(source.x, source.y);
-    links.lineTo(target.x, target.y);
+  solidLine(source, target) {
+    this.links.moveTo(source.x, source.y);
+    this.links.lineTo(target.x, target.y);
   }
 
   distance(p1, p2) {
@@ -236,51 +231,75 @@ export default class NetworkVisualization {
   }
 
   // Adapated from https://codepen.io/shepelevstas/pen/WKbYyw
-  dashedLine(links, source, target) {
+  dashedLine(source, target) {
     const dash = 5;
     const gap = 5;
     const p1 = {x: target.x, y: target.y};
     const p2 = {x: source.x, y: source.y};
     const len = this.distance(p1, p2);
     const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
-    links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
+    this.links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
     let progress = dash+gap;
   
     while (progress < len) {
-      links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      this.links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
       progress += dash;
-      links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      this.links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
       progress += gap;
     }
   }
 
-  lineType(links, source, target, connect_actor_activity) {
+  lineType(source, target, connect_actor_activity) {
     if (connect_actor_activity) {
-      this.solidLine(links, source, target);
+      this.solidLine(source, target);
     } else {
-      this.dashedLine(links, source, target);
+      this.dashedLine(source, target);
     }
   }
 
+  // Hover on links
+  highlightNetworkLinks(source, target) {
+    if (this.hoverLink.includes(source.id) && this.hoverLink.includes(target.id)) {
+      this.highlightLine();
+    } else {
+      this.defaultLine();
+    }
+  }
+
+  // Inspect on links
+  inspectNetworkLinks() {
+    this.data.links
+      .filter(d => (this.inspectLink.includes(d.source.id) && this.inspectLink.includes(d.target.id))
+        && !(this.hoverLink.includes(d.source.id) && this.hoverLink.includes(d.target.id)))
+      .forEach(link => {
+        let { source, target, connect_actor_activity } = link;
+
+        this.lineType(source, target, connect_actor_activity);
+        this.defaultLine();
+        this.alphaLine();
+    });
+  }
+
   // Update the links position
+  // Note
   updateLinkPosition() {
     // Links
     this.links.clear();
     this.data.links.forEach(link => {
       let { source, target, connect_actor_activity } = link;
 
-      this.lineType(this.links, source, target, connect_actor_activity);
-      this.defaultLine(this.links);
-
       if (this.selectedChapter === -1 || this.selectedChapter === undefined) {
         this.links.alpha = 1;
       } else {
         this.links.alpha = nonHighlightOpacity;
       }
-    });
 
-    // Hover on links
-    this.highlightNetworkLinks();
+      // Hover on links
+      this.highlightNetworkLinks(source, target);
+
+      // Line type
+      this.lineType(source, target, connect_actor_activity);
+    });
   
     // Inspect on links
     this.inspectNetworkLinks();
@@ -305,9 +324,6 @@ export default class NetworkVisualization {
     }
     if (this.links !== undefined) {
       this.links.destroy();
-    }
-    if (this.hoverLinks !== undefined) {
-      this.hoverLinks.destroy();
     }
     if (this.inspectLinks !== undefined) {
       this.inspectLinks.destroy();
@@ -440,33 +456,6 @@ export default class NetworkVisualization {
         ];
         gfx.zIndex = 1;
       });
-  }
-
-  // Hover on links
-  highlightNetworkLinks() {
-    this.hoverLinks.clear();
-    this.data.links
-      .filter(d => this.hoverLink.includes(d.source.id) && this.hoverLink.includes(d.target.id))
-      .forEach(link => {
-        let { source, target, connect_actor_activity } = link;
-        this.lineType(this.hoverLinks, source, target, connect_actor_activity);
-        this.highlightLine(this.hoverLinks);
-    });
-  }
-
-  // Inspect on links
-  inspectNetworkLinks() {
-    this.inspectLinks.clear();
-    this.data.links
-      .filter(d => (this.inspectLink.includes(d.source.id) && this.inspectLink.includes(d.target.id))
-        && !(this.hoverLink.includes(d.source.id) && this.hoverLink.includes(d.target.id)))
-      .forEach(link => {
-        let { source, target, connect_actor_activity } = link;
-
-        this.lineType(this.inspectLinks, source, target, connect_actor_activity);
-        this.defaultLine(this.inspectLinks);
-        this.alphaLine(this.inspectLinks);
-    });
   }
 
   tooltipText(d) {
