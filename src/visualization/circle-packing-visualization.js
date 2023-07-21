@@ -41,19 +41,11 @@ export class CirclePackingDiagram {
     this.selectedLevel2 = [];
     this.selectedLevel3 = [];
     this.selectedChapter = [];
-    this.selectedOrg1 = -1;
-    this.selectedOrg2 = -1;
   
     this.taxonomyDataMap = {};
     this.data.forEach(d => {
       this.levelIDs.push(d.data.id);
       this.taxonomyDataMap[`${d.data.id}`] = d;
-    });
-
-    this.orgStructureDataMap = {};
-    this.data.forEach(d => {
-      this.orgStructureIDs.push(d.data.id);
-      this.orgStructureDataMap[`${d.data.id}`] = d;
     });
   }
 
@@ -197,30 +189,13 @@ export class CirclePackingDiagram {
     }
   }
 
-  organizationalStructureDataMapping() {
-    if (this.selectedOrg1.id !== -1) {
-
-      if (this.selectedOrg2.id !== -1) {
-
-      } else {
-        this.orgStructureIDs = [this.orgStructureDataMap[`${this.selectedOrg1.id}`]].map(d => d.data.childrenIDs)
-        .reduce((a, b) => a.concat(b))
-        .concat([this.selectedOrg1]);
-      }
-    }
-  }
-
-  updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter, selectedOrg1, selectedOrg2) {
+  updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
     this.selectedActivities = activityTypeValues.filter(activity => !selectedActivities.includes(activity));
-
-    console.log(selectedOrg1)
     
     this.selectedLevel1 = selectedLevel1;
     this.selectedLevel2 = selectedLevel2;
     this.selectedLevel3 = selectedLevel3;
     this.selectedChapter = selectedChapter;
-    this.selectedOrg1 = selectedOrg1;
-    this.selectedOrg2 = selectedOrg2;
 
     this.taxonomyDataMapping(valuesChapter, selectedChapter);
     this.data.forEach(n => this.opacityScale(n));
