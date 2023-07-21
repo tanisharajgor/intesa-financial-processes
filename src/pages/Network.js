@@ -201,7 +201,7 @@ export default function Network() {
                     overflowY: !shouldRotate ? "hidden" : "scroll",
                     visibility: isFullscreen ? 'hidden' : 'visible'
                 }}>
-                    <MenuHeader label="Network" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+                    <MenuHeader label="Network" />
                     <MenuBody shouldRotate={shouldRotate} pageDescription="Filter data in the actor network graph to explore activities and risks.">
                         <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
                         <InspectOrgStructure selectedOrg1={selectedOrg1} updateSelectedOrg1={updateSelectedOrg1} selectedOrg2={selectedOrg2} updateSelectedOrg2={updateSelectedOrg2} orgStructure={orgStructureValues}/>
