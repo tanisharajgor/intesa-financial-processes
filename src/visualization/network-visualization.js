@@ -217,10 +217,6 @@ export default class NetworkVisualization {
     this.links.lineStyle(1, 0xffffff);
   }
 
-  alphaLine() {
-    this.links.alpha = 1;
-  }
-
   solidLine(source, target) {
     this.links.moveTo(source.x, source.y);
     this.links.lineTo(target.x, target.y);
@@ -267,17 +263,19 @@ export default class NetworkVisualization {
   }
 
   // Inspect on links
-  inspectNetworkLinks() {
-    this.data.links
-      .filter(d => (this.inspectLink.includes(d.source.id) && this.inspectLink.includes(d.target.id))
-        && !(this.hoverLink.includes(d.source.id) && this.hoverLink.includes(d.target.id)))
-      .forEach(link => {
-        let { source, target, connect_actor_activity } = link;
+  inspectNetworkLinks(source, target) {
+    if(this.inspectLink.length !== 0) {
 
-        this.lineType(source, target, connect_actor_activity);
-        this.defaultLine();
-        this.alphaLine();
-    });
+      if((this.inspectLink.includes(source.id) && this.inspectLink.includes(target.id))
+      && !(this.hoverLink.includes(source.id) && this.hoverLink.includes(target.id))) {
+        this.links.alpha = 1;
+      } else {
+        this.links.alpha = nonHighlightOpacity;
+      }
+
+    } else {
+      this.links.alpha = 1;
+    }
   }
 
   // Update the links position
@@ -288,21 +286,16 @@ export default class NetworkVisualization {
     this.data.links.forEach(link => {
       let { source, target, connect_actor_activity } = link;
 
-      if (this.selectedChapter === -1 || this.selectedChapter === undefined) {
-        this.links.alpha = 1;
-      } else {
-        this.links.alpha = nonHighlightOpacity;
-      }
+      // Link Opacity
+      this.inspectNetworkLinks(source, target);
 
       // Hover on links
       this.highlightNetworkLinks(source, target);
 
       // Line type
       this.lineType(source, target, connect_actor_activity);
+
     });
-  
-    // Inspect on links
-    this.inspectNetworkLinks();
   }
 
   // Update the nodes position
