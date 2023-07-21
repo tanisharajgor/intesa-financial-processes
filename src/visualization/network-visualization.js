@@ -543,7 +543,8 @@ export default class NetworkVisualization {
     this.animate();
   }
 
-  inspectNodesLinks(node) {
+  // Identify nodes and links to highlight
+  identifyNodesLinks(node) {
     let links = this.listHighlightNetworkNodes(node);
     let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
     this.inspectLink = this.reduceNestedList(this.inspectLink, links);
@@ -551,13 +552,19 @@ export default class NetworkVisualization {
     node.gfx.alpha = 1;
   }
 
+  // Apply ifelse logic to identified nodes
+  highlightInspectedNodes(nodeEvaluation, node) {
+    if (nodeEvaluation) {
+      this.identifyNodesLinks(node);
+    } else {
+      node.gfx.alpha = nonHighlightOpacity;
+    }
+  }
+
+  // Identify inspected nodes by chapter and assign them an alpha level
   selectedChapterAlpha(node) {
     if (node.viewId === "Actor") {
-      if (node.levels.modelID.includes(this.selectedChapter)) {
-       this.inspectNodesLinks(node);
-      } else {
-        node.gfx.alpha = nonHighlightOpacity;
-      }
+      this.highlightInspectedNodes(node.levels.modelID.includes(this.selectedChapter), node);
     } else {
       if (this.inspectNode.includes(node.id)) {
         node.gfx.alpha = 1;
@@ -567,24 +574,13 @@ export default class NetworkVisualization {
     }
   }
 
+  // Identify inspected nodes by organizational structure and assign them an alpha level
   selectedOrgAlpha(node) {
     if (node.viewId === "Actor") {
-      if (this.selectedOrg !== -1) {
-        if (this.selectedOrg2 !== -1) {
-
-          if (node.levels.orgStructure2ID.includes(this.selectedOrg2)) {
-            this.inspectNodesLinks(node);
-           } else {
-             node.gfx.alpha = nonHighlightOpacity;
-           }
-          
-        } else {
-          if (node.levels.orgStructure1ID.includes(this.selectedOrg1)) {
-            this.inspectNodesLinks(node);
-           } else {
-             node.gfx.alpha = nonHighlightOpacity;
-           }
-        }
+      if (this.selectedOrg2 !== -1) {
+        this.highlightInspectedNodes(node.levels.orgStructure2ID.includes(this.selectedOrg2), node);
+      } else {
+        this.highlightInspectedNodes(node.levels.orgStructure1ID.includes(this.selectedOrg1), node);
       }
 
     } else {
@@ -594,6 +590,26 @@ export default class NetworkVisualization {
         node.gfx.alpha = nonHighlightOpacity;
       }
     }
+  }
+
+  // Logic to define the intersection of the chapter and organizational structure
+  selectedChapterAndOrgStructureAlpha(node) {
+    if (node.viewId === "Actor") {
+
+      if (node.levels.modelID.includes(this.selectedChapter) && node.levels.orgStructure1ID.includes(this.selectedOrg1)) {
+        this.identifyNodesLinks(node);
+       } else {
+        node.gfx.alpha = nonHighlightOpacity;
+       }
+
+    } else {
+      if (this.inspectNode.includes(node.id)) {
+        node.gfx.alpha = 1;
+      } else {
+        node.gfx.alpha = nonHighlightOpacity;
+      }
+    }
+
   }
 
   // Change the opacity of the actor nodes and their linked attributes when inspected
@@ -607,7 +623,7 @@ export default class NetworkVisualization {
 
     this.nodes.forEach((node) => {
       if (this.selectedChapter !== -1 && this.selectedChapter !== undefined && this.selectedOrg1 !== -1) {
-
+        this.selectedChapterAndOrgStructureAlpha(node);
       } else if (this.selectedChapter !== -1 && this.selectedChapter !== undefined) {
         this.selectedChapterAlpha(node);
       } else if (this.selectedOrg1 !== -1) {
