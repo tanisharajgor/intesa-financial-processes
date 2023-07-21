@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import * as Theme from "../component-styles/theme";
 
 const fontPath = `${process.env.PUBLIC_URL}/font/`
 
@@ -11,6 +12,12 @@ export const GlobalStyles = createGlobalStyle`
       url(${fontPath}/ibmplexsans-regular-webfont.woff) format("woff");
     font-weight: normal;
     font-style: normal;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 
   body {
@@ -26,15 +33,24 @@ export const GlobalStyles = createGlobalStyle`
     overflow: hidden;
   }
 
+  .query-menu .description {
+  }
+
   .Card {
-    border-bottom: 1px solid #4e5155;
-    Cursor: pointer;
+    border-bottom: 1px solid ${Theme.extraDarkGreyHex};
+    cursor: pointer;
+  }
+
+  .Card > div:last-child {
+    padding-bottom: 0.5rem;
   }
 
   .Query {
-    border-right: 1px solid #4e5155;
-    padding-left: 8px;
-    padding-right: 8px;
+    border-right: 1px solid ${Theme.extraDarkGreyHex};
+  }
+
+  .value {
+    color: ${Theme.darkGreyColorHex}
   }
 
   #process1-select {
@@ -52,7 +68,6 @@ export const GlobalStyles = createGlobalStyle`
     height: 1.15rem;
     border: 0.15em solid ${props =>  props.theme.color.secondary };
     border-radius: 0.15rem;
-    transform: translateY(-0.075rem);
     background-color: ${props =>  props.theme.backgroundColor.main };
     vertical-align: middle;
     display: grid;
@@ -68,5 +83,9 @@ export const GlobalStyles = createGlobalStyle`
   
   input[type="checkbox"]:checked::before {
     transform: scale(0);
+  }
+
+  input[type="checkbox"] + label {
+    margin-left: 0.5em;
   }
 `

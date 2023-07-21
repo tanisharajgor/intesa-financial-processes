@@ -39,18 +39,18 @@ const resetBtn = document.getElementById("reset");
 const legend = document.getElementById("legend");
 
 const shapes = [
-    {"name":"Actor", "shape":"ellipse", "ascii":"●"},
-    {"name":"Process activity", "shape":"rectangle", "ascii":"■"},
-    {"name":"Control activity", "shape":"star", "ascii":"★"},
-    {"name":"Common process activity", "shape":"triangle", "ascii":"▲"},
-    {"name":"System activity", "shape":"diamond", "ascii":"♦"},
-    {"name":"Position", "shape":"pentagon", "ascii":"⬟"},
-    {"name":"Organizational unit", "shape":"hexagon", "ascii":"⬢"}
+    {"descr":"Actor", "shape":"ellipse", "ascii":"●"},
+    {"descr":"Process activity", "shape":"rectangle", "ascii":"■"},
+    {"descr":"Control activity", "shape":"star", "ascii":"★"},
+    {"descr":"Common process activity", "shape":"triangle", "ascii":"▲"},
+    {"descr":"System activity", "shape":"diamond", "ascii":"♦"},
+    {"descr":"Position", "shape":"pentagon", "ascii":"⬟"},
+    {"descr":"Organizational unit", "shape":"hexagon", "ascii":"⬢"}
 ];
 
 let legendStr = "";
 shapes.forEach(d=>{
-    legendStr += `<p><span>${d.ascii}</span> ${d.name}</p>`;
+    legendStr += `<p><span>${d.ascii}</span> ${d.descr}</p>`;
 })
 legend.innerHTML = legendStr;
 
@@ -98,7 +98,7 @@ fetchDataJSON().then(data => {
                 "width": "30%",
                 "height": "30%",
                 "shape": d=>{
-                    let shp = shapes.find(j=>j.name === d.data('type'));
+                    let shp = shapes.find(j=>j.descr === d.data('type'));
                     if (shp === undefined) {return "ellipse";}
                     else {return shp.shape;}
                 }
