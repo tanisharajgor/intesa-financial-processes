@@ -44,6 +44,8 @@ export default class NetworkVisualization {
     this.clickCount = 0;
     this.inspectNode = [];
     this.inspectLink = [];
+
+    console.log(data)
   }
 
   initSimulation() {
@@ -543,37 +545,66 @@ export default class NetworkVisualization {
     this.animate();
   }
 
+  selectedChapterAlpha(node) {
+    if (node.viewId === "Actor") {
+      if (node.levels.modelID.includes(this.selectedChapter)) {
+        let links = this.listHighlightNetworkNodes(node);
+        let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
+        this.inspectLink = this.reduceNestedList(this.inspectLink, links);
+        this.inspectNode = this.reduceNestedList(this.inspectNode, nodes);
+        node.gfx.alpha = 1;
+      } else {
+        node.gfx.alpha = nonHighlightOpacity;
+      }
+    } else {
+      if (this.inspectNode.includes(node.id)) {
+        node.gfx.alpha = 1;
+      } else {
+        node.gfx.alpha = nonHighlightOpacity;
+      }
+    }
+  }
+
+  selectedOrgAlpha(node) {
+    if (node.viewId === "Actor") {
+      if (node.levels.orgStructure1ID.includes(this.selectedOrg1)) {
+        let links = this.listHighlightNetworkNodes(node);
+        let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
+        this.inspectLink = this.reduceNestedList(this.inspectLink, links);
+        this.inspectNode = this.reduceNestedList(this.inspectNode, nodes);
+        node.gfx.alpha = 1;
+      } else {
+        node.gfx.alpha = nonHighlightOpacity;
+      }
+    } else {
+      if (this.inspectNode.includes(node.id)) {
+        node.gfx.alpha = 1;
+      } else {
+        node.gfx.alpha = nonHighlightOpacity;
+      }
+    }
+  }
+
   // Change the opacity of the actor nodes and their linked attributes when inspected
-  updateNodeAlpha(selectedChapter) {
+  updateNodeAlpha(selectedChapter, selectedOrg1, selectedOrg2) {
     this.selectedChapter = selectedChapter;
+    this.selectedOrg1 = selectedOrg1.id;
+    this.selectedOrg2 = selectedOrg2.id;
     this.inspectLink = [];
     this.inspectNode = [];
 
     this.nodes.forEach((node) => {
-      if (this.selectedChapter !== -1 && this.selectedChapter !== undefined) {
-        if (node.viewId === "Actor") {
-          if (node.levels.modelID.includes(this.selectedChapter)) {
-            let links = this.listHighlightNetworkNodes(node);
-            let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
-            this.inspectLink = this.reduceNestedList(this.inspectLink, links);
-            this.inspectNode = this.reduceNestedList(this.inspectNode, nodes);
-            node.gfx.alpha = 1;
-          } else {
-            node.gfx.alpha = nonHighlightOpacity;
-          }
-        } else {
-          if (this.inspectNode.includes(node.id)) {
-            node.gfx.alpha = 1;
-          } else {
-            node.gfx.alpha = nonHighlightOpacity;
-          }
-        }
+      if (this.selectedChapter !== -1 && this.selectedChapter !== undefined && this.selectedOrg1 !== -1) {
+
+      } else if (this.selectedChapter !== -1 && this.selectedChapter !== undefined) {
+        this.selectedChapterAlpha(node);
+      } else if (this.selectedOrg1 !== -1) {
+        this.selectedOrgAlpha(node);
       } else {
         node.gfx.alpha = 1;
       }
     });
   }
-
 
   animate() {
     this.app.ticker.add(() => {

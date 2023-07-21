@@ -164,7 +164,7 @@ export default function Network() {
 
         networkDiagram.current.data = filteredData;
         networkDiagram.current.initSimulation();
-        networkDiagram.current.updateDraw(viewVariable, selectedChapter);
+        networkDiagram.current.updateDraw(viewVariable);
 
         let inspect = d3.select(".Inspect");
         inspectNetworkSummary(inspect, filteredData);
@@ -182,8 +182,8 @@ export default function Network() {
     }, [viewVariable]);
 
     useEffect(() => {
-        networkDiagram.current.updateNodeAlpha(selectedChapter);
-    }, [selectedChapter]);
+        networkDiagram.current.updateNodeAlpha(selectedChapter, selectedOrg1, selectedOrg2);
+    }, [selectedChapter, selectedOrg1, selectedOrg2]);
 
     return (
         <>
