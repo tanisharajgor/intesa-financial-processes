@@ -280,28 +280,10 @@ export default class NetworkVisualization {
     });
 
     // Hover on links
-    this.hoverLinks.clear();
-    this.data.links
-      .filter(d => this.hoverLink.includes(d.source.id) && this.hoverLink.includes(d.target.id))
-      .forEach(link => {
-        let { source, target, connect_actor_activity } = link;
-        this.lineType(this.hoverLinks, source, target, connect_actor_activity);
-        this.highlightLine(this.hoverLinks);
-    });
-
+    this.highlightNetworkLinks();
+  
     // Inspect on links
-    this.inspectLinks.clear();
-    this.data.links
-      .filter(d => (this.inspectLink.includes(d.source.id) && this.inspectLink.includes(d.target.id))
-        && !(this.hoverLink.includes(d.source.id) && this.hoverLink.includes(d.target.id)))
-      .forEach(link => {
-        let { source, target, connect_actor_activity } = link;
-
-        this.lineType(this.inspectLinks, source, target, connect_actor_activity);
-        this.defaultLine(this.inspectLinks);
-        this.alphaLine(this.inspectLinks);
-    });
-
+    this.inspectNetworkLinks();
   }
 
   // Update the nodes position
@@ -458,6 +440,33 @@ export default class NetworkVisualization {
         ];
         gfx.zIndex = 1;
       });
+  }
+
+  // Hover on links
+  highlightNetworkLinks() {
+    this.hoverLinks.clear();
+    this.data.links
+      .filter(d => this.hoverLink.includes(d.source.id) && this.hoverLink.includes(d.target.id))
+      .forEach(link => {
+        let { source, target, connect_actor_activity } = link;
+        this.lineType(this.hoverLinks, source, target, connect_actor_activity);
+        this.highlightLine(this.hoverLinks);
+    });
+  }
+
+  // Inspect on links
+  inspectNetworkLinks() {
+    this.inspectLinks.clear();
+    this.data.links
+      .filter(d => (this.inspectLink.includes(d.source.id) && this.inspectLink.includes(d.target.id))
+        && !(this.hoverLink.includes(d.source.id) && this.hoverLink.includes(d.target.id)))
+      .forEach(link => {
+        let { source, target, connect_actor_activity } = link;
+
+        this.lineType(this.inspectLinks, source, target, connect_actor_activity);
+        this.defaultLine(this.inspectLinks);
+        this.alphaLine(this.inspectLinks);
+    });
   }
 
   tooltipText(d) {
