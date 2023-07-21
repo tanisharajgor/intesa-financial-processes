@@ -561,16 +561,21 @@ export default class NetworkVisualization {
     }
   }
 
+  // Highlights the non actor nodes according the inspect node list
+  highlightNonActorNodes(node) {
+    if (this.inspectNode.includes(node.id)) {
+      node.gfx.alpha = 1;
+    } else {
+      node.gfx.alpha = nonHighlightOpacity;
+    }
+  }
+
   // Identify inspected nodes by chapter and assign them an alpha level
   selectedChapterAlpha(node) {
     if (node.viewId === "Actor") {
       this.highlightInspectedNodes(node.levels.modelID.includes(this.selectedChapter), node);
     } else {
-      if (this.inspectNode.includes(node.id)) {
-        node.gfx.alpha = 1;
-      } else {
-        node.gfx.alpha = nonHighlightOpacity;
-      }
+      this.highlightNonActorNodes(node);
     }
   }
 
@@ -582,13 +587,8 @@ export default class NetworkVisualization {
       } else {
         this.highlightInspectedNodes(node.levels.orgStructure1ID.includes(this.selectedOrg1), node);
       }
-
     } else {
-      if (this.inspectNode.includes(node.id)) {
-        node.gfx.alpha = 1;
-      } else {
-        node.gfx.alpha = nonHighlightOpacity;
-      }
+      this.highlightNonActorNodes(node);
     }
   }
 
@@ -596,20 +596,15 @@ export default class NetworkVisualization {
   selectedChapterAndOrgStructureAlpha(node) {
     if (node.viewId === "Actor") {
 
-      if (node.levels.modelID.includes(this.selectedChapter) && node.levels.orgStructure1ID.includes(this.selectedOrg1)) {
-        this.identifyNodesLinks(node);
-       } else {
-        node.gfx.alpha = nonHighlightOpacity;
-       }
+      if (this.selectedOrg2 !== -1) {
+        this.highlightInspectedNodes(node.levels.orgStructure2ID.includes(this.selectedOrg2) && node.levels.modelID.includes(this.selectedChapter), node);
+      } else {
+        this.highlightInspectedNodes(node.levels.orgStructure1ID.includes(this.selectedOrg1) && node.levels.modelID.includes(this.selectedChapter), node);
+      }
 
     } else {
-      if (this.inspectNode.includes(node.id)) {
-        node.gfx.alpha = 1;
-      } else {
-        node.gfx.alpha = nonHighlightOpacity;
-      }
+      this.highlightNonActorNodes(node);
     }
-
   }
 
   // Change the opacity of the actor nodes and their linked attributes when inspected
