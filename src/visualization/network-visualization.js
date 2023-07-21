@@ -543,14 +543,18 @@ export default class NetworkVisualization {
     this.animate();
   }
 
+  inspectNodesLinks(node) {
+    let links = this.listHighlightNetworkNodes(node);
+    let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
+    this.inspectLink = this.reduceNestedList(this.inspectLink, links);
+    this.inspectNode = this.reduceNestedList(this.inspectNode, nodes);
+    node.gfx.alpha = 1;
+  }
+
   selectedChapterAlpha(node) {
     if (node.viewId === "Actor") {
       if (node.levels.modelID.includes(this.selectedChapter)) {
-        let links = this.listHighlightNetworkNodes(node);
-        let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
-        this.inspectLink = this.reduceNestedList(this.inspectLink, links);
-        this.inspectNode = this.reduceNestedList(this.inspectNode, nodes);
-        node.gfx.alpha = 1;
+       this.inspectNodesLinks(node);
       } else {
         node.gfx.alpha = nonHighlightOpacity;
       }
@@ -566,11 +570,7 @@ export default class NetworkVisualization {
   selectedOrgAlpha(node) {
     if (node.viewId === "Actor") {
       if (node.levels.orgStructure1ID.includes(this.selectedOrg1)) {
-        let links = this.listHighlightNetworkNodes(node);
-        let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
-        this.inspectLink = this.reduceNestedList(this.inspectLink, links);
-        this.inspectNode = this.reduceNestedList(this.inspectNode, nodes);
-        node.gfx.alpha = 1;
+        this.inspectNodesLinks(node);
       } else {
         node.gfx.alpha = nonHighlightOpacity;
       }
@@ -587,6 +587,8 @@ export default class NetworkVisualization {
   updateNodeAlpha(selectedChapter, selectedOrg1, selectedOrg2) {
     this.selectedChapter = selectedChapter;
     this.selectedOrg1 = selectedOrg1.id;
+
+    console.log(this.selectedOrg1)
     this.selectedOrg2 = selectedOrg2.id;
     this.inspectLink = [];
     this.inspectNode = [];
