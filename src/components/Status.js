@@ -25,7 +25,7 @@ export default function Status({
     return (
         <Draggable bounds="body">
             <StatusMenu isFullscreen={isFullscreen} style={{
-                    height: !shouldRotate ? "10vh" : "65vh",
+                    maxHeight: !shouldRotate ? "10vh" : "calc(100vh - 8rem)",
                     overflowY: !shouldRotate ? "hidden" : "scroll",
                     visibility: isFullscreen ? 'hidden' : 'visible'
                 }}>
