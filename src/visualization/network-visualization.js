@@ -569,11 +569,24 @@ export default class NetworkVisualization {
 
   selectedOrgAlpha(node) {
     if (node.viewId === "Actor") {
-      if (node.levels.orgStructure1ID.includes(this.selectedOrg1)) {
-        this.inspectNodesLinks(node);
-      } else {
-        node.gfx.alpha = nonHighlightOpacity;
+      if (this.selectedOrg !== -1) {
+        if (this.selectedOrg2 !== -1) {
+
+          if (node.levels.orgStructure2ID.includes(this.selectedOrg2)) {
+            this.inspectNodesLinks(node);
+           } else {
+             node.gfx.alpha = nonHighlightOpacity;
+           }
+          
+        } else {
+          if (node.levels.orgStructure1ID.includes(this.selectedOrg1)) {
+            this.inspectNodesLinks(node);
+           } else {
+             node.gfx.alpha = nonHighlightOpacity;
+           }
+        }
       }
+
     } else {
       if (this.inspectNode.includes(node.id)) {
         node.gfx.alpha = 1;
@@ -587,9 +600,8 @@ export default class NetworkVisualization {
   updateNodeAlpha(selectedChapter, selectedOrg1, selectedOrg2) {
     this.selectedChapter = selectedChapter;
     this.selectedOrg1 = selectedOrg1.id;
-
-    console.log(this.selectedOrg1)
     this.selectedOrg2 = selectedOrg2.id;
+
     this.inspectLink = [];
     this.inspectNode = [];
 
