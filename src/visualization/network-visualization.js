@@ -5,11 +5,12 @@ import * as Global from "../utils/global";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
 
+const nonHighlightOpacity = .3;
+
 export default class NetworkVisualization {
 
-  activeLinks;
-  activeLink;
-  activeNodes;
+  hoverLink;
+  hoverNodes;
   app;
   clickNode;
   clickViewport;
@@ -19,23 +20,29 @@ export default class NetworkVisualization {
   data;
   height;
   inspect;
+  inspectNodes;
+  inspectLinks;
   links;
   nodes;
   rootDOM;
+  selectedChapter;
   simulation;
   tooltip;
   width;
   viewport;
+  viewVariable;
 
   constructor(data, updateSymbolHoverValue, updateViewHoverValue) {
     this.updateSymbolHoverValue = updateSymbolHoverValue;
     this.updateViewHoverValue = updateViewHoverValue;
     this.data = data;
-    this.activeLink = [];
-    this.activeNodes = [];
+    this.hoverLink = [];
+    this.hoverNode = [];
     this.clickNode = false;
     this.clickViewport = false;
     this.clickCount = 0;
+    this.inspectNode = [];
+    this.inspectLink = [];
   }
 
   initSimulation() {
@@ -50,6 +57,9 @@ export default class NetworkVisualization {
       .force("collide", d3.forceCollide().strength(2).radius(8))
       .force("x", d3.forceX().strength(0.1))
       .force("y", d3.forceY().strength((adjustmentFactor * this.width) / this.height));
+
+    this.simulation.force("link")
+      .links(this.data.links);
   }
 
   // Initializes the application
@@ -59,7 +69,7 @@ export default class NetworkVisualization {
     this.height = this.rootDOM.clientHeight;
 
     this.initSimulation();
-    this.initTooltip(selector);
+    this.tooltip = Global.initTooltip(selector);
 
     // create canvas
     this.app = new PIXI.Application({
@@ -95,21 +105,27 @@ export default class NetworkVisualization {
     this.viewport.on('click', () => this.clickOff());
   }
 
+  // Set diagram to fill the vizualization frame
+  centerVisualization(newX, newY, zoom) {
+    this.viewport.zoomPercent(zoom, true)
+    this.viewport.moveCenter(newX, newY);
+  }
+
   clickOff() {
 
     this.clickCount++;
     if (this.clickCount > 2) {
       this.clickNode = false;
       this.clickCount = 0;
-      this.activeNodes
+      this.hoverNodes
         .forEach(node => {
           let { gfx } = node;
           gfx.filters.pop();
           gfx.zIndex = 0;
         });
 
-        this.activeLink = [];
-        this.activeNode = [];
+        this.hoverLink = [];
+        this.hoverNode = [];
     }
   }
 
@@ -122,7 +138,7 @@ export default class NetworkVisualization {
       this.clickCount = 0;
     }
 
-    this.activeNodes
+    this.hoverNodes
       .forEach(node => {
         let { gfx } = node;
         gfx.filters.pop();
@@ -130,10 +146,6 @@ export default class NetworkVisualization {
       });
     this.highlightNetworkNodes(node);
   }
-
-  initTooltip(selector) {
-    this.tooltip = Global.initTooltip(selector);
-}
 
   // Drawing functions ------------------------------------------------------
 
@@ -143,21 +155,24 @@ export default class NetworkVisualization {
 
     // Links
     this.links = new PIXI.Graphics();
-    this.links.alpha = .8;
     this.containerLinks.addChild(this.links);
 
-    // Active Links
-    this.activeLinks = new PIXI.Graphics();
-    this.activeLinks.alpha = .8;
-    this.containerLinks.addChild(this.activeLinks);
-    this.viewport.addChild(this.containerLinks);
+    // Inspect Links
+    this.inspectLinks = new PIXI.Graphics();
+    this.containerLinks.addChild(this.inspectLinks);
 
-    this.simulation.force("link")
-      .links(this.data.links);
+    this.viewport.addChild(this.containerLinks);
+  }
+
+  reduceNestedList(emptyList, list) {
+    emptyList.push(list);
+    emptyList = emptyList.flat(1);
+    let unique = [...new Set(emptyList)];
+    return unique;
   }
 
   // Initializes the nodes
-  drawNodes(viewVariable) {
+  drawNodes() {
 
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
@@ -171,7 +186,7 @@ export default class NetworkVisualization {
       if (node.viewId === "Actor") {
         node.gfx.beginFill(0xcbcbcb);
       } else {
-        node.gfx.beginFill(Global.applyColorScale(node, viewVariable));
+        node.gfx.beginFill(Global.applyColorScale(node, this.viewVariable));
       }
 
       Global.symbolScalePixi(node, rSize);
@@ -181,7 +196,7 @@ export default class NetworkVisualization {
       node.gfx.interactive = true;
       node.gfx.buttonMode = true;
       node.gfx.cursor = 'pointer';
-      node.gfx.on("pointerover", () => this.pointerOver(node, viewVariable));
+      node.gfx.on("pointerover", () => this.pointerOver(node));
       node.gfx.on("pointerout", () => this.pointerOut(node));
       node.gfx.on('click', () => this.clickOn(node));
 
@@ -194,108 +209,117 @@ export default class NetworkVisualization {
 
   // Updating the draw functions during the animation ------------------------------------------------------
 
+  defaultLine(links) {
+    links.lineStyle(1, 0x686868);
+  }
+
+  highlightLine(links) {
+    links.lineStyle(1, 0xffffff);
+  }
+
+  solidLine(links, source, target) {
+    links.moveTo(source.x, source.y);
+    links.lineTo(target.x, target.y);
+  }
+
   distance(p1, p2) {
     return Math.hypot(p2.x-p1.x, p2.y-p1.y)
   }
 
-  solidLine(source, target) {
-    this.links.lineStyle(1, 0x686868);
-    this.links.moveTo(target.x, target.y);
-    this.links.lineTo(source.x, source.y);
-  }
-
-  highlightSolidLine(source, target) {
-    this.activeLinks.lineStyle(1, 0xffffff);
-    this.activeLinks.moveTo(source.x, source.y);
-    this.activeLinks.lineTo(target.x, target.y);
-  }
-
   // Adapated from https://codepen.io/shepelevstas/pen/WKbYyw
-  dashedLine(source, target) {
+  dashedLine(links, source, target) {
     const dash = 5;
     const gap = 5;
     const p1 = {x: target.x, y: target.y};
     const p2 = {x: source.x, y: source.y};
     const len = this.distance(p1, p2);
     const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
-    this.links.lineStyle(1, 0x686868);
-    this.links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
+    links.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
     let progress = dash+gap;
   
     while (progress < len) {
-      this.links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      links.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
       progress += dash;
-      this.links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
+      links.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
       progress += gap;
     }
   }
 
-  highlightDashedLine(source, target) {
+  lineType(links, source, target, connect_actor_activity) {
+    if (connect_actor_activity) {
+      this.solidLine(links, source, target);
+    } else {
+      this.dashedLine(links, source, target);
+    }
+  }
 
-    const dash = 5;
-    const gap = 5;
-    const p1 = {x: target.x, y: target.y};
-    const p2 = {x: source.x, y: source.y};
-    const len = this.distance(p1, p2);
-    const norm = {x: (p2.x-p1.x)/len, y: (p2.y-p1.y)/len};
-    this.activeLinks.lineStyle(1, 0xffffff);
-    this.activeLinks.moveTo(p1.x, p1.y).lineTo(p1.x+dash*norm.x, p1.y+dash*norm.y);
-    let progress = dash+gap;
+  // Hover on links
+  highlightNetworkLinks(links, source, target) {
+    if (this.hoverLink.includes(source.id) && this.hoverLink.includes(target.id)) {
+      this.highlightLine(links);
+    } else {
+      this.defaultLine(links);
+    }
+  }
 
-    while (progress < len) {
-      this.activeLinks.moveTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
-      progress += dash;
-      this.activeLinks.lineTo(p1.x+progress*norm.x, p1.y+progress*norm.y);
-      progress += gap;
+  // Inspect on links
+  inspectNetworkLinks(source, target) {
+    if(this.inspectLink.length !== 0) {
+
+      if((this.inspectLink.includes(source.id) && this.inspectLink.includes(target.id))
+      && !(this.hoverLink.includes(source.id) && this.hoverLink.includes(target.id))) {
+        this.links.alpha = 1;
+      } else {
+        this.links.alpha = nonHighlightOpacity;
+      }
+
+    } else {
+      this.links.alpha = 1;
     }
   }
 
   // Update the links position
+  // Note
   updateLinkPosition() {
-
     // Links
     this.links.clear();
     this.data.links.forEach(link => {
-
       let { source, target, connect_actor_activity } = link;
 
-      if (connect_actor_activity) {
-        this.solidLine(source, target);
+      // Hover on links
+      this.highlightNetworkLinks(this.links, source, target);
+
+      // Line type
+      this.lineType(this.links, source, target, connect_actor_activity);
+
+      if (this.inspectLink.length === 0) {
+        this.links.alpha = 1;
       } else {
-        this.dashedLine(source, target);
+        this.links.alpha = nonHighlightOpacity;
       }
     });
 
-    // Hover on links
-    this.activeLinks.clear();
-    const activeLinkData = this.data.links
-            .filter(d => this.activeLink.includes(d.source.id) && this.activeLink.includes(d.target.id));
-
-    activeLinkData.forEach(link => {
+    this.inspectLinks.clear();
+    this.data.links
+    .filter(d => (this.inspectLink.includes(d.source.id) && this.inspectLink.includes(d.target.id)))
+    .forEach(link => {
       let { source, target, connect_actor_activity } = link;
+      this.inspectLinks.alpha = 1;
 
-      if (connect_actor_activity) {
-        this.highlightSolidLine(source, target);
-      } else {
-        this.highlightDashedLine(source, target);
-      }
+      // Hover on links
+      this.highlightNetworkLinks(this.inspectLinks, source, target);
+
+      // Line type
+      this.lineType(this.inspectLinks, source, target, connect_actor_activity);
     });
   }
 
   // Update the nodes position
   updateNodePosition() {
     this.nodes.forEach((node) => {
-      let { x, y, focus, gfx } = node;
+      let { x, y, gfx } = node;
       gfx.x = x;
       gfx.y = y;
-      if (focus) {
-        gfx.tint = 0xffffff;
-        gfx.zIndex = 1;
-      } else {
-        gfx.tint = 0xffffff;
-        // 0x444444;
-        gfx.zIndex = 0;
-      }
     });
   }
 
@@ -310,8 +334,8 @@ export default class NetworkVisualization {
     if (this.links !== undefined) {
       this.links.destroy();
     }
-    if (this.activeLinks !== undefined) {
-      this.activeLinks.destroy();
+    if (this.inspectLinks !== undefined) {
+      this.inspectLinks.destroy();
     }
   }
 
@@ -424,9 +448,9 @@ export default class NetworkVisualization {
   }
 
   highlightNetworkNodes(d) {
-    this.activeLink = this.listHighlightNetworkNodes(d);
-    this.activeNodes = this.data.nodes.filter(z => this.activeLink.includes(z.id));
-    this.activeNodes
+    this.hoverLink = this.listHighlightNetworkNodes(d);
+    this.hoverNodes = this.data.nodes.filter(z => this.hoverLink.includes(z.id));
+    this.hoverNodes
       .forEach(node => {
         let { gfx } = node;
 
@@ -446,19 +470,19 @@ export default class NetworkVisualization {
   tooltipText(d) {
     if (d.viewId === "Actor") {
 
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # activities: ${d.viewType.nActivity} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
+        return `Type: ${d.type} <br> ${d.group}: ${d.descr} <br> # activities: ${d.viewType.nActivity} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Other activity") {
 
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.viewType.nActor} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
+        return `Type: ${d.type} <br> ${d.group}: ${d.descr} <br> # actors: ${d.viewType.nActor} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Risk") {
-    
-        return `${d.group}: ${d.name} <br> # actors: ${d.viewType.nActor} <br> # activity: ${d.viewType.nActivity} <br> # control: ${d.viewType.nControl}`;
+
+        return `${d.group}: ${d.descr} <br> # actors: ${d.viewType.nActor} <br> # activity: ${d.viewType.nActivity} <br> # control: ${d.viewType.nControl}`;
 
     } else if (d.viewId === "Control activity") {
-    
-        return `Type: ${d.type} <br> ${d.group}: ${d.name} <br> # actors: ${d.viewType.nActor} <br> # risks: ${d.viewType.nRisk}`;
+
+        return `Type: ${d.type} <br> ${d.group}: ${d.descr} <br> # actors: ${d.viewType.nActor} <br> # risks: ${d.viewType.nRisk}`;
     }
   }
 
@@ -472,29 +496,29 @@ export default class NetworkVisualization {
       .html(this.tooltipText(d));
   }
 
-  pointerOver(d, viewVariable) {
+  pointerOver(d) {
 
     if (!this.clickNode) {
       this.highlightNetworkNodes(d);
     }
 
     this.updateSymbolHoverValue(d.viewId);
-    this.updateViewHoverValue(Global.applyColorScale(d, viewVariable));
+    this.updateViewHoverValue(Global.applyColorScale(d, this.viewVariable));
     this.showTooltip(d);
   }
 
   pointerOut(d) {
 
     if (!this.clickNode) {
-      this.activeNodes
+      this.hoverNodes
       .forEach(node => {
         let { gfx } = node;
         gfx.filters.pop();
         gfx.zIndex = 0;
       });
 
-      this.activeLink = [];
-      this.activeNode = [];
+      this.hoverLink = [];
+      this.hoverNode = [];
     }
 
     this.updateViewHoverValue(undefined);
@@ -510,16 +534,106 @@ export default class NetworkVisualization {
   }
 
   draw(viewVariable) {
+    this.viewVariable = viewVariable;
     this.drawLinks();
-    this.drawNodes(viewVariable);
+    this.drawNodes();
     this.simulation.alpha(1).restart();
   }
 
   updateDraw(viewVariable) {
+    this.hoverLink = [];
+    this.hoverNode = [];
+    this.hoverNodes = [];
     this.destroyLinks();
     this.destroyNodes();
     this.draw(viewVariable);
-    this.animate()
+    this.animate();
+  }
+
+  // Identify nodes and links to highlight
+  identifyNodesLinks(node) {
+    let links = this.listHighlightNetworkNodes(node);
+    let nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
+    this.inspectLink = this.reduceNestedList(this.inspectLink, links);
+    this.inspectNode = this.reduceNestedList(this.inspectNode, nodes);
+    node.gfx.alpha = 1;
+  }
+
+  // Apply ifelse logic to identified nodes
+  highlightInspectedNodes(nodeEvaluation, node) {
+    if (nodeEvaluation) {
+      this.identifyNodesLinks(node);
+    } else {
+      node.gfx.alpha = nonHighlightOpacity;
+    }
+  }
+
+  // Highlights the non actor nodes according the inspect node list
+  highlightNonActorNodes(node) {
+    if (this.inspectNode.includes(node.id)) {
+      node.gfx.alpha = 1;
+    } else {
+      node.gfx.alpha = nonHighlightOpacity;
+    }
+  }
+
+  // Identify inspected nodes by chapter and assign them an alpha level
+  selectedChapterAlpha(node) {
+    if (node.viewId === "Actor") {
+      this.highlightInspectedNodes(node.levels.modelID.includes(this.selectedChapter), node);
+    } else {
+      this.highlightNonActorNodes(node);
+    }
+  }
+
+  // Identify inspected nodes by organizational structure and assign them an alpha level
+  selectedOrgAlpha(node) {
+    if (node.viewId === "Actor") {
+      if (this.selectedOrg2 !== -1) {
+        this.highlightInspectedNodes(node.levels.orgStructure2ID.includes(this.selectedOrg2), node);
+      } else {
+        this.highlightInspectedNodes(node.levels.orgStructure1ID.includes(this.selectedOrg1), node);
+      }
+    } else {
+      this.highlightNonActorNodes(node);
+    }
+  }
+
+  // Logic to define the intersection of the chapter and organizational structure
+  selectedChapterAndOrgStructureAlpha(node) {
+    if (node.viewId === "Actor") {
+
+      if (this.selectedOrg2 !== -1) {
+        this.highlightInspectedNodes(node.levels.orgStructure2ID.includes(this.selectedOrg2) && node.levels.modelID.includes(this.selectedChapter), node);
+      } else {
+        this.highlightInspectedNodes(node.levels.orgStructure1ID.includes(this.selectedOrg1) && node.levels.modelID.includes(this.selectedChapter), node);
+      }
+
+    } else {
+      this.highlightNonActorNodes(node);
+    }
+  }
+
+  // Change the opacity of the actor nodes and their linked attributes when inspected
+  updateNodeAlpha(selectedChapter, selectedOrg1, selectedOrg2) {
+    this.selectedChapter = selectedChapter;
+    this.selectedOrg1 = selectedOrg1.id;
+    this.selectedOrg2 = selectedOrg2.id;
+
+    this.inspectLink = [];
+    this.inspectNode = [];
+
+    this.nodes.forEach((node) => {
+      if (this.selectedChapter !== -1 && this.selectedChapter !== undefined && this.selectedOrg1 !== -1) {
+        this.selectedChapterAndOrgStructureAlpha(node);
+      } else if (this.selectedChapter !== -1 && this.selectedChapter !== undefined) {
+        this.selectedChapterAlpha(node);
+      } else if (this.selectedOrg1 !== -1) {
+        this.selectedOrgAlpha(node);
+      } else {
+        node.gfx.alpha = 1;
+      }
+    });
   }
 
   animate() {

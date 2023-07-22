@@ -1,8 +1,12 @@
 import styled from 'styled-components'
 
 export const LayoutGroup = styled('div')`
+    padding-top: 0%;
+    padding-right: ${props =>  props.theme.padding };
+    padding-bottom: ${props =>  props.theme.padding };
+    padding-left: ${props =>  props.theme.padding };
     width: 100%;
-
+    
     &.inline {
         width: 100%;
         .layout_row {
@@ -11,10 +15,6 @@ export const LayoutGroup = styled('div')`
             display: inline;
             }
         }
-    }
-
-    &.pad {
-        padding: 12px;
     }
 `
 

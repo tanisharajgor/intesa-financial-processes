@@ -1,50 +1,9 @@
 import * as d3 from 'd3';
+import * as Theme from "../component-styles/theme";
 
 export const palette = [0x1f77b4, 0xff7f0e, 0x2ca02c, 0xd62728, 0x9467bd, 0x8c564b, 
     0xe377c2, 0xbcbd22, 0x17becf, 0xaec7e8, 0xffbb78, 0x98df8a, 0xff9896, 
     0xc5b0d5, 0xc49c94, 0xf7b6d2, 0xc7c7c7, 0xdbdb8d, 0x9edae5];
-
-export const naColor = 0x777777;
-export const naColorHex = "#777777";
-
-export const lightGreyColor = 0xCBCBCB;
-export const lightGreyColorRGB = "rgb(203, 203, 203)";
-export const lightGreyColorHex = "#CBCBCB";
-
-export const darkGreyColor = 0x929295;
-export const darkGreyColorRGB = "rgb(145, 146, 149)";
-export const darkGreyColorHex = "#929295";
-
-export const tooltipStyles = {
-    fontFamily: '"IBM Plex", "Helvetica Neue", Helvetica, Arial, sans-serif',
-    fontSize: "12px",
-    fontColor: lightGreyColorHex
-}
-
-export const labelStyles = {
-    fontFamily: '"IBM Plex", "Helvetica Neue", Helvetica, Arial, sans-serif',
-    fontSize: "12px",
-    fontColor: darkGreyColorHex
-}
-
-export function initTooltip(selector) {
-    return d3.select(`#${selector}`)
-      .append("div")
-      .attr("class", "tooltip")
-      .style("position", "absolute")
-      .style("left", "0px")
-      .style("top", "0px")
-      .style("visibility", "hidden")
-      .style("padding", "10px")
-      .style("pointer-events", "none")
-      .style("border-radius", "5px")
-      .style("background-color", "rgba(0, 0, 0, 0.65)")
-      .style("font-weight", "normal")
-      .style("border", "1px solid rgba(78, 81, 85, 0.7)")
-      .style("font-family", tooltipStyles.fontFamily)
-      .style("color", tooltipStyles.fontColor)
-      .style("font-size", tooltipStyles.fontSize);
-}
 
 export const viewVariables = {
 
@@ -77,7 +36,7 @@ export const viewVariables = {
         labels: ['Financial Information Risk', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'NA'],
         id: [20, 21, 22, 23, 24],
         values: ['Financial Information Risk (ex 262/2005)', 'Legal and non-compliance', 'Information and Communication Technology risk', 'Other risks (operational)', 'NA'],
-        colors: [0xf27800, 0x35b7ad, 0xedb900, 0xb04492, naColor],
+        colors: [0xf27800, 0x35b7ad, 0xedb900, 0xb04492, Theme.naColor],
         viewId: "Risk"
     },
     "controlType": {
@@ -85,7 +44,7 @@ export const viewVariables = {
         values: ["Manual", "Semi-automatic", "Automatic", "NA"],
         id: [1, 2, 3, 4, 5],
         labels: ["Manual", "Semi-automatic", "Automatic", "NA"],
-        colors: [0xFF0000, 0xFFC41F, 0x0071BC, naColor],
+        colors: [0xFF0000, 0xFFC41F, 0x0071BC, Theme.naColor],
         viewId: "Control activity"
     },
     "controlPeriodocity": {
@@ -110,7 +69,7 @@ export function createColorScale(variable) {
             .domain(d3.extent(t.values));
 
         let interp = [3650, 365, 182, 91, 30, 7, 1, .1].map(d => scale(d))
-        interp.push(naColorHex)
+        interp.push(Theme.naColorHex)
 
         var s = d3.scaleOrdinal()
             .domain(t.values)
@@ -132,7 +91,7 @@ export function createColorScale(variable) {
 export function applyColorScale(d, viewVariable) {
 
     let colorScale = createColorScale(viewVariable);
-    return d.viewType[viewVariable] === "NA" || d.viewType[viewVariable] === undefined? naColor : colorScale(d.viewType[viewVariable]);   
+    return d.viewType[viewVariable] === "NA" || d.viewType[viewVariable] === undefined? Theme.naColor : colorScale(d.viewType[viewVariable]);   
 }
 
 export function createLabelScale(viewVariable) {
@@ -216,3 +175,24 @@ export function filterLinksTargetToSource(data, ids) {
 }
 
 export const activityTypeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
+
+export function initTooltip(selector) {
+    return d3.select(`#${selector}`)
+      .append("div")
+      .attr("class", "tooltip")
+      .style("max-width", "175px")
+      .style("position", "absolute")
+      .style("left", "0px")
+      .style("top", "0px")
+      .style("visibility", "hidden")
+      .style("padding", "7px")
+      .style("pointer-events", "none")
+      .style("border-radius", "5px")
+      .style("background-color", "rgba(0, 0, 0, 0.65)")
+      .style("font-weight", "normal")
+      .style("border", "1px solid rgba(78, 81, 85, 0.7)")
+      .style("font-family", Theme.tooltipStyles.fontFamily)
+      .style("font-size", Theme.tooltipStyles.fontSize)
+      .style("color", Theme.tooltipStyles.fontColor)
+      .style("line-height", Theme.tooltipStyles.lineHeight);
+}

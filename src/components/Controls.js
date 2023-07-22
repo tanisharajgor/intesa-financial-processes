@@ -1,21 +1,12 @@
-import styled from "styled-components";
+//Components
 import Ripple from "./Ripple";
 
-const StyledControlButton = styled('button')`
-    background: transparent;
-    border: 1px solid transparent;
-    cursor: pointer;
-    position: relative;
+//Styles
+import { StyledControlsPanel, StyledControlButton, FullscreenIcon, FullscreenButton } from "../component-styles/controls";
 
-    &:hover {
-        border-color: ${props =>  props.theme.color.secondary };
-        border-radius: 15%;
-    }
-`
-
-export default function Control({hideControls, controls}) {
+export default function Control({handleFullscreen, controls}) {
     return (
-        <div className="Controls">
+        <StyledControlsPanel>
             <div className="inner">
                 <StyledControlButton onClick={() => controls.reset()}>
                     <img alt="Button to reset the scale of the visualization" src={process.env.PUBLIC_URL + "/assets/crop_free.svg"}/>
@@ -29,7 +20,13 @@ export default function Control({hideControls, controls}) {
                     <img alt="Button to zoom out of the visualization" src={process.env.PUBLIC_URL + "/assets/zoom_out.svg"}/>
                     <Ripple color={"#FFFFFF"} duration={1000}/>
                 </StyledControlButton>
+                <FullscreenButton onClick={handleFullscreen}>
+                    <FullscreenIcon alt="Button to make the visualization take up the screen"
+                        src={process.env.PUBLIC_URL + "/assets/fullscreen.svg"}
+                    />
+                    <Ripple color={"#FFFFFF"} duration={1000}/>
+                </FullscreenButton>
             </div>
-        </div>
+        </StyledControlsPanel>
     )
 }

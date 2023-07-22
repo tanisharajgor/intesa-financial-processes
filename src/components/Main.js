@@ -1,23 +1,35 @@
+// Components
 import Status from "../components/Status";
-import styled from "styled-components";
+import Control from "./Controls";
 
-const StyledMain = styled('div')`
-    position: relative;
-    grid-column-start: 2;
-    // display: flex;
-    width: 100%;
-`
-const Visualization = styled('div')`
-    width: 100%;
-    height: 100vh;
-    background-color: black;
-`
-export default function Main({viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue, id, controls}) {
+// Styles
+import { StyledMain, Visualization} from "../component-styles/main";
+
+export default function Main({
+    viewVariable,
+    updateViewVariable,
+    viewHoverValue,
+    symbolHoverValue,
+    id,
+    controls,
+    handleFullscreen,
+    isFullscreen
+}) {
 
     return(
         <StyledMain>
             <Visualization id={id} className="Visualization"></Visualization>
-            <Status id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} controls={controls}/>
+            <Status
+                id={id}
+                viewVariable={viewVariable}
+                updateViewVariable={updateViewVariable}
+                viewHoverValue={viewHoverValue}
+                symbolHoverValue={symbolHoverValue}
+                controls={controls}
+                handleFullscreen={handleFullscreen}
+                isFullscreen={isFullscreen}
+            />
+            <Control controls={controls} handleFullscreen={handleFullscreen}/>
         </StyledMain>
     )
 }

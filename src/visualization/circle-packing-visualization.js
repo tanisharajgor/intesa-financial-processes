@@ -1,13 +1,14 @@
+// Libraries
 import * as d3 from "d3";
 import * as PIXI from "pixi.js";
 import * as Global from "../utils/global";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
+
+// Components
 import { activityTypeValues } from "../utils/global";
 
-const lineWidth = d3.scaleOrdinal()
-  .domain([0, 1, 2, 3, 4])
-  .range([.5, .5, .5, .5, 0]);
+const nonHighlightOpacity = .15;
 
 export class CirclePackingDiagram {
   app;
@@ -16,19 +17,34 @@ export class CirclePackingDiagram {
   height;
   inspect;
   label;
+  levelIDs;
   nodes;
   rootDOM;
+  selectedActivities;
+  selectedLevels;
   tooltip;
   width;
   viewport;
+  viewVariable;
   zoomedNodeId;
+  dataMap;
 
   constructor(data, updateViewHoverValue) {
     this.data = data;
+    this.levelIDs = [];
+    this.dataMap = {};
+    this.data.forEach(d => {
+      this.levelIDs.push(d.data.id);
+      this.dataMap[`${d.data.id}`] = d;
+    })
     this.zoomedNodeId = 0;
     this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
     this.selectedActivities = [];
+    this.selectedLevel1 = [];
+    this.selectedLevel2 = [];
+    this.selectedLevel3 = [];
+    this.selectedChapter = [];
   }
 
   // Initializes the application
@@ -36,7 +52,7 @@ export class CirclePackingDiagram {
     this.rootDOM = document.getElementById(selector);
     this.width = this.rootDOM.clientWidth;
     this.height = this.rootDOM.clientHeight;
-    this.initTooltip(selector);
+    this.tooltip = Global.initTooltip(selector);
   
     // create canvas
     this.app = new PIXI.Application({
@@ -70,51 +86,122 @@ export class CirclePackingDiagram {
     this.app.stage.addChild(this.viewport);
   }
 
+  // Set diagram to fill the vizualization frame
+  centerVisualization(zoom, xPos, yPos) {
+    if (xPos && yPos) {
+      this.viewport.moveCenter(xPos, yPos)
+    }
+    this.viewport.zoomPercent(zoom, true)
+  }
+
   initTooltip(selector) {
     this.tooltip = Global.initTooltip(selector);
   }
-  
-  // Drawing functions ------------------------------------------------------
-  opacityScale(node) {
 
-    const scale = d3.scaleOrdinal()
-      .domain([0, 1, 2, 3, 4])
-      .range([.05, .3, .4, .5, .9]);
-  
-    if (this.selectedActivities.length === 0) {
-      node.gfx.alpha = scale(node.data.treeLevel);
+  // Drawing functions ------------------------------------------------------
+
+  selectedActivitiesOpacity(node) {
+    if (node.data.level < 4) {
+      node.gfx.alpha = nonHighlightOpacity;
     } else {
-  
-      if (node.data.treeLevel < 4) {
-        node.gfx.alpha = .1;
+      if (this.selectedActivities.includes(node.data.activityType)) {
+        node.gfx.alpha = 1;
       } else {
-  
-        if (this.selectedActivities.includes(node.data.activityType)) {
-          node.gfx.alpha = 1;
-        } else {
-          node.gfx.alpha = .1;
-        }
+        node.gfx.alpha = nonHighlightOpacity;
       }
     }
   }
-  
-  draw(viewVariable, selector) {
-    this.drawNodes(viewVariable);
+
+  selectedLevelOpacity(node) {
+    if (this.levelIDs.includes(node.data.id)) {
+      node.gfx.alpha = this.alphaScale(node.data.level);
+    } else {
+      node.gfx.alpha = nonHighlightOpacity;
+    }
+  }
+
+  selectedLevelAndActivitiesOpacity(node) {
+    if (this.levelIDs.includes(node.data.id) && this.selectedActivities.includes(node.data.activityType)) {
+      node.gfx.alpha = 1;
+    } else {
+      node.gfx.alpha = nonHighlightOpacity;
+    }
+  }
+
+  opacityScale(node) {
+    this.alphaScale = d3.scaleOrdinal()
+      .domain([0, 1, 2, 3, 4])
+      .range([.05, .3, .4, .5, .6]);
+
+    if (this.selectedActivities.length > 0 && this.selectedLevel1.id !== -1) {
+      this.selectedLevelAndActivitiesOpacity(node);
+    } else if(this.selectedActivities.length > 0) {
+      this.selectedActivitiesOpacity(node);
+    } else if(this.selectedLevel1.id !== -1) {
+      this.selectedLevelOpacity(node);
+    } else {
+      node.gfx.alpha = this.alphaScale(node.data.level);
+    }
+  }
+
+  updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
+    this.selectedActivities = activityTypeValues.filter(activity => !selectedActivities.includes(activity));
+    
+    this.selectedLevel1 = selectedLevel1;
+    this.selectedLevel2 = selectedLevel2;
+    this.selectedLevel3 = selectedLevel3;
+    this.selectedChapter = selectedChapter;
+
+    if (this.selectedLevel1.id !== -1) {
+      if (this.selectedLevel2.id !== -1) {
+        if (this.selectedLevel3.id !== -1) {
+          if (this.selectedChapter.id !== -1) {
+            let foundChapter = this.dataMap[`${valuesChapter.find(d => d.id === selectedChapter.id).id}`]
+            if (foundChapter !== undefined) {
+              this.levelIDs = [foundChapter.data.id]
+            } else {
+              this.levelIDs = []
+            }
+          } else {
+            this.levelIDs = [this.dataMap[`${this.selectedLevel3.id}`]].map(d => d.data.childrenIDs)
+            .reduce((a, b) => a.concat(b))
+            .concat([this.selectedLevel3]);          }
+        } else {
+          this.levelIDs = [this.dataMap[`${this.selectedLevel2.id}`]].map(d => d.data.childrenIDs)
+          .reduce((a, b) => a.concat(b))
+          .concat([this.selectedLevel2]);
+        }
+      } else {
+        this.levelIDs = [this.dataMap[`${this.selectedLevel1.id}`]].map(d => d.data.childrenIDs)
+          .reduce((a, b) => a.concat(b))
+          .concat([this.selectedLevel1]);
+      }
+    }
+
+    this.data.forEach(n => this.opacityScale(n));
+  }
+
+  draw(viewVariable) {
+    this.viewVariable = viewVariable;
+    this.drawNodes();
     this.drawLabels(selector);
   }
 
   // Initializes the nodes
-  drawNodes(viewVariable) {
+  drawNodes() {
 
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
 
+    const lineWidth = d3.scaleOrdinal()
+      .domain([0, 1, 2, 3, 4])
+      .range([.4, .5, .5, .5, .1]);
+
     this.data.forEach((node) => {
       node.viewId = node.data.viewId;
       node.gfx = new PIXI.Graphics();
-      node.gfx.lineStyle(lineWidth(node.data.treeLevel), 0xFFFFFF, 1);
-      node.gfx.lineWidth = 1;
-      node.gfx.beginFill(Global.applyColorScale(node.data, viewVariable));
+      node.gfx.lineStyle(lineWidth(node.data.level), 0xFFFFFF, 1);
+      node.gfx.beginFill(Global.applyColorScale(node.data, this.viewVariable));
 
       this.opacityScale(node);
 
@@ -126,9 +213,9 @@ export class CirclePackingDiagram {
       node.gfx.interactive = true;
       node.gfx.buttonMode = true;
       node.gfx.cursor = 'zoom-in';
-      node.gfx.on("pointerover", (e) => this.pointerOver(node, e, viewVariable));
+      node.gfx.on("pointerover", (e) => this.pointerOver(node, e));
       node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
-      node.gfx.on("click", (e) => this.onClick(node, e))
+      node.gfx.on("click", (e) => this.centerOnNode(node, e))
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx); 
@@ -190,12 +277,13 @@ export class CirclePackingDiagram {
   // Updating the draw functions on mouse interaction ------------------------------------------------------
 
   tooltipText(d) {
-    return `${d.data.treeLevel === 4? "Activity": "Process"}: ${d.data.name}`;
+    return `${d.data.level === 4? "Activity": "Process"} <br><b>${d.data.descr}</b>`;
   }
 
   showTooltip(d, event) {
-    let x = event.client.x;
-    let y = event.client.y;
+
+    let x = event.screen.x + 20;
+    let y = event.screen.y - 10;
 
     this.tooltip.style("visibility", "visible")
       .style("top", `${y}px`)
@@ -203,13 +291,13 @@ export class CirclePackingDiagram {
       .html(this.tooltipText(d));
     }
 
-  pointerOver(node, event, viewVariable) {
-    node.gfx.alpha = .9;
+  pointerOver(node, event) {
+    node.gfx.alpha = 1;
     this.showTooltip(node, event);
-    this.updateViewHoverValue(Global.applyColorScale(node.data, viewVariable));
+    this.updateViewHoverValue(Global.applyColorScale(node.data, this.viewVariable));
   }
 
-  pointerOut(node, event) {
+  pointerOut(node) {
     this.opacityScale(node);
     this.tooltip.style("visibility", "hidden");
     this.updateViewHoverValue(undefined);
@@ -257,9 +345,11 @@ export class CirclePackingDiagram {
     return scale(node.depth);
   }
 
-  onClick(node) {
+  centerOnNode(node) {
     this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
+
     node.gfx.cursor = "zoom-out";
+
     const zoomScale = this.getZoomWidth(node);
     const centerPoint = this.getCenter(node);
 
@@ -278,13 +368,14 @@ export class CirclePackingDiagram {
     }
   }
 
-  updateDraw(viewVariable, selectedActivities) {
-    this.selectedActivities = activityTypeValues.filter(x => !selectedActivities.includes(x));
+  updateDraw(viewVariable) {
+
+    this.viewVariable = viewVariable;
     this.destroyNodes();
-    this.drawNodes(viewVariable);
+    this.drawNodes();
   }
 
-    // Controls ------------------------------------------------------
+  // Controls ------------------------------------------------------
   getControls() {
     return {
       zoomIn: () => {

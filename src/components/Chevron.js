@@ -1,16 +1,17 @@
-import { useState } from "react";
-import { ChevronButton } from "../component-styles/chevron-button";
+// Components
 import Ripple from "./Ripple";
 
-export default function Chevron() {
-    const [shouldRotate, setRotate] = useState(false);
+// Styles
+import { ChevronButton } from "../component-styles/chevron-button";
 
-    const handleRotate = () => setRotate(!shouldRotate);
 
-    return (
-        <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate}>
-            <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"}/>
-            <Ripple color={"#FFFFFF"} duration={1000}/>
+// Component to style the Chevron Button
+export function ChevronButtonStyled({shouldRotate, handleRotate}) {
+
+    return(
+        <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate} style={{ paddingLeft: "2%", paddingRight: "2%" }}>
+            <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"} />
+            <Ripple color={"#FFFFFF"} duration={1000} />
         </ChevronButton>
     )
 }

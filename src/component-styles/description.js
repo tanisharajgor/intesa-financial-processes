@@ -2,13 +2,11 @@ import styled from "styled-components";
 
 export const StyledDescription = styled.div`
     border-bottom: 1px solid #4e5155;
-    padding-bottom: 1rem;    
-    padding-top: 0.25rem;
+    padding: ${props =>  props.theme.padding };
 
     h4 {
-        margin: 0;
+        margin-bottom: 1.2rem;
         padding: 0;
         color: #919295;
     }
-
 `;
