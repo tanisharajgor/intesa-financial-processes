@@ -97,7 +97,7 @@ export default function CirclePacking() {
         updateViewVariable(updatedView)
     }, [])
 
-    const onFilterActivitiesChange = useCallback((updatedActivities) => {
+    const onInspectActivitiesChange = useCallback((updatedActivities) => {
         circlePackingDiagram.current.updateOpacity(updatedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter);
         let inspect = d3.select(".Inspect");
         inspectHierarchySummary(inspect, data);
