@@ -190,7 +190,6 @@ export class CirclePackingDiagram {
 
   // Initializes the nodes
   drawNodes() {
-
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
 
@@ -251,28 +250,30 @@ export class CirclePackingDiagram {
     //     .text(d => d.data.name)
     //     .style("fill", "white");
 
-      this.label = this.data.filter(node => node.data.treeLevel === 1)
-        .forEach(node => {
+    // console.log(this.data.filter(d => d.data.level === 1))
 
-          let x = this.width - node.gfx.x - node.r;
-          let y = this.height - node.gfx.y;
+    this.label = this.data.filter(d => d.data.level === 1)
+      .forEach(d => {
+        // console.log(d)
+        let x = this.width - d.gfx.x - d.r;
+        let y = this.height - d.gfx.y;
 
-          d3.select(`#${this.selector}`)
-            .append("div")
-            .attr("class", "label")
-            // .attr("text-anchor", "middle")
-            .attr("pointer-events", "none")
-            .style("position", "absolute")
-            .style("top", `${y}px`)
-            .style("left", `${x}px`)
-            // .style("text-align", "center")
-            // .style("vertical-align", "middle")
-            .style("font-family", Theme.labelStyles.fontFamily)
-            .style("color", Theme.lightGreyColorHex)
-            .style("font-size", Theme.labelStyles.fontSize)
-            // .style("fill-opacity", node.data.treeLevel === 1 ? 1 : 0)
-            .text(node.data.name);
-        });
+        d3.select(`#${this.selector}`)
+          .append("div")
+          .attr("class", "label")
+          // .attr("text-anchor", "middle")
+          .attr("pointer-events", "none")
+          .style("position", "absolute")
+          .style("top", `${y}px`)
+          .style("left", `${x}px`)
+          // .style("text-align", "center")
+          // .style("vertical-align", "middle")
+          .style("font-family", Theme.labelStyles.fontFamily)
+          .style("color", Theme.lightGreyColorHex)
+          .style("font-size", Theme.labelStyles.fontSize)
+          // .style("fill-opacity", node.data.treeLevel === 1 ? 1 : 0)
+          .text(d.data.descr);
+      });
   }
 
   // Updating the draw functions on mouse interaction ------------------------------------------------------
@@ -308,15 +309,14 @@ export class CirclePackingDiagram {
     if (this.currentNodeId === this.zoomedNodeId) {
       node.gfx.cursor = "zoom-in";
 
-      // if (node.depth === 1 ) {
-        
+      if (node.depth === 1 ) {
       //   this.label.attr("transform", d => `translate(${this.viewport.worldWidth / 2},${  this.viewport.worldHeight / 2})`)
       //   return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
-      // } else {
-      //   node.parent.gfx.cursor = "zoom-out";
+      } else {
+        node.parent.gfx.cursor = "zoom-out";
       //   this.label.attr("transform", d => `translate(${this.width - node.parent.x},${ this.height - node.parent.y})`)
       //   return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
-      // }
+      }
 
     } else {
         // this.label.attr("transform", d => `translate(${this.width - node.x},${this.height - node.y})`)
@@ -342,7 +342,6 @@ export class CirclePackingDiagram {
     if (this.currentNodeId === this.zoomedNodeId && node.depth !== 0) {
       return scale(node.depth - 1);
     }
-
     return scale(node.depth);
   }
 
@@ -370,10 +369,10 @@ export class CirclePackingDiagram {
   }
 
   updateDraw(viewVariable) {
-
     this.viewVariable = viewVariable;
     this.destroyNodes();
     this.drawNodes();
+    this.drawLabels();
   }
 
   // Controls ------------------------------------------------------
