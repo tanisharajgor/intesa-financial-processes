@@ -37,8 +37,6 @@ export default function CirclePacking() {
     const [isFullscreen, setFullscreen] = useState(false);
     const [shouldRotate, setRotate] = useState(true);
 
-    const handleRotate = () => setRotate(!shouldRotate);
-
     // Possible set of activities/actors to choose from
     const possibleActivities = activityTypeValues;
 
@@ -99,22 +97,16 @@ export default function CirclePacking() {
         updateViewVariable(updatedView)
     }, [])
 
-    // const onFilterActivitiesChange = useCallback((updatedActivities) => {
-    //     circlePackingDiagram.current.updateDraw(viewVariable, updatedActivities)
-
-    //     let inspect = d3.select(".Inspect");
-    //     inspectHierarchySummary(inspect, data);
-    //     updateActivities(updatedActivities)
-    // }, [selectedActivities])
-
-    useEffect(() => {
-        circlePackingDiagram.current.updateDraw(viewVariable, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter);
-        inspectHierarchySummary(data);
-    }, [viewVariable]);
+    const onFilterActivitiesChange = useCallback((updatedActivities) => {
+        circlePackingDiagram.current.updateOpacity(updatedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter);
+        let inspect = d3.select(".Inspect");
+        inspectHierarchySummary(inspect, data);
+        updateActivities(updatedActivities)
+    }, [selectedActivities])
 
     useEffect(() => {
         circlePackingDiagram.current.updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter)
-    }, [selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, selectedActivities]);
+    }, [selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter]);
 
     return (
         <>
@@ -126,7 +118,7 @@ export default function CirclePacking() {
                 }}>
                     <MenuHeader label="Ecosystem" />
                     <MenuBody shouldRotate={shouldRotate} pageDescription="Click on the circles to zoom into the process visualization.">
-                        <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type" />
+                        <FilterType typesChecked={selectedActivities} updateSelection={onFilterActivitiesChange} typeValues={possibleActivities} label="Inspect by Activity Type" />
                         <InspectTaxonomy
                             handleTaxonomyChange={handleTaxonomyChange}
                             selectedLevel1={selectedLevel1}
