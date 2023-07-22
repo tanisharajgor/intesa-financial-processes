@@ -37,8 +37,6 @@ export default function CirclePacking() {
     const [isFullscreen, setFullscreen] = useState(false);
     const [shouldRotate, setRotate] = useState(true);
 
-    const handleRotate = () => setRotate(!shouldRotate);
-
     // Possible set of activities/actors to choose from
     const possibleActivities = activityTypeValues;
 
@@ -90,24 +88,25 @@ export default function CirclePacking() {
         circlePackingDiagram.current.centerVisualization(-0.30);
     }, []);
 
-    // const onViewVariableChange = useCallback((updatedView) => {
-    //     circlePackingDiagram.current.updateDraw(updatedView)
+    const onViewVariableChange = useCallback((updatedView) => {
+        circlePackingDiagram.current.updateDraw(updatedView, selectedActivities)
 
-    //     let inspect = d3.select(".Inspect");
-    //     inspectHierarchySummary(inspect, data);
-    //     updateViewVariable(updatedView)
-    // }, [])
+        let inspect = d3.select(".Inspect");
+        inspectHierarchySummary(inspect, data);
+        updateViewVariable(updatedView)
+    }, [])
 
-    // Redraws the visualization when the Legend Changes
-    useEffect(() => {
-        circlePackingDiagram.current.updateDraw(viewVariable);
-        inspectHierarchySummary(data);
-    }, [viewVariable]);
+    const onInspectActivitiesChange = useCallback((updatedActivities) => {
+        circlePackingDiagram.current.updateOpacity(updatedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter);
+        let inspect = d3.select(".Inspect");
+        inspectHierarchySummary(inspect, data);
+        updateActivities(updatedActivities)
+    }, [selectedActivities])
 
     // Updates the Opacity on Inspect
     useEffect(() => {
         circlePackingDiagram.current.updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter)
-    }, [selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, selectedActivities]);
+    }, [selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter]);
 
     return (
         <>
@@ -119,7 +118,7 @@ export default function CirclePacking() {
                 }}>
                     <MenuHeader label="Ecosystem" />
                     <MenuBody shouldRotate={shouldRotate} pageDescription="Click on the circles to zoom into the process visualization.">
-                        <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Inspect by Activity Type" />
+                        <FilterType typesChecked={selectedActivities} updateSelection={onInspectActivitiesChange} typeValues={possibleActivities} label="Inspect by Activity Type" />
                         <InspectTaxonomy
                             handleTaxonomyChange={handleTaxonomyChange}
                             selectedLevel1={selectedLevel1}
@@ -137,7 +136,7 @@ export default function CirclePacking() {
                 </QueryMenu>
                 <Main
                     viewVariable={viewVariable}
-                    updateViewVariable={updateViewVariable}
+                    updateViewVariable={onViewVariableChange}
                     viewHoverValue={viewHoverValue}
                     id={id}
                     controls={circlePackingDiagram.current.getControls()}
