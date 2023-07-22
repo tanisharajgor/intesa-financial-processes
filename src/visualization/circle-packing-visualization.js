@@ -8,6 +8,9 @@ import '@pixi/graphics-extras';
 // Components
 import { activityTypeValues } from "../utils/global";
 
+// Styles
+import * as Theme from "../component-styles/theme";
+
 const nonHighlightOpacity = .15;
 
 export class CirclePackingDiagram {
@@ -20,6 +23,7 @@ export class CirclePackingDiagram {
   levelIDs;
   nodes;
   rootDOM;
+  selector;
   selectedActivities;
   selectedLevels;
   tooltip;
@@ -29,7 +33,7 @@ export class CirclePackingDiagram {
   zoomedNodeId;
   dataMap;
 
-  constructor(data, updateViewHoverValue) {
+  constructor(data, selector, updateViewHoverValue) {
     this.data = data;
     this.levelIDs = [];
     this.dataMap = {};
@@ -41,6 +45,7 @@ export class CirclePackingDiagram {
     this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
     this.selectedActivities = [];
+    this.selector = selector;
     this.selectedLevel1 = [];
     this.selectedLevel2 = [];
     this.selectedLevel3 = [];
@@ -48,11 +53,11 @@ export class CirclePackingDiagram {
   }
 
   // Initializes the application
-  init(selector) {
-    this.rootDOM = document.getElementById(selector);
+  init() {
+    this.rootDOM = document.getElementById(this.selector);
     this.width = this.rootDOM.clientWidth;
     this.height = this.rootDOM.clientHeight;
-    this.tooltip = Global.initTooltip(selector);
+    this.tooltip = Global.initTooltip(this.selector);
   
     // create canvas
     this.app = new PIXI.Application({
@@ -92,10 +97,6 @@ export class CirclePackingDiagram {
       this.viewport.moveCenter(xPos, yPos)
     }
     this.viewport.zoomPercent(zoom, true)
-  }
-
-  initTooltip(selector) {
-    this.tooltip = Global.initTooltip(selector);
   }
 
   // Drawing functions ------------------------------------------------------
@@ -184,7 +185,7 @@ export class CirclePackingDiagram {
   draw(viewVariable) {
     this.viewVariable = viewVariable;
     this.drawNodes();
-    this.drawLabels(selector);
+    this.drawLabels();
   }
 
   // Initializes the nodes
@@ -231,9 +232,9 @@ export class CirclePackingDiagram {
     this.viewport.addChild(this.containerNodes);
   }
   
-  drawLabels(selector) {
+  drawLabels() {
 
-    // this.label = d3.select(`#${selector}`)
+    // this.label = d3.select(`#${this.selector}`)
     //   // .append("g")
     //     .style("font", "10px sans-serif")
     //     // .attr("pointer-events", "none")
@@ -256,7 +257,7 @@ export class CirclePackingDiagram {
           let x = this.width - node.gfx.x - node.r;
           let y = this.height - node.gfx.y;
 
-          d3.select(`#${selector}`)
+          d3.select(`#${this.selector}`)
             .append("div")
             .attr("class", "label")
             // .attr("text-anchor", "middle")
@@ -266,9 +267,9 @@ export class CirclePackingDiagram {
             .style("left", `${x}px`)
             // .style("text-align", "center")
             // .style("vertical-align", "middle")
-            .style("font-family", Global.labelStyles.fontFamily)
-            .style("color", Global.lightGreyColorHex)
-            .style("font-size", Global.labelStyles.fontSize)
+            .style("font-family", Theme.labelStyles.fontFamily)
+            .style("color", Theme.lightGreyColorHex)
+            .style("font-size", Theme.labelStyles.fontSize)
             // .style("fill-opacity", node.data.treeLevel === 1 ? 1 : 0)
             .text(node.data.name);
         });
@@ -307,19 +308,19 @@ export class CirclePackingDiagram {
     if (this.currentNodeId === this.zoomedNodeId) {
       node.gfx.cursor = "zoom-in";
 
-      if (node.depth === 1 ) {
+      // if (node.depth === 1 ) {
         
-        this.label.attr("transform", d => `translate(${this.viewport.worldWidth / 2},${  this.viewport.worldHeight / 2})`)
-        return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
-      } else {
-        node.parent.gfx.cursor = "zoom-out";
-        this.label.attr("transform", d => `translate(${this.width - node.parent.x},${ this.height - node.parent.y})`)
-        return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
-      }
+      //   this.label.attr("transform", d => `translate(${this.viewport.worldWidth / 2},${  this.viewport.worldHeight / 2})`)
+      //   return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
+      // } else {
+      //   node.parent.gfx.cursor = "zoom-out";
+      //   this.label.attr("transform", d => `translate(${this.width - node.parent.x},${ this.height - node.parent.y})`)
+      //   return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
+      // }
 
     } else {
-        this.label.attr("transform", d => `translate(${this.width - node.x},${this.height - node.y})`)
-        return new PIXI.Point(this.width - node.x, this.height - node.y);
+        // this.label.attr("transform", d => `translate(${this.width - node.x},${this.height - node.y})`)
+        // return new PIXI.Point(this.width - node.x, this.height - node.y);
     }
   }
 

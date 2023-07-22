@@ -32,7 +32,7 @@ export default class NetworkVisualization {
   viewport;
   viewVariable;
 
-  constructor(data, updateSymbolHoverValue, updateViewHoverValue) {
+  constructor(data, selector, updateSymbolHoverValue, updateViewHoverValue) {
     this.updateSymbolHoverValue = updateSymbolHoverValue;
     this.updateViewHoverValue = updateViewHoverValue;
     this.data = data;
@@ -43,6 +43,7 @@ export default class NetworkVisualization {
     this.clickCount = 0;
     this.inspectNode = [];
     this.inspectLink = [];
+    this.selector = selector;
   }
 
   initSimulation() {
@@ -63,13 +64,13 @@ export default class NetworkVisualization {
   }
 
   // Initializes the application
-  init(selector) {
-    this.rootDOM = document.getElementById(selector);
+  init() {
+    this.rootDOM = document.getElementById(this.selector);
     this.width = this.rootDOM.clientWidth*.75; //fraction of the width until with view becomes moveable and collapseable
     this.height = this.rootDOM.clientHeight;
 
     this.initSimulation();
-    this.tooltip = Global.initTooltip(selector);
+    this.tooltip = Global.initTooltip(this.selector);
 
     // create canvas
     this.app = new PIXI.Application({

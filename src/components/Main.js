@@ -10,7 +10,7 @@ export default function Main({
     updateViewVariable,
     viewHoverValue,
     symbolHoverValue,
-    id,
+    selector,
     controls,
     handleFullscreen,
     isFullscreen
@@ -18,9 +18,9 @@ export default function Main({
 
     return(
         <StyledMain>
-            <Visualization id={id} className="Visualization"></Visualization>
+            <Visualization id={selector} className="Visualization"></Visualization>
             <Status
-                id={id}
+                selector={selector}
                 viewVariable={viewVariable}
                 updateViewVariable={updateViewVariable}
                 viewHoverValue={viewHoverValue}
