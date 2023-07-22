@@ -118,7 +118,7 @@ export default function CirclePacking() {
                 }}>
                     <MenuHeader label="Ecosystem" />
                     <MenuBody shouldRotate={shouldRotate} pageDescription="Click on the circles to zoom into the process visualization.">
-                        <FilterType typesChecked={selectedActivities} updateSelection={onFilterActivitiesChange} typeValues={possibleActivities} label="Inspect by Activity Type" />
+                        <FilterType typesChecked={selectedActivities} updateSelection={onInspectActivitiesChange} typeValues={possibleActivities} label="Inspect by Activity Type" />
                         <InspectTaxonomy
                             handleTaxonomyChange={handleTaxonomyChange}
                             selectedLevel1={selectedLevel1}
