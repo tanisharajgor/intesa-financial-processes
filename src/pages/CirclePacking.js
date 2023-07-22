@@ -85,7 +85,6 @@ export default function CirclePacking() {
     useEffect(() => {
         circlePackingDiagram.current.init(id);
         circlePackingDiagram.current.draw(viewVariable);
-
         circlePackingDiagram.current.centerVisualization(-0.30);
     }, []);
 
@@ -104,6 +103,7 @@ export default function CirclePacking() {
         updateActivities(updatedActivities)
     }, [selectedActivities])
 
+    // Updates the Opacity on Inspect
     useEffect(() => {
         circlePackingDiagram.current.updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter)
     }, [selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter]);

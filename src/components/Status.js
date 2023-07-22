@@ -18,7 +18,6 @@ export default function Status({
     symbolHoverValue,
     isFullscreen
 }) {
-
     const [shouldRotate, setRotate] = useState(true);
     const handleRotate = () => setRotate(!shouldRotate);
 
