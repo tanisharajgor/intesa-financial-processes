@@ -134,11 +134,7 @@ function drawShapeLegend(networkChart, symbolHoverValue) {
                     .attr("transform", function(d, i) {
                         return 'translate(' + 10 + ', ' + (i*23 + 15) + ')';
                     })
-<<<<<<< HEAD
-                    .attr("fill", Global.labelStyles.fontColor),
-=======
                     .attr("fill", Theme.labelStyles.fontColor),
->>>>>>> main
                 update => update
                     .attr('opacity', ((d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined? 1: .3))
             );
