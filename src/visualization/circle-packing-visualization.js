@@ -45,7 +45,7 @@ export class CirclePackingDiagram {
     this.selectedLevel3 = [];
     this.selectedChapter = [];
     this.alphaScale = d3.scaleOrdinal()
-    .domain([0, 1, 2, 3, 4])
+    .domain([0, 1, 2, 3, 5])
     .range([.05, .3, .4, .5, .6]);
   }
 
@@ -145,10 +145,6 @@ export class CirclePackingDiagram {
   }
 
   opacityScale(node) {
-    this.alphaScale = d3.scaleOrdinal()
-      .domain([0, 1, 2, 3, 4])
-      .range([.05, .3, .4, .5, .6]);
-
     if (this.selectedActivities.length > 0 && this.selectedLevel1.id !== -1) {
       this.selectedLevelAndActivitiesOpacity(node);
     } else if(this.selectedActivities.length > 0) {
