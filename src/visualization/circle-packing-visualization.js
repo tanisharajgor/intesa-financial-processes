@@ -44,6 +44,9 @@ export class CirclePackingDiagram {
     this.selectedLevel2 = [];
     this.selectedLevel3 = [];
     this.selectedChapter = [];
+    this.alphaScale = d3.scaleOrdinal()
+    .domain([0, 1, 2, 3, 4])
+    .range([.05, .3, .4, .5, .6]);
   }
 
   // Initializes the application
