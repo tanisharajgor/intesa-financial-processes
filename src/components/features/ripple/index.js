@@ -2,7 +2,7 @@
 import React, { useState, useLayoutEffect } from "react";
 
 //Styles
-import { RippleContainer } from "../../../component-styles/ripple-style";
+import { RippleContainer } from "./style";
 
 const useDebouncedRippleCleanUp = (rippleCount, duration, cleanUpFunction) => {
   useLayoutEffect(() => {

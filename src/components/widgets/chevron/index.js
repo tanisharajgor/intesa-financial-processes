@@ -2,7 +2,7 @@
 import Ripple from "../../features/ripple";
 
 // Styles
-import { ChevronButton } from "../../../component-styles/chevron-button";
+import { ChevronButton } from "./style";
 
 
 // Component to style the Chevron Button
