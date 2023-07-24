@@ -11,6 +11,26 @@ import { activityTypeValues } from "../utils/global";
 // Styles
 import * as Theme from "../component-styles/theme";
 
+const labelZAxisDefault = 100;
+
+const labelStyle = {
+  align: "center",
+  fill: 0xffffff,
+  fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
+  fontSize: 11,
+  padding: 5,
+  textBaseline: "middle",
+  wordWrap: true,
+  wordWrapWidth: 90,
+  leading: -2 
+  // ,
+  // dropShadow: true, // add text drop shadow to labels
+  // dropShadowAngle: 90,
+  // dropShadowBlur: 5,
+  // dropShadowDistance: 2,
+  // dropShadowColor: 0x21252b
+}
+
 const nonHighlightOpacity = .15;
 
 export class CirclePackingDiagram {
@@ -50,6 +70,7 @@ export class CirclePackingDiagram {
     this.selectedLevel2 = [];
     this.selectedLevel3 = [];
     this.selectedChapter = [];
+    this.labelStyle = new PIXI.TextStyle(labelStyle);
   }
 
   // Initializes the application
@@ -250,30 +271,44 @@ export class CirclePackingDiagram {
     //     .text(d => d.data.name)
     //     .style("fill", "white");
 
-    // console.log(this.data.filter(d => d.data.level === 1))
 
     this.label = this.data.filter(d => d.data.level === 1)
       .forEach(d => {
-        // console.log(d)
-        let x = this.width - d.gfx.x - d.r;
-        let y = this.height - d.gfx.y;
 
-        d3.select(`#${this.selector}`)
-          .append("div")
-          .attr("class", "label")
-          // .attr("text-anchor", "middle")
-          .attr("pointer-events", "none")
-          .style("position", "absolute")
-          .style("top", `${y}px`)
-          .style("left", `${x}px`)
-          // .style("text-align", "center")
-          // .style("vertical-align", "middle")
-          .style("font-family", Theme.labelStyles.fontFamily)
-          .style("color", Theme.lightGreyColorHex)
-          .style("font-size", Theme.labelStyles.fontSize)
-          // .style("fill-opacity", node.data.treeLevel === 1 ? 1 : 0)
-          .text(d.data.descr);
-      });
+        // console.log(d)
+
+        const textMetrics = PIXI.TextMetrics.measureText(d.data.descr, this.labelStyle);
+        d.width = textMetrics.maxLineWidth + 15;
+        d.height = textMetrics.lineHeight * textMetrics.lines.length + 15;
+
+        const text = new PIXI.Text(d.data.descr, this.labelStyle);
+          text.zIndex = labelZAxisDefault;
+          text.x = d.gfx.x;
+          text.y = d.gfx.y;
+          text.anchor.set(.5, .5);
+
+        console.log(text)
+
+    //     // console.log(d)
+    //     let x = this.width - d.gfx.x - d.r;
+    //     let y = this.height - d.gfx.y;
+
+    //     d3.select(`#${this.selector}`)
+    //       .append("div")
+    //       .attr("class", "label")
+    //       // .attr("text-anchor", "middle")
+    //       .attr("pointer-events", "none")
+    //       .style("position", "absolute")
+    //       .style("top", `${y}px`)
+    //       .style("left", `${x}px`)
+    //       // .style("text-align", "center")
+    //       // .style("vertical-align", "middle")
+    //       .style("font-family", Theme.labelStyles.fontFamily)
+    //       .style("color", Theme.lightGreyColorHex)
+    //       .style("font-size", Theme.labelStyles.fontSize)
+    //       // .style("fill-opacity", node.data.treeLevel === 1 ? 1 : 0)
+    //       .text(d.data.descr);
+    });
   }
 
   // Updating the draw functions on mouse interaction ------------------------------------------------------
