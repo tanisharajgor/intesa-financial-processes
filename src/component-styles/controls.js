@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import * as Theme from "../component-styles/theme";
 
 export const StyledControlsPanel = styled.div`
     position: absolute;
@@ -7,6 +8,9 @@ export const StyledControlsPanel = styled.div`
     .inner {
         display: flex;
     }
+    background-color: rgba(0,0,0,0.6);
+    border: 1px solid ${Theme.extraDarkGreyHex};
+    border-radius: 5px;
 `
 
 export const StyledControlButton = styled('button')`
