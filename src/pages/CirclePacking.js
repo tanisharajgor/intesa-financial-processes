@@ -3,8 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import * as d3 from 'd3';
 
 // Components
-import Navigation from "../components/layout/navigation";
-import Main from "../components/layout/main";
+import { Navigation, Main, Content } from "../components/layout/index";
 import { inspectHierarchySummary } from "../components/widgets/inspect";
 import FilterType from "../components/widgets/filterType";
 import InspectTaxonomy from "../components/widgets/inspectTaxonomy";
@@ -18,7 +17,6 @@ import data from "../data/processed/nested/processes.json";
 
 // Styles
 import { QueryMenu } from "../components/features/menu/style";
-import { Content } from "../components/layout/content/style";
 
 const id = "circle-packing-chart";
 const root = d3.pack()

@@ -4,7 +4,7 @@ import Ripple from "../../features/ripple";
 //Styles
 import { StyledControlsPanel, StyledControlButton, FullscreenIcon, FullscreenButton } from "./style";
 
-export default function Control({handleFullscreen, controls}) {
+export function Control({handleFullscreen, controls}) {
     return (
         <StyledControlsPanel>
             <div className="inner">

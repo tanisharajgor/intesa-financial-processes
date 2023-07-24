@@ -1,7 +1,7 @@
 //Styles
 
 import { MenuItem, Form } from 'cfd-react-components';
-import { LayoutGroup, LayoutRow, LayoutItem } from '../../layout/queryMenu/style';
+import { LayoutGroup, LayoutRow, LayoutItem } from '../../layout/index';
 import { StyledSelect } from "../../../utils/global-styles";
 import { StyledLabel } from "../menu/style";
 

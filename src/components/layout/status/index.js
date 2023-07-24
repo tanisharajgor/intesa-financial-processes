@@ -9,7 +9,7 @@ import { View, MenuBody, MenuCollapsableHeader } from "../../features/index";
 import { StatusMenu } from "../../features/menu/style";
 import { LayoutGroup } from "../queryMenu/style";
 
-export default function Status({
+export function Status({
     id,
     viewVariable,
     updateViewVariable,

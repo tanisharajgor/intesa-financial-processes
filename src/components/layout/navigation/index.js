@@ -9,7 +9,7 @@ import { NavigationBranding, StyledLayoutHeader, NavigationLinks, LinkList, Link
  * Menu Navigation bar to navigate to different parts of the project
  * @returns 
  */
-export default function Navigation({isFullscreen}) {
+export function Navigation({isFullscreen}) {
     return (
         <StyledLayoutHeader className="Navigation" isFullscreen={isFullscreen}>
             <NavigationBranding className="Navigation_branding">

@@ -10,7 +10,7 @@ import lu from '../../../data/processed/nested/lu.json';
 
 // Styles
 import { Accordion, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
-import { LayoutGroup, LayoutRow, LayoutItem } from '../../layout/queryMenu/style';
+import { LayoutGroup, LayoutRow, LayoutItem } from '../../layout/index';
 import { StyledSelect } from '../../../utils/global-styles';
 import * as Theme from "../../../utils/theme";
 import { StyledFilter } from "../../features/menu/style"; 

@@ -3,8 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import * as d3 from 'd3';
 
 // Components
-import Main from "../components/layout/main/index";
-import Navigation from "../components/layout/navigation";
+import { Navigation, Main, Content } from "../components/layout/index";
 import InspectChapter from "../components/widgets/inspectChapter/index";
 import InspectOrgStructure from "../components/widgets/inspectOrgStructure/index";
 import FilterTaxonomy from "../components/widgets/filterTaxonomy/index";
@@ -21,7 +20,6 @@ import orgStructure from "../data/processed/nested/org_structure.json";
 import lu from '../data/processed/nested/lu.json';
 
 // Styles
-import { Content } from "../components/layout/content/style";
 import { QueryMenu } from "../components/features/menu/style";
 
 const id = "network-chart";

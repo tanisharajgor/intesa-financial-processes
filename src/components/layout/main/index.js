@@ -1,11 +1,11 @@
 // Components
-import Status from "../status";
-import Control from "../controls";
+import { Status } from "../status";
+import { Control } from "../controls";
 
 // Styles
 import { StyledMain, Visualization} from "./style";
 
-export default function Main({
+export function Main({
     viewVariable,
     updateViewVariable,
     viewHoverValue,
