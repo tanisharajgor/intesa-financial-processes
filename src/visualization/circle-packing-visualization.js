@@ -8,9 +8,6 @@ import '@pixi/graphics-extras';
 // Components
 import { activityTypeValues } from "../utils/global";
 
-// Styles
-import * as Theme from "../component-styles/theme";
-
 const labelZAxisDefault = 100;
 
 const labelStyle = {
@@ -21,7 +18,7 @@ const labelStyle = {
   padding: 5,
   textBaseline: "middle",
   wordWrap: true,
-  wordWrapWidth: 90,
+  wordWrapWidth: 120,
   leading: -2 
   // ,
   // dropShadow: true, // add text drop shadow to labels
@@ -72,8 +69,8 @@ export class CirclePackingDiagram {
     this.selectedChapter = [];
     this.labelStyle = new PIXI.TextStyle(labelStyle);
     this.alphaScale = d3.scaleOrdinal()
-    .domain([0, 1, 2, 3, 5])
-    .range([.05, .3, .4, .5, .6]);
+      .domain([0, 1, 2, 3, 5])
+      .range([.05, .3, .4, .5, .6]);
   }
 
   // Initializes the application
@@ -271,10 +268,10 @@ export class CirclePackingDiagram {
     //     .style("fill", "white");
 
 
+    this.containerLabel = new PIXI.Container();
+
     this.label = this.data.filter(d => d.data.level === 1)
       .forEach(d => {
-
-        // console.log(d)
 
         const textMetrics = PIXI.TextMetrics.measureText(d.data.descr, this.labelStyle);
         d.width = textMetrics.maxLineWidth + 15;
@@ -282,32 +279,14 @@ export class CirclePackingDiagram {
 
         const text = new PIXI.Text(d.data.descr, this.labelStyle);
           text.zIndex = labelZAxisDefault;
-          text.x = d.gfx.x;
-          text.y = d.gfx.y;
+          text.x = this.width - d.gfx.x;
+          text.y = this.height - d.gfx.y;
           text.anchor.set(.5, .5);
 
-        console.log(text)
-
-    //     // console.log(d)
-    //     let x = this.width - d.gfx.x - d.r;
-    //     let y = this.height - d.gfx.y;
-
-    //     d3.select(`#${this.selector}`)
-    //       .append("div")
-    //       .attr("class", "label")
-    //       // .attr("text-anchor", "middle")
-    //       .attr("pointer-events", "none")
-    //       .style("position", "absolute")
-    //       .style("top", `${y}px`)
-    //       .style("left", `${x}px`)
-    //       // .style("text-align", "center")
-    //       // .style("vertical-align", "middle")
-    //       .style("font-family", Theme.labelStyles.fontFamily)
-    //       .style("color", Theme.lightGreyColorHex)
-    //       .style("font-size", Theme.labelStyles.fontSize)
-    //       // .style("fill-opacity", node.data.treeLevel === 1 ? 1 : 0)
-    //       .text(d.data.descr);
+        this.containerLabel.addChild(text); 
     });
+
+    this.viewport.addChild(this.containerLabel);
   }
 
   // Updating the draw functions on mouse interaction ------------------------------------------------------
