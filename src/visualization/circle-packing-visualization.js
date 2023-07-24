@@ -64,6 +64,23 @@ const labelStyleTertiary = {
   dropShadowColor: 0x21252b
 }
 
+const labelStyleQuartiary = {
+  align: "center",
+  fill: Theme.primaryLabelColor,
+  fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
+  fontSize: 3,
+  padding: 5,
+  textBaseline: "middle",
+  wordWrap: true,
+  wordWrapWidth: 120,
+  leading: -2,
+  dropShadow: true, // add text drop shadow to labels
+  dropShadowAngle: 90,
+  dropShadowBlur: 5,
+  dropShadowDistance: 2,
+  dropShadowColor: 0x21252b
+}
+
 const nonHighlightOpacity = .15;
 
 export class CirclePackingDiagram {
@@ -302,7 +319,6 @@ export class CirclePackingDiagram {
       label.x = this.width - d.gfx.x;
       label.y = this.height - d.gfx.y -d.r;
       label.anchor.set(.5, .5);
-      label.resolution = 2;
 
     return label;
   }
@@ -317,6 +333,7 @@ export class CirclePackingDiagram {
     this.labelStylePrimary = new PIXI.TextStyle(labelStylePrimary);
     this.labelStyleSecondary = new PIXI.TextStyle(labelStyleSecondary);
     this.labelStyleTertiary = new PIXI.TextStyle(labelStyleTertiary);
+    this.labelStyleQuartiary= new PIXI.TextStyle(labelStyleQuartiary);
 
     // Initialized first level of labels
     this.level1Labels = this.data.filter(d => d.data.level === 1)
@@ -384,25 +401,25 @@ export class CirclePackingDiagram {
     return scale(node.depth);
   }
 
+  // Update labels according to the zoom scale
   updateLabels(node) {
 
-    if (node.depth === 0) {
-      this.containerLabelLevel1.children.forEach(label => {
-        label.resolution = 2;
-        label.style = labelStylePrimary;
-      });
+    if (node.depth > 0) {
 
-      if (this.containerLabelLevel2) {
-        this.containerLabelLevel2.destroy();
-      }
+      if (node.depth > 1) {
 
-      if (this.containerLabelLevel3) {
-        this.containerLabelLevel3.destroy();
-      }      
+        this.level3Labels = node.children
+        .forEach(d => {
+          this.labelMetrics(d);
+          const label = this.label(d, this.labelStyleQuartiary);
+          label.resolution = 10;
+          this.containerLabelLevel3.addChild(label);
+        });
 
-    } else {
-console.log(node)
-      if (node.depth === 1) {
+        this.viewport.addChild(this.containerLabelLevel3);
+       
+      } else {
+
         this.level2Labels = node.children
         .forEach(d => {
           this.labelMetrics(d);
@@ -418,6 +435,21 @@ console.log(node)
         label.resolution = 10;
         label.style = labelStyleSecondary;
       });
+
+    } else {
+      
+      this.containerLabelLevel1.children.forEach(label => {
+        label.resolution = 2;
+        label.style = labelStylePrimary;
+      });
+
+      if (this.containerLabelLevel2) {
+        this.containerLabelLevel2.destroy();
+      }
+
+      if (this.containerLabelLevel3) {
+        this.containerLabelLevel3.destroy();
+      }
     }
   }
 
