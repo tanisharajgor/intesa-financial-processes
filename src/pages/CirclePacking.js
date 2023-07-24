@@ -5,7 +5,7 @@ import * as d3 from 'd3';
 // Components
 import Navigation from "../components/layout/navigation";
 import Main from "../components/layout/main";
-import { inspectHierarchySummary } from "../components/widgets/inspect/Inspect";
+import { inspectHierarchySummary } from "../components/widgets/inspect";
 import FilterType from "../components/widgets/filterType";
 import InspectTaxonomy from "../components/widgets/inspectTaxonomy";
 import { MenuHeader, MenuBody } from "../components/features/menu";

@@ -20,7 +20,7 @@ const useDebouncedRippleCleanUp = (rippleCount, duration, cleanUpFunction) => {
   }, [rippleCount, duration, cleanUpFunction]);
 };
 
-const Ripple = props => {
+export const Ripple = props => {
   const { duration, color } = props;
   const [rippleArray, setRippleArray] = useState([]);
 

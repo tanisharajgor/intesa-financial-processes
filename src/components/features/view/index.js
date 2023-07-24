@@ -3,12 +3,12 @@ import { useEffect } from "react";
 import * as d3 from 'd3';
 
 // Components
-import { InspectHTML } from "../../widgets/inspect/Inspect";
+import { InspectHTML } from "../../widgets/inspect";
 import * as Global from "../../../utils/global";
 
 //Styles
 import { Form, MenuItem } from "cfd-react-components";
-import { StyledSelect } from "../../../component-styles/select";
+import { StyledSelect } from "../../../utils/global-styles";
 import { ViewStyles } from "./style";
 import * as Theme from "../../../utils/theme";
 
@@ -282,7 +282,7 @@ function viewInfo(networkChart) {
     )
 }
 
-export default function View({id, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue}) {
+export function View({id, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue}) {
 
     const networkChart = id === "network-chart";
 

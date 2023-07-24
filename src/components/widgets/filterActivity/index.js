@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 // Components
-import { AccordionHeaderStyled } from './Menu';
+import { AccordionHeaderStyled } from '../../features/menu';
 
 // Styles
 import { Accordion, AccordionDetails, FormLabel, Checkbox } from 'cfd-react-components';

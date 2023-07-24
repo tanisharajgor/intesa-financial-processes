@@ -3,17 +3,16 @@ import { useEffect, useRef, useState } from "react";
 import * as d3 from 'd3';
 
 // Components
-import Main from "../components/Main";
-import Navigation from "../components/Navigation";
-import InspectChapter from "../components/InspectChapter";
-import InspectOrgStructure from "../components/InspectOrgStructure";
-import FilterTaxonomy from "../components/FilterTaxonomy";
-import FilterType from "../components/FilterType";
-import { MenuBody, MenuHeader } from "../components/Menu";
-import { inspectNetworkSummary } from "../components/Inspect";
+import Main from "../components/layout/main/index";
+import Navigation from "../components/layout/navigation";
+import InspectChapter from "../components/widgets/inspectChapter/index";
+import InspectOrgStructure from "../components/widgets/inspectOrgStructure/index";
+import FilterTaxonomy from "../components/widgets/filterTaxonomy/index";
+import FilterType from "../components/widgets/filterType/index";
+import { MenuBody, MenuHeader } from "../components/features/index";
+import { inspectNetworkSummary } from "../components/widgets/inspect/index";
 import NetworkVisualization from "../visualization/network-visualization";
 import * as Global from "../utils/global";
-
 
 // Data
 import links from "../data/processed/nested/links.json";
@@ -22,8 +21,8 @@ import orgStructure from "../data/processed/nested/org_structure.json";
 import lu from '../data/processed/nested/lu.json';
 
 // Styles
-import { Content } from "../component-styles/content";
-import { QueryMenu } from "../component-styles/menu";
+import { Content } from "../components/layout/content/style";
+import { QueryMenu } from "../components/features/menu/style";
 
 const id = "network-chart";
 const processes = lu["processes"];

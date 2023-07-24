@@ -3,8 +3,7 @@ import { useState } from "react";
 import Draggable from 'react-draggable';
 
 // Components
-import View from "../../features/view";
-import { MenuBody, MenuCollapsableHeader } from "../../features/menu";
+import { View, MenuBody, MenuCollapsableHeader } from "../../features/index";
 
 // Styles
 import { StatusMenu } from "../../features/menu/style";

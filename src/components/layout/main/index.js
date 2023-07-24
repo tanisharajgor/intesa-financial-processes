@@ -1,5 +1,5 @@
 // Components
-import Status from "../../Status";
+import Status from "../status";
 import Control from "../controls";
 
 // Styles

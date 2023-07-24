@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import * as d3 from 'd3';
 
 // Components
-import { AccordionHeaderStyled } from './Menu';
+import { AccordionHeaderStyled } from '../../features/index';
 
 // Data
 import lu from '../../../data/processed/nested/lu.json';
@@ -11,7 +11,7 @@ import lu from '../../../data/processed/nested/lu.json';
 // Styles
 import { Accordion, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
 import { LayoutGroup, LayoutRow, LayoutItem } from '../../layout/queryMenu/style';
-import { StyledSelect } from '../../../component-styles/select';
+import { StyledSelect } from '../../../utils/global-styles';
 import * as Theme from "../../../utils/theme";
 import { StyledFilter } from "../../features/menu/style"; 
 

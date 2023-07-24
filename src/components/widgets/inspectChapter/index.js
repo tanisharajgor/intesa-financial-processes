@@ -1,6 +1,6 @@
 // Components
-import { DrillDown } from '../../features/drillDown';
-import { AccordionHeaderStyled } from './Menu';
+import { DrillDown } from '../../features/index';
+import { AccordionHeaderStyled } from '../../features/index';
 
 // Styles
 import { Accordion, AccordionDetails } from 'cfd-react-components';

@@ -2,7 +2,7 @@
 
 import { MenuItem, Form } from 'cfd-react-components';
 import { LayoutGroup, LayoutRow, LayoutItem } from '../../layout/queryMenu/style';
-import { StyledSelect } from '../../../component-styles/select';
+import { StyledSelect } from "../../../utils/global-styles";
 import { StyledLabel } from "../menu/style";
 
 export function DrillDown({values, selected, handleChange, label, id}) {

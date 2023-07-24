@@ -1,4 +1,4 @@
-import { createGlobalStyle, Select } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import * as Theme from "./theme";
 
 const fontPath = `${process.env.PUBLIC_URL}/font/`
@@ -90,7 +90,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 `
 
-export const StyledSelect = styled(Select)`
+export const StyledSelect = styled('select')`
     // A reset of styles, including removing the default dropdown arrow
     width: 100%;
     min-width: 15ch;

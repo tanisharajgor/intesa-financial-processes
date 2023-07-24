@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 // Components
-import { AccordionHeaderStyled } from './Menu';
+import { AccordionHeaderStyled } from '../../features/index';
 import { DrillDown } from '../../features/drillDown';
 
 // Data
