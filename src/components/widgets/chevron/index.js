@@ -1,8 +1,8 @@
 // Components
-import Ripple from "./Ripple";
+import Ripple from "../../features/ripple";
 
 // Styles
-import { ChevronButton } from "../component-styles/chevron-button";
+import { ChevronButton } from "../../../component-styles/chevron-button";
 
 
 // Component to style the Chevron Button

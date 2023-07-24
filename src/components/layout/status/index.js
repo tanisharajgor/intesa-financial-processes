@@ -3,12 +3,12 @@ import { useState } from "react";
 import Draggable from 'react-draggable';
 
 // Components
-import View from "./View";
-import { MenuBody, MenuCollapsableHeader } from "./Menu";
+import View from "../../features/view";
+import { MenuBody, MenuCollapsableHeader } from "../../features/menu";
 
 // Styles
-import { StatusMenu } from "../component-styles/menu";
-import { LayoutGroup } from "../component-styles/query-layout";
+import { StatusMenu } from "../../../component-styles/menu";
+import { LayoutGroup } from "../../../component-styles/query-layout";
 
 export default function Status({
     id,

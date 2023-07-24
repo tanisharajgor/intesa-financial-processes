@@ -3,12 +3,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import * as d3 from 'd3';
 
 // Components
-import Navigation from "../components/Navigation";
-import Main from "../components/Main";
-import { inspectHierarchySummary } from "../components/Inspect";
-import FilterType from "../components/FilterType";
-import InspectTaxonomy from "../components/InspectTaxonomy";
-import { MenuHeader, MenuBody } from "../components/Menu";
+import Navigation from "../components/layout/navigation";
+import Main from "../components/layout/main";
+import { inspectHierarchySummary } from "../components/widgets/inspect/Inspect";
+import FilterType from "../components/widgets/filterType";
+import InspectTaxonomy from "../components/widgets/inspectTaxonomy";
+import { MenuHeader, MenuBody } from "../components/features/menu";
 
 import { activityTypeValues } from "../utils/global";
 import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";

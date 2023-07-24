@@ -3,10 +3,10 @@ import { useState } from 'react';
 
 // Components
 import { AccordionHeaderStyled } from './Menu';
-import { DrillDown } from './DrillDown';
+import { DrillDown } from '../../features/drillDown';
 
 // Data
-import lu from '../data/processed/nested/lu.json';
+import lu from '../../../data/processed/nested/lu.json';
 
 // Styles
 import { Accordion, AccordionDetails } from 'cfd-react-components';

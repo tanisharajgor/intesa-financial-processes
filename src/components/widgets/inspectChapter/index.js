@@ -1,5 +1,5 @@
 // Components
-import { DrillDown } from './DrillDown';
+import { DrillDown } from '../../features/drillDown';
 import { AccordionHeaderStyled } from './Menu';
 
 // Styles

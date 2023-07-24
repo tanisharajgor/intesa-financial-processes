@@ -1,8 +1,8 @@
 //Components
-import Ripple from "./Ripple";
+import Ripple from "../../features/ripple";
 
 //Styles
-import { StyledControlsPanel, StyledControlButton, FullscreenIcon, FullscreenButton } from "../component-styles/controls";
+import { StyledControlsPanel, StyledControlButton, FullscreenIcon, FullscreenButton } from "../../../component-styles/controls";
 
 export default function Control({handleFullscreen, controls}) {
     return (

@@ -1,4 +1,4 @@
-import { viewVariables, createLabelScale } from "../utils/global";
+import { viewVariables, createLabelScale } from "../../../utils/global";
 import * as d3 from 'd3';
 
 const treeLevelScale = d3.scaleOrdinal()

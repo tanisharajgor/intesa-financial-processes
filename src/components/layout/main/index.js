@@ -1,9 +1,9 @@
 // Components
-import Status from "../components/Status";
-import Control from "./Controls";
+import Status from "../../Status";
+import Control from "../controls";
 
 // Styles
-import { StyledMain, Visualization} from "../component-styles/main";
+import { StyledMain, Visualization} from "../../../component-styles/main";
 
 export default function Main({
     viewVariable,

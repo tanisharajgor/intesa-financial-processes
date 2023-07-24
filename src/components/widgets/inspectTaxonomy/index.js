@@ -2,14 +2,14 @@
 import { useState } from 'react';
 
 //Components
-import { AccordionHeaderStyled } from './Menu';
+import { AccordionHeaderStyled } from '../../features/menu';
 
 //Data
-import lu from '../data/processed/nested/lu.json';
+import lu from '../../../data/processed/nested/lu.json';
 
 //Styles
 import { Accordion, AccordionDetails } from 'cfd-react-components';
-import { DrillDown } from './DrillDown';
+import { DrillDown } from '../../features/drillDown';
 
 export default function InspectTaxonomy({
     handleTaxonomyChange,
