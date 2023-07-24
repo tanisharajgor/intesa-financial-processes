@@ -36,7 +36,7 @@ export class CirclePackingDiagram {
   data;
   height;
   inspect;
-  label;
+  labels;
   levelIDs;
   nodes;
   rootDOM;
@@ -250,29 +250,11 @@ export class CirclePackingDiagram {
   
   drawLabels() {
 
-    // this.label = d3.select(`#${this.selector}`)
-    //   // .append("g")
-    //     .style("font", "10px sans-serif")
-    //     // .attr("pointer-events", "none")
-    //     // .attr("text-anchor", "middle")
-    //   .selectAll("text")
-    //   .data(this.data.filter(node => node.data.treeLevel < 4))
-    //   .join("text")
-    //     // .style("fill-opacity", d => d.data.treeLevel === 1 ? 1 : 0)
-    //     // .style("display", d => d.data.treeLevel === 1 ? "inline" : "none")
-    //     .attr("class", "label")
-    //     // .attr("transform", d => `translate(${d.gfx.x},${d.gfx.y})`)
-    //     .style("top", d => `${this.width - d.gfx.x}px`)
-    //     .style("left", d => `${this.height - d.gfx.y}px`)
-    //     .text(d => d.data.name)
-    //     .style("fill", "white");
-
-
     this.containerLabel = new PIXI.Container();
 
-    this.label = this.data.filter(d => d.data.level === 1)
+    const labels = this.data.filter(d => d.data.level === 1);
+    this.labels = labels
       .forEach(d => {
-
         const textMetrics = PIXI.TextMetrics.measureText(d.data.descr, this.labelStyle);
         d.width = textMetrics.maxLineWidth + 15;
         d.height = textMetrics.lineHeight * textMetrics.lines.length + 15;
@@ -321,31 +303,16 @@ export class CirclePackingDiagram {
   getCenter = (node) => {
     if (this.currentNodeId === this.zoomedNodeId) {
       node.gfx.cursor = "zoom-in";
-
       if (node.depth === 1 ) {
-      //   this.label.attr("transform", d => `translate(${this.viewport.worldWidth / 2},${  this.viewport.worldHeight / 2})`)
-      //   return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
+        return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
       } else {
         node.parent.gfx.cursor = "zoom-out";
-      //   this.label.attr("transform", d => `translate(${this.width - node.parent.x},${ this.height - node.parent.y})`)
-      //   return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
+        return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
       }
-
     } else {
-        // this.label.attr("transform", d => `translate(${this.width - node.x},${this.height - node.y})`)
-        // return new PIXI.Point(this.width - node.x, this.height - node.y);
+        return new PIXI.Point(this.width - node.x, this.height - node.y)
     }
   }
-
-  // label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
-  //   node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
-  //   node.attr("r", d => d.r * k);
-
-  // this.label
-  //     .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
-  //       .style("fill-opacity", d => d.parent === focus ? 1 : 0)
-  //       .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
-  //       .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
 
   getZoomWidth = (node) => {
     const scale =  d3.scaleLinear()
@@ -372,6 +339,31 @@ export class CirclePackingDiagram {
     })
 
     this.zoomedNodeId = this.currentNodeId;
+  }
+
+  updateLabels() {
+
+    if (this.currentNodeId === this.zoomedNodeId) {
+  
+      if (node.depth === 1 ) {
+        return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
+      } else {
+        node.parent.gfx.cursor = "zoom-out"
+        return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
+      }
+    } else {
+        return new PIXI.Point(this.width - node.x, this.height - node.y)
+    }
+
+      // label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
+  //   node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
+  //   node.attr("r", d => d.r * k);
+
+  // this.labels
+  //     .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+  //       .style("fill-opacity", d => d.parent === focus ? 1 : 0)
+  //       .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+  //       .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
   }
 
   // Destroys the nodes on data update
