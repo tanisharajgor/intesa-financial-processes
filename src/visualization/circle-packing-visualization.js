@@ -47,8 +47,22 @@ const labelStyleSecondary = {
   dropShadowColor: 0x21252b
 }
 
-// let labelStyleSecondary = labelStylePrimary;
-// labelStyleSecondary.fill = Theme.labelStyles.lightGreyColor;
+const labelStyleTertiary = {
+  align: "center",
+  fill: Theme.primaryLabelColor,
+  fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
+  fontSize: 4,
+  padding: 5,
+  textBaseline: "middle",
+  wordWrap: true,
+  wordWrapWidth: 120,
+  leading: -2,
+  dropShadow: true, // add text drop shadow to labels
+  dropShadowAngle: 90,
+  dropShadowBlur: 5,
+  dropShadowDistance: 2,
+  dropShadowColor: 0x21252b
+}
 
 const nonHighlightOpacity = .15;
 
@@ -72,6 +86,8 @@ export class CirclePackingDiagram {
   zoomedNodeId;
   dataMap;
   containerLabelLevel1;
+  containerLabelLevel2;
+  containerLabelLevel3;
 
   constructor(data, selector, updateViewHoverValue) {
     this.data = data;
@@ -280,8 +296,8 @@ export class CirclePackingDiagram {
   }
   
   // Adds the rest of the label styles
-  label(d) {
-    const label = new PIXI.Text(d.data.descr, this.labelStylePrimary);
+  label(d, labelStyles) {
+    const label = new PIXI.Text(d.data.descr, labelStyles);
       label.zIndex = labelZAxisDefault;
       label.x = this.width - d.gfx.x;
       label.y = this.height - d.gfx.y;
@@ -291,15 +307,24 @@ export class CirclePackingDiagram {
   }
 
   initLabels() {
+    //Initialize containers
     this.containerLabelLevel1 = new PIXI.Container();
-    this.labelStylePrimary = new PIXI.TextStyle(labelStylePrimary);
+    this.containerLabelLevel2 = new PIXI.Container();
+    this.containerLabelLevel3 = new PIXI.Container();
 
+    // Initialize styles
+    this.labelStylePrimary = new PIXI.TextStyle(labelStylePrimary);
+    this.labelStyleSecondary = new PIXI.TextStyle(labelStyleSecondary);
+    this.labelStyleTertiary = new PIXI.TextStyle(labelStyleTertiary);
+
+    // Initialized first level of labels
     this.level1Labels = this.data.filter(d => d.data.level === 1)
       .forEach(d => {
         this.labelMetrics(d);
-        this.label(d);
+        this.label(d, this.labelStylePrimary);
     });
 
+    // add labels to viewport
     this.viewport.addChild(this.containerLabelLevel1);
   }
 
@@ -360,46 +385,50 @@ export class CirclePackingDiagram {
 
   updateLabels(node) {
 
-    // console.log(node)
-    // console.log(this.zoomedNodeId)
-    console.log(this.currentNodeId)
+    console.log(node)
 
-    if (this.currentNodeId !== 0) {
+    if (node.depth > 0) {
+
+      // this.level2Labels = node.children
+      //   .forEach(d => {
+      //     this.labelMetrics(d);
+      //     this.label(d, this.labelStyleTertiary);
+      //   });
+
+      // this.viewport.addChild(this.containerLabelLevel2);
+
+      // if (node.depth > 1) {
+
+      //   this.level3Labels = this.data
+      //   .filter(d => d.data.level === 3)
+      //   .forEach(d => {
+      //     this.labelMetrics(d);
+      //     this.label(d, this.labelStylePrimary);
+      //   });
+
+      //   this.viewport.addChild(this.containerLabelLevel3);
+      // }
+
       this.containerLabelLevel1.children.forEach(label => {
         label.resolution = 10;
         label.style = labelStyleSecondary;
-      })
+      });
+
     } else {
-      console.log("hit")
       this.containerLabelLevel1.children.forEach(label => {
         label.resolution = 2;
         label.style = labelStylePrimary;
-      })
-    }
+      });
 
-    if (this.currentNodeId === this.zoomedNodeId) {
-    
-      if (node.depth === 1) {
-        // return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
-      } else {
-        // return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
+      if (this.containerLabelLevel2) {
+        this.containerLabelLevel2.destroy();
       }
-    } else {
-      // zoomed to the inner most level
-      // console.log("hit")
 
+      if (this.containerLabelLevel3) {
+        this.containerLabelLevel3.destroy();
+      }
     }
-
-          // label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
-  //   node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
-  //   node.attr("r", d => d.r * k);
-
-  // this.labels
-  //     .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
-  //       .style("fill-opacity", d => d.parent === focus ? 1 : 0)
-  //       .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
-  //       .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; })
-    }
+  }
 
   centerOnNode(node) {
 
