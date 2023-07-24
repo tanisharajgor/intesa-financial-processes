@@ -2,12 +2,10 @@
 import { useState } from 'react';
 
 // Components
-import Description from "../../widgets/description";
-import { ChevronButtonStyled } from '../../widgets/chevron';
+import { ChevronButtonStyled, Description, Key } from '../../widgets/index';
 
 // Styles
 import { AccordionHeader } from 'cfd-react-components';
-import { Key } from '../../widgets/key/style';
 import { StyledMenuHeader, StyledMenuBody, StyledFilteredData } from './style';
 
 // Component to style the Menu Header

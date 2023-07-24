@@ -1,7 +1,7 @@
 // Styles
 import { StyledDescription } from "./style";
 
-export default function Description(props) {
+export function Description(props) {
     return (
         <StyledDescription>{ props.children }</StyledDescription>
     )

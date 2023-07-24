@@ -11,7 +11,7 @@ import lu from '../../../data/processed/nested/lu.json';
 import { Accordion, AccordionDetails } from 'cfd-react-components';
 import { DrillDown } from '../../features/drillDown';
 
-export default function InspectTaxonomy({
+export function InspectTaxonomy({
     handleTaxonomyChange,
     selectedLevel1,
     updateSelectedLevel1,

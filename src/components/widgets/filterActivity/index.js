@@ -9,7 +9,7 @@ import { Accordion, AccordionDetails, FormLabel, Checkbox } from 'cfd-react-comp
 import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../../layout/index';
 
 
-export default function FilterActivityType({typesChecks, updateSelection, label}) {
+export function FilterActivityType({typesChecks, updateSelection, label}) {
 
     let typeValues = ["Process activity", "Control activity", "Common process activity", "System activity"];
 

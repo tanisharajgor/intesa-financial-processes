@@ -11,7 +11,7 @@ import lu from '../../../data/processed/nested/lu.json';
 // Styles
 import { Accordion, AccordionDetails } from 'cfd-react-components';
 
-export default function InspectOrgStructure({selectedOrg1, updateSelectedOrg1, selectedOrg2, updateSelectedOrg2, orgStructure}) {
+export function InspectOrgStructure({selectedOrg1, updateSelectedOrg1, selectedOrg2, updateSelectedOrg2, orgStructure}) {
 
     // const orgStructure = lu["org_structure"];
     const orgsLevel1 = [{"id": -1, "descr": "All"}].concat(orgStructure);

@@ -9,7 +9,7 @@ import { Accordion, AccordionDetails, FormLabel, Checkbox } from 'cfd-react-comp
 import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../../layout/index';
 
 
-export default function FilterType({typesChecked, updateSelection, typeValues, label}) {
+export function FilterType({typesChecked, updateSelection, typeValues, label}) {
 
     let newSelectedTypes = [];
     const [filteredTypes, updateFilter] = useState([]);

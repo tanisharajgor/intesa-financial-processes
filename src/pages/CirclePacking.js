@@ -4,9 +4,7 @@ import * as d3 from 'd3';
 
 // Components
 import { Navigation, Main, Content } from "../components/layout/index";
-import { inspectHierarchySummary } from "../components/widgets/inspect";
-import FilterType from "../components/widgets/filterType";
-import InspectTaxonomy from "../components/widgets/inspectTaxonomy";
+import { FilterType, inspectHierarchySummary, InspectTaxonomy } from "../components/widgets/index";
 import { MenuHeader, MenuBody } from "../components/features/menu";
 
 import { activityTypeValues } from "../utils/global";

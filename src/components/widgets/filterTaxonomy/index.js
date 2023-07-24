@@ -149,7 +149,7 @@ function updateFilter(root, selectedLevel3) {
             .style('cursor', d => d.data.data.level === 3 ? 'pointer': 'not-allowed');
 }
 
-export default function FilterTaxonomy({selectedLevel1, updateLevel1, selectedLevel3, updateLevel3}) {
+export function FilterTaxonomy({selectedLevel1, updateLevel1, selectedLevel3, updateLevel3}) {
 
     const processes = lu["processes"];
     const valuesLevel1 = processes.children;

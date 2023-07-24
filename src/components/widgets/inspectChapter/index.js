@@ -6,7 +6,7 @@ import { AccordionHeaderStyled } from '../../features/index';
 import { Accordion, AccordionDetails } from 'cfd-react-components';
 
 
-export default function InspectChapter({selectedChapter, updateSelectedChapter, valuesChapter}) {
+export function InspectChapter({selectedChapter, updateSelectedChapter, valuesChapter}) {
 
     const handleChangeChapter = (event) => {
         let chapter = parseInt(event.target.value);

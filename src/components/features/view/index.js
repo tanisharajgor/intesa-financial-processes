@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import * as d3 from 'd3';
 
 // Components
-import { InspectHTML } from "../../widgets/inspect";
+import { InspectHTML } from "../../widgets/index";
 import * as Global from "../../../utils/global";
 
 //Styles

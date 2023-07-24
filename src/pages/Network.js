@@ -4,12 +4,8 @@ import * as d3 from 'd3';
 
 // Components
 import { Navigation, Main, Content } from "../components/layout/index";
-import InspectChapter from "../components/widgets/inspectChapter/index";
-import InspectOrgStructure from "../components/widgets/inspectOrgStructure/index";
-import FilterTaxonomy from "../components/widgets/filterTaxonomy/index";
-import FilterType from "../components/widgets/filterType/index";
+import { FilterTaxonomy, FilterType, InspectChapter, InspectOrgStructure, inspectNetworkSummary} from "../components/widgets/index";
 import { MenuBody, MenuHeader } from "../components/features/index";
-import { inspectNetworkSummary } from "../components/widgets/inspect/index";
 import NetworkVisualization from "../visualization/network-visualization";
 import * as Global from "../utils/global";
 
