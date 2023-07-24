@@ -8,11 +8,14 @@ import '@pixi/graphics-extras';
 // Components
 import { activityTypeValues } from "../utils/global";
 
+//Styles
+import * as Theme from "../component-styles/theme";
+
 const labelZAxisDefault = 100;
 
-const labelStyle = {
+const labelStylePrimary = {
   align: "center",
-  fill: 0xffffff,
+  fill: Theme.primaryLabelColor,
   fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
   fontSize: 13,
   padding: 5,
@@ -26,6 +29,26 @@ const labelStyle = {
   dropShadowDistance: 2,
   dropShadowColor: 0x21252b
 }
+
+const labelStyleSecondary = {
+  align: "center",
+  fill: Theme.lightGreyColor,
+  fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
+  fontSize: 9,
+  padding: 5,
+  textBaseline: "middle",
+  wordWrap: true,
+  wordWrapWidth: 120,
+  leading: -2,
+  dropShadow: true, // add text drop shadow to labels
+  dropShadowAngle: 90,
+  dropShadowBlur: 5,
+  dropShadowDistance: 2,
+  dropShadowColor: 0x21252b
+}
+
+// let labelStyleSecondary = labelStylePrimary;
+// labelStyleSecondary.fill = Theme.labelStyles.lightGreyColor;
 
 const nonHighlightOpacity = .15;
 
@@ -48,6 +71,7 @@ export class CirclePackingDiagram {
   viewVariable;
   zoomedNodeId;
   dataMap;
+  containerLabelLevel1;
 
   constructor(data, selector, updateViewHoverValue) {
     this.data = data;
@@ -68,7 +92,7 @@ export class CirclePackingDiagram {
     this.selectedChapter = [];
     this.alphaScale = d3.scaleOrdinal()
       .domain([0, 1, 2, 3, 5])
-      .range([.05, .3, .4, .5, .6]);
+      .range([.05, .3, .4, .5, .6]); 
   }
 
   // Initializes the application
@@ -250,34 +274,33 @@ export class CirclePackingDiagram {
 
   // Wraps the text according to the label style
   labelMetrics(d) {
-    const textMetrics = PIXI.TextMetrics.measureText(d.data.descr, this.labelStyle);
+    const textMetrics = PIXI.TextMetrics.measureText(d.data.descr, this.labelStylePrimary);
     d.width = textMetrics.maxLineWidth + 15;
     d.height = textMetrics.lineHeight * textMetrics.lines.length + 15;
   }
   
   // Adds the rest of the label styles
   label(d) {
-    const text = new PIXI.Text(d.data.descr, this.labelStyle);
-      text.zIndex = labelZAxisDefault;
-      text.x = this.width - d.gfx.x;
-      text.y = this.height - d.gfx.y;
-      text.anchor.set(.5, .5);
-      text.alpha = d.data.level === 1? 1: 0;
-
-      this.containerLabel.addChild(text); 
+    const label = new PIXI.Text(d.data.descr, this.labelStylePrimary);
+      label.zIndex = labelZAxisDefault;
+      label.x = this.width - d.gfx.x;
+      label.y = this.height - d.gfx.y;
+      label.anchor.set(.5, .5);
+      label.resolution = 2;
+      this.containerLabelLevel1.addChild(label);
   }
 
   initLabels() {
-    this.containerLabel = new PIXI.Container();
-    this.labelStyle = new PIXI.TextStyle(labelStyle);
+    this.containerLabelLevel1 = new PIXI.Container();
+    this.labelStylePrimary = new PIXI.TextStyle(labelStylePrimary);
 
-    this.labels = this.data.filter(d => d.data.level === 1)
+    this.level1Labels = this.data.filter(d => d.data.level === 1)
       .forEach(d => {
         this.labelMetrics(d);
         this.label(d);
     });
 
-    this.viewport.addChild(this.containerLabel);
+    this.viewport.addChild(this.containerLabelLevel1);
   }
 
   // Tooltip interaction ------------------------------------------------------
@@ -295,7 +318,7 @@ export class CirclePackingDiagram {
       .style("top", `${y}px`)
       .style("left", `${x}px`)
       .html(this.tooltipText(d));
-    }
+  }
 
   pointerOver(node, event) {
     node.gfx.alpha = 1;
@@ -337,27 +360,35 @@ export class CirclePackingDiagram {
 
   updateLabels(node) {
 
-    console.log(node)
+    // console.log(node)
+    // console.log(this.zoomedNodeId)
+    console.log(this.currentNodeId)
 
-    // this.labels = this.data.filter(d => d.data.level === 1)
-    //   .forEach(d => {
-    //     this.labelMetrics(d);
-    //     this.label(d);
-    // });
+    if (this.currentNodeId !== 0) {
+      this.containerLabelLevel1.children.forEach(label => {
+        label.resolution = 10;
+        label.style = labelStyleSecondary;
+      })
+    } else {
+      console.log("hit")
+      this.containerLabelLevel1.children.forEach(label => {
+        label.resolution = 2;
+        label.style = labelStylePrimary;
+      })
+    }
 
-    this.labels.forEach(label => {
-      if (this.currentNodeId === this.zoomedNodeId) {
-      
-        if (node.depth === 1 ) {
-          // return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
-        } else {
-
-          // return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
-        }
+    if (this.currentNodeId === this.zoomedNodeId) {
+    
+      if (node.depth === 1) {
+        // return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
       } else {
-          // return new PIXI.Point(this.width - node.x, this.height - node.y)
+        // return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
       }
-    })
+    } else {
+      // zoomed to the inner most level
+      // console.log("hit")
+
+    }
 
           // label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
   //   node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);

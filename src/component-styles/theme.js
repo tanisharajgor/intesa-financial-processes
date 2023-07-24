@@ -2,6 +2,8 @@
 export const naColor = 0x777777;
 export const naColorHex = "#777777";
 
+export const primaryLabelColor = 0xffffff;
+
 export const lightGreyColor = 0xCBCBCB;
 export const lightGreyColorRGB = "rgb(203, 203, 203)";
 export const lightGreyColorHex = "#CBCBCB";
