@@ -3,7 +3,7 @@ import Status from "../../Status";
 import Control from "../controls";
 
 // Styles
-import { StyledMain, Visualization} from "../../../component-styles/main";
+import { StyledMain, Visualization} from "./style";
 
 export default function Main({
     viewVariable,

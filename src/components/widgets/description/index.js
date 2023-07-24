@@ -1,5 +1,5 @@
 // Styles
-import { StyledDescription } from "../../../component-styles/description";
+import { StyledDescription } from "./style";
 
 export default function Description(props) {
     return (

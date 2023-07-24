@@ -1,9 +1,9 @@
 //Styles
 
 import { MenuItem, Form } from 'cfd-react-components';
-import { LayoutGroup, LayoutRow, LayoutItem } from '../../../component-styles/query-layout';
+import { LayoutGroup, LayoutRow, LayoutItem } from '../../layout/queryMenu/style';
 import { StyledSelect } from '../../../component-styles/select';
-import { StyledLabel } from "../../../component-styles/menu";
+import { StyledLabel } from "../menu/style";
 
 export function DrillDown({values, selected, handleChange, label, id}) {
 

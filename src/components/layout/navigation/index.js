@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 // Styles
 
-import { NavigationBranding, StyledLayoutHeader, NavigationLinks, LinkList, Link } from "../../../component-styles/navigation";
+import { NavigationBranding, StyledLayoutHeader, NavigationLinks, LinkList, Link } from "./style";
 
 /**
  * Menu Navigation bar to navigate to different parts of the project

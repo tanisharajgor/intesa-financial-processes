@@ -7,8 +7,8 @@ import View from "../../features/view";
 import { MenuBody, MenuCollapsableHeader } from "../../features/menu";
 
 // Styles
-import { StatusMenu } from "../../../component-styles/menu";
-import { LayoutGroup } from "../../../component-styles/query-layout";
+import { StatusMenu } from "../../features/menu/style";
+import { LayoutGroup } from "../queryMenu/style";
 
 export default function Status({
     id,

@@ -1,5 +1,5 @@
-import { createGlobalStyle } from "styled-components";
-import * as Theme from "../component-styles/theme";
+import { createGlobalStyle, Select } from "styled-components";
+import * as Theme from "./theme";
 
 const fontPath = `${process.env.PUBLIC_URL}/font/`
 
@@ -88,4 +88,79 @@ export const GlobalStyles = createGlobalStyle`
   input[type="checkbox"] + label {
     margin-left: 0.5em;
   }
+`
+
+export const StyledSelect = styled(Select)`
+    // A reset of styles, including removing the default dropdown arrow
+    width: 100%;
+    min-width: 15ch;
+    max-width: 30ch;
+    border: 1px solid ${props =>  props.theme.color.secondary };
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: transparent;
+    color: ${props =>  props.theme.color.secondary };
+    display: grid;
+    grid-template-areas: select;
+
+    &:after {
+        content: "";
+        display: block;
+        width: 0.8em;
+        height: 0.5em;
+        background-color: ${props =>  props.theme.color.secondary };
+        clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+        grid-area: select;
+      }
+`;
+
+export const LayoutGroup = styled('div')`
+    padding-top: 0%;
+    padding-right: ${props =>  props.theme.padding };
+    padding-bottom: ${props =>  props.theme.padding };
+    padding-left: ${props =>  props.theme.padding };
+    width: 100%;
+    
+    &.inline {
+        width: 100%;
+        .layout_row {
+            display: block;
+            .layout_item {
+            display: inline;
+            }
+        }
+    }
+`
+
+export const LayoutRow = styled('div')`
+    display: flex;
+    gap: ${props =>  props.theme.padding };
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+`
+
+export const LayoutItem = styled('div')`
+    flex: 1;
+    display: inline-block;
+
+    &.label {
+        flex: 0;
+        min-width: 2.5rem;
+    }
+
+    &.icon {
+        flex: 0;
+        min-width: 2rem;
+    }
+    
+    &.push {
+        // margin-left: 3.125rem;
+    }
+`
+
+export const FilterList = styled('ul')`
+    list-style: none;
 `

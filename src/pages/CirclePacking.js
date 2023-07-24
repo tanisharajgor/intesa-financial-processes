@@ -17,8 +17,8 @@ import { CirclePackingDiagram } from "../visualization/circle-packing-visualizat
 import data from "../data/processed/nested/processes.json";
 
 // Styles
-import { QueryMenu } from "../component-styles/menu";
-import { Content } from "../component-styles/content";
+import { QueryMenu } from "../components/features/menu/style";
+import { Content } from "../components/layout/content/style";
 
 const id = "circle-packing-chart";
 const root = d3.pack()

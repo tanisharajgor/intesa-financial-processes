@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import * as Theme from "../component-styles/theme";
+import * as Theme from "../../../utils/theme";
 
 export const QueryMenu = styled.div`
     resize: vertical;

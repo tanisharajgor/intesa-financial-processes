@@ -7,8 +7,8 @@ import { ChevronButtonStyled } from '../../widgets/chevron';
 
 // Styles
 import { AccordionHeader } from 'cfd-react-components';
-import { Key } from '../../../component-styles/key';
-import { StyledMenuHeader, StyledMenuBody, StyledFilteredData } from '../../../component-styles/menu';
+import { Key } from '../../widgets/key/style';
+import { StyledMenuHeader, StyledMenuBody, StyledFilteredData } from './style';
 
 // Component to style the Menu Header
 export function MenuCollapsableHeader({label, shouldRotate, handleRotate, filteredTypes=[]}) {

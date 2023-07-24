@@ -9,8 +9,8 @@ import * as Global from "../../../utils/global";
 //Styles
 import { Form, MenuItem } from "cfd-react-components";
 import { StyledSelect } from "../../../component-styles/select";
-import { ViewStyles } from "../../../component-styles/view";
-import * as Theme from "../../../component-styles/theme";
+import { ViewStyles } from "./style";
+import * as Theme from "../../../utils/theme";
 
 const width = 216;
 const height = 15;
