@@ -66,7 +66,6 @@ export class CirclePackingDiagram {
     this.selectedLevel2 = [];
     this.selectedLevel3 = [];
     this.selectedChapter = [];
-    this.labelStyle = new PIXI.TextStyle(labelStyle);
     this.alphaScale = d3.scaleOrdinal()
       .domain([0, 1, 2, 3, 5])
       .range([.05, .3, .4, .5, .6]);
@@ -248,24 +247,34 @@ export class CirclePackingDiagram {
 
     this.viewport.addChild(this.containerNodes);
   }
+
+  // Wraps the text according to the label style
+  labelMetrics(d) {
+    const textMetrics = PIXI.TextMetrics.measureText(d.data.descr, this.labelStyle);
+    d.width = textMetrics.maxLineWidth + 15;
+    d.height = textMetrics.lineHeight * textMetrics.lines.length + 15;
+  }
   
+  // Adds the rest of the label styles
+  label(d) {
+    const text = new PIXI.Text(d.data.descr, this.labelStyle);
+      text.zIndex = labelZAxisDefault;
+      text.x = this.width - d.gfx.x;
+      text.y = this.height - d.gfx.y;
+      text.anchor.set(.5, .5);
+      text.alpha = d.data.level === 1? 1: 0;
+
+      this.containerLabel.addChild(text); 
+  }
+
   initLabels() {
-
     this.containerLabel = new PIXI.Container();
-    this.labels = this.data.filter(d => d.data.level < 4)
+    this.labelStyle = new PIXI.TextStyle(labelStyle);
+
+    this.labels = this.data.filter(d => d.data.level === 1)
       .forEach(d => {
-        const textMetrics = PIXI.TextMetrics.measureText(d.data.descr, this.labelStyle);
-        d.width = textMetrics.maxLineWidth + 15;
-        d.height = textMetrics.lineHeight * textMetrics.lines.length + 15;
-
-        const text = new PIXI.Text(d.data.descr, this.labelStyle);
-          text.zIndex = labelZAxisDefault;
-          text.x = this.width - d.gfx.x;
-          text.y = this.height - d.gfx.y;
-          text.anchor.set(.5, .5);
-          text.alpha = d.data.level === 1? 1: 0;
-
-        this.containerLabel.addChild(text); 
+        this.labelMetrics(d);
+        this.label(d);
     });
 
     this.viewport.addChild(this.containerLabel);
@@ -329,13 +338,20 @@ export class CirclePackingDiagram {
   updateLabels(node) {
 
     console.log(node)
+
+    // this.labels = this.data.filter(d => d.data.level === 1)
+    //   .forEach(d => {
+    //     this.labelMetrics(d);
+    //     this.label(d);
+    // });
+
     this.labels.forEach(label => {
       if (this.currentNodeId === this.zoomedNodeId) {
-  
+      
         if (node.depth === 1 ) {
           // return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
         } else {
-  
+
           // return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
         }
       } else {
@@ -357,12 +373,11 @@ export class CirclePackingDiagram {
   centerOnNode(node) {
 
     node.gfx.cursor = "zoom-out";
-
     this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
-    this.updateLabels(node);
 
     const zoomScale = this.getZoomWidth(node);
     const centerPoint = this.getCenter(node);
+    this.updateLabels(node);
 
     this.viewport.animate({
       position: centerPoint,
