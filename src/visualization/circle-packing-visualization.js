@@ -34,16 +34,16 @@ const labelStyleSecondary = {
   align: "center",
   fill: Theme.lightGreyColor,
   fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
-  fontSize: 9,
+  fontSize: 6,
   padding: 5,
   textBaseline: "middle",
   wordWrap: true,
-  wordWrapWidth: 120,
+  wordWrapWidth: 140,
   leading: -2,
   dropShadow: true, // add text drop shadow to labels
   dropShadowAngle: 90,
   dropShadowBlur: 5,
-  dropShadowDistance: 2,
+  dropShadowDistance: 1,
   dropShadowColor: 0x21252b
 }
 
@@ -51,7 +51,7 @@ const labelStyleTertiary = {
   align: "center",
   fill: Theme.primaryLabelColor,
   fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
-  fontSize: 4,
+  fontSize: 5,
   padding: 5,
   textBaseline: "middle",
   wordWrap: true,
@@ -241,12 +241,12 @@ export class CirclePackingDiagram {
 
   draw(viewVariable) {
     this.viewVariable = viewVariable;
-    this.drawNodes();
+    this.initNodes();
     this.initLabels();
   }
 
   // Initializes the nodes
-  drawNodes() {
+  initNodes() {
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
 
@@ -300,10 +300,11 @@ export class CirclePackingDiagram {
     const label = new PIXI.Text(d.data.descr, labelStyles);
       label.zIndex = labelZAxisDefault;
       label.x = this.width - d.gfx.x;
-      label.y = this.height - d.gfx.y;
+      label.y = this.height - d.gfx.y -d.r;
       label.anchor.set(.5, .5);
       label.resolution = 2;
-      this.containerLabelLevel1.addChild(label);
+
+    return label;
   }
 
   initLabels() {
@@ -321,7 +322,8 @@ export class CirclePackingDiagram {
     this.level1Labels = this.data.filter(d => d.data.level === 1)
       .forEach(d => {
         this.labelMetrics(d);
-        this.label(d, this.labelStylePrimary);
+        const label = this.label(d, this.labelStylePrimary);
+        this.containerLabelLevel1.addChild(label);
     });
 
     // add labels to viewport
@@ -335,7 +337,6 @@ export class CirclePackingDiagram {
   }
 
   showTooltip(d, event) {
-
     let x = event.screen.x + 20;
     let y = event.screen.y - 10;
 
@@ -385,36 +386,7 @@ export class CirclePackingDiagram {
 
   updateLabels(node) {
 
-    console.log(node)
-
-    if (node.depth > 0) {
-
-      // this.level2Labels = node.children
-      //   .forEach(d => {
-      //     this.labelMetrics(d);
-      //     this.label(d, this.labelStyleTertiary);
-      //   });
-
-      // this.viewport.addChild(this.containerLabelLevel2);
-
-      // if (node.depth > 1) {
-
-      //   this.level3Labels = this.data
-      //   .filter(d => d.data.level === 3)
-      //   .forEach(d => {
-      //     this.labelMetrics(d);
-      //     this.label(d, this.labelStylePrimary);
-      //   });
-
-      //   this.viewport.addChild(this.containerLabelLevel3);
-      // }
-
-      this.containerLabelLevel1.children.forEach(label => {
-        label.resolution = 10;
-        label.style = labelStyleSecondary;
-      });
-
-    } else {
+    if (node.depth === 0) {
       this.containerLabelLevel1.children.forEach(label => {
         label.resolution = 2;
         label.style = labelStylePrimary;
@@ -426,7 +398,26 @@ export class CirclePackingDiagram {
 
       if (this.containerLabelLevel3) {
         this.containerLabelLevel3.destroy();
+      }      
+
+    } else {
+console.log(node)
+      if (node.depth === 1) {
+        this.level2Labels = node.children
+        .forEach(d => {
+          this.labelMetrics(d);
+          const label = this.label(d, this.labelStyleTertiary);
+          label.resolution = 8;
+          this.containerLabelLevel2.addChild(label);
+        });
+
+        this.viewport.addChild(this.containerLabelLevel2);
       }
+
+      this.containerLabelLevel1.children.forEach(label => {
+        label.resolution = 10;
+        label.style = labelStyleSecondary;
+      });
     }
   }
 
@@ -459,7 +450,7 @@ export class CirclePackingDiagram {
   updateDraw(viewVariable) {
     this.viewVariable = viewVariable;
     this.destroyNodes();
-    this.drawNodes();
+    this.initNodes();
   }
 
   // Controls ------------------------------------------------------
