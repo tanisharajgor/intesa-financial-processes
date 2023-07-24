@@ -3,7 +3,8 @@ import { MenuBody,MenuHeader, MenuCollapsableHeader, AccordionHeaderStyled } fro
 import { Ripple } from "./ripple/index";
 import { View } from "./view";
 
-export { DrillDown,
+export { 
+    DrillDown,
     MenuBody,
     MenuHeader,
     MenuCollapsableHeader,

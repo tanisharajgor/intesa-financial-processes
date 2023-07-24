@@ -2,16 +2,16 @@
 import Ripple from "../../features/ripple";
 
 // Styles
-import { ChevronButton } from "./style";
+import { ChevronButtonStyles } from "./style";
 
 
 // Component to style the Chevron Button
-export function ChevronButtonStyled({shouldRotate, handleRotate}) {
+export function ChevronButton({shouldRotate, handleRotate}) {
 
     return(
-        <ChevronButton shouldRotate={shouldRotate} onClick={handleRotate} style={{ paddingLeft: "2%", paddingRight: "2%" }}>
+        <ChevronButtonStyles shouldRotate={shouldRotate} onClick={handleRotate} style={{ paddingLeft: "2%", paddingRight: "2%" }}>
             <img alt="Button to zoom further into the visualization" src={process.env.PUBLIC_URL + "/assets/chevron.svg"} />
             <Ripple color={"#FFFFFF"} duration={1000} />
-        </ChevronButton>
+        </ChevronButtonStyles>
     )
 }

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 // Components
-import { ChevronButtonStyled, Description, Key } from '../../widgets/index';
+import { ChevronButton, Description, Key } from '../../widgets/index';
 
 // Styles
 import { AccordionHeader } from 'cfd-react-components';
@@ -13,7 +13,7 @@ export function MenuCollapsableHeader({label, shouldRotate, handleRotate, filter
     return(
         <StyledMenuHeader>
             <Key>{filteredTypes.length <= 0 ? label : `${label}:`}</Key>
-            <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+            <ChevronButton shouldRotate={shouldRotate} handleRotate={handleRotate}/>
         </StyledMenuHeader>
     )
 }

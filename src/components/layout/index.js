@@ -5,7 +5,8 @@ import { Navigation } from "./navigation";
 import { LayoutGroup, FilterList, LayoutItem, LayoutRow } from "./queryMenu/style";
 import { Status } from "./status";
 
-export { Content,
+export { 
+    Content,
     Control,
     Main,
     Navigation,
