@@ -14,18 +14,17 @@ const labelStyle = {
   align: "center",
   fill: 0xffffff,
   fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
-  fontSize: 11,
+  fontSize: 13,
   padding: 5,
   textBaseline: "middle",
   wordWrap: true,
   wordWrapWidth: 120,
-  leading: -2 
-  // ,
-  // dropShadow: true, // add text drop shadow to labels
-  // dropShadowAngle: 90,
-  // dropShadowBlur: 5,
-  // dropShadowDistance: 2,
-  // dropShadowColor: 0x21252b
+  leading: -2,
+  dropShadow: true, // add text drop shadow to labels
+  dropShadowAngle: 90,
+  dropShadowBlur: 5,
+  dropShadowDistance: 2,
+  dropShadowColor: 0x21252b
 }
 
 const nonHighlightOpacity = .15;
@@ -120,7 +119,7 @@ export class CirclePackingDiagram {
     this.viewport.zoomPercent(zoom, true)
   }
 
-  // Drawing functions ------------------------------------------------------
+  // Aesthetic functions for drawing ------------------------------------------------------
 
   selectedActivitiesOpacity(node) {
     if (node.data.level < 4) {
@@ -199,10 +198,12 @@ export class CirclePackingDiagram {
     this.data.forEach(n => this.opacityScale(n));
   }
 
+  // Drawing functions ------------------------------------------------------
+
   draw(viewVariable) {
     this.viewVariable = viewVariable;
     this.drawNodes();
-    this.drawLabels();
+    this.initLabels();
   }
 
   // Initializes the nodes
@@ -232,7 +233,7 @@ export class CirclePackingDiagram {
       node.gfx.cursor = 'zoom-in';
       node.gfx.on("pointerover", (e) => this.pointerOver(node, e));
       node.gfx.on("pointerout", (e) => this.pointerOut(node, e));
-      node.gfx.on("click", (e) => this.centerOnNode(node, e))
+      node.gfx.on("click", (e) => this.centerOnNode(node, e));
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx); 
@@ -248,12 +249,10 @@ export class CirclePackingDiagram {
     this.viewport.addChild(this.containerNodes);
   }
   
-  drawLabels() {
+  initLabels() {
 
     this.containerLabel = new PIXI.Container();
-
-    const labels = this.data.filter(d => d.data.level === 1);
-    this.labels = labels
+    this.labels = this.data.filter(d => d.data.level < 4)
       .forEach(d => {
         const textMetrics = PIXI.TextMetrics.measureText(d.data.descr, this.labelStyle);
         d.width = textMetrics.maxLineWidth + 15;
@@ -264,6 +263,7 @@ export class CirclePackingDiagram {
           text.x = this.width - d.gfx.x;
           text.y = this.height - d.gfx.y;
           text.anchor.set(.5, .5);
+          text.alpha = d.data.level === 1? 1: 0;
 
         this.containerLabel.addChild(text); 
     });
@@ -271,7 +271,7 @@ export class CirclePackingDiagram {
     this.viewport.addChild(this.containerLabel);
   }
 
-  // Updating the draw functions on mouse interaction ------------------------------------------------------
+  // Tooltip interaction ------------------------------------------------------
 
   tooltipText(d) {
     return `${d.data.level === 4? "Activity": "Process"} <br><b>${d.data.descr}</b>`;
@@ -300,6 +300,7 @@ export class CirclePackingDiagram {
     this.updateViewHoverValue(undefined);
   }
 
+  // Panning and zooming ------------------------------------------------------
   getCenter = (node) => {
     if (this.currentNodeId === this.zoomedNodeId) {
       node.gfx.cursor = "zoom-in";
@@ -325,10 +326,40 @@ export class CirclePackingDiagram {
     return scale(node.depth);
   }
 
+  updateLabels(node) {
+
+    console.log(node)
+    this.labels.forEach(label => {
+      if (this.currentNodeId === this.zoomedNodeId) {
+  
+        if (node.depth === 1 ) {
+          // return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
+        } else {
+  
+          // return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
+        }
+      } else {
+          // return new PIXI.Point(this.width - node.x, this.height - node.y)
+      }
+    })
+
+          // label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
+  //   node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
+  //   node.attr("r", d => d.r * k);
+
+  // this.labels
+  //     .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+  //       .style("fill-opacity", d => d.parent === focus ? 1 : 0)
+  //       .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+  //       .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; })
+    }
+
   centerOnNode(node) {
-    this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
 
     node.gfx.cursor = "zoom-out";
+
+    this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
+    this.updateLabels(node);
 
     const zoomScale = this.getZoomWidth(node);
     const centerPoint = this.getCenter(node);
@@ -341,30 +372,7 @@ export class CirclePackingDiagram {
     this.zoomedNodeId = this.currentNodeId;
   }
 
-  updateLabels() {
-
-    if (this.currentNodeId === this.zoomedNodeId) {
-  
-      if (node.depth === 1 ) {
-        return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
-      } else {
-        node.parent.gfx.cursor = "zoom-out"
-        return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
-      }
-    } else {
-        return new PIXI.Point(this.width - node.x, this.height - node.y)
-    }
-
-      // label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
-  //   node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
-  //   node.attr("r", d => d.r * k);
-
-  // this.labels
-  //     .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
-  //       .style("fill-opacity", d => d.parent === focus ? 1 : 0)
-  //       .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
-  //       .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
-  }
+  // Updating the draw functions  ------------------------------------------------------
 
   // Destroys the nodes on data update
   destroyNodes() {
@@ -377,7 +385,6 @@ export class CirclePackingDiagram {
     this.viewVariable = viewVariable;
     this.destroyNodes();
     this.drawNodes();
-    this.drawLabels();
   }
 
   // Controls ------------------------------------------------------
@@ -395,4 +402,5 @@ export class CirclePackingDiagram {
       }
     }
   }
+
 }
