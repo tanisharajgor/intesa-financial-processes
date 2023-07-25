@@ -400,6 +400,8 @@ export default class NetworkVisualization {
         this.viewport.zoomPercent(-0.15, true);
       },
       reset: () => {
+        this.viewport.fit();
+        this.viewport.moveCenter(this.width / 2, this.height / 2)
         this.centerVisualization(-0.30)
       }
     }
