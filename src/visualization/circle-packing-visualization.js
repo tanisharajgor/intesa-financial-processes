@@ -415,6 +415,14 @@ export class CirclePackingDiagram {
     });
   }
 
+  resetLabels() {
+    this.destroyObject(this.containerLabelLevel2);
+    this.containerLabelLevel2 = new PIXI.Container();
+    this.destroyObject(this.containerLabelLevel3);
+    this.containerLabelLevel3 = new PIXI.Container();
+    this.resetLevel1Labels();
+  }
+
   // Update labels according to the zoom scale
   updateLabels(node) {
 
@@ -422,22 +430,26 @@ export class CirclePackingDiagram {
 
       if (node.depth > 1) {
 
+        // Initialized third level of labels
         this.level3Labels = node.children
           .forEach(d => {
             const label = this.label(d, this.labelStyleQuartiary, 10);
             this.containerLabelLevel3.addChild(label);
-          });
+        });
 
+        // add labels to viewport
         this.viewport.addChild(this.containerLabelLevel3);
-       
+
       } else {
 
+        // Initialized second level of labels
         this.level2Labels = node.children
           .forEach(d => {
             const label = this.label(d, this.labelStyleTertiary, 8);
             this.containerLabelLevel2.addChild(label);
-          });
+        });
 
+        // add labels to viewport
         this.viewport.addChild(this.containerLabelLevel2);
       }
 
@@ -447,7 +459,7 @@ export class CirclePackingDiagram {
       });
 
     } else {
-      this.resetLevel1Labels();
+      this.resetLabels();
     }
   }
 
@@ -463,7 +475,7 @@ export class CirclePackingDiagram {
     this.viewport.animate({
       position: centerPoint,
       scale: zoomScale,
-    })
+    });
 
     this.zoomedNodeId = this.currentNodeId;
   }
@@ -479,7 +491,6 @@ export class CirclePackingDiagram {
   destroyObject(pixiObject) {
     if (pixiObject) {
       pixiObject.destroy();
-      pixiObject = new PIXI.Container();
     }
   }
 
@@ -510,7 +521,7 @@ export class CirclePackingDiagram {
         this.viewport.fit();
         this.viewport.moveCenter(this.width / 2, this.height / 2);
         this.centerVisualization(-0.30);
-        this.resetLevel1Labels();
+        this.resetLabels();
       }
     }
   }
