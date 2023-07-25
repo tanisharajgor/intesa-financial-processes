@@ -72,7 +72,7 @@ const labelStyleQuartiary = {
   padding: 5,
   textBaseline: "middle",
   wordWrap: true,
-  wordWrapWidth: 120,
+  wordWrapWidth: 90,
   leading: -2,
   dropShadow: true, // add text drop shadow to labels
   dropShadowAngle: 90,
@@ -306,8 +306,8 @@ export class CirclePackingDiagram {
   }
 
   // Wraps the text according to the label style
-  labelMetrics(d) {
-    const textMetrics = PIXI.TextMetrics.measureText(d.data.descr, this.labelStylePrimary);
+  labelMetrics(d, labelStyles) {
+    const textMetrics = PIXI.TextMetrics.measureText(d.data.descr, labelStyles);
     d.width = textMetrics.maxLineWidth + 15;
     d.height = textMetrics.lineHeight * textMetrics.lines.length + 15;
   }
@@ -333,12 +333,12 @@ export class CirclePackingDiagram {
     this.labelStylePrimary = new PIXI.TextStyle(labelStylePrimary);
     this.labelStyleSecondary = new PIXI.TextStyle(labelStyleSecondary);
     this.labelStyleTertiary = new PIXI.TextStyle(labelStyleTertiary);
-    this.labelStyleQuartiary= new PIXI.TextStyle(labelStyleQuartiary);
+    this.labelStyleQuartiary = new PIXI.TextStyle(labelStyleQuartiary);
 
     // Initialized first level of labels
     this.level1Labels = this.data.filter(d => d.data.level === 1)
       .forEach(d => {
-        this.labelMetrics(d);
+        this.labelMetrics(d, this.labelStylePrimary);
         const label = this.label(d, this.labelStylePrimary);
         this.containerLabelLevel1.addChild(label);
     });
@@ -409,24 +409,24 @@ export class CirclePackingDiagram {
       if (node.depth > 1) {
 
         this.level3Labels = node.children
-        .forEach(d => {
-          this.labelMetrics(d);
-          const label = this.label(d, this.labelStyleQuartiary);
-          label.resolution = 10;
-          this.containerLabelLevel3.addChild(label);
-        });
+          .forEach(d => {
+            this.labelMetrics(d, this.labelStyleQuartiary);
+            const label = this.label(d, this.labelStyleQuartiary);
+            label.resolution = 10;
+            this.containerLabelLevel3.addChild(label);
+          });
 
         this.viewport.addChild(this.containerLabelLevel3);
        
       } else {
 
         this.level2Labels = node.children
-        .forEach(d => {
-          this.labelMetrics(d);
-          const label = this.label(d, this.labelStyleTertiary);
-          label.resolution = 8;
-          this.containerLabelLevel2.addChild(label);
-        });
+          .forEach(d => {
+            this.labelMetrics(d, this.labelStyleTertiary);
+            const label = this.label(d, this.labelStyleTertiary);
+            label.resolution = 8;
+            this.containerLabelLevel2.addChild(label);
+          });
 
         this.viewport.addChild(this.containerLabelLevel2);
       }
