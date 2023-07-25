@@ -3,11 +3,11 @@ import styled from "styled-components";
 export const StyledControlsPanel = styled.div`
     position: absolute;
     bottom: 0.5rem;
-    right: 0.5rem; 
+    right: 1rem;
     .inner {
         display: flex;
     }
-    right: 1rem;
+    padding: ${props => props.theme.padding};
 `
 
 export const StyledControlButton = styled('button')`
