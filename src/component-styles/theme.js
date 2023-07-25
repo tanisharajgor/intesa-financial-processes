@@ -1,4 +1,3 @@
-
 export const naColor = 0x777777;
 export const naColorHex = "#777777";
 
