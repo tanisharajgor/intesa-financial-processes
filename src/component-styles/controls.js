@@ -7,6 +7,7 @@ export const StyledControlsPanel = styled.div`
     .inner {
         display: flex;
     }
+    right: 1rem;
 `
 
 export const StyledControlButton = styled('button')`
@@ -14,7 +15,6 @@ export const StyledControlButton = styled('button')`
     border: 1px solid transparent;
     cursor: pointer;
     position: relative;
-
     &:hover {
         border-color: ${props =>  props.theme.color.secondary };
         border-radius: 15%;
