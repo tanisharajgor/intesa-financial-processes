@@ -86,7 +86,11 @@ const nonHighlightOpacity = .15;
 export class CirclePackingDiagram {
   app;
   containerNodes;
+  containerLabelLevel1;
+  containerLabelLevel2;
+  containerLabelLevel3;
   data;
+  dataMap;
   height;
   inspect;
   labels;
@@ -101,10 +105,6 @@ export class CirclePackingDiagram {
   viewport;
   viewVariable;
   zoomedNodeId;
-  dataMap;
-  containerLabelLevel1;
-  containerLabelLevel2;
-  containerLabelLevel3;
 
   constructor(data, selector, updateViewHoverValue) {
     this.data = data;
@@ -113,7 +113,7 @@ export class CirclePackingDiagram {
     this.data.forEach(d => {
       this.levelIDs.push(d.data.id);
       this.dataMap[`${d.data.id}`] = d;
-    })
+    });
     this.zoomedNodeId = 0;
     this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
@@ -170,9 +170,9 @@ export class CirclePackingDiagram {
   // Set diagram to fill the vizualization frame
   centerVisualization(zoom, xPos, yPos) {
     if (xPos && yPos) {
-      this.viewport.moveCenter(xPos, yPos)
+      this.viewport.moveCenter(xPos, yPos);
     }
-    this.viewport.zoomPercent(zoom, true)
+    this.viewport.zoomPercent(zoom, true);
   }
 
   // Aesthetic functions for drawing ------------------------------------------------------
@@ -312,14 +312,22 @@ export class CirclePackingDiagram {
     d.height = textMetrics.lineHeight * textMetrics.lines.length + 15;
   }
   
-  // Adds the rest of the label styles
-  label(d, labelStyles) {
+  // Adds the aesthetics, e.g., position, index, centered, resolution
+  labelAesthetics(d, labelStyles, resolution) {
     const label = new PIXI.Text(d.data.descr, labelStyles);
       label.zIndex = labelZAxisDefault;
       label.x = this.width - d.gfx.x;
       label.y = this.height - d.gfx.y -d.r;
       label.anchor.set(.5, .5);
+      label.resolution = resolution;
 
+      return label;
+  }
+
+  // Adds the rest of the label styles
+  label(d, labelStyles, resolution) {
+    this.labelMetrics(d, labelStyles);
+    let label = this.labelAesthetics(d, labelStyles, resolution);
     return label;
   }
 
@@ -338,8 +346,7 @@ export class CirclePackingDiagram {
     // Initialized first level of labels
     this.level1Labels = this.data.filter(d => d.data.level === 1)
       .forEach(d => {
-        this.labelMetrics(d, this.labelStylePrimary);
-        const label = this.label(d, this.labelStylePrimary);
+        const label = this.label(d, this.labelStylePrimary, 2);
         this.containerLabelLevel1.addChild(label);
     });
 
@@ -401,6 +408,13 @@ export class CirclePackingDiagram {
     return scale(node.depth);
   }
 
+  resetLevel1Labels() {
+    this.containerLabelLevel1.children.forEach(label => {
+      label.resolution = 2;
+      label.style = labelStylePrimary;
+    });
+  }
+
   // Update labels according to the zoom scale
   updateLabels(node) {
 
@@ -410,9 +424,7 @@ export class CirclePackingDiagram {
 
         this.level3Labels = node.children
           .forEach(d => {
-            this.labelMetrics(d, this.labelStyleQuartiary);
-            const label = this.label(d, this.labelStyleQuartiary);
-            label.resolution = 10;
+            const label = this.label(d, this.labelStyleQuartiary, 10);
             this.containerLabelLevel3.addChild(label);
           });
 
@@ -422,9 +434,7 @@ export class CirclePackingDiagram {
 
         this.level2Labels = node.children
           .forEach(d => {
-            this.labelMetrics(d, this.labelStyleTertiary);
-            const label = this.label(d, this.labelStyleTertiary);
-            label.resolution = 8;
+            const label = this.label(d, this.labelStyleTertiary, 8);
             this.containerLabelLevel2.addChild(label);
           });
 
@@ -437,19 +447,7 @@ export class CirclePackingDiagram {
       });
 
     } else {
-      
-      this.containerLabelLevel1.children.forEach(label => {
-        label.resolution = 2;
-        label.style = labelStylePrimary;
-      });
-
-      if (this.containerLabelLevel2) {
-        this.containerLabelLevel2.destroy();
-      }
-
-      if (this.containerLabelLevel3) {
-        this.containerLabelLevel3.destroy();
-      }
+      this.resetLevel1Labels();
     }
   }
 
@@ -474,9 +472,23 @@ export class CirclePackingDiagram {
 
   // Destroys the nodes on data update
   destroyNodes() {
-    if (this.containerNodes) {
-      this.containerNodes.destroy();
+    this.destroyObject(this.containerNodes);
+  }
+
+  // Destroys object and recreates empty container
+  destroyObject(pixiObject) {
+    if (pixiObject) {
+      pixiObject.destroy();
+      pixiObject = new PIXI.Container();
     }
+  }
+
+  removeChild(pixiObject) {
+    let i = 0;
+    pixiObject.children.forEach(function(child) {
+      pixiObject.removeChild(i);
+      i++;
+    });
   }
 
   updateDraw(viewVariable) {
@@ -496,10 +508,10 @@ export class CirclePackingDiagram {
       },
       reset: () => {
         this.viewport.fit();
-        this.viewport.moveCenter(this.width / 2, this.height / 2)
-        this.centerVisualization(-0.30)
+        this.viewport.moveCenter(this.width / 2, this.height / 2);
+        this.centerVisualization(-0.30);
+        this.resetLevel1Labels();
       }
     }
   }
-
 }
