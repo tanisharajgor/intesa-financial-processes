@@ -55,8 +55,8 @@ const labelStyleTertiary = {
   padding: 5,
   textBaseline: "middle",
   wordWrap: true,
-  wordWrapWidth: 120,
-  leading: -2,
+  wordWrapWidth: 50,
+  leading: -1,
   dropShadow: true, // add text drop shadow to labels
   dropShadowAngle: 90,
   dropShadowBlur: 5,
@@ -72,8 +72,8 @@ const labelStyleQuartiary = {
   padding: 5,
   textBaseline: "middle",
   wordWrap: true,
-  wordWrapWidth: 90,
-  leading: -2,
+  wordWrapWidth: 30,
+  leading: -1,
   dropShadow: true, // add text drop shadow to labels
   dropShadowAngle: 90,
   dropShadowBlur: 5,
@@ -316,25 +316,21 @@ export class CirclePackingDiagram {
   }
   
   // Adds the aesthetics, e.g., position, index, centered, resolution
-  labelAesthetics(d, labelStyles, resolution) {
+  label(d, labelStyles, resolution) {
+
+    this.labelMetrics(d, labelStyles);
     const label = new PIXI.Text(d.data.descr, labelStyles);
       label.zIndex = labelZAxisDefault;
       label.x = this.width - d.gfx.x;
-      label.y = this.height - d.gfx.y -d.r;
+      label.y = this.height - d.gfx.y - d.r;
       label.anchor.set(.5, .5);
       label.resolution = resolution;
 
       return label;
   }
 
-  // Adds the rest of the label styles
-  label(d, labelStyles, resolution) {
-    this.labelMetrics(d, labelStyles);
-    let label = this.labelAesthetics(d, labelStyles, resolution);
-    return label;
-  }
-
   initLabels() {
+
     //Initialize containers
     this.containerLabelLevel1 = new PIXI.Container();
     this.containerLabelLevel2 = new PIXI.Container();
@@ -457,7 +453,7 @@ export class CirclePackingDiagram {
   }
 
   getZoomWidth = (node) => {
-    const scale =  d3.scaleLinear()
+    const scale = d3.scaleLinear()
       .range([1, 20])
       .domain([0, 4]);
 
@@ -467,8 +463,8 @@ export class CirclePackingDiagram {
   centerOnNode(node) {
 
     node.gfx.cursor = "zoom-out";
-    this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
     node.zoomed = !node.zoomed;
+    this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
 
     if(!node.zoomed && node.depth === 1) {
       this.getControls().reset();
@@ -480,8 +476,8 @@ export class CirclePackingDiagram {
         position: centerPoint,
         scale: zoomScale,
       });
-  
-    }    
+
+    }
     this.zoomedNodeId = this.currentNodeId;
   }
 
