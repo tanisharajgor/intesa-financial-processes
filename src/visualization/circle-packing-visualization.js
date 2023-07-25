@@ -273,6 +273,7 @@ export class CirclePackingDiagram {
 
     this.data.forEach((node) => {
       node.viewId = node.data.viewId;
+      node.zoomed = false;
       node.gfx = new PIXI.Graphics();
       node.gfx.lineStyle(lineWidth(node.data.level), 0xFFFFFF, 1);
       node.gfx.beginFill(Global.applyColorScale(node.data, this.viewVariable));
@@ -304,6 +305,8 @@ export class CirclePackingDiagram {
 
     this.viewport.addChild(this.containerNodes);
   }
+
+  // Visualization Labels ------------------------------------------------------
 
   // Wraps the text according to the label style
   labelMetrics(d, labelStyles) {
@@ -354,60 +357,6 @@ export class CirclePackingDiagram {
     this.viewport.addChild(this.containerLabelLevel1);
   }
 
-  // Tooltip interaction ------------------------------------------------------
-
-  tooltipText(d) {
-    return `${d.data.level === 4? "Activity": "Process"} <br><b>${d.data.descr}</b>`;
-  }
-
-  showTooltip(d, event) {
-    let x = event.screen.x + 20;
-    let y = event.screen.y - 10;
-
-    this.tooltip.style("visibility", "visible")
-      .style("top", `${y}px`)
-      .style("left", `${x}px`)
-      .html(this.tooltipText(d));
-  }
-
-  pointerOver(node, event) {
-    node.gfx.alpha = 1;
-    this.showTooltip(node, event);
-    this.updateViewHoverValue(Global.applyColorScale(node.data, this.viewVariable));
-  }
-
-  pointerOut(node) {
-    this.opacityScale(node);
-    this.tooltip.style("visibility", "hidden");
-    this.updateViewHoverValue(undefined);
-  }
-
-  // Panning and zooming ------------------------------------------------------
-  getCenter = (node) => {
-    if (this.currentNodeId === this.zoomedNodeId) {
-      node.gfx.cursor = "zoom-in";
-      if (node.depth === 1 ) {
-        return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
-      } else {
-        node.parent.gfx.cursor = "zoom-out";
-        return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
-      }
-    } else {
-        return new PIXI.Point(this.width - node.x, this.height - node.y)
-    }
-  }
-
-  getZoomWidth = (node) => {
-    const scale =  d3.scaleLinear()
-      .range([1, 20])
-      .domain([0, 4]);
-
-    if (this.currentNodeId === this.zoomedNodeId && node.depth !== 0) {
-      return scale(node.depth - 1);
-    }
-    return scale(node.depth);
-  }
-
   resetLevel1Labels() {
     this.containerLabelLevel1.children.forEach(label => {
       label.resolution = 2;
@@ -415,6 +364,7 @@ export class CirclePackingDiagram {
     });
   }
 
+  // Destroys labels and resets level 1 labels to their original styling
   resetLabels() {
     this.destroyObject(this.containerLabelLevel2);
     this.containerLabelLevel2 = new PIXI.Container();
@@ -463,29 +413,79 @@ export class CirclePackingDiagram {
     }
   }
 
+  // Tooltip interaction ------------------------------------------------------
+
+  tooltipText(d) {
+    return `${d.data.level === 4? "Activity": "Process"} <br><b>${d.data.descr}</b>`;
+  }
+
+  showTooltip(d, event) {
+    let x = event.screen.x + 20;
+    let y = event.screen.y - 10;
+
+    this.tooltip.style("visibility", "visible")
+      .style("top", `${y}px`)
+      .style("left", `${x}px`)
+      .html(this.tooltipText(d));
+  }
+
+  pointerOver(node, event) {
+    node.gfx.alpha = 1;
+    this.showTooltip(node, event);
+    this.updateViewHoverValue(Global.applyColorScale(node.data, this.viewVariable));
+  }
+
+  pointerOut(node) {
+    this.opacityScale(node);
+    this.tooltip.style("visibility", "hidden");
+    this.updateViewHoverValue(undefined);
+  }
+
+  // Panning and zooming ------------------------------------------------------
+  getCenter = (node) => {
+    if (this.currentNodeId === this.zoomedNodeId) {
+      node.gfx.cursor = "zoom-in";
+      if (node.depth === 1) {
+        return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
+      } else {
+        node.parent.gfx.cursor = "zoom-out";
+        return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
+      }
+    } else {
+        return new PIXI.Point(this.width - node.x, this.height - node.y)
+    }
+  }
+
+  getZoomWidth = (node) => {
+    const scale =  d3.scaleLinear()
+      .range([1, 20])
+      .domain([0, 4]);
+
+    return scale(node.depth);
+  }
+
   centerOnNode(node) {
 
     node.gfx.cursor = "zoom-out";
     this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
+    node.zoomed = !node.zoomed;
 
-    const zoomScale = this.getZoomWidth(node);
-    const centerPoint = this.getCenter(node);
-    this.updateLabels(node);
-
-    this.viewport.animate({
-      position: centerPoint,
-      scale: zoomScale,
-    });
-
+    if(!node.zoomed && node.depth === 1) {
+      this.getControls().reset();
+    } else {
+      const zoomScale = this.getZoomWidth(node);
+      const centerPoint = this.getCenter(node);
+      this.updateLabels(node);
+      this.viewport.animate({
+        position: centerPoint,
+        scale: zoomScale,
+      });
+  
+    }    
     this.zoomedNodeId = this.currentNodeId;
   }
 
   // Updating the draw functions  ------------------------------------------------------
-
-  // Destroys the nodes on data update
-  destroyNodes() {
-    this.destroyObject(this.containerNodes);
-  }
 
   // Destroys object and recreates empty container
   destroyObject(pixiObject) {
@@ -494,12 +494,9 @@ export class CirclePackingDiagram {
     }
   }
 
-  removeChild(pixiObject) {
-    let i = 0;
-    pixiObject.children.forEach(function(child) {
-      pixiObject.removeChild(i);
-      i++;
-    });
+  // Destroys the nodes on data update
+  destroyNodes() {
+    this.destroyObject(this.containerNodes);
   }
 
   updateDraw(viewVariable) {
