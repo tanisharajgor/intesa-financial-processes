@@ -52,6 +52,11 @@ export default function CirclePacking() {
     const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1), selector, updateViewHoverValue));
 
     const handleFullscreen = (e) => {
+        if (isFullscreen) {
+            circlePackingDiagram.current.centerVisualization(-0.4)
+        } else {
+            circlePackingDiagram.current.centerVisualization(0.4)
+        }
         setFullscreen(!isFullscreen);
     }
 

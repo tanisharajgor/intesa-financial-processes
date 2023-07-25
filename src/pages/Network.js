@@ -107,7 +107,13 @@ export default function Network() {
     const [selectedActors, updateActors] = useState(possibleActors);
 
     const [isFullscreen, setFullscreen] = useState(false);
+
     const handleFullscreen = (e) => {
+        if (isFullscreen) {
+            networkDiagram.current.centerVisualization(-0.4)
+        } else {
+            networkDiagram.current.centerVisualization(0.4)
+        }
         setFullscreen(!isFullscreen);
     }
 
@@ -126,7 +132,7 @@ export default function Network() {
         const width = (document.getElementById(selector).clientWidth / 2) - document.getElementsByClassName("Query")[0].clientWidth;
         const height = (document.getElementById(selector).clientHeight / 2) - document.getElementsByClassName("Navigation")[0].clientHeight;
 
-        networkDiagram.current.centerVisualization(width - visualizationXPadding, height, -0.40);
+        networkDiagram.current.centerVisualization(-0.40, width - visualizationXPadding, height);
     }, []);
 
     // React Hooks

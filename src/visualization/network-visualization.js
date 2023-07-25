@@ -107,9 +107,11 @@ export default class NetworkVisualization {
   }
 
   // Set diagram to fill the vizualization frame
-  centerVisualization(newX, newY, zoom) {
+  centerVisualization(zoom, xPos, yPos) {
+    if (xPos && yPos) {
+      this.viewport.moveCenter(xPos, yPos)
+    }
     this.viewport.zoomPercent(zoom, true)
-    this.viewport.moveCenter(newX, newY);
   }
 
   clickOff() {
@@ -402,7 +404,8 @@ export default class NetworkVisualization {
       },
       reset: () => {
         this.viewport.fit();
-        this.viewport.moveCenter(this.width / 2, this.height / 2);
+        this.viewport.moveCenter(this.width / 2, this.height / 2)
+        this.centerVisualization(-0.30)
       }
     }
   }
