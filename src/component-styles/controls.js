@@ -7,6 +7,8 @@ export const StyledControlsPanel = styled.div`
     .inner {
         display: flex;
     }
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 5px;
     padding: ${props => props.theme.padding};
 `
 
