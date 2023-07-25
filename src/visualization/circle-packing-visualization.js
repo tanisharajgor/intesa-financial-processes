@@ -372,9 +372,9 @@ export class CirclePackingDiagram {
   // Update labels according to the zoom scale
   updateLabels(node) {
 
-    if (node.depth > 0) {
+    if (node.depth > 0 && node.depth < 3) {
 
-      if (node.depth > 1) {
+      if (node.depth > 1 && node.depth < 3) {
 
         // Initialized third level of labels
         this.level3Labels = node.children
