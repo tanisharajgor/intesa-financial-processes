@@ -11,77 +11,6 @@ import { activityTypeValues } from "../utils/global";
 //Styles
 import * as Theme from "../component-styles/theme";
 
-const labelZAxisDefault = 100;
-
-const labelStylePrimary = {
-  align: "center",
-  fill: Theme.primaryLabelColor,
-  fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
-  fontSize: 13,
-  padding: 5,
-  textBaseline: "middle",
-  wordWrap: true,
-  wordWrapWidth: 120,
-  leading: -2,
-  dropShadow: true, // add text drop shadow to labels
-  dropShadowAngle: 90,
-  dropShadowBlur: 5,
-  dropShadowDistance: 2,
-  dropShadowColor: 0x21252b
-}
-
-const labelStyleSecondary = {
-  align: "center",
-  fill: Theme.lightGreyColor,
-  fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
-  fontSize: 6,
-  padding: 5,
-  textBaseline: "middle",
-  wordWrap: true,
-  wordWrapWidth: 140,
-  leading: -2,
-  dropShadow: true, // add text drop shadow to labels
-  dropShadowAngle: 90,
-  dropShadowBlur: 5,
-  dropShadowDistance: 1,
-  dropShadowColor: 0x21252b
-}
-
-const labelStyleTertiary = {
-  align: "center",
-  fill: Theme.primaryLabelColor,
-  fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
-  fontSize: 5,
-  padding: 5,
-  textBaseline: "middle",
-  wordWrap: true,
-  wordWrapWidth: 50,
-  leading: -1,
-  dropShadow: true, // add text drop shadow to labels
-  dropShadowAngle: 90,
-  dropShadowBlur: 5,
-  dropShadowDistance: 2,
-  dropShadowColor: 0x21252b
-}
-
-const labelStyleQuartiary = {
-  align: "center",
-  fill: Theme.primaryLabelColor,
-  fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
-  fontSize: 3,
-  padding: 5,
-  textBaseline: "middle",
-  wordWrap: true,
-  wordWrapWidth: 30,
-  leading: -1,
-  dropShadow: true, // add text drop shadow to labels
-  dropShadowAngle: 90,
-  dropShadowBlur: 5,
-  dropShadowDistance: 2,
-  dropShadowColor: 0x21252b
-}
-
-const nonHighlightOpacity = .15;
 
 export class CirclePackingDiagram {
   app;
@@ -179,12 +108,12 @@ export class CirclePackingDiagram {
 
   selectedActivitiesOpacity(node) {
     if (node.data.level < 4) {
-      node.gfx.alpha = nonHighlightOpacity;
+      node.gfx.alpha = Theme.nonHighlightOpacity;
     } else {
       if (this.selectedActivities.includes(node.data.activityType)) {
         node.gfx.alpha = 1;
       } else {
-        node.gfx.alpha = nonHighlightOpacity;
+        node.gfx.alpha = Theme.nonHighlightOpacity;
       }
     }
   }
@@ -193,7 +122,7 @@ export class CirclePackingDiagram {
     if (this.levelIDs.includes(node.data.id)) {
       node.gfx.alpha = this.alphaScale(node.data.level);
     } else {
-      node.gfx.alpha = nonHighlightOpacity;
+      node.gfx.alpha = Theme.nonHighlightOpacity;
     }
   }
 
@@ -201,7 +130,7 @@ export class CirclePackingDiagram {
     if (this.levelIDs.includes(node.data.id) && this.selectedActivities.includes(node.data.activityType)) {
       node.gfx.alpha = 1;
     } else {
-      node.gfx.alpha = nonHighlightOpacity;
+      node.gfx.alpha = Theme.nonHighlightOpacity;
     }
   }
 
@@ -320,7 +249,7 @@ export class CirclePackingDiagram {
 
     this.labelMetrics(d, labelStyles);
     const label = new PIXI.Text(d.data.descr, labelStyles);
-      label.zIndex = labelZAxisDefault;
+      label.zIndex = Theme.labelZAxisDefault;
       label.x = this.width - d.gfx.x;
       label.y = this.height - d.gfx.y - d.r;
       label.anchor.set(.5, .5);
@@ -337,10 +266,10 @@ export class CirclePackingDiagram {
     this.containerLabelLevel3 = new PIXI.Container();
 
     // Initialize styles
-    this.labelStylePrimary = new PIXI.TextStyle(labelStylePrimary);
-    this.labelStyleSecondary = new PIXI.TextStyle(labelStyleSecondary);
-    this.labelStyleTertiary = new PIXI.TextStyle(labelStyleTertiary);
-    this.labelStyleQuartiary = new PIXI.TextStyle(labelStyleQuartiary);
+    this.labelStylePrimary = new PIXI.TextStyle(Theme.labelStylePrimary);
+    this.labelStyleSecondary = new PIXI.TextStyle(Theme.labelStyleSecondary);
+    this.labelStyleTertiary = new PIXI.TextStyle(Theme.labelStyleTertiary);
+    this.labelStyleQuartiary = new PIXI.TextStyle(Theme.labelStyleQuartiary);
 
     // Initialized first level of labels
     this.level1Labels = this.data.filter(d => d.data.level === 1)
@@ -356,7 +285,7 @@ export class CirclePackingDiagram {
   resetLevel1Labels() {
     this.containerLabelLevel1.children.forEach(label => {
       label.resolution = 2;
-      label.style = labelStylePrimary;
+      label.style = Theme.labelStylePrimary;
     });
   }
 
@@ -401,7 +330,7 @@ export class CirclePackingDiagram {
 
       this.containerLabelLevel1.children.forEach(label => {
         label.resolution = 10;
-        label.style = labelStyleSecondary;
+        label.style = Theme.labelStyleSecondary;
       });
 
     } else {

@@ -5,7 +5,8 @@ import * as Global from "../utils/global";
 import { Viewport } from 'pixi-viewport'
 import '@pixi/graphics-extras';
 
-const nonHighlightOpacity = .3;
+//Styles
+import * as Theme from "../component-styles/theme";
 
 export default class NetworkVisualization {
 
@@ -273,7 +274,7 @@ export default class NetworkVisualization {
       && !(this.hoverLink.includes(source.id) && this.hoverLink.includes(target.id))) {
         this.links.alpha = 1;
       } else {
-        this.links.alpha = nonHighlightOpacity;
+        this.links.alpha = Theme.nonHighlightOpacity;
       }
 
     } else {
@@ -298,7 +299,7 @@ export default class NetworkVisualization {
       if (this.inspectLink.length === 0) {
         this.links.alpha = 1;
       } else {
-        this.links.alpha = nonHighlightOpacity;
+        this.links.alpha = Theme.nonHighlightOpacity;
       }
     });
 
@@ -568,7 +569,7 @@ export default class NetworkVisualization {
     if (nodeEvaluation) {
       this.identifyNodesLinks(node);
     } else {
-      node.gfx.alpha = nonHighlightOpacity;
+      node.gfx.alpha = Theme.nonHighlightOpacity;
     }
   }
 
@@ -577,7 +578,7 @@ export default class NetworkVisualization {
     if (this.inspectNode.includes(node.id)) {
       node.gfx.alpha = 1;
     } else {
-      node.gfx.alpha = nonHighlightOpacity;
+      node.gfx.alpha = Theme.nonHighlightOpacity;
     }
   }
 

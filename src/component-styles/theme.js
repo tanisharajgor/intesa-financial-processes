@@ -54,3 +54,74 @@ export const GlobalTheme = {
     padding: '0.625rem',
     viewColWidth: '17rem'
   }
+
+export const labelZAxisDefault = 100;
+export const nonHighlightOpacity = .15;
+
+export const labelStylePrimary = {
+  align: "center",
+  fill: primaryLabelColor,
+  fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
+  fontSize: 13,
+  padding: 5,
+  textBaseline: "middle",
+  wordWrap: true,
+  wordWrapWidth: 120,
+  leading: -2,
+  dropShadow: true, // add text drop shadow to labels
+  dropShadowAngle: 90,
+  dropShadowBlur: 5,
+  dropShadowDistance: 2,
+  dropShadowColor: 0x21252b
+}
+  
+export const labelStyleSecondary = {
+  align: "center",
+  fill: lightGreyColor,
+  fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
+  fontSize: 6,
+  padding: 5,
+  textBaseline: "middle",
+  wordWrap: true,
+  wordWrapWidth: 140,
+  leading: -2,
+  dropShadow: true, // add text drop shadow to labels
+  dropShadowAngle: 90,
+  dropShadowBlur: 5,
+  dropShadowDistance: 1,
+  dropShadowColor: 0x21252b
+}
+  
+export const labelStyleTertiary = {
+  align: "center",
+  fill: primaryLabelColor,
+  fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
+  fontSize: 5,
+  padding: 5,
+  textBaseline: "middle",
+  wordWrap: true,
+  wordWrapWidth: 50,
+  leading: -1,
+  dropShadow: true, // add text drop shadow to labels
+  dropShadowAngle: 90,
+  dropShadowBlur: 5,
+  dropShadowDistance: 2,
+  dropShadowColor: 0x21252b
+}
+  
+export const labelStyleQuartiary = {
+  align: "center",
+  fill: primaryLabelColor,
+  fontFamily: ["ibmplexsans-regular-webfont", "Plex", "Arial"],
+  fontSize: 3,
+  padding: 5,
+  textBaseline: "middle",
+  wordWrap: true,
+  wordWrapWidth: 30,
+  leading: -1,
+  dropShadow: true, // add text drop shadow to labels
+  dropShadowAngle: 90,
+  dropShadowBlur: 5,
+  dropShadowDistance: 2,
+  dropShadowColor: 0x21252b
+}
