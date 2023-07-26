@@ -47,7 +47,7 @@ export default function CirclePacking () {
 
   const [valuesChapter, updateValuesChapter] = useState([]);
 
-  const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1), updateViewHoverValue));
+  const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1), selector, updateViewHoverValue));
 
   const handleFullscreen = (e) => {
     if (isFullscreen) {
@@ -86,7 +86,7 @@ export default function CirclePacking () {
   };
 
   useEffect(() => {
-    circlePackingDiagram.current.init(id);
+    circlePackingDiagram.current.init(selector);
     circlePackingDiagram.current.draw(viewVariable);
     circlePackingDiagram.current.centerVisualization(-0.30);
   }, []);

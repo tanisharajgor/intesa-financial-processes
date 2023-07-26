@@ -116,11 +116,11 @@ export default function Network () {
   const [shouldRotate] = useState(true);
 
   // Initiating the network diagram
-  const networkDiagram = useRef(new NetworkVisualization(data, updateSymbolHoverValue, updateViewHoverValue));
+  const networkDiagram = useRef(new NetworkVisualization(data, selector, updateSymbolHoverValue, updateViewHoverValue));
 
   // React Hooks
   useEffect(() => {
-    networkDiagram.current.init(id);
+    networkDiagram.current.init(selector);
     networkDiagram.current.draw(viewVariable);
     networkDiagram.current.animate();
 
