@@ -186,14 +186,14 @@ export class CirclePackingDiagram {
 
   // Drawing functions ------------------------------------------------------
 
-  draw (viewVariable) {
+  draw(viewVariable) {
     this.viewVariable = viewVariable;
     this.initNodes();
     this.initLabels();
   }
 
   // Initializes the nodes
-  initNodes () {
+  initNodes() {
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
 
@@ -442,8 +442,7 @@ export class CirclePackingDiagram {
       },
       reset: () => {
         this.viewport.fit();
-        this.viewport.moveCenter(this.width / 2, this.height / 2);
-        this.centerVisualization(-0.30);
+        this.centerVisualization(-0.10, this.width / 2, (this.height / 2) - 75);
         this.resetLabels();
       }
     };

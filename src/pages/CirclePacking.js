@@ -51,9 +51,9 @@ export default function CirclePacking () {
 
   const handleFullscreen = () => {
     if (isFullscreen) {
-      circlePackingDiagram.current.centerVisualization(-0.4);
+      circlePackingDiagram.current.centerVisualization(-0.2);
     } else {
-      circlePackingDiagram.current.centerVisualization(0.4);
+      circlePackingDiagram.current.centerVisualization(0.2);
     }
     setFullscreen(!isFullscreen);
   };
@@ -88,7 +88,7 @@ export default function CirclePacking () {
   useEffect(() => {
     circlePackingDiagram.current.init(selector);
     circlePackingDiagram.current.draw(viewVariable);
-    circlePackingDiagram.current.centerVisualization(-0.30);
+    circlePackingDiagram.current.centerVisualization(-0.1, window.innerWidth / 2, (window.innerHeight / 2) - 75);
   }, []);
 
   const onViewVariableChange = useCallback((updatedView) => {
