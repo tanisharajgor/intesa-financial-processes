@@ -14,6 +14,7 @@ import * as Theme from "../component-styles/theme";
 
 const width = 216;
 const height = 15;
+
 let colorScale;
 
 let riskLegendId = "Risk-Legend";
@@ -282,9 +283,9 @@ function viewInfo(networkChart) {
     )
 }
 
-export default function View({id, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue}) {
+export default function View({selector, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue}) {
 
-    const networkChart = id === "network-chart";
+    const networkChart = selector === "network-chart";
 
     colorScale = Global.createColorScale(viewVariable);
 

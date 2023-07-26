@@ -25,7 +25,7 @@ import lu from '../data/processed/nested/lu.json';
 import { Content } from "../component-styles/content";
 import { QueryMenu } from "../component-styles/menu";
 
-const id = "network-chart";
+const selector = "network-chart";
 const processes = lu["processes"];
 
 // Combines the two types of links into a single array
@@ -121,16 +121,16 @@ export default function Network() {
     const handleRotate = () => setRotate(!shouldRotate);
 
     // Initiating the network diagram
-    const networkDiagram = useRef(new NetworkVisualization(data, updateSymbolHoverValue, updateViewHoverValue));
+    const networkDiagram = useRef(new NetworkVisualization(data, selector, updateSymbolHoverValue, updateViewHoverValue));
 
     // React Hooks
     useEffect(() => {
-        networkDiagram.current.init(id);
+        networkDiagram.current.init();
         networkDiagram.current.draw(viewVariable);
         networkDiagram.current.animate();
 
-        const width = (document.getElementById(id).clientWidth / 2) - document.getElementsByClassName("Query")[0].clientWidth;
-        const height = (document.getElementById(id).clientHeight / 2) - document.getElementsByClassName("Navigation")[0].clientHeight;
+        const width = (document.getElementById(selector).clientWidth / 2) - document.getElementsByClassName("Query")[0].clientWidth;
+        const height = (document.getElementById(selector).clientHeight / 2) - document.getElementsByClassName("Navigation")[0].clientHeight;
 
         networkDiagram.current.centerVisualization(-0.40, width - visualizationXPadding, height);
     }, []);
@@ -221,7 +221,7 @@ export default function Network() {
                     updateViewVariable={updateViewVariable}
                     viewHoverValue={viewHoverValue}
                     symbolHoverValue={symbolHoverValue}
-                    id={id}
+                    selector={selector}
                     controls={networkDiagram.current.getControls()}
                     handleFullscreen={handleFullscreen}
                     isFullscreen={isFullscreen}
