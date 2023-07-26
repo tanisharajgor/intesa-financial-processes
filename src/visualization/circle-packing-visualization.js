@@ -286,15 +286,19 @@ export class CirclePackingDiagram {
   }
 
   getZoomWidth = (node) => {
-    const scale =  d3.scaleLinear()
-      .range([1, 20])
-      .domain([0, 4]);
+    const depthScale =  d3.scaleLinear()
+      .domain([0, 4])
+      .range([1, 20]);
+
+    const radiusScale =  d3.scaleLinear()
+      .domain([65, 3])
+      .range([1, 5]);
 
     if (this.currentNodeId === this.zoomedNodeId && node.depth !== 0) {
-      return scale(node.depth - 1);
+      return depthScale(node.depth - 1) * radiusScale(node.parent.r);
     }
 
-    return scale(node.depth);
+    return depthScale(node.depth) * radiusScale(node.r);
   }
 
   centerOnNode(node) {
