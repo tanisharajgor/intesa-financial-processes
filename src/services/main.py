@@ -67,8 +67,7 @@ def main():
     level2Clean = level2_dm(data, raw_pth, processed_pth)
     level3Clean = level3_dm(data, raw_pth, processed_pth)
     modelClean = model_dm(data, raw_pth, processed_pth)
-    org1Clean = org_str1_dm(data, raw_pth, processed_pth)
-    org2Clean = org_str2_dm(data, raw_pth, processed_pth)
+    orgClean = org_str2_dm(data, raw_pth, processed_pth)
 
     data = data[["L1 GUID", "L2 GUID", "L3 GUID", "MODEL GUID", "activityGUID", "actorGUID", "organizational_structure1", "organizational_structure2", "Connection"]].rename(
                                 columns={
@@ -89,7 +88,7 @@ def main():
     # Relational data
     activity_to_risk = activity_to_risk_dm(risks, activitiesClean, risksClean, processed_pth)
     risk_to_control = risk_to_control_dm(controls, risksClean, controlsClean, processed_pth)
-    main = main_dm(data, level1Clean, level2Clean, level3Clean, modelClean, activitiesClean, actorsClean, risksClean, controlsClean, org1Clean, org2Clean, activity_to_risk, risk_to_control)
+    main = main_dm(data, level1Clean, level2Clean, level3Clean, modelClean, activitiesClean, actorsClean, risksClean, controlsClean, orgClean, activity_to_risk, risk_to_control)
 
     network = create_network(main)
     write_json(network["nodes"], os.path.join(processed_pth, "nested"), "nodes")

@@ -351,6 +351,9 @@ def org_str2_dm(data, raw_pth, processed_pth):
     df = pd.merge(df, dfTranslated, on="organizational_structure2", how="left")
     df = num_id(df, "organizational_structure2", 10000000)
 
+    df2 = {'organizational_structure2': 'Not specified', 'English': 'Not specified', 'organizational_structure2ID': max(df.organizational_structure2ID)+1}
+    df = df.append(df2, ignore_index = True)
+
     df.to_csv(os.path.join(processed_pth, 'relational', 'organizational_structure2' + ".csv"), index = False)
 
     return df
@@ -510,25 +513,23 @@ def risk_to_control_dm(controls, risks, control, processed_pth):
 """
 Main crosswalk
 """
-def main_dm(data, level1, level2, level3, model, activities, actors, risks, controls, org1, org2, activity_to_risk, risk_to_control):
+def main_dm(data, level1, level2, level3, model, activities, actors, risks, controls, org, activity_to_risk, risk_to_control):
 
     df = pd.merge(data, level1, how="left", on="level1GUID")
     df = pd.merge(df, level2, how="left", on="level2GUID")
     df = pd.merge(df, level3, how="left", on="level3GUID")
-
     df = pd.merge(df, model, how="left", on="modelGUID")
-
     df = pd.merge(df, activities, how="left", on="activityGUID")
     df = pd.merge(df, actors, how="left", on="actorGUID")
 
-    df = pd.merge(df, org1, how="left", on="organizational_structure1").drop("organizational_structure1", axis=1).rename(columns={'English': "organizational_structure1"})
-    df = pd.merge(df, org2, how="left", on="organizational_structure2").drop("organizational_structure2", axis=1).rename(columns={'English': "organizational_structure2"})
-    df = clean_strings(df, "organizational_structure1")
-    df.organizational_structure1 = df.organizational_structure1.str.capitalize()
+    df = pd.merge(df, org, how="left", on="organizational_structure2").drop("organizational_structure2", axis=1).rename(columns={'English': "organizational_structure2"})
     df = clean_strings(df, "organizational_structure2")
 
     def shorten_label(row):
-        return row['organizational_structure2'].split(" - ")[-1]
+        if not pd.isnull(row['organizational_structure2']):
+            return row['organizational_structure2'].split(" - ")[-1]
+        else: 
+            return "Not specified"
 
     df['organizational_structure2'] = df.apply(shorten_label, axis=1)
 

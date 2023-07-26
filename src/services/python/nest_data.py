@@ -41,8 +41,7 @@ def levelsObject(df):
             "level2ID": df.level2ID.unique().tolist(),
             "level3ID": df.level3ID.unique().tolist(),
             "modelID": df.modelID.unique().tolist(),
-            "orgStructure1ID": df.organizational_structure1ID.unique().tolist(),
-            "orgStructure2ID": df.organizational_structure2ID.unique().tolist()
+            "orgStructureID": df.organizational_structure2ID.unique().tolist()
         }
 
     return levels
@@ -449,23 +448,15 @@ Create a nested structure for organizational structure
 Return object
 """
 def create_org_structure(main):
-    l1Array = []
+    array = []
 
-    for i in main.organizational_structure1ID.unique():
-        l2 = main[main.organizational_structure1ID == i].organizational_structure2ID.unique()
+    df = main[main.organizational_structure1 == "Strutture organizzative"][["organizational_structure2", "organizational_structure2ID"]].drop_duplicates()
 
-        l2Array = []
-        for j in l2:
+    for j in df.organizational_structure2ID.unique():
 
-            r2 = {"id": int(j),
-                  "descr": main[main.organizational_structure2ID == j].organizational_structure2.iloc[0],
-                  "level": int(2)}
-            l2Array.append(r2)
+        r = {"id": int(j),
+            "descr": df[df.organizational_structure2ID == j].organizational_structure2.iloc[0],
+            "level": int(1)}
+        array.append(r)
 
-        r1 = {"id": int(i),
-              "descr": main[main.organizational_structure1ID == i].organizational_structure1.iloc[0],
-              "children": l2Array,
-              "level": int(1)}
-        l1Array.append(r1)
-
-    return l1Array
+    return array
