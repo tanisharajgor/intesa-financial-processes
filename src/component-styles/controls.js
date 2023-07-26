@@ -3,10 +3,13 @@ import styled from 'styled-components';
 export const StyledControlsPanel = styled.div`
     position: absolute;
     bottom: 0.5rem;
-    right: 0.5rem; 
+    right: 1rem;
     .inner {
         display: flex;
     }
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 5px;
+    padding: ${props => props.theme.padding};
 `;
 
 export const StyledControlButton = styled('button')`
@@ -14,7 +17,6 @@ export const StyledControlButton = styled('button')`
     border: 1px solid transparent;
     cursor: pointer;
     position: relative;
-
     &:hover {
         border-color: ${props => props.theme.color.secondary};
         border-radius: 15%;
