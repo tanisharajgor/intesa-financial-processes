@@ -17,7 +17,7 @@ export default function InspectChapter({selectedChapter, updateSelectedChapter, 
 
     return(
         <Accordion className={'Card'}>
-            <AccordionHeaderStyled label="Inspect by Chapter" filteredTypes={[chapterDescr]}/>
+            <AccordionHeaderStyled label="Identify by Chapter" filteredTypes={[chapterDescr]}/>
             <AccordionDetails>
                 <DrillDown values={valuesChapter} selected={selectedChapter} handleChange={handleChangeChapter} label="Chapter" id="chapter" />
             </AccordionDetails>

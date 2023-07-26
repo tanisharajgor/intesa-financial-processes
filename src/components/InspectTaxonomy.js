@@ -76,7 +76,7 @@ export default function InspectTaxonomy({
 
     return(
         <Accordion className={'Card'}>
-            <AccordionHeaderStyled label="Inspect by Taxonomy" filteredTypes={[]}/>
+            <AccordionHeaderStyled label="Identify by Taxonomy" filteredTypes={[]}/>
             <AccordionDetails>
                 <DrillDown values={valuesLevel1} selected={selectedLevel1} handleChange={handleChangeLevel1} label="Level 1" id="1" />
                 {selectedLevel1.id !== -1 ? <DrillDown values={valuesLevel2} selected={selectedLevel2} handleChange={handleChangeLevel2} label="Level 2" id="2" />: <></>}
