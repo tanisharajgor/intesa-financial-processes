@@ -14,11 +14,11 @@ import { LayoutGroup } from '../component-styles/query-layout';
 
 // Prop types
 Status.propTypes = {
-  selector: PropTypes.node.isRequired,
+  selector: PropTypes.string,
   viewVariable: PropTypes.node.isRequired,
-  updateViewVariable: PropTypes.node.isRequired,
-  viewHoverValue: PropTypes.node.isRequired,
-  symbolHoverValue: PropTypes.node.isRequired,
+  updateViewVariable: PropTypes.func,
+  viewHoverValue: PropTypes.number,
+  symbolHoverValue: PropTypes.number,
   isFullscreen: PropTypes.node.isRequired
 };
 

@@ -10,8 +10,8 @@ import { StyledControlsPanel, StyledControlButton, FullscreenIcon, FullscreenBut
 
 // Prop types
 Control.propTypes = {
-  handleFullscreen: PropTypes.node.isRequired,
-  controls: PropTypes.node.isRequired
+  handleFullscreen: PropTypes.func,
+  controls: PropTypes.object
 };
 
 export default function Control ({ handleFullscreen, controls }) {

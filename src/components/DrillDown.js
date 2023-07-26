@@ -10,11 +10,11 @@ import { StyledLabel } from '../component-styles/menu';
 
 // Prop types
 DrillDown.propTypes = {
-  values: PropTypes.node.isRequired,
-  selected: PropTypes.node.isRequired,
-  handleChange: PropTypes.node.isRequired,
-  label: PropTypes.node.isRequired,
-  id: PropTypes.node.isRequired
+  values: PropTypes.array,
+  selected: PropTypes.object,
+  handleChange: PropTypes.func,
+  label: PropTypes.string,
+  id: PropTypes.string
 };
 
 

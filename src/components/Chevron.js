@@ -10,8 +10,8 @@ import { ChevronButton } from '../component-styles/chevron-button';
 
 // Prop types
 ChevronButtonStyled.propTypes = {
-  shouldRotate: PropTypes.node.isRequired,
-  handleRotate: PropTypes.node.isRequired
+  shouldRotate: PropTypes.bool,
+  handleRotate: PropTypes.func
 };
 
 // Component to style the Chevron Button

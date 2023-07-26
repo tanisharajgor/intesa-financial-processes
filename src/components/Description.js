@@ -7,12 +7,13 @@ import { StyledDescription } from '../component-styles/description';
 
 // Prop types
 Description.propTypes = {
-  props: PropTypes.node.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.string
 };
 
-export default function Description (props) {
+export default function Description ({children}) {
   return (
-    <StyledDescription>{ props.children }</StyledDescription>
+    <StyledDescription>
+      <p>{ children }</p>
+    </StyledDescription>
   );
 }

@@ -12,12 +12,12 @@ import { StyledMain, Visualization } from '../component-styles/main';
 // Prop types
 Main.propTypes = {
   viewVariable: PropTypes.node.isRequired,
-  updateViewVariable: PropTypes.node.isRequired,
-  viewHoverValue: PropTypes.node.isRequired,
-  symbolHoverValue: PropTypes.node.isRequired,
-  selector: PropTypes.node.isRequired,
-  controls: PropTypes.node.isRequired,
-  handleFullscreen: PropTypes.node.isRequired,
+  updateViewVariable: PropTypes.func,
+  viewHoverValue: PropTypes.number,
+  symbolHoverValue: PropTypes.number,
+  selector: PropTypes.string,
+  controls: PropTypes.object,
+  handleFullscreen: PropTypes.func,
   isFullscreen: PropTypes.node.isRequired
 };
 

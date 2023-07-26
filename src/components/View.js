@@ -278,11 +278,11 @@ function viewInfo (networkChart) {
 
 // Prop types
 View.propTypes = {
-  selector: PropTypes.node.isRequired,
+  selector: PropTypes.string,
   viewVariable: PropTypes.node.isRequired,
-  updateViewVariable: PropTypes.node.isRequired,
-  viewHoverValue: PropTypes.node.isRequired,
-  symbolHoverValue: PropTypes.node.isRequired
+  updateViewVariable: PropTypes.func,
+  viewHoverValue: PropTypes.number,
+  symbolHoverValue: PropTypes.number
 };
 
 export default function View ({ selector, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue }) {

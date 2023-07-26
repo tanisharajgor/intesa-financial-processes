@@ -14,17 +14,17 @@ import { DrillDown } from './DrillDown';
 
 // Prop types
 InspectTaxonomy.propTypes = {
-  handleTaxonomyChange: PropTypes.node.isRequired,
-  selectedLevel1: PropTypes.node.isRequired,
-  updateSelectedLevel1: PropTypes.node.isRequired,
-  selectedLevel2: PropTypes.node.isRequired,
-  updateSelectedLevel2: PropTypes.node.isRequired,
-  selectedLevel3: PropTypes.node.isRequired,
-  updateSelectedLevel3: PropTypes.node.isRequired,
-  selectedChapter: PropTypes.node.isRequired,
-  updateSelectedChapter: PropTypes.node.isRequired,
-  valuesChapter: PropTypes.node.isRequired,
-  updateValuesChapter: PropTypes.node.isRequired
+  handleTaxonomyChange: PropTypes.func,
+  selectedLevel1: PropTypes.object,
+  updateSelectedLevel1: PropTypes.func,
+  selectedLevel2: PropTypes.object,
+  updateSelectedLevel2: PropTypes.func,
+  selectedLevel3: PropTypes.object,
+  updateSelectedLevel3: PropTypes.func,
+  selectedChapter: PropTypes.object,
+  updateSelectedChapter: PropTypes.func,
+  valuesChapter: PropTypes.array,
+  updateValuesChapter: PropTypes.func
 };
 
 export default function InspectTaxonomy ({

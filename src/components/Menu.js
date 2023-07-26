@@ -1,9 +1,6 @@
 // Libraries
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
-// Libraries
-import { useState } from 'react';
 
 // Components
 import Description from './Description';
@@ -16,10 +13,10 @@ import { StyledMenuHeader, StyledMenuBody, StyledFilteredData } from '../compone
 
 // Prop types
 MenuCollapsableHeader.propTypes = {
-  label: PropTypes.node.isRequired,
-  shouldRotate: PropTypes.node.isRequired,
-  handleRotate: PropTypes.node.isRequired,
-  filteredTypes: PropTypes.node.isRequired
+  label: PropTypes.string,
+  shouldRotate: PropTypes.bool,
+  handleRotate: PropTypes.func,
+  filteredTypes: PropTypes.array
 };
 
 // Component to style the Menu Header
@@ -34,8 +31,8 @@ export function MenuCollapsableHeader ({ label, shouldRotate, handleRotate, filt
 
 // Prop types
 MenuHeader.propTypes = {
-  label: PropTypes.node.isRequired,
-  filteredTypes: PropTypes.node.isRequired
+  label: PropTypes.string,
+  filteredTypes: PropTypes.object
 };
 
 export function MenuHeader ({ label, filteredTypes = [] }) {
@@ -48,8 +45,8 @@ export function MenuHeader ({ label, filteredTypes = [] }) {
 
 // Prop types
 MenuBody.propTypes = {
-  shouldRotate: PropTypes.node.isRequired,
-  pageDescription: PropTypes.node.isRequired,
+  shouldRotate: PropTypes.bool,
+  pageDescription: PropTypes.string,
   children: PropTypes.node.isRequired
 };
 
@@ -58,7 +55,7 @@ export function MenuBody ({ shouldRotate, pageDescription, children }) {
   return (
     <StyledMenuBody style={{ visibility: !shouldRotate ? 'hidden' : 'visible' }}>
       <Description>
-        <p>{pageDescription}</p>
+        {pageDescription}
       </Description>
       {children}
     </StyledMenuBody>
@@ -67,7 +64,7 @@ export function MenuBody ({ shouldRotate, pageDescription, children }) {
 
 // Prop types
 TypesStatus.propTypes = {
-  filteredTypes: PropTypes.node.isRequired
+  filteredTypes: PropTypes.array
 };
 
 // Returns a status for each selected type
@@ -93,8 +90,8 @@ function TypesStatus ({ filteredTypes }) {
 
 // Prop types
 AccordionHeaderStyled.propTypes = {
-  label: PropTypes.node.isRequired,
-  filteredTypes: PropTypes.node.isRequired
+  label: PropTypes.string,
+  filteredTypes: PropTypes.array
 };
 
 // Component to style the Accordian Header

@@ -57,7 +57,7 @@ export default function Ripple ({duration, color}) {
   RippleContainer.propTypes = {
     duration: PropTypes.node.isRequired,
     color: PropTypes.node.isRequired,
-    onMouseDown: PropTypes.node.isRequired
+    onMouseDown: PropTypes.func
   };
 
   return (

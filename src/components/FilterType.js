@@ -12,9 +12,9 @@ import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../component-sty
 // Prop types
 FilterType.propTypes = {
   typesChecked: PropTypes.node.isRequired,
-  updateSelection: PropTypes.node.isRequired,
+  updateSelection: PropTypes.func,
   typeValues: PropTypes.node.isRequired,
-  label: PropTypes.node.isRequired
+  label: PropTypes.string
 };
 
 
