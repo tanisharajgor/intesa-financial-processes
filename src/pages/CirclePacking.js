@@ -116,8 +116,7 @@ export default function CirclePacking () {
       <Navigation isFullscreen={isFullscreen} />
       <Content>
         <QueryMenu className="Query" isFullscreen={isFullscreen} style={{
-          height: !shouldRotate ? '10vh' : '100vh',
-          overflowY: !shouldRotate ? 'hidden' : 'scroll'
+          height: !shouldRotate ? '10vh' : '100vh'
         }}>
           <MenuHeader label="Ecosystem" />
           <MenuBody shouldRotate={shouldRotate} pageDescription="Click on the circles to zoom into the process visualization.">

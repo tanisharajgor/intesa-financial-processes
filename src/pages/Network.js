@@ -196,9 +196,7 @@ export default function Network () {
       <Navigation isFullscreen={isFullscreen} />
       <Content>
         <QueryMenu className="Query" isFullscreen={isFullscreen} style={{
-          height: !shouldRotate ? '10vh' : '100vh',
-          overflowY: !shouldRotate ? 'hidden' : 'scroll',
-          visibility: isFullscreen ? 'hidden' : 'visible'
+          height: !shouldRotate ? '10vh' : '100vh'
         }}>
           <MenuHeader label="Network" />
           <MenuBody shouldRotate={shouldRotate} pageDescription="Filter data in the actor network graph to explore activities and risks.">
