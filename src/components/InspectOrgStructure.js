@@ -1,12 +1,10 @@
 // Libraries
-import { useState } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { AccordionHeaderStyled } from './Menu';
 import { DrillDown } from './DrillDown';
-
-// Data
-import lu from '../data/processed/nested/lu.json';
 
 // Styles
 import { Accordion, AccordionDetails } from 'cfd-react-components';

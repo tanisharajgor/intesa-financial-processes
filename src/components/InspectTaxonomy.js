@@ -1,79 +1,94 @@
 // Libraries
-import { useState } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-//Components
+// Components
 import { AccordionHeaderStyled } from './Menu';
 
-//Data
+// Data
 import lu from '../data/processed/nested/lu.json';
 
-//Styles
+// Styles
 import { Accordion, AccordionDetails } from 'cfd-react-components';
 import { DrillDown } from './DrillDown';
 
-export default function InspectTaxonomy({
-    handleTaxonomyChange,
-    selectedLevel1,
-    updateSelectedLevel1,
-    selectedLevel2,
-    updateSelectedLevel2,
-    selectedLevel3,
-    updateSelectedLevel3,
-    selectedChapter,
-    updateSelectedChapter,
-    valuesChapter,
-    updateValuesChapter,
+// Prop types
+InspectTaxonomy.propTypes = {
+  handleTaxonomyChange: PropTypes.func,
+  selectedLevel1: PropTypes.object,
+  updateSelectedLevel1: PropTypes.func,
+  selectedLevel2: PropTypes.object,
+  updateSelectedLevel2: PropTypes.func,
+  selectedLevel3: PropTypes.object,
+  updateSelectedLevel3: PropTypes.func,
+  selectedChapter: PropTypes.object,
+  updateSelectedChapter: PropTypes.func,
+  valuesChapter: PropTypes.array,
+  updateValuesChapter: PropTypes.func
+};
+
+export default function InspectTaxonomy ({
+  handleTaxonomyChange,
+  selectedLevel1,
+  updateSelectedLevel1,
+  selectedLevel2,
+  updateSelectedLevel2,
+  selectedLevel3,
+  updateSelectedLevel3,
+  selectedChapter,
+  updateSelectedChapter,
+  valuesChapter,
+  updateValuesChapter
 }) {
+  const processes = lu.processes;
 
-    const processes = lu["processes"];
+  const valuesLevel1 = [{ id: -1, descr: 'All' }].concat(processes.children);
+  const [valuesLevel2, updateValuesLevel2] = useState({ id: -1, descr: 'All' });
+  const [valuesLevel3, updateValuesLevel3] = useState({ id: -1, descr: 'All' });
 
-    const valuesLevel1 = [{"id": -1, "descr": "All"}].concat(processes.children);
-    const [valuesLevel2, updateValuesLevel2] = useState({"id": -1, "descr": "All"});
-    const [valuesLevel3, updateValuesLevel3] = useState({"id": -1, "descr": "All"});
-
-    const handleChangeLevel1 = (event) => {
-        let selectedLevelId = parseInt(event.target.value);
-        if (selectedLevelId !== -1) {
-            let l2 = processes.children.find(d => d.id === selectedLevelId);
-            updateValuesLevel2([{"id": -1, "descr": "All"}].concat(l2.children));
-            handleTaxonomyChange(l2, updateSelectedLevel1, 1);
-        } else {
-            updateSelectedLevel2({"id": -1, "descr": "All"});
-            updateSelectedLevel3({"id": -1, "descr": "All"});
-            handleTaxonomyChange({"id": -1, "descr": "All"}, updateSelectedLevel1, 1);
-        }
-    };
-
-    const handleChangeLevel2 = (event) => {
-        let selectedLevelId = parseInt(event.target.value);
-        if (selectedLevelId !== -1) {
-            let l3 = valuesLevel2.find(d => d.id === selectedLevelId);
-            updateValuesLevel3([{"id": -1, "descr": "All"}].concat(l3.children));
-            handleTaxonomyChange(l3, updateSelectedLevel2, 2);
-        } else {
-            updateSelectedLevel3({"id": -1, "descr": "All"});
-            handleTaxonomyChange({"id": -1, "descr": "All"}, updateSelectedLevel2, 2);
-        }
-    };
-
-    const handleChangeLevel3 = (event) => {
-        let selectedLevelId = parseInt(event.target.value);
-        if (selectedLevelId !== -1) {
-            let chapter = valuesLevel3.find(d => d.id === selectedLevelId);
-            updateValuesChapter([{"id": -1, "descr": "All"}].concat(chapter.children));
-            handleTaxonomyChange(chapter, updateSelectedLevel3, 3);
-        } else {
-            updateSelectedChapter({"id": -1, "descr": "All"});
-            handleTaxonomyChange({"id": -1, "descr": "All"}, updateSelectedLevel3, 3);
-        }
-    };
-
-    const handleChangeChapter = (event) => {
-        let chapterId = parseInt(event.target.value);
-        let updatedChapter = valuesChapter.find(ch => ch.id === chapterId);
-        handleTaxonomyChange(updatedChapter, updateSelectedChapter, 4);
+  const handleChangeLevel1 = (event) => {
+    const selectedLevelId = parseInt(event.target.value);
+    if (selectedLevelId !== -1) {
+      const l2 = processes.children.find(d => d.id === selectedLevelId);
+      updateValuesLevel2([{ id: -1, descr: 'All' }].concat(l2.children));
+      handleTaxonomyChange(l2, updateSelectedLevel1, 1);
+    } else {
+      updateSelectedLevel2({ id: -1, descr: 'All' });
+      updateSelectedLevel3({ id: -1, descr: 'All' });
+      handleTaxonomyChange({ id: -1, descr: 'All' }, updateSelectedLevel1, 1);
     }
+  };
 
+  const handleChangeLevel2 = (event) => {
+    const selectedLevelId = parseInt(event.target.value);
+    if (selectedLevelId !== -1) {
+      const l3 = valuesLevel2.find(d => d.id === selectedLevelId);
+      updateValuesLevel3([{ id: -1, descr: 'All' }].concat(l3.children));
+      handleTaxonomyChange(l3, updateSelectedLevel2, 2);
+    } else {
+      updateSelectedLevel3({ id: -1, descr: 'All' });
+      handleTaxonomyChange({ id: -1, descr: 'All' }, updateSelectedLevel2, 2);
+    }
+  };
+
+  const handleChangeLevel3 = (event) => {
+    const selectedLevelId = parseInt(event.target.value);
+    if (selectedLevelId !== -1) {
+      const chapter = valuesLevel3.find(d => d.id === selectedLevelId);
+      updateValuesChapter([{ id: -1, descr: 'All' }].concat(chapter.children));
+      handleTaxonomyChange(chapter, updateSelectedLevel3, 3);
+    } else {
+      updateSelectedChapter({ id: -1, descr: 'All' });
+      handleTaxonomyChange({ id: -1, descr: 'All' }, updateSelectedLevel3, 3);
+    }
+  };
+
+  const handleChangeChapter = (event) => {
+    const chapterId = parseInt(event.target.value);
+    const updatedChapter = valuesChapter.find(ch => ch.id === chapterId);
+    handleTaxonomyChange(updatedChapter, updateSelectedChapter, 4);
+  };
+  
     return(
         <Accordion className={'Card'}>
             <AccordionHeaderStyled label="Identify by Taxonomy" filteredTypes={[]}/>

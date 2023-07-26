@@ -1,92 +1,88 @@
 // Libraries
-import { useCallback, useEffect, useRef, useState } from "react";
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import * as d3 from 'd3';
 
 // Components
-import Navigation from "../components/Navigation";
-import Main from "../components/Main";
-import { inspectHierarchySummary } from "../components/Inspect";
-import FilterType from "../components/FilterType";
-import InspectTaxonomy from "../components/InspectTaxonomy";
-import { MenuHeader, MenuBody } from "../components/Menu";
+import Navigation from '../components/Navigation';
+import Main from '../components/Main';
+import { inspectHierarchySummary } from '../components/Inspect';
+import FilterType from '../components/FilterType';
+import InspectTaxonomy from '../components/InspectTaxonomy';
+import { MenuHeader, MenuBody } from '../components/Menu';
 
-import { activityTypeValues } from "../utils/global";
-import { CirclePackingDiagram } from "../visualization/circle-packing-visualization";
+import { activityTypeValues } from '../utils/global';
+import { CirclePackingDiagram } from '../visualization/circle-packing-visualization';
 
 // Data
-import data from "../data/processed/nested/processes.json";
+import data from '../data/processed/nested/processes.json';
 
 // Styles
-import { QueryMenu } from "../component-styles/menu";
-import { Content } from "../component-styles/content";
+import { QueryMenu } from '../component-styles/menu';
+import { Content } from '../component-styles/content';
 
 const selector = "circle-packing-chart";
 const root = d3.pack()
-    .size([window.innerWidth, window.innerHeight])
-    .padding(1)
-    (d3.hierarchy(data)
-        .sum(d => 1)
-        .sort((a, b) => b.value - a.value)
-    );
+  .size([window.innerWidth, window.innerHeight])
+  .padding(1)(d3.hierarchy(data)
+    .count()
+    .sort((a, b) => b.value - a.value)
+  );
 
-export default function CirclePacking() {
+export default function CirclePacking () {
+  // View highlight states
+  const [viewVariable, updateViewVariable] = useState('riskType');
+  const [viewHoverValue, updateViewHoverValue] = useState(undefined);
+  const [isFullscreen, setFullscreen] = useState(false);
+  const [shouldRotate] = useState(true);
 
-    // View highlight states
-    const [viewVariable, updateViewVariable] = useState("riskType");
-    const [viewHoverValue, updateViewHoverValue] = useState(undefined);
-    const [isFullscreen, setFullscreen] = useState(false);
-    const [shouldRotate, setRotate] = useState(true);
+  // Possible set of activities/actors to choose from
+  const possibleActivities = activityTypeValues;
 
-    // Possible set of activities/actors to choose from
-    const possibleActivities = activityTypeValues;
+  // User selected activities and actors
+  const [selectedActivities, updateActivities] = useState(activityTypeValues);
+  const [selectedLevel1, updateSelectedLevel1] = useState({ id: -1, descr: 'All' });
+  const [selectedLevel2, updateSelectedLevel2] = useState({ id: -1, descr: 'All' });
+  const [selectedLevel3, updateSelectedLevel3] = useState({ id: -1, descr: 'All' });
+  const [selectedChapter, updateSelectedChapter] = useState({ id: -1, descr: 'All' });
 
-    // User selected activities and actors
-    const [selectedActivities, updateActivities] = useState(activityTypeValues);
-    const [selectedLevel1, updateSelectedLevel1] = useState({ "id": -1, "descr": "All" });
-    const [selectedLevel2, updateSelectedLevel2] = useState({ "id": -1, "descr": "All" });
-    const [selectedLevel3, updateSelectedLevel3] = useState({ "id": -1, "descr": "All" });
-    const [selectedChapter, updateSelectedChapter] = useState({ "id": -1, "descr": "All" });
+  const [valuesChapter, updateValuesChapter] = useState([]);
 
-    const [valuesChapter, updateValuesChapter] = useState([]);
+  const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1), selector, updateViewHoverValue));
 
-    const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1), selector, updateViewHoverValue));
-
-    const handleFullscreen = (e) => {
-        if (isFullscreen) {
-            circlePackingDiagram.current.centerVisualization(-0.4)
-        } else {
-            circlePackingDiagram.current.centerVisualization(0.4)
-        }
-        setFullscreen(!isFullscreen);
+  const handleFullscreen = () => {
+    if (isFullscreen) {
+      circlePackingDiagram.current.centerVisualization(-0.4);
+    } else {
+      circlePackingDiagram.current.centerVisualization(0.4);
     }
+    setFullscreen(!isFullscreen);
+  };
 
-    const handleTaxonomyChange = (node, updateSelected, level) => {
-        const nodeFromMap = circlePackingDiagram.current.dataMap[node.id]
-        if (nodeFromMap !== undefined) {
-            circlePackingDiagram.current.centerOnNode(nodeFromMap);
-        } else if (node.id === -1) {
-            let parentNode;
-            switch (level) {
-                case 2:
-                    parentNode = circlePackingDiagram.current.dataMap[selectedLevel1.id];
-                    break;
-                case 3:
-                    parentNode = circlePackingDiagram.current.dataMap[selectedLevel2.id];
-                    break;
-                case 4:
-                    parentNode = circlePackingDiagram.current.dataMap[selectedLevel3.id];
-                    break;
-                default:
-                    circlePackingDiagram.current.centerVisualization(-0.85, window.innerWidth / 2, window.innerHeight / 2)
-                    break;
-            }
-            if (parentNode) {
-                circlePackingDiagram.current.centerOnNode(parentNode);
-            }
-        }
-        updateSelected(node);
+  const handleTaxonomyChange = (node, updateSelected, level) => {
+    const nodeFromMap = circlePackingDiagram.current.dataMap[node.id];
+    if (nodeFromMap !== undefined) {
+      circlePackingDiagram.current.centerOnNode(nodeFromMap);
+    } else if (node.id === -1) {
+      let parentNode;
+      switch (level) {
+      case 2:
+        parentNode = circlePackingDiagram.current.dataMap[selectedLevel1.id];
+        break;
+      case 3:
+        parentNode = circlePackingDiagram.current.dataMap[selectedLevel2.id];
+        break;
+      case 4:
+        parentNode = circlePackingDiagram.current.dataMap[selectedLevel3.id];
+        break;
+      default:
+        circlePackingDiagram.current.centerVisualization(-0.85, window.innerWidth / 2, window.innerHeight / 2);
+        break;
+      }
+      if (parentNode) {
+        circlePackingDiagram.current.centerOnNode(parentNode);
+      }
     }
-
+    
     useEffect(() => {
         circlePackingDiagram.current.init();
         circlePackingDiagram.current.draw(viewVariable);
