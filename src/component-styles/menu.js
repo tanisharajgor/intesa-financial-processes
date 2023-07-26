@@ -30,7 +30,7 @@ export const StatusMenu = styled('div')`
 
 export const StyledMenuHeader = styled('div')`
     display: flex;
-    padding: ${ props => props.theme.padding };
+    padding: ${props => props.theme.padding};
 `
 
 export const StyledMenuBody = styled('div')`
@@ -39,9 +39,9 @@ export const StyledMenuBody = styled('div')`
 
 export const StyledFilteredData = styled('p')`
     padding-top: 0; 
-    padding-right: ${props => props.theme.padding };
-    padding-bottom: ${props => props.theme.padding };
-    padding-left: ${props =>  props.theme.padding };
+    padding-right: ${props => props.theme.padding};
+    padding-bottom: ${props => props.theme.padding};
+    padding-left: ${props => props.theme.padding};
     font-size: 14px
     text-color: ${props => props.theme.color.secondary};
 `
