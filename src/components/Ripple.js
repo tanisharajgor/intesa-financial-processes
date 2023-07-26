@@ -1,8 +1,8 @@
 // Libraries
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect } from 'react';
 
-//Styles
-import { RippleContainer } from "../component-styles/ripple-style";
+// Styles
+import { RippleContainer } from '../component-styles/ripple-style';
 
 const useDebouncedRippleCleanUp = (rippleCount, duration, cleanUpFunction) => {
   useLayoutEffect(() => {
@@ -52,7 +52,7 @@ const Ripple = props => {
         rippleArray.map((ripple, index) => {
           return (
             <span
-              key={"span" + index}
+              key={'span' + index}
               style={{
                 top: ripple.y,
                 left: ripple.x,

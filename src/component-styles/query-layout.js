@@ -1,10 +1,10 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const LayoutGroup = styled('div')`
     padding-top: 0%;
-    padding-right: ${props =>  props.theme.padding };
-    padding-bottom: ${props =>  props.theme.padding };
-    padding-left: ${props =>  props.theme.padding };
+    padding-right: ${props => props.theme.padding};
+    padding-bottom: ${props => props.theme.padding};
+    padding-left: ${props => props.theme.padding};
     width: 100%;
     
     &.inline {
@@ -16,15 +16,15 @@ export const LayoutGroup = styled('div')`
             }
         }
     }
-`
+`;
 
 export const LayoutRow = styled('div')`
     display: flex;
-    gap: ${props =>  props.theme.padding };
+    gap: ${props => props.theme.padding};
     flex-direction: row;
     align-items: center;
     width: 100%;
-`
+`;
 
 export const LayoutItem = styled('div')`
     flex: 1;
@@ -43,8 +43,8 @@ export const LayoutItem = styled('div')`
     &.push {
         // margin-left: 3.125rem;
     }
-`
+`;
 
 export const FilterList = styled('ul')`
     list-style: none;
-`
+`;

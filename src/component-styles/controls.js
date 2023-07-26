@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledControlsPanel = styled.div`
     position: absolute;
@@ -7,7 +7,7 @@ export const StyledControlsPanel = styled.div`
     .inner {
         display: flex;
     }
-`
+`;
 
 export const StyledControlButton = styled('button')`
     background: transparent;
@@ -16,15 +16,15 @@ export const StyledControlButton = styled('button')`
     position: relative;
 
     &:hover {
-        border-color: ${props =>  props.theme.color.secondary };
+        border-color: ${props => props.theme.color.secondary};
         border-radius: 15%;
     }
-`
+`;
 
 export const FullscreenIcon = styled('img')`
     padding: 4px;
-`
+`;
 
 export const FullscreenButton = styled(StyledControlButton)`
     width: 22px;
-`
+`;
