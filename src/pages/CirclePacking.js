@@ -51,9 +51,9 @@ export default function CirclePacking () {
 
   const handleFullscreen = () => {
     if (isFullscreen) {
-      circlePackingDiagram.current.centerVisualization(-0.4);
+      circlePackingDiagram.current.centerVisualization(-0.2);
     } else {
-      circlePackingDiagram.current.centerVisualization(0.4);
+      circlePackingDiagram.current.centerVisualization(0.2);
     }
     setFullscreen(!isFullscreen);
   };
