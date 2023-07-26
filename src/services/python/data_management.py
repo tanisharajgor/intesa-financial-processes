@@ -346,7 +346,7 @@ Return dataframe unique on organizational structure 2
 """
 def org_str2_dm(data, raw_pth, processed_pth):
 
-    df = data[["organizational_structure2"]].drop_duplicates() # drop duplicates
+    df = data[data.organizational_structure1 == "Strutture organizzative"][["organizational_structure2"]].drop_duplicates()
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "organizational_structure2.csv")).rename(columns={'Italian': 'organizational_structure2'})
     df = pd.merge(df, dfTranslated, on="organizational_structure2", how="left")
     df = num_id(df, "organizational_structure2", 10000000)

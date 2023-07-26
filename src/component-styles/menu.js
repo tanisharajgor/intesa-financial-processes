@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import * as Theme from "../component-styles/theme";
+import styled from 'styled-components';
+import * as Theme from '../component-styles/theme';
 
 export const QueryMenu = styled.div`
     resize: vertical;
     z-index: +9;
     position: absolute;
     top: 4rem;
-    left: ${props => props.isFullscreen ? "-100vw;" : "0vw;"};
+    left: ${props => props.isFullscreen ? '-100vw;' : '0vw;'};
     width: 20rem;
     padding: ${props => props.theme.padding};
     background-color: ${props => props.theme.backgroundColor.main};
@@ -17,7 +17,7 @@ export const QueryMenu = styled.div`
 export const StatusMenu = styled('div')`
     position: fixed;
     top: 5rem;
-    right: ${props => props.isFullscreen ? "-100vw;" : "1rem;"};
+    right: ${props => props.isFullscreen ? '-100vw;' : '1rem;'};
     cursor: grab;
     background-color: rgba(0,0,0,0.6);
     width: ${props => props.theme.viewColWidth};
@@ -26,16 +26,17 @@ export const StatusMenu = styled('div')`
     border: 1px solid ${Theme.extraDarkGreyHex};
     border-radius: 5px;
     overflow-y: auto;
-`
+`;
+
 
 export const StyledMenuHeader = styled('div')`
     display: flex;
     padding: ${props => props.theme.padding};
-`
+`;
 
 export const StyledMenuBody = styled('div')`
 
-`
+`;
 
 export const StyledFilteredData = styled('p')`
     padding-top: 0; 
@@ -44,12 +45,12 @@ export const StyledFilteredData = styled('p')`
     padding-left: ${props => props.theme.padding};
     font-size: 14px
     text-color: ${props => props.theme.color.secondary};
-`
+`;
 
 export const StyledFilter = styled('div')`
     display: flex;
     flex-direction: column;
-`
+`;
 
 export const StyledLabel = styled('span')`
     color: ${Theme.labelStyles.fontColor};
@@ -57,4 +58,4 @@ export const StyledLabel = styled('span')`
     font-size: ${Theme.labelStyles.fontSize};
     margin-bottom: 5px;
     margin-left: 3px;
-`
+`;
