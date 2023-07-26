@@ -364,7 +364,7 @@ export class CirclePackingDiagram {
   pointerOut (node) {
     this.opacityScale(node);
     this.tooltip.style('visibility', 'hidden');
-    this.updateViewHoverValue(undefined);
+    this.updateViewHoverValue(-1);
   }
 
   // Panning and zooming ------------------------------------------------------

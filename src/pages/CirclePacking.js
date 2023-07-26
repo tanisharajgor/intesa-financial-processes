@@ -31,7 +31,7 @@ const root = d3.pack()
 export default function CirclePacking () {
   // View highlight states
   const [viewVariable, updateViewVariable] = useState('riskType');
-  const [viewHoverValue, updateViewHoverValue] = useState(undefined);
+  const [viewHoverValue, updateViewHoverValue] = useState(-1);
   const [isFullscreen, setFullscreen] = useState(false);
   const [shouldRotate] = useState(true);
 
