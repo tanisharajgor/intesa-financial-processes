@@ -10,6 +10,7 @@ import {
 // Pages
 import CirclePacking from "./pages/CirclePacking";
 import Network from "./pages/Network";
+import Help from "./pages/Help";
 
 // Styles
 import { ThemeProvider } from 'styled-components';
@@ -24,6 +25,7 @@ root.render(
       <Routes>
         <Route path="/" element={<CirclePacking />} />
         <Route path="/Network" element={<Network />} />
+        <Route path="/Help" element={<Help />} />
       </Routes>
     </HashRouter>
   </ThemeProvider>
