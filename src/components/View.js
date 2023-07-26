@@ -57,7 +57,7 @@ function drawRiskLegend (t, viewHoverValue, networkChart) {
         .attr('fill', d => d.color)
         .attr('stroke-width', 1),
       update => update
-        .attr('opacity', d => viewHoverValue === undefined || d.color === viewHoverValue ? 1 : 0.3),
+        .attr('opacity', d => viewHoverValue === -1 || d.color === viewHoverValue ? 1 : 0.3),
       exit => exit.remove()
     );
 
@@ -73,7 +73,7 @@ function drawRiskLegend (t, viewHoverValue, networkChart) {
         .attr('font-size', Theme.labelStyles.fontSize)
         .attr('fill', Theme.labelStyles.fontColor),
       update => update
-        .attr('opacity', d => viewHoverValue === undefined || d.color === viewHoverValue ? 1 : 0.3),
+        .attr('opacity', d => viewHoverValue === -1 || d.color === viewHoverValue ? 1 : 0.3),
       exit => exit.remove()
     );
 }
@@ -131,7 +131,7 @@ function drawShapeLegend (networkChart, symbolHoverValue) {
           })
           .attr('fill', Theme.labelStyles.fontColor),
         update => update
-          .attr('opacity', (d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined ? 1 : 0.3)
+          .attr('opacity', (d) => d.viewId === symbolHoverValue || symbolHoverValue === -1 ? 1 : 0.3)
       );
 
     svg
@@ -146,7 +146,7 @@ function drawShapeLegend (networkChart, symbolHoverValue) {
           .attr('font-size', Theme.labelStyles.fontSize)
           .text((d) => d.viewId),
         update => update
-          .attr('opacity', (d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined ? 1 : 0.3)
+          .attr('opacity', (d) => d.viewId === symbolHoverValue || symbolHoverValue === -1 ? 1 : 0.3)
       );
   } else {
     svg
@@ -164,7 +164,7 @@ function drawShapeLegend (networkChart, symbolHoverValue) {
           })
           .attr('fill', Theme.labelStyles.fontColor),
         update => update
-          .attr('opacity', (d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined ? 1 : 0.3)
+          .attr('opacity', (d) => d.viewId === symbolHoverValue || symbolHoverValue === -1 ? 1 : 0.3)
       );
 
     svg
@@ -179,7 +179,7 @@ function drawShapeLegend (networkChart, symbolHoverValue) {
           .attr('font-size', Theme.labelStyles.fontSize)
           .text((d) => d.viewId),
         update => update
-          .attr('opacity', (d) => d.viewId === symbolHoverValue || symbolHoverValue === undefined ? 1 : 0.3)
+          .attr('opacity', (d) => d.viewId === symbolHoverValue || symbolHoverValue === -1 ? 1 : 0.3)
       );
   }
 }
