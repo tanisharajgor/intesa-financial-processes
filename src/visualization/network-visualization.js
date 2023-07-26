@@ -486,6 +486,7 @@ export default class NetworkVisualization {
       this.highlightNetworkNodes(d);
     }
 
+    console.log(d.viewId)
     this.updateSymbolHoverValue(d.viewId);
     this.updateViewHoverValue(Global.applyColorScale(d, this.viewVariable));
     this.showTooltip(d);
@@ -504,8 +505,8 @@ export default class NetworkVisualization {
       this.hoverNode = [];
     }
 
-    this.updateViewHoverValue(undefined);
-    this.updateSymbolHoverValue(undefined);
+    this.updateViewHoverValue(-1);
+    this.updateSymbolHoverValue(-1);
     this.tooltip.style('visibility', 'hidden');
     this.app.renderer.events.cursorStyles.default = 'default';
   }
