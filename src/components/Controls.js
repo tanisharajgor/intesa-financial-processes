@@ -1,8 +1,18 @@
+// Libraries
+import React from 'react';
+import PropTypes from 'prop-types';
+
 // Components
 import Ripple from './Ripple';
 
 // Styles
 import { StyledControlsPanel, StyledControlButton, FullscreenIcon, FullscreenButton } from '../component-styles/controls';
+
+// Prop types
+Control.propTypes = {
+  handleFullscreen: PropTypes.node.isRequired,
+  controls: PropTypes.node.isRequired
+};
 
 export default function Control ({ handleFullscreen, controls }) {
   return (

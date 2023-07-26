@@ -1,5 +1,5 @@
 // Libraries
-import { useEffect, useRef, useState } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import * as d3 from 'd3';
 
 // Components
@@ -104,7 +104,7 @@ export default function Network () {
 
   const [isFullscreen, setFullscreen] = useState(false);
 
-  const handleFullscreen = (e) => {
+  const handleFullscreen = () => {
     if (isFullscreen) {
       networkDiagram.current.centerVisualization(-0.4);
     } else {
@@ -124,8 +124,8 @@ export default function Network () {
     networkDiagram.current.draw(viewVariable);
     networkDiagram.current.animate();
 
-    const width = (document.getElementById(id).clientWidth / 2) - document.getElementsByClassName('Query')[0].clientWidth;
-    const height = (document.getElementById(id).clientHeight / 2) - document.getElementsByClassName('Navigation')[0].clientHeight;
+    const width = (document.getElementById(selector).clientWidth / 2) - document.getElementsByClassName('Query')[0].clientWidth;
+    const height = (document.getElementById(selector).clientHeight / 2) - document.getElementsByClassName('Navigation')[0].clientHeight;
 
     networkDiagram.current.centerVisualization(-0.40, width - visualizationXPadding, height);
   }, []);

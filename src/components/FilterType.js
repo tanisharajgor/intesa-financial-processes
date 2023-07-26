@@ -1,5 +1,6 @@
 // Libraries
-import { useState } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { AccordionHeaderStyled } from './Menu';
@@ -7,6 +8,15 @@ import { AccordionHeaderStyled } from './Menu';
 // Styles
 import { Accordion, AccordionDetails, FormLabel, Checkbox } from 'cfd-react-components';
 import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../component-styles/query-layout';
+
+// Prop types
+FilterType.propTypes = {
+  typesChecked: PropTypes.node.isRequired,
+  updateSelection: PropTypes.node.isRequired,
+  typeValues: PropTypes.node.isRequired,
+  label: PropTypes.node.isRequired
+};
+
 
 export default function FilterType ({ typesChecked, updateSelection, typeValues, label }) {
   let newSelectedTypes = [];

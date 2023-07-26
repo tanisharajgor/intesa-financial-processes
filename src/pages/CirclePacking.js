@@ -1,5 +1,5 @@
 // Libraries
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import * as d3 from 'd3';
 
 // Components
@@ -24,7 +24,7 @@ const selector = "circle-packing-chart";
 const root = d3.pack()
   .size([window.innerWidth, window.innerHeight])
   .padding(1)(d3.hierarchy(data)
-    .sum(d => 1)
+    .count()
     .sort((a, b) => b.value - a.value)
   );
 
@@ -49,7 +49,7 @@ export default function CirclePacking () {
 
   const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1), selector, updateViewHoverValue));
 
-  const handleFullscreen = (e) => {
+  const handleFullscreen = () => {
     if (isFullscreen) {
       circlePackingDiagram.current.centerVisualization(-0.4);
     } else {

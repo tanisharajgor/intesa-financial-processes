@@ -1,4 +1,8 @@
 // Libraries
+import React from 'react';
+import PropTypes from 'prop-types';
+
+// Libraries
 import { useState } from 'react';
 
 // Components
@@ -10,6 +14,14 @@ import { AccordionHeader } from 'cfd-react-components';
 import { Key } from '../component-styles/key';
 import { StyledMenuHeader, StyledMenuBody, StyledFilteredData } from '../component-styles/menu';
 
+// Prop types
+MenuCollapsableHeader.propTypes = {
+  label: PropTypes.node.isRequired,
+  shouldRotate: PropTypes.node.isRequired,
+  handleRotate: PropTypes.node.isRequired,
+  filteredTypes: PropTypes.node.isRequired
+};
+
 // Component to style the Menu Header
 export function MenuCollapsableHeader ({ label, shouldRotate, handleRotate, filteredTypes = [] }) {
   return (
@@ -20,6 +32,12 @@ export function MenuCollapsableHeader ({ label, shouldRotate, handleRotate, filt
   );
 }
 
+// Prop types
+MenuHeader.propTypes = {
+  label: PropTypes.node.isRequired,
+  filteredTypes: PropTypes.node.isRequired
+};
+
 export function MenuHeader ({ label, filteredTypes = [] }) {
   return (
     <StyledMenuHeader>
@@ -27,6 +45,13 @@ export function MenuHeader ({ label, filteredTypes = [] }) {
     </StyledMenuHeader>
   );
 }
+
+// Prop types
+MenuBody.propTypes = {
+  shouldRotate: PropTypes.node.isRequired,
+  pageDescription: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
+};
 
 // Component to style Menu Body
 export function MenuBody ({ shouldRotate, pageDescription, children }) {
@@ -39,6 +64,11 @@ export function MenuBody ({ shouldRotate, pageDescription, children }) {
     </StyledMenuBody>
   );
 }
+
+// Prop types
+TypesStatus.propTypes = {
+  filteredTypes: PropTypes.node.isRequired
+};
 
 // Returns a status for each selected type
 function TypesStatus ({ filteredTypes }) {
@@ -60,6 +90,12 @@ function TypesStatus ({ filteredTypes }) {
       </StyledFilteredData>
   );
 }
+
+// Prop types
+AccordionHeaderStyled.propTypes = {
+  label: PropTypes.node.isRequired,
+  filteredTypes: PropTypes.node.isRequired
+};
 
 // Component to style the Accordian Header
 export function AccordionHeaderStyled ({ label, filteredTypes = [] }) {

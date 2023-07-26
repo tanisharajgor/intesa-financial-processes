@@ -1,8 +1,22 @@
+// Libraries
+import React from 'react';
+import PropTypes from 'prop-types';
+
 // Styles
 import { MenuItem, Form } from 'cfd-react-components';
 import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
 import { StyledSelect } from '../component-styles/select';
 import { StyledLabel } from '../component-styles/menu';
+
+// Prop types
+DrillDown.propTypes = {
+  values: PropTypes.node.isRequired,
+  selected: PropTypes.node.isRequired,
+  handleChange: PropTypes.node.isRequired,
+  label: PropTypes.node.isRequired,
+  id: PropTypes.node.isRequired
+};
+
 
 export function DrillDown ({ values, selected, handleChange, label, id }) {
   return (

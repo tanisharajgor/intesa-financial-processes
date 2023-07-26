@@ -1,5 +1,6 @@
 // Libraries
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 // Components
@@ -14,6 +15,14 @@ import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-la
 import { StyledSelect } from '../component-styles/select';
 import * as Theme from '../component-styles/theme';
 import { StyledFilter } from '../component-styles/menu';
+
+// Prop types
+FilterTaxonomy.propTypes = {
+  selectedLevel1: PropTypes.node.isRequired,
+  updateLevel1: PropTypes.node.isRequired,
+  selectedLevel3: PropTypes.node.isRequired,
+  updateLevel3: PropTypes.node.isRequired
+};
 
 // constants
 const width = 500; const height = 600;
@@ -86,7 +95,7 @@ function renderTooltip (selectedLevel3) {
 }
 
 function clickProcess (updateLevel3) {
-  d3.selectAll('.Process-Node').each(function (d, i) {
+  d3.selectAll('.Process-Node').each(function () {
     d3.select(this)
       .on('click', (e, datum) => {
         if (datum.data.data.level === 3) {
@@ -192,7 +201,7 @@ export default function FilterTaxonomy ({ selectedLevel1, updateLevel1, selected
                   value={selectedLevel1}
                   onChange={handleChangeLevel1}
                 >
-                  {valuesLevel1.map((level, index) => {
+                  {valuesLevel1.map((level) => {
                     return (
                       <MenuItem key={`menu-item-${level.descr}`} value={level.id}>{level.descr}</MenuItem>
                     );

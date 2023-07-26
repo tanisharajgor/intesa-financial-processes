@@ -1,5 +1,6 @@
 // Libraries
-import { useState } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { AccordionHeaderStyled } from './Menu';
@@ -7,6 +8,15 @@ import { DrillDown } from './DrillDown';
 
 // Styles
 import { Accordion, AccordionDetails } from 'cfd-react-components';
+
+// Prop types
+InspectOrgStructure.propTypes = {
+  selectedOrg1: PropTypes.node.isRequired,
+  updateSelectedOrg1: PropTypes.node.isRequired,
+  selectedOrg2: PropTypes.node.isRequired,
+  updateSelectedOrg2: PropTypes.node.isRequired,
+  orgStructure: PropTypes.node.isRequired
+};
 
 export default function InspectOrgStructure ({ selectedOrg1, updateSelectedOrg1, selectedOrg2, updateSelectedOrg2, orgStructure }) {
   // const orgStructure = lu["org_structure"];

@@ -1,8 +1,18 @@
+// Libraries
+import React from 'react';
+import PropTypes from 'prop-types';
+
 // Components
 import Ripple from './Ripple';
 
 // Styles
 import { ChevronButton } from '../component-styles/chevron-button';
+
+// Prop types
+ChevronButtonStyled.propTypes = {
+  shouldRotate: PropTypes.node.isRequired,
+  handleRotate: PropTypes.node.isRequired
+};
 
 // Component to style the Chevron Button
 export function ChevronButtonStyled ({ shouldRotate, handleRotate }) {

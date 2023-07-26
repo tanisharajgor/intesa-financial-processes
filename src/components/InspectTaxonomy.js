@@ -1,5 +1,6 @@
 // Libraries
-import { useState } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { AccordionHeaderStyled } from './Menu';
@@ -10,6 +11,21 @@ import lu from '../data/processed/nested/lu.json';
 // Styles
 import { Accordion, AccordionDetails } from 'cfd-react-components';
 import { DrillDown } from './DrillDown';
+
+// Prop types
+InspectTaxonomy.propTypes = {
+  handleTaxonomyChange: PropTypes.node.isRequired,
+  selectedLevel1: PropTypes.node.isRequired,
+  updateSelectedLevel1: PropTypes.node.isRequired,
+  selectedLevel2: PropTypes.node.isRequired,
+  updateSelectedLevel2: PropTypes.node.isRequired,
+  selectedLevel3: PropTypes.node.isRequired,
+  updateSelectedLevel3: PropTypes.node.isRequired,
+  selectedChapter: PropTypes.node.isRequired,
+  updateSelectedChapter: PropTypes.node.isRequired,
+  valuesChapter: PropTypes.node.isRequired,
+  updateValuesChapter: PropTypes.node.isRequired
+};
 
 export default function InspectTaxonomy ({
   handleTaxonomyChange,

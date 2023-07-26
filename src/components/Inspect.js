@@ -1,5 +1,10 @@
-import { viewVariables, createLabelScale } from '../utils/global';
+// Libraries
+import React from 'react';
 import * as d3 from 'd3';
+
+// Components
+import { viewVariables, createLabelScale } from '../utils/global';
+
 
 const treeLevelScale = d3.scaleOrdinal()
   .domain([0, 1, 2, 3, 4])

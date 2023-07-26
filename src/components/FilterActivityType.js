@@ -1,5 +1,5 @@
 // Libraries
-import { useState } from 'react';
+import React from 'react';
 
 // Components
 import { AccordionHeaderStyled } from './Menu';

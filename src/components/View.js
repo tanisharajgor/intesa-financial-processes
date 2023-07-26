@@ -1,5 +1,6 @@
 // Libraries
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 // Components
@@ -274,6 +275,15 @@ function viewInfo (networkChart) {
     </div>
   );
 }
+
+// Prop types
+View.propTypes = {
+  selector: PropTypes.node.isRequired,
+  viewVariable: PropTypes.node.isRequired,
+  updateViewVariable: PropTypes.node.isRequired,
+  viewHoverValue: PropTypes.node.isRequired,
+  symbolHoverValue: PropTypes.node.isRequired
+};
 
 export default function View ({ selector, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue }) {
   const networkChart = selector === 'network-chart';

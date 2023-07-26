@@ -1,10 +1,12 @@
-/* eslint-disable camelcase */
+// Libraries
 import * as d3 from 'd3';
 import * as PIXI from 'pixi.js';
 import { GlowFilter } from '@pixi/filter-glow';
-import * as Global from '../utils/global';
 import { Viewport } from 'pixi-viewport';
 import '@pixi/graphics-extras';
+
+// Components
+import * as Global from '../utils/global';
 
 //Styles
 import * as Theme from "../component-styles/theme";
@@ -196,7 +198,7 @@ export default class NetworkVisualization {
       node.gfx.buttonMode = true;
       node.gfx.cursor = 'pointer';
       node.gfx.on('pointerover', () => this.pointerOver(node));
-      node.gfx.on('pointerout', () => this.pointerOut(node));
+      node.gfx.on('pointerout', () => this.pointerOut());
       node.gfx.on('click', () => this.clickOn(node));
 
       this.nodes.push(node);
@@ -489,7 +491,7 @@ export default class NetworkVisualization {
     this.showTooltip(d);
   }
 
-  pointerOut (d) {
+  pointerOut () {
     if (!this.clickNode) {
       this.hoverNodes
         .forEach(node => {

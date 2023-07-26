@@ -1,6 +1,7 @@
 // Libraries
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Draggable from 'react-draggable';
+import PropTypes from 'prop-types';
 
 // Components
 import View from './View';
@@ -9,6 +10,17 @@ import { MenuBody, MenuCollapsableHeader } from './Menu';
 // Styles
 import { StatusMenu } from '../component-styles/menu';
 import { LayoutGroup } from '../component-styles/query-layout';
+
+
+// Prop types
+Status.propTypes = {
+  selector: PropTypes.node.isRequired,
+  viewVariable: PropTypes.node.isRequired,
+  updateViewVariable: PropTypes.node.isRequired,
+  viewHoverValue: PropTypes.node.isRequired,
+  symbolHoverValue: PropTypes.node.isRequired,
+  isFullscreen: PropTypes.node.isRequired
+};
 
 export default function Status ({
   selector,

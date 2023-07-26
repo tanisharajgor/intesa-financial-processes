@@ -1,9 +1,18 @@
 // Libraries
+import React from 'react';
+import PropTypes from 'prop-types';
+
+// Libraries
 import { NavLink } from 'react-router-dom';
 
 // Styles
-
 import { NavigationBranding, StyledLayoutHeader, NavigationLinks, LinkList, Link } from '../component-styles/navigation';
+
+// Prop types
+Navigation.propTypes = {
+  isFullscreen: PropTypes.node.isRequired
+};
+
 
 /**
  * Menu Navigation bar to navigate to different parts of the project
