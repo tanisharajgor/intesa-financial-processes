@@ -118,7 +118,6 @@ export default function Network() {
     }
 
     const [shouldRotate, setRotate] = useState(true);
-    const handleRotate = () => setRotate(!shouldRotate);
 
     // Initiating the network diagram
     const networkDiagram = useRef(new NetworkVisualization(data, updateSymbolHoverValue, updateViewHoverValue));
