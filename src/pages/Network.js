@@ -24,8 +24,8 @@ import lu from '../data/processed/nested/lu.json';
 import { Content } from '../component-styles/content';
 import { QueryMenu } from '../component-styles/menu';
 
-const id = 'network-chart';
-const processes = lu.processes;
+const selector = "network-chart";
+const processes = lu["processes"];
 
 // Combines the two types of links into a single array
 function combineLink (links) {
@@ -214,7 +214,7 @@ export default function Network () {
           updateViewVariable={updateViewVariable}
           viewHoverValue={viewHoverValue}
           symbolHoverValue={symbolHoverValue}
-          id={id}
+          selector={selector}
           controls={networkDiagram.current.getControls()}
           handleFullscreen={handleFullscreen}
           isFullscreen={isFullscreen}

@@ -11,7 +11,7 @@ import { StatusMenu } from '../component-styles/menu';
 import { LayoutGroup } from '../component-styles/query-layout';
 
 export default function Status ({
-  id,
+  selector,
   viewVariable,
   updateViewVariable,
   viewHoverValue,
@@ -31,7 +31,7 @@ export default function Status ({
         <MenuCollapsableHeader label="Legend" shouldRotate={shouldRotate} handleRotate={handleRotate}/>
         <MenuBody>
           <LayoutGroup style={{ visibility: !shouldRotate || isFullscreen ? 'hidden' : 'visible' }}>
-            <View id={id} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} isFullscreen={isFullscreen} />
+            <View selector={selector} viewVariable={viewVariable} updateViewVariable={updateViewVariable} viewHoverValue={viewHoverValue} symbolHoverValue={symbolHoverValue} isFullscreen={isFullscreen} />
           </LayoutGroup>
         </MenuBody>
       </StatusMenu>

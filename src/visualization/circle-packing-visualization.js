@@ -8,17 +8,25 @@ import '@pixi/graphics-extras';
 // Components
 import { activityTypeValues } from '../utils/global';
 
-const nonHighlightOpacity = 0.15;
+//Styles
+import * as Theme from "../component-styles/theme";
+
 
 export class CirclePackingDiagram {
   app;
   containerNodes;
+  containerLabelLevel1;
+  containerLabelLevel2;
+  containerLabelLevel3;
   data;
+  dataMap;
   height;
   inspect;
+  labels;
   levelIDs;
   nodes;
   rootDOM;
+  selector;
   selectedActivities;
   selectedLevels;
   tooltip;
@@ -26,9 +34,8 @@ export class CirclePackingDiagram {
   viewport;
   viewVariable;
   zoomedNodeId;
-  dataMap;
 
-  constructor (data, updateViewHoverValue) {
+  constructor (data, selector, updateViewHoverValue) {
     this.data = data;
     this.levelIDs = [];
     this.dataMap = {};
@@ -40,22 +47,23 @@ export class CirclePackingDiagram {
     this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
     this.selectedActivities = [];
+    this.selector = selector;
     this.selectedLevel1 = [];
     this.selectedLevel2 = [];
     this.selectedLevel3 = [];
     this.selectedChapter = [];
     this.alphaScale = d3.scaleOrdinal()
       .domain([0, 1, 2, 3, 5])
-      .range([0.05, 0.3, 0.4, 0.5, 0.6]);
+      .range([0.05, 0.3, 0.4, 0.5, 0.6]); 
   }
 
   // Initializes the application
-  init (selector) {
-    this.rootDOM = document.getElementById(selector);
+  init() {
+    this.rootDOM = document.getElementById(this.selector);
     this.width = this.rootDOM.clientWidth;
     this.height = this.rootDOM.clientHeight;
-    this.tooltip = Global.initTooltip(selector);
-
+    this.tooltip = Global.initTooltip(this.selector);
+  
     // create canvas
     this.app = new PIXI.Application({
       resizeTo: this.rootDOM,
@@ -96,34 +104,16 @@ export class CirclePackingDiagram {
     this.viewport.zoomPercent(zoom, true);
   }
 
-  initTooltip (selector) {
-    this.tooltip = d3.select(`#${selector}`)
-      .append('div')
-      .attr('class', 'tooltip')
-      .style('position', 'absolute')
-      .style('left', '0px')
-      .style('top', '0px')
-      .style('visibility', 'hidden')
-      .style('padding', '10px')
-      .style('pointer-events', 'none')
-      .style('border-radius', '5px')
-      .style('background-color', 'rgba(0, 0, 0, 0.65)')
-      .style('font-family', '"IBM Plex", ""Helvetica Neue", Helvetica, Arial, sans-serif')
-      .style('font-weight', 'normal')
-      .style('border', '1px solid rgba(78, 81, 85, 0.7)')
-      .style('font-size', '16px');
-  }
-
-  // Drawing functions ------------------------------------------------------
+  // Aesthetic functions for drawing ------------------------------------------------------
 
   selectedActivitiesOpacity (node) {
     if (node.data.level < 4) {
-      node.gfx.alpha = nonHighlightOpacity;
+      node.gfx.alpha = Theme.nonHighlightOpacity;
     } else {
       if (this.selectedActivities.includes(node.data.activityType)) {
         node.gfx.alpha = 1;
       } else {
-        node.gfx.alpha = nonHighlightOpacity;
+        node.gfx.alpha = Theme.nonHighlightOpacity;
       }
     }
   }
@@ -132,7 +122,7 @@ export class CirclePackingDiagram {
     if (this.levelIDs.includes(node.data.id)) {
       node.gfx.alpha = this.alphaScale(node.data.level);
     } else {
-      node.gfx.alpha = nonHighlightOpacity;
+      node.gfx.alpha = Theme.nonHighlightOpacity;
     }
   }
 
@@ -140,7 +130,7 @@ export class CirclePackingDiagram {
     if (this.levelIDs.includes(node.data.id) && this.selectedActivities.includes(node.data.activityType)) {
       node.gfx.alpha = 1;
     } else {
-      node.gfx.alpha = nonHighlightOpacity;
+      node.gfx.alpha = Theme.nonHighlightOpacity;
     }
   }
 
@@ -194,13 +184,16 @@ export class CirclePackingDiagram {
     this.data.forEach(n => this.opacityScale(n));
   }
 
+  // Drawing functions ------------------------------------------------------
+
   draw (viewVariable) {
     this.viewVariable = viewVariable;
-    this.drawNodes();
+    this.initNodes();
+    this.initLabels();
   }
 
   // Initializes the nodes
-  drawNodes () {
+  initNodes () {
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
 
@@ -210,6 +203,7 @@ export class CirclePackingDiagram {
 
     this.data.forEach((node) => {
       node.viewId = node.data.viewId;
+      node.zoomed = false;
       node.gfx = new PIXI.Graphics();
       node.gfx.lineStyle(lineWidth(node.data.level), 0xFFFFFF, 1);
       node.gfx.beginFill(Global.applyColorScale(node.data, this.viewVariable));
@@ -242,7 +236,110 @@ export class CirclePackingDiagram {
     this.viewport.addChild(this.containerNodes);
   }
 
-  // Updating the draw functions on mouse interaction ------------------------------------------------------
+  // Visualization Labels ------------------------------------------------------
+
+  // Wraps the text according to the label style
+  labelMetrics(d, labelStyles) {
+    const textMetrics = PIXI.TextMetrics.measureText(d.data.descr, labelStyles);
+    d.width = textMetrics.maxLineWidth + 15;
+    d.height = textMetrics.lineHeight * textMetrics.lines.length + 15;
+  }
+  
+  // Adds the aesthetics, e.g., position, index, centered, resolution
+  label(d, labelStyles, resolution) {
+
+    this.labelMetrics(d, labelStyles);
+    const label = new PIXI.Text(d.data.descr, labelStyles);
+      label.zIndex = Theme.labelZAxisDefault;
+      label.x = this.width - d.gfx.x;
+      label.y = this.height - d.gfx.y - d.r;
+      label.anchor.set(.5, .5);
+      label.resolution = resolution;
+
+      return label;
+  }
+
+  initLabels() {
+
+    //Initialize containers
+    this.containerLabelLevel1 = new PIXI.Container();
+    this.containerLabelLevel2 = new PIXI.Container();
+    this.containerLabelLevel3 = new PIXI.Container();
+
+    // Initialize styles
+    this.labelStylePrimary = new PIXI.TextStyle(Theme.labelStylePrimary);
+    this.labelStyleSecondary = new PIXI.TextStyle(Theme.labelStyleSecondary);
+    this.labelStyleTertiary = new PIXI.TextStyle(Theme.labelStyleTertiary);
+    this.labelStyleQuartiary = new PIXI.TextStyle(Theme.labelStyleQuartiary);
+
+    // Initialized first level of labels
+    this.level1Labels = this.data.filter(d => d.data.level === 1)
+      .forEach(d => {
+        const label = this.label(d, this.labelStylePrimary, 2);
+        this.containerLabelLevel1.addChild(label);
+    });
+
+    // add labels to viewport
+    this.viewport.addChild(this.containerLabelLevel1);
+  }
+
+  resetLevel1Labels() {
+    this.containerLabelLevel1.children.forEach(label => {
+      label.resolution = 2;
+      label.style = Theme.labelStylePrimary;
+    });
+  }
+
+  // Destroys labels and resets level 1 labels to their original styling
+  resetLabels() {
+    this.destroyObject(this.containerLabelLevel2);
+    this.containerLabelLevel2 = new PIXI.Container();
+    this.destroyObject(this.containerLabelLevel3);
+    this.containerLabelLevel3 = new PIXI.Container();
+    this.resetLevel1Labels();
+  }
+
+  // Update labels according to the zoom scale
+  updateLabels(node) {
+
+    if (node.depth > 0 && node.depth < 3) {
+
+      if (node.depth > 1 && node.depth < 3) {
+
+        // Initialized third level of labels
+        this.level3Labels = node.children
+          .forEach(d => {
+            const label = this.label(d, this.labelStyleQuartiary, 10);
+            this.containerLabelLevel3.addChild(label);
+        });
+
+        // add labels to viewport
+        this.viewport.addChild(this.containerLabelLevel3);
+
+      } else {
+
+        // Initialized second level of labels
+        this.level2Labels = node.children
+          .forEach(d => {
+            const label = this.label(d, this.labelStyleTertiary, 8);
+            this.containerLabelLevel2.addChild(label);
+        });
+
+        // add labels to viewport
+        this.viewport.addChild(this.containerLabelLevel2);
+      }
+
+      this.containerLabelLevel1.children.forEach(label => {
+        label.resolution = 10;
+        label.style = Theme.labelStyleSecondary;
+      });
+
+    } else {
+      this.resetLabels();
+    }
+  }
+
+  // Tooltip interaction ------------------------------------------------------
 
   tooltipText (d) {
     return `${d.data.level === 4 ? 'Activity' : 'Process'} <br><b>${d.data.descr}</b>`;
@@ -270,6 +367,7 @@ export class CirclePackingDiagram {
     this.updateViewHoverValue(undefined);
   }
 
+  // Panning and zooming ------------------------------------------------------
   getCenter = (node) => {
     if (this.currentNodeId === this.zoomedNodeId) {
       node.gfx.cursor = 'zoom-in';
@@ -289,40 +387,48 @@ export class CirclePackingDiagram {
       .range([1, 20])
       .domain([0, 4]);
 
-    if (this.currentNodeId === this.zoomedNodeId && node.depth !== 0) {
-      return scale(node.depth - 1);
-    }
-
     return scale(node.depth);
   };
 
-  centerOnNode (node) {
+  centerOnNode(node) {
+
+    node.gfx.cursor = "zoom-out";
+    node.zoomed = !node.zoomed;
     this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
 
-    node.gfx.cursor = 'zoom-out';
+    if(!node.zoomed && node.depth === 1) {
+      this.getControls().reset();
+    } else {
+      const zoomScale = this.getZoomWidth(node);
+      const centerPoint = this.getCenter(node);
+      this.updateLabels(node);
+      this.viewport.animate({
+        position: centerPoint,
+        scale: zoomScale,
+      });
 
-    const zoomScale = this.getZoomWidth(node);
-    const centerPoint = this.getCenter(node);
-
-    this.viewport.animate({
-      position: centerPoint,
-      scale: zoomScale
-    });
-
+    }
     this.zoomedNodeId = this.currentNodeId;
+  }
+
+  // Updating the draw functions  ------------------------------------------------------
+
+  // Destroys object and recreates empty container
+  destroyObject (pixiObject) {
+    if (pixiObject) {
+      pixiObject.destroy();
+    }
   }
 
   // Destroys the nodes on data update
   destroyNodes () {
-    if (this.containerNodes) {
-      this.containerNodes.destroy();
-    }
+    this.destroyObject(this.containerNodes);
   }
 
   updateDraw (viewVariable) {
     this.viewVariable = viewVariable;
     this.destroyNodes();
-    this.drawNodes();
+    this.initNodes();
   }
 
   // Controls ------------------------------------------------------
@@ -338,6 +444,7 @@ export class CirclePackingDiagram {
         this.viewport.fit();
         this.viewport.moveCenter(this.width / 2, this.height / 2);
         this.centerVisualization(-0.30);
+        this.resetLabels();
       }
     };
   }

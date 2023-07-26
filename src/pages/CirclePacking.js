@@ -20,7 +20,7 @@ import data from '../data/processed/nested/processes.json';
 import { QueryMenu } from '../component-styles/menu';
 import { Content } from '../component-styles/content';
 
-const id = 'circle-packing-chart';
+const selector = "circle-packing-chart";
 const root = d3.pack()
   .size([window.innerWidth, window.innerHeight])
   .padding(1)(d3.hierarchy(data)
@@ -141,7 +141,7 @@ export default function CirclePacking () {
           viewVariable={viewVariable}
           updateViewVariable={onViewVariableChange}
           viewHoverValue={viewHoverValue}
-          id={id}
+          selector={selector}
           controls={circlePackingDiagram.current.getControls()}
           handleFullscreen={handleFullscreen}
           isFullscreen={isFullscreen}

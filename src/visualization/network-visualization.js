@@ -6,7 +6,8 @@ import * as Global from '../utils/global';
 import { Viewport } from 'pixi-viewport';
 import '@pixi/graphics-extras';
 
-const nonHighlightOpacity = 0.3;
+//Styles
+import * as Theme from "../component-styles/theme";
 
 export default class NetworkVisualization {
   hoverLink;
@@ -32,7 +33,7 @@ export default class NetworkVisualization {
   viewport;
   viewVariable;
 
-  constructor (data, updateSymbolHoverValue, updateViewHoverValue) {
+  constructor (data, selector, updateSymbolHoverValue, updateViewHoverValue) {
     this.updateSymbolHoverValue = updateSymbolHoverValue;
     this.updateViewHoverValue = updateViewHoverValue;
     this.data = data;
@@ -43,6 +44,7 @@ export default class NetworkVisualization {
     this.clickCount = 0;
     this.inspectNode = [];
     this.inspectLink = [];
+    this.selector = selector;
   }
 
   initSimulation () {
@@ -62,13 +64,13 @@ export default class NetworkVisualization {
   }
 
   // Initializes the application
-  init (selector) {
-    this.rootDOM = document.getElementById(selector);
-    this.width = this.rootDOM.clientWidth * 0.75; // fraction of the width until with view becomes moveable and collapseable
+  init () {
+    this.rootDOM = document.getElementById(this.selector);
+    this.width = this.rootDOM.clientWidth*.75; //fraction of the width until with view becomes moveable and collapseable
     this.height = this.rootDOM.clientHeight;
 
     this.initSimulation();
-    this.tooltip = Global.initTooltip(selector);
+    this.tooltip = Global.initTooltip(this.selector);
 
     // create canvas
     this.app = new PIXI.Application({
@@ -266,7 +268,7 @@ export default class NetworkVisualization {
       !(this.hoverLink.includes(source.id) && this.hoverLink.includes(target.id))) {
         this.links.alpha = 1;
       } else {
-        this.links.alpha = nonHighlightOpacity;
+        this.links.alpha = Theme.nonHighlightOpacity;
       }
     } else {
       this.links.alpha = 1;
@@ -290,7 +292,7 @@ export default class NetworkVisualization {
       if (this.inspectLink.length === 0) {
         this.links.alpha = 1;
       } else {
-        this.links.alpha = nonHighlightOpacity;
+        this.links.alpha = Theme.nonHighlightOpacity;
       }
     });
 
@@ -543,7 +545,7 @@ export default class NetworkVisualization {
     if (nodeEvaluation) {
       this.identifyNodesLinks(node);
     } else {
-      node.gfx.alpha = nonHighlightOpacity;
+      node.gfx.alpha = Theme.nonHighlightOpacity;
     }
   }
 
@@ -552,7 +554,7 @@ export default class NetworkVisualization {
     if (this.inspectNode.includes(node.id)) {
       node.gfx.alpha = 1;
     } else {
-      node.gfx.alpha = nonHighlightOpacity;
+      node.gfx.alpha = Theme.nonHighlightOpacity;
     }
   }
 
