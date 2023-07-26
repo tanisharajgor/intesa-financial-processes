@@ -77,7 +77,7 @@ export default function Network () {
   const [viewVariable, updateViewVariable] = useState('riskType');
   const [selectedLevel1, updateLevel1] = useState(processes.children[0].id);
   const [selectedLevel3, updateLevel3] = useState(processes.children[0].children[0].children[0].id);
-  const [selectedChapter, updateSelectedChapter] = useState(-1);
+  const [selectedChapter, updateSelectedChapter] = useState({ id: -1, descr: 'All' });
   const [valuesChapter, updateValuesChapter] = useState([{ id: -1, descr: 'All' }].concat(processes
     .children.find(d => d.id === selectedLevel1).children[0].children[0].children));
 
@@ -144,7 +144,7 @@ export default function Network () {
     );
 
     updateLevel3(l3.id);
-    updateSelectedChapter(-1);
+    updateSelectedChapter({ id: -1, descr: 'All' });
   }, [selectedLevel1]);
 
   useEffect(() => {
@@ -161,7 +161,7 @@ export default function Network () {
       orgStructure.find(d => d.id === selectedLevel3).orgStructure
     );
 
-    updateSelectedChapter(-1);
+    updateSelectedChapter({ id: -1, descr: 'All' });
   }, [selectedLevel3]);
 
   // Filter data

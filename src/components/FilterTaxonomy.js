@@ -18,10 +18,10 @@ import { StyledFilter } from '../component-styles/menu';
 
 // Prop types
 FilterTaxonomy.propTypes = {
-  selectedLevel1: PropTypes.node.isRequired,
-  updateLevel1: PropTypes.node.isRequired,
-  selectedLevel3: PropTypes.node.isRequired,
-  updateLevel3: PropTypes.node.isRequired
+  selectedLevel1: PropTypes.number,
+  updateLevel1: PropTypes.func,
+  selectedLevel3: PropTypes.number,
+  updateLevel3: PropTypes.func
 };
 
 // constants

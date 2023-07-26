@@ -597,7 +597,7 @@ export default class NetworkVisualization {
 
   // Change the opacity of the actor nodes and their linked attributes when inspected
   updateNodeAlpha (selectedChapter, selectedOrg1, selectedOrg2) {
-    this.selectedChapter = selectedChapter;
+    this.selectedChapter = selectedChapter.id;
     this.selectedOrg1 = selectedOrg1.id;
     this.selectedOrg2 = selectedOrg2.id;
 
