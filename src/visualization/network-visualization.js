@@ -395,8 +395,8 @@ export default class NetworkVisualization {
       },
       reset: () => {
         this.viewport.fit();
-        this.viewport.moveCenter(this.width / 2, this.height / 2)
-        this.centerVisualization(-0.30)
+        this.viewport.moveCenter(this.width / 2, this.height / 2);
+        this.centerVisualization(-0.30);
       }
     };
   }

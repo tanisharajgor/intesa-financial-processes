@@ -29,14 +29,12 @@ module.exports = {
   ],
   rules: {
     quotes: ['error', 'single'],
-    // we want to force semicolons
     semi: ['error', 'always'],
-    // we use 2 spaces to indent our code
     indent: ['error', 2],
-    // we want to avoid extraneous spaces
     'no-multi-spaces': ['error'],
     'react/react-in-jsx-scope': [0],
     'no-return-assign': [0],
-    'react/prop-types': [0]
+    'react/prop-types': [0],
+    'react-hooks/exhaustive-deps': [0]
   }
 };
