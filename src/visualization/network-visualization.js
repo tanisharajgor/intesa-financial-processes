@@ -9,7 +9,7 @@ import '@pixi/graphics-extras';
 import * as Global from '../utils/global';
 
 //Styles
-import * as Theme from "../component-styles/theme";
+import * as Theme from '../utils/theme';
 
 export default class NetworkVisualization {
   hoverLink;
@@ -68,7 +68,7 @@ export default class NetworkVisualization {
   // Initializes the application
   init () {
     this.rootDOM = document.getElementById(this.selector);
-    this.width = this.rootDOM.clientWidth*.75; //fraction of the width until with view becomes moveable and collapseable
+    this.width = this.rootDOM.clientWidth * .75; //fraction of the width until with view becomes moveable and collapseable
     this.height = this.rootDOM.clientHeight;
 
     this.initSimulation();
@@ -398,9 +398,11 @@ export default class NetworkVisualization {
         this.viewport.zoomPercent(-0.15, true);
       },
       reset: () => {
+        const width = (document.getElementById(this.selector).clientWidth / 2) - document.getElementsByClassName('Query')[0].clientWidth;
+        const height = (document.getElementById(this.selector).clientHeight / 2) - document.getElementsByClassName('Navigation')[0].clientHeight;
+    
         this.viewport.fit();
-        this.viewport.moveCenter(this.width / 2, this.height / 2);
-        this.centerVisualization(-0.30);
+        this.centerVisualization(-0.4,  width - 200, height)
       }
     };
   }
@@ -486,6 +488,7 @@ export default class NetworkVisualization {
       this.highlightNetworkNodes(d);
     }
 
+    console.log(d.viewId)
     this.updateSymbolHoverValue(d.viewId);
     this.updateViewHoverValue(Global.applyColorScale(d, this.viewVariable));
     this.showTooltip(d);
@@ -504,8 +507,8 @@ export default class NetworkVisualization {
       this.hoverNode = [];
     }
 
-    this.updateViewHoverValue(undefined);
-    this.updateSymbolHoverValue(undefined);
+    this.updateViewHoverValue("");
+    this.updateSymbolHoverValue("");
     this.tooltip.style('visibility', 'hidden');
     this.app.renderer.events.cursorStyles.default = 'default';
   }

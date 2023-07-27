@@ -3,14 +3,10 @@ import React, {useState, useEffect, useRef} from 'react';
 import * as d3 from 'd3';
 
 // Components
-import Main from '../components/Main';
-import Navigation from '../components/Navigation';
-import InspectChapter from '../components/InspectChapter';
-import InspectOrgStructure from '../components/InspectOrgStructure';
-import FilterTaxonomy from '../components/FilterTaxonomy';
-import FilterType from '../components/FilterType';
-import { MenuBody, MenuHeader } from '../components/Menu';
-import { inspectNetworkSummary } from '../components/Inspect';
+import { Navigation, Main, Content } from '../components/layout/index';
+import { FilterTaxonomy, FilterType, IdentifyChapter, IdentifyOrgStructure, InspectNetworkSummary } from '../components/widgets/index';
+import { MenuBody, MenuHeader } from '../components/features/index';
+
 import NetworkVisualization from '../visualization/network-visualization';
 import * as Global from '../utils/global';
 
@@ -21,8 +17,7 @@ import orgStructure from '../data/processed/nested/org_structure.json';
 import lu from '../data/processed/nested/lu.json';
 
 // Styles
-import { Content } from '../component-styles/content';
-import { QueryMenu } from '../component-styles/menu';
+import { QueryMenu } from '../components/features/menu/style';
 
 const selector = "network-chart";
 const processes = lu["processes"];
@@ -85,8 +80,8 @@ export default function Network () {
   const [selectedOrg2, updateSelectedOrg2] = useState({ id: -1, descr: 'All' });
 
   // Status to update the opacity in the legend
-  const [viewHoverValue, updateViewHoverValue] = useState(undefined);
-  const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
+  const [viewHoverValue, updateViewHoverValue] = useState("");
+  const [symbolHoverValue, updateSymbolHoverValue] = useState("");
 
   // Data management steps
   const dataNew = combineNodeLink(selectedLevel3, nodes, links, orgStructure);
@@ -174,7 +169,7 @@ export default function Network () {
     networkDiagram.current.updateDraw(viewVariable);
 
     const inspect = d3.select('.Inspect');
-    inspectNetworkSummary(inspect, filteredData);
+    InspectNetworkSummary(inspect, filteredData);
   }, [selectedLevel3, selectedActivities, selectedActors]);
 
   // Update filter possibilities when level changes
@@ -202,8 +197,8 @@ export default function Network () {
         }}>
           <MenuHeader label="Network" />
           <MenuBody shouldRotate={shouldRotate} pageDescription="Filter data in the actor network graph to explore activities and risks.">
-            <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
-            <InspectOrgStructure selectedOrg1={selectedOrg1} updateSelectedOrg1={updateSelectedOrg1} selectedOrg2={selectedOrg2} updateSelectedOrg2={updateSelectedOrg2} orgStructure={orgStructureValues}/>
+            <IdentifyChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
+            <IdentifyOrgStructure selectedOrg1={selectedOrg1} updateSelectedOrg1={updateSelectedOrg1} selectedOrg2={selectedOrg2} updateSelectedOrg2={updateSelectedOrg2} orgStructure={orgStructureValues}/>
             <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3} />
             <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type" />
             <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type" />
