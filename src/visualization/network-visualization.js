@@ -575,11 +575,7 @@ export default class NetworkVisualization {
   // Identify inspected nodes by organizational structure and assign them an alpha level
   selectedOrgAlpha (node) {
     if (node.viewId === 'Actor') {
-      if (this.selectedOrg2 !== -1) {
-        this.highlightInspectedNodes(node.levels.orgStructure2ID.includes(this.selectedOrg2), node);
-      } else {
-        this.highlightInspectedNodes(node.levels.orgStructure1ID.includes(this.selectedOrg1), node);
-      }
+      this.highlightInspectedNodes(node.levels.orgStructureID.includes(this.selectedOrg), node);
     } else {
       this.highlightNonActorNodes(node);
     }
@@ -588,31 +584,25 @@ export default class NetworkVisualization {
   // Logic to define the intersection of the chapter and organizational structure
   selectedChapterAndOrgStructureAlpha (node) {
     if (node.viewId === 'Actor') {
-      if (this.selectedOrg2 !== -1) {
-        this.highlightInspectedNodes(node.levels.orgStructure2ID.includes(this.selectedOrg2) && node.levels.modelID.includes(this.selectedChapter), node);
-      } else {
-        this.highlightInspectedNodes(node.levels.orgStructure1ID.includes(this.selectedOrg1) && node.levels.modelID.includes(this.selectedChapter), node);
-      }
-    } else {
+      this.highlightInspectedNodes(node.levels.orgStructureID.includes(this.selectedOrg) && node.levels.modelID.includes(this.selectedChapter), node);
       this.highlightNonActorNodes(node);
     }
   }
 
   // Change the opacity of the actor nodes and their linked attributes when inspected
-  updateNodeAlpha (selectedChapter, selectedOrg1, selectedOrg2) {
+  updateNodeAlpha (selectedChapter, selectedOrg) {
     this.selectedChapter = selectedChapter.id;
-    this.selectedOrg1 = selectedOrg1.id;
-    this.selectedOrg2 = selectedOrg2.id;
+    this.selectedOrg = selectedOrg.id;
 
     this.inspectLink = [];
     this.inspectNode = [];
 
     this.nodes.forEach((node) => {
-      if (this.selectedChapter !== -1 && this.selectedChapter !== undefined && this.selectedOrg1 !== -1) {
+      if (this.selectedChapter !== -1 && this.selectedChapter !== undefined && this.selectedOrg !== -1) {
         this.selectedChapterAndOrgStructureAlpha(node);
       } else if (this.selectedChapter !== -1 && this.selectedChapter !== undefined) {
         this.selectedChapterAlpha(node);
-      } else if (this.selectedOrg1 !== -1) {
+      } else if (this.selectedOrg !== -1) {
         this.selectedOrgAlpha(node);
       } else {
         node.gfx.alpha = 1;
