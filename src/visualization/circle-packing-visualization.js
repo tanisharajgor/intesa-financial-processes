@@ -35,7 +35,7 @@ export class CirclePackingDiagram {
   viewVariable;
   zoomedNodeId;
 
-  constructor (data, selector, updateViewHoverValue) {
+  constructor (data, selector, updateViewHoverValue, updateSymbolHoverValue) {
     this.data = data;
     this.levelIDs = [];
     this.dataMap = {};
@@ -46,6 +46,7 @@ export class CirclePackingDiagram {
     this.zoomedNodeId = 0;
     this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
+    this.updateSymbolHoverValue = updateSymbolHoverValue;
     this.selectedActivities = [];
     this.selector = selector;
     this.selectedLevel1 = [];
@@ -359,12 +360,14 @@ export class CirclePackingDiagram {
     node.gfx.alpha = 1;
     this.showTooltip(node, event);
     this.updateViewHoverValue(Global.applyColorScale(node.data, this.viewVariable));
+    this.updateSymbolHoverValue(node.viewId);
   }
 
   pointerOut (node) {
     this.opacityScale(node);
     this.tooltip.style('visibility', 'hidden');
-    this.updateViewHoverValue(-1);
+    this.updateViewHoverValue("");
+    this.updateSymbolHoverValue("");
   }
 
   // Panning and zooming ------------------------------------------------------

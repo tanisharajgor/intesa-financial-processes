@@ -13,8 +13,8 @@ import { StyledMain, Visualization } from '../component-styles/main';
 Main.propTypes = {
   viewVariable: PropTypes.node.isRequired,
   updateViewVariable: PropTypes.func,
-  viewHoverValue: PropTypes.number,
-  symbolHoverValue: PropTypes.number,
+  viewHoverValue: PropTypes.string,
+  symbolHoverValue: PropTypes.string,
   selector: PropTypes.string,
   controls: PropTypes.object,
   handleFullscreen: PropTypes.func,

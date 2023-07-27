@@ -31,7 +31,8 @@ const root = d3.pack()
 export default function CirclePacking () {
   // View highlight states
   const [viewVariable, updateViewVariable] = useState('riskType');
-  const [viewHoverValue, updateViewHoverValue] = useState(-1);
+  const [viewHoverValue, updateViewHoverValue] = useState("");
+  const [symbolHoverValue, updateSymbolHoverValue] = useState("");
   const [isFullscreen, setFullscreen] = useState(false);
   const [shouldRotate] = useState(true);
 
@@ -47,7 +48,7 @@ export default function CirclePacking () {
 
   const [valuesChapter, updateValuesChapter] = useState([]);
 
-  const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1), selector, updateViewHoverValue));
+  const circlePackingDiagram = useRef(new CirclePackingDiagram(root.descendants().slice(1), selector, updateViewHoverValue, updateSymbolHoverValue));
 
   const handleFullscreen = () => {
     if (isFullscreen) {
@@ -141,6 +142,7 @@ export default function CirclePacking () {
           viewVariable={viewVariable}
           updateViewVariable={onViewVariableChange}
           viewHoverValue={viewHoverValue}
+          symbolHoverValue={symbolHoverValue}
           selector={selector}
           controls={circlePackingDiagram.current.getControls()}
           handleFullscreen={handleFullscreen}
