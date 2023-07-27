@@ -487,8 +487,6 @@ export default class NetworkVisualization {
     if (!this.clickNode) {
       this.highlightNetworkNodes(d);
     }
-
-    console.log(d.viewId)
     this.updateSymbolHoverValue(d.viewId);
     this.updateViewHoverValue(Global.applyColorScale(d, this.viewVariable));
     this.showTooltip(d);
