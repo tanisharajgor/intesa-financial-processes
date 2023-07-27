@@ -11,25 +11,25 @@ import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../../layout/ind
 
 // Prop types
 FilterType.propTypes = {
-  typesChecked: PropTypes.node.isRequired,
+  checkedValues: PropTypes.node.isRequired,
   updateSelection: PropTypes.func,
-  typeValues: PropTypes.node.isRequired,
+  selectedValues: PropTypes.node.isRequired,
   label: PropTypes.string
 };
 
-export function FilterType ({ typesChecked, updateSelection, typeValues, label }) {
+export function FilterType ({ checkedValues, updateSelection, selectedValues, label }) {
   let newSelectedTypes = [];
   const [filteredTypes, updateFilter] = useState([]);
 
   const updateSelectedRange = (selected) => {
-    if (typesChecked.includes(selected)) {
-      newSelectedTypes = typesChecked.filter((obj) => obj !== selected);
+    if (checkedValues.includes(selected)) {
+      newSelectedTypes = checkedValues.filter((obj) => obj !== selected);
       filteredTypes.push(selected);
       updateFilter([...filteredTypes]);
     } else {
-      typesChecked.push(selected);
+      checkedValues.push(selected);
       updateFilter(filteredTypes.filter((obj) => obj !== selected));
-      newSelectedTypes = [...typesChecked];
+      newSelectedTypes = [...checkedValues];
     }
     updateSelection(newSelectedTypes);
   };
@@ -42,12 +42,12 @@ export function FilterType ({ typesChecked, updateSelection, typeValues, label }
           <LayoutRow>
             <LayoutItem className="push">
               <FilterList>
-                {typeValues.map((value, index) => {
+                {selectedValues.map((value, index) => {
                   return (
                     <li key={index}>
                       <FormLabel
                         control={<Checkbox color="primary"
-                          checked={typesChecked.includes(value)}
+                          checked={checkedValues.includes(value)}
                           name={value}
                           onChange={() => updateSelectedRange(value)}
                           label={value}
