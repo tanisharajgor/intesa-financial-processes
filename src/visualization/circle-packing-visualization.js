@@ -33,7 +33,6 @@ export class CirclePackingDiagram {
   width;
   viewport;
   viewVariable;
-  zoomedNodeId;
 
   constructor (data, selector, updateViewHoverValue, updateSymbolHoverValue) {
     this.data = data;
@@ -43,8 +42,6 @@ export class CirclePackingDiagram {
       this.levelIDs.push(d.data.id);
       this.dataMap[`${d.data.id}`] = d;
     });
-    this.zoomedNodeId = 0;
-    this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
     this.updateSymbolHoverValue = updateSymbolHoverValue;
     this.selectedActivities = [];
@@ -372,17 +369,7 @@ export class CirclePackingDiagram {
 
   // Panning and zooming ------------------------------------------------------
   getCenter = (node) => {
-    if (this.currentNodeId === this.zoomedNodeId) {
-      node.gfx.cursor = 'zoom-in';
-      if (node.depth === 1) {
-        return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
-      } else {
-        node.parent.gfx.cursor = 'zoom-out';
-        return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
-      }
-    } else {
       return new PIXI.Point(this.width - node.x, this.height - node.y);
-    }
   };
 
   getZoomWidth = (node) => {
@@ -390,20 +377,12 @@ export class CirclePackingDiagram {
       .domain([110, 0.4])
       .range([2, 25]);
 
-    if (this.currentNodeId === this.zoomedNodeId && node.depth !== 0) {
-      // console.log(radiusScale(node.parent.r), node.parent.r);
-      return radiusScale(node.parent.r);
-    } else if (this.currentNodeId === this.zoomedNodeId && node.depth === 1) {
-      return 1
-    } else {
-      // console.log(radiusScale(node.r), node.r);
-      return radiusScale(node.r);
-    }
+    return radiusScale(node.r);
   }
 
+  // Operations that occur on click
   clickNode(node) {
 
-    this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
     node.zoomed = !node.zoomed;
     if(node.zoomed) {
       node.gfx.cursor = "zoom-out";
@@ -412,14 +391,17 @@ export class CirclePackingDiagram {
     }
 
     if(!node.zoomed && node.depth === 1) {
+
+      console.log("reset")
       this.getControls().reset();
     } else {
+      console.log("zoom")
       const zoomScale = this.getZoomWidth(node);
       const centerPoint = this.getCenter(node);
       this.updateLabels(node);
       this.viewport.animate({
         position: centerPoint,
-        scale: zoomScale,
+        scale: zoomScale
       });
     }
 
