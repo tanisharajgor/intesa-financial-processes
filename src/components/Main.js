@@ -36,7 +36,7 @@ export default function Main ({
     <StyledMain>
       <Visualization id={selector} className="Visualization"></Visualization>
       <Status
-        id={selector}
+        selector={selector}
         viewVariable={viewVariable}
         updateViewVariable={updateViewVariable}
         viewHoverValue={viewHoverValue}
