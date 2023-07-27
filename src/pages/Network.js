@@ -200,8 +200,8 @@ export default function Network () {
             <IdentifyChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
             <IdentifyOrgStructure selectedOrg1={selectedOrg1} updateSelectedOrg1={updateSelectedOrg1} selectedOrg2={selectedOrg2} updateSelectedOrg2={updateSelectedOrg2} orgStructure={orgStructureValues}/>
             <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3} />
-            <FilterType checkedValues={selectedActivities} updateSelectedValues={updateActivities} selectedValues={possibleActivities} label="Filter by Activity Type" />
-            <FilterType checkedValues={selectedActors} updateSelectedValues={updateActors} selectedValues={possibleActors} label="Filter by Actor Type" />
+            <FilterType checkedValues={possibleActivities} updateSelectedValues={updateActivities} selectedValues={selectedActivities} label="Filter by Activity Type" />
+            <FilterType checkedValues={possibleActors} updateSelectedValues={updateActors} selectedValues={selectedActors} label="Filter by Actor Type" />
           </MenuBody>
         </QueryMenu>
         <Main
