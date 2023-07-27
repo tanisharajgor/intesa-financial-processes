@@ -9,9 +9,17 @@ import { DrillDown } from './DrillDown';
 // Styles
 import { Accordion, AccordionDetails } from 'cfd-react-components';
 
+// Prop types
+InspectOrgStructure.propTypes = {
+    selectedOrg1: PropTypes.object,
+    updateSelectedOrg1: PropTypes.func,
+    selectedOrg2: PropTypes.object,
+    updateSelectedOrg2: PropTypes.func,
+    orgStructure: PropTypes.array
+};
+
 export default function InspectOrgStructure({selectedOrg1, updateSelectedOrg1, selectedOrg2, updateSelectedOrg2, orgStructure}) {
 
-    // const orgStructure = lu["org_structure"];
     const orgsLevel1 = [{"id": -1, "descr": "All"}].concat(orgStructure);
     const [orgsLevel2, updateOrgs2] = useState({"id": -1, "descr": "All"});
 
@@ -43,5 +51,5 @@ export default function InspectOrgStructure({selectedOrg1, updateSelectedOrg1, s
                 {selectedOrg1.id !== -1 ? <DrillDown values={orgsLevel2} selected={selectedOrg2} handleChange={handleChangeOrg2} label="Organizational Structure 2" id="2" />: <></>}
             </AccordionDetails>
         </Accordion>
-    )
+    );
 }

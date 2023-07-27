@@ -25,12 +25,12 @@ export default function InspectChapter ({ selectedChapter, updateSelectedChapter
 
   const chapterDescr = valuesChapter.find((d) => d.id === selectedChapter.id).descr;
 
-    return(
-        <Accordion className={'Card'}>
-            <AccordionHeaderStyled label="Identify by Chapter" filteredTypes={[chapterDescr]}/>
-            <AccordionDetails>
-                <DrillDown values={valuesChapter} selected={selectedChapter} handleChange={handleChangeChapter} label="Chapter" id="chapter" />
-            </AccordionDetails>
-        </Accordion>
-    )
+  return(
+      <Accordion className={'Card'}>
+          <AccordionHeaderStyled label="Identify by Chapter" filteredTypes={[chapterDescr]}/>
+          <AccordionDetails>
+              <DrillDown values={valuesChapter} selected={selectedChapter} handleChange={handleChangeChapter} label="Chapter" id="chapter" />
+          </AccordionDetails>
+      </Accordion>
+  );
 }

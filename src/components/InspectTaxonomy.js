@@ -88,16 +88,16 @@ export default function InspectTaxonomy ({
     const updatedChapter = valuesChapter.find(ch => ch.id === chapterId);
     handleTaxonomyChange(updatedChapter, updateSelectedChapter, 4);
   };
-  
-    return(
-        <Accordion className={'Card'}>
-            <AccordionHeaderStyled label="Identify by Taxonomy" filteredTypes={[]}/>
-            <AccordionDetails>
-                <DrillDown values={valuesLevel1} selected={selectedLevel1} handleChange={handleChangeLevel1} label="Level 1" id="1" />
-                {selectedLevel1.id !== -1 ? <DrillDown values={valuesLevel2} selected={selectedLevel2} handleChange={handleChangeLevel2} label="Level 2" id="2" />: <></>}
-                {selectedLevel2.id !== -1 && selectedLevel1.id !== -1 ? <DrillDown values={valuesLevel3} selected={selectedLevel3} handleChange={handleChangeLevel3} label="Level 3" id="3" />: <></>}
-                {selectedLevel3.id !== -1 && selectedLevel2.id !== -1 && selectedLevel1.id !== -1 ? <DrillDown values={valuesChapter} selected={selectedChapter} handleChange={handleChangeChapter} label="Chapter" id="chapter" />: <></>}
-            </AccordionDetails>
-        </Accordion>
-    )
+
+  return(
+      <Accordion className={'Card'}>
+          <AccordionHeaderStyled label="Identify by Taxonomy" filteredTypes={[]}/>
+          <AccordionDetails>
+              <DrillDown values={valuesLevel1} selected={selectedLevel1} handleChange={handleChangeLevel1} label="Level 1" id="1" />
+              {selectedLevel1.id !== -1 ? <DrillDown values={valuesLevel2} selected={selectedLevel2} handleChange={handleChangeLevel2} label="Level 2" id="2" /> : <></>}
+              {selectedLevel2.id !== -1 && selectedLevel1.id !== -1 ? <DrillDown values={valuesLevel3} selected={selectedLevel3} handleChange={handleChangeLevel3} label="Level 3" id="3" /> : <></>}
+              {selectedLevel3.id !== -1 && selectedLevel2.id !== -1 && selectedLevel1.id !== -1 ? <DrillDown values={valuesChapter} selected={selectedChapter} handleChange={handleChangeChapter} label="Chapter" id="chapter" /> : <></>}
+          </AccordionDetails>
+      </Accordion>
+  );
 }

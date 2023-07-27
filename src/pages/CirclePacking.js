@@ -83,14 +83,15 @@ export default function CirclePacking () {
         circlePackingDiagram.current.centerOnNode(parentNode);
       }
     }
-  }
+    updateSelected(node);
+  };
 
   useEffect(() => {
     circlePackingDiagram.current.init(selector);
     circlePackingDiagram.current.draw(viewVariable);
     circlePackingDiagram.current.centerVisualization(-0.1, window.innerWidth / 2, (window.innerHeight / 2) - 75);
   }, []);
- 
+
   const onViewVariableChange = useCallback((updatedView) => {
     circlePackingDiagram.current.updateDraw(updatedView, selectedActivities);
     const inspect = d3.select('.Inspect');
@@ -103,12 +104,7 @@ export default function CirclePacking () {
       let inspect = d3.select(".Inspect");
       inspectHierarchySummary(inspect, data);
       updateActivities(updatedActivities)
-  }, [selectedActivities])
-
-  // Updates the Opacity on Inspect
-  useEffect(() => {
-      circlePackingDiagram.current.updateOpacity(selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter)
-  }, [selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter]);
+  }, [selectedActivities]);
 
   // Updates the Opacity on Inspect
   useEffect(() => {
