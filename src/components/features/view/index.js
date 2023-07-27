@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 // Components
-import { IdentifyHTML } from "../../widgets/index";
+import { InspectHTML } from "../../widgets/index";
 import * as Global from "../../../utils/global";
 
 //Styles
@@ -315,7 +315,7 @@ export function View ({ selector, viewVariable, updateViewVariable, viewHoverVal
   return (
     <ViewStyles>
       <div className="inner">
-        <IdentifyHTML/>
+        <InspectHTML/>
         {viewInfo(networkChart)}
         <Form variant="outlined" size="small">
           <StyledSelect

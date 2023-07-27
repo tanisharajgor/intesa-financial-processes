@@ -3,7 +3,7 @@ import { Description } from "./description";
 import { FilterActivityType } from "./filterActivity";
 import { FilterTaxonomy } from "./filterTaxonomy";
 import { FilterType } from "./filterType";
-import { identifyHierarchyDetail, IdentifyHTML, identifyHierarchySummary, identifyNetworkSummary } from "./identify";
+import { InspectHierarchyDetail, InspectHTML, InspectHierarchySummary, InspectNetworkSummary } from "./inspect";
 import { IdentifyChapter } from "./identifyChapter";
 import { IdentifyOrgStructure } from "./identifyOrgStructure";
 import { IdentifyTaxonomy } from "./identifyTaxonomy";
@@ -15,10 +15,10 @@ export {
     FilterActivityType,
     FilterTaxonomy,
     FilterType,
-    identifyHierarchyDetail,
-    IdentifyHTML,
-    identifyHierarchySummary,
-    identifyNetworkSummary,
+    InspectHierarchyDetail,
+    InspectHTML,
+    InspectHierarchySummary,
+    InspectNetworkSummary,
     IdentifyChapter,
     IdentifyOrgStructure,
     IdentifyTaxonomy,
