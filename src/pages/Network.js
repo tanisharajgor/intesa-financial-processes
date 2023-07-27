@@ -3,14 +3,10 @@ import React, {useState, useEffect, useRef} from 'react';
 import * as d3 from 'd3';
 
 // Components
-import Main from '../components/Main';
-import Navigation from '../components/Navigation';
-import IdentifyChapter from '../components/IdentifyChapter';
-import IdentifyOrgStructure from '../components/IdentifyOrgStructure';
-import FilterTaxonomy from '../components/FilterTaxonomy';
-import FilterType from '../components/FilterType';
-import { MenuBody, MenuHeader } from '../components/Menu';
-import { identifyNetworkSummary } from '../components/Identify';
+import { Navigation, Main, Content } from '../components/layout/index';
+import { FilterTaxonomy, FilterType, IdentifyChapter, IdentifyOrgStructure, identifyNetworkSummary } from '../components/widgets/index';
+import { MenuBody, MenuHeader } from '../components/features/index';
+
 import NetworkVisualization from '../visualization/network-visualization';
 import * as Global from '../utils/global';
 
@@ -21,8 +17,7 @@ import orgStructure from '../data/processed/nested/org_structure.json';
 import lu from '../data/processed/nested/lu.json';
 
 // Styles
-import { Content } from '../component-styles/content';
-import { QueryMenu } from '../component-styles/menu';
+import { QueryMenu } from '../components/features/menu/style';
 
 const selector = "network-chart";
 const processes = lu["processes"];

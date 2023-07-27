@@ -3,12 +3,9 @@ import React, {useState, useEffect, useRef, useCallback} from 'react';
 import * as d3 from 'd3';
 
 // Components
-import Navigation from '../components/Navigation';
-import Main from '../components/Main';
-import { identifyHierarchySummary } from '../components/Identify';
-import FilterType from '../components/FilterType';
-import IdentifyTaxonomy from '../components/IdentifyTaxonomy';
-import { MenuHeader, MenuBody } from '../components/Menu';
+import { Navigation, Main, Content } from '../components/layout/index';
+import { FilterType, identifyHierarchySummary, IdentifyTaxonomy } from '../components/widgets/index';
+import { MenuHeader, MenuBody } from "../components/features/menu";
 
 import { activityTypeValues } from '../utils/global';
 import { CirclePackingDiagram } from '../visualization/circle-packing-visualization';
@@ -17,8 +14,7 @@ import { CirclePackingDiagram } from '../visualization/circle-packing-visualizat
 import data from '../data/processed/nested/processes.json';
 
 // Styles
-import { QueryMenu } from '../component-styles/menu';
-import { Content } from '../component-styles/content';
+import { QueryMenu } from '../components/features/menu/style';
 
 const selector = "circle-packing-chart";
 const root = d3.pack()

@@ -4,17 +4,17 @@ import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 // Components
-import { AccordionHeaderStyled } from './Menu';
+import { AccordionHeaderStyled } from '../../features/index';
 
 // Data
-import lu from '../data/processed/nested/lu.json';
+import lu from '../../../data/processed/nested/lu.json';
 
 // Styles
 import { Accordion, AccordionDetails, MenuItem, Form } from 'cfd-react-components';
-import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
-import { StyledSelect } from '../component-styles/select';
-import * as Theme from '../component-styles/theme';
-import { StyledFilter } from '../component-styles/menu';
+import { LayoutGroup, LayoutRow, LayoutItem } from '../../layout/index';
+import { StyledSelect } from '../../../utils/global-styles';
+import * as Theme from '../../../utils/theme';
+import { StyledFilter } from '../../features/menu/style'; 
 
 // Prop types
 FilterTaxonomy.propTypes = {
@@ -151,7 +151,7 @@ function updateFilter (root, selectedLevel3) {
     .style('cursor', d => d.data.data.level === 3 ? 'pointer' : 'not-allowed');
 }
 
-export default function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, updateLevel3 }) {
+export function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, updateLevel3 }) {
   const processes = lu.processes;
   const valuesLevel1 = processes.children;
   const level3Descr = lu.level3.find((d) => d.id === selectedLevel3).descr;

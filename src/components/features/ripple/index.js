@@ -3,13 +3,7 @@ import React, { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 
 // Styles
-import { RippleContainer } from '../component-styles/ripple-style';
-
-// Prop types
-Ripple.propTypes = {
-  duration: PropTypes.node.isRequired,
-  color: PropTypes.node.isRequired
-};
+import { RippleContainer } from "./style";
 
 const useDebouncedRippleCleanUp = (rippleCount, duration, cleanUpFunction) => {
   useLayoutEffect(() => {
@@ -27,8 +21,8 @@ const useDebouncedRippleCleanUp = (rippleCount, duration, cleanUpFunction) => {
   }, [rippleCount, duration, cleanUpFunction]);
 };
 
-export default function Ripple ({duration, color}) {
-
+export const Ripple = props => {
+  const { duration, color } = props;
   const [rippleArray, setRippleArray] = useState([]);
 
   useDebouncedRippleCleanUp(rippleArray.length, duration, () => {
@@ -79,3 +73,9 @@ export default function Ripple ({duration, color}) {
     </RippleContainer>
   );
 }
+
+// Prop types
+Ripple.propTypes = {
+  duration: PropTypes.node.isRequired,
+  color: PropTypes.node.isRequired
+};

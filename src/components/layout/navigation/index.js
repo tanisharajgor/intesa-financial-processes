@@ -6,19 +6,18 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 // Styles
-import { NavigationBranding, StyledLayoutHeader, NavigationLinks, LinkList, Link } from '../component-styles/navigation';
+import { NavigationBranding, StyledLayoutHeader, NavigationLinks, LinkList, Link } from './style';
 
 // Prop types
 Navigation.propTypes = {
   isFullscreen: PropTypes.node.isRequired
 };
 
-
 /**
  * Menu Navigation bar to navigate to different parts of the project
  * @returns
  */
-export default function Navigation ({ isFullscreen }) {
+export function Navigation ({ isFullscreen }) {
   return (
     <StyledLayoutHeader className="Navigation" isFullscreen={isFullscreen}>
       <NavigationBranding className="Navigation_branding">

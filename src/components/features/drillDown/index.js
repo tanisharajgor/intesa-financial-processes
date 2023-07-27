@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 // Styles
 import { MenuItem, Form } from 'cfd-react-components';
-import { LayoutGroup, LayoutRow, LayoutItem } from '../component-styles/query-layout';
-import { StyledSelect } from '../component-styles/select';
-import { StyledLabel } from '../component-styles/menu';
+import { LayoutGroup, LayoutRow, LayoutItem } from '../../layout/index';
+import { StyledSelect } from "../../../utils/global-styles";
+import { StyledLabel } from "../menu/style";
 
 // Prop types
 DrillDown.propTypes = {

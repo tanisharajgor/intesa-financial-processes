@@ -13,8 +13,8 @@ import Network from './pages/Network';
 
 // Styles
 import { ThemeProvider } from 'styled-components';
-import { GlobalStyles } from './component-styles/global-styles';
-import { GlobalTheme } from './component-styles/theme';
+import { GlobalStyles } from './utils/global-styles';
+import { GlobalTheme } from './utils/theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -3,13 +3,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import Description from './Description';
-import { ChevronButtonStyled } from './Chevron';
+import { ChevronButton, Description, Key } from '../../widgets/index';
 
 // Styles
 import { AccordionHeader } from 'cfd-react-components';
-import { Key } from '../component-styles/key';
-import { StyledMenuHeader, StyledMenuBody, StyledFilteredData } from '../component-styles/menu';
+import { StyledMenuHeader, StyledMenuBody, StyledFilteredData } from './style';
 
 // Prop types
 MenuCollapsableHeader.propTypes = {
@@ -24,7 +22,7 @@ export function MenuCollapsableHeader ({ label, shouldRotate, handleRotate, filt
   return (
     <StyledMenuHeader>
       <Key>{filteredTypes.length <= 0 ? label : `${label}:`}</Key>
-      <ChevronButtonStyled shouldRotate={shouldRotate} handleRotate={handleRotate}/>
+      <ChevronButton shouldRotate={shouldRotate} handleRotate={handleRotate}/>
     </StyledMenuHeader>
   );
 }

@@ -4,14 +4,19 @@ import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 // Components
+<<<<<<< HEAD:src/components/View.js
 import { IdentifyHTML } from './Identify';
 import * as Global from '../utils/global';
+=======
+import { IdentifyHTML } from "../../widgets/index";
+import * as Global from "../../../utils/global";
+>>>>>>> main:src/components/features/view/index.js
 
-// Styles
-import { Form, MenuItem } from 'cfd-react-components';
-import { StyledSelect } from '../component-styles/select';
-import { ViewStyles } from '../component-styles/view';
-import * as Theme from '../component-styles/theme';
+//Styles
+import { Form, MenuItem } from "cfd-react-components";
+import { StyledSelect } from "../../../utils/global-styles";
+import { ViewStyles } from "./style";
+import * as Theme from "../../../utils/theme";
 
 const width = 216;
 const height = 15;
@@ -285,7 +290,7 @@ View.propTypes = {
   symbolHoverValue: PropTypes.string
 };
 
-export default function View ({ selector, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue }) {
+export function View ({ selector, viewVariable, updateViewVariable, viewHoverValue, symbolHoverValue }) {
   const networkChart = selector === 'network-chart';
 
   colorScale = Global.createColorScale(viewVariable);

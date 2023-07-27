@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import * as Theme from '../component-styles/theme';
+import * as Theme from './theme';
 
 export const palette = [0x1f77b4, 0xff7f0e, 0x2ca02c, 0xd62728, 0x9467bd, 0x8c564b,
   0xe377c2, 0xbcbd22, 0x17becf, 0xaec7e8, 0xffbb78, 0x98df8a, 0xff9896,

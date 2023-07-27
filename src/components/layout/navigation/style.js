@@ -1,6 +1,6 @@
 import { LayoutHeader } from 'cfd-react-components';
 import styled from 'styled-components';
-import * as Theme from '../component-styles/theme';
+import * as Theme from '../../../utils/theme';
 
 export const NavigationBranding = styled('div')`
     flex: 1;

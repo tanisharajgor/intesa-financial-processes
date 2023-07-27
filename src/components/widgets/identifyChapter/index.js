@@ -16,7 +16,11 @@ IdentifyChapter.propTypes = {
   valuesChapter: PropTypes.array
 };
 
+<<<<<<<< HEAD:src/components/IdentifyChapter.js
+export default function IdentifyChapter ({ selectedChapter, updateSelectedChapter, valuesChapter }) {
+========
 export function IdentifyChapter ({ selectedChapter, updateSelectedChapter, valuesChapter }) {
+>>>>>>>> main:src/components/widgets/identifyChapter/index.js
   const handleChangeChapter = (event) => {
     const chapter = parseInt(event.target.value);
     const updatedChapter = valuesChapter.find(ch => ch.id === chapter);

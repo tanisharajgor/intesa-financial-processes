@@ -1,28 +1,35 @@
 // Libraries
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 // Components
-import { AccordionHeaderStyled } from './Menu';
+import { AccordionHeaderStyled } from '../../features/menu';
 
 // Styles
 import { Accordion, AccordionDetails, FormLabel, Checkbox } from 'cfd-react-components';
-import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../component-styles/query-layout';
+import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../../layout/index';
 
-export default function FilterActivityType ({ typesChecks, updateSelection, label }) {
-  const typeValues = ['Process activity', 'Control activity', 'Common process activity', 'System activity'];
+// Prop types
+FilterType.propTypes = {
+  typesChecked: PropTypes.node.isRequired,
+  updateSelection: PropTypes.func,
+  typeValues: PropTypes.node.isRequired,
+  label: PropTypes.string
+};
 
+export function FilterType ({ typesChecked, updateSelection, typeValues, label }) {
   let newSelectedTypes = [];
   const [filteredTypes, updateFilter] = useState([]);
 
   const updateSelectedRange = (selected) => {
-    if (typesChecks.includes(selected)) {
-      newSelectedTypes = typesChecks.filter((obj) => obj !== selected);
+    if (typesChecked.includes(selected)) {
+      newSelectedTypes = typesChecked.filter((obj) => obj !== selected);
       filteredTypes.push(selected);
       updateFilter([...filteredTypes]);
     } else {
-      typesChecks.push(selected);
+      typesChecked.push(selected);
       updateFilter(filteredTypes.filter((obj) => obj !== selected));
-      newSelectedTypes = [...typesChecks];
+      newSelectedTypes = [...typesChecked];
     }
     updateSelection(newSelectedTypes);
   };
@@ -40,7 +47,7 @@ export default function FilterActivityType ({ typesChecks, updateSelection, labe
                     <li key={index}>
                       <FormLabel
                         control={<Checkbox color="primary"
-                          checked={typesChecks.includes(value)}
+                          checked={typesChecked.includes(value)}
                           name={value}
                           onChange={() => updateSelectedRange(value)}
                           label={value}

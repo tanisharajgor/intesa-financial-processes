@@ -4,12 +4,11 @@ import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
 
 // Components
-import View from './View';
-import { MenuBody, MenuCollapsableHeader } from './Menu';
+import { View, MenuBody, MenuCollapsableHeader } from '../../features/index';
 
 // Styles
-import { StatusMenu } from '../component-styles/menu';
-import { LayoutGroup } from '../component-styles/query-layout';
+import { StatusMenu } from '../../features/menu/style';
+import { LayoutGroup } from '../queryMenu/style';
 
 
 // Prop types
@@ -22,7 +21,7 @@ Status.propTypes = {
   isFullscreen: PropTypes.node.isRequired
 };
 
-export default function Status ({
+export function Status ({
   selector,
   viewVariable,
   updateViewVariable,
