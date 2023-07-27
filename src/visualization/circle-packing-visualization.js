@@ -15,6 +15,7 @@ import * as Theme from '../utils/theme';
 export class CirclePackingDiagram {
   app;
   containerNodes;
+  containerBackground;
   containerLabelLevel1;
   containerLabelLevel2;
   containerLabelLevel3;
@@ -188,8 +189,32 @@ export class CirclePackingDiagram {
 
   draw(viewVariable) {
     this.viewVariable = viewVariable;
+    this.initBackground();
     this.initNodes();
     this.initLabels();
+  }
+
+  initBackground() {
+    let bg = new PIXI.Sprite(PIXI.Texture.WHITE);
+      bg.width = this.width;
+      bg.height = this.height;
+      bg.tint = 0x000000;
+      bg.interactive = true;
+
+      bg.on('pointerover', () => {
+        if(this.focus.depth > 1) {
+          bg.cursor = "zoom-out";
+        } else {
+          bg.cursor = "default";
+        }
+      });
+      bg.on('pointerout', () => {
+        bg.cursor = "default";
+      });
+      bg.on('click', () => {
+        this.getControls().reset();
+      });
+    this.viewport.addChild(bg);
   }
 
   // Initializes the nodes
@@ -218,8 +243,8 @@ export class CirclePackingDiagram {
       node.gfx.interactive = true;
       node.gfx.buttonMode = true;
       node.gfx.on('pointerover', (e) => this.pointerOver(node, e));
-      node.gfx.on('pointerout', (e) => this.pointerOut(node, e));
-      node.gfx.on('click', (e) => this.clickNode(node, e));
+      node.gfx.on('pointerout', () => this.pointerOut(node));
+      node.gfx.on('click', () => this.clickNode(node));
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx);
@@ -397,10 +422,10 @@ export class CirclePackingDiagram {
     node.zoomed = !node.zoomed;
     this.focus = node;
     if(!node.zoomed && node.depth === 1) {
-      console.log("reset")
+      // console.log("reset")
       this.getControls().reset();
     } else {
-      console.log("zoom")
+      // console.log("zoom")
       const zoomScale = this.getZoomWidth(node);
       const centerPoint = this.getCenter(node);
       this.updateLabels(node);
