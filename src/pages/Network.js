@@ -5,12 +5,12 @@ import * as d3 from 'd3';
 // Components
 import Main from '../components/Main';
 import Navigation from '../components/Navigation';
-import InspectChapter from '../components/InspectChapter';
-import InspectOrgStructure from '../components/InspectOrgStructure';
+import IdentifyChapter from '../components/IdentifyChapter';
+import IdentifyOrgStructure from '../components/IdentifyOrgStructure';
 import FilterTaxonomy from '../components/FilterTaxonomy';
 import FilterType from '../components/FilterType';
 import { MenuBody, MenuHeader } from '../components/Menu';
-import { inspectNetworkSummary } from '../components/Inspect';
+import { identifyNetworkSummary } from '../components/Identify';
 import NetworkVisualization from '../visualization/network-visualization';
 import * as Global from '../utils/global';
 
@@ -174,7 +174,7 @@ export default function Network () {
     networkDiagram.current.updateDraw(viewVariable);
 
     const inspect = d3.select('.Inspect');
-    inspectNetworkSummary(inspect, filteredData);
+    identifyNetworkSummary(inspect, filteredData);
   }, [selectedLevel3, selectedActivities, selectedActors]);
 
   // Update filter possibilities when level changes
@@ -202,8 +202,8 @@ export default function Network () {
         }}>
           <MenuHeader label="Network" />
           <MenuBody shouldRotate={shouldRotate} pageDescription="Filter data in the actor network graph to explore activities and risks.">
-            <InspectChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
-            <InspectOrgStructure selectedOrg1={selectedOrg1} updateSelectedOrg1={updateSelectedOrg1} selectedOrg2={selectedOrg2} updateSelectedOrg2={updateSelectedOrg2} orgStructure={orgStructureValues}/>
+            <IdentifyChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
+            <IdentifyOrgStructure selectedOrg1={selectedOrg1} updateSelectedOrg1={updateSelectedOrg1} selectedOrg2={selectedOrg2} updateSelectedOrg2={updateSelectedOrg2} orgStructure={orgStructureValues}/>
             <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3} />
             <FilterType typesChecked={selectedActivities} updateSelection={updateActivities} typeValues={possibleActivities} label="Filter by Activity Type" />
             <FilterType typesChecked={selectedActors} updateSelection={updateActors} typeValues={possibleActors} label="Filter by Actor Type" />

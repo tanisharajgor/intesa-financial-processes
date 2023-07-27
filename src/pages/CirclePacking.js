@@ -5,9 +5,9 @@ import * as d3 from 'd3';
 // Components
 import Navigation from '../components/Navigation';
 import Main from '../components/Main';
-import { inspectHierarchySummary } from '../components/Inspect';
+import { identifyHierarchySummary } from '../components/Identify';
 import FilterType from '../components/FilterType';
-import InspectTaxonomy from '../components/InspectTaxonomy';
+import IdentifyTaxonomy from '../components/IdentifyTaxonomy';
 import { MenuHeader, MenuBody } from '../components/Menu';
 
 import { activityTypeValues } from '../utils/global';
@@ -95,14 +95,14 @@ export default function CirclePacking () {
   const onViewVariableChange = useCallback((updatedView) => {
     circlePackingDiagram.current.updateDraw(updatedView, selectedActivities);
     const inspect = d3.select('.Inspect');
-    inspectHierarchySummary(inspect, data);
+    identifyHierarchySummary(inspect, data);
     updateViewVariable(updatedView);
   }, []);
 
   const onInspectActivitiesChange = useCallback((updatedActivities) => {
     circlePackingDiagram.current.updateOpacity(updatedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter);
     const inspect = d3.select('.Inspect');
-    inspectHierarchySummary(inspect, data);
+    identifyHierarchySummary(inspect, data);
     updateActivities(updatedActivities);
   }, [selectedActivities]);
 
@@ -122,7 +122,7 @@ export default function CirclePacking () {
           <MenuHeader label="Ecosystem" />
           <MenuBody shouldRotate={shouldRotate} pageDescription="Click on the circles to zoom into the process visualization.">
             <FilterType typesChecked={selectedActivities} updateSelection={onInspectActivitiesChange} typeValues={possibleActivities} label="Identify by Activity Type" />
-            <InspectTaxonomy
+            <IdentifyTaxonomy
               handleTaxonomyChange={handleTaxonomyChange}
               selectedLevel1={selectedLevel1}
               updateSelectedLevel1={updateSelectedLevel1}
