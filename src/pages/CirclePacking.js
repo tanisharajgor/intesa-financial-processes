@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 
 // Components
 import { Navigation, Main, Content } from '../components/layout/index';
-import { FilterType, identifyHierarchySummary, IdentifyTaxonomy } from '../components/widgets/index';
+import { FilterType, InspectHierarchySummary, IdentifyTaxonomy } from '../components/widgets/index';
 import { MenuHeader, MenuBody } from "../components/features/menu";
 
 import { activityTypeValues } from '../utils/global';
@@ -91,14 +91,14 @@ export default function CirclePacking () {
   const onViewVariableChange = useCallback((updatedView) => {
     circlePackingDiagram.current.updateDraw(updatedView, selectedActivities);
     const inspect = d3.select('.Inspect');
-    identifyHierarchySummary(inspect, data);
+    InspectHierarchySummary(inspect, data);
     updateViewVariable(updatedView);
   }, []);
 
   const onInspectActivitiesChange = useCallback((updatedActivities) => {
     circlePackingDiagram.current.updateOpacity(updatedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter);
     const inspect = d3.select('.Inspect');
-    identifyHierarchySummary(inspect, data);
+    InspectHierarchySummary(inspect, data);
     updateActivities(updatedActivities);
   }, [selectedActivities]);
 
