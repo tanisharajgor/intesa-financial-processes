@@ -100,10 +100,10 @@ export default function CirclePacking () {
   }, []);
 
   const onInspectActivitiesChange = useCallback((updatedActivities) => {
-      circlePackingDiagram.current.updateOpacity(updatedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter);
-      let inspect = d3.select(".Inspect");
-      inspectHierarchySummary(inspect, data);
-      updateActivities(updatedActivities)
+    circlePackingDiagram.current.updateOpacity(updatedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter);
+    const inspect = d3.select('.Inspect');
+    inspectHierarchySummary(inspect, data);
+    updateActivities(updatedActivities);
   }, [selectedActivities]);
 
   // Updates the Opacity on Inspect
