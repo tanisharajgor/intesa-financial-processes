@@ -1,7 +1,8 @@
-import styled, { createGlobalStyle } from "styled-components";
-import * as Theme from "./theme";
+import styled, { createGlobalStyle } from 'styled-components';
+import * as Theme from './theme';
+import { Select } from 'cfd-react-components';
 
-const fontPath = `${process.env.PUBLIC_URL}/font/`
+const fontPath = `${process.env.PUBLIC_URL}/font/`;
 
 export const GlobalStyles = createGlobalStyle`
 
@@ -24,11 +25,11 @@ export const GlobalStyles = createGlobalStyle`
     width: 100vw;
     height: 100vh;
     padding: 0;
-    color: ${props =>  props.theme.color.main };
-    background-color: ${props =>  props.theme.backgroundColor.main };
-    font-family: ${props =>  props.theme.font.family };
-    font-size: ${props =>  props.theme.font.baseSize };
-    line-height: ${props =>  props.theme.font.lineHeight };
+    color: ${props => props.theme.color.main};
+    background-color: ${props => props.theme.backgroundColor.main};
+    font-family: ${props => props.theme.font.family};
+    font-size: ${props => props.theme.font.baseSize};
+    line-height: ${props => props.theme.font.lineHeight};
     margin: 0px;
     overflow: hidden;
   }
@@ -66,9 +67,9 @@ export const GlobalStyles = createGlobalStyle`
     cursor: pointer;
     width: 1.15rem;
     height: 1.15rem;
-    border: 0.15em solid ${props =>  props.theme.color.secondary };
+    border: 0.15em solid ${props => props.theme.color.secondary};
     border-radius: 0.15rem;
-    background-color: ${props =>  props.theme.backgroundColor.main };
+    background-color: ${props => props.theme.backgroundColor.main};
     vertical-align: middle;
     display: grid;
   }
@@ -78,7 +79,7 @@ export const GlobalStyles = createGlobalStyle`
     width: 0.9rem;
     transform: scale(1);
     transition: 120ms transform ease-in-out;
-    box-shadow: inset 1rem 1rem ${props =>  props.theme.color.focus };
+    box-shadow: inset 1rem 1rem ${props => props.theme.color.focus};
   }
   
   input[type="checkbox"]:checked::before {
@@ -90,18 +91,18 @@ export const GlobalStyles = createGlobalStyle`
   }
 `
 
-export const StyledSelect = styled('select')`
+export const StyledSelect = styled(Select)`
     // A reset of styles, including removing the default dropdown arrow
     width: 100%;
     min-width: 15ch;
     max-width: 30ch;
-    border: 1px solid ${props =>  props.theme.color.secondary };
+    border: 1px solid ${props => props.theme.color.secondary};
     border-radius: 0.25em;
     padding: 0.25em 0.5em;
     cursor: pointer;
     line-height: 1.1;
     background-color: transparent;
-    color: ${props =>  props.theme.color.secondary };
+    color: ${props => props.theme.color.secondary};
     display: grid;
     grid-template-areas: select;
 
@@ -110,7 +111,7 @@ export const StyledSelect = styled('select')`
         display: block;
         width: 0.8em;
         height: 0.5em;
-        background-color: ${props =>  props.theme.color.secondary };
+        background-color: ${props => props.theme.color.secondary};
         clip-path: polygon(100% 0%, 0 0%, 50% 100%);
         grid-area: select;
       }

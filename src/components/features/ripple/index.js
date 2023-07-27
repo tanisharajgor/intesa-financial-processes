@@ -1,8 +1,15 @@
 // Libraries
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect } from 'react';
+import PropTypes from 'prop-types';
 
-//Styles
+// Styles
 import { RippleContainer } from "./style";
+
+// Prop types
+Ripple.propTypes = {
+  duration: PropTypes.node.isRequired,
+  color: PropTypes.node.isRequired
+};
 
 const useDebouncedRippleCleanUp = (rippleCount, duration, cleanUpFunction) => {
   useLayoutEffect(() => {
@@ -46,13 +53,20 @@ export const Ripple = props => {
     setRippleArray([...rippleArray, newRipple]);
   };
 
+  // Prop types
+  RippleContainer.propTypes = {
+    duration: PropTypes.node.isRequired,
+    color: PropTypes.node.isRequired,
+    onMouseDown: PropTypes.func
+  };
+
   return (
     <RippleContainer duration={duration} color={color} onMouseDown={addRipple}>
       {rippleArray.length > 0 &&
         rippleArray.map((ripple, index) => {
           return (
             <span
-              key={"span" + index}
+              key={'span' + index}
               style={{
                 top: ripple.y,
                 left: ripple.x,
@@ -64,6 +78,4 @@ export const Ripple = props => {
         })}
     </RippleContainer>
   );
-};
-
-export default Ripple;
+}

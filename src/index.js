@@ -4,12 +4,12 @@ import ReactDOM from 'react-dom/client';
 import {
   Routes,
   Route,
-  HashRouter,
-} from "react-router-dom";
+  HashRouter
+} from 'react-router-dom';
 
 // Pages
-import CirclePacking from "./pages/CirclePacking";
-import Network from "./pages/Network";
+import CirclePacking from './pages/CirclePacking';
+import Network from './pages/Network';
 
 // Styles
 import { ThemeProvider } from 'styled-components';
@@ -28,4 +28,3 @@ root.render(
     </HashRouter>
   </ThemeProvider>
 );
-

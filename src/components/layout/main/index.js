@@ -1,35 +1,51 @@
+// Libraries
+import React from 'react';
+import PropTypes from 'prop-types';
+
 // Components
-import { Status } from "../status";
-import { Control } from "../controls";
+import Status from '../components/Status';
+import Control from './Controls';
 
 // Styles
-import { StyledMain, Visualization} from "./style";
+import { StyledMain, Visualization } from '../component-styles/main';
 
-export function Main({
-    viewVariable,
-    updateViewVariable,
-    viewHoverValue,
-    symbolHoverValue,
-    id,
-    controls,
-    handleFullscreen,
-    isFullscreen
+// Prop types
+Main.propTypes = {
+  viewVariable: PropTypes.node.isRequired,
+  updateViewVariable: PropTypes.func,
+  viewHoverValue: PropTypes.string,
+  symbolHoverValue: PropTypes.string,
+  selector: PropTypes.string,
+  controls: PropTypes.object,
+  handleFullscreen: PropTypes.func,
+  isFullscreen: PropTypes.node.isRequired
+};
+
+
+export default function Main ({
+  viewVariable,
+  updateViewVariable,
+  viewHoverValue,
+  symbolHoverValue,
+  selector,
+  controls,
+  handleFullscreen,
+  isFullscreen
 }) {
-
-    return(
-        <StyledMain>
-            <Visualization id={id} className="Visualization"></Visualization>
-            <Status
-                id={id}
-                viewVariable={viewVariable}
-                updateViewVariable={updateViewVariable}
-                viewHoverValue={viewHoverValue}
-                symbolHoverValue={symbolHoverValue}
-                controls={controls}
-                handleFullscreen={handleFullscreen}
-                isFullscreen={isFullscreen}
-            />
-            <Control controls={controls} handleFullscreen={handleFullscreen}/>
-        </StyledMain>
-    )
+  return (
+    <StyledMain>
+      <Visualization id={selector} className="Visualization"></Visualization>
+      <Status
+        selector={selector}
+        viewVariable={viewVariable}
+        updateViewVariable={updateViewVariable}
+        viewHoverValue={viewHoverValue}
+        symbolHoverValue={symbolHoverValue}
+        controls={controls}
+        handleFullscreen={handleFullscreen}
+        isFullscreen={isFullscreen}
+      />
+      <Control controls={controls} handleFullscreen={handleFullscreen}/>
+    </StyledMain>
+  );
 }
