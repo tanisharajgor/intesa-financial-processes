@@ -32,6 +32,10 @@ Inside the services directory are functions and process related to processing da
 1. To run the translation data you will have to download a key from google cloud and name the file `key.json`. The `key.json` file goes in `src/services`.
 2. Update the projectId in `src/services/config.yaml`
 
+## Update the application
+
+1. Install the [linter](https://eslint.org/docs/latest/use/getting-started) 
+
 ## Run application locally
 
 In the project directory, you can run:
