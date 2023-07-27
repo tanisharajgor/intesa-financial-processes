@@ -55,7 +55,6 @@ export class CirclePackingDiagram {
       .domain([0, 1, 2, 3, 5])
       .range([0.05, 0.3, 0.4, 0.5, 0.6]);
     this.focus = this.data[0];
-    console.log(this.focus)
   }
 
   // Initializes the application
