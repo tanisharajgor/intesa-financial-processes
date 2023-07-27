@@ -1,5 +1,6 @@
 // Libraries
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { AccordionHeaderStyled } from '../../features/menu';
@@ -7,6 +8,13 @@ import { AccordionHeaderStyled } from '../../features/menu';
 // Styles
 import { Accordion, AccordionDetails, FormLabel, Checkbox } from 'cfd-react-components';
 import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../../layout/index';
+
+// Prop types
+FilterActivityType.propTypes = {
+  typesChecks: PropTypes.array,
+  updateSelection: PropTypes.func,
+  label: PropTypes.string
+};
 
 export function FilterActivityType ({ typesChecks, updateSelection, label }) {
   const typeValues = ['Process activity', 'Control activity', 'Common process activity', 'System activity'];
