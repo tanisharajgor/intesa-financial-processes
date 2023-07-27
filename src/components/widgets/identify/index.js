@@ -8,7 +8,7 @@ const treeLevelScale = d3.scaleOrdinal()
   .domain([0, 1, 2, 3, 4])
   .range(['root', 'Process 1', 'Process 2', 'Process 3', 'Activity']);
 
-export function identifyNetworkSummary (inspect, data) {
+export function InspectNetworkSummary (inspect, data) {
   const nActors = data.nodes.filter(d => d.group === 'Actor').length;
   const nActivities = data.nodes.filter(d => d.group === 'Activity').length;
 
@@ -20,7 +20,7 @@ export function identifyNetworkSummary (inspect, data) {
   inspect.select('.value3 .value').text(' ');
 }
 
-export function identifyHierarchySummary (data) {
+export function InspectHierarchySummary (data) {
   const inspect = d3.select('.Inspect');
 
   inspect.select('.value1 .key').text('Processes showing: ');
@@ -31,7 +31,7 @@ export function identifyHierarchySummary (data) {
   inspect.select('.value3 .value').text(' ');
 }
 
-export function identifyHierarchyDetail (inspect, d, viewVariable) {
+export function InspectHierarchyDetail (inspect, d, viewVariable) {
   const rs = d.data.riskStatus[viewVariable];
   const labelScale = createLabelScale(viewVariable);
 
@@ -46,7 +46,7 @@ export function identifyHierarchyDetail (inspect, d, viewVariable) {
 }
 
 /* Creates the inspect html dom object */
-export function IdentifyHTML () {
+export function InspectHTML () {
   return (
     <div className="Inspect">
       <div className="inner">
