@@ -221,7 +221,7 @@ export class CirclePackingDiagram {
       node.gfx.cursor = 'zoom-in';
       node.gfx.on('pointerover', (e) => this.pointerOver(node, e));
       node.gfx.on('pointerout', (e) => this.pointerOut(node, e));
-      node.gfx.on('click', (e) => this.centerOnNode(node, e));
+      node.gfx.on('click', (e) => this.clickNode(node, e));
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx);
@@ -391,21 +391,25 @@ export class CirclePackingDiagram {
       .range([2, 25]);
 
     if (this.currentNodeId === this.zoomedNodeId && node.depth !== 0) {
-      console.log(radiusScale(node.parent.r), node.parent.r);
+      // console.log(radiusScale(node.parent.r), node.parent.r);
       return radiusScale(node.parent.r);
     } else if (this.currentNodeId === this.zoomedNodeId && node.depth === 1) {
       return 1
     } else {
-      console.log(radiusScale(node.r), node.r);
+      // console.log(radiusScale(node.r), node.r);
       return radiusScale(node.r);
     }
   }
 
-  centerOnNode(node) {
+  clickNode(node) {
 
-    node.gfx.cursor = "zoom-out";
-    node.zoomed = !node.zoomed;
     this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
+    node.zoomed = !node.zoomed;
+    if(node.zoomed) {
+      node.gfx.cursor = "zoom-out";
+    } else {
+      node.gfx.cursor = "zoom-in";
+    }
 
     if(!node.zoomed && node.depth === 1) {
       this.getControls().reset();
@@ -417,8 +421,8 @@ export class CirclePackingDiagram {
         position: centerPoint,
         scale: zoomScale,
       });
-
     }
+
     this.zoomedNodeId = this.currentNodeId;
   }
 
