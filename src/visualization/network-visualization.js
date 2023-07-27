@@ -505,8 +505,8 @@ export default class NetworkVisualization {
       this.hoverNode = [];
     }
 
-    this.updateViewHoverValue(-1);
-    this.updateSymbolHoverValue(-1);
+    this.updateViewHoverValue("");
+    this.updateSymbolHoverValue("");
     this.tooltip.style('visibility', 'hidden');
     this.app.renderer.events.cursorStyles.default = 'default';
   }

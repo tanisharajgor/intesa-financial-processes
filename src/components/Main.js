@@ -13,8 +13,8 @@ import { StyledMain, Visualization } from '../component-styles/main';
 Main.propTypes = {
   viewVariable: PropTypes.node.isRequired,
   updateViewVariable: PropTypes.func,
-  viewHoverValue: PropTypes.number,
-  symbolHoverValue: PropTypes.number,
+  viewHoverValue: PropTypes.string,
+  symbolHoverValue: PropTypes.string,
   selector: PropTypes.string,
   controls: PropTypes.object,
   handleFullscreen: PropTypes.func,
@@ -36,7 +36,7 @@ export default function Main ({
     <StyledMain>
       <Visualization id={selector} className="Visualization"></Visualization>
       <Status
-        id={selector}
+        selector={selector}
         viewVariable={viewVariable}
         updateViewVariable={updateViewVariable}
         viewHoverValue={viewHoverValue}
