@@ -45,7 +45,7 @@ export function IdentifyOrgStructure({ selectedOrg1, updateSelectedOrg1, selecte
 
   return (
     <Accordion className={'Card'}>
-      <AccordionHeaderStyled label="Inspect by Organizational Structure" filteredTypes={[types]}/>
+      <AccordionHeaderStyled label="Identify by Organizational Structure" filteredTypes={[types]}/>
       <AccordionDetails>
         <DrillDown values={orgsLevel1} selected={selectedOrg1} handleChange={handleChangeOrg1} label="Organizational Structure 1" id="1" />
         {selectedOrg1.id !== -1 ? <DrillDown values={orgsLevel2} selected={selectedOrg2} handleChange={handleChangeOrg2} label="Organizational Structure 2" id="2" /> : <></>}

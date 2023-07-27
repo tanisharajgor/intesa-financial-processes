@@ -4,8 +4,9 @@ import * as d3 from 'd3';
 
 // Components
 import { Navigation, Main, Content } from '../components/layout/index';
-import { FilterTaxonomy, FilterType, IdentifyChapter, IdentifyOrgStructure, identifyNetworkSummary} from '../components/widgets/index';
+import { FilterTaxonomy, FilterType, IdentifyChapter, IdentifyOrgStructure, InspectNetworkSummary } from '../components/widgets/index';
 import { MenuBody, MenuHeader } from '../components/features/index';
+
 import NetworkVisualization from '../visualization/network-visualization';
 import * as Global from '../utils/global';
 
@@ -168,7 +169,7 @@ export default function Network () {
     networkDiagram.current.updateDraw(viewVariable);
 
     const inspect = d3.select('.Inspect');
-    identifyNetworkSummary(inspect, filteredData);
+    InspectNetworkSummary(inspect, filteredData);
   }, [selectedLevel3, selectedActivities, selectedActors]);
 
   // Update filter possibilities when level changes
