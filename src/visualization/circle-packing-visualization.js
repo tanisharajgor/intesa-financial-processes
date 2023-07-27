@@ -20,6 +20,7 @@ export class CirclePackingDiagram {
   containerLabelLevel3;
   data;
   dataMap;
+  focus;
   height;
   inspect;
   labels;
@@ -52,7 +53,9 @@ export class CirclePackingDiagram {
     this.selectedChapter = [];
     this.alphaScale = d3.scaleOrdinal()
       .domain([0, 1, 2, 3, 5])
-      .range([0.05, 0.3, 0.4, 0.5, 0.6]); 
+      .range([0.05, 0.3, 0.4, 0.5, 0.6]);
+    this.focus = this.data[0];
+    console.log(this.focus)
   }
 
   // Initializes the application
@@ -199,7 +202,7 @@ export class CirclePackingDiagram {
       .domain([0, 1, 2, 3, 4])
       .range([0.4, 0.5, 0.5, 0.5, 0.1]);
 
-    this.data.forEach((node) => {
+    this.data.forEach(node => {
       node.viewId = node.data.viewId;
       node.zoomed = false;
       node.gfx = new PIXI.Graphics();
@@ -215,7 +218,6 @@ export class CirclePackingDiagram {
       node.gfx.y = node.y;
       node.gfx.interactive = true;
       node.gfx.buttonMode = true;
-      node.gfx.cursor = 'zoom-in';
       node.gfx.on('pointerover', (e) => this.pointerOver(node, e));
       node.gfx.on('pointerout', (e) => this.pointerOut(node, e));
       node.gfx.on('click', (e) => this.clickNode(node, e));
@@ -353,8 +355,18 @@ export class CirclePackingDiagram {
       .html(this.tooltipText(d));
   }
 
+  // Updates the cursor to zoom in or out by comparing the current to the focus
+  updateCursor = (node) => {
+    if(node.depth < this.focus.depth) {
+      node.gfx.cursor = "zoom-out";
+    } else {
+      node.gfx.cursor = "zoom-in";
+    }
+  }
+
   pointerOver (node, event) {
     node.gfx.alpha = 1;
+    this.updateCursor(node);
     this.showTooltip(node, event);
     this.updateViewHoverValue(Global.applyColorScale(node.data, this.viewVariable));
     this.updateSymbolHoverValue(node.viewId);
@@ -368,30 +380,24 @@ export class CirclePackingDiagram {
   }
 
   // Panning and zooming ------------------------------------------------------
+
   getCenter = (node) => {
-      return new PIXI.Point(this.width - node.x, this.height - node.y);
+    return new PIXI.Point(this.width - node.x, this.height - node.y);
   };
 
   getZoomWidth = (node) => {
     const radiusScale =  d3.scaleSqrt()
       .domain([110, 0.4])
-      .range([2, 25]);
+      .range([2, 23]);
 
     return radiusScale(node.r);
   }
 
   // Operations that occur on click
   clickNode(node) {
-
     node.zoomed = !node.zoomed;
-    if(node.zoomed) {
-      node.gfx.cursor = "zoom-out";
-    } else {
-      node.gfx.cursor = "zoom-in";
-    }
-
+    this.focus = node;
     if(!node.zoomed && node.depth === 1) {
-
       console.log("reset")
       this.getControls().reset();
     } else {
@@ -404,8 +410,6 @@ export class CirclePackingDiagram {
         scale: zoomScale
       });
     }
-
-    this.zoomedNodeId = this.currentNodeId;
   }
 
   // Updating the draw functions  ------------------------------------------------------
