@@ -4,13 +4,8 @@ import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 // Components
-<<<<<<< HEAD:src/components/View.js
-import { IdentifyHTML } from './Identify';
-import * as Global from '../utils/global';
-=======
 import { IdentifyHTML } from "../../widgets/index";
 import * as Global from "../../../utils/global";
->>>>>>> main:src/components/features/view/index.js
 
 //Styles
 import { Form, MenuItem } from "cfd-react-components";
