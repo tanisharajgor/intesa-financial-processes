@@ -3,12 +3,9 @@ import React, {useState, useEffect, useRef, useCallback} from 'react';
 import * as d3 from 'd3';
 
 // Components
-import Navigation from '../components/Navigation';
-import Main from '../components/Main';
-import { inspectHierarchySummary } from '../components/Inspect';
-import FilterType from '../components/FilterType';
-import InspectTaxonomy from '../components/InspectTaxonomy';
-import { MenuHeader, MenuBody } from '../components/Menu';
+import { Navigation, Main, Content } from '../components/layout/index';
+import { FilterType, identifyHierarchySummary, IdentifyTaxonomy } from '../components/widgets/index';
+import { MenuHeader, MenuBody } from "../components/features/menu";
 
 import { activityTypeValues } from '../utils/global';
 import { CirclePackingDiagram } from '../visualization/circle-packing-visualization';
@@ -17,8 +14,7 @@ import { CirclePackingDiagram } from '../visualization/circle-packing-visualizat
 import data from '../data/processed/nested/processes.json';
 
 // Styles
-import { QueryMenu } from '../component-styles/menu';
-import { Content } from '../component-styles/content';
+import { QueryMenu } from '../components/features/menu/style';
 
 const selector = "circle-packing-chart";
 const root = d3.pack()
@@ -96,14 +92,14 @@ export default function CirclePacking () {
     circlePackingDiagram.current.updateDraw(updatedView, selectedActivities);
 
     const inspect = d3.select('.Inspect');
-    inspectHierarchySummary(inspect, data);
+    identifyHierarchySummary(inspect, data);
     updateViewVariable(updatedView);
   }, []);
 
   const onInspectActivitiesChange = useCallback((updatedActivities) => {
     circlePackingDiagram.current.updateOpacity(updatedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter);
     const inspect = d3.select('.Inspect');
-    inspectHierarchySummary(inspect, data);
+    identifyHierarchySummary(inspect, data);
     updateActivities(updatedActivities);
   }, [selectedActivities]);
 
@@ -123,7 +119,7 @@ export default function CirclePacking () {
           <MenuHeader label="Ecosystem" />
           <MenuBody shouldRotate={shouldRotate} pageDescription="Click on the circles to zoom into the process visualization.">
             <FilterType typesChecked={selectedActivities} updateSelection={onInspectActivitiesChange} typeValues={possibleActivities} label="Inspect by Activity Type" />
-            <InspectTaxonomy
+            <IdentifyTaxonomy
               handleTaxonomyChange={handleTaxonomyChange}
               selectedLevel1={selectedLevel1}
               updateSelectedLevel1={updateSelectedLevel1}
