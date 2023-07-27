@@ -386,19 +386,19 @@ export class CirclePackingDiagram {
   };
 
   getZoomWidth = (node) => {
-    const depthScale =  d3.scaleLinear()
-      .domain([0, 4])
-      .range([1, 20]);
-
-    const radiusScale =  d3.scaleLinear()
-      .domain([65, 3])
-      .range([1, 5]);
+    const radiusScale =  d3.scaleSqrt()
+      .domain([110, 0.4])
+      .range([2, 25]);
 
     if (this.currentNodeId === this.zoomedNodeId && node.depth !== 0) {
-      return depthScale(node.depth - 1) * radiusScale(node.parent.r);
+      console.log(radiusScale(node.parent.r), node.parent.r);
+      return radiusScale(node.parent.r);
+    } else if (this.currentNodeId === this.zoomedNodeId && node.depth === 1) {
+      return 1
+    } else {
+      console.log(radiusScale(node.r), node.r);
+      return radiusScale(node.r);
     }
-
-    return depthScale(node.depth) * radiusScale(node.r);
   }
 
   centerOnNode(node) {
