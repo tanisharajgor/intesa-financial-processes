@@ -47,7 +47,7 @@ export function FilterType ({ checkedValues, updateSelectedValues, selectedValue
                     <li key={index}>
                       <FormLabel
                         control={<Checkbox color="primary"
-                          checked={selectedValues.includes(value)}
+                          checked={!selectedValues.includes(value)}
                           name={value}
                           onChange={() => updateSelectedRange(value)}
                           label={value}
