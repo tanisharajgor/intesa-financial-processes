@@ -17,8 +17,8 @@ Status.propTypes = {
   selector: PropTypes.string,
   viewVariable: PropTypes.node.isRequired,
   updateViewVariable: PropTypes.func,
-  viewHoverValue: PropTypes.number,
-  symbolHoverValue: PropTypes.number,
+  viewHoverValue: PropTypes.string,
+  symbolHoverValue: PropTypes.string,
   isFullscreen: PropTypes.node.isRequired
 };
 

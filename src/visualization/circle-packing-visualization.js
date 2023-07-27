@@ -35,7 +35,7 @@ export class CirclePackingDiagram {
   viewVariable;
   zoomedNodeId;
 
-  constructor (data, selector, updateViewHoverValue) {
+  constructor (data, selector, updateViewHoverValue, updateSymbolHoverValue) {
     this.data = data;
     this.levelIDs = [];
     this.dataMap = {};
@@ -46,6 +46,7 @@ export class CirclePackingDiagram {
     this.zoomedNodeId = 0;
     this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
+    this.updateSymbolHoverValue = updateSymbolHoverValue;
     this.selectedActivities = [];
     this.selector = selector;
     this.selectedLevel1 = [];
@@ -186,14 +187,14 @@ export class CirclePackingDiagram {
 
   // Drawing functions ------------------------------------------------------
 
-  draw (viewVariable) {
+  draw(viewVariable) {
     this.viewVariable = viewVariable;
     this.initNodes();
     this.initLabels();
   }
 
   // Initializes the nodes
-  initNodes () {
+  initNodes() {
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
 
@@ -359,12 +360,14 @@ export class CirclePackingDiagram {
     node.gfx.alpha = 1;
     this.showTooltip(node, event);
     this.updateViewHoverValue(Global.applyColorScale(node.data, this.viewVariable));
+    this.updateSymbolHoverValue(node.viewId);
   }
 
   pointerOut (node) {
     this.opacityScale(node);
     this.tooltip.style('visibility', 'hidden');
-    this.updateViewHoverValue(undefined);
+    this.updateViewHoverValue("");
+    this.updateSymbolHoverValue("");
   }
 
   // Panning and zooming ------------------------------------------------------
@@ -442,8 +445,7 @@ export class CirclePackingDiagram {
       },
       reset: () => {
         this.viewport.fit();
-        this.viewport.moveCenter(this.width / 2, this.height / 2);
-        this.centerVisualization(-0.30);
+        this.centerVisualization(-0.10, this.width / 2, (this.height / 2) - 75);
         this.resetLabels();
       }
     };

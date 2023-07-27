@@ -85,8 +85,8 @@ export default function Network () {
   const [selectedOrg2, updateSelectedOrg2] = useState({ id: -1, descr: 'All' });
 
   // Status to update the opacity in the legend
-  const [viewHoverValue, updateViewHoverValue] = useState(undefined);
-  const [symbolHoverValue, updateSymbolHoverValue] = useState(undefined);
+  const [viewHoverValue, updateViewHoverValue] = useState("");
+  const [symbolHoverValue, updateSymbolHoverValue] = useState("");
 
   // Data management steps
   const dataNew = combineNodeLink(selectedLevel3, nodes, links, orgStructure);
