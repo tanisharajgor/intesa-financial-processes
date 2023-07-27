@@ -11,13 +11,13 @@ import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../../layout/ind
 
 // Prop types
 FilterType.propTypes = {
-  checkedValues: PropTypes.node.isRequired,
-  updateSelection: PropTypes.func,
-  selectedValues: PropTypes.node.isRequired,
+  checkedValues: PropTypes.array,
+  updateSelectedValues: PropTypes.func,
+  selectedValues: PropTypes.array,
   label: PropTypes.string
 };
 
-export function FilterType ({ checkedValues, updateSelection, selectedValues, label }) {
+export function FilterType ({ checkedValues, updateSelectedValues, selectedValues, label }) {
   let newSelectedTypes = [];
   const [filteredTypes, updateFilter] = useState([]);
 
@@ -31,7 +31,7 @@ export function FilterType ({ checkedValues, updateSelection, selectedValues, la
       updateFilter(filteredTypes.filter((obj) => obj !== selected));
       newSelectedTypes = [...checkedValues];
     }
-    updateSelection(newSelectedTypes);
+    updateSelectedValues(newSelectedTypes);
   };
 
   return (
