@@ -34,7 +34,7 @@ export function IdentifyOrgStructure({ selectedOrg, updateSelectedOrg, orgStruct
     <Accordion className={'Card'}>
       <AccordionHeaderStyled label="Identify by Organizational Structure" filteredTypes={[selectedOrg.descr]}/>
       <AccordionDetails>
-        <DrillDown values={orgsLevel} selected={selectedOrg} handleChange={handleChangeOrg} label="Organizational Structure 1" id="1" />
+        <DrillDown values={orgsLevel} selected={selectedOrg} handleChange={handleChangeOrg} label="" id="1" />
       </AccordionDetails>
     </Accordion>
   );
