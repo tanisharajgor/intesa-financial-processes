@@ -5,12 +5,6 @@ import PropTypes from 'prop-types';
 // Styles
 import { RippleContainer } from "./style";
 
-// Prop types
-Ripple.propTypes = {
-  duration: PropTypes.node.isRequired,
-  color: PropTypes.node.isRequired
-};
-
 const useDebouncedRippleCleanUp = (rippleCount, duration, cleanUpFunction) => {
   useLayoutEffect(() => {
     let bounce = null;
@@ -79,3 +73,9 @@ export const Ripple = props => {
     </RippleContainer>
   );
 }
+
+// Prop types
+Ripple.propTypes = {
+  duration: PropTypes.node.isRequired,
+  color: PropTypes.node.isRequired
+};

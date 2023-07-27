@@ -10,13 +10,13 @@ import { AccordionHeaderStyled } from '../../features/index';
 import { Accordion, AccordionDetails } from 'cfd-react-components';
 
 // Prop types
-InspectChapter.propTypes = {
+IdentifyChapter.propTypes = {
   selectedChapter: PropTypes.object,
   updateSelectedChapter: PropTypes.func,
   valuesChapter: PropTypes.array
 };
 
-export function InspectChapter ({ selectedChapter, updateSelectedChapter, valuesChapter }) {
+export function IdentifyChapter ({ selectedChapter, updateSelectedChapter, valuesChapter }) {
   const handleChangeChapter = (event) => {
     const chapter = parseInt(event.target.value);
     const updatedChapter = valuesChapter.find(ch => ch.id === chapter);

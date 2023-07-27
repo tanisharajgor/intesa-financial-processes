@@ -10,7 +10,7 @@ import { DrillDown } from '../../features/drillDown';
 import { Accordion, AccordionDetails } from 'cfd-react-components';
 
 // Prop types
-InspectOrgStructure.propTypes = {
+IdentifyOrgStructure.propTypes = {
   selectedOrg1: PropTypes.object,
   updateSelectedOrg1: PropTypes.func,
   selectedOrg2: PropTypes.object,
@@ -18,7 +18,7 @@ InspectOrgStructure.propTypes = {
   orgStructure: PropTypes.array
 };
 
-export default function InspectOrgStructure ({ selectedOrg1, updateSelectedOrg1, selectedOrg2, updateSelectedOrg2, orgStructure }) {
+export function IdentifyOrgStructure({ selectedOrg1, updateSelectedOrg1, selectedOrg2, updateSelectedOrg2, orgStructure }) {
   // const orgStructure = lu["org_structure"];
   const orgsLevel1 = [{ id: -1, descr: 'All' }].concat(orgStructure);
   const [orgsLevel2, updateOrgs2] = useState({ id: -1, descr: 'All' });

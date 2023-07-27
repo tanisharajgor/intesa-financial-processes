@@ -21,7 +21,7 @@ Status.propTypes = {
   isFullscreen: PropTypes.node.isRequired
 };
 
-export default function Status ({
+export function Status ({
   selector,
   viewVariable,
   updateViewVariable,

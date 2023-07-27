@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ChevronButtonStyles = styled.div`
+export const ChevronButtonStyled = styled.div`
     flex: 0 0 auto;
     position: relative;
     margin-left: auto; 

@@ -3,10 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import Ripple from './Ripple';
+import { Ripple } from '../../features/index';
 
 // Styles
-import { StyledControlsPanel, StyledControlButton, FullscreenIcon, FullscreenButton } from '../component-styles/controls';
+import { StyledControlsPanel, StyledControlButton, FullscreenIcon, FullscreenButton } from './style';
 
 // Prop types
 Control.propTypes = {
@@ -14,7 +14,7 @@ Control.propTypes = {
   controls: PropTypes.object
 };
 
-export default function Control ({ handleFullscreen, controls }) {
+export function Control ({ handleFullscreen, controls }) {
   return (
     <StyledControlsPanel>
       <div className="inner">

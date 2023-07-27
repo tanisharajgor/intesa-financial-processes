@@ -3,11 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import Status from '../components/Status';
-import Control from './Controls';
+import { Status, Control } from '../index';
 
 // Styles
-import { StyledMain, Visualization } from '../component-styles/main';
+import { StyledMain, Visualization } from './style';
 
 // Prop types
 Main.propTypes = {
@@ -22,7 +21,7 @@ Main.propTypes = {
 };
 
 
-export default function Main ({
+export function Main ({
   viewVariable,
   updateViewVariable,
   viewHoverValue,

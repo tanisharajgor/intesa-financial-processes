@@ -9,7 +9,7 @@ import '@pixi/graphics-extras';
 import { activityTypeValues } from '../utils/global';
 
 //Styles
-import * as Theme from "../component-styles/theme";
+import * as Theme from '../utils/theme';
 
 
 export class CirclePackingDiagram {

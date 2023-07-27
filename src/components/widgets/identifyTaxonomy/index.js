@@ -3,17 +3,17 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import { AccordionHeaderStyled } from './Menu';
+import { AccordionHeaderStyled } from '../../features/index';
 
 // Data
-import lu from '../data/processed/nested/lu.json';
+import lu from '../../../data/processed/nested/lu.json';
 
 // Styles
 import { Accordion, AccordionDetails } from 'cfd-react-components';
 import { DrillDown } from '../../features/drillDown';
 
 // Prop types
-InspectTaxonomy.propTypes = {
+IdentifyTaxonomy.propTypes = {
   handleTaxonomyChange: PropTypes.func,
   selectedLevel1: PropTypes.object,
   updateSelectedLevel1: PropTypes.func,
@@ -27,7 +27,7 @@ InspectTaxonomy.propTypes = {
   updateValuesChapter: PropTypes.func
 };
 
-export function InspectTaxonomy ({
+export function IdentifyTaxonomy ({
   handleTaxonomyChange,
   selectedLevel1,
   updateSelectedLevel1,

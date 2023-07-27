@@ -3,10 +3,10 @@ import { Description } from "./description";
 import { FilterActivityType } from "./filterActivity";
 import { FilterTaxonomy } from "./filterTaxonomy";
 import { FilterType } from "./filterType";
-import { inspectHierarchyDetail, InspectHTML, inspectHierarchySummary, inspectNetworkSummary } from "./inspect";
-import { InspectChapter } from "./inspectChapter";
-import { InspectOrgStructure } from "./inspectOrgStructure";
-import { InspectTaxonomy } from "./inspectTaxonomy";
+import { identifyHierarchyDetail, IdentifyHTML, identifyHierarchySummary, identifyNetworkSummary } from "./identify";
+import { IdentifyChapter } from "./identifyChapter";
+import { IdentifyOrgStructure } from "./identifyOrgStructure";
+import { IdentifyTaxonomy } from "./identifyTaxonomy";
 import { Key } from "./key/style";
 
 export {
@@ -15,12 +15,12 @@ export {
     FilterActivityType,
     FilterTaxonomy,
     FilterType,
-    inspectHierarchyDetail,
-    InspectHTML,
-    inspectHierarchySummary,
-    inspectNetworkSummary,
-    InspectChapter,
-    InspectOrgStructure,
-    InspectTaxonomy,
+    identifyHierarchyDetail,
+    IdentifyHTML,
+    identifyHierarchySummary,
+    identifyNetworkSummary,
+    IdentifyChapter,
+    IdentifyOrgStructure,
+    IdentifyTaxonomy,
     Key
 }
