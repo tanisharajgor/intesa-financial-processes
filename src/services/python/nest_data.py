@@ -41,7 +41,7 @@ def levelsObject(df):
             "level2ID": df.level2ID.unique().tolist(),
             "level3ID": df.level3ID.unique().tolist(),
             "modelID": df.modelID.unique().tolist(),
-            "orgStructureID": df.organizational_structure2ID.unique().tolist()
+            "orgStructureID": df.organizational_structureID.unique().tolist()
         }
 
     return levels
@@ -450,13 +450,13 @@ Return object
 def create_org_structure(main):
     array = []
 
-    df = main[main.organizational_structure1 == "Strutture organizzative"][["organizational_structure2", "organizational_structure2ID"]].drop_duplicates()
+    df = main[main.organizational_structure1 == "Strutture organizzative"][["organizational_structure", "organizational_structureID"]].drop_duplicates()
 
-    for j in df.organizational_structure2ID.unique():
+    for j in df.organizational_structureID.unique():
 
         r = {"id": int(j),
-            "descr": df[df.organizational_structure2ID == j].organizational_structure2.iloc[0],
-            "level": int(1)}
+            "descr": df[df.organizational_structureID == j].organizational_structure.iloc[0]}
+
         array.append(r)
 
     return array

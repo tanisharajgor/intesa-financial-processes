@@ -55,7 +55,7 @@ def main():
     # translate_text(data["L3 NAME"].unique(), os.path.join(raw_pth, "translated"), 'level3', project_id)
     # translate_text(data["MODEL NAME ITA"].unique(), os.path.join(raw_pth, "translated"), 'model', project_id)
     # translate_text(data.organizational_structure1.unique(), os.path.join(raw_pth, "translated"), 'organizational_structure1', project_id)
-    # translate_text(data.organizational_structure2.unique(), os.path.join(raw_pth, "translated"), 'organizational_structure2', project_id)
+    # translate_text(data.organizational_structure.unique(), os.path.join(raw_pth, "translated"), 'organizational_structure', project_id)
 
     # ## Clean data
     controlsClean = controls_dm(controls, data, config, raw_pth, processed_pth)
@@ -69,7 +69,7 @@ def main():
     modelClean = model_dm(data, raw_pth, processed_pth)
     orgClean = org_str2_dm(data, raw_pth, processed_pth)
 
-    data = data[["L1 GUID", "L2 GUID", "L3 GUID", "MODEL GUID", "activityGUID", "actorGUID", "organizational_structure1", "organizational_structure2", "Connection"]].rename(
+    data = data[["L1 GUID", "L2 GUID", "L3 GUID", "MODEL GUID", "activityGUID", "actorGUID", "organizational_structure1", "organizational_structure", "Connection"]].rename(
                                 columns={
                                 'L1 GUID': 'level1GUID',
                                 'L2 GUID': 'level2GUID',
