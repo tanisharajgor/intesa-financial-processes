@@ -22,9 +22,8 @@ export default class NetworkVisualization {
   containerLinks;
   data;
   height;
-  inspect;
-  inspectNodes;
-  inspectLinks;
+  identifyNodes;
+  identifyLinks;
   links;
   nodes;
   rootDOM;
@@ -44,8 +43,8 @@ export default class NetworkVisualization {
     this.clickNode = false;
     this.clickViewport = false;
     this.clickCount = 0;
-    this.inspectNode = [];
-    this.inspectLink = [];
+    this.identifyNode = [];
+    this.identifyLink = [];
     this.selector = selector;
   }
 
@@ -160,9 +159,9 @@ export default class NetworkVisualization {
     this.links = new PIXI.Graphics();
     this.containerLinks.addChild(this.links);
 
-    // Inspect Links
-    this.inspectLinks = new PIXI.Graphics();
-    this.containerLinks.addChild(this.inspectLinks);
+    // Identify Links
+    this.identifyLinks = new PIXI.Graphics();
+    this.containerLinks.addChild(this.identifyLinks);
 
     this.viewport.addChild(this.containerLinks);
   }
@@ -263,10 +262,10 @@ export default class NetworkVisualization {
     }
   }
 
-  // Inspect on links
-  inspectNetworkLinks (source, target) {
-    if (this.inspectLink.length !== 0) {
-      if ((this.inspectLink.includes(source.id) && this.inspectLink.includes(target.id)) &&
+  // Identify on links
+  identifyNetworkLinks (source, target) {
+    if (this.identifyLink.length !== 0) {
+      if ((this.identifyLink.includes(source.id) && this.identifyLink.includes(target.id)) &&
       !(this.hoverLink.includes(source.id) && this.hoverLink.includes(target.id))) {
         this.links.alpha = 1;
       } else {
@@ -278,7 +277,6 @@ export default class NetworkVisualization {
   }
 
   // Update the links position
-  // Note
   updateLinkPosition () {
     // Links
     this.links.clear();
@@ -291,25 +289,25 @@ export default class NetworkVisualization {
       // Line type
       this.lineType(this.links, source, target, connect_actor_activity);
 
-      if (this.inspectLink.length === 0) {
+      if (this.identifyLink.length === 0) {
         this.links.alpha = 1;
       } else {
         this.links.alpha = Theme.nonHighlightOpacity;
       }
     });
 
-    this.inspectLinks.clear();
+    this.identifyLinks.clear();
     this.data.links
-      .filter(d => (this.inspectLink.includes(d.source.id) && this.inspectLink.includes(d.target.id)))
+      .filter(d => (this.identifyLink.includes(d.source.id) && this.identifyLink.includes(d.target.id)))
       .forEach(link => {
         const { source, target, connect_actor_activity } = link;
-        this.inspectLinks.alpha = 1;
+        this.identifyLinks.alpha = 1;
 
         // Hover on links
-        this.highlightNetworkLinks(this.inspectLinks, source, target);
+        this.highlightNetworkLinks(this.identifyLinks, source, target);
 
         // Line type
-        this.lineType(this.inspectLinks, source, target, connect_actor_activity);
+        this.lineType(this.identifyLinks, source, target, connect_actor_activity);
       });
   }
 
@@ -332,8 +330,8 @@ export default class NetworkVisualization {
     if (this.links !== undefined) {
       this.links.destroy();
     }
-    if (this.inspectLinks !== undefined) {
-      this.inspectLinks.destroy();
+    if (this.identifyLinks !== undefined) {
+      this.identifyLinks.destroy();
     }
   }
 
@@ -366,7 +364,6 @@ export default class NetworkVisualization {
   }
 
   dragStarted (d, e) {
-    this.hideInspect(d);
     if (!e.active) {
       this.simulation.alphaTarget(0.1).restart();
     }
@@ -542,13 +539,13 @@ export default class NetworkVisualization {
   identifyNodesLinks (node) {
     const links = this.listHighlightNetworkNodes(node);
     const nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
-    this.inspectLink = this.reduceNestedList(this.inspectLink, links);
-    this.inspectNode = this.reduceNestedList(this.inspectNode, nodes);
+    this.identifyLink = this.reduceNestedList(this.identifyLink, links);
+    this.identifyNode = this.reduceNestedList(this.identifyNode, nodes);
     node.gfx.alpha = 1;
   }
 
   // Apply ifelse logic to identified nodes
-  highlightInspectedNodes (nodeEvaluation, node) {
+  highlightIdentifiedNodes (nodeEvaluation, node) {
     if (nodeEvaluation) {
       this.identifyNodesLinks(node);
     } else {
@@ -556,28 +553,28 @@ export default class NetworkVisualization {
     }
   }
 
-  // Highlights the non actor nodes according the inspect node list
+  // Highlights the non actor nodes according the identify node list
   highlightNonActorNodes (node) {
-    if (this.inspectNode.includes(node.id)) {
+    if (this.identifyNode.includes(node.id)) {
       node.gfx.alpha = 1;
     } else {
       node.gfx.alpha = Theme.nonHighlightOpacity;
     }
   }
 
-  // Identify inspected nodes by chapter and assign them an alpha level
+  // Identify identified nodes by chapter and assign them an alpha level
   selectedChapterAlpha (node) {
     if (node.viewId === 'Actor') {
-      this.highlightInspectedNodes(node.levels.modelID.includes(this.selectedChapter), node);
+      this.highlightIdentifiedNodes(node.levels.modelID.includes(this.selectedChapter), node);
     } else {
       this.highlightNonActorNodes(node);
     }
   }
 
-  // Identify inspected nodes by organizational structure and assign them an alpha level
+  // Identify identified nodes by organizational structure and assign them an alpha level
   selectedOrgAlpha (node) {
     if (node.viewId === 'Actor') {
-      this.highlightInspectedNodes(node.levels.orgStructureID.includes(this.selectedOrg), node);
+      this.highlightIdentifiedNodes(node.levels.orgStructureID.includes(this.selectedOrg), node);
     } else {
       this.highlightNonActorNodes(node);
     }
@@ -586,18 +583,18 @@ export default class NetworkVisualization {
   // Logic to define the intersection of the chapter and organizational structure
   selectedChapterAndOrgStructureAlpha (node) {
     if (node.viewId === 'Actor') {
-      this.highlightInspectedNodes(node.levels.orgStructureID.includes(this.selectedOrg) && node.levels.modelID.includes(this.selectedChapter), node);
+      this.highlightIdentifiedNodes(node.levels.orgStructureID.includes(this.selectedOrg) && node.levels.modelID.includes(this.selectedChapter), node);
       this.highlightNonActorNodes(node);
     }
   }
 
-  // Change the opacity of the actor nodes and their linked attributes when inspected
+  // Change the opacity of the actor nodes and their linked attributes when identified
   updateNodeAlpha (selectedChapter, selectedOrg) {
     this.selectedChapter = selectedChapter.id;
     this.selectedOrg = selectedOrg.id;
 
-    this.inspectLink = [];
-    this.inspectNode = [];
+    this.identifyLink = [];
+    this.identifyNode = [];
 
     this.nodes.forEach((node) => {
       if (this.selectedChapter !== -1 && this.selectedChapter !== undefined && this.selectedOrg !== -1) {
