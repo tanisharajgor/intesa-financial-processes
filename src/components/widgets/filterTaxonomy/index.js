@@ -182,6 +182,7 @@ function updateFilter (root, selectedLevel3) {
 export function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, updateLevel3 }) {
   const processes = lu.processes;
   const valuesLevel1 = processes.children;
+  const level1Descr = valuesLevel1.find(d => d.id === selectedLevel1).descr;
   const level2Descr = processes.children
     .find(d => d.id === selectedLevel1).children
     .find(d => d.childrenIDs.includes(selectedLevel3)).descr;
@@ -217,9 +218,11 @@ export function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, 
     renderTooltip(selectedLevel3);
   }, [selectedLevel1, selectedLevel3]);
 
+  const types = `L1: ${level1Descr} > L2: ${level2Descr} > L3: ${level3Descr}`
+
   return (
     <Accordion className={'Card'}>
-      <AccordionHeaderStyled label="Filter by Taxonomy" filteredTypes={[]}/>
+      <AccordionHeaderStyled label="Filter by Taxonomy" filteredTypes={[types]}/>
       <AccordionDetails>
         <LayoutGroup>
           <LayoutRow className="layout_row">
