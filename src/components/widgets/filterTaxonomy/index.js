@@ -76,7 +76,7 @@ function renderTooltip (selectedLevel3) {
     tooltip.style('visibility', 'visible')
       .style('top', `${y}px`)
       .style('left', `${x}px`)
-      .html(`Level ${d.data.data.level}<br><b>${d.data.data.descr}</b>`);
+      .html(`Level ${d.data.data.level}: <b>${d.data.data.descr}</b>`);
 
     thisCircle
       .attr('stroke', 'white')
@@ -154,6 +154,9 @@ function updateFilter (root, selectedLevel3) {
 export function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, updateLevel3 }) {
   const processes = lu.processes;
   const valuesLevel1 = processes.children;
+  const level2Descr = processes.children
+    .find(d => d.id === selectedLevel1).children
+    .find(d => d.childrenIDs.includes(selectedLevel3)).descr;
   const level3Descr = lu.level3.find((d) => d.id === selectedLevel3).descr;
   const levelsFiltered = lu.processes.children.find((d) => d.id === selectedLevel1);
 
@@ -188,7 +191,7 @@ export function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, 
 
   return (
     <Accordion className={'Card'}>
-      <AccordionHeaderStyled label="Filter by Taxonomy" filteredTypes={[level3Descr]}/>
+      <AccordionHeaderStyled label="Filter by Taxonomy" filteredTypes={[]}/>
       <AccordionDetails>
         <LayoutGroup>
           <LayoutRow className="layout_row">
@@ -210,6 +213,14 @@ export function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, 
                 </StyledSelect>
               </Form>
             </LayoutItem>
+          </LayoutRow>
+          <LayoutRow>
+              <StyledItemHeader>L2</StyledItemHeader>
+              <LayoutItem>{level2Descr}</LayoutItem>
+          </LayoutRow>
+          <LayoutRow>
+              <StyledItemHeader>L3</StyledItemHeader>
+              <LayoutItem>{level3Descr}</LayoutItem>
           </LayoutRow>
           <LayoutRow>
             <StyledFilter id={id}></StyledFilter>
