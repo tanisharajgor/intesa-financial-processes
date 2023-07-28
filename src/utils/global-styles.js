@@ -10,7 +10,7 @@ export const GlobalStyles = createGlobalStyle`
   @font-face {
     font-family: "Plex";
     src: url(${fontPath}/ibmplexsans-regular-webfont.woff2) format("woff2"),
-      url(${fontPath}/ibmplexsans-regular-webfont.woff) format("woff");
+         url(${fontPath}/ibmplexsans-regular-webfont.woff) format("woff");
     font-weight: normal;
     font-style: normal;
   }
@@ -92,76 +92,161 @@ export const GlobalStyles = createGlobalStyle`
 `
 
 export const StyledSelect = styled(Select)`
-    // A reset of styles, including removing the default dropdown arrow
-    width: 100%;
-    min-width: 15ch;
-    max-width: 30ch;
-    border: 1px solid ${props => props.theme.color.secondary};
-    border-radius: 0.25em;
-    padding: 0.25em 0.5em;
-    cursor: pointer;
-    line-height: 1.1;
-    background-color: transparent;
-    color: ${props => props.theme.color.secondary};
-    display: grid;
-    grid-template-areas: select;
+  // A reset of styles, including removing the default dropdown arrow
+  width: 100%;
+  min-width: 15ch;
+  max-width: 30ch;
+  border: 1px solid ${props => props.theme.color.secondary};
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+  line-height: 1.1;
+  background-color: transparent;
+  color: ${props => props.theme.color.secondary};
+  display: grid;
+  grid-template-areas: select;
 
-    &:after {
-        content: "";
-        display: block;
-        width: 0.8em;
-        height: 0.5em;
-        background-color: ${props => props.theme.color.secondary};
-        clip-path: polygon(100% 0%, 0 0%, 50% 100%);
-        grid-area: select;
-      }
+  &:after {
+    content: "";
+    display: block;
+    width: 0.8em;
+    height: 0.5em;
+    background-color: ${props => props.theme.color.secondary};
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+    grid-area: select;
+  }
 `;
 
 export const LayoutGroup = styled('div')`
-    padding-top: 0%;
-    padding-right: ${props =>  props.theme.padding };
-    padding-bottom: ${props =>  props.theme.padding };
-    padding-left: ${props =>  props.theme.padding };
+  padding-top: 0%;
+  padding-right: ${props =>  props.theme.padding };
+  padding-bottom: ${props =>  props.theme.padding };
+  padding-left: ${props =>  props.theme.padding };
+  width: 100%;
+  
+  &.inline {
     width: 100%;
-    
-    &.inline {
-        width: 100%;
-        .layout_row {
-            display: block;
-            .layout_item {
-            display: inline;
-            }
-        }
+    .layout_row {
+      display: block;
+      .layout_item {
+        display: inline;
+      }
     }
+  }
 `
 
 export const LayoutRow = styled('div')`
-    display: flex;
-    gap: ${props =>  props.theme.padding };
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  gap: ${props =>  props.theme.padding };
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
 `
 
 export const LayoutItem = styled('div')`
-    flex: 1;
-    display: inline-block;
+  flex: 1;
+  display: inline-block;
 
-    &.label {
-        flex: 0;
-        min-width: 2.5rem;
-    }
+  &.label {
+    flex: 0;
+    min-width: 2.5rem;
+  }
 
-    &.icon {
-        flex: 0;
-        min-width: 2rem;
-    }
-    
-    &.push {
-        // margin-left: 3.125rem;
-    }
+  &.icon {
+    flex: 0;
+    min-width: 2rem;
+  }
+  
+  &.push {
+    // margin-left: 3.125rem;
+  }
 `
 
 export const FilterList = styled('ul')`
-    list-style: none;
+  list-style: none;
 `
+
+export const FormattedContent = styled('div')`
+
+  h1, h2, h3, h4, h5, h6, p {
+    font-weight: 300;
+    margin-bottom: 1.4rem;
+    margin-top: 0;
+  }
+
+  h2 {
+    padding-top: 2rem;
+    color: ${props => props.theme.color.focus};
+  }
+
+  h3 {
+    color: purple;
+    margin-top: calc(2 * ${props => props.theme.padding}); // offset when navigating page anchors
+  }
+
+  dl, ol, ul {
+    list-style: none;
+    list-style-position: outside;
+    margin: ${props => props.theme.padding} 0 calc(2 * ${props => props.theme.padding}) calc(2 * ${props => props.theme.padding});
+    padding-left: ${props => props.theme.padding};
+  }
+  
+  dl dl, dl ol, dl ul, ol dl, ol ol, ol ul, ul dl, ul ol, ul ul {
+    font-size: 90%;
+    margin: ${props => props.theme.padding} 0 ${props => props.theme.padding} calc(2 * ${props => props.theme.padding});
+    background-color: pink;
+  }
+  
+  ol {
+    list-style: decimal outside;
+  }
+  
+  ul {
+    list-style: circle outside;
+  }
+  
+  dd, dt, li {
+    margin-bottom: 0;
+  }
+
+  li + li {
+    margin-top: ${props => props.theme.padding};
+  }
+
+
+  strong {
+    color: lime;
+  }
+  
+  section {
+    clear: both;
+    padding-bottom: calc(2 * ${props => props.theme.padding});
+  }
+
+  figure {
+    margin: calc(2 * ${props => props.theme.padding}) 0;
+    width: 100%;
+
+    img {
+      width: 100%;
+    }
+  }
+  figcaption {
+    padding-top: ${props => props.theme.padding};
+    color: ${props => props.theme.color.focus};
+    font-style: italic;
+  }    
+
+  @media (min-width: 1080px) {
+    margin-right: 50%;
+    max-width: 680px;
+
+    figure {
+      margin: 0 0;
+      padding: 0 calc(2 * ${props => props.theme.padding});
+      float: right;
+      margin-right: -100%;
+    }
+  }
+
+`;
