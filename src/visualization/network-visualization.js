@@ -198,12 +198,12 @@ export default class NetworkVisualization {
       const { source, target, connect_actor_activity } = link;
 
       // Hover on links
-      this.highlightNetworkLinks(this.links, source, target);
+      this.hoverNetworkLinks(this.links, source, target);
 
       // Line type
       this.lineType(this.links, source, target, connect_actor_activity);
 
-      if (this.identifyLink.length === 0) {
+      if (this.selectedChapter === -1 && this.selectedOrg === -1) {
         this.links.alpha = 1;
       } else {
         this.links.alpha = Theme.nonHighlightOpacity;
@@ -218,7 +218,7 @@ export default class NetworkVisualization {
         this.identifyLinks.alpha = 1;
 
         // Hover on links
-        this.highlightNetworkLinks(this.identifyLinks, source, target);
+        this.hoverNetworkLinks(this.identifyLinks, source, target);
 
         // Line type
         this.lineType(this.identifyLinks, source, target, connect_actor_activity);
@@ -277,15 +277,6 @@ export default class NetworkVisualization {
       this.solidLine(links, source, target);
     } else {
       this.dashedLine(links, source, target);
-    }
-  }
-
-  // Hover on links
-  highlightNetworkLinks (links, source, target) {
-    if (this.hoverLink.includes(source.id) && this.hoverLink.includes(target.id)) {
-      this.highlightLine(links);
-    } else {
-      this.defaultLine(links);
     }
   }
 
@@ -501,6 +492,15 @@ export default class NetworkVisualization {
   }
 
   // Tooltip functions ------------------------------------------------------
+
+  // Makes lines white when hovered over
+  hoverNetworkLinks (links, source, target) {
+    if (this.hoverLink.includes(source.id) && this.hoverLink.includes(target.id)) {
+      this.highlightLine(links);
+    } else {
+      this.defaultLine(links);
+    }
+  }
 
   // Adds glow to nodes when hovered over
   hoverNetworkNodes (d) {
