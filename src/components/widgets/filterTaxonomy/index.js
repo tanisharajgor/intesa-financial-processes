@@ -25,7 +25,7 @@ FilterTaxonomy.propTypes = {
 };
 
 // constants
-const width = 500; const height = 600;
+const width = 490; const height = 600;
 
 const id = 'Filter-Process';
 
@@ -53,7 +53,7 @@ function initTooltip () {
     .attr('class', 'tooltip')
     .attr('z-index', 500)
     .style('width', '100%')
-    .style('height', '85px');
+    .style('height', '75px');
 }
 
 // Tooltip
@@ -112,15 +112,8 @@ function initFilter () {
     .attr('height', height);
 }
 
-function updateFilter (root, selectedLevel3) {
-  let svg = d3.select(`#${id} svg`);
-
-  d3.select(`#${id} svg g`).remove();
-
-  svg = svg.append('g')
-    .attr('transform', 'translate(10, 0)');
-
-  // Add the links between nodes:
+// Add the links between nodes
+function addLinks (svg, root) {
   svg.selectAll('path')
     .data(root.descendants().slice(1).filter(d => d.data.data.level < 4))
     .join('path')
@@ -134,21 +127,56 @@ function updateFilter (root, selectedLevel3) {
     .attr('stroke', Theme.extraDarkGreyHex)
     .attr('stroke-opacity', 1)
     .attr('stroke-width', 0.5);
+}
 
-  // Add a circle for each node.
+// Add a circle for each node
+function addNodes (svg, root, selectedLevel3) {
+
   svg.selectAll('g')
     .data(root.descendants().filter(d => d.data.data.level < 4))
     .join('g')
-    .attr('transform', function (d) {
-      return `translate(${d.y},${d.x})`;
-    })
+    .attr('transform', d=> `translate(${d.y},${d.x})`)
     .append('circle')
-    .attr('r', d => rScale(d.data.data.level))
-    .attr('fill', d => fillScale(d, selectedLevel3))
-    .attr('stroke', d => fillScale(d, selectedLevel3))
-    .attr('stroke-width', 0.5)
-    .attr('class', 'Process-Node')
-    .style('cursor', d => d.data.data.level === 3 ? 'pointer' : 'not-allowed');
+      .attr('r', d => rScale(d.data.data.level))
+      .attr('fill', d => fillScale(d, selectedLevel3))
+      .attr('stroke', d => fillScale(d, selectedLevel3))
+      .attr('stroke-width', 0.5)
+      .attr('class', 'Process-Node')
+      .style('cursor', d => d.data.data.level === 3 ? 'pointer' : 'not-allowed');
+}
+
+//Add level labels to the top node of each level
+function addLabels (svg, root) {
+
+  let l1 = root.descendants().find(d => d.depth === 0)
+  let l2 = root.descendants().find(d => d.depth === 1)
+  let l3 = root.descendants().find(d => d.depth === 2)
+
+  let data = [];
+  data.push({x: l1.x, y: l1.y, label: `L${l1.depth + 1}`})
+  data.push({x: l2.x, y: l2.y, label: `L${l2.depth + 1}`})
+  data.push({x: l3.x, y: l3.y, label: `L${l3.depth + 1}`})
+
+  svg.selectAll('label')
+    .data(data)
+    .join('g')
+    .attr('transform', d=> `translate(${d.y-10},${d.x-10})`)
+    .append('text')
+      .attr('fill', Theme.darkGreyColorHex)
+      .text(d => d.label)
+}
+
+function updateFilter (root, selectedLevel3) {
+  let svg = d3.select(`#${id} svg`);
+
+  d3.select(`#${id} svg g`).remove();
+
+  svg = svg.append('g')
+    .attr('transform', 'translate(10, 0)');
+
+  addLinks(svg, root);
+  addNodes(svg, root, selectedLevel3);
+  addLabels(svg, root);
 }
 
 export function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, updateLevel3 }) {
