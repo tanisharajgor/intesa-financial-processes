@@ -192,7 +192,7 @@ export default function Network () {
       <Content>
         <QueryMenu className="Query" isFullscreen={isFullscreen} style={{
           height: !shouldRotate ? '10vh' : '100vh',
-          overflowY: !shouldRotate ? 'hidden' : 'scroll',
+          overflowY: !shouldRotate ? 'hidden' : 'auto',
           visibility: isFullscreen ? 'hidden' : 'visible'
         }}>
           <MenuHeader label="Network" />
