@@ -14,7 +14,7 @@ import { Accordion, AccordionDetails, MenuItem, Form } from 'cfd-react-component
 import { LayoutGroup, LayoutRow, LayoutItem } from '../../layout/index';
 import { StyledSelect } from '../../../utils/global-styles';
 import * as Theme from '../../../utils/theme';
-import { StyledFilter } from '../../features/menu/style'; 
+import { StyledFilter, StyledItemHeader } from '../../features/menu/style'; 
 
 // Prop types
 FilterTaxonomy.propTypes = {
@@ -188,10 +188,11 @@ export function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, 
 
   return (
     <Accordion className={'Card'}>
-      <AccordionHeaderStyled label="Filter by Process" filteredTypes={[level3Descr]}/>
+      <AccordionHeaderStyled label="Filter by Taxonomy" filteredTypes={[level3Descr]}/>
       <AccordionDetails>
         <LayoutGroup>
           <LayoutRow className="layout_row">
+            <StyledItemHeader>L1</StyledItemHeader>
             <LayoutItem className="push">
               <Form variant="outlined" size="small">
                 <StyledSelect

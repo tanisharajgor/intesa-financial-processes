@@ -33,6 +33,15 @@ export const StyledMenuHeader = styled('div')`
     padding: ${props => props.theme.padding};
 `;
 
+export const StyledItemHeader = styled('div')`
+    padding-top: ${props => props.theme.padding}; 
+    padding-right: ${props => props.theme.padding};
+    padding-bottom: ${props => props.theme.padding};
+    padding-left: 0;
+    font-size: 14px;
+    color: ${props => props.theme.color.secondary};
+`;
+
 export const StyledMenuBody = styled('div')`
 
 `;
