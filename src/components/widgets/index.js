@@ -1,6 +1,5 @@
 import { ChevronButton } from "./chevron";
 import { Description } from "./description";
-import { FilterActivityType } from "./filterActivity";
 import { FilterTaxonomy } from "./filterTaxonomy";
 import { FilterType } from "./filterType";
 import { InspectHierarchyDetail, InspectHTML, InspectHierarchySummary, InspectNetworkSummary } from "./inspect";
@@ -12,7 +11,6 @@ import { Key } from "./key/style";
 export {
     ChevronButton,
     Description,
-    FilterActivityType,
     FilterTaxonomy,
     FilterType,
     InspectHierarchyDetail,

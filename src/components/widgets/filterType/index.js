@@ -11,27 +11,27 @@ import { LayoutGroup, LayoutRow, LayoutItem, FilterList } from '../../layout/ind
 
 // Prop types
 FilterType.propTypes = {
-  typesChecked: PropTypes.node.isRequired,
-  updateSelection: PropTypes.func,
-  typeValues: PropTypes.node.isRequired,
+  checkedValues: PropTypes.array,
+  updateSelectedValues: PropTypes.func,
+  selectedValues: PropTypes.array,
   label: PropTypes.string
 };
 
-export function FilterType ({ typesChecked, updateSelection, typeValues, label }) {
+export function FilterType ({ checkedValues, updateSelectedValues, selectedValues, label }) {
   let newSelectedTypes = [];
   const [filteredTypes, updateFilter] = useState([]);
 
   const updateSelectedRange = (selected) => {
-    if (typesChecked.includes(selected)) {
-      newSelectedTypes = typesChecked.filter((obj) => obj !== selected);
+    if (selectedValues.includes(selected)) {
+      newSelectedTypes = selectedValues.filter((obj) => obj !== selected);
       filteredTypes.push(selected);
       updateFilter([...filteredTypes]);
     } else {
-      typesChecked.push(selected);
+      selectedValues.push(selected);
       updateFilter(filteredTypes.filter((obj) => obj !== selected));
-      newSelectedTypes = [...typesChecked];
+      newSelectedTypes = [...selectedValues];
     }
-    updateSelection(newSelectedTypes);
+    updateSelectedValues(newSelectedTypes);
   };
 
   return (
@@ -42,12 +42,12 @@ export function FilterType ({ typesChecked, updateSelection, typeValues, label }
           <LayoutRow>
             <LayoutItem className="push">
               <FilterList>
-                {typeValues.map((value, index) => {
+                {checkedValues.map((value, index) => {
                   return (
                     <li key={index}>
                       <FormLabel
                         control={<Checkbox color="primary"
-                          checked={typesChecked.includes(value)}
+                          checked={!selectedValues.includes(value)}
                           name={value}
                           onChange={() => updateSelectedRange(value)}
                           label={value}
