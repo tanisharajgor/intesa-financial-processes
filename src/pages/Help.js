@@ -96,6 +96,9 @@ export default function Help () {
                 </section>
                 <section>
                     <h2 href="about">About the Project</h2>
+                    <p>
+                        <img src={process.env.PUBLIC_URL + '/assets/logos.svg'}  width="542" alt="Center for Design and Banca Intesa S.p.A." />&nbsp;&nbsp;&nbsp;&nbsp; 
+                    </p>
                     <p>...</p>
                 </section>
             </FormattedContent>
