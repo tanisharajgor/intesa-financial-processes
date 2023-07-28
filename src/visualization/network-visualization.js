@@ -107,48 +107,6 @@ export default class NetworkVisualization {
     this.viewport.on('click', () => this.clickOff());
   }
 
-  // Set diagram to fill the vizualization frame
-  centerVisualization (zoom, xPos, yPos) {
-    if (xPos && yPos) {
-      this.viewport.moveCenter(xPos, yPos);
-    }
-    this.viewport.zoomPercent(zoom, true);
-  }
-
-  clickOff () {
-    this.clickCount++;
-    if (this.clickCount > 2) {
-      this.clickNode = false;
-      this.clickCount = 0;
-      this.hoverNodes
-        .forEach(node => {
-          const { gfx } = node;
-          gfx.filters.pop();
-          gfx.zIndex = 0;
-        });
-
-      this.hoverLink = [];
-      this.hoverNode = [];
-    }
-  }
-
-  clickOn (node) {
-    this.clickNode = true;
-    this.clickCount++;
-    if (this.clickCount > 3) {
-      this.clickNode = false;
-      this.clickCount = 0;
-    }
-
-    this.hoverNodes
-      .forEach(node => {
-        const { gfx } = node;
-        gfx.filters.pop();
-        gfx.zIndex = 0;
-      });
-    this.highlightNetworkNodes(node);
-  }
-
   // Drawing functions ------------------------------------------------------
 
   // Initializes the links
@@ -164,13 +122,6 @@ export default class NetworkVisualization {
     this.containerLinks.addChild(this.identifyLinks);
 
     this.viewport.addChild(this.containerLinks);
-  }
-
-  reduceNestedList (emptyList, list) {
-    emptyList.push(list);
-    emptyList = emptyList.flat(1);
-    const unique = [...new Set(emptyList)];
-    return unique;
   }
 
   // Initializes the nodes
@@ -320,224 +271,9 @@ export default class NetworkVisualization {
     });
   }
 
-  // Destroy the links on update ------------------------------------------------------
-
-  // Destroys the links on data update
-  destroyLinks () {
-    if (this.containerLinks) {
-      this.containerLinks.destroy();
-    }
-    if (this.links !== undefined) {
-      this.links.destroy();
-    }
-    if (this.identifyLinks !== undefined) {
-      this.identifyLinks.destroy();
-    }
-  }
-
-  // Destroys the nodes on data update
-  destroyNodes () {
-    if (this.containerNodes) {
-      this.containerNodes.destroy();
-    }
-  }
-
-  // Dragging functions ------------------------------------------------------
-
-  drag () {
-    // d3 drag
-    d3.select(this.app.view).call(() => {
-      d3.drag()
-        .container(this.app.view)
-        // Returns the node closest to the position with the given search radius
-        .subject((d) => this.simulation.find(d.x, d.y, 10))
-        .on('start', (d, e) => {
-          this.dragStarted(d, e);
-        })
-        .on('drag', (e) => {
-          this.dragged(e);
-        })
-        .on('end', (e) => {
-          this.dragEnded(e);
-        });
-    });
-  }
-
-  dragStarted (d, e) {
-    if (!e.active) {
-      this.simulation.alphaTarget(0.1).restart();
-    }
-    e.subject.fx = e.subject.x;
-    e.subject.fy = e.subject.y;
-  }
-
-  dragged (e) {
-    e.subject.fx = e.x;
-    e.subject.fy = e.y;
-  }
-
-  dragEnded (e) {
-    if (!e.active) {
-      this.simulation.alphaTarget(0);
-    }
-    e.subject.fx = null;
-    e.subject.fy = null;
-  }
-
-  // Controls ------------------------------------------------------
-
-  getControls () {
-    return {
-      zoomIn: () => {
-        this.viewport.zoomPercent(0.15, true);
-      },
-      zoomOut: () => {
-        this.viewport.zoomPercent(-0.15, true);
-      },
-      reset: () => {
-        const width = (document.getElementById(this.selector).clientWidth / 2) - document.getElementsByClassName('Query')[0].clientWidth;
-        const height = (document.getElementById(this.selector).clientHeight / 2) - document.getElementsByClassName('Navigation')[0].clientHeight;
-    
-        this.viewport.fit();
-        this.centerVisualization(-0.4,  width - 200, height)
-      }
-    };
-  }
-
-  // Update aesthetic functions ------------------------------------------------------
-
-  listHighlightNetworkNodes (d) {
-    if (d.group === 'Actor') {
-
-      const activityIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
-      const riskIds = Global.filterLinksSourceToTarget(this.data.links, activityIds);
-      const controlIds = Global.filterLinksSourceToTarget(this.data.links, riskIds);
-      const ids = controlIds.concat(riskIds.concat(activityIds.concat(d.id)));
-      return ids;
-
-    } else if (d.group === 'Activity') {
-
-      const actorIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
-      const riskIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
-      const controlIds = Global.filterLinksSourceToTarget(this.data.links, riskIds);
-      const ids = controlIds.concat(riskIds.concat(actorIds.concat(d.id)));
-      return ids;
-
-    } else if (d.group === 'Risk') {
-
-      const controlIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
-      const activityIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
-      const actorIds = Global.filterLinksTargetToSource(this.data.links, activityIds);
-      const ids = actorIds.concat(activityIds.concat(controlIds.concat(d.id)));
-      return ids;
-
-    } else if (d.group === 'Control') {
-
-      const riskIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
-      const activityIds = Global.filterLinksTargetToSource(this.data.links, riskIds);
-      const actorIds = Global.filterLinksTargetToSource(this.data.links, activityIds);
-      const ids = actorIds.concat(activityIds.concat(riskIds.concat(d.id)));
-      return ids;
-
-    }
-  }
-
-  highlightNetworkNodes (d) {
-    this.hoverLink = this.listHighlightNetworkNodes(d);
-    this.hoverNodes = this.data.nodes.filter(z => this.hoverLink.includes(z.id));
-    this.hoverNodes
-      .forEach(node => {
-        const { gfx } = node;
-
-        gfx.filters = [
-          new GlowFilter({
-            distance: 1,
-            innerStrength: 0,
-            outerStrength: 2,
-            color: 0xffffff,
-            quality: 1
-          })
-        ];
-        gfx.zIndex = 1;
-      });
-  }
-
-  tooltipText (d) {
-    if (d.viewId === 'Actor') {
-      return `<b>${d.type}</b>: ${d.descr} <br> <b>Organizational structure</b>: ${d.organizationalStructure[0].descr} <br> <b># activities</b>: ${d.viewType.nActivity} <br> <b># risks</b>: ${d.viewType.nRisk} <br> <b># controls</b>: ${d.viewType.nControl}`;
-    } else if (d.viewId === 'Other activity') {
-      return `<b>Type</b>: ${d.type} <br> <b>${d.group}</b>: ${d.descr} <br> <b># actors</b>: ${d.viewType.nActor} <br> <b># risks</b>: ${d.viewType.nRisk} <br> <b># controls</b>: ${d.viewType.nControl}`;
-    } else if (d.viewId === 'Risk') {
-      return `<b>${d.group}</b>: ${d.descr} <br> <b># actors</b>: ${d.viewType.nActor} <br> <b># activity</b>: ${d.viewType.nActivity} <br> <b># control</b>: ${d.viewType.nControl}`;
-    } else if (d.viewId === 'Control activity') {
-      return `<b>Type</b>: ${d.type} <br> <b>${d.group}</b>: ${d.descr} <br> <b># actors</b>: ${d.viewType.nActor} <br> <b># risks</b>: ${d.viewType.nRisk}`;
-    }
-  }
-
-  showTooltip (d) {
-    const x = d.x + 20;
-    const y = d.y - 10;
-
-    this.tooltip.style('visibility', 'visible')
-      .style('top', `${y}px`)
-      .style('left', `${x}px`)
-      .html(this.tooltipText(d));
-  }
-
-  pointerOver (d) {
-    if (!this.clickNode) {
-      this.highlightNetworkNodes(d);
-    }
-    this.updateSymbolHoverValue(d.viewId);
-    this.updateViewHoverValue(Global.applyColorScale(d, this.viewVariable));
-    this.showTooltip(d);
-  }
-
-  pointerOut () {
-    if (!this.clickNode) {
-      this.hoverNodes
-        .forEach(node => {
-          const { gfx } = node;
-          gfx.filters.pop();
-          gfx.zIndex = 0;
-        });
-
-      this.hoverLink = [];
-      this.hoverNode = [];
-    }
-
-    this.updateViewHoverValue("");
-    this.updateSymbolHoverValue("");
-    this.tooltip.style('visibility', 'hidden');
-    this.app.renderer.events.cursorStyles.default = 'default';
-  }
-
-  // Main functions ------------------------------------------------------
-
-  run () {
-    return this.simulation;
-  }
-
-  draw (viewVariable) {
-    this.viewVariable = viewVariable;
-    this.drawLinks();
-    this.drawNodes();
-    this.simulation.alpha(1).restart();
-  }
-
-  updateDraw (viewVariable) {
-    this.hoverLink = [];
-    this.hoverNode = [];
-    this.hoverNodes = [];
-    this.destroyLinks();
-    this.destroyNodes();
-    this.draw(viewVariable);
-    this.animate();
-  }
-
   // Identify nodes and links to highlight
   identifyNodesLinks (node) {
-    const links = this.listHighlightNetworkNodes(node);
+    const links = this.listNetworkNodes(node);
     const nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
     this.identifyLink = this.reduceNestedList(this.identifyLink, links);
     this.identifyNode = this.reduceNestedList(this.identifyNode, nodes);
@@ -612,10 +348,283 @@ export default class NetworkVisualization {
     });
   }
 
+  // Destroy the links on update ------------------------------------------------------
+
+  // Destroys the links on data update
+  destroyLinks () {
+    if (this.containerLinks) {
+      this.containerLinks.destroy();
+    }
+    if (this.links !== undefined) {
+      this.links.destroy();
+    }
+    if (this.identifyLinks !== undefined) {
+      this.identifyLinks.destroy();
+    }
+  }
+
+  // Destroys the nodes on data update
+  destroyNodes () {
+    if (this.containerNodes) {
+      this.containerNodes.destroy();
+    }
+  }
+
+  // Dragging functions ------------------------------------------------------
+
+  drag () {
+    // d3 drag
+    d3.select(this.app.view).call(() => {
+      d3.drag()
+        .container(this.app.view)
+        // Returns the node closest to the position with the given search radius
+        .subject((d) => this.simulation.find(d.x, d.y, 10))
+        .on('start', (d, e) => {
+          this.dragStarted(d, e);
+        })
+        .on('drag', (e) => {
+          this.dragged(e);
+        })
+        .on('end', (e) => {
+          this.dragEnded(e);
+        });
+    });
+  }
+
+  dragStarted (d, e) {
+    if (!e.active) {
+      this.simulation.alphaTarget(0.1).restart();
+    }
+    e.subject.fx = e.subject.x;
+    e.subject.fy = e.subject.y;
+  }
+
+  dragged (e) {
+    e.subject.fx = e.x;
+    e.subject.fy = e.y;
+  }
+
+  dragEnded (e) {
+    if (!e.active) {
+      this.simulation.alphaTarget(0);
+    }
+    e.subject.fx = null;
+    e.subject.fy = null;
+  }
+
+  // Controls (panning, zooming, centering) ------------------------------------------------------
+
+  // Set diagram to fill the vizualization frame
+  centerVisualization (zoom, xPos, yPos) {
+    if (xPos && yPos) {
+      this.viewport.moveCenter(xPos, yPos);
+    }
+    this.viewport.zoomPercent(zoom, true);
+  }
+
+  getControls () {
+    return {
+      zoomIn: () => {
+        this.viewport.zoomPercent(0.15, true);
+      },
+      zoomOut: () => {
+        this.viewport.zoomPercent(-0.15, true);
+      },
+      reset: () => {
+        const width = (document.getElementById(this.selector).clientWidth / 2) - document.getElementsByClassName('Query')[0].clientWidth;
+        const height = (document.getElementById(this.selector).clientHeight / 2) - document.getElementsByClassName('Navigation')[0].clientHeight;
+    
+        this.viewport.fit();
+        this.centerVisualization(-0.4,  width - 200, height)
+      }
+    };
+  }
+
+  // Freeze functions ------------------------------------------------------
+
+  // Turn on the freeze network
+  // Click highlights a portion of the network
+  clickOn (node) {
+    this.clickNode = true;
+    this.clickCount++;
+    if (this.clickCount > 3) {
+      this.clickNode = false;
+      this.clickCount = 0;
+    }
+
+    this.hoverNodes
+      .forEach(node => {
+        const { gfx } = node;
+        gfx.filters.pop();
+        gfx.zIndex = 0;
+      });
+    this.hoverNetworkNodes(node);
+  }
+
+  // Turn off the freeze
+  // Click unhighlights the portion of the network
+  clickOff () {
+    this.clickCount++;
+    if (this.clickCount > 2) {
+      this.clickNode = false;
+      this.clickCount = 0;
+      this.hoverNodes
+        .forEach(node => {
+          const { gfx } = node;
+          gfx.filters.pop();
+          gfx.zIndex = 0;
+        });
+
+      this.hoverLink = [];
+      this.hoverNode = [];
+    }
+  }
+
+  // Tooltip functions ------------------------------------------------------
+
+  hoverNetworkNodes (d) {
+    this.hoverLink = this.listNetworkNodes(d);
+    this.hoverNodes = this.data.nodes.filter(z => this.hoverLink.includes(z.id));
+    this.hoverNodes
+      .forEach(node => {
+        const { gfx } = node;
+
+        gfx.filters = [
+          new GlowFilter({
+            distance: 1,
+            innerStrength: 0,
+            outerStrength: 2,
+            color: 0xffffff,
+            quality: 1
+          })
+        ];
+        gfx.zIndex = 1;
+      });
+  }
+
+  tooltipText (d) {
+    if (d.viewId === 'Actor') {
+      return `<b>${d.type}</b>: ${d.descr} <br> <b>Organizational structure</b>: ${d.organizationalStructure[0].descr} <br> <b># activities</b>: ${d.viewType.nActivity} <br> <b># risks</b>: ${d.viewType.nRisk} <br> <b># controls</b>: ${d.viewType.nControl}`;
+    } else if (d.viewId === 'Other activity') {
+      return `<b>Type</b>: ${d.type} <br> <b>${d.group}</b>: ${d.descr} <br> <b># actors</b>: ${d.viewType.nActor} <br> <b># risks</b>: ${d.viewType.nRisk} <br> <b># controls</b>: ${d.viewType.nControl}`;
+    } else if (d.viewId === 'Risk') {
+      return `<b>${d.group}</b>: ${d.descr} <br> <b># actors</b>: ${d.viewType.nActor} <br> <b># activity</b>: ${d.viewType.nActivity} <br> <b># control</b>: ${d.viewType.nControl}`;
+    } else if (d.viewId === 'Control activity') {
+      return `<b>Type</b>: ${d.type} <br> <b>${d.group}</b>: ${d.descr} <br> <b># actors</b>: ${d.viewType.nActor} <br> <b># risks</b>: ${d.viewType.nRisk}`;
+    }
+  }
+
+  showTooltip (d) {
+    const x = d.x + 20;
+    const y = d.y - 10;
+
+    this.tooltip.style('visibility', 'visible')
+      .style('top', `${y}px`)
+      .style('left', `${x}px`)
+      .html(this.tooltipText(d));
+  }
+
+  pointerOver (d) {
+    if (!this.clickNode) {
+      this.hoverNetworkNodes(d);
+    }
+    this.updateSymbolHoverValue(d.viewId);
+    this.updateViewHoverValue(Global.applyColorScale(d, this.viewVariable));
+    this.showTooltip(d);
+  }
+
+  pointerOut () {
+    if (!this.clickNode) {
+      this.hoverNodes
+        .forEach(node => {
+          const { gfx } = node;
+          gfx.filters.pop();
+          gfx.zIndex = 0;
+        });
+
+      this.hoverLink = [];
+      this.hoverNode = [];
+    }
+
+    this.updateViewHoverValue("");
+    this.updateSymbolHoverValue("");
+    this.tooltip.style('visibility', 'hidden');
+    this.app.renderer.events.cursorStyles.default = 'default';
+  }
+
+  // Main functions ------------------------------------------------------
+
+  run () {
+    return this.simulation;
+  }
+
+  draw (viewVariable) {
+    this.viewVariable = viewVariable;
+    this.drawLinks();
+    this.drawNodes();
+    this.simulation.alpha(1).restart();
+  }
+
+  updateDraw (viewVariable) {
+    this.hoverLink = [];
+    this.hoverNode = [];
+    this.hoverNodes = [];
+    this.destroyLinks();
+    this.destroyNodes();
+    this.draw(viewVariable);
+    this.animate();
+  }
+
   animate () {
     this.app.ticker.add(() => {
       this.updateLinkPosition();
       this.updateNodePosition();
     });
+  }
+
+  // Helper functions ------------------------------------------------------
+
+  reduceNestedList (emptyList, list) {
+    emptyList.push(list);
+    emptyList = emptyList.flat(1);
+    const unique = [...new Set(emptyList)];
+    return unique;
+  }
+
+  // Returns the list of nodes associated with a particular given id
+  listNetworkNodes (d) {
+    if (d.group === 'Actor') {
+
+      const activityIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
+      const riskIds = Global.filterLinksSourceToTarget(this.data.links, activityIds);
+      const controlIds = Global.filterLinksSourceToTarget(this.data.links, riskIds);
+      const ids = controlIds.concat(riskIds.concat(activityIds.concat(d.id)));
+      return ids;
+
+    } else if (d.group === 'Activity') {
+
+      const actorIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
+      const riskIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
+      const controlIds = Global.filterLinksSourceToTarget(this.data.links, riskIds);
+      const ids = controlIds.concat(riskIds.concat(actorIds.concat(d.id)));
+      return ids;
+
+    } else if (d.group === 'Risk') {
+
+      const controlIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
+      const activityIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
+      const actorIds = Global.filterLinksTargetToSource(this.data.links, activityIds);
+      const ids = actorIds.concat(activityIds.concat(controlIds.concat(d.id)));
+      return ids;
+
+    } else if (d.group === 'Control') {
+
+      const riskIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
+      const activityIds = Global.filterLinksTargetToSource(this.data.links, riskIds);
+      const actorIds = Global.filterLinksTargetToSource(this.data.links, activityIds);
+      const ids = actorIds.concat(activityIds.concat(riskIds.concat(d.id)));
+      return ids;
+
+    }
   }
 }
