@@ -18,6 +18,8 @@ IdentifyOrgStructure.propTypes = {
 
 export function IdentifyOrgStructure({ selectedOrg, updateSelectedOrg, orgStructure }) {
 
+  orgStructure.sort((a, b) => a.id - b.id)
+
   const orgsLevel = [{ id: -1, descr: 'All' }].concat(orgStructure);
 
   const handleChangeOrg = (event) => {
