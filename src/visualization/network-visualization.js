@@ -107,7 +107,37 @@ export default class NetworkVisualization {
     this.viewport.on('click', () => this.clickOff());
   }
 
-  // Drawing functions ------------------------------------------------------
+  // Main functions ------------------------------------------------------
+
+  run () {
+    return this.simulation;
+  }
+
+  draw (viewVariable) {
+    this.viewVariable = viewVariable;
+    this.drawLinks();
+    this.drawNodes();
+    this.simulation.alpha(1).restart();
+  }
+
+  updateDraw (viewVariable) {
+    this.hoverLink = [];
+    this.hoverNode = [];
+    this.hoverNodes = [];
+    this.destroyLinks();
+    this.destroyNodes();
+    this.draw(viewVariable);
+    this.animate();
+  }
+
+  animate () {
+    this.app.ticker.add(() => {
+      this.updateLinkPosition();
+      this.updateNodePosition();
+    });
+  }
+
+  // Initialize forms ------------------------------------------------------
 
   // Initializes the links
   drawLinks () {
@@ -156,6 +186,52 @@ export default class NetworkVisualization {
     });
 
     this.viewport.addChild(this.containerNodes);
+  }
+
+  // Update notes and links during animation ------------------------------------------------------
+
+  // Update the links position
+  updateLinkPosition () {
+    // Links
+    this.links.clear();
+    this.data.links.forEach(link => {
+      const { source, target, connect_actor_activity } = link;
+
+      // Hover on links
+      this.highlightNetworkLinks(this.links, source, target);
+
+      // Line type
+      this.lineType(this.links, source, target, connect_actor_activity);
+
+      if (this.identifyLink.length === 0) {
+        this.links.alpha = 1;
+      } else {
+        this.links.alpha = Theme.nonHighlightOpacity;
+      }
+    });
+
+    this.identifyLinks.clear();
+    this.data.links
+      .filter(d => (this.identifyLink.includes(d.source.id) && this.identifyLink.includes(d.target.id)))
+      .forEach(link => {
+        const { source, target, connect_actor_activity } = link;
+        this.identifyLinks.alpha = 1;
+
+        // Hover on links
+        this.highlightNetworkLinks(this.identifyLinks, source, target);
+
+        // Line type
+        this.lineType(this.identifyLinks, source, target, connect_actor_activity);
+      });
+  }
+
+  // Update the nodes position
+  updateNodePosition () {
+    this.nodes.forEach((node) => {
+      const { x, y, gfx } = node;
+      gfx.x = x;
+      gfx.y = y;
+    });
   }
 
   // Updating the draw functions during the animation ------------------------------------------------------
@@ -225,50 +301,6 @@ export default class NetworkVisualization {
     } else {
       this.links.alpha = 1;
     }
-  }
-
-  // Update the links position
-  updateLinkPosition () {
-    // Links
-    this.links.clear();
-    this.data.links.forEach(link => {
-      const { source, target, connect_actor_activity } = link;
-
-      // Hover on links
-      this.highlightNetworkLinks(this.links, source, target);
-
-      // Line type
-      this.lineType(this.links, source, target, connect_actor_activity);
-
-      if (this.identifyLink.length === 0) {
-        this.links.alpha = 1;
-      } else {
-        this.links.alpha = Theme.nonHighlightOpacity;
-      }
-    });
-
-    this.identifyLinks.clear();
-    this.data.links
-      .filter(d => (this.identifyLink.includes(d.source.id) && this.identifyLink.includes(d.target.id)))
-      .forEach(link => {
-        const { source, target, connect_actor_activity } = link;
-        this.identifyLinks.alpha = 1;
-
-        // Hover on links
-        this.highlightNetworkLinks(this.identifyLinks, source, target);
-
-        // Line type
-        this.lineType(this.identifyLinks, source, target, connect_actor_activity);
-      });
-  }
-
-  // Update the nodes position
-  updateNodePosition () {
-    this.nodes.forEach((node) => {
-      const { x, y, gfx } = node;
-      gfx.x = x;
-      gfx.y = y;
-    });
   }
 
   // Identify nodes and links to highlight
@@ -482,6 +514,7 @@ export default class NetworkVisualization {
 
   // Tooltip functions ------------------------------------------------------
 
+  // Adds glow to nodes when hovered over
   hoverNetworkNodes (d) {
     this.hoverLink = this.listNetworkNodes(d);
     this.hoverNodes = this.data.nodes.filter(z => this.hoverLink.includes(z.id));
@@ -502,6 +535,7 @@ export default class NetworkVisualization {
       });
   }
 
+  // Returns the tooltip text for each type of node
   tooltipText (d) {
     if (d.viewId === 'Actor') {
       return `<b>${d.type}</b>: ${d.descr} <br> <b>Organizational structure</b>: ${d.organizationalStructure[0].descr} <br> <b># activities</b>: ${d.viewType.nActivity} <br> <b># risks</b>: ${d.viewType.nRisk} <br> <b># controls</b>: ${d.viewType.nControl}`;
@@ -550,36 +584,6 @@ export default class NetworkVisualization {
     this.updateSymbolHoverValue("");
     this.tooltip.style('visibility', 'hidden');
     this.app.renderer.events.cursorStyles.default = 'default';
-  }
-
-  // Main functions ------------------------------------------------------
-
-  run () {
-    return this.simulation;
-  }
-
-  draw (viewVariable) {
-    this.viewVariable = viewVariable;
-    this.drawLinks();
-    this.drawNodes();
-    this.simulation.alpha(1).restart();
-  }
-
-  updateDraw (viewVariable) {
-    this.hoverLink = [];
-    this.hoverNode = [];
-    this.hoverNodes = [];
-    this.destroyLinks();
-    this.destroyNodes();
-    this.draw(viewVariable);
-    this.animate();
-  }
-
-  animate () {
-    this.app.ticker.add(() => {
-      this.updateLinkPosition();
-      this.updateNodePosition();
-    });
   }
 
   // Helper functions ------------------------------------------------------
