@@ -289,20 +289,6 @@ export default class NetworkVisualization {
     }
   }
 
-  // Identify on links
-  identifyNetworkLinks (source, target) {
-    if (this.identifyLink.length !== 0) {
-      if ((this.identifyLink.includes(source.id) && this.identifyLink.includes(target.id)) &&
-      !(this.hoverLink.includes(source.id) && this.hoverLink.includes(target.id))) {
-        this.links.alpha = 1;
-      } else {
-        this.links.alpha = Theme.nonHighlightOpacity;
-      }
-    } else {
-      this.links.alpha = 1;
-    }
-  }
-
   // Identify nodes and links to highlight
   identifyNodesLinks (node) {
     const links = this.listNetworkNodes(node);
@@ -364,6 +350,8 @@ export default class NetworkVisualization {
     this.selectedChapter = selectedChapter.id;
     this.selectedOrg = selectedOrg.id;
 
+
+    console.log(this.selectedChapter, this.selectedOrg)
     this.identifyLink = [];
     this.identifyNode = [];
 
