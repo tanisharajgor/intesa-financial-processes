@@ -25,7 +25,7 @@ FilterTaxonomy.propTypes = {
 };
 
 // constants
-const width = 490; const height = 600;
+const width = 500; const height = 600;
 
 const id = 'Filter-Process';
 
@@ -35,7 +35,7 @@ const rScale = d3.scaleOrdinal()
 
 // Data management steps
 const cluster = d3.cluster()
-  .size([height, width - 100]); // 100 is the margin I will have on the right side
+  .size([height - 10, width - 110]); // 100 is the margin I will have on the right side
 
 function fillScale (d, selectedLevel3) {
   if (d.data.data.level === 3 && d.data.data.id === selectedLevel3) {
@@ -172,7 +172,7 @@ function updateFilter (root, selectedLevel3) {
   d3.select(`#${id} svg g`).remove();
 
   svg = svg.append('g')
-    .attr('transform', 'translate(10, 0)');
+    .attr('transform', 'translate(10, 10)');
 
   addLinks(svg, root);
   addNodes(svg, root, selectedLevel3);
