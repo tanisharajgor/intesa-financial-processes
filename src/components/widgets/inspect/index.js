@@ -11,11 +11,11 @@ const treeLevelScale = d3.scaleOrdinal()
   .domain([0, 1, 2, 3, 4])
   .range(['root', 'Process 1', 'Process 2', 'Process 3', 'Activity']);
 
-export function InspectNetworkSummary (inspect, data) {
+export function InspectNetworkSummary (inspect, data, networkDiagram) {
   const nActors = data.nodes.filter(d => d.group === 'Actor').length;
   const nActivities = data.nodes.filter(d => d.group === 'Activity').length;
-  const nIdentifiedActors = data.nodes.filter(d => d.group === 'Actor' && d.gfx.alpha === 1).length;
-  const nIdentifiedActivities = data.nodes.filter(d => d.group === 'Activity' && d.gfx.alpha === 1).length;
+  const nIdentifiedActors = networkDiagram.inspectNode ? data.nodes.filter(d => d.group === 'Actor' && networkDiagram.inspectNode.includes(d.id)).length : 0;
+  const nIdentifiedActivities = networkDiagram.inspectNode ? data.nodes.filter(d => d.group === 'Activity' && networkDiagram.inspectNode.includes(d.id)).length : 0;
 
   inspect.select('.value1 .key').text('Number of actors: ');
   inspect.select('.value1 .value').text(`${nActors}`);

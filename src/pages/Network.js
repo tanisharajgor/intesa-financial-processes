@@ -169,8 +169,8 @@ export default function Network () {
     networkDiagram.current.updateDraw(viewVariable);
 
     const inspect = d3.select('.Inspect');
-    InspectNetworkSummary(inspect, filteredData);
-  }, [selectedLevel3, selectedActivities, selectedActors]);
+    InspectNetworkSummary(inspect, filteredData, networkDiagram);
+  }, [selectedLevel3, selectedActivities, selectedActors, networkDiagram.inspectNode]);
 
   // Update filter possibilities when level changes
   useEffect(() => {
