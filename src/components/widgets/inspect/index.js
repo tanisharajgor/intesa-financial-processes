@@ -2,7 +2,10 @@
 import React from 'react';
 import * as d3 from 'd3';
 import { viewVariables, createLabelScale } from '../../../utils/global';
+// import * as Theme from '../../../utils/theme';
 
+// Libraries
+import '@pixi/graphics-extras';
 
 const treeLevelScale = d3.scaleOrdinal()
   .domain([0, 1, 2, 3, 4])
@@ -11,13 +14,17 @@ const treeLevelScale = d3.scaleOrdinal()
 export function InspectNetworkSummary (inspect, data) {
   const nActors = data.nodes.filter(d => d.group === 'Actor').length;
   const nActivities = data.nodes.filter(d => d.group === 'Activity').length;
+  const nIdentifiedActors = data.nodes.filter(d => d.group === 'Actor' && d.gfx.alpha === 1).length;
+  const nIdentifiedActivities = data.nodes.filter(d => d.group === 'Activity' && d.gfx.alpha === 1).length;
 
   inspect.select('.value1 .key').text('Number of actors: ');
   inspect.select('.value1 .value').text(`${nActors}`);
   inspect.select('.value2 .key').text('Number of activities: ');
   inspect.select('.value2 .value').text(`${nActivities}`);
-  inspect.select('.value3 .key').text('');
-  inspect.select('.value3 .value').text(' ');
+  inspect.select('.value3 .key').text('Actors identified: ');
+  inspect.select('.value3 .value').text(`${nIdentifiedActors}`);
+  inspect.select('.value4 .key').text('Activites identified: ');
+  inspect.select('.value4 .value').text(`${nIdentifiedActivities}`);
 }
 
 export function InspectHierarchySummary (data) {
@@ -60,6 +67,10 @@ export function InspectHTML () {
             <span className="layout_item value"></span>
           </div>
           <div className="value3 layout_row">
+            <span className="layout_item key"></span>
+            <span className="layout_item value"></span>
+          </div>
+          <div className="value4 layout_row">
             <span className="layout_item key"></span>
             <span className="layout_item value"></span>
           </div>
