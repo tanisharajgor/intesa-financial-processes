@@ -545,6 +545,8 @@ export default class NetworkVisualization {
   }
 
   // Apply ifelse logic to identified nodes
+  // nodeEvaluation is an operation that takes the value of true or false
+  // node is the node object
   highlightIdentifiedNodes (nodeEvaluation, node) {
     if (nodeEvaluation) {
       this.identifyNodesLinks(node);
@@ -584,6 +586,7 @@ export default class NetworkVisualization {
   selectedChapterAndOrgStructureAlpha (node) {
     if (node.viewId === 'Actor') {
       this.highlightIdentifiedNodes(node.levels.orgStructureID.includes(this.selectedOrg) && node.levels.modelID.includes(this.selectedChapter), node);
+    } else {
       this.highlightNonActorNodes(node);
     }
   }
