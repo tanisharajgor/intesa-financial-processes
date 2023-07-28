@@ -3,8 +3,7 @@ import os
 import yaml
 from python.data_management import actors_rename, activities_dm, actors_dm, risks_dm, \
     applications_dm, controls_dm, level1_dm, level2_dm, level3_dm, model_dm, \
-    activity_to_risk_dm, risk_to_control_dm, main_dm, activity_to_actor_dm, org_str1_dm, \
-    org_str2_dm
+    activity_to_risk_dm, risk_to_control_dm, main_dm, org_str_dm
 
 from python.nest_data import create_processes_to_activities, \
      create_network, create_processes, create_org_structure
@@ -67,7 +66,7 @@ def main():
     level2Clean = level2_dm(data, raw_pth, processed_pth)
     level3Clean = level3_dm(data, raw_pth, processed_pth)
     modelClean = model_dm(data, raw_pth, processed_pth)
-    orgClean = org_str2_dm(data, raw_pth, processed_pth)
+    orgClean = org_str_dm(data, raw_pth, processed_pth)
 
     data = data[["L1 GUID", "L2 GUID", "L3 GUID", "MODEL GUID", "activityGUID", "actorGUID", "organizational_structure1", "organizational_structure", "Connection"]].rename(
                                 columns={

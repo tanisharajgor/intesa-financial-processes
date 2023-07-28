@@ -344,9 +344,9 @@ def org_str1_dm(data, raw_pth, processed_pth):
 Organizational structure data management
 Return dataframe unique on organizational structure 2
 """
-def org_str2_dm(data, raw_pth, processed_pth):
+def org_str_dm(data, raw_pth, processed_pth):
 
-    df = data[data.organizational_structure1 == "Strutture organizzative"][["organizational_structure"]].drop_duplicates()
+    df = data[["organizational_structure"]].drop_duplicates()
     dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "organizational_structure.csv")).rename(columns={'Italian': 'organizational_structure'})
     df = pd.merge(df, dfTranslated, on="organizational_structure", how="left")
     df = num_id(df, "organizational_structure", 10000000)
@@ -521,19 +521,19 @@ def main_dm(data, level1, level2, level3, model, activities, actors, risks, cont
     df = pd.merge(df, model, how="left", on="modelGUID")
     df = pd.merge(df, activities, how="left", on="activityGUID")
     df = pd.merge(df, actors, how="left", on="actorGUID")
-
     df = pd.merge(df, org, how="left", on="organizational_structure").drop("organizational_structure", axis=1).rename(columns={'English': "organizational_structure"})
+
     df = clean_strings(df, "organizational_structure")
-    df['organizational_structureID'] = df['organizational_structureID'].fillna(df.organizational_structureID.max() +1)
+
+    id = df.organizational_structureID.max()+1
+    df['organizational_structureID'] = df['organizational_structureID'].fillna(id)
+    df['organizational_structureID'] = np.where(df.organizational_structure1 == "Strutture organizzative", df.organizational_structureID, df.organizational_structureID.max())
+    df['organizational_structure'] = np.where(df.organizational_structure1 == "Strutture organizzative", df.organizational_structure, "Not specified")
 
     def shorten_label(row):
-        if not pd.isnull(row['organizational_structure']):
-            return row['organizational_structure'].split(" - ")[-1]
-        else: 
-            return "Not specified"
+        return row['organizational_structure'].split(" - ")[-1]
 
     df['organizational_structure'] = df.apply(shorten_label, axis=1)
-
 
     rtc = pd.concat([risk_to_control.rename(columns={'controlID': 'activityID'}), activity_to_risk], ignore_index=True, sort=False).drop_duplicates()
     df = pd.merge(df, rtc, how="left", on="activityID")

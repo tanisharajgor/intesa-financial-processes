@@ -411,33 +411,37 @@ export default class NetworkVisualization {
 
   listHighlightNetworkNodes (d) {
     if (d.group === 'Actor') {
+
       const activityIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
       const riskIds = Global.filterLinksSourceToTarget(this.data.links, activityIds);
       const controlIds = Global.filterLinksSourceToTarget(this.data.links, riskIds);
       const ids = controlIds.concat(riskIds.concat(activityIds.concat(d.id)));
-
       return ids;
+
     } else if (d.group === 'Activity') {
+
       const actorIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
       const riskIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
       const controlIds = Global.filterLinksSourceToTarget(this.data.links, riskIds);
       const ids = controlIds.concat(riskIds.concat(actorIds.concat(d.id)));
-
       return ids;
+
     } else if (d.group === 'Risk') {
+
       const controlIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
       const activityIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
       const actorIds = Global.filterLinksTargetToSource(this.data.links, activityIds);
       const ids = actorIds.concat(activityIds.concat(controlIds.concat(d.id)));
-
       return ids;
+
     } else if (d.group === 'Control') {
+
       const riskIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
       const activityIds = Global.filterLinksTargetToSource(this.data.links, riskIds);
       const actorIds = Global.filterLinksTargetToSource(this.data.links, activityIds);
       const ids = actorIds.concat(activityIds.concat(riskIds.concat(d.id)));
-
       return ids;
+
     }
   }
 
