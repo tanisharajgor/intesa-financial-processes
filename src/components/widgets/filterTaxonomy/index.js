@@ -14,7 +14,7 @@ import { Accordion, AccordionDetails, MenuItem, Form } from 'cfd-react-component
 import { LayoutGroup, LayoutRow, LayoutItem } from '../../layout/index';
 import { StyledSelect } from '../../../utils/global-styles';
 import * as Theme from '../../../utils/theme';
-import { StyledFilter, StyledItemHeader } from '../../features/menu/style'; 
+import { StyledFilter, StyledItemHeader } from '../../features/menu/style';
 
 // Prop types
 FilterTaxonomy.propTypes = {
@@ -65,7 +65,7 @@ function renderTooltip (selectedLevel3) {
 
     let x, y;
 
-    if (d.data.data.level === 3) {
+    if (d.depth + 1 === 3) {
       x = e.layerX - 150;
       y = e.layerY - 100;
     } else {
@@ -76,12 +76,12 @@ function renderTooltip (selectedLevel3) {
     tooltip.style('visibility', 'visible')
       .style('top', `${y}px`)
       .style('left', `${x}px`)
-      .html(`Level ${d.data.data.level}: <b>${d.data.data.descr}</b>`);
+      .html(`<span style="color:${Theme.darkGreyColorHex}">Level ${d.depth + 1}:</span> ${d.data.data.descr}`);
 
     thisCircle
       .attr('stroke', 'white')
-      .attr('stroke-width', d => d.data.data.level === 3 ? 1.5 : 0)
-      .attr('fill', d => d.data.data.level === 3 ? Theme.primaryColorHex : Theme.extraDarkGreyHex)
+      .attr('stroke-width', d => d.depth + 1 === 3 ? 1.5 : 0)
+      .attr('fill', d => d.depth + 1 === 3 ? Theme.primaryColorHex : Theme.extraDarkGreyHex)
       .attr('r', 4);
   }).on('mouseout', function () {
     tooltip.style('visibility', 'hidden');
@@ -90,7 +90,7 @@ function renderTooltip (selectedLevel3) {
       .attr('stroke', d => fillScale(d, selectedLevel3))
       .attr('fill', d => fillScale(d, selectedLevel3))
       .attr('stroke-width', 0.5)
-      .attr('r', d => rScale(d.data.data.level));
+      .attr('r', d => rScale(d.depth + 1));
   });
 }
 
