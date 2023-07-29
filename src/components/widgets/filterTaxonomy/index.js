@@ -199,7 +199,12 @@ export function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, 
 
   const handleChangeLevel1 = (event) => {
     const level1 = parseInt(event.target.value);
+    const l1 = processes.children
+      .find(d => d.id === level1);
+    const l2 = l1.children[0];
+    const l3 = l2.children[0];
     updateLevel1(level1);
+    updateLevel3(l3.id);
   };
 
   useEffect(() => {
