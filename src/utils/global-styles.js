@@ -220,7 +220,8 @@ export const FormattedContent = styled('div')`
   
   section {
     clear: both;
-    padding-bottom: calc(2 * ${props => props.theme.padding});
+    padding-right: 1rem;
+    padding-bottom: calc(3 * ${props => props.theme.padding});
   }
 
   figure {
@@ -228,24 +229,25 @@ export const FormattedContent = styled('div')`
     width: 100%;
 
     img {
-      width: 100%;
+      max-width: 100%;
     }
   }
   figcaption {
+    margin-bottom: calc(2 * ${props => props.theme.padding});
     padding-top: ${props => props.theme.padding};
-    color: ${props => props.theme.color.focus};
+    color: ${props => props.theme.color.secondary};
     font-style: italic;
   }    
 
-  @media (min-width: 1080px) {
+  @media (min-width: 1020px) {
     margin-right: 50%;
-    max-width: 680px;
+    max-width: 510px;
 
     figure {
       margin: 0 0;
       padding: 0 calc(2 * ${props => props.theme.padding});
       float: right;
-      margin-right: -100%;
+      margin-right: calc(-100% - 2rem);
     }
   }
 
