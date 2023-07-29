@@ -29,7 +29,7 @@ export function IdentifyChapter ({ selectedChapter, updateSelectedChapter, value
     <Accordion className={'Card'}>
       <AccordionHeaderStyled label="Identify by Chapter" filteredTypes={[chapterDescr]}/>
       <AccordionDetails>
-        <DrillDown values={valuesChapter} selected={selectedChapter} handleChange={handleChangeChapter} label="Chapter" id="chapter" />
+        <DrillDown values={valuesChapter} selected={selectedChapter} handleChange={handleChangeChapter} label="" id="chapter" />
       </AccordionDetails>
     </Accordion>
   );

@@ -21,7 +21,7 @@ DrillDown.propTypes = {
 export function DrillDown ({ values, selected, handleChange, label, id }) {
   return (
     <LayoutGroup>
-      <StyledLabel>{label}</StyledLabel>
+      {label == ""? <></>: <StyledLabel>{label}</StyledLabel>}
       <LayoutRow>
         <LayoutItem className="push">
           <Form variant="outlined" size="small">
