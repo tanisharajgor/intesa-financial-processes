@@ -55,7 +55,7 @@ export class CirclePackingDiagram {
     this.alphaScale = d3.scaleOrdinal()
       .domain([0, 1, 2, 3, 5])
       .range([0.05, 0.3, 0.4, 0.5, 0.6]);
-    this.focus = this.data[0];
+    this.focus = { depth: 0, id: 0 }; //this.data[0];
   }
 
   // Initializes the application
@@ -383,10 +383,12 @@ export class CirclePackingDiagram {
   updateCursor = (node) => {
     if(node.depth < this.focus.depth) {
       node.gfx.cursor = "zoom-out";
+    } else if (node.id === this.focus.id) {
+      node.gfx.cursor = "cursor";
     } else {
       node.gfx.cursor = "zoom-in";
     }
-  }
+  };
 
   pointerOver (node, event) {
     node.gfx.alpha = 1;
@@ -409,11 +411,13 @@ export class CirclePackingDiagram {
     return new PIXI.Point(this.width - node.x, this.height - node.y);
   };
 
-  getZoomWidth = (node) => {
-    const radiusScale =  d3.scaleSqrt()
-      .domain([110, 0.4])
-      .range([2, 23]);
+  getZoomWidth(node) {
+    const domain = node.depth === 1 ? [110, 80] : [110, 0.4];
+    const range = node.depth === 1 ? [1.5, 3] : [2, 23];
 
+    const radiusScale =  d3.scaleSqrt()
+      .domain(domain)
+      .range(range);
     return radiusScale(node.r);
   }
 
@@ -422,10 +426,8 @@ export class CirclePackingDiagram {
     node.zoomed = !node.zoomed;
     this.focus = node;
     if(!node.zoomed && node.depth === 1) {
-      // console.log("reset")
       this.getControls().reset();
     } else {
-      // console.log("zoom")
       const zoomScale = this.getZoomWidth(node);
       const centerPoint = this.getCenter(node);
       this.updateLabels(node);
@@ -466,6 +468,7 @@ export class CirclePackingDiagram {
         this.viewport.zoomPercent(-0.15, true);
       },
       reset: () => {
+        this.focus = { depth: 0, id: 0 };
         this.viewport.fit();
         this.centerVisualization(-0.10, this.width / 2, (this.height / 2) - 75);
         this.resetLabels();
