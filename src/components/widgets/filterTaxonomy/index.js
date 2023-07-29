@@ -53,7 +53,7 @@ function initTooltip () {
     .attr('class', 'tooltip')
     .attr('z-index', 500)
     .style('width', '100%')
-    .style('height', '75px');
+    .style('height', '30px');
 }
 
 // Tooltip
@@ -223,7 +223,7 @@ export function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, 
     renderTooltip(selectedLevel3);
   }, [selectedLevel1, selectedLevel3]);
 
-  const types = `L1: ${level1Descr} > L2: ${level2Descr} > L3: ${level3Descr}`
+  const types = `${level1Descr} > ${level2Descr} > ${level3Descr}`
 
   return (
     <Accordion className={'Card'}>
