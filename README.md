@@ -58,3 +58,19 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 - Add two scripts to the package.json: `"predeploy": "npm run build"` and  `"deploy": "gh-pages -d deploy"`
 
 - Run `npm run deploy`
+
+### About the Project
+
+![Center for Design and Banca Intesa S.p.A.](public/assets/logos-repo.svg)
+
+The Banca Intesa Processes project began in September 2022 as a partnership between the Center for Design at Northeastern University and Banca Intesa S.p.A. to visualize risk and mitigation processes within the company. The interface was developed through collaborative discovery and problem-space research conducted in 2022–2023. 
+
+**Contributors**
+
+* Matt Blanco, Design Research Assistant, Northeastern University
+* Paolo Ciuccarelli, Director, Center for Design
+* Estefania Ciliotta Chehade, Associate Director, Center for Design
+* Andrea Cosentini, Head of Data Science & AI, Intesa Sanpaolo
+* Joli Holmes, Design Research Assistant, Northeastern University
+* Todd Linkner, Assistant Teaching Professor, Northeastern University
+* Tanisha Rajgor, Design Research Assistant, Northeastern University
