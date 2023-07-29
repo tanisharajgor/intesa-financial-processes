@@ -61,5 +61,5 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### About the Project
 
-![Center for Design and Banca Intesa S.p.A.](public/assets/logos.svg)
+![Center for Design and Banca Intesa S.p.A.](public/assets/logos-repo.svg)
 
