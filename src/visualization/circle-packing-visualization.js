@@ -136,9 +136,9 @@ export class CirclePackingDiagram {
   }
 
   opacityScale (node) {
-    if (this.selectedActivities.length > 0 && this.selectedLevel1.id !== -1) {
+    if (this.selectedActivities.length < activityTypeValues.length && this.selectedLevel1.id !== -1) {
       this.selectedLevelAndActivitiesOpacity(node);
-    } else if (this.selectedActivities.length > 0) {
+    } else if (this.selectedActivities.length < activityTypeValues.length) {
       this.selectedActivitiesOpacity(node);
     } else if (this.selectedLevel1.id !== -1) {
       this.selectedLevelOpacity(node);
@@ -148,8 +148,7 @@ export class CirclePackingDiagram {
   }
 
   updateOpacity (selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
-    this.selectedActivities = activityTypeValues.filter(activity => !selectedActivities.includes(activity));
-
+    this.selectedActivities = selectedActivities;
     this.selectedLevel1 = selectedLevel1;
     this.selectedLevel2 = selectedLevel2;
     this.selectedLevel3 = selectedLevel3;
@@ -366,7 +365,7 @@ export class CirclePackingDiagram {
   // Tooltip interaction ------------------------------------------------------
 
   tooltipText (d) {
-    return `${d.data.level === 4 ? 'Activity' : 'Process'} <br><b>${d.data.descr}</b>`;
+    return `${d.depth === 4 ? '<b>Activity</b>' : '<b>Process</b>'} <br>${d.data.descr}`;
   }
 
   showTooltip (d, event) {
