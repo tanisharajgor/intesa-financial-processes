@@ -76,8 +76,7 @@ export default function Network () {
   const [valuesChapter, updateValuesChapter] = useState([{ id: -1, descr: 'All' }].concat(processes
     .children.find(d => d.id === selectedLevel1).children[0].children[0].children));
 
-  const [selectedOrg1, updateSelectedOrg1] = useState({ id: -1, descr: 'All' });
-  const [selectedOrg2, updateSelectedOrg2] = useState({ id: -1, descr: 'All' });
+  const [selectedOrg, updateSelectedOrg] = useState({ id: -1, descr: 'All' });
 
   // Status to update the opacity in the legend
   const [viewHoverValue, updateViewHoverValue] = useState("");
@@ -183,8 +182,8 @@ export default function Network () {
   }, [viewVariable]);
 
   useEffect(() => {
-    networkDiagram.current.updateNodeAlpha(selectedChapter, selectedOrg1, selectedOrg2);
-  }, [selectedChapter, selectedOrg1, selectedOrg2]);
+    networkDiagram.current.updateNodeAlpha(selectedChapter, selectedOrg);
+  }, [selectedChapter, selectedOrg]);
 
   return (
     <>
@@ -198,7 +197,7 @@ export default function Network () {
           <MenuHeader label="Network" />
           <MenuBody shouldRotate={shouldRotate} pageDescription="Filter data in the actor network graph to explore activities and risks.">
             <IdentifyChapter selectedChapter={selectedChapter} updateSelectedChapter={updateSelectedChapter} valuesChapter={valuesChapter}/>
-            <IdentifyOrgStructure selectedOrg1={selectedOrg1} updateSelectedOrg1={updateSelectedOrg1} selectedOrg2={selectedOrg2} updateSelectedOrg2={updateSelectedOrg2} orgStructure={orgStructureValues}/>
+            <IdentifyOrgStructure selectedOrg={selectedOrg} updateSelectedOrg={updateSelectedOrg} orgStructure={orgStructureValues}/>
             <FilterTaxonomy selectedLevel1={selectedLevel1} updateLevel1={updateLevel1} selectedLevel3={selectedLevel3} updateLevel3={updateLevel3} />
             <FilterType checkedValues={possibleActivities} updateSelectedValues={updateActivities} selectedValues={selectedActivities} label="Filter by Activity Type" />
             <FilterType checkedValues={possibleActors} updateSelectedValues={updateActors} selectedValues={selectedActors} label="Filter by Actor Type" />
