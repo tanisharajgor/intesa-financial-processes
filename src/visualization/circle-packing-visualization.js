@@ -435,7 +435,6 @@ export class CirclePackingDiagram {
     if (this.focus.depth >= 2) {
       this.updateDraw(this.viewVariable);
     }
-
     node.zoomed = !node.zoomed;
     this.focus = node;
     if(!node.zoomed && node.depth === 1) {
