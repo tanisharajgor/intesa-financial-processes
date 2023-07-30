@@ -89,7 +89,7 @@ export const GlobalStyles = createGlobalStyle`
   input[type="checkbox"] + label {
     margin-left: 0.5em;
   }
-`
+`;
 
 export const StyledSelect = styled(Select)`
     // A reset of styles, including removing the default dropdown arrow
@@ -133,7 +133,7 @@ export const LayoutGroup = styled('div')`
             }
         }
     }
-`
+`;
 
 export const LayoutRow = styled('div')`
     display: flex;
@@ -141,7 +141,7 @@ export const LayoutRow = styled('div')`
     flex-direction: row;
     align-items: center;
     width: 100%;
-`
+`;
 
 export const LayoutItem = styled('div')`
     flex: 1;
@@ -160,8 +160,8 @@ export const LayoutItem = styled('div')`
     &.push {
         // margin-left: 3.125rem;
     }
-`
+`;
 
 export const FilterList = styled('ul')`
     list-style: none;
-`
+`;
