@@ -64,6 +64,7 @@ export class CirclePackingDiagram {
     this.width = this.rootDOM.clientWidth;
     this.height = this.rootDOM.clientHeight;
     this.tooltip = Global.initTooltip(this.selector);
+    this.navHeight = d3.select(".Navigation").property("clientHeight");
   
     // create canvas
     this.app = new PIXI.Application({
@@ -417,13 +418,11 @@ export class CirclePackingDiagram {
   // Panning and zooming ------------------------------------------------------
 
   getCenter = (node) => {
-    let nav = d3.select(".Navigation")
-    return new PIXI.Point(this.width - node.x, this.height - nav.property("clientHeight") - node.y);
+    return new PIXI.Point(this.width - node.x, this.height - 20 - node.y);
   };
 
   getZoomWidth(node) {
-    let nav = d3.select(".Navigation")
-    return ((this.height - nav.property("clientHeight"))/2)/node.r;
+    return ((this.height - this.navHeight)/2)/(node.r*1.05);
   }
 
   // Operations that occur on click
