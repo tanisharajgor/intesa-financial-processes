@@ -1,6 +1,5 @@
 // Libraries
 import React, {useState, useEffect, useRef} from 'react';
-import * as d3 from 'd3';
 
 // Components
 import { Navigation, Main, Content } from '../components/layout/index';
@@ -139,6 +138,7 @@ export default function Network () {
 
     updateLevel3(l3.id);
     updateSelectedChapter({ id: -1, descr: 'All' });
+    updateSelectedOrg({ id: -1, descr: 'All' });
   }, [selectedLevel1]);
 
   useEffect(() => {
@@ -156,6 +156,7 @@ export default function Network () {
     );
 
     updateSelectedChapter({ id: -1, descr: 'All' });
+    updateSelectedOrg({ id: -1, descr: 'All' });
   }, [selectedLevel3]);
 
   // Filter data
@@ -166,9 +167,6 @@ export default function Network () {
     networkDiagram.current.data = filteredData;
     networkDiagram.current.initSimulation();
     networkDiagram.current.updateDraw(viewVariable);
-
-    const inspect = d3.select('.Inspect');
-    InspectNetworkSummary(inspect, filteredData);
   }, [selectedLevel3, selectedActivities, selectedActors]);
 
   // Update filter possibilities when level changes
@@ -183,6 +181,7 @@ export default function Network () {
 
   useEffect(() => {
     networkDiagram.current.updateNodeAlpha(selectedChapter, selectedOrg);
+    InspectNetworkSummary(data, networkDiagram.current.identifyNode, selectedChapter, selectedOrg);
   }, [selectedChapter, selectedOrg]);
 
   return (

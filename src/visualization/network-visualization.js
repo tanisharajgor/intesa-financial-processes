@@ -340,9 +340,6 @@ export default class NetworkVisualization {
   updateNodeAlpha (selectedChapter, selectedOrg) {
     this.selectedChapter = selectedChapter.id;
     this.selectedOrg = selectedOrg.id;
-
-
-    console.log(this.selectedChapter, this.selectedOrg);
     this.identifyLink = [];
     this.identifyNode = [];
 
