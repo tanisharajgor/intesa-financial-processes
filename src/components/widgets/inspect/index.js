@@ -8,12 +8,20 @@ const treeLevelScale = d3.scaleOrdinal()
   .domain([0, 1, 2, 3, 4])
   .range(['root', 'Process 1', 'Process 2', 'Process 3', 'Activity']);
 
-export function InspectNetworkSummary (data, identifyNode) {
+export function InspectNetworkSummary (data, identifyNode, selectedChapter, selectedOrg) {
 
   const nActors = data.nodes.filter(d => d.group === 'Actor').length;
   const nActivities = data.nodes.filter(d => d.group === 'Activity').length;
-  const nIdentifiedActors = data.nodes.filter(d => d.group === 'Actor' && identifyNode.includes(d.id)).length;
-  const nIdentifiedActivities = data.nodes.filter(d => d.group === 'Activity' && identifyNode.includes(d.id)).length;
+
+  let nIdentifiedActors, nIdentifiedActivities; 
+
+  if (selectedChapter.id === -1 && selectedOrg.id === -1) {
+    nIdentifiedActors = nActors;
+    nIdentifiedActivities = nActivities;
+  } else {
+    nIdentifiedActors = data.nodes.filter(d => d.group === 'Actor' && identifyNode.includes(d.id)).length;
+    nIdentifiedActivities = data.nodes.filter(d => d.group === 'Activity' && identifyNode.includes(d.id)).length;
+  }
 
   const inspect = d3.select('.Inspect');
 

@@ -181,7 +181,7 @@ export default function Network () {
 
   useEffect(() => {
     networkDiagram.current.updateNodeAlpha(selectedChapter, selectedOrg);
-    InspectNetworkSummary(data, networkDiagram.current.identifyNode);
+    InspectNetworkSummary(data, networkDiagram.current.identifyNode, selectedChapter, selectedOrg);
   }, [selectedChapter, selectedOrg]);
 
   return (
