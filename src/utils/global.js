@@ -187,3 +187,5 @@ export function initTooltip (selector) {
     .style('color', Theme.tooltipStyles.fontColor)
     .style('line-height', Theme.tooltipStyles.lineHeight);
 }
+
+export const NetworkVisualizationXPadding = 200;

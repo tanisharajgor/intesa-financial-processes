@@ -32,7 +32,6 @@ function combineLink (links) {
 
   return links;
 }
-const visualizationXPadding = 200;
 
 // Combines the nodes and links into a single object
 function combineNodeLink (selectedLevel3, nodes, links, orgStructure) {
@@ -121,7 +120,7 @@ export default function Network () {
     const width = (document.getElementById(selector).clientWidth / 2) - document.getElementsByClassName('Query')[0].clientWidth;
     const height = (document.getElementById(selector).clientHeight / 2) - document.getElementsByClassName('Navigation')[0].clientHeight;
 
-    networkDiagram.current.centerVisualization(-0.3, width - visualizationXPadding, height);
+    networkDiagram.current.centerVisualization(-0.3, width - Global.NetworkVisualizationXPadding, height);
   }, []);
 
   // React Hooks
