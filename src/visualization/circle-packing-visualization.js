@@ -317,19 +317,27 @@ export class CirclePackingDiagram {
     this.viewport.addChild(this.containerLabelLevel1);
   }
 
-  resetLevel1Labels() {
+  resetLevel1Labels () {
     this.containerLabelLevel1.children.forEach(label => {
       label.resolution = 2;
       label.style = Theme.labelStylePrimary;
     });
   }
 
-  // Destroys labels and resets level 1 labels to their original styling
-  resetLabels() {
+  resetLevel2Labels () {
     this.destroyObject(this.containerLabelLevel2);
     this.containerLabelLevel2 = new PIXI.Container();
+  }
+
+  resetLevel3Labels () {
     this.destroyObject(this.containerLabelLevel3);
     this.containerLabelLevel3 = new PIXI.Container();
+  }
+
+  // Destroys labels and resets level 1 labels to their original styling
+  resetLabels () {
+    this.resetLevel2Labels();
+    this.resetLevel3Labels();
     this.resetLevel1Labels();
   }
 
@@ -351,6 +359,8 @@ export class CirclePackingDiagram {
         this.viewport.addChild(this.containerLabelLevel3);
 
       } else {
+
+        this.resetLevel3Labels();
 
         // Initialized second level of labels
         this.level2Labels = node.children
