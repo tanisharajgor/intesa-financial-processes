@@ -421,17 +421,12 @@ export class CirclePackingDiagram {
   };
 
   getZoomWidth(node) {
-    const domain = node.depth === 1 ? [110, 80] : [110, 0.4];
-    const range = node.depth === 1 ? [1.5, 3] : [2, 23];
-
-    const radiusScale =  d3.scaleSqrt()
-      .domain(domain)
-      .range(range);
-    return radiusScale(node.r);
+    let nav = d3.select(".Navigation")
+    return ((this.height - nav.property("clientHeight"))/2)/node.r;
   }
 
   // Operations that occur on click
-  clickNode(node) {
+  clickNode (node) {
     if (this.focus.depth >= 2) {
       this.updateDraw(this.viewVariable);
     }
@@ -460,11 +455,11 @@ export class CirclePackingDiagram {
   }
 
   // Destroys the nodes on data update
-  destroyNodes() {
+  destroyNodes () {
     this.destroyObject(this.containerNodes);
   }
 
-  updateDraw(viewVariable) {
+  updateDraw (viewVariable) {
     this.viewVariable = viewVariable;
     this.destroyNodes();
     this.initNodes();
