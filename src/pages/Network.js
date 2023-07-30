@@ -138,6 +138,7 @@ export default function Network () {
 
     updateLevel3(l3.id);
     updateSelectedChapter({ id: -1, descr: 'All' });
+    updateSelectedOrg({ id: -1, descr: 'All' });
   }, [selectedLevel1]);
 
   useEffect(() => {
@@ -155,6 +156,7 @@ export default function Network () {
     );
 
     updateSelectedChapter({ id: -1, descr: 'All' });
+    updateSelectedOrg({ id: -1, descr: 'All' });
   }, [selectedLevel3]);
 
   // Filter data
