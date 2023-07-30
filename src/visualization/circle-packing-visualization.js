@@ -430,7 +430,7 @@ export class CirclePackingDiagram {
 
     let y;
     if (node.depth > 2) {
-      y = this.height - node.y
+      y = this.height - node.y;
     } else {
       y = this.height - 20 - node.y;
     }

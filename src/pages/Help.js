@@ -1,6 +1,6 @@
 // Libraries
 import React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 // Components
 import { Navigation } from '../components/layout/index';
