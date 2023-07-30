@@ -402,7 +402,7 @@ export default class NetworkVisualization {
         const height = (document.getElementById(this.selector).clientHeight / 2) - document.getElementsByClassName('Navigation')[0].clientHeight;
     
         this.viewport.fit();
-        this.centerVisualization(-0.4,  width - 200, height)
+        this.centerVisualization(-0.4,  width - 200, height);
       }
     };
   }
@@ -488,7 +488,7 @@ export default class NetworkVisualization {
       this.highlightNetworkNodes(d);
     }
 
-    console.log(d.viewId)
+    console.log(d.viewId);
     this.updateSymbolHoverValue(d.viewId);
     this.updateViewHoverValue(Global.applyColorScale(d, this.viewVariable));
     this.showTooltip(d);
