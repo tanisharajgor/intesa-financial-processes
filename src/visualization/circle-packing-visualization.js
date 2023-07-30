@@ -9,17 +9,19 @@ import '@pixi/graphics-extras';
 import { activityTypeValues } from '../utils/global';
 
 //Styles
-import * as Theme from "../component-styles/theme";
+import * as Theme from '../utils/theme';
 
 
 export class CirclePackingDiagram {
   app;
   containerNodes;
+  containerBackground;
   containerLabelLevel1;
   containerLabelLevel2;
   containerLabelLevel3;
   data;
   dataMap;
+  focus;
   height;
   inspect;
   labels;
@@ -33,9 +35,8 @@ export class CirclePackingDiagram {
   width;
   viewport;
   viewVariable;
-  zoomedNodeId;
 
-  constructor (data, selector, updateViewHoverValue) {
+  constructor (data, selector, updateViewHoverValue, updateSymbolHoverValue) {
     this.data = data;
     this.levelIDs = [];
     this.dataMap = {};
@@ -43,9 +44,8 @@ export class CirclePackingDiagram {
       this.levelIDs.push(d.data.id);
       this.dataMap[`${d.data.id}`] = d;
     });
-    this.zoomedNodeId = 0;
-    this.currentNodeId = 0;
     this.updateViewHoverValue = updateViewHoverValue;
+    this.updateSymbolHoverValue = updateSymbolHoverValue;
     this.selectedActivities = [];
     this.selector = selector;
     this.selectedLevel1 = [];
@@ -54,7 +54,8 @@ export class CirclePackingDiagram {
     this.selectedChapter = [];
     this.alphaScale = d3.scaleOrdinal()
       .domain([0, 1, 2, 3, 5])
-      .range([0.05, 0.3, 0.4, 0.5, 0.6]); 
+      .range([0.05, 0.3, 0.4, 0.5, 0.6]);
+    this.focus = { depth: 0, id: 0 }; //this.data[0];
   }
 
   // Initializes the application
@@ -63,6 +64,7 @@ export class CirclePackingDiagram {
     this.width = this.rootDOM.clientWidth;
     this.height = this.rootDOM.clientHeight;
     this.tooltip = Global.initTooltip(this.selector);
+    this.navHeight = d3.select(".Navigation").property("clientHeight");
   
     // create canvas
     this.app = new PIXI.Application({
@@ -135,9 +137,9 @@ export class CirclePackingDiagram {
   }
 
   opacityScale (node) {
-    if (this.selectedActivities.length > 0 && this.selectedLevel1.id !== -1) {
+    if (this.selectedActivities.length < activityTypeValues.length && this.selectedLevel1.id !== -1) {
       this.selectedLevelAndActivitiesOpacity(node);
-    } else if (this.selectedActivities.length > 0) {
+    } else if (this.selectedActivities.length < activityTypeValues.length) {
       this.selectedActivitiesOpacity(node);
     } else if (this.selectedLevel1.id !== -1) {
       this.selectedLevelOpacity(node);
@@ -147,8 +149,7 @@ export class CirclePackingDiagram {
   }
 
   updateOpacity (selectedActivities, selectedLevel1, selectedLevel2, selectedLevel3, selectedChapter, valuesChapter) {
-    this.selectedActivities = activityTypeValues.filter(activity => !selectedActivities.includes(activity));
-
+    this.selectedActivities = selectedActivities;
     this.selectedLevel1 = selectedLevel1;
     this.selectedLevel2 = selectedLevel2;
     this.selectedLevel3 = selectedLevel3;
@@ -186,26 +187,60 @@ export class CirclePackingDiagram {
 
   // Drawing functions ------------------------------------------------------
 
-  draw (viewVariable) {
+  draw(viewVariable) {
     this.viewVariable = viewVariable;
+    this.initBackground();
     this.initNodes();
     this.initLabels();
   }
 
+  initBackground() {
+    let bg = new PIXI.Sprite(PIXI.Texture.WHITE);
+      bg.width = this.width;
+      bg.height = this.height;
+      bg.tint = 0x000000;
+      bg.interactive = true;
+
+      bg.on('pointerover', () => {
+        if(this.focus.depth > 1) {
+          bg.cursor = "zoom-out";
+        } else {
+          bg.cursor = "default";
+        }
+      });
+      bg.on('pointerout', () => {
+        bg.cursor = "default";
+      });
+      bg.on('click', () => {
+        this.getControls().reset();
+      });
+    this.viewport.addChild(bg);
+  }
+
   // Initializes the nodes
-  initNodes () {
+  initNodes() {
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
 
-    const lineWidth = d3.scaleOrdinal()
-      .domain([0, 1, 2, 3, 4])
-      .range([0.4, 0.5, 0.5, 0.5, 0.1]);
+    const lineWidth = (level, depth) => {
+      const scale = d3.scaleOrdinal()
+        .domain([0, 1, 2, 3, 4])
+        .range([0.4, 0.5, 0.5, 0.5, 0.1]);
 
-    this.data.forEach((node) => {
+      if (this.focus.depth >= 2 && depth >= 4) {
+        return 0.05;
+      } else if (this.focus.depth >= 3 && depth >= 4) {
+        return 0.03;
+      } else {
+        return scale(level);
+      }
+    };
+
+    this.data.forEach(node => {
       node.viewId = node.data.viewId;
       node.zoomed = false;
       node.gfx = new PIXI.Graphics();
-      node.gfx.lineStyle(lineWidth(node.data.level), 0xFFFFFF, 1);
+      node.gfx.lineStyle(lineWidth(node.data.level, node.depth), 0xFFFFFF, 1);
       node.gfx.beginFill(Global.applyColorScale(node.data, this.viewVariable));
 
       this.opacityScale(node);
@@ -217,10 +252,9 @@ export class CirclePackingDiagram {
       node.gfx.y = node.y;
       node.gfx.interactive = true;
       node.gfx.buttonMode = true;
-      node.gfx.cursor = 'zoom-in';
       node.gfx.on('pointerover', (e) => this.pointerOver(node, e));
-      node.gfx.on('pointerout', (e) => this.pointerOut(node, e));
-      node.gfx.on('click', (e) => this.centerOnNode(node, e));
+      node.gfx.on('pointerout', () => this.pointerOut(node));
+      node.gfx.on('click', () => this.clickNode(node));
 
       this.nodes.push(node);
       this.containerNodes.addChild(node.gfx);
@@ -283,19 +317,27 @@ export class CirclePackingDiagram {
     this.viewport.addChild(this.containerLabelLevel1);
   }
 
-  resetLevel1Labels() {
+  resetLevel1Labels () {
     this.containerLabelLevel1.children.forEach(label => {
       label.resolution = 2;
       label.style = Theme.labelStylePrimary;
     });
   }
 
-  // Destroys labels and resets level 1 labels to their original styling
-  resetLabels() {
+  resetLevel2Labels () {
     this.destroyObject(this.containerLabelLevel2);
     this.containerLabelLevel2 = new PIXI.Container();
+  }
+
+  resetLevel3Labels () {
     this.destroyObject(this.containerLabelLevel3);
     this.containerLabelLevel3 = new PIXI.Container();
+  }
+
+  // Destroys labels and resets level 1 labels to their original styling
+  resetLabels () {
+    this.resetLevel2Labels();
+    this.resetLevel3Labels();
     this.resetLevel1Labels();
   }
 
@@ -317,6 +359,8 @@ export class CirclePackingDiagram {
         this.viewport.addChild(this.containerLabelLevel3);
 
       } else {
+
+        this.resetLevel3Labels();
 
         // Initialized second level of labels
         this.level2Labels = node.children
@@ -342,7 +386,7 @@ export class CirclePackingDiagram {
   // Tooltip interaction ------------------------------------------------------
 
   tooltipText (d) {
-    return `${d.data.level === 4 ? 'Activity' : 'Process'} <br><b>${d.data.descr}</b>`;
+    return `${d.depth === 4 ? '<b>Activity</b>' : '<b>Process</b>'} <br>${d.data.descr}`;
   }
 
   showTooltip (d, event) {
@@ -355,47 +399,56 @@ export class CirclePackingDiagram {
       .html(this.tooltipText(d));
   }
 
+  // Updates the cursor to zoom in or out by comparing the current to the focus
+  updateCursor = (node) => {
+
+    if(node.depth < this.focus.depth) {
+      node.gfx.cursor = "zoom-out";
+    } else {
+      node.gfx.cursor = "zoom-in";
+    }
+  };
+
   pointerOver (node, event) {
     node.gfx.alpha = 1;
+    this.updateCursor(node);
     this.showTooltip(node, event);
     this.updateViewHoverValue(Global.applyColorScale(node.data, this.viewVariable));
+    this.updateSymbolHoverValue(node.viewId);
   }
 
   pointerOut (node) {
     this.opacityScale(node);
     this.tooltip.style('visibility', 'hidden');
-    this.updateViewHoverValue(undefined);
+    this.updateViewHoverValue("");
+    this.updateSymbolHoverValue("");
   }
 
   // Panning and zooming ------------------------------------------------------
+
   getCenter = (node) => {
-    if (this.currentNodeId === this.zoomedNodeId) {
-      node.gfx.cursor = 'zoom-in';
-      if (node.depth === 1) {
-        return new PIXI.Point(this.viewport.worldWidth / 2, this.viewport.worldHeight / 2);
-      } else {
-        node.parent.gfx.cursor = 'zoom-out';
-        return new PIXI.Point(this.width - node.parent.x, this.height - node.parent.y);
-      }
+
+    let y;
+    if (node.depth > 2) {
+      y = this.height - node.y;
     } else {
-      return new PIXI.Point(this.width - node.x, this.height - node.y);
+      y = this.height - 20 - node.y;
     }
+
+    return new PIXI.Point(this.width - node.x, y);
   };
 
-  getZoomWidth = (node) => {
-    const scale = d3.scaleLinear()
-      .range([1, 20])
-      .domain([0, 4]);
+  getZoomWidth(node) {
+    return ((this.height - this.navHeight)/2)/(node.r*1.05);
+  }
 
-    return scale(node.depth);
-  };
-
-  centerOnNode(node) {
-
-    node.gfx.cursor = "zoom-out";
+  // Operations that occur on click
+  clickNode (node) {
+    if (this.focus.depth >= 2) {
+      this.updateDraw(this.viewVariable);
+    }
     node.zoomed = !node.zoomed;
-    this.currentNodeId = node.depth !== 0 ? node.data.id : 0;
-
+    this.focus = node;
     if(!node.zoomed && node.depth === 1) {
       this.getControls().reset();
     } else {
@@ -404,11 +457,9 @@ export class CirclePackingDiagram {
       this.updateLabels(node);
       this.viewport.animate({
         position: centerPoint,
-        scale: zoomScale,
+        scale: zoomScale
       });
-
     }
-    this.zoomedNodeId = this.currentNodeId;
   }
 
   // Updating the draw functions  ------------------------------------------------------
@@ -441,9 +492,9 @@ export class CirclePackingDiagram {
         this.viewport.zoomPercent(-0.15, true);
       },
       reset: () => {
+        this.focus = { depth: 0, id: 0 };
         this.viewport.fit();
-        this.viewport.moveCenter(this.width / 2, this.height / 2);
-        this.centerVisualization(-0.30);
+        this.centerVisualization(-0.10, this.width / 2, (this.height / 2) - 75);
         this.resetLabels();
       }
     };

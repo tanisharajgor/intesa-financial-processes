@@ -10,11 +10,12 @@ import {
 // Pages
 import CirclePacking from './pages/CirclePacking';
 import Network from './pages/Network';
+import Help from "./pages/Help";
 
 // Styles
 import { ThemeProvider } from 'styled-components';
-import { GlobalStyles } from './component-styles/global-styles';
-import { GlobalTheme } from './component-styles/theme';
+import { GlobalStyles } from './utils/global-styles';
+import { GlobalTheme } from './utils/theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,6 +25,7 @@ root.render(
       <Routes>
         <Route path="/" element={<CirclePacking />} />
         <Route path="/Network" element={<Network />} />
+        <Route path="/Help" element={<Help />} />
       </Routes>
     </HashRouter>
   </ThemeProvider>
