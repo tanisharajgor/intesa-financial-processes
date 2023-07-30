@@ -41,8 +41,7 @@ def levelsObject(df):
             "level2ID": df.level2ID.unique().tolist(),
             "level3ID": df.level3ID.unique().tolist(),
             "modelID": df.modelID.unique().tolist(),
-            "orgStructure1ID": df.organizational_structure1ID.unique().tolist(),
-            "orgStructure2ID": df.organizational_structure2ID.unique().tolist()
+            "orgStructureID":  df.organizational_structureID.unique().tolist()
         }
 
     return levels
@@ -145,8 +144,6 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
 
         df_sub = df[df[root1ID] == id]
 
-        org = create_org_structure(df_sub)
-
         childrenIDs = df_sub[root2ID].unique().tolist()
         activityID = df_sub.activityID.unique().tolist()
         childrenID3 = df_sub.level3ID.unique().tolist()
@@ -162,8 +159,7 @@ def create_sub_processes(df, root1, root2, children = None, tree_level = None):
         d = {"id": int(id),
             "descr": df_sub[df_sub[root1ID] == id][root1].iloc[0],
             "viewType": create_view_type(df_sub),
-            "level": int(tree_level),
-            "organizationalStructure": org
+            "level": int(tree_level)
             }
 
         if children is not None:
@@ -254,11 +250,10 @@ def create_network(data):
 
         links = []
         nodes = []
+
         orgStructure = create_org_structure(df)
 
         for k in actorsID:
-
-            org = create_org_structure(df[df.actorID == k])
 
             row = {"id": int(k),
                    "group": "Actor",
@@ -272,7 +267,7 @@ def create_network(data):
                         "nRisk": int(df[(df.actorID == k) & (pd.isnull(df.riskID) == False)][['riskID']].drop_duplicates().shape[0]),
                         "nControl": int(df[(df.actorID == k) & (pd.isnull(df.activityID) == False) & (df.activityType == "Control activity")][['activityID']].drop_duplicates().shape[0])
                         },
-                    "organizationalStructure": org
+                    "organizationalStructure": create_org_structure(df[df.actorID == k])
                    }
 
             nodes.append(row)
@@ -449,23 +444,21 @@ Create a nested structure for organizational structure
 Return object
 """
 def create_org_structure(main):
-    l1Array = []
+    array = []
 
-    for i in main.organizational_structure1ID.unique():
-        l2 = main[main.organizational_structure1ID == i].organizational_structure2ID.unique()
+    df = main[["organizational_structure", "organizational_structureID"]].drop_duplicates()
 
-        l2Array = []
-        for j in l2:
+    if df.shape[0] == 0:
+        r = {"id":  10000023.0,
+            "descr": "Not specified"}
 
-            r2 = {"id": int(j),
-                  "descr": main[main.organizational_structure2ID == j].organizational_structure2.iloc[0],
-                  "level": int(2)}
-            l2Array.append(r2)
+        array.append(r)
 
-        r1 = {"id": int(i),
-              "descr": main[main.organizational_structure1ID == i].organizational_structure1.iloc[0],
-              "children": l2Array,
-              "level": int(1)}
-        l1Array.append(r1)
+    for j in df.organizational_structureID.unique():
 
-    return l1Array
+        r = {"id": int(j),
+            "descr": df[df.organizational_structureID == j].organizational_structure.iloc[0]}
+
+        array.append(r)
+
+    return array

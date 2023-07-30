@@ -33,9 +33,9 @@ export function Navigation ({ isFullscreen }) {
           <Link>
             <NavLink to="/Network" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Network</NavLink>
           </Link>
-          {/* <Link className="Navigation_link">
-                        <NavLink to="/Help" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Help</NavLink>
-                    </Link> */}
+          <Link className="Navigation_link">
+            <NavLink to="/Help" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Help</NavLink>
+          </Link>
         </LinkList>
       </NavigationLinks>
     </StyledLayoutHeader>

@@ -22,9 +22,8 @@ export default class NetworkVisualization {
   containerLinks;
   data;
   height;
-  inspect;
-  inspectNodes;
-  inspectLinks;
+  identifyNodes;
+  identifyLinks;
   links;
   nodes;
   rootDOM;
@@ -44,8 +43,8 @@ export default class NetworkVisualization {
     this.clickNode = false;
     this.clickViewport = false;
     this.clickCount = 0;
-    this.inspectNode = [];
-    this.inspectLink = [];
+    this.identifyNode = [];
+    this.identifyLink = [];
     this.selector = selector;
   }
 
@@ -108,49 +107,37 @@ export default class NetworkVisualization {
     this.viewport.on('click', () => this.clickOff());
   }
 
-  // Set diagram to fill the vizualization frame
-  centerVisualization (zoom, xPos, yPos) {
-    if (xPos && yPos) {
-      this.viewport.moveCenter(xPos, yPos);
-    }
-    this.viewport.zoomPercent(zoom, true);
+  // Main functions ------------------------------------------------------
+
+  run () {
+    return this.simulation;
   }
 
-  clickOff () {
-    this.clickCount++;
-    if (this.clickCount > 2) {
-      this.clickNode = false;
-      this.clickCount = 0;
-      this.hoverNodes
-        .forEach(node => {
-          const { gfx } = node;
-          gfx.filters.pop();
-          gfx.zIndex = 0;
-        });
-
-      this.hoverLink = [];
-      this.hoverNode = [];
-    }
+  draw (viewVariable) {
+    this.viewVariable = viewVariable;
+    this.drawLinks();
+    this.drawNodes();
+    this.simulation.alpha(1).restart();
   }
 
-  clickOn (node) {
-    this.clickNode = true;
-    this.clickCount++;
-    if (this.clickCount > 3) {
-      this.clickNode = false;
-      this.clickCount = 0;
-    }
-
-    this.hoverNodes
-      .forEach(node => {
-        const { gfx } = node;
-        gfx.filters.pop();
-        gfx.zIndex = 0;
-      });
-    this.highlightNetworkNodes(node);
+  updateDraw (viewVariable) {
+    this.hoverLink = [];
+    this.hoverNode = [];
+    this.hoverNodes = [];
+    this.destroyLinks();
+    this.destroyNodes();
+    this.draw(viewVariable);
+    this.animate();
   }
 
-  // Drawing functions ------------------------------------------------------
+  animate () {
+    this.app.ticker.add(() => {
+      this.updateLinkPosition();
+      this.updateNodePosition();
+    });
+  }
+
+  // Initialize forms ------------------------------------------------------
 
   // Initializes the links
   drawLinks () {
@@ -160,18 +147,11 @@ export default class NetworkVisualization {
     this.links = new PIXI.Graphics();
     this.containerLinks.addChild(this.links);
 
-    // Inspect Links
-    this.inspectLinks = new PIXI.Graphics();
-    this.containerLinks.addChild(this.inspectLinks);
+    // Identify Links
+    this.identifyLinks = new PIXI.Graphics();
+    this.containerLinks.addChild(this.identifyLinks);
 
     this.viewport.addChild(this.containerLinks);
-  }
-
-  reduceNestedList (emptyList, list) {
-    emptyList.push(list);
-    emptyList = emptyList.flat(1);
-    const unique = [...new Set(emptyList)];
-    return unique;
   }
 
   // Initializes the nodes
@@ -206,6 +186,52 @@ export default class NetworkVisualization {
     });
 
     this.viewport.addChild(this.containerNodes);
+  }
+
+  // Update notes and links during animation ------------------------------------------------------
+
+  // Update the links position
+  updateLinkPosition () {
+    // Links
+    this.links.clear();
+    this.data.links.forEach(link => {
+      const { source, target, connect_actor_activity } = link;
+
+      // Hover on links
+      this.hoverNetworkLinks(this.links, source, target);
+
+      // Line type
+      this.lineType(this.links, source, target, connect_actor_activity);
+
+      if (this.selectedChapter === -1 && this.selectedOrg === -1) {
+        this.links.alpha = 1;
+      } else {
+        this.links.alpha = Theme.nonHighlightOpacity;
+      }
+    });
+
+    this.identifyLinks.clear();
+    this.data.links
+      .filter(d => (this.identifyLink.includes(d.source.id) && this.identifyLink.includes(d.target.id)))
+      .forEach(link => {
+        const { source, target, connect_actor_activity } = link;
+        this.identifyLinks.alpha = 1;
+
+        // Hover on links
+        this.hoverNetworkLinks(this.identifyLinks, source, target);
+
+        // Line type
+        this.lineType(this.identifyLinks, source, target, connect_actor_activity);
+      });
+  }
+
+  // Update the nodes position
+  updateNodePosition () {
+    this.nodes.forEach((node) => {
+      const { x, y, gfx } = node;
+      gfx.x = x;
+      gfx.y = y;
+    });
   }
 
   // Updating the draw functions during the animation ------------------------------------------------------
@@ -254,71 +280,82 @@ export default class NetworkVisualization {
     }
   }
 
-  // Hover on links
-  highlightNetworkLinks (links, source, target) {
-    if (this.hoverLink.includes(source.id) && this.hoverLink.includes(target.id)) {
-      this.highlightLine(links);
+  // Identify nodes and links to highlight
+  identifyNodesLinks (node) {
+    const links = this.listNetworkNodes(node);
+    const nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
+    this.identifyLink = this.reduceNestedList(this.identifyLink, links);
+    this.identifyNode = this.reduceNestedList(this.identifyNode, nodes);
+    node.gfx.alpha = 1;
+  }
+
+  // Apply ifelse logic to identified nodes
+  // nodeEvaluation is an operation that takes the value of true or false
+  // node is the node object
+  highlightIdentifiedNodes (nodeEvaluation, node) {
+    if (nodeEvaluation) {
+      this.identifyNodesLinks(node);
     } else {
-      this.defaultLine(links);
+      node.gfx.alpha = Theme.nonHighlightOpacity;
     }
   }
 
-  // Inspect on links
-  inspectNetworkLinks (source, target) {
-    if (this.inspectLink.length !== 0) {
-      if ((this.inspectLink.includes(source.id) && this.inspectLink.includes(target.id)) &&
-      !(this.hoverLink.includes(source.id) && this.hoverLink.includes(target.id))) {
-        this.links.alpha = 1;
-      } else {
-        this.links.alpha = Theme.nonHighlightOpacity;
-      }
+  // Highlights the non actor nodes according the identify node list
+  highlightNonActorNodes (node) {
+    if (this.identifyNode.includes(node.id)) {
+      node.gfx.alpha = 1;
     } else {
-      this.links.alpha = 1;
+      node.gfx.alpha = Theme.nonHighlightOpacity;
     }
   }
 
-  // Update the links position
-  // Note
-  updateLinkPosition () {
-    // Links
-    this.links.clear();
-    this.data.links.forEach(link => {
-      const { source, target, connect_actor_activity } = link;
-
-      // Hover on links
-      this.highlightNetworkLinks(this.links, source, target);
-
-      // Line type
-      this.lineType(this.links, source, target, connect_actor_activity);
-
-      if (this.inspectLink.length === 0) {
-        this.links.alpha = 1;
-      } else {
-        this.links.alpha = Theme.nonHighlightOpacity;
-      }
-    });
-
-    this.inspectLinks.clear();
-    this.data.links
-      .filter(d => (this.inspectLink.includes(d.source.id) && this.inspectLink.includes(d.target.id)))
-      .forEach(link => {
-        const { source, target, connect_actor_activity } = link;
-        this.inspectLinks.alpha = 1;
-
-        // Hover on links
-        this.highlightNetworkLinks(this.inspectLinks, source, target);
-
-        // Line type
-        this.lineType(this.inspectLinks, source, target, connect_actor_activity);
-      });
+  // Identify identified nodes by chapter and assign them an alpha level
+  selectedChapterAlpha (node) {
+    if (node.viewId === 'Actor') {
+      this.highlightIdentifiedNodes(node.levels.modelID.includes(this.selectedChapter), node);
+    } else {
+      this.highlightNonActorNodes(node);
+    }
   }
 
-  // Update the nodes position
-  updateNodePosition () {
+  // Identify identified nodes by organizational structure and assign them an alpha level
+  selectedOrgAlpha (node) {
+    if (node.viewId === 'Actor') {
+      this.highlightIdentifiedNodes(node.levels.orgStructureID.includes(this.selectedOrg), node);
+    } else {
+      this.highlightNonActorNodes(node);
+    }
+  }
+
+  // Logic to define the intersection of the chapter and organizational structure
+  selectedChapterAndOrgStructureAlpha (node) {
+    if (node.viewId === 'Actor') {
+      this.highlightIdentifiedNodes(node.levels.orgStructureID.includes(this.selectedOrg) && node.levels.modelID.includes(this.selectedChapter), node);
+    } else {
+      this.highlightNonActorNodes(node);
+    }
+  }
+
+  // Change the opacity of the actor nodes and their linked attributes when identified
+  updateNodeAlpha (selectedChapter, selectedOrg) {
+    this.selectedChapter = selectedChapter.id;
+    this.selectedOrg = selectedOrg.id;
+
+
+    console.log(this.selectedChapter, this.selectedOrg);
+    this.identifyLink = [];
+    this.identifyNode = [];
+
     this.nodes.forEach((node) => {
-      const { x, y, gfx } = node;
-      gfx.x = x;
-      gfx.y = y;
+      if (this.selectedChapter !== -1 && this.selectedChapter !== undefined && this.selectedOrg !== -1) {
+        this.selectedChapterAndOrgStructureAlpha(node);
+      } else if (this.selectedChapter !== -1 && this.selectedChapter !== undefined) {
+        this.selectedChapterAlpha(node);
+      } else if (this.selectedOrg !== -1) {
+        this.selectedOrgAlpha(node);
+      } else {
+        node.gfx.alpha = 1;
+      }
     });
   }
 
@@ -332,8 +369,8 @@ export default class NetworkVisualization {
     if (this.links !== undefined) {
       this.links.destroy();
     }
-    if (this.inspectLinks !== undefined) {
-      this.inspectLinks.destroy();
+    if (this.identifyLinks !== undefined) {
+      this.identifyLinks.destroy();
     }
   }
 
@@ -366,7 +403,6 @@ export default class NetworkVisualization {
   }
 
   dragStarted (d, e) {
-    this.hideInspect(d);
     if (!e.active) {
       this.simulation.alphaTarget(0.1).restart();
     }
@@ -387,7 +423,15 @@ export default class NetworkVisualization {
     e.subject.fy = null;
   }
 
-  // Controls ------------------------------------------------------
+  // Controls (panning, zooming, centering) ------------------------------------------------------
+
+  // Set diagram to fill the vizualization frame
+  centerVisualization (zoom, xPos, yPos) {
+    if (xPos && yPos) {
+      this.viewport.moveCenter(xPos, yPos);
+    }
+    this.viewport.zoomPercent(zoom, true);
+  }
 
   getControls () {
     return {
@@ -407,42 +451,60 @@ export default class NetworkVisualization {
     };
   }
 
-  // Update aesthetic functions ------------------------------------------------------
+  // Freeze functions ------------------------------------------------------
 
-  listHighlightNetworkNodes (d) {
-    if (d.group === 'Actor') {
-      const activityIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
-      const riskIds = Global.filterLinksSourceToTarget(this.data.links, activityIds);
-      const controlIds = Global.filterLinksSourceToTarget(this.data.links, riskIds);
-      const ids = controlIds.concat(riskIds.concat(activityIds.concat(d.id)));
+  // Turn on the freeze network
+  // Click highlights a portion of the network
+  clickOn (node) {
+    this.clickNode = true;
+    this.clickCount++;
+    if (this.clickCount > 3) {
+      this.clickNode = false;
+      this.clickCount = 0;
+    }
 
-      return ids;
-    } else if (d.group === 'Activity') {
-      const actorIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
-      const riskIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
-      const controlIds = Global.filterLinksSourceToTarget(this.data.links, riskIds);
-      const ids = controlIds.concat(riskIds.concat(actorIds.concat(d.id)));
+    this.hoverNodes
+      .forEach(node => {
+        const { gfx } = node;
+        gfx.filters.pop();
+        gfx.zIndex = 0;
+      });
+    this.hoverNetworkNodes(node);
+  }
 
-      return ids;
-    } else if (d.group === 'Risk') {
-      const controlIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
-      const activityIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
-      const actorIds = Global.filterLinksTargetToSource(this.data.links, activityIds);
-      const ids = actorIds.concat(activityIds.concat(controlIds.concat(d.id)));
+  // Turn off the freeze
+  // Click unhighlights the portion of the network
+  clickOff () {
+    this.clickCount++;
+    if (this.clickCount > 2) {
+      this.clickNode = false;
+      this.clickCount = 0;
+      this.hoverNodes
+        .forEach(node => {
+          const { gfx } = node;
+          gfx.filters.pop();
+          gfx.zIndex = 0;
+        });
 
-      return ids;
-    } else if (d.group === 'Control') {
-      const riskIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
-      const activityIds = Global.filterLinksTargetToSource(this.data.links, riskIds);
-      const actorIds = Global.filterLinksTargetToSource(this.data.links, activityIds);
-      const ids = actorIds.concat(activityIds.concat(riskIds.concat(d.id)));
-
-      return ids;
+      this.hoverLink = [];
+      this.hoverNode = [];
     }
   }
 
-  highlightNetworkNodes (d) {
-    this.hoverLink = this.listHighlightNetworkNodes(d);
+  // Tooltip functions ------------------------------------------------------
+
+  // Makes lines white when hovered over
+  hoverNetworkLinks (links, source, target) {
+    if (this.hoverLink.includes(source.id) && this.hoverLink.includes(target.id)) {
+      this.highlightLine(links);
+    } else {
+      this.defaultLine(links);
+    }
+  }
+
+  // Adds glow to nodes when hovered over
+  hoverNetworkNodes (d) {
+    this.hoverLink = this.listNetworkNodes(d);
     this.hoverNodes = this.data.nodes.filter(z => this.hoverLink.includes(z.id));
     this.hoverNodes
       .forEach(node => {
@@ -461,15 +523,16 @@ export default class NetworkVisualization {
       });
   }
 
+  // Returns the tooltip text for each type of node
   tooltipText (d) {
     if (d.viewId === 'Actor') {
-      return `Type: ${d.type} <br> ${d.group}: ${d.descr} <br> # activities: ${d.viewType.nActivity} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
+      return `<b>${d.type}</b>: ${d.descr} <br> <b>Organizational structure</b>: ${d.organizationalStructure[0].descr} <br> <b># activities</b>: ${d.viewType.nActivity} <br> <b># risks</b>: ${d.viewType.nRisk} <br> <b># controls</b>: ${d.viewType.nControl}`;
     } else if (d.viewId === 'Other activity') {
-      return `Type: ${d.type} <br> ${d.group}: ${d.descr} <br> # actors: ${d.viewType.nActor} <br> # risks: ${d.viewType.nRisk} <br> # controls: ${d.viewType.nControl}`;
+      return `<b>Type</b>: ${d.type} <br> <b>${d.group}</b>: ${d.descr} <br> <b># actors</b>: ${d.viewType.nActor} <br> <b># risks</b>: ${d.viewType.nRisk} <br> <b># controls</b>: ${d.viewType.nControl}`;
     } else if (d.viewId === 'Risk') {
-      return `${d.group}: ${d.descr} <br> # actors: ${d.viewType.nActor} <br> # activity: ${d.viewType.nActivity} <br> # control: ${d.viewType.nControl}`;
+      return `<b>${d.group}</b>: ${d.descr} <br> <b># actors</b>: ${d.viewType.nActor} <br> <b># activity</b>: ${d.viewType.nActivity} <br> <b># control</b>: ${d.viewType.nControl}`;
     } else if (d.viewId === 'Control activity') {
-      return `Type: ${d.type} <br> ${d.group}: ${d.descr} <br> # actors: ${d.viewType.nActor} <br> # risks: ${d.viewType.nRisk}`;
+      return `<b>Type</b>: ${d.type} <br> <b>${d.group}</b>: ${d.descr} <br> <b># actors</b>: ${d.viewType.nActor} <br> <b># risks</b>: ${d.viewType.nRisk}`;
     }
   }
 
@@ -485,10 +548,8 @@ export default class NetworkVisualization {
 
   pointerOver (d) {
     if (!this.clickNode) {
-      this.highlightNetworkNodes(d);
+      this.hoverNetworkNodes(d);
     }
-
-    console.log(d.viewId);
     this.updateSymbolHoverValue(d.viewId);
     this.updateViewHoverValue(Global.applyColorScale(d, this.viewVariable));
     this.showTooltip(d);
@@ -513,117 +574,49 @@ export default class NetworkVisualization {
     this.app.renderer.events.cursorStyles.default = 'default';
   }
 
-  // Main functions ------------------------------------------------------
+  // Helper functions ------------------------------------------------------
 
-  run () {
-    return this.simulation;
+  reduceNestedList (emptyList, list) {
+    emptyList.push(list);
+    emptyList = emptyList.flat(1);
+    const unique = [...new Set(emptyList)];
+    return unique;
   }
 
-  draw (viewVariable) {
-    this.viewVariable = viewVariable;
-    this.drawLinks();
-    this.drawNodes();
-    this.simulation.alpha(1).restart();
-  }
+  // Returns the list of nodes associated with a particular given id
+  listNetworkNodes (d) {
+    if (d.group === 'Actor') {
 
-  updateDraw (viewVariable) {
-    this.hoverLink = [];
-    this.hoverNode = [];
-    this.hoverNodes = [];
-    this.destroyLinks();
-    this.destroyNodes();
-    this.draw(viewVariable);
-    this.animate();
-  }
+      const activityIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
+      const riskIds = Global.filterLinksSourceToTarget(this.data.links, activityIds);
+      const controlIds = Global.filterLinksSourceToTarget(this.data.links, riskIds);
+      const ids = controlIds.concat(riskIds.concat(activityIds.concat(d.id)));
+      return ids;
 
-  // Identify nodes and links to highlight
-  identifyNodesLinks (node) {
-    const links = this.listHighlightNetworkNodes(node);
-    const nodes = this.data.nodes.filter(z => links.includes(z.id)).map(d => d.id);
-    this.inspectLink = this.reduceNestedList(this.inspectLink, links);
-    this.inspectNode = this.reduceNestedList(this.inspectNode, nodes);
-    node.gfx.alpha = 1;
-  }
+    } else if (d.group === 'Activity') {
 
-  // Apply ifelse logic to identified nodes
-  highlightInspectedNodes (nodeEvaluation, node) {
-    if (nodeEvaluation) {
-      this.identifyNodesLinks(node);
-    } else {
-      node.gfx.alpha = Theme.nonHighlightOpacity;
+      const actorIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
+      const riskIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
+      const controlIds = Global.filterLinksSourceToTarget(this.data.links, riskIds);
+      const ids = controlIds.concat(riskIds.concat(actorIds.concat(d.id)));
+      return ids;
+
+    } else if (d.group === 'Risk') {
+
+      const controlIds = Global.filterLinksSourceToTarget(this.data.links, [d.id]);
+      const activityIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
+      const actorIds = Global.filterLinksTargetToSource(this.data.links, activityIds);
+      const ids = actorIds.concat(activityIds.concat(controlIds.concat(d.id)));
+      return ids;
+
+    } else if (d.group === 'Control') {
+
+      const riskIds = Global.filterLinksTargetToSource(this.data.links, [d.id]);
+      const activityIds = Global.filterLinksTargetToSource(this.data.links, riskIds);
+      const actorIds = Global.filterLinksTargetToSource(this.data.links, activityIds);
+      const ids = actorIds.concat(activityIds.concat(riskIds.concat(d.id)));
+      return ids;
+
     }
-  }
-
-  // Highlights the non actor nodes according the inspect node list
-  highlightNonActorNodes (node) {
-    if (this.inspectNode.includes(node.id)) {
-      node.gfx.alpha = 1;
-    } else {
-      node.gfx.alpha = Theme.nonHighlightOpacity;
-    }
-  }
-
-  // Identify inspected nodes by chapter and assign them an alpha level
-  selectedChapterAlpha (node) {
-    if (node.viewId === 'Actor') {
-      this.highlightInspectedNodes(node.levels.modelID.includes(this.selectedChapter), node);
-    } else {
-      this.highlightNonActorNodes(node);
-    }
-  }
-
-  // Identify inspected nodes by organizational structure and assign them an alpha level
-  selectedOrgAlpha (node) {
-    if (node.viewId === 'Actor') {
-      if (this.selectedOrg2 !== -1) {
-        this.highlightInspectedNodes(node.levels.orgStructure2ID.includes(this.selectedOrg2), node);
-      } else {
-        this.highlightInspectedNodes(node.levels.orgStructure1ID.includes(this.selectedOrg1), node);
-      }
-    } else {
-      this.highlightNonActorNodes(node);
-    }
-  }
-
-  // Logic to define the intersection of the chapter and organizational structure
-  selectedChapterAndOrgStructureAlpha (node) {
-    if (node.viewId === 'Actor') {
-      if (this.selectedOrg2 !== -1) {
-        this.highlightInspectedNodes(node.levels.orgStructure2ID.includes(this.selectedOrg2) && node.levels.modelID.includes(this.selectedChapter), node);
-      } else {
-        this.highlightInspectedNodes(node.levels.orgStructure1ID.includes(this.selectedOrg1) && node.levels.modelID.includes(this.selectedChapter), node);
-      }
-    } else {
-      this.highlightNonActorNodes(node);
-    }
-  }
-
-  // Change the opacity of the actor nodes and their linked attributes when inspected
-  updateNodeAlpha (selectedChapter, selectedOrg1, selectedOrg2) {
-    this.selectedChapter = selectedChapter.id;
-    this.selectedOrg1 = selectedOrg1.id;
-    this.selectedOrg2 = selectedOrg2.id;
-
-    this.inspectLink = [];
-    this.inspectNode = [];
-
-    this.nodes.forEach((node) => {
-      if (this.selectedChapter !== -1 && this.selectedChapter !== undefined && this.selectedOrg1 !== -1) {
-        this.selectedChapterAndOrgStructureAlpha(node);
-      } else if (this.selectedChapter !== -1 && this.selectedChapter !== undefined) {
-        this.selectedChapterAlpha(node);
-      } else if (this.selectedOrg1 !== -1) {
-        this.selectedOrgAlpha(node);
-      } else {
-        node.gfx.alpha = 1;
-      }
-    });
-  }
-
-  animate () {
-    this.app.ticker.add(() => {
-      this.updateLinkPosition();
-      this.updateNodePosition();
-    });
   }
 }

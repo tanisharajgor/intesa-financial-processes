@@ -65,7 +65,7 @@ def actors_rename(actors):
                                     'Object Type': 'actorType',
                                     'Object GUID': 'actorGUID',
                                     '3rd path': 'organizational_structure1',
-                                    '4th path': 'organizational_structure2'})
+                                    '4th path': 'organizational_structure'})
 
     return actors
 
@@ -344,14 +344,17 @@ def org_str1_dm(data, raw_pth, processed_pth):
 Organizational structure data management
 Return dataframe unique on organizational structure 2
 """
-def org_str2_dm(data, raw_pth, processed_pth):
+def org_str_dm(data, raw_pth, processed_pth):
 
-    df = data[data.organizational_structure1 == "Strutture organizzative"][["organizational_structure2"]].drop_duplicates()
-    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "organizational_structure2.csv")).rename(columns={'Italian': 'organizational_structure2'})
-    df = pd.merge(df, dfTranslated, on="organizational_structure2", how="left")
-    df = num_id(df, "organizational_structure2", 10000000)
+    df = data[["organizational_structure"]].drop_duplicates()
+    dfTranslated = pd.read_csv(os.path.join(raw_pth, "translated", "organizational_structure.csv")).rename(columns={'Italian': 'organizational_structure'})
+    df = pd.merge(df, dfTranslated, on="organizational_structure", how="left")
+    df = num_id(df, "organizational_structure", 10000000)
 
-    df.to_csv(os.path.join(processed_pth, 'relational', 'organizational_structure2' + ".csv"), index = False)
+    df2 = {'organizational_structure': 'Not specified', 'English': 'Not specified', 'organizational_structureID': max(df.organizational_structureID)+1}
+    df = df.append(df2, ignore_index = True)
+
+    df.to_csv(os.path.join(processed_pth, 'relational', 'organizational_structure' + ".csv"), index = False)
 
     return df
 
@@ -510,27 +513,27 @@ def risk_to_control_dm(controls, risks, control, processed_pth):
 """
 Main crosswalk
 """
-def main_dm(data, level1, level2, level3, model, activities, actors, risks, controls, org1, org2, activity_to_risk, risk_to_control):
+def main_dm(data, level1, level2, level3, model, activities, actors, risks, controls, org, activity_to_risk, risk_to_control):
 
     df = pd.merge(data, level1, how="left", on="level1GUID")
     df = pd.merge(df, level2, how="left", on="level2GUID")
     df = pd.merge(df, level3, how="left", on="level3GUID")
-
     df = pd.merge(df, model, how="left", on="modelGUID")
-
     df = pd.merge(df, activities, how="left", on="activityGUID")
     df = pd.merge(df, actors, how="left", on="actorGUID")
+    df = pd.merge(df, org, how="left", on="organizational_structure").drop("organizational_structure", axis=1).rename(columns={'English': "organizational_structure"})
 
-    df = pd.merge(df, org1, how="left", on="organizational_structure1").drop("organizational_structure1", axis=1).rename(columns={'English': "organizational_structure1"})
-    df = pd.merge(df, org2, how="left", on="organizational_structure2").drop("organizational_structure2", axis=1).rename(columns={'English': "organizational_structure2"})
-    df = clean_strings(df, "organizational_structure1")
-    df.organizational_structure1 = df.organizational_structure1.str.capitalize()
-    df = clean_strings(df, "organizational_structure2")
+    df = clean_strings(df, "organizational_structure")
+
+    id = df.organizational_structureID.max()+1
+    df['organizational_structureID'] = df['organizational_structureID'].fillna(id)
+    df['organizational_structureID'] = np.where(df.organizational_structure1 == "Strutture organizzative", df.organizational_structureID, df.organizational_structureID.max())
+    df['organizational_structure'] = np.where(df.organizational_structure1 == "Strutture organizzative", df.organizational_structure, "Not specified")
 
     def shorten_label(row):
-        return row['organizational_structure2'].split(" - ")[-1]
+        return row['organizational_structure'].split(" - ")[-1]
 
-    df['organizational_structure2'] = df.apply(shorten_label, axis=1)
+    df['organizational_structure'] = df.apply(shorten_label, axis=1)
 
     rtc = pd.concat([risk_to_control.rename(columns={'controlID': 'activityID'}), activity_to_risk], ignore_index=True, sort=False).drop_duplicates()
     df = pd.merge(df, rtc, how="left", on="activityID")
