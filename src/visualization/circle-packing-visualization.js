@@ -417,7 +417,8 @@ export class CirclePackingDiagram {
   // Panning and zooming ------------------------------------------------------
 
   getCenter = (node) => {
-    return new PIXI.Point(this.width - node.x, this.height - node.y);
+    let nav = d3.select(".Navigation")
+    return new PIXI.Point(this.width - node.x, this.height - nav.property("clientHeight") - node.y);
   };
 
   getZoomWidth(node) {
