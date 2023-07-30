@@ -93,7 +93,7 @@ export default class NetworkVisualization {
       worldWidth: this.width,
       worldHeight: this.height,
       passiveWheel: false,
-      interaction: this.app.renderer.plugins.interaction, // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
+      interaction: this.app.renderer.events, // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
       events: this.app.renderer.events
     });
 
