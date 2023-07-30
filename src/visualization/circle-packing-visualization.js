@@ -221,15 +221,25 @@ export class CirclePackingDiagram {
     this.containerNodes = new PIXI.Container();
     this.nodes = [];
 
-    const lineWidth = d3.scaleOrdinal()
-      .domain([0, 1, 2, 3, 4])
-      .range([0.4, 0.5, 0.5, 0.5, 0.1]);
+    const lineWidth = (level, depth) => {
+      const scale = d3.scaleOrdinal()
+        .domain([0, 1, 2, 3, 4])
+        .range([0.4, 0.5, 0.5, 0.5, 0.1]);
+
+      if (this.focus.depth >= 2 && depth >= 4) {
+        return 0.05;
+      } else if (this.focus.depth >= 3 && depth >= 4) {
+        return 0.03;
+      } else {
+        return scale(level);
+      }
+    };
 
     this.data.forEach(node => {
       node.viewId = node.data.viewId;
       node.zoomed = false;
       node.gfx = new PIXI.Graphics();
-      node.gfx.lineStyle(lineWidth(node.data.level), 0xFFFFFF, 1);
+      node.gfx.lineStyle(lineWidth(node.data.level, node.depth), 0xFFFFFF, 1);
       node.gfx.beginFill(Global.applyColorScale(node.data, this.viewVariable));
 
       this.opacityScale(node);
@@ -422,6 +432,9 @@ export class CirclePackingDiagram {
 
   // Operations that occur on click
   clickNode(node) {
+    if (this.focus.depth >= 2) {
+      this.updateDraw(this.viewVariable);
+    }
     node.zoomed = !node.zoomed;
     this.focus = node;
     if(!node.zoomed && node.depth === 1) {
@@ -447,11 +460,11 @@ export class CirclePackingDiagram {
   }
 
   // Destroys the nodes on data update
-  destroyNodes () {
+  destroyNodes() {
     this.destroyObject(this.containerNodes);
   }
 
-  updateDraw (viewVariable) {
+  updateDraw(viewVariable) {
     this.viewVariable = viewVariable;
     this.destroyNodes();
     this.initNodes();

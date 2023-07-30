@@ -342,7 +342,7 @@ export default class NetworkVisualization {
     this.selectedOrg = selectedOrg.id;
 
 
-    console.log(this.selectedChapter, this.selectedOrg)
+    console.log(this.selectedChapter, this.selectedOrg);
     this.identifyLink = [];
     this.identifyNode = [];
 
@@ -446,7 +446,7 @@ export default class NetworkVisualization {
         const height = (document.getElementById(this.selector).clientHeight / 2) - document.getElementsByClassName('Navigation')[0].clientHeight;
     
         this.viewport.fit();
-        this.centerVisualization(-0.4,  width - 200, height)
+        this.centerVisualization(-0.4,  width - 200, height);
       }
     };
   }

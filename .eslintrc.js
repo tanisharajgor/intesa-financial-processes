@@ -32,6 +32,7 @@ module.exports = {
     ],
     "rules": {
         semi: "error",
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "no-undef": "off"
     }
 };
