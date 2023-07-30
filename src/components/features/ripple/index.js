@@ -72,7 +72,7 @@ export const Ripple = props => {
         })}
     </RippleContainer>
   );
-}
+};
 
 // Prop types
 Ripple.propTypes = {

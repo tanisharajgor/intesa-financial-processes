@@ -8,16 +8,31 @@ const treeLevelScale = d3.scaleOrdinal()
   .domain([0, 1, 2, 3, 4])
   .range(['root', 'Process 1', 'Process 2', 'Process 3', 'Activity']);
 
-export function InspectNetworkSummary (inspect, data) {
+export function InspectNetworkSummary (data, identifyNode, selectedChapter, selectedOrg) {
+
   const nActors = data.nodes.filter(d => d.group === 'Actor').length;
   const nActivities = data.nodes.filter(d => d.group === 'Activity').length;
+
+  let nIdentifiedActors, nIdentifiedActivities; 
+
+  if (selectedChapter.id === -1 && selectedOrg.id === -1) {
+    nIdentifiedActors = nActors;
+    nIdentifiedActivities = nActivities;
+  } else {
+    nIdentifiedActors = data.nodes.filter(d => d.group === 'Actor' && identifyNode.includes(d.id)).length;
+    nIdentifiedActivities = data.nodes.filter(d => d.group === 'Activity' && identifyNode.includes(d.id)).length;
+  }
+
+  const inspect = d3.select('.Inspect');
 
   inspect.select('.value1 .key').text('Number of actors: ');
   inspect.select('.value1 .value').text(`${nActors}`);
   inspect.select('.value2 .key').text('Number of activities: ');
   inspect.select('.value2 .value').text(`${nActivities}`);
-  inspect.select('.value3 .key').text('');
-  inspect.select('.value3 .value').text(' ');
+  inspect.select('.value3 .key').text('Actors identified: ');
+  inspect.select('.value3 .value').text(`${nIdentifiedActors}`);
+  inspect.select('.value4 .key').text('Activites identified: ');
+  inspect.select('.value4 .value').text(`${nIdentifiedActivities}`);
 }
 
 export function InspectHierarchySummary (data) {
@@ -60,6 +75,10 @@ export function InspectHTML () {
             <span className="layout_item value"></span>
           </div>
           <div className="value3 layout_row">
+            <span className="layout_item key"></span>
+            <span className="layout_item value"></span>
+          </div>
+          <div className="value4 layout_row">
             <span className="layout_item key"></span>
             <span className="layout_item value"></span>
           </div>

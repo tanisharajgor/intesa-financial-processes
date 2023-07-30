@@ -52,7 +52,7 @@ export const GlobalTheme = {
     headerWeight: "48px",
     padding: '0.625rem',
     viewColWidth: '17rem'
-  }
+  };
 
 export const labelZAxisDefault = 100;
 export const nonHighlightOpacity = .15;
@@ -72,7 +72,7 @@ export const labelStylePrimary = {
   dropShadowBlur: 5,
   dropShadowDistance: 2,
   dropShadowColor: 0x21252b
-}
+};
   
 export const labelStyleSecondary = {
   align: "center",
@@ -89,7 +89,7 @@ export const labelStyleSecondary = {
   dropShadowBlur: 5,
   dropShadowDistance: 1,
   dropShadowColor: 0x21252b
-}
+};
   
 export const labelStyleTertiary = {
   align: "center",
@@ -106,7 +106,7 @@ export const labelStyleTertiary = {
   dropShadowBlur: 5,
   dropShadowDistance: 2,
   dropShadowColor: 0x21252b
-}
+};
   
 export const labelStyleQuartiary = {
   align: "center",
@@ -123,4 +123,4 @@ export const labelStyleQuartiary = {
   dropShadowBlur: 5,
   dropShadowDistance: 2,
   dropShadowColor: 0x21252b
-}
+};
