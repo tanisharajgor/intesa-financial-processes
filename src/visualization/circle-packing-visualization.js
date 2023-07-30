@@ -391,10 +391,9 @@ export class CirclePackingDiagram {
 
   // Updates the cursor to zoom in or out by comparing the current to the focus
   updateCursor = (node) => {
+
     if(node.depth < this.focus.depth) {
       node.gfx.cursor = "zoom-out";
-    } else if (node.id === this.focus.id) {
-      node.gfx.cursor = "cursor";
     } else {
       node.gfx.cursor = "zoom-in";
     }
@@ -418,7 +417,15 @@ export class CirclePackingDiagram {
   // Panning and zooming ------------------------------------------------------
 
   getCenter = (node) => {
-    return new PIXI.Point(this.width - node.x, this.height - 20 - node.y);
+
+    let y;
+    if (node.depth > 2) {
+      y = this.height - node.y
+    } else {
+      y = this.height - 20 - node.y;
+    }
+
+    return new PIXI.Point(this.width - node.x, y);
   };
 
   getZoomWidth(node) {
