@@ -86,7 +86,7 @@ export class CirclePackingDiagram {
       worldWidth: this.width,
       worldHeight: this.height,
       passiveWheel: false,
-      interaction: this.app.renderer.plugins.interaction, // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
+      interaction: this.app.renderer.events, // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
       events: this.app.renderer.events
     });
 
@@ -199,7 +199,7 @@ export class CirclePackingDiagram {
       bg.width = this.width;
       bg.height = this.height;
       bg.tint = 0x000000;
-      bg.interactive = true;
+      bg.eventMode = 'dynamic';
 
       bg.on('pointerover', () => {
         if(this.focus.depth > 1) {
@@ -250,7 +250,7 @@ export class CirclePackingDiagram {
 
       node.gfx.x = node.x;
       node.gfx.y = node.y;
-      node.gfx.interactive = true;
+      node.gfx.eventMode = 'dynamic';
       node.gfx.buttonMode = true;
       node.gfx.on('pointerover', (e) => this.pointerOver(node, e));
       node.gfx.on('pointerout', () => this.pointerOut(node));
