@@ -89,6 +89,27 @@ export const GlobalStyles = createGlobalStyle`
   input[type="checkbox"] + label {
     margin-left: 0.5em;
   }
+
+  // Additions for enhanced scrolling bars.
+
+  /* Works on Chrome, Edge, Safari, and should on Firefox. */
+  
+  *::-webkit-scrollbar {
+    scrollbar-width: thin;
+    width: 12px;
+    scrollbar-color: ${Theme.darkGreyColorHex}; ${Theme.GlobalTheme.backgroundColor};
+  }
+
+  *::-webkit-scrollbar-track {
+    background: ${Theme.GlobalTheme.backgroundColor};
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: ${Theme.darkGreyColorHex};
+    border-radius: 20px;
+    border: 3px solid ${Theme.GlobalTheme.backgroundColor};
+    z-index: 13;
+  }
 `;
 
 export const StyledSelect = styled(Select)`
