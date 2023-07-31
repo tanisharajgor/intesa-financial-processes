@@ -199,7 +199,7 @@ export class CirclePackingDiagram {
       bg.width = this.width;
       bg.height = this.height;
       bg.tint = 0x000000;
-      bg.interactive = true;
+      bg.eventMode = 'dynamic';
 
       bg.on('pointerover', () => {
         if(this.focus.depth > 1) {
@@ -250,7 +250,7 @@ export class CirclePackingDiagram {
 
       node.gfx.x = node.x;
       node.gfx.y = node.y;
-      node.gfx.interactive = true;
+      node.gfx.eventMode = 'dynamic';
       node.gfx.buttonMode = true;
       node.gfx.on('pointerover', (e) => this.pointerOver(node, e));
       node.gfx.on('pointerout', () => this.pointerOut(node));

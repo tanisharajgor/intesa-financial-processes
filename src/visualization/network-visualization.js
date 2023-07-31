@@ -174,7 +174,7 @@ export default class NetworkVisualization {
 
       node.gfx.x = this.width * 0.5;
       node.gfx.y = this.height * 0.5;
-      node.gfx.interactive = true;
+      node.gfx.eventMode = 'dynamic';
       node.gfx.buttonMode = true;
       node.gfx.cursor = 'pointer';
       node.gfx.on('pointerover', () => this.pointerOver(node));
