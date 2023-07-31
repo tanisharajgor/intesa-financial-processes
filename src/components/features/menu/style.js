@@ -25,8 +25,10 @@ export const StatusMenu = styled('div')`
     transition: right 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     border: 1px solid ${Theme.extraDarkGreyHex};
     border-radius: 5px;
+    overflow-y: auto;
     z-index: +9;
 `;
+
 
 export const StyledMenuHeader = styled('div')`
     display: flex;
