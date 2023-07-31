@@ -14,7 +14,7 @@ import { Accordion, AccordionDetails, MenuItem, Form } from 'cfd-react-component
 import { LayoutGroup, LayoutRow, LayoutItem } from '../../layout/index';
 import { StyledSelect } from '../../../utils/global-styles';
 import * as Theme from '../../../utils/theme';
-import { StyledFilter } from '../../features/menu/style'; 
+import { StyledFilter, StyledItemHeader } from '../../features/menu/style';
 
 // Prop types
 FilterTaxonomy.propTypes = {
@@ -35,7 +35,7 @@ const rScale = d3.scaleOrdinal()
 
 // Data management steps
 const cluster = d3.cluster()
-  .size([height, width - 100]); // 100 is the margin I will have on the right side
+  .size([height - 20, width - 110]); // 100 is the margin I will have on the right side
 
 function fillScale (d, selectedLevel3) {
   if (d.data.data.level === 3 && d.data.data.id === selectedLevel3) {
@@ -53,7 +53,7 @@ function initTooltip () {
     .attr('class', 'tooltip')
     .attr('z-index', 500)
     .style('width', '100%')
-    .style('height', '85px');
+    .style('height', '30px');
 }
 
 // Tooltip
@@ -65,7 +65,7 @@ function renderTooltip (selectedLevel3) {
 
     let x, y;
 
-    if (d.data.data.level === 3) {
+    if (d.depth + 1 === 3) {
       x = e.layerX - 150;
       y = e.layerY - 100;
     } else {
@@ -76,12 +76,12 @@ function renderTooltip (selectedLevel3) {
     tooltip.style('visibility', 'visible')
       .style('top', `${y}px`)
       .style('left', `${x}px`)
-      .html(`Level ${d.data.data.level}<br><b>${d.data.data.descr}</b>`);
+      .html(`<span style="color:${Theme.darkGreyColorHex}">Level ${d.depth + 1}:</span> ${d.data.data.descr}`);
 
     thisCircle
       .attr('stroke', 'white')
-      .attr('stroke-width', d => d.data.data.level === 3 ? 1.5 : 0)
-      .attr('fill', d => d.data.data.level === 3 ? Theme.primaryColorHex : Theme.extraDarkGreyHex)
+      .attr('stroke-width', d => d.depth + 1 === 3 ? 1.5 : 0)
+      .attr('fill', d => d.depth + 1 === 3 ? Theme.primaryColorHex : Theme.extraDarkGreyHex)
       .attr('r', 4);
   }).on('mouseout', function () {
     tooltip.style('visibility', 'hidden');
@@ -90,7 +90,7 @@ function renderTooltip (selectedLevel3) {
       .attr('stroke', d => fillScale(d, selectedLevel3))
       .attr('fill', d => fillScale(d, selectedLevel3))
       .attr('stroke-width', 0.5)
-      .attr('r', d => rScale(d.data.data.level));
+      .attr('r', d => rScale(d.depth + 1));
   });
 }
 
@@ -112,15 +112,8 @@ function initFilter () {
     .attr('height', height);
 }
 
-function updateFilter (root, selectedLevel3) {
-  let svg = d3.select(`#${id} svg`);
-
-  d3.select(`#${id} svg g`).remove();
-
-  svg = svg.append('g')
-    .attr('transform', 'translate(10, 0)');
-
-  // Add the links between nodes:
+// Add the links between nodes
+function addLinks (svg, root) {
   svg.selectAll('path')
     .data(root.descendants().slice(1).filter(d => d.data.data.level < 4))
     .join('path')
@@ -134,26 +127,65 @@ function updateFilter (root, selectedLevel3) {
     .attr('stroke', Theme.extraDarkGreyHex)
     .attr('stroke-opacity', 1)
     .attr('stroke-width', 0.5);
+}
 
-  // Add a circle for each node.
+// Add a circle for each node
+function addNodes (svg, root, selectedLevel3) {
+
   svg.selectAll('g')
     .data(root.descendants().filter(d => d.data.data.level < 4))
     .join('g')
-    .attr('transform', function (d) {
-      return `translate(${d.y},${d.x})`;
-    })
+    .attr('transform', d=> `translate(${d.y},${d.x})`)
     .append('circle')
-    .attr('r', d => rScale(d.data.data.level))
-    .attr('fill', d => fillScale(d, selectedLevel3))
-    .attr('stroke', d => fillScale(d, selectedLevel3))
-    .attr('stroke-width', 0.5)
-    .attr('class', 'Process-Node')
-    .style('cursor', d => d.data.data.level === 3 ? 'pointer' : 'not-allowed');
+      .attr('r', d => rScale(d.data.data.level))
+      .attr('fill', d => fillScale(d, selectedLevel3))
+      .attr('stroke', d => fillScale(d, selectedLevel3))
+      .attr('stroke-width', 0.5)
+      .attr('class', 'Process-Node')
+      .style('cursor', d => d.data.data.level === 3 ? 'pointer' : 'not-allowed');
+}
+
+//Add level labels to the top node of each level
+function addLabels (svg, root) {
+
+  let l1 = root.descendants().find(d => d.depth === 0)
+  let l2 = root.descendants().find(d => d.depth === 1)
+  let l3 = root.descendants().find(d => d.depth === 2)
+
+  let data = [];
+  data.push({x: l1.x, y: l1.y, label: `L${l1.depth + 1}`})
+  data.push({x: l2.x, y: l2.y, label: `L${l2.depth + 1}`})
+  data.push({x: l3.x, y: l3.y, label: `L${l3.depth + 1}`})
+
+  svg.selectAll('label')
+    .data(data)
+    .join('g')
+    .attr('transform', d=> `translate(${d.y-10},${d.x-10})`)
+    .append('text')
+      .attr('fill', Theme.darkGreyColorHex)
+      .text(d => d.label)
+}
+
+function updateFilter (root, selectedLevel3) {
+  let svg = d3.select(`#${id} svg`);
+
+  d3.select(`#${id} svg g`).remove();
+
+  svg = svg.append('g')
+    .attr('transform', 'translate(10, 20)');
+
+  addLinks(svg, root);
+  addNodes(svg, root, selectedLevel3);
+  addLabels(svg, root);
 }
 
 export function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, updateLevel3 }) {
   const processes = lu.processes;
   const valuesLevel1 = processes.children;
+  const level1Descr = valuesLevel1.find(d => d.id === selectedLevel1).descr;
+  const level2Descr = processes.children
+    .find(d => d.id === selectedLevel1).children
+    .find(d => d.childrenIDs.includes(selectedLevel3)).descr;
   const level3Descr = lu.level3.find((d) => d.id === selectedLevel3).descr;
   const levelsFiltered = lu.processes.children.find((d) => d.id === selectedLevel1);
 
@@ -167,7 +199,12 @@ export function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, 
 
   const handleChangeLevel1 = (event) => {
     const level1 = parseInt(event.target.value);
+    const l1 = processes.children
+      .find(d => d.id === level1);
+    const l2 = l1.children[0];
+    const l3 = l2.children[0];
     updateLevel1(level1);
+    updateLevel3(l3.id);
   };
 
   useEffect(() => {
@@ -186,12 +223,15 @@ export function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, 
     renderTooltip(selectedLevel3);
   }, [selectedLevel1, selectedLevel3]);
 
+  const types = `${level1Descr} > ${level2Descr} > ${level3Descr}`
+
   return (
     <Accordion className={'Card'}>
-      <AccordionHeaderStyled label="Filter by Process" filteredTypes={[level3Descr]}/>
+      <AccordionHeaderStyled label="Filter by Taxonomy" filteredTypes={[types]}/>
       <AccordionDetails>
         <LayoutGroup>
           <LayoutRow className="layout_row">
+            <StyledItemHeader>L1</StyledItemHeader>
             <LayoutItem className="push">
               <Form variant="outlined" size="small">
                 <StyledSelect
@@ -209,6 +249,14 @@ export function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, 
                 </StyledSelect>
               </Form>
             </LayoutItem>
+          </LayoutRow>
+          <LayoutRow>
+              <StyledItemHeader>L2</StyledItemHeader>
+              <LayoutItem>{level2Descr}</LayoutItem>
+          </LayoutRow>
+          <LayoutRow>
+              <StyledItemHeader>L3</StyledItemHeader>
+              <LayoutItem>{level3Descr}</LayoutItem>
           </LayoutRow>
           <LayoutRow>
             <StyledFilter id={id}></StyledFilter>
