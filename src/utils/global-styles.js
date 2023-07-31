@@ -92,8 +92,8 @@ export const GlobalStyles = createGlobalStyle`
 
   // Additions for enhanced scrolling bars.
 
-  /* Works on Chrome, Edge, Safari, and should on Firefox. */
-  
+  /* Works on Chrome, Edge, Safari. */
+
   *::-webkit-scrollbar {
     scrollbar-width: thin;
     width: 12px;
@@ -109,6 +109,13 @@ export const GlobalStyles = createGlobalStyle`
     border-radius: 20px;
     border: 3px solid ${Theme.GlobalTheme.backgroundColor};
     z-index: 13;
+  }
+
+  /* Works on Firefox. */
+  
+  @-moz-document {
+    scrollbar-width: thin;
+    scrollbar-color: ${Theme.darkGreyColorHex}; ${Theme.GlobalTheme.backgroundColor};
   }
 `;
 
