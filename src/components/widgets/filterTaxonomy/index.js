@@ -148,14 +148,14 @@ function addNodes (svg, root, selectedLevel3) {
 //Add level labels to the top node of each level
 function addLabels (svg, root) {
 
-  let l1 = root.descendants().find(d => d.depth === 0)
-  let l2 = root.descendants().find(d => d.depth === 1)
-  let l3 = root.descendants().find(d => d.depth === 2)
+  let l1 = root.descendants().find(d => d.depth === 0);
+  let l2 = root.descendants().find(d => d.depth === 1);
+  let l3 = root.descendants().find(d => d.depth === 2);
 
   let data = [];
-  data.push({x: l1.x, y: l1.y, label: `L${l1.depth + 1}`})
-  data.push({x: l2.x, y: l2.y, label: `L${l2.depth + 1}`})
-  data.push({x: l3.x, y: l3.y, label: `L${l3.depth + 1}`})
+  data.push({x: l1.x, y: l1.y, label: `L${l1.depth + 1}`});
+  data.push({x: l2.x, y: l2.y, label: `L${l2.depth + 1}`});
+  data.push({x: l3.x, y: l3.y, label: `L${l3.depth + 1}`});
 
   svg.selectAll('label')
     .data(data)
@@ -163,7 +163,7 @@ function addLabels (svg, root) {
     .attr('transform', d=> `translate(${d.y-10},${d.x-10})`)
     .append('text')
       .attr('fill', Theme.darkGreyColorHex)
-      .text(d => d.label)
+      .text(d => d.label);
 }
 
 function updateFilter (root, selectedLevel3) {
@@ -223,7 +223,7 @@ export function FilterTaxonomy ({ selectedLevel1, updateLevel1, selectedLevel3, 
     renderTooltip(selectedLevel3);
   }, [selectedLevel1, selectedLevel3]);
 
-  const types = `${level1Descr} > ${level2Descr} > ${level3Descr}`
+  const types = `${level1Descr} > ${level2Descr} > ${level3Descr}`;
 
   return (
     <Accordion className={'Card'}>
